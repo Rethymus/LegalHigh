@@ -1,0 +1,304 @@
+[
+  {
+    "name": "01-dashboard",
+    "path": "/",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": []
+  },
+  {
+    "name": "02-dashboard-dark",
+    "path": "/",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": []
+  },
+  {
+    "name": "03-needs",
+    "path": "/needs",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": []
+  },
+  {
+    "name": "04-needs-run",
+    "path": "/needs",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "step1": "ok",
+    "step2": "clicked"
+  },
+  {
+    "name": "05-search-home",
+    "path": "/search",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": []
+  },
+  {
+    "name": "06-search-results",
+    "path": "/search/results?q=%E8%AF%95%E7%94%A8%E6%9C%9F%20%E4%B8%80%E5%B9%B4",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": []
+  },
+  {
+    "name": "07-law-detail",
+    "path": "/laws/civl-2020?art=25",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": []
+  },
+  {
+    "name": "08-laws-browse",
+    "path": "/laws",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": []
+  },
+  {
+    "name": "09-case-search",
+    "path": "/cases",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": []
+  },
+  {
+    "name": "10-case-detail-cn",
+    "path": "/cases/guidance-24",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": []
+  },
+  {
+    "name": "11-case-detail-foreign",
+    "path": "/cases/brown-v-board",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": []
+  },
+  {
+    "name": "12-research",
+    "path": "/research",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": []
+  },
+  {
+    "name": "13-research-run",
+    "path": "/research",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "step1": "ok",
+    "step2": "clicked:开始研究"
+  },
+  {
+    "name": "14-contracts",
+    "path": "/contracts",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": []
+  },
+  {
+    "name": "15-contract-review",
+    "path": "/contracts/c-1",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": []
+  },
+  {
+    "name": "16-contract-review-run",
+    "path": "/contracts/c-1",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "step1": "no-btn"
+  },
+  {
+    "name": "17-compare",
+    "path": "/compare",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": []
+  },
+  {
+    "name": "18-draft",
+    "path": "/draft",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": []
+  },
+  {
+    "name": "19-draft-validation",
+    "path": "/draft/validation",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": []
+  },
+  {
+    "name": "20-comparative",
+    "path": "/comparative",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": []
+  },
+  {
+    "name": "21-learning",
+    "path": "/learning",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": []
+  },
+  {
+    "name": "22-workspace",
+    "path": "/workspace",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": []
+  },
+  {
+    "name": "23-collections",
+    "path": "/collections",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": []
+  },
+  {
+    "name": "24-data-sources",
+    "path": "/data-sources",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": []
+  },
+  {
+    "name": "25-audit",
+    "path": "/audit",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": []
+  },
+  {
+    "name": "26-settings",
+    "path": "/settings",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": []
+  },
+  {
+    "name": "27-design-system",
+    "path": "/design-system",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": []
+  },
+  {
+    "name": "28-narrow-needs",
+    "path": "/needs",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": []
+  },
+  {
+    "name": "29-narrow-dashboard",
+    "path": "/",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": []
+  },
+  {
+    "name": "30-narrow-nav-open",
+    "path": "/",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "step1": "clicked"
+  },
+  {
+    "name": "31-narrow-search-results",
+    "path": "/search/results?q=%E8%AF%95%E7%94%A8%E6%9C%9F",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": []
+  },
+  {
+    "name": "32-narrow-law-detail",
+    "path": "/laws/civl-2020?art=25",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": []
+  },
+  {
+    "name": "33-narrow-contract-review",
+    "path": "/contracts/c-1",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": []
+  },
+  {
+    "name": "34-dark-search-results",
+    "path": "/search/results?q=%E8%AF%95%E7%94%A8%E6%9C%9F",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": []
+  },
+  {
+    "name": "35-dark-law-detail",
+    "path": "/laws/civl-2020?art=25",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": []
+  },
+  {
+    "name": "36-dark-contract-review",
+    "path": "/contracts/c-1",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": []
+  },
+  {
+    "name": "37-dark-audit",
+    "path": "/audit",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": []
+  }
+]

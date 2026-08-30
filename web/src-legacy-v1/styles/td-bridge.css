@@ -1,0 +1,147 @@
+/* ============================================================
+   TDesign ×「纸与玻璃」主题桥（设计规格 v4 §一）
+   职责：把 LegalHigh token 映射进 TDesign 的 --td-* 变量体系，
+   控件层（Button/Tag/Textarea/Empty/Message…）复用库级细节，
+   视觉仍是「纸与玻璃」。
+   纪律：零硬编码色值——全部引用 var(--token)；rgba/color-mix
+   组合只允许写死 alpha/百分比。main.tsx 中本文件必须
+   在 tdesign-react 库 css 之后引入（覆盖库默认）。
+   ============================================================ */
+
+:root {
+  /* —— brand：accent 系（hover 提亮 6% / active 压暗 6%，v4 §一） —— */
+  --td-brand-color: var(--accent);
+  --td-brand-color-hover: color-mix(in srgb, var(--accent) 94%, white);
+  --td-brand-color-active: color-mix(in srgb, var(--accent) 92%, black);
+  --td-brand-color-focus: var(--accent);
+  --td-brand-color-disabled: color-mix(in srgb, var(--accent) 40%, transparent);
+  /* Tag variant="light" / soft 底色：accent 低透明（alpha 固定，色取 token） */
+  --td-brand-color-light: color-mix(in srgb, var(--accent) 12%, transparent);
+  --td-brand-color-light-hover: color-mix(in srgb, var(--accent) 18%, transparent);
+  --td-brand-color-light-active: color-mix(in srgb, var(--accent) 24%, transparent);
+
+  /* —— 页面 / 容器（纸阶） —— */
+  --td-bg-color-page: var(--paper);
+  --td-bg-color-container: var(--paper-2);
+  --td-bg-color-secondarycontainer: var(--paper-3);
+  --td-bg-color-container-hover: var(--n100);
+
+  /* —— 状态色 —— */
+  --td-warning-color: var(--orange);
+  --td-error-color: var(--red);
+  --td-success-color: var(--green);
+  /* 状态色 light 底（Tag/RiskBadge variant="light" 用） */
+  --td-warning-color-1: color-mix(in srgb, var(--orange) 16%, transparent);
+  --td-error-color-1: color-mix(in srgb, var(--red) 12%, transparent);
+  --td-success-color-1: color-mix(in srgb, var(--green) 14%, transparent);
+
+  /* —— 文字 —— */
+  --td-text-color-primary: var(--ink);
+  --td-text-color-secondary: var(--ink-2);
+  --td-text-color-placeholder: var(--ink-3);
+  --td-text-color-disabled: var(--ink-3);
+  --td-text-color-anti: var(--paper);
+  --td-text-color-brand: var(--accent);
+
+  /* —— 边框 —— */
+  --td-component-border: var(--hairline-strong);
+  --td-component-stroke: var(--hairline);
+
+  /* —— 圆角（对齐 v4 §一：6/10/14 / 全圆） —— */
+  --td-radius-small: 6px;
+  --td-radius-medium: 10px;
+  --td-radius-large: 14px;
+  --td-radius-round: 999px;
+  --td-radius-extraLarge: 999px;
+
+  /* —— 字体（双字体制中 TDesign 控件走 sans） —— */
+  --td-font-family: var(--font-sans);
+}
+
+/* ============ DARK（墨阶）：token 换源即全局生效，无需逐项重写 ============ */
+[data-theme="dark"] {
+  --td-brand-color: var(--accent);
+  --td-brand-color-hover: color-mix(in srgb, var(--accent) 94%, white);
+  --td-brand-color-active: color-mix(in srgb, var(--accent) 92%, black);
+  --td-brand-color-focus: var(--accent);
+  --td-brand-color-disabled: color-mix(in srgb, var(--accent) 40%, transparent);
+  --td-brand-color-light: color-mix(in srgb, var(--accent) 22%, transparent);
+  --td-brand-color-light-hover: color-mix(in srgb, var(--accent) 30%, transparent);
+  --td-brand-color-light-active: color-mix(in srgb, var(--accent) 36%, transparent);
+
+  --td-bg-color-page: var(--paper);
+  --td-bg-color-container: var(--paper-2);
+  --td-bg-color-secondarycontainer: var(--paper-3);
+  --td-bg-color-container-hover: var(--n100);
+
+  --td-warning-color: var(--orange);
+  --td-error-color: var(--red);
+  --td-success-color: var(--green);
+  --td-warning-color-1: color-mix(in srgb, var(--orange) 22%, transparent);
+  --td-error-color-1: color-mix(in srgb, var(--red) 18%, transparent);
+  --td-success-color-1: color-mix(in srgb, var(--green) 20%, transparent);
+
+  --td-text-color-primary: var(--ink);
+  --td-text-color-secondary: var(--ink-2);
+  --td-text-color-placeholder: var(--ink-3);
+  --td-text-color-disabled: var(--ink-3);
+  --td-text-color-anti: var(--paper);
+  --td-text-color-brand: var(--accent);
+
+  --td-component-border: var(--hairline-strong);
+  --td-component-stroke: var(--hairline);
+}
+
+/* ============================================================
+   与自家 base.css 的边界（v4 交付纪律）：
+   base.css 的元素选择器 button/textarea 样式保留给非库控件
+   （tabbar/tab/chip/iconbtn 等身份件）；.t-* 控件不受其互击。
+   ============================================================ */
+.t-button {
+  box-shadow: none;
+  font-family: var(--font-sans);
+}
+button.t-button { min-height: 36px; }
+html[data-sizeclass="narrow"] button.t-button { min-height: 44px; }
+
+/* —— QA 试点（v4 §二）布局适配与元素级规则隔离 —— */
+/* 输入行：库 Textarea 外层在 flex 行内撑满（原生 textarea 由 width:100% 达成） */
+.qa-input-wrap .t-textarea { flex: 1; min-width: 0; }
+/* 隔离 base.css/page.css 的元素级 textarea 规则对库内层的互击：
+   min-height 地板会顶掉 autosize 的 minRows/maxRows；dark 的 [data-theme] textarea
+   背景会盖掉库级 --td-bg-color-specialcomponent。焦点环是库的（.t-textarea__inner:focus
+   特异性更高，不受 box-shadow:none 影响）。 */
+.t-textarea textarea {
+  min-height: 0;
+  box-shadow: none;
+  background-color: var(--td-bg-color-specialcomponent);
+}
+/* 示例 chips：保持横向滑动语义（narrow nowrap 下 flex 子项不回缩换行） */
+.qa-chips .t-button { flex: none; white-space: nowrap; }
+
+/* ============================================================
+   v4 铺开约束（设计规格 v4 §二/§三 · Agent J 全量铺开）
+   作用域限定：只约束「页面容器 × 库控件」的交互
+   （.field / .table-scroll / .gate-bar / .finding-head），
+   不触碰身份件（DocHeader/EvidenceChain/Stamp/壳层）。
+   ============================================================ */
+
+/* —— 表单字段：库 Select 显式撑满（.t-select__wrap 默认 100%，此处兜底） —— */
+.field .t-select { width: 100%; }
+
+/* —— CheckboxGroup（法律范围 / 违约条款多选）：
+      库默认 inline-flex 横排，对齐原 .checks 的纵向列表节奏 —— */
+.field .t-checkbox-group { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+
+/* —— Table（Compliance 三表）：窄屏借 .table-scroll 横向滚动，
+      列不压缩（库表格默认 100% 宽会被长文案挤碎）；
+      容器背景透明保持玻璃面板质感（边线由库级 --td-component-* 桥接提供） —— */
+.table-scroll .t-table { min-width: 640px; background: transparent; }
+
+/* —— 批注操作行（Review）：TDesign small 按钮与原 .small 节奏对齐 —— */
+.finding-actions .t-button { min-height: 28px; }
+html[data-sizeclass="narrow"] .finding-actions .t-button { min-height: 36px; }
+
+/* —— gate-bar（Drafting）：签发/下载按钮行内对齐 —— */
+.gate-bar .t-button + .t-button { margin-left: var(--sp-2); }
+.gate-bar { align-items: center; }

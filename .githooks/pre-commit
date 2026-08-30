@@ -1,0 +1,20 @@
+#!/bin/sh
+# pre-commit 快速门：pytest + tsc/vite build + 数据纪律 grep + WCAG 对比度（--strict）
+# 视觉巡检（需 dev server）不在钩子里跑——发布前手动 run_qa.cmd 全量。
+# 安装：git config core.hooksPath .githooks（仓库初始化时已设置）
+echo "[pre-commit] fast QA gates..."
+cd "$(git rev-parse --show-toplevel)" || exit 1
+
+(cd server && .venv/Scripts/python.exe -m pytest tests -q) || {
+  echo "[pre-commit] FAILED: pytest"; exit 1; }
+
+(cd web && npm run build >/dev/null 2>&1) || {
+  echo "[pre-commit] FAILED: tsc/vite build"; exit 1; }
+
+(cd web && node scripts/qa_gates.mjs) || {
+  echo "[pre-commit] FAILED: data-discipline gate"; exit 1; }
+
+(cd web && node scripts/qa_contrast.mjs --strict >/dev/null) || {
+  echo "[pre-commit] FAILED: WCAG contrast gate"; exit 1; }
+
+echo "[pre-commit] all fast gates passed"

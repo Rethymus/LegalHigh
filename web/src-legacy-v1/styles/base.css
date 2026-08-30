@@ -1,0 +1,184 @@
+/* ============================================================
+   全局基底：reset / 画布 / 背景采样层（毛玻璃的「被采样内容」）/ 控件
+   ============================================================ */
+
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; }
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* —— 背景采样层：fixed、多层渐变 + 漂移光斑 + 噪点，供材质面板采样 —— */
+#app-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(1200px 800px at 12% -8%, var(--bg-blob-1), transparent 60%),
+    radial-gradient(1000px 700px at 88% 12%, var(--bg-blob-2), transparent 62%),
+    radial-gradient(900px 900px at 50% 115%, var(--bg-blob-3), transparent 60%),
+    linear-gradient(180deg, var(--bg-base-1), var(--bg-base-2));
+}
+/* v2「纸与玻璃」：基渐变换纸色；blob 保留但降透明（light 减半 / dark ×0.7），
+   玻璃材质仍可采样到光斑 */
+:root {
+  --bg-base-1: #faf9f5; --bg-base-2: #f0ede2;
+  --bg-blob-1: rgba(0, 122, 255, 0.07);
+  --bg-blob-2: rgba(175, 82, 222, 0.05);
+  --bg-blob-3: rgba(48, 176, 199, 0.06);
+}
+[data-theme="dark"] {
+  --bg-base-1: #14110d; --bg-base-2: #1b1712;
+  --bg-blob-1: rgba(10, 132, 255, 0.14);
+  --bg-blob-2: rgba(191, 90, 242, 0.10);
+  --bg-blob-3: rgba(64, 200, 224, 0.09);
+}
+#app-backdrop::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+}
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px) saturate(0.8);
+  opacity: 0.28;
+  animation: drift 75s var(--ease) infinite alternate;
+}
+.blob.b1 { width: 480px; height: 480px; left: 8%; top: 12%; background: var(--bg-blob-1); }
+.blob.b2 { width: 380px; height: 380px; right: 10%; top: 30%; background: var(--bg-blob-2); animation-duration: 92s; animation-delay: -20s; }
+.blob.b3 { width: 420px; height: 420px; left: 42%; bottom: 6%; background: var(--bg-blob-3); animation-duration: 64s; animation-delay: -40s; }
+@keyframes drift {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to   { transform: translate3d(70px, -50px, 0) scale(1.12); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .blob { animation: none; }
+  * { transition-duration: 0ms !important; }
+}
+
+/* —— 布局 —— */
+.app-shell { min-height: 100%; display: flex; flex-direction: column; }
+.topbar {
+  position: sticky; top: 0; z-index: 50;
+  display: flex; align-items: center; gap: var(--sp-5);
+  padding: 0 var(--sp-6); height: 60px;
+  border-bottom: 0.5px solid var(--hairline);
+}
+.brand { display: flex; align-items: center; gap: var(--sp-3); font-weight: 700; font-size: 17px; color: var(--label-primary); text-decoration: none; }
+.brand-glyph {
+  width: 26px; height: 26px; border-radius: 8px;
+  background: linear-gradient(135deg, var(--accent), var(--purple));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), var(--shadow-1);
+  display: grid; place-items: center; color: #fff; font-size: 13px; font-weight: 800;
+}
+.nav { display: flex; gap: var(--sp-1); flex: 1; }
+.nav a {
+  padding: 7px 14px; border-radius: var(--r-pill);
+  color: var(--label-secondary); text-decoration: none; font-size: 14px; font-weight: 500;
+  transition: background var(--dur-quick) var(--ease), color var(--dur-quick) var(--ease);
+}
+.nav a:hover { background: var(--accent-soft); color: var(--label-primary); }
+.nav a.active { background: var(--accent); color: #fff; box-shadow: var(--shadow-1); }
+
+.page { flex: 1; width: 100%; max-width: 1200px; margin: 0 auto; padding: var(--sp-8) clamp(16px, 4vw, 24px) var(--sp-16); }
+
+/* —— 通用控件 —— */
+button {
+  font-family: inherit; font-size: 15px; font-weight: 600;
+  border: none; cursor: pointer; color: #fff;
+  background: var(--accent);
+  padding: 10px 18px; border-radius: var(--r-s);
+  transition: transform var(--dur-quick) var(--ease), filter var(--dur-quick) var(--ease), box-shadow var(--dur-quick) var(--ease);
+  box-shadow: var(--shadow-1);
+}
+button:hover { filter: brightness(1.06); }
+button:active { transform: scale(0.97); }
+button:disabled { opacity: 0.45; cursor: not-allowed; }
+button.ghost { background: transparent; color: var(--accent); box-shadow: none; border: 0.5px solid var(--hairline); }
+button.subtle { background: var(--accent-soft); color: var(--accent); box-shadow: none; }
+button.danger { background: var(--red); }
+button.small { font-size: 13px; padding: 6px 12px; border-radius: var(--r-xs); }
+
+textarea, input[type="text"], input[type="email"], select {
+  font-family: inherit; font-size: 15px; color: var(--label-primary);
+  background: var(--n0); border: 0.5px solid var(--hairline-strong);
+  border-radius: var(--r-s); padding: 12px 14px; width: 100%;
+  transition: border-color var(--dur-quick) var(--ease), box-shadow var(--dur-quick) var(--ease);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+[data-theme="dark"] textarea, [data-theme="dark"] input[type="text"], [data-theme="dark"] input[type="email"], [data-theme="dark"] select {
+  background: var(--n100);
+}
+textarea { resize: vertical; min-height: 96px; }
+textarea:focus-visible, input:focus-visible, select:focus-visible {
+  outline: none; border-color: var(--accent);
+  box-shadow: 0 0 0 3.5px var(--focus-ring);
+}
+:focus-visible { outline: none; }
+.nav a:focus-visible, button:focus-visible {
+  box-shadow: 0 0 0 3.5px var(--focus-ring);
+}
+
+/* —— 徽章 / 标签 —— */
+.badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: var(--r-pill);
+  border: 0.5px solid var(--hairline);
+}
+.badge.high { color: var(--red); background: color-mix(in srgb, var(--red) 12%, transparent); }
+.badge.medium { color: #b25000; background: color-mix(in srgb, var(--orange) 16%, transparent); }
+[data-theme="dark"] .badge.medium { color: var(--orange); }
+.badge.low { color: #8a6d00; background: color-mix(in srgb, var(--yellow) 18%, transparent); }
+[data-theme="dark"] .badge.low { color: var(--yellow); }
+.badge.info { color: var(--accent); background: var(--accent-soft); }
+.badge.ok { color: var(--green); background: color-mix(in srgb, var(--green) 14%, transparent); }
+.badge.neutral { color: var(--label-secondary); background: var(--n100); }
+[data-theme="dark"] .badge.neutral { background: var(--n200); }
+
+/* —— 卡片内排版 —— */
+.muted { color: var(--label-secondary); }
+.faint { color: var(--label-tertiary); }
+hr.sep { border: none; border-top: 0.5px solid var(--hairline); margin: var(--sp-5) 0; }
+
+/* —— 滚动条（Apple 风） —— */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: var(--n300); border-radius: 999px; border: 2.5px solid transparent; background-clip: content-box; }
+[data-theme="dark"] ::-webkit-scrollbar-thumb { background: var(--n400); border: 2.5px solid transparent; background-clip: content-box; }
+::-webkit-scrollbar-track { background: transparent; }
+
+/* ============================================================
+   v3 自适应架构（规格 §一）：安全区 / 触摸输入 / 工具类 / 大标题折叠
+   形态决策一律 html[data-sizeclass]；流式尺寸用 clamp；不新增零散 @media
+   ============================================================ */
+:root {
+  --safe-b: env(safe-area-inset-bottom, 0px);
+  --safe-t: env(safe-area-inset-top, 0px);
+  --scrim: rgba(0, 0, 0, 0.35);  /* BottomSheet 背景遮罩（经 var 消费，不散落硬编码） */
+}
+
+/* —— 触摸目标与输入字号（narrow；HIG 44pt / 防 iOS 聚焦缩放 ≥16px） —— */
+html[data-sizeclass="narrow"] button { min-height: 44px; }
+html[data-sizeclass="narrow"] .chip { min-height: 38px; }
+html[data-sizeclass="narrow"] textarea,
+html[data-sizeclass="narrow"] input,
+html[data-sizeclass="narrow"] select { font-size: 16px; }
+
+/* —— 形态工具类：调用方以 .only-narrow / .only-regular 切换 inline 与动作栏 —— */
+html[data-sizeclass="regular"] .only-narrow { display: none !important; }
+html[data-sizeclass="narrow"] .only-regular { display: none !important; }
+
+/* —— 表格横向滑动容器（narrow 页面适配，规格 §二） —— */
+.table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+/* —— 大标题折叠：doc-header 衬线大标题 narrow 28px（regular 保持现状） —— */
+html[data-sizeclass="narrow"] .doc-header-title { font-size: 28px; line-height: 34px; }
+
+/* —— narrow 底部预留：tab 栏 + 动作栏 + Home Indicator 余量 —— */
+html[data-sizeclass="narrow"] .page { padding-bottom: calc(170px + var(--safe-b)); }

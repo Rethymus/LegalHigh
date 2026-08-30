@@ -1,0 +1,94 @@
+{
+  "built_at": "2026-08-29T21:23:15.763047",
+  "fetch_date": "2026-08-29",
+  "laws": [
+    {
+      "law_id": "civl-2020",
+      "title": "中华人民共和国民法典",
+      "status": "现行有效",
+      "article_count": 1260,
+      "expected_count": 1260,
+      "missing_numbers": [],
+      "source_url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E6%B0%91%E6%B3%95%E5%85%B8",
+      "snapshot": "docs/research/evidence/ws_中华人民共和国民法典.html",
+      "fetched_at": "2026-08-29"
+    },
+    {
+      "law_id": "cl-2013",
+      "title": "中华人民共和国消费者权益保护法",
+      "status": "现行有效（2013修正）",
+      "article_count": 63,
+      "expected_count": 63,
+      "missing_numbers": [],
+      "source_url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E6%B6%88%E8%B4%B9%E8%80%85%E6%9D%83%E7%9B%8A%E4%BF%9D%E6%8A%A4%E6%B3%95_(2013%E5%B9%B4)",
+      "snapshot": "docs/research/evidence/ws_消保法2013.json",
+      "fetched_at": "2026-08-29"
+    },
+    {
+      "law_id": "lcl-2012",
+      "title": "中华人民共和国劳动合同法",
+      "status": "现行有效（2012修正）",
+      "article_count": 98,
+      "expected_count": 98,
+      "missing_numbers": [],
+      "source_url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%8A%B3%E5%8A%A8%E5%90%88%E5%90%8C%E6%B3%95_(2012%E5%B9%B4)",
+      "snapshot": "docs/research/evidence/ws_劳动合同法2012.json",
+      "fetched_at": "2026-08-29"
+    },
+    {
+      "law_id": "ll-2017",
+      "title": "中华人民共和国律师法",
+      "status": "现行有效（2017修正）",
+      "article_count": 60,
+      "expected_count": 60,
+      "missing_numbers": [],
+      "source_url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%BE%8B%E5%B8%88%E6%B3%95_(2017%E5%B9%B4)",
+      "snapshot": "docs/research/evidence/ws_律师法2017.json",
+      "fetched_at": "2026-08-29"
+    },
+    {
+      "law_id": "ecom-2018",
+      "title": "中华人民共和国电子商务法",
+      "status": "现行有效",
+      "article_count": 89,
+      "expected_count": 89,
+      "missing_numbers": [],
+      "source_url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E7%94%B5%E5%AD%90%E5%95%86%E5%8A%A1%E6%B3%95",
+      "snapshot": "docs/research/evidence/ws_电子商务法.json",
+      "fetched_at": "2026-08-29"
+    },
+    {
+      "law_id": "pcl-2023",
+      "title": "中华人民共和国民事诉讼法",
+      "status": "现行有效（2023修正）",
+      "article_count": 306,
+      "expected_count": 306,
+      "missing_numbers": [],
+      "source_url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E6%B0%91%E4%BA%8B%E8%AF%89%E8%AE%BC%E6%B3%95_(2023%E5%B9%B4)",
+      "snapshot": "docs/research/evidence/ws_民事诉讼法2023.json",
+      "fetched_at": "2026-08-29"
+    },
+    {
+      "law_id": "crpl-imp-2024",
+      "title": "中华人民共和国消费者权益保护法实施条例",
+      "status": "现行有效",
+      "article_count": 53,
+      "expected_count": 53,
+      "missing_numbers": [],
+      "source_url": "https://www.gov.cn/zhengce/zhengceku/202403/content_6940159.htm",
+      "snapshot": "docs/research/evidence/消保法实施条例_govcn.html",
+      "fetched_at": "2026-08-29"
+    },
+    {
+      "law_id": "genai-2023",
+      "title": "生成式人工智能服务管理暂行办法",
+      "status": "现行有效",
+      "article_count": 24,
+      "expected_count": 24,
+      "missing_numbers": [],
+      "source_url": "https://www.gov.cn/zhengce/zhengceku/202307/content_6891752.htm",
+      "snapshot": "docs/research/evidence/生成式AI办法_govcn.html",
+      "fetched_at": "2026-08-29"
+    }
+  ]
+}

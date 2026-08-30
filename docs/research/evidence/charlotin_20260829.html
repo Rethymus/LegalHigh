@@ -1,0 +1,5998 @@
+
+<head>
+  <!-- Remove the extra lines and only keep one version -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  >
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" ...>
+
+  <!-- Optionally include the Font Awesome link -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+
+    <link
+    rel="stylesheet"
+    href="/static/css/custom.4c09aca549b8.css"
+  >
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google-site-verification" content="ywksUwpoqm0fnEyfZ0PrFlOzm4P3Z5CN8AM6KRkNS-Q" />
+  <title>AI Hallucination Cases Database – Damien Charlotin</title>
+  <meta name="description" content="The most comprehensive database of AI hallucination cases in law: legal decisions from courts worldwide, searchable by country, party, AI tool, and outcome. Updated daily.">
+  
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const toggles = document.querySelectorAll(".inline-footnote");
+
+  toggles.forEach(container => {
+    const sup = container.querySelector(".footnote-toggle");
+    const box = container.querySelector(".hover-box");
+
+    let pinned = false;
+
+    sup.addEventListener("click", function (e) {
+      e.stopPropagation();
+      pinned = !pinned;
+      box.style.display = pinned ? "block" : "none";
+    });
+
+    document.addEventListener("click", function (e) {
+      if (pinned) {
+        // Don't close if clicking inside the hover box itself
+        if (!box.contains(e.target)) {
+          box.style.display = "none";
+          pinned = false;
+        }
+      }
+    });
+
+    // Optional: still allow hover behavior before click
+    container.addEventListener("mouseenter", () => {
+      if (!pinned) box.style.display = "block";
+    });
+
+    container.addEventListener("mouseleave", () => {
+      if (!pinned) box.style.display = "none";
+    });
+  });
+});
+</script>
+
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Dataset",
+    "name": "AI Hallucination Cases Database",
+    "description": "A curated database of legal cases where generative AI produced hallucinated citations submitted in court filings.",
+    "creator": {
+      "@type": "Person",
+      "name": "Damien Charlotin"
+    },
+	"license" : "https://creativecommons.org/publicdomain/zero/1.0/",
+    "url": "https://damiencharlotin.com/hallucinations/",
+    "keywords": ["AI", "hallucination", "legal technology", "court decisions", "fake citations"]
+  }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-treemap@3.1.0/dist/chartjs-chart-treemap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-geo@4.3.4/build/index.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
+
+</head>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".toggle-details").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        const row = document.querySelector(btn.dataset.target);
+		if (row) {
+		  row.classList.toggle("expanded");
+		}
+        btn.textContent = row.classList.contains("expanded") ? "▾" : "▸";
+      });
+    });
+  });
+</script>
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light no-link-style" style="font-family: Century Schoolbook">
+    <div class="container">
+        <a class="navbar-brand" href="/">Damien Charlotin</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/hallucinations/">Hallucinations</a>
+            </li>
+            <li class="nav-item dropdown no-link-style">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDataDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                AI &amp; Law Databases
+              </a>
+              <ul class="dropdown-menu no-link-style" aria-labelledby="navbarDataDropdown">
+                <li><a class="dropdown-item" href="/hallucinations/">AI Hallucinations</a></li>
+                <li><a class="dropdown-item" href="/ai-evidence/">AI Evidence</a></li>
+                <li><a class="dropdown-item" href="/ai-discovery/">AI Discovery</a></li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown no-link-style">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarWritingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Writing
+              </a>
+              <ul class="dropdown-menu no-link-style" aria-labelledby="navbarWritingDropdown">
+                <li><a class="dropdown-item" href="https://artificialauthority.ai/" target="_blank" rel="noopener">Artificial Authority</a></li>
+                <li><a class="dropdown-item" href="/media/?types=op_ed">Op-eds</a></li>
+                <li><a class="dropdown-item" href="#">Essays</a></li>
+                <li><a class="dropdown-item" href="#">Books / Longform</a></li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown no-link-style">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarResearchDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Research &amp; Teaching
+              </a>
+              <ul class="dropdown-menu no-link-style" aria-labelledby="navbarResearchDropdown">
+                <li><a class="dropdown-item" href="/biblio/">Publications</a></li>
+                <li><a class="dropdown-item" href="https://www.damiencharlotin.com/llms-the-future-of-the-legal-profession/">Courses</a></li>
+                <li><a class="dropdown-item" href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=2587643" target="_blank" rel="noopener">SSRN</a></li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/media/">Media</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/cv/">CV</a>
+            </li>
+            
+            
+          </ul>
+		  <ul class="navbar-nav">
+		  <!-- Social icons -->
+		  				<li class="nav-item">
+				  <a class="nav-link circle-icon" href="https://twitter.com/DamienCharlotin" target="_blank">
+					<i class="fab fa-twitter"></i>
+				  </a>
+				</li>
+				<li class="nav-item">
+				  <a class="nav-link circle-icon" href="https://www.linkedin.com/in/damien-charlotin-45769278/" target="_blank">
+					<i class="fab fa-linkedin"></i>
+				  </a>
+				</li>
+				<li class="nav-item">
+				  <a class="nav-link circle-icon circle-ssrn" href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=2587643" target="_blank">
+					SSRN
+				  </a>
+				</li>
+		</ul>
+        </div>
+    </div>
+
+</nav>
+
+<div class="container" style="font-family: Century Schoolbook">
+    
+  <h1 class="text-center py-4">AI Hallucination Cases</h1>
+
+<div class="container" style="max-width: 1200px; margin: 1em auto;">
+  <div class="row">
+    <!-- Left column: Explanation -->
+    <div class="col-md-8 text-center pe-md-4" style="font-size: 1.1em;">
+      <p>
+        This database tracks legal <i>decisions</i><span class="inline-footnote"><sup  class="footnote-toggle">1</sup>
+          <span class="hover-box">
+            I.e., all documents where the use of AI, whether established or merely alleged, is addressed in more than a passing reference by the court or tribunal.<br><br>
+            Notably, this does not cover mere allegations of hallucinations, but only cases where the court or tribunal has explicitly found (or implied) that a party relied on hallucinated content or material.<br><br>
+            As an exception, the database also covers some judicial decisions where AI use was alleged but not confirmed. This is a judgment call on my part.
+          </span>
+        </span>
+        in cases where generative AI produced hallucinated content – typically fake citations, but also other types of AI-generated arguments. It does not track the (necessarily wider) universe of all fake citations or use of AI in court filings.
+      </p>
+      <p>
+        While seeking to be exhaustive (<strong>1981</strong> cases identified so far), it is a work in progress and will expand as new examples emerge. This database has been featured in news media, and indeed in several decisions dealing with hallucinated material.<span class="inline-footnote"><sup  class="footnote-toggle">2</sup>
+          <span class="hover-box">
+            Examples of media coverage include: <br/>
+            - M. Hiltzik, <a href="https://www.latimes.com/business/story/2025-05-22/ai-lawyers-hallucinations-a-growing-problem-for-lawyers" class="link">AI 'hallucinations' are a growing problem for the legal profession</a> (LA Times, 22 May 2025)<br/>
+            - E. Volokh, <a href="https://reason.com/volokh/2025/05/18/ai-hallucination-cases-from-courts-all-over-the-world/" class="link">"AI Hallucination Cases," from Courts All Over the World</a> (Volokh Conspiracy, 18 May 2025)
+            <br/>
+            - J-.M. Manach, <a href="https://next.ink/189552/il-genere-des-plaidoiries-par-ia-et-en-recense-160-ayant-hallucine-depuis-2023">"Il génère des plaidoiries par IA, et en recense 160 ayant « halluciné » depuis 2023"</a> (Next, 1 July 2025)
+            - J. Koebler & J. Roscoe, <a href="https://www.404media.co/18-lawyers-caught-using-ai-explain-why-they-did-it/" class="link">"18 Lawyers Caught Using AI Explain Why They Did It</a> (404 Media, 30 September 2025)
+          </span>
+        </span>
+      </p>
+      <p></p>
+        If you have any questions about the database, a FAQ is available <a href="https://artificialauthority.ai/p/hallucinations-case-database-faq" class="link">here</a>.
+        <br/>And if you know of a case that should be included, feel free to 
+        <a href="/cdn-cgi/l/email-protection#147075797d717a3a777c7566787b607d7a547379757d783a777b79" class="link">contact me</a>.<span class="inline-footnote"><sup  class="footnote-toggle">3</sup>
+          <span class="hover-box">
+            (Readers may also be interested in <a href="https://www.academ-ai.info/" class="link">this project</a> regarding AI use in academic papers.)
+          </span>
+        </span>
+      </p>
+      <p style="font-size: 1.05em; margin-bottom: 1em; padding: 12px; border: 1px solid #AF1616; border-radius: 4px;">
+        Based on this database, I have developed an <a href="https://pelaikan-app.web.app/" class="link">automated reference checker</a> that also detects hallucinations: PelAIkan. Check the Reports <img src="/static/hallucinations/report-icon.1ff904a55555.png" alt="Report icon" style="width: 24px; height: 24px; vertical-align: middle; display: inline;"> in the database for examples, and <a href="/cdn-cgi/l/email-protection#4e3e2b222b252f202a2d0e29232f2722602d2123713d3b2c242b2d3a731e2b222f27252f206b7c7e636b7c7e0a2b23216b7c7e1c2b3f3b2b3d3a" class="link">reach out to me</a> for a demo.
+      </p>
+      <p style="font-size: 1.05em; margin-bottom: 1em;">
+        For weekly takes on cases like these, and what they mean for legal practice, subscribe to Artificial Authority.
+      </p>
+    </div>
+
+    <!-- Right column: Substack subscription -->
+    <div class="col-md-4 text-center d-flex flex-column align-items-center justify-content-center ps-md-4">
+
+      <iframe src="https://damiencharlotin.substack.com/embed" width="100%" height="320" style="border:1px solid #EEE; background:white; max-width: 480px;" frameborder="0" scrolling="no"></iframe>
+      <div class="mt-3">
+        <a href="/hallucinations/hallucinations/download.csv" class="btn btn-light">
+          Click to Download CSV
+        </a>
+        
+          <div class="mt-2 small text-muted">
+            Last updated: 28 August 2026
+          </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script id="graphData" type="application/json">{"n_total": 1981, "timeline": {"labels": ["Q2 2023", "Q3 2023", "Q4 2023", "Q1 2024", "Q2 2024", "Q3 2024", "Q4 2024", "Q1 2025", "Q2 2025", "Q3 2025", "Q4 2025", "Q1 2026", "Q2 2026", "Q3 2026"], "decision_per_quarter": [6, 3, 7, 10, 5, 19, 25, 55, 124, 267, 403, 446, 408, 203], "cumulative": [6, 9, 16, 26, 31, 50, 75, 130, 254, 521, 924, 1370, 1778, 1981], "n_decision": 1981}, "timeline_compare": {"labels": ["Q2 2023", "Q3 2023", "Q4 2023", "Q1 2024", "Q2 2024", "Q3 2024", "Q4 2024", "Q1 2025", "Q2 2025", "Q3 2025", "Q4 2025", "Q1 2026", "Q2 2026", "Q3 2026"], "decision_per_quarter": [2, 2, 4, 5, 1, 10, 11, 28, 51, 132, 216, 229, 201, 100], "document_per_quarter": [1, 5, 8, 4, 9, 22, 27, 63, 171, 220, 218, 123, 80, 34], "n_matched": 992, "doc_not_addressed": 988, "doc_unparsed": 1}, "party_mix": {"labels": ["Q2 2023", "Q3 2023", "Q4 2023", "Q1 2024", "Q2 2024", "Q3 2024", "Q4 2024", "Q1 2025", "Q2 2025", "Q3 2025", "Q4 2025", "Q1 2026", "Q2 2026", "Q3 2026"], "lawyer": [50.0, 66.7, 14.3, 60.0, 40.0, 36.8, 36.0, 40.4, 49.2, 45.3, 38.2, 39.6, 38.8, 38.4], "prose": [50.0, 33.3, 71.4, 40.0, 60.0, 63.2, 56.0, 57.7, 49.2, 52.1, 59.3, 59.3, 60.0, 56.7], "other": [0.0, 0.0, 14.3, 0.0, 0.0, 0.0, 8.0, 1.9, 1.6, 2.6, 2.5, 1.1, 1.2, 4.9], "totals": [6, 3, 7, 10, 5, 19, 25, 52, 124, 267, 403, 445, 407, 203], "n": 1976, "no_party": 5}, "doc_month": {"labels": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], "counts": [71, 53, 73, 68, 76, 117, 114, 97, 70, 99, 83, 71], "n": 992, "usa_only": false}, "tools": {"labels": ["ChatGPT / OpenAI", "Claude", "Westlaw / CoCounsel", "Google Gemini / Bard", "Microsoft Copilot", "LexisNexis", "Perplexity", "Fastcase / vLex", "Grok", "Grammarly", "DeepSeek", "Other"], "counts": [132, 17, 15, 13, 13, 11, 6, 5, 4, 2, 1, 28], "n": 219, "placeholder": 1762}, "remediation": {"labels": ["Attempt to withdraw/Correct the filing", "Apologies", "Other", "Blaming: A tool", "Denying", "Blaming: Other", "Setting up systems in law firm", "Blaming: A junior", "Spontaneous CLE", "Refusing to answer", "Doubling down", "Spontaneous costs repayment", "Blaming: The client", "Blaming: A co-counsel"], "counts": [377, 365, 96, 92, 82, 75, 62, 58, 44, 36, 34, 22, 10, 10], "categories": ["corrective", "corrective", "other", "defensive", "defensive", "defensive", "corrective", "defensive", "corrective", "defensive", "defensive", "corrective", "defensive", "defensive"], "n": 711, "not_addressed": 1270}, "geo": {"mode": "world", "world": {"32": 8, "36": 98, "40": 2, "56": 8, "76": 41, "124": 214, "152": 3, "170": 3, "203": 2, "208": 1, "250": 13, "276": 11, "344": 2, "356": 14, "372": 6, "376": 57, "380": 15, "528": 7, "554": 7, "598": 1, "620": 1, "634": 1, "643": 1, "702": 7, "710": 6, "410": 4, "724": 8, "834": 1, "44": 1, "780": 1, "784": 2, "800": 1, "826": 62, "840": 1363, "716": 1}, "us": {"Florida": 66, "New Hampshire": 2, "Illinois": 62, "Maryland": 29, "Michigan": 49, "Missouri": 19, "New Jersey": 25, "Utah": 14, "Arizona": 49, "New Mexico": 15, "Nevada": 36, "California": 137, "Delaware": 12, "Pennsylvania": 38, "Georgia": 23, "Iowa": 13, "Texas": 83, "Washington": 39, "Indiana": 34, "Vermont": 8, "Alabama": 23, "Arkansas": 9, "North Carolina": 21, "Massachusetts": 14, "New York": 116, "Ohio": 35, "Nebraska": 6, "North Dakota": 5, "Tennessee": 17, "Connecticut": 18, "Oregon": 27, "Virginia": 15, "Mississippi": 23, "Wisconsin": 16, "Colorado": 32, "Maine": 5, "Minnesota": 14, "Kentucky": 9, "Kansas": 16, "Oklahoma": 23, "Louisiana": 14, "Alaska": 2, "Rhode Island": 1, "Idaho": 3, "South Carolina": 3, "Montana": 3, "West Virginia": 1, "South Dakota": 1, "Hawaii": 4, "Wyoming": 3}, "canada": {"Quebec": 24, "Ontario": 57, "British Columbia": 52, "New Brunswick": 2, "Alberta": 13, "Manitoba": 1, "Nova Scotia": 1, "Yukon": 1, "Saskatchewan": 4}, "n_world": 1973, "n_us": 1232, "us_unmatched": 131, "n_canada": 155, "canada_unmatched": 59}, "jurisdiction": {"labels": ["USA", "Canada", "Australia", "UK", "Israel", "Brazil", "Italy", "India", "France", "Germany", "Spain", "Belgium", "Other"], "counts": [1363, 214, 98, 62, 57, 41, 15, 14, 13, 11, 8, 8, 76], "n": 1980, "untagged": 1}, "nature_category": {"labels": ["Fabricated", "Misrepresented", "False Quotes", "Outdated Advice"], "counts": [3312, 1570, 961, 35], "n_items": 5878, "n_cases_with_items": 1879, "n_cases_without": 102}, "nature_subcategory": {"labels": ["Case Law", "Legal Norm", "Exhibits & Submissions", "Doctrinal Work", "Other", "Overturned Case Law", "Repealed Law"], "counts": [5185, 332, 220, 59, 47, 19, 16], "n_items": 5878}, "outcome": {"labels": ["Monetary sanction", "Disciplinary referral"], "counts": [362, 154], "n": 1962, "excluded_alleged": 19}, "penalty": {"currency": "USD", "labels": ["0\u2013100", "100\u20131k", "1k\u20135k", "5k\u201310k", "10k\u201350k", "50k+"], "counts": [21, 30, 82, 34, 26, 6], "n": 199, "other_currencies": 163}, "legal_field": {"labels": ["Contract", "Administrative", "Civil rights", "Employment", "Tort", "Other", "Family", "Criminal", "Bankruptcy", "Immigration", "Tax", "IP", "Landlord-tenant", "Habeas"], "counts": [449, 253, 198, 177, 174, 157, 127, 62, 53, 34, 23, 19, 10, 10], "n": 1746, "blank": 235}}</script>
+
+<style>
+.vendor-disputed {
+  cursor: help;
+}
+
+  .nerd-btn {
+    color: #fff; background-color: #AF1616; border: 1px solid #AF1616;
+    font-family: "Century Schoolbook", Georgia, serif; font-weight: 600; letter-spacing: 0.02em;
+  }
+  .nerd-btn:hover, .nerd-btn:focus { color: #fff; background-color: #7a0f0f; border-color: #7a0f0f; }
+  .graph-card {
+    border: 1px solid #e3e3e3; border-top: 3px solid #AF1616; border-radius: 4px;
+    padding: 14px 16px; height: 100%; background: #fff;
+  }
+  .graph-card h6 {
+    margin-bottom: 10px; color: #AF1616;
+    font-family: "Century Schoolbook", Georgia, serif; font-variant: small-caps; letter-spacing: 0.03em;
+  }
+  .graph-wrap { position: relative; height: 260px; }
+  .graph-nodata {
+    display: none; position: absolute; inset: 0; align-items: center; justify-content: center;
+    background: rgba(255,255,255,0.85); color: #AF1616; font-style: italic;
+    border: 1px dashed #AF1616; border-radius: 4px; text-align: center;
+  }
+  .graph-wrap.is-empty .graph-nodata { display: flex; }
+  .graph-caption { margin-top: 8px; font-size: 0.8em; color: #777; }
+  #graphsPanel .graphs-intro { color: #555; }
+</style>
+
+<div class="row">
+  <!-- ── FILTER COLUMN ──────────────────────────────────────────── -->
+  <div class="col-12 filter-col mb-4">
+    <form id="filterForm" method="get">
+      <input type="hidden" name="graphs" id="graphsInput" value="0">
+	<div class="mb-4">
+  <input
+    type="search"
+    name="q"
+    class="form-control"
+    placeholder="Search cases, courts, tools, tags…"
+    value=""
+    style="max-width: 420px;"
+  />
+</div>
+
+<div class="mb-4">
+  <button type="button" id="nerdToggle" class="btn nerd-btn"
+          aria-expanded="false">
+    I want graphs
+  </button>
+</div>
+
+      <input type="hidden" name="sort_by" id="sortByInput" value="-date">
+      
+      <div class="mb-4">
+        <h6>State</h6>
+        <div class="d-flex flex-wrap gap-2">
+
+  <input 
+    type="checkbox"
+    class="btn-check"
+    name="states"
+    id="state-argentina"
+    value="Argentina"
+    
+  >
+  <label class="btn btn-light border" for="state-argentina">
+    Argentina (8)
+  </label>
+
+  <input 
+    type="checkbox"
+    class="btn-check"
+    name="states"
+    id="state-australia"
+    value="Australia"
+    
+  >
+  <label class="btn btn-light border" for="state-australia">
+    Australia (98)
+  </label>
+
+  <input 
+    type="checkbox"
+    class="btn-check"
+    name="states"
+    id="state-austria"
+    value="Austria"
+    
+  >
+  <label class="btn btn-light border" for="state-austria">
+    Austria (2)
+  </label>
+
+  <input 
+    type="checkbox"
+    class="btn-check"
+    name="states"
+    id="state-belgium"
+    value="Belgium"
+    
+  >
+  <label class="btn btn-light border" for="state-belgium">
+    Belgium (8)
+  </label>
+
+  <input 
+    type="checkbox"
+    class="btn-check"
+    name="states"
+    id="state-brazil"
+    value="Brazil"
+    
+  >
+  <label class="btn btn-light border" for="state-brazil">
+    Brazil (41)
+  </label>
+
+  <input 
+    type="checkbox"
+    class="btn-check"
+    name="states"
+    id="state-canada"
+    value="Canada"
+    
+  >
+  <label class="btn btn-light border" for="state-canada">
+    Canada (214)
+  </label>
+
+  <input 
+    type="checkbox"
+    class="btn-check"
+    name="states"
+    id="state-chile"
+    value="Chile"
+    
+  >
+  <label class="btn btn-light border" for="state-chile">
+    Chile (3)
+  </label>
+
+  <input 
+    type="checkbox"
+    class="btn-check"
+    name="states"
+    id="state-china"
+    value="China"
+    
+  >
+  <label class="btn btn-light border" for="state-china">
+    China (1)
+  </label>
+
+  <input 
+    type="checkbox"
+    class="btn-check"
+    name="states"
+    id="state-colombia"
+    value="Colombia"
+    
+  >
+  <label class="btn btn-light border" for="state-colombia">
+    Colombia (3)
+  </label>
+
+  <input 
+    type="checkbox"
+    class="btn-check"
+    name="states"
+    id="state-costa-rica"
+    value="Costa Rica"
+    
+  >
+  <label class="btn btn-light border" for="state-costa-rica">
+    Costa Rica (1)
+  </label>
+
+  <input 
+    type="checkbox"
+    class="btn-check"
+    name="states"
+    id="state-czech-republic"
+    value="Czech Republic"
+    
+  >
+  <label class="btn btn-light border" for="state-czech-republic">
+    Czech Republic (2)
+  </label>
+
+  <input 
+    type="checkbox"
+    class="btn-check"
+    name="states"
+    id="state-denmark"
+    value="Denmark"
+    
+  >
+  <label class="btn btn-light border" for="state-denmark">
+    Denmark (1)
+  </label>
+
+  <input 
+    type="checkbox"
+    class="btn-check"
+    name="states"
+    id="state-france"
+    value="France"
+    
+  >
+  <label class="btn btn-light border" for="state-france">
+    France (13)
+  </label>
+
+  <input 
+    type="checkbox"
+    class="btn-check"
+    name="states"
+    id="state-germany"
+    value="Germany"
+    
+  >
+  <label class="btn btn-light border" for="state-germany">
+    Germany (11)
+  </label>
+
+  <input 
+    type="checkbox"
+    class="btn-check"
+    name="states"
+    id="state-hong-kong"
+    value="Hong Kong"
+    
+  >
+  <label class="btn btn-light border" for="state-hong-kong">
+    Hong Kong (2)
+  </label>
+
+  <input 
+    type="checkbox"
+    class="btn-check"
+    name="states"
+    id="state-india"
+    value="India"
+    
+  >
+  <label class="btn btn-light border" for="state-india">
+    India (14)
+  </label>
+
+  <input 
+    type="checkbox"
+    class="btn-check"
+    name="states"
+    id="state-international-arbitration"
+    value="International Arbitration"
+    
+  >
+  <label class="btn btn-light border" for="state-international-arbitration">
+    International Arbitration (1)
+  </label>
+
+  <input 
+    type="checkbox"
+    class="btn-check"
+    name="states"
+    id="state-ireland"
+    value="Ireland"
+    
+  >
+  <label class="btn btn-light border" for="state-ireland">
+    Ireland (6)
+  </label>
+
+  <input 
+    type="checkbox"
+    class="btn-check"
+    name="states"
+    id="state-israel"
+    value="Israel"
+    
+  >
+  <label class="btn btn-light border" for="state-israel">
+    Israel (57)
+  </label>
+
+  <input 
+    type="checkbox"
+    class="btn-check"
+    name="states"
+    id="state-italy"
+    value="Italy"
+    
+  >
+  <label class="btn btn-light border" for="state-italy">
+    Italy (15)
+  </label>
+
+  <input 
+    type="checkbox"
+    class="btn-check"
+    name="states"
+    id="state-kenya"
+    value="Kenya"
+    
+  >
+  <label class="btn btn-light border" for="state-kenya">
+    Kenya (1)
+  </label>
+
+  <input 
+    type="checkbox"
+    class="btn-check"
+    name="states"
+    id="state-netherlands"
+    value="Netherlands"
+    
+  >
+  <label class="btn btn-light border" for="state-netherlands">
+    Netherlands (7)
+  </label>
+
+  <input 
+    type="checkbox"
+    class="btn-check"
+    name="states"
+    id="state-new-zealand"
+    value="New Zealand"
+    
+  >
+  <label class="btn btn-light border" for="state-new-zealand">
+    New Zealand (7)
+  </label>
+
+  <input 
+    type="checkbox"
+    class="btn-check"
+    name="states"
+    id="state-northern-cyprus-kktc"
+    value="Northern Cyprus (KKTC)"
+    
+  >
+  <label class="btn btn-light border" for="state-northern-cyprus-kktc">
+    Northern Cyprus (KKTC) (1)
+  </label>
+
+  <input 
+    type="checkbox"
+    class="btn-check"
+    name="states"
+    id="state-papua-new-guinea"
+    value="Papua New Guinea"
+    
+  >
+  <label class="btn btn-light border" for="state-papua-new-guinea">
+    Papua New Guinea (1)
+  </label>
+
+  <input 
+    type="checkbox"
+    class="btn-check"
+    name="states"
+    id="state-poland"
+    value="Poland"
+    
+  >
+  <label class="btn btn-light border" for="state-poland">
+    Poland (2)
+  </label>
+
+  <input 
+    type="checkbox"
+    class="btn-check"
+    name="states"
+    id="state-portugal"
+    value="Portugal"
+    
+  >
+  <label class="btn btn-light border" for="state-portugal">
+    Portugal (1)
+  </label>
+
+  <input 
+    type="checkbox"
+    class="btn-check"
+    name="states"
+    id="state-qatar"
+    value="Qatar"
+    
+  >
+  <label class="btn btn-light border" for="state-qatar">
+    Qatar (1)
+  </label>
+
+  <input 
+    type="checkbox"
+    class="btn-check"
+    name="states"
+    id="state-russian-federation"
+    value="Russian Federation"
+    
+  >
+  <label class="btn btn-light border" for="state-russian-federation">
+    Russian Federation (1)
+  </label>
+
+  <input 
+    type="checkbox"
+    class="btn-check"
+    name="states"
+    id="state-singapore"
+    value="Singapore"
+    
+  >
+  <label class="btn btn-light border" for="state-singapore">
+    Singapore (7)
+  </label>
+
+  <input 
+    type="checkbox"
+    class="btn-check"
+    name="states"
+    id="state-south-africa"
+    value="South Africa"
+    
+  >
+  <label class="btn btn-light border" for="state-south-africa">
+    South Africa (6)
+  </label>
+
+  <input 
+    type="checkbox"
+    class="btn-check"
+    name="states"
+    id="state-south-korea"
+    value="South Korea"
+    
+  >
+  <label class="btn btn-light border" for="state-south-korea">
+    South Korea (4)
+  </label>
+
+  <input 
+    type="checkbox"
+    class="btn-check"
+    name="states"
+    id="state-spain"
+    value="Spain"
+    
+  >
+  <label class="btn btn-light border" for="state-spain">
+    Spain (8)
+  </label>
+
+  <input 
+    type="checkbox"
+    class="btn-check"
+    name="states"
+    id="state-tanzania"
+    value="Tanzania"
+    
+  >
+  <label class="btn btn-light border" for="state-tanzania">
+    Tanzania (1)
+  </label>
+
+  <input 
+    type="checkbox"
+    class="btn-check"
+    name="states"
+    id="state-the-bahamas"
+    value="The Bahamas"
+    
+  >
+  <label class="btn btn-light border" for="state-the-bahamas">
+    The Bahamas (1)
+  </label>
+
+  <input 
+    type="checkbox"
+    class="btn-check"
+    name="states"
+    id="state-trinidad-tobago"
+    value="Trinidad &amp; Tobago"
+    
+  >
+  <label class="btn btn-light border" for="state-trinidad-tobago">
+    Trinidad &amp; Tobago (1)
+  </label>
+
+  <input 
+    type="checkbox"
+    class="btn-check"
+    name="states"
+    id="state-uae"
+    value="UAE"
+    
+  >
+  <label class="btn btn-light border" for="state-uae">
+    UAE (2)
+  </label>
+
+  <input 
+    type="checkbox"
+    class="btn-check"
+    name="states"
+    id="state-uganda"
+    value="Uganda"
+    
+  >
+  <label class="btn btn-light border" for="state-uganda">
+    Uganda (1)
+  </label>
+
+  <input 
+    type="checkbox"
+    class="btn-check"
+    name="states"
+    id="state-uk"
+    value="UK"
+    
+  >
+  <label class="btn btn-light border" for="state-uk">
+    UK (62)
+  </label>
+
+  <input 
+    type="checkbox"
+    class="btn-check"
+    name="states"
+    id="state-usa"
+    value="USA"
+    
+  >
+  <label class="btn btn-light border" for="state-usa">
+    USA (1363)
+  </label>
+
+  <input 
+    type="checkbox"
+    class="btn-check"
+    name="states"
+    id="state-zimbabwe"
+    value="Zimbabwe"
+    
+  >
+  <label class="btn btn-light border" for="state-zimbabwe">
+    Zimbabwe (1)
+  </label>
+
+
+
+        </div>
+      </div>
+
+      
+      <div class="mb-4">
+        <h6>Party</h6>
+        <div class="d-flex flex-wrap gap-2">
+
+  <input 
+    type="checkbox"
+    class="btn-check"
+    name="parties"
+    id="party-arbitrator"
+    value="Arbitrator"
+    
+  >
+  <label class="btn btn-light border" for="party-arbitrator">
+    Arbitrator (1)
+  </label>
+
+  <input 
+    type="checkbox"
+    class="btn-check"
+    name="parties"
+    id="party-expert"
+    value="Expert"
+    
+  >
+  <label class="btn btn-light border" for="party-expert">
+    Expert (15)
+  </label>
+
+  <input 
+    type="checkbox"
+    class="btn-check"
+    name="parties"
+    id="party-federal-defender"
+    value="Federal Defender"
+    
+  >
+  <label class="btn btn-light border" for="party-federal-defender">
+    Federal Defender (1)
+  </label>
+
+  <input 
+    type="checkbox"
+    class="btn-check"
+    name="parties"
+    id="party-governement-lawyer"
+    value="Governement Lawyer"
+    
+  >
+  <label class="btn btn-light border" for="party-governement-lawyer">
+    Governement Lawyer (3)
+  </label>
+
+  <input 
+    type="checkbox"
+    class="btn-check"
+    name="parties"
+    id="party-judge"
+    value="Judge"
+    
+  >
+  <label class="btn btn-light border" for="party-judge">
+    Judge (29)
+  </label>
+
+  <input 
+    type="checkbox"
+    class="btn-check"
+    name="parties"
+    id="party-lawyer"
+    value="Lawyer"
+    
+  >
+  <label class="btn btn-light border" for="party-lawyer">
+    Lawyer (793)
+  </label>
+
+  <input 
+    type="checkbox"
+    class="btn-check"
+    name="parties"
+    id="party-paralegal"
+    value="Paralegal"
+    
+  >
+  <label class="btn btn-light border" for="party-paralegal">
+    Paralegal (2)
+  </label>
+
+  <input 
+    type="checkbox"
+    class="btn-check"
+    name="parties"
+    id="party-prosecutor"
+    value="Prosecutor"
+    
+  >
+  <label class="btn btn-light border" for="party-prosecutor">
+    Prosecutor (5)
+  </label>
+
+  <input 
+    type="checkbox"
+    class="btn-check"
+    name="parties"
+    id="party-pro-se-litigant"
+    value="Pro Se Litigant"
+    
+  >
+  <label class="btn btn-light border" for="party-pro-se-litigant">
+    Pro Se Litigant (1136)
+  </label>
+
+
+
+        </div>
+      </div>
+
+      
+      <div class="mb-4">
+        <label for="periodSlider" class="form-label">
+          From period:
+          <span id="periodLabel">Q2 2023</span>
+        </label>
+        <input
+          type="range"
+          class="form-range"
+          name="period_idx"
+          id="periodSlider"
+          min="0"
+          max="13"
+          step="1"
+          value="0"
+          oninput="periodLabel.innerText = periodLabels[this.value]"
+        >
+      </div>
+
+<div class="mb-4">
+  <h6>Nature – Category</h6>
+  <div class="d-flex flex-wrap gap-2">
+    
+      <input
+        type="checkbox"
+        class="btn-check"
+        name="nature_categories"
+        id="nc-fabricated"
+        value="fabricated"
+        
+      >
+      <label class="btn btn-light border" for="nc-fabricated">
+        Fabricated (1646)
+      </label>
+    
+      <input
+        type="checkbox"
+        class="btn-check"
+        name="nature_categories"
+        id="nc-false_quotes"
+        value="false_quotes"
+        
+      >
+      <label class="btn btn-light border" for="nc-false_quotes">
+        False Quotes (539)
+      </label>
+    
+      <input
+        type="checkbox"
+        class="btn-check"
+        name="nature_categories"
+        id="nc-misrepresented"
+        value="misrepresented"
+        
+      >
+      <label class="btn btn-light border" for="nc-misrepresented">
+        Misrepresented (824)
+      </label>
+    
+      <input
+        type="checkbox"
+        class="btn-check"
+        name="nature_categories"
+        id="nc-outdated_advice"
+        value="outdated_advice"
+        
+      >
+      <label class="btn btn-light border" for="nc-outdated_advice">
+        Outdated Advice (33)
+      </label>
+    
+  </div>
+</div>
+
+
+<div class="mb-4">
+  <h6>Nature – Subcategory</h6>
+  <div class="d-flex flex-wrap gap-2">
+    
+      <input
+        type="checkbox"
+        class="btn-check"
+        name="nature_subcategories"
+        id="sc-case_law"
+        value="case_law"
+        
+      >
+      <label class="btn btn-light border" for="sc-case_law">
+        Case Law (1782)
+      </label>
+    
+      <input
+        type="checkbox"
+        class="btn-check"
+        name="nature_subcategories"
+        id="sc-doctrinal_work"
+        value="doctrinal_work"
+        
+      >
+      <label class="btn btn-light border" for="sc-doctrinal_work">
+        Doctrinal Work (44)
+      </label>
+    
+      <input
+        type="checkbox"
+        class="btn-check"
+        name="nature_subcategories"
+        id="sc-exhibits_&amp;_submissions"
+        value="exhibits_&amp;_submissions"
+        
+      >
+      <label class="btn btn-light border" for="sc-exhibits_&amp;_submissions">
+        Exhibits &amp; Submissions (140)
+      </label>
+    
+      <input
+        type="checkbox"
+        class="btn-check"
+        name="nature_subcategories"
+        id="sc-legal_norm"
+        value="legal_norm"
+        
+      >
+      <label class="btn btn-light border" for="sc-legal_norm">
+        Legal Norm (225)
+      </label>
+    
+      <input
+        type="checkbox"
+        class="btn-check"
+        name="nature_subcategories"
+        id="sc-other"
+        value="other"
+        
+      >
+      <label class="btn btn-light border" for="sc-other">
+        Other (43)
+      </label>
+    
+      <input
+        type="checkbox"
+        class="btn-check"
+        name="nature_subcategories"
+        id="sc-overturned_case_law"
+        value="overturned_case_law"
+        
+      >
+      <label class="btn btn-light border" for="sc-overturned_case_law">
+        Overturned Case Law (17)
+      </label>
+    
+      <input
+        type="checkbox"
+        class="btn-check"
+        name="nature_subcategories"
+        id="sc-repealed_law"
+        value="repealed_law"
+        
+      >
+      <label class="btn btn-light border" for="sc-repealed_law">
+        Repealed Law (16)
+      </label>
+    
+  </div>
+</div>
+
+
+<div class="mb-4">
+  <h6>Legal Field</h6>
+  <select name="legal_fields" id="legalFieldSelect" class="form-select" style="max-width: 420px;">
+    <option value="">All legal fields</option>
+    
+      <option value="contract" >
+        Contract (449)
+      </option>
+    
+      <option value="administrative" >
+        Administrative (253)
+      </option>
+    
+      <option value="civil rights" >
+        Civil rights (198)
+      </option>
+    
+      <option value="employment" >
+        Employment (177)
+      </option>
+    
+      <option value="tort" >
+        Tort (174)
+      </option>
+    
+      <option value="other" >
+        Other (157)
+      </option>
+    
+      <option value="family" >
+        Family (127)
+      </option>
+    
+      <option value="criminal" >
+        Criminal (62)
+      </option>
+    
+      <option value="bankruptcy" >
+        Bankruptcy (53)
+      </option>
+    
+      <option value="immigration" >
+        Immigration (34)
+      </option>
+    
+      <option value="tax" >
+        Tax (23)
+      </option>
+    
+      <option value="IP" >
+        IP (19)
+      </option>
+    
+      <option value="habeas" >
+        Habeas (10)
+      </option>
+    
+      <option value="landlord-tenant" >
+        Landlord-tenant (10)
+      </option>
+    
+  </select>
+</div>
+
+
+<div class="mb-4">
+  <div class="form-check">
+    <input
+      class="form-check-input"
+      type="checkbox"
+      name="only_monetary"
+      id="onlyMonetary"
+      value="yes"
+      
+    >
+    <label class="form-check-label" for="onlyMonetary">
+      Monetary sanction
+    </label>
+  </div>
+</div>
+
+
+<div class="mb-4">
+  <div class="form-check">
+    <input
+      class="form-check-input"
+      type="checkbox"
+      name="only_professional_sanction"
+      id="onlyProfessional"
+      value="yes"
+      
+    >
+    <label class="form-check-label" for="onlyProfessional">
+      Disciplinary Referral
+    </label>
+  </div>
+</div>
+      
+    </form>
+  </div>
+
+
+<script>
+  // auto-submit for facets (NOT the search box)
+  document.querySelectorAll('#filterForm input[type="checkbox"], #filterForm input[type="range"], #filterForm select')
+    .forEach(el => el.addEventListener('change', () => document.getElementById('filterForm').submit()));
+
+  // quarter labels (unchanged)
+  const periodLabels = JSON.parse('{\u00220\u0022: \u0022Q2 2023\u0022, \u00221\u0022: \u0022Q3 2023\u0022, \u00222\u0022: \u0022Q4 2023\u0022, \u00223\u0022: \u0022Q1 2024\u0022, \u00224\u0022: \u0022Q2 2024\u0022, \u00225\u0022: \u0022Q3 2024\u0022, \u00226\u0022: \u0022Q4 2024\u0022, \u00227\u0022: \u0022Q1 2025\u0022, \u00228\u0022: \u0022Q2 2025\u0022, \u00229\u0022: \u0022Q3 2025\u0022, \u002210\u0022: \u0022Q4 2025\u0022, \u002211\u0022: \u0022Q1 2026\u0022, \u002212\u0022: \u0022Q2 2026\u0022, \u002213\u0022: \u0022Q3 2026\u0022}');
+  const periodLabel  = document.getElementById('periodLabel');
+</script>
+
+<script>
+(function() {
+  const form  = document.getElementById('filterForm');
+  const input = form ? form.querySelector('input[name="q"]') : null;
+  if (!form || !input) return;
+
+  let timer, lastSent = input.value;
+
+  function submitIfChanged() {
+    const now = input.value.trim();
+    if (now === lastSent.trim()) return; // avoid double submits
+    lastSent = now;
+    (form.requestSubmit ? form.requestSubmit() : form.submit());
+  }
+
+  // Debounce while typing - waits for user to pause typing
+  input.addEventListener('input', function() {
+    clearTimeout(timer);
+    timer = setTimeout(submitIfChanged, 1000);
+  });
+
+  // Submit when the built-in clear (×) is used
+  input.addEventListener('search', submitIfChanged);
+
+  // Submit on Enter
+  input.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      submitIfChanged();
+    }
+  });
+
+  // Submit on blur
+  input.addEventListener('change', submitIfChanged);
+})();
+</script>
+
+
+
+<br/>
+  <div class="col-12 col-md-9">
+  <div id="caseListView">
+  <table class="hiloc-table">
+    <thead>
+      <tr>
+        <th style="cursor:pointer"
+			onclick="setSort('case_name')">
+		  Case
+		  
+		</th>
+        <th style="cursor:pointer"
+			onclick="setSort('case_name')">
+		  Court / Jurisdiction
+		  
+		</th>
+        <th class="text-center" style="cursor:pointer"
+			onclick="setSort('date')">
+		  Date
+		  ▼
+		</th>
+        <th>Party Using AI</th>
+        <th>AI Tool
+          <span style="cursor: help; font-size: 0.85em; color: #AF1616;"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="This database tracks AI tools only as disclosed or admitted by parties in court filings. 
+                If AI use was acknowledged but no specific tool was named, the entry reads 'Unidentified.' 
+                Otherwise, the default value is 'Implied' when AI use is evident but not explicitly confirmed. 
+                <br><br><strong>Note:</strong> The mention of a specific tool does not necessarily mean that tool was responsible 
+                for the hallucinations in question.">
+            ⓘ
+          </span>
+        </th>
+        <th>Nature of Hallucination</th>
+        <th>Outcome / Sanction</th>
+        <th>Monetary Penalty</th>
+        <th>Details</th>
+        <th>Report(s)</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        <td>
+		
+		  <a href="/documents/2948/James_v._Conley_USA_27_August_2026.pdf" class="link">Thomas Raynard James v. Detective Kevin Conley, et al.</a>
+		
+		</td>
+        <td>
+		  S.D. Florida
+		  
+			 (USA)
+		  
+		  
+		</td>
+        <td class="text-center">27 August 2026</td>
+        <td>
+		  
+			Lawyer
+		  
+		</td>
+        <td>Unidentified</td>
+		
+
+<td>
+  
+    
+      
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Plaintiff alleged the existence and content of an IACP Training Key that could not be produced or verified and was later conceded to be AI-generated; court found counsel&#x27;s reliance irresponsible and noted the allegation was AI-hallucinated.<br>• Plaintiff alleged the existence and content of an IACP Training Key that could not be produced or verified and was later conceded to be AI-generated; court found counsel&#x27;s reliance irresponsible and noted the allegation was AI-hallucinated.<br>• Plaintiff alleged the existence and content of an IACP Training Key that could not be produced or verified and was later conceded to be AI-generated; court found counsel&#x27;s reliance irresponsible and noted the allegation was AI-hallucinated.<br>• Plaintiff alleged the existence and content of an IACP Training Key that could not be produced or verified and was later conceded to be AI-generated; court found counsel&#x27;s reliance irresponsible and noted the allegation was AI-hallucinated.<br>• Plaintiff alleged the existence and content of an IACP Training Key that could not be produced or verified and was later conceded to be AI-generated; court found counsel&#x27;s reliance irresponsible and noted the allegation was AI-hallucinated.">
+            Fabricated
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Exhibits or Submissions
+              
+              (5)
+            
+          </span>
+        </div>
+      
+    
+  
+</td>
+
+        <td>Bar Referral</td>
+        <td>
+		  
+			—
+		  
+		</td>
+		<td style="width:2em; text-align:center">
+		  
+			<button class="toggle-details" data-target="#details-2530">
+			  ▸
+			</button>
+		  
+		</td>
+		<td style="text-align:center">
+		  
+			—
+		  
+		</td>
+    </tr>
+    
+    <tr id="details-2530" class="details-row">
+      <td colspan="10">
+        <div class="details-box"><p data-block-key="yx8wd">Plaintiff’s counsel included multiple purported IACP "Training Keys" in the Fifth Amended Complaint that later could not be verified and were conceded to be the product of unverified AI-augmented research (AI hallucinations). Defendant moved for Rule 11 sanctions; the Court denied the motion on procedural grounds because the safe-harbor service requirement was not satisfied. The Court found counsel’s reliance on unverified AI-generated material irresponsible, denied sanctions, and recommended referral of the signing attorneys to the Ad Hoc Committee for potential disciplinary review.</p></div>
+      </td>
+    </tr>
+    
+	
+    
+      <tr>
+        <td>
+		
+		  <a href="/documents/2947/Re_Turgeon_USA_26_August_2026.pdf" class="link">Noella P. Turgeon v. FHLMC</a>
+		
+		</td>
+        <td>
+		  D. New Hampshire
+		  
+			 (USA)
+		  
+		  
+		</td>
+        <td class="text-center">26 August 2026</td>
+        <td>
+		  
+			Pro Se Litigant
+		  
+		</td>
+        <td>Implied</td>
+		
+
+<td>
+  
+    
+      
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Court found some of the cases Turgeon cited did not exist.">
+            Fabricated
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (1)
+            
+          </span>
+        </div>
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Court found some cited authorities did not support the propositions for which Turgeon cited them (false or misleading authority/quotation).">
+            False Quotes
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (1)
+            
+          </span>
+        </div>
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Court found some citations were to decisions issued by a different court than the one Turgeon cited (misstated source court).">
+            Misrepresented
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (1)
+            
+          </span>
+        </div>
+      
+    
+  
+</td>
+
+        <td>Brief Struck</td>
+        <td>
+		  
+			—
+		  
+		</td>
+		<td style="width:2em; text-align:center">
+		  
+		</td>
+		<td style="text-align:center">
+		  
+			—
+		  
+		</td>
+    </tr>
+    
+	
+    
+      <tr>
+        <td>
+		
+		  <a href="/documents/2951/Shelbert_v._Baxter_International_USA_26_August_2026.pdf" class="link">Tyler Shelbert v. Baxter International, Inc.</a>
+		
+		</td>
+        <td>
+		  N.D. Illinois
+		  
+			 (USA)
+		  
+		  
+		</td>
+        <td class="text-center">26 August 2026</td>
+        <td>
+		  
+			Lawyer
+		  
+		</td>
+        <td>Implied</td>
+		
+
+<td>
+  
+    
+      
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Plaintiff cited Instituto Nacional de Comercializacion Agricola v. Continental Illinois Nat&#x27;l Bank &amp; Trust Co., 858 F.2d 1264, 1270 (7th Cir. 1988) for two propositions about affirmative defenses; the court found the Seventh Circuit opinion did not support those propositions and lacks the phrase &#x27;affirmative defense&#x27;, noting the likely intended citation was a 1983 N.D. Ill. decision, 576 F. Supp. 985.">
+            Misrepresented
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (1)
+            
+          </span>
+        </div>
+      
+    
+  
+</td>
+
+        <td>Admonishment</td>
+        <td>
+		  
+			—
+		  
+		</td>
+		<td style="width:2em; text-align:center">
+		  
+		</td>
+		<td style="text-align:center">
+		  
+			—
+		  
+		</td>
+    </tr>
+    
+	
+    
+      <tr>
+        <td>
+		
+		  <a href="/documents/2949/Johnson_v._Nationstar_Mortgage_LLC_USA_26_August_2026.pdf" class="link">Darrin L. Johnson, Jr. v. Nationstar Mortgage LLC, et al.</a>
+		
+		</td>
+        <td>
+		  D. Maryland
+		  
+			 (USA)
+		  
+		  
+		</td>
+        <td class="text-center">26 August 2026</td>
+        <td>
+		  
+			Pro Se Litigant
+		  
+		</td>
+        <td>Implied</td>
+		
+
+<td>
+  
+    
+      
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Plaintiff cited a non-existent Fourth Circuit opinion as support; court could not locate the opinion and concluded the citation was fabricated.<br>• Plaintiff cited a Maryland appellate/decisional citation that the court could not locate.">
+            Fabricated
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (2)
+            
+          </span>
+        </div>
+      
+    
+  
+</td>
+
+        <td>Warning</td>
+        <td>
+		  
+			—
+		  
+		</td>
+		<td style="width:2em; text-align:center">
+		  
+		</td>
+		<td style="text-align:center">
+		  
+			—
+		  
+		</td>
+    </tr>
+    
+	
+    
+      <tr>
+        <td>
+		
+		  <a href="/documents/2952/Potterf_v._Wessels_USA_26_August_2026.pdf" class="link">Krystal Faye Potterf, et al. v. Drew F. Wessels, et al.</a>
+		
+		</td>
+        <td>
+		  E.D. Michigan
+		  
+			 (USA)
+		  
+		  
+		</td>
+        <td class="text-center">26 August 2026</td>
+        <td>
+		  
+			Pro Se Litigant
+		  
+		</td>
+        <td>Unidentified</td>
+		
+
+<td>
+  
+    
+      
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Cited a non-existent Sixth Circuit opinion United States v. Abdi at 827 F.3d 533 for a docket-management proposition.<br>• Listed Hill v. Synder, 814 F.3d 408 (6th Cir. 2016) in index of authorities though the court could not locate such a decision.">
+            Fabricated
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (2)
+            
+          </span>
+        </div>
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Quoted a purported Supreme Court statement attributed to United States v. Sineneng-Smith that does not appear in the opinion.">
+            False Quotes
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (1)
+            
+          </span>
+        </div>
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Cited Ability Center of Greater Toledo v. City of Sandusky for a proposition about cognitive/communicative accommodations that the case does not support.<br>• Asserted Tindall v. Wayne County Friend of the Court supports an exception to Younger abstention when it actually held Younger abstention was required.">
+            Misrepresented
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (2)
+            
+          </span>
+        </div>
+      
+    
+  
+</td>
+
+        <td>Warning</td>
+        <td>
+		  
+			—
+		  
+		</td>
+		<td style="width:2em; text-align:center">
+		  
+		</td>
+		<td style="text-align:center">
+		  
+			—
+		  
+		</td>
+    </tr>
+    
+	
+    
+      <tr>
+        <td>
+		
+		  <a href="/documents/2946/Benjamin_v_State_USA_25_August_2026.pdf" class="link">Benjamin v. State</a>
+		
+		</td>
+        <td>
+		  CA Maryland
+		  
+			 (USA)
+		  
+		  
+		</td>
+        <td class="text-center">25 August 2026</td>
+        <td>
+		  
+			Lawyer
+		  
+		</td>
+        <td>Implied</td>
+		
+
+<td>
+  
+    
+      
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Appellant&#x27;s appellate brief contained multiple inaccurate case citations; the court observed the errors were likely due to AI-assisted drafting but found they were not excessive and did not include wholly made-up cases.">
+            Fabricated
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (1)
+            
+          </span>
+        </div>
+      
+    
+  
+</td>
+
+        <td>Admonishment</td>
+        <td>
+		  
+			—
+		  
+		</td>
+		<td style="width:2em; text-align:center">
+		  
+			<button class="toggle-details" data-target="#details-2523">
+			  ▸
+			</button>
+		  
+		</td>
+		<td style="text-align:center">
+		  
+			—
+		  
+		</td>
+    </tr>
+    
+    <tr id="details-2523" class="details-row">
+      <td colspan="10">
+        <div class="details-box"><p data-block-key="5scx0">The court found appellant's brief contained multiple inaccurate case citations and observed that, although counsel did not admit using AI, the errors appeared likely AI-related. Citing Mezu v. Mezu (an earlier AI-related decision), the court reviewed the errors, concluded they were not excessive and did not include wholly fabricated cases, accepted counsel's corrective attempts, and opted not to refer counsel for disciplinary action while warning counsel to verify citations generated with AI.</p></div>
+      </td>
+    </tr>
+    
+	
+    
+      <tr>
+        <td>
+		
+		  <a href="/documents/2944/KURELKO_v._BALLARD_JR._USA_25_August_2026.pdf" class="link">Kurelko v. Ballard</a>
+		
+		</td>
+        <td>
+		  D. New Jersey
+		  
+			 (USA)
+		  
+		  
+		</td>
+        <td class="text-center">25 August 2026</td>
+        <td>
+		  
+			Pro Se Litigant
+		  
+		</td>
+        <td>Implied</td>
+		
+
+<td>
+  
+    
+      
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Plaintiff&#x27;s motion included several inaccurate or non-existent case citations (fabricated judicial opinions). The Court identified these as non-existent citations.">
+            Fabricated
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (1)
+            
+          </span>
+        </div>
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Plaintiff&#x27;s motion included quotations attributed to cases that the Court described as fake or inaccurate.">
+            False Quotes
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (1)
+            
+          </span>
+        </div>
+      
+    
+  
+</td>
+
+        <td>Admonishment &amp; Warning</td>
+        <td>
+		  
+			—
+		  
+		</td>
+		<td style="width:2em; text-align:center">
+		  
+		</td>
+		<td style="text-align:center">
+		  
+			—
+		  
+		</td>
+    </tr>
+    
+	
+    
+      <tr>
+        <td>
+		
+		  <a href="/documents/2945/AndDone_LLC_v._Gaines_USA_25_August_2026.pdf" class="link">AndDone, LLC v. Shante Gaines; Reset Financial Group, LLC</a>
+		
+		</td>
+        <td>
+		  W.D. Missouri
+		  
+			 (USA)
+		  
+		  
+		</td>
+        <td class="text-center">25 August 2026</td>
+        <td>
+		  
+			Pro Se Litigant
+		  
+		</td>
+        <td>Implied</td>
+		
+
+<td>
+  
+    
+      
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• November 18 filing (Doc. 53) included citations to nonexistent cases; AndDone moved for Rule 11 show cause.">
+            Fabricated
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (1)
+            
+          </span>
+        </div>
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• November 18 filing contained quotations attributed to authority that the court found to be improper or unsupported.">
+            False Quotes
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (1)
+            
+          </span>
+        </div>
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Gaines inaccurately represented that the Bankruptcy Court &#x27;expressly held&#x27; AndDone&#x27;s claim was discharged, but the Bankruptcy Court made no such ruling (Doc. 53-3).">
+            Misrepresented
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (1)
+            
+          </span>
+        </div>
+      
+    
+  
+</td>
+
+        <td>Order to Show Cause</td>
+        <td>
+		  
+			—
+		  
+		</td>
+		<td style="width:2em; text-align:center">
+		  
+		</td>
+		<td style="text-align:center">
+		  
+			—
+		  
+		</td>
+    </tr>
+    
+	
+    
+      <tr>
+        <td>
+		
+		  <a href="/documents/2942/Ruiz_v._Magellan_Financial_USA_24_August_2026.pdf" class="link">Michael L. Ruiz v. Magellan Financial &amp; Insurance Services (2)</a>
+		
+		</td>
+        <td>
+		  D. Arizona
+		  
+			 (USA)
+		  
+		  
+		</td>
+        <td class="text-center">24 August 2026</td>
+        <td>
+		  
+			Lawyer
+		  
+		</td>
+        <td>ChatGPT</td>
+		
+
+<td>
+  
+    
+      
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• AI-generated false direct quotation presented in the parenthetical of a case citation attributed to Antonakeas (Ninth Circuit) in Plaintiff&#x27;s response to fees (Doc. 155).<br>• AI-generated false direct quotation presented in the parenthetical of a case citation attributed to Osazuwa (Ninth Circuit) in Plaintiff&#x27;s filings.<br>• Additional fake AI-generated quotations detected across three different briefs filed by counsel beyond the two identified in Doc. 155.">
+            False Quotes
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (3)
+            
+          </span>
+        </div>
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• A fourth brief contained an inaccurate AI-generated case summary; counsel acknowledged ChatGPT cited Ansell v. Green Acres Contracting Co., 347 F.3d 515 (3d Cir. 2003) in support of a legal proposition.">
+            Misrepresented
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (1)
+            
+          </span>
+        </div>
+      
+    
+  
+</td>
+
+        <td>Formal public reprimand</td>
+        <td>
+		  
+			—
+		  
+		</td>
+		<td style="width:2em; text-align:center">
+		  
+		</td>
+		<td style="text-align:center">
+		  
+			—
+		  
+		</td>
+    </tr>
+    
+	
+    
+      <tr>
+        <td>
+		
+		  <a href="/documents/2956/Ferm_v._Agritech_USA_25_August_2026.pdf" class="link">Jack Ferm v. Agritech Properties, et al.</a>
+		
+		</td>
+        <td>
+		  D. Utah
+		  
+			 (USA)
+		  
+		  
+		</td>
+        <td class="text-center">24 August 2026</td>
+        <td>
+		  
+			Pro Se Litigant
+		  
+		</td>
+        <td>Implied</td>
+		
+
+<td>
+  
+    
+      
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="">
+            False Quotes
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (1)
+            
+          </span>
+        </div>
+      
+    
+  
+</td>
+
+        <td>Warning</td>
+        <td>
+		  
+			—
+		  
+		</td>
+		<td style="width:2em; text-align:center">
+		  
+			<button class="toggle-details" data-target="#details-2536">
+			  ▸
+			</button>
+		  
+		</td>
+		<td style="text-align:center">
+		  
+			
+			  <div style="display: inline-block; margin: 5px; text-align: center; width: 80px; vertical-align: top;">
+				<a href="https://firebasestorage.googleapis.com/v0/b/pelaikan-app.firebasestorage.app/o/reports%2FA0Acf2IN78gUWK349cCEpeccRUo2%2Fdesktop_10a41ec3%2FFerm_citation_report_2026-08-28T13-41-07.html?alt=media&amp;token=cbb4d9f2-46d1-49cc-8bc2-2e4e356f3b5f" target="_blank">
+				  <img src="/static/hallucinations/report-icon.1ff904a55555.png" alt="Report" style="width: 40px; height: 40px; display: block; margin: 0 auto;">
+				</a>
+				<div style="font-size: 0.75em; color: #777; margin-top: 3px; word-wrap: break-word;">Plaintiff&#x27;s Objection</div>
+			  </div>
+			
+		  
+		</td>
+    </tr>
+    
+    <tr id="details-2536" class="details-row">
+      <td colspan="10">
+        <div class="details-box"><p data-block-key="tv8wb">(Existence of hallucinations in drafting verified by myself thanks to PelAIkan.)</p></div>
+      </td>
+    </tr>
+    
+	
+    
+      <tr>
+        <td>
+		
+		  <a href="https://www.lawfirms.co.il/journal/articles/368/%D7%94%D7%96%D7%99%D7%95%D7%AA-ai-%D7%95%D7%97%D7%A9%D7%A9-%D7%9C-%D7%AA%D7%91%D7%99%D7%A2%D7%AA-%D7%A1%D7%A8%D7%A7-%D7%A1%D7%97%D7%98%D7%A0%D7%99%D7%AA" class="link">Adibi v. AIG Israel Insurance Co.</a>
+		
+		</td>
+        <td>
+		  Tel Aviv-Jaffa DC
+		  
+			 (Israel)
+		  
+		  
+		</td>
+        <td class="text-center">23 August 2026</td>
+        <td>
+		  
+			Lawyer
+		  
+		</td>
+        <td>Implied</td>
+		
+
+<td>
+  
+    
+      
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="">
+            Fabricated
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (1)
+            
+          </span>
+        </div>
+      
+    
+  
+</td>
+
+        <td>Monetary Sanction</td>
+        <td>
+		  
+			20000 ILS
+		  
+		</td>
+		<td style="width:2em; text-align:center">
+		  
+		</td>
+		<td style="text-align:center">
+		  
+			—
+		  
+		</td>
+    </tr>
+    
+	
+    
+      <tr>
+        <td>
+		
+		  <a href="/documents/2906/Capital_Standard_v._US_Bank_NA_USA_21_August_2026.pdf" class="link">Capital Standard, LLC v. U.S. Bank National Association</a>
+		
+		</td>
+        <td>
+		  CA Florida (2d)
+		  
+			 (USA)
+		  
+		  
+		</td>
+        <td class="text-center">21 August 2026</td>
+        <td>
+		  
+			Lawyer
+		  
+		</td>
+        <td>Unidentified</td>
+		
+
+<td>
+  
+    
+      
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Presented Board of Regents v. Wilson, 365 So. 2d 213 (Fla. 1st DCA 1979) as authority though the court identified it as a fabricated/nonexistent case.">
+            Fabricated
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (1)
+            
+          </span>
+        </div>
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Attributed a nonexistent quotation about &#x27;fundamental error&#x27; to Hart Properties, Inc. v. Slack and provided a pincite that does not contain the quote.">
+            False Quotes
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (1)
+            
+          </span>
+        </div>
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Cited Maciejewski v. Holland, 441 So. 2d 703 (Fla. 2d DCA 1983) for unrelated propositions (e.g., ratification), though the two-page opinion does not contain those propositions.<br>• Used Miami Country Day School v. Bakst, 641 So. 2d 467 (Fla. 3d DCA 1994) (a homestead/houseboat case) to support broad propositions about good-faith acquisition and detrimental reliance not found in that opinion.<br>• Cited Gonzalez v. Deutsche Bank Nat&#x27;l Tr. Co., 95 So. 3d 251 (Fla. 2d DCA 2012) as an all-purpose authority for matters (e.g., bona fide purchaser principles) that the opinion does not address.">
+            Misrepresented
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (3)
+            
+          </span>
+        </div>
+      
+    
+  
+</td>
+
+        <td>Monetary Sanction; Adverse Costs Order; Bar Referral; Briefs struck</td>
+        <td>
+		  
+			1500 USD
+		  
+		</td>
+		<td style="width:2em; text-align:center">
+		  
+		</td>
+		<td style="text-align:center">
+		  
+			—
+		  
+		</td>
+    </tr>
+    
+	
+	<tr class="pointer-row pointer-source" id="pointer-2489">
+	  <td colspan="10">
+		<div style="display: flex; justify-content: space-between; align-items: center;">
+		  <span style="font-size: 0.85em; color: #555; font-style: italic;">
+			
+			  
+				Source: <a href="https://rosenbaumpllc.com/christian-r-silva/" class="link" target="_blank">Christian Silva</a>
+			  
+			
+		  </span>
+		  <span style="font-size: 0.85em; color: #AF1616; font-style: italic;">
+			
+			
+		  </span>
+		</div>
+	  </td>
+	</tr>
+	
+    
+      <tr>
+        <td>
+		
+		  <a href="https://www.santafenewmexican.com/news/local_news/new-mexico-high-court-blasts-lawyer-takes-him-off-case-for-ai-errors-in-brief/article_a162daf7-95a4-4010-a017-dedcbdb68b0b.html" class="link">Unspecified murder appeal (Las Cruces area)</a>
+		
+		</td>
+        <td>
+		  New Mexico SC
+		  
+			 (USA)
+		  
+		  
+		</td>
+        <td class="text-center">21 August 2026</td>
+        <td>
+		  
+			Lawyer
+		  
+		</td>
+        <td>ChatGPT</td>
+		
+
+<td>
+  
+    
+      
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Brief referenced several nonexistent witnesses generated by ChatGPT; the court determined these witnesses did not exist.">
+            Fabricated
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Exhibits or Submissions
+              
+              (1)
+            
+          </span>
+        </div>
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Brief attributed fabricated testimony/quotations to at least one real witness that were generated by ChatGPT (false quotes).">
+            False Quotes
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Exhibits or Submissions
+              
+              (1)
+            
+          </span>
+        </div>
+      
+    
+  
+</td>
+
+        <td>Found in contempt; removed from the case; Monetary Sanction; Briefs stricken and appeal to start anew; Bar Referral.</td>
+        <td>
+		  
+			5000 USD
+		  
+		</td>
+		<td style="width:2em; text-align:center">
+		  
+		</td>
+		<td style="text-align:center">
+		  
+			—
+		  
+		</td>
+    </tr>
+    
+	
+    
+      <tr>
+        <td>
+		
+		  <a href="/documents/2938/Speranza_v._Golden_Technologies_USA_21_August_2026.pdf" class="link">Joseph M. Speranza v. Golden Technologies, Inc.</a>
+		
+		</td>
+        <td>
+		  D. Nevada
+		  
+			 (USA)
+		  
+		  
+		</td>
+        <td class="text-center">21 August 2026</td>
+        <td>
+		  
+			Pro Se Litigant
+		  
+		</td>
+        <td>Implied</td>
+		
+
+<td>
+  
+    
+      
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Defendant asserted the plaintiff&#x27;s opposition contained &quot;fake case law;&quot; the court noted the allegation but did not identify specific fabricated cases or analyze them.">
+            Fabricated
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (1)
+            
+          </span>
+        </div>
+      
+    
+  
+</td>
+
+        <td></td>
+        <td>
+		  
+			—
+		  
+		</td>
+		<td style="width:2em; text-align:center">
+		  
+		</td>
+		<td style="text-align:center">
+		  
+			—
+		  
+		</td>
+    </tr>
+    
+	
+	<tr class="pointer-row pointer-source" id="pointer-2518">
+	  <td colspan="10">
+		<div style="display: flex; justify-content: space-between; align-items: center;">
+		  <span style="font-size: 0.85em; color: #555; font-style: italic;">
+			
+		  </span>
+		  <span style="font-size: 0.85em; color: #AF1616; font-style: italic;">
+			
+			  ⚠ Alleged AI Use
+			
+			
+		  </span>
+		</div>
+	  </td>
+	</tr>
+	
+    
+      <tr>
+        <td>
+		
+		  <a href="/documents/2923/CECILE_KASENGELA_v_KAISER_FOUNDATION_HOSPITALS_et_al_USA_20_August_2026.pdf" class="link">Cecile Kasengela v. Kaiser Foundation Hospitals, et al.</a>
+		
+		</td>
+        <td>
+		  C.D. California
+		  
+			 (USA)
+		  
+		  
+		</td>
+        <td class="text-center">20 August 2026</td>
+        <td>
+		  
+			Pro Se Litigant
+		  
+		</td>
+        <td>Implied</td>
+		
+
+<td>
+  
+    
+      
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Plaintiff submitted briefing containing non-existent quotations and misstated case law (apparently derived from AI/third-party summaries); the Court noted Kaiser pointed out the incorrect quotations and warned against AI-generated hallucinated caselaw.">
+            Fabricated
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (1)
+            
+          </span>
+        </div>
+      
+    
+  
+</td>
+
+        <td>Admonishment &amp; Warning</td>
+        <td>
+		  
+			—
+		  
+		</td>
+		<td style="width:2em; text-align:center">
+		  
+		</td>
+		<td style="text-align:center">
+		  
+			
+			  <div style="display: inline-block; margin: 5px; text-align: center; width: 80px; vertical-align: top;">
+				<a href="https://pelaikan-api-772587166095.europe-west9.run.app/r/oMgxgtYau_9DJzsqXsZ8K8TFSiyHDZugx_876lyunD8" target="_blank">
+				  <img src="/static/hallucinations/report-icon.1ff904a55555.png" alt="Report" style="width: 40px; height: 40px; display: block; margin: 0 auto;">
+				</a>
+				<div style="font-size: 0.75em; color: #777; margin-top: 3px; word-wrap: break-word;">Plaintiff&#x27;s Motion</div>
+			  </div>
+			
+		  
+		</td>
+    </tr>
+    
+	
+	<tr class="pointer-row pointer-source" id="pointer-2502">
+	  <td colspan="10">
+		<div style="display: flex; justify-content: space-between; align-items: center;">
+		  <span style="font-size: 0.85em; color: #555; font-style: italic;">
+			
+			  
+				Source: <a href="https://www.womblebonddickinson.com/us/people/jesse-schaefer" class="link" target="_blank">Jesse Schaefer</a>
+			  
+			
+		  </span>
+		  <span style="font-size: 0.85em; color: #AF1616; font-style: italic;">
+			
+			
+		  </span>
+		</div>
+	  </td>
+	</tr>
+	
+    
+      <tr>
+        <td>
+		
+		  <a href="/documents/2925/Disruptive_Resources_LLC_v._Ballistic_Barrier_Products_USA_20_August_2026.pdf" class="link">Disruptive Resources, LLC v. Ballistic Barrier Products Inc. et al.</a>
+		
+		</td>
+        <td>
+		  D. Delaware
+		  
+			 (USA)
+		  
+		  
+		</td>
+        <td class="text-center">20 August 2026</td>
+        <td>
+		  
+			Lawyer
+		  
+		</td>
+        <td>Strongsuit</td>
+		
+
+<td>
+  
+    
+      
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Two sections of the Joint Claim Construction Brief contained a concluding statement proposing an incorrect claim construction generated by AI; counsel missed a one-page section when editing.<br>• A third section of the brief contained pervasive AI-generated errors and was withdrawn; counsel used the AI to pull deposition statements and integrate extrinsic evidence, producing inaccuracies.">
+            Misrepresented
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Exhibits or Submissions
+              
+              (2)
+            
+          </span>
+        </div>
+      
+    
+  
+</td>
+
+        <td>Warning</td>
+        <td>
+		  
+			—
+		  
+		</td>
+		<td style="width:2em; text-align:center">
+		  
+		</td>
+		<td style="text-align:center">
+		  
+			—
+		  
+		</td>
+    </tr>
+    
+	
+    
+      <tr>
+        <td>
+		
+		  <a href="/documents/2931/Faiz_Enterprise_v._State_Tax_Officer.pdf" class="link">Faiz Enterprise v. State Tax Officer, Unit-67, Surat &amp; Anr.</a>
+		
+		</td>
+        <td>
+		  Gujarat High Court
+		  
+			 (India)
+		  
+		  
+		</td>
+        <td class="text-center">20 August 2026</td>
+        <td>
+		  
+			Judge
+		  
+		</td>
+        <td>Unidentified</td>
+		
+
+<td>
+  
+    
+      
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Impugned order cited &#x27;State of Gujarat v. Aarbee Structures Pvt. Ltd., 2024 (4) TMI 951&#x27; which opposing counsel says does not exist; court found reliance on AI-generated case law and officer admitted AI use.">
+            Fabricated
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (1)
+            
+          </span>
+        </div>
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Impugned order referred to &#x27;M/s. Sri Vinayaga Agencies v. Assistant Commissioner, 2023 (5) TMI 106&#x27; with a different citation/ratio than the actual Madras High Court decision; opposing counsel said citation and ratio do not apply.<br>• Impugned order relied on &#x27;Jyoti Tar Products Pvt. Ltd. v. Deputy Commissioner, 2024 (7) TMI 512&#x27; which opposing counsel stated does not match cited authorities and whose ratio was inapplicable; court treated these as AI-generated/irrelevant citations.">
+            Misrepresented
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (2)
+            
+          </span>
+        </div>
+      
+    
+  
+</td>
+
+        <td></td>
+        <td>
+		  
+			—
+		  
+		</td>
+		<td style="width:2em; text-align:center">
+		  
+		</td>
+		<td style="text-align:center">
+		  
+			—
+		  
+		</td>
+    </tr>
+    
+	
+    
+      <tr>
+        <td>
+		
+		  <a href="/documents/2937/Lohbeck_v._Amazon_USA_21_August_2026.pdf" class="link">Stephen Lohbeck v. Amazon.com Services, LLC</a>
+		
+		</td>
+        <td>
+		  E.D. California
+		  
+			 (USA)
+		  
+		  
+		</td>
+        <td class="text-center">20 August 2026</td>
+        <td>
+		  
+			Pro Se Litigant
+		  
+		</td>
+        <td>Implied</td>
+		
+
+<td>
+  
+    
+      
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Plaintiff attributed quotations to two different cases in his motion for sanctions, but the quoted language does not appear in either cited opinion; court found these misquotations indicative of AI-generated hallucinations.">
+            False Quotes
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (1)
+            
+          </span>
+        </div>
+      
+    
+  
+</td>
+
+        <td>Warning</td>
+        <td>
+		  
+			—
+		  
+		</td>
+		<td style="width:2em; text-align:center">
+		  
+		</td>
+		<td style="text-align:center">
+		  
+			—
+		  
+		</td>
+    </tr>
+    
+	
+    
+      <tr>
+        <td>
+		
+		  <a href="/documents/2939/Dotson_v._Evans_USa_20_August_2026.pdf" class="link">Michael Dotson v. Bob Evans Farms, LLC</a>
+		
+		</td>
+        <td>
+		  C.D. California
+		  
+			 (USA)
+		  
+		  
+		</td>
+        <td class="text-center">20 August 2026</td>
+        <td>
+		  
+			Lawyer
+		  
+		</td>
+        <td>Implied</td>
+		
+
+<td>
+  
+    
+      
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Application attributes quoted language to Mission Power, 883 F. Supp. 488, though that language does not appear there; the language appears in Horne v. Wells Fargo, 969 F. Supp. 2d 1203, 1205 (C.D. Cal. 2013). Court identified this as an AI-style hallucination.">
+            False Quotes
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (1)
+            
+          </span>
+        </div>
+      
+    
+  
+</td>
+
+        <td>Order to Show Cause</td>
+        <td>
+		  
+			—
+		  
+		</td>
+		<td style="width:2em; text-align:center">
+		  
+		</td>
+		<td style="text-align:center">
+		  
+			—
+		  
+		</td>
+    </tr>
+    
+	
+    
+      <tr>
+        <td>
+		
+		  <a href="/documents/2941/Full_Standard_Properties_USA_20_August_2026.pdf" class="link">Full Standard Properties, LLC v. SJ 6070, LLC</a>
+		
+		</td>
+        <td>
+		  N.D. California
+		  
+			 (USA)
+		  
+		  
+		</td>
+        <td class="text-center">20 August 2026</td>
+        <td>
+		  
+			Lawyer
+		  
+		</td>
+        <td>Implied</td>
+		
+
+<td>
+  
+    
+      
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Plaintiff cited nonexistent cases in its opposition to Defendant&#x27;s first attorneys&#x27; fees motion; Defendant incurred fees addressing those fabricated authorities and sought reimbursement.">
+            Fabricated
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (1)
+            
+          </span>
+        </div>
+      
+    
+  
+</td>
+
+        <td>Adverse Costs (Voluntarily repaid)</td>
+        <td>
+		  
+			14500 USD
+		  
+		</td>
+		<td style="width:2em; text-align:center">
+		  
+		</td>
+		<td style="text-align:center">
+		  
+			—
+		  
+		</td>
+    </tr>
+    
+	
+    
+      <tr>
+        <td>
+		
+		  <a href="/documents/2910/Snisko_v._Cascade_Funding_Mortgage_Trust_HB4_USA_19_August_2026.pdf" class="link">Snisko v. Cascade Funding Mortgage Trust HB4</a>
+		
+		</td>
+        <td>
+		  N.D. Illinois
+		  
+			 (USA)
+		  
+		  
+		</td>
+        <td class="text-center">19 August 2026</td>
+        <td>
+		  
+			Lawyer
+		  
+		</td>
+        <td>Implied</td>
+		
+
+<td>
+  
+    
+      
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Appellant included a quotation attributed to In re Tarnow that does not appear in that opinion.<br>• Appellant apparently quoted or attributed propositions to In re Aguirre and In re Boughton that do not appear in those cases, per appellee and the court.">
+            False Quotes
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (2)
+            
+          </span>
+        </div>
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Appellant cited In re Chi., Milwaukee, St. Paul &amp; Pac. R.R. Co., 6 F.3d 1184, 1188 (7th Cir. 1993) for a &#x27;de novo&#x27; standard, but the case actually supports abuse-of-discretion review for permissive abstention (misstated precedent).">
+            Misrepresented
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (1)
+            
+          </span>
+        </div>
+      
+    
+  
+</td>
+
+        <td>Order to Show Cause</td>
+        <td>
+		  
+			—
+		  
+		</td>
+		<td style="width:2em; text-align:center">
+		  
+		</td>
+		<td style="text-align:center">
+		  
+			—
+		  
+		</td>
+    </tr>
+    
+	
+	<tr class="pointer-row pointer-source" id="pointer-2492">
+	  <td colspan="10">
+		<div style="display: flex; justify-content: space-between; align-items: center;">
+		  <span style="font-size: 0.85em; color: #555; font-style: italic;">
+			
+			  
+				Source: <a href="https://www.womblebonddickinson.com/us/people/jesse-schaefer" class="link" target="_blank">Jesse Schaefer</a>
+			  
+			
+		  </span>
+		  <span style="font-size: 0.85em; color: #AF1616; font-style: italic;">
+			
+			
+		  </span>
+		</div>
+	  </td>
+	</tr>
+	
+    
+      <tr>
+        <td>
+		
+		  <a href="/documents/2914/TRENTISS_MITCHELL_v._HIG_REALTY_CREDIT_FUND_USA_19_August_2026.pdf" class="link">Mitchell v. HIG Realty Credit Fund, L.P.</a>
+		
+		</td>
+        <td>
+		  CA Georgia
+		  
+			 (USA)
+		  
+		  
+		</td>
+        <td class="text-center">19 August 2026</td>
+        <td>
+		  
+			Pro Se Litigant
+		  
+		</td>
+        <td>Unidentified</td>
+		
+
+<td>
+  
+    
+      
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Court identified Walker v. Pierce as a non-existent citation included in Mitchell&#x27;s brief.<br>• Court identified Crenshaw v. Ga. Dep’t of Human Resources as a non-existent citation included in Mitchell&#x27;s brief.">
+            Fabricated
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (2)
+            
+          </span>
+        </div>
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Court noted Henson v. Columbus Bank &amp; Trust Co. was cited but is unrelated to the issues presented.<br>• Court noted Stamps v. Nelson was cited but is unrelated to the issues presented.">
+            Misrepresented
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (2)
+            
+          </span>
+        </div>
+      
+    
+  
+</td>
+
+        <td>Warning</td>
+        <td>
+		  
+			—
+		  
+		</td>
+		<td style="width:2em; text-align:center">
+		  
+		</td>
+		<td style="text-align:center">
+		  
+			—
+		  
+		</td>
+    </tr>
+    
+	
+	<tr class="pointer-row pointer-source" id="pointer-2494">
+	  <td colspan="10">
+		<div style="display: flex; justify-content: space-between; align-items: center;">
+		  <span style="font-size: 0.85em; color: #555; font-style: italic;">
+			
+			  
+				Source: <a href="https://www.womblebonddickinson.com/us/people/jesse-schaefer" class="link" target="_blank">Jesse Schaefer</a>
+			  
+			
+		  </span>
+		  <span style="font-size: 0.85em; color: #AF1616; font-style: italic;">
+			
+			
+		  </span>
+		</div>
+	  </td>
+	</tr>
+	
+    
+      <tr>
+        <td>
+		
+		  <a href="/documents/2913/Kaspryak_Z._v._Stadarskyy_USA_19_August_2026.pdf" class="link">Zoryana Kaspryak v. Mykhaylo Stadarskyy</a>
+		
+		</td>
+        <td>
+		  SC Pennsylvania
+		  
+			 (USA)
+		  
+		  
+		</td>
+        <td class="text-center">19 August 2026</td>
+        <td>
+		  
+			Pro Se Litigant
+		  
+		</td>
+        <td>Implied</td>
+		
+
+<td>
+  
+    
+      
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Appellant cited &quot;Lowrey v. Eastaff, 860 A.2d 533 (Pa. Super. 2004)&quot;; court concluded this caption appears entirely fabricated and the Atlantic Reporter citation does not match the caption provided.">
+            Fabricated
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (1)
+            
+          </span>
+        </div>
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Appellant cited &quot;General Fin. Co. v. Archetto, 167 A.2d 306 (Pa. Super. 1961)&quot;; court found the reporter citation corresponds to Slott v. Plastic Fabricators, 167 A.2d 306 (Pa. 1961) and the closest real &quot;Archetto&quot; case is a Rhode Island opinion, indicating a misattributed citation.">
+            Misrepresented
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (1)
+            
+          </span>
+        </div>
+      
+    
+  
+</td>
+
+        <td>Warning</td>
+        <td>
+		  
+			—
+		  
+		</td>
+		<td style="width:2em; text-align:center">
+		  
+		</td>
+		<td style="text-align:center">
+		  
+			—
+		  
+		</td>
+    </tr>
+    
+	
+    
+      <tr>
+        <td>
+		
+		  <a href="/documents/2918/Brett_Thomas_Wilkinson_v._Lacey_Schmelzer_USA_19_August_2026.pdf" class="link">Wilkinson v. Schmelzer</a>
+		
+		</td>
+        <td>
+		  CA Iowa
+		  
+			 (USA)
+		  
+		  
+		</td>
+        <td class="text-center">19 August 2026</td>
+        <td>
+		  
+			Pro Se Litigant
+		  
+		</td>
+        <td>Implied</td>
+		
+
+<td>
+  
+    
+      
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Appellant&#x27;s briefs referenced the nonexistent procedural rule &quot;Iowa R. App. P. 6.1004(3)&quot;; court noted it could be a typo or unchecked AI output and found no other hallucinated authorities.">
+            Fabricated
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Legal Norm
+              
+              (1)
+            
+          </span>
+        </div>
+      
+    
+  
+</td>
+
+        <td>No sanctions</td>
+        <td>
+		  
+			—
+		  
+		</td>
+		<td style="width:2em; text-align:center">
+		  
+		</td>
+		<td style="text-align:center">
+		  
+			—
+		  
+		</td>
+    </tr>
+    
+	
+	<tr class="pointer-row pointer-source" id="pointer-2498">
+	  <td colspan="10">
+		<div style="display: flex; justify-content: space-between; align-items: center;">
+		  <span style="font-size: 0.85em; color: #555; font-style: italic;">
+			
+			  
+				Source: <a href="https://www.womblebonddickinson.com/us/people/jesse-schaefer" class="link" target="_blank">Jesse Schaefer</a>
+			  
+			
+		  </span>
+		  <span style="font-size: 0.85em; color: #AF1616; font-style: italic;">
+			
+			  ⚠ Alleged AI Use
+			
+			
+		  </span>
+		</div>
+	  </td>
+	</tr>
+	
+    
+      <tr>
+        <td>
+		
+		  <a href="/documents/2917/Marriage_of_Dillon_USA_18_AUgust_2026.pdf" class="link">In re the Marriage of Kira Lindsay and Jamie Alexander Dillon</a>
+		
+		</td>
+        <td>
+		  CA California
+		  
+			 (USA)
+		  
+		  
+		</td>
+        <td class="text-center">19 August 2026</td>
+        <td>
+		  
+			Pro Se Litigant
+		  
+		</td>
+        <td>Unidentified</td>
+		
+
+<td>
+  
+    
+      
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Respondent attributed a nonexistent quotation/legal proposition to Wilkison (101 Cal.App.4th 822); court found the attribution inaccurate and disregarded the argument relying on it.<br>• Respondent attributed a nonexistent quotation/legal proposition to Brown v. Grimes (192 Cal.App.4th 265); court found the attribution inaccurate and disregarded the argument relying on it.<br>• Respondent attributed a nonexistent quotation/legal proposition to In re Marriage of Iberti (55 Cal.App.4th 1434); court found the attribution inaccurate and disregarded the argument relying on it.">
+            False Quotes
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (3)
+            
+          </span>
+        </div>
+      
+    
+  
+</td>
+
+        <td>Costs Denied</td>
+        <td>
+		  
+			—
+		  
+		</td>
+		<td style="width:2em; text-align:center">
+		  
+		</td>
+		<td style="text-align:center">
+		  
+			—
+		  
+		</td>
+    </tr>
+    
+	
+    
+      <tr>
+        <td>
+		
+		  <a href="/documents/2924/Kelly_v._Financial_Industry_Regulatory_Authority_USA_19_August_2026.pdf" class="link">Kelly v. Financial Industry Regulatory Authority</a>
+		
+		</td>
+        <td>
+		  D. Nevada
+		  
+			 (USA)
+		  
+		  
+		</td>
+        <td class="text-center">19 August 2026</td>
+        <td>
+		  
+			Pro Se Litigant
+		  
+		</td>
+        <td>Implied</td>
+		
+
+<td>
+  
+    
+      
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Court found multiple nonexistent case citations and extended false quoting from page 9, line 20 to page 10, line 5 of Kelly&#x27;s opposition.">
+            Fabricated
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (1)
+            
+          </span>
+        </div>
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Court found a quotation on page 2, lines 11-12 of Kelly&#x27;s opposition that does not appear in the cited case(s).<br>• Court found a quotation on page 3, lines 3-4 of Kelly&#x27;s opposition that does not appear in the cited case(s).">
+            False Quotes
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (2)
+            
+          </span>
+        </div>
+      
+    
+  
+</td>
+
+        <td>Warning</td>
+        <td>
+		  
+			—
+		  
+		</td>
+		<td style="width:2em; text-align:center">
+		  
+		</td>
+		<td style="text-align:center">
+		  
+			—
+		  
+		</td>
+    </tr>
+    
+	
+	<tr class="pointer-row pointer-source" id="pointer-2506">
+	  <td colspan="10">
+		<div style="display: flex; justify-content: space-between; align-items: center;">
+		  <span style="font-size: 0.85em; color: #555; font-style: italic;">
+			
+			  
+				Source: <a href="https://www.womblebonddickinson.com/us/people/jesse-schaefer" class="link" target="_blank">Jesse Schaefer</a>
+			  
+			
+		  </span>
+		  <span style="font-size: 0.85em; color: #AF1616; font-style: italic;">
+			
+			
+		  </span>
+		</div>
+	  </td>
+	</tr>
+	
+    
+      <tr>
+        <td>
+		
+		  <a href="/documents/2894/Muriel_v._Farris_USA_18_August_2026.pdf" class="link">In re Marriage of Rebekah Muriel and Johnathan David Farris</a>
+		
+		</td>
+        <td>
+		  CA Washington
+		  
+			 (USA)
+		  
+		  
+		</td>
+        <td class="text-center">18 August 2026</td>
+        <td>
+		  
+			Lawyer
+		  
+		</td>
+        <td>Implied</td>
+		
+
+<td>
+  
+    
+      
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Respondent&#x27;s brief twice cited a nonexistent case &#x27;Marriage of Sanjuan&#x27;; appellant identified the error; court concluded it was an AI hallucination and treated the filing as frivolous.">
+            Fabricated
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (1)
+            
+          </span>
+        </div>
+      
+    
+  
+</td>
+
+        <td>Adverse Costs Order</td>
+        <td>
+		  
+			1 USD
+		  
+		</td>
+		<td style="width:2em; text-align:center">
+		  
+		</td>
+		<td style="text-align:center">
+		  
+			—
+		  
+		</td>
+    </tr>
+    
+	
+    
+      <tr>
+        <td>
+		
+		  <a href="/documents/2902/Ledoux_v._Outliers_USA_August_2026.pdf" class="link">Joann LeDoux v. Outliers, Inc. (2)</a>
+		
+		</td>
+        <td>
+		  W.D. Washington
+		  
+			 (USA)
+		  
+		  
+		</td>
+        <td class="text-center">18 August 2026</td>
+        <td>
+		  
+			Expert
+		  
+		</td>
+        <td>Claude and ChatGPT</td>
+		
+
+<td>
+  
+    
+      
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Plaintiff&#x27;s counsel (Jocelyn Stewart) used Claude or ChatGPT to generate citation data provided as an appendix/submission to the court and experts, resulting in numerous false citations in filings and expert exhibits.<br>• AI-generated formatted citation table appended to expert reports of James Kababick and Ronald Shippee contained numerous false/fabricated academic citations; plaintiff admitted providing the same AI-generated citation table to both experts.<br>• Dr. Gabriel Holguin&#x27;s expert report contained multiple AI-generated fabricated citations to academic articles in portions later withdrawn; the Court found these hallucinated citations undermined his credibility and rendered his opinions unreliable.">
+            Fabricated
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Exhibits or Submissions
+              
+              (1), 
+            
+              other
+              (2)
+            
+          </span>
+        </div>
+      
+    
+  
+</td>
+
+        <td>Expert Brief excluded/struck</td>
+        <td>
+		  
+			—
+		  
+		</td>
+		<td style="width:2em; text-align:center">
+		  
+		</td>
+		<td style="text-align:center">
+		  
+			—
+		  
+		</td>
+    </tr>
+    
+	
+    
+      <tr>
+        <td>
+		
+		  <a href="/documents/2915/Manny_Kourradi_v._Wyatt_Brian_Christophe_USA_18_August_2026.pdf" class="link">Kourradi v. Christopher</a>
+		
+		</td>
+        <td>
+		  CA Texas
+		  
+			 (USA)
+		  
+		  
+		</td>
+        <td class="text-center">18 August 2026</td>
+        <td>
+		  
+			Pro Se Litigant
+		  
+		</td>
+        <td>Implied</td>
+		
+
+<td>
+  
+    
+      
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Citation not locatable on Westlaw; WL identifier 2011 WL 1905858 and appellate number 07-10-00308-CV point to different cases or withdrawn opinions; court deemed the citation at best partially fabricated.<br>• No Westlaw authority with identifier 2012 WL 2370823; appellate number 09-11-00414-CV is non-existent or refers to different criminal appeal, indicating the citation is fabricated or erroneous.<br>• No Westlaw authority assigned 2022 WL 1938866; appellate case number 03-21-00523-CV does not match available records, suggesting the citation is fabricated or partially fabricated.<br>• The WL identifier 2011 WL 1742356 does not exist on Westlaw and the appellate number provided corresponds to a different case, so the citation appears fabricated or inaccurate.">
+            Fabricated
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (4)
+            
+          </span>
+        </div>
+      
+    
+  
+</td>
+
+        <td>Brief Struck; Appeal Dismissed</td>
+        <td>
+		  
+			—
+		  
+		</td>
+		<td style="width:2em; text-align:center">
+		  
+		</td>
+		<td style="text-align:center">
+		  
+			—
+		  
+		</td>
+    </tr>
+    
+	
+	<tr class="pointer-row pointer-source" id="pointer-2496">
+	  <td colspan="10">
+		<div style="display: flex; justify-content: space-between; align-items: center;">
+		  <span style="font-size: 0.85em; color: #555; font-style: italic;">
+			
+			  
+				Source: <a href="https://www.womblebonddickinson.com/us/people/jesse-schaefer" class="link" target="_blank">Jesse Schaefer</a>
+			  
+			
+		  </span>
+		  <span style="font-size: 0.85em; color: #AF1616; font-style: italic;">
+			
+			
+		  </span>
+		</div>
+	  </td>
+	</tr>
+	
+    
+      <tr>
+        <td>
+		
+		  <a href="/documents/2919/Perez_v._Blanche_USA_18_August_2026.pdf" class="link">Gilberto Garcia Perez v. Todd Blanche, et al.</a>
+		
+		</td>
+        <td>
+		  W.D. Texas
+		  
+			 (USA)
+		  
+		  
+		</td>
+        <td class="text-center">18 August 2026</td>
+        <td>
+		  
+			Lawyer
+		  
+		</td>
+        <td>Implied</td>
+		
+
+<td>
+  
+    
+      
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Reply cites Kostak v. Garland, No. 24-cv-11024-ADB, 2025 WL 2472136, at *4–6; Court found the case does not exist on Westlaw or court dockets.<br>• Reply cites Martinez Lopez v. Garland, No. 1:25-cv-00069, 2026 WL 1200000, at *4–5; Court found the case does not exist on Westlaw or court dockets.<br>• Reply cites Cruz-Reyes v. Decker, No. 1:25-cv-01719-MKV, 2025 WL 332315, at *4–6; Court found the case does not exist on Westlaw or court dockets.<br>• Reply cites Castanon Nava v. Garland, No. 2:25-cv-01308-JHC, 2026 WL 1234567, at *5–7; Court found the case does not exist on Westlaw or court dockets.<br>• Reply cites Duarte Escobar v. Garland, No. 1:25-cv-00963-MSN-LRV, 2025 WL 7061234, at *2–4; Court found the case does not exist on Westlaw or court dockets.<br>• Reply cites Garcia v. Mullin, No. 1:25-cv-00836-RP, 2026 WL 1045678, at *2–4, allegedly authored by this Court; Court found the decision is nonexistent.">
+            Fabricated
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (6)
+            
+          </span>
+        </div>
+      
+    
+  
+</td>
+
+        <td>Admonishment; Warning</td>
+        <td>
+		  
+			—
+		  
+		</td>
+		<td style="width:2em; text-align:center">
+		  
+		</td>
+		<td style="text-align:center">
+		  
+			—
+		  
+		</td>
+    </tr>
+    
+	
+    
+      <tr>
+        <td>
+		
+		  <a href="/documents/2922/Sani_v_Institute_for_Human_Reproduction_USA_18_August_2026.pdf" class="link">Sani v. Institute for Human Reproduction</a>
+		
+		</td>
+        <td>
+		  CA Illinois
+		  
+			 (USA)
+		  
+		  
+		</td>
+        <td class="text-center">18 August 2026</td>
+        <td>
+		  
+			Pro Se Litigant
+		  
+		</td>
+        <td>Implied</td>
+		
+
+<td>
+  
+    
+      
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Appellant&#x27;s brief cited a non-existent case &#x27;Helm v. Illinois Cent. R.R.&#x27; with the citation 142 Ill. App. 3d 108 (1986); the court identified the citation as fictitious and noted it likely arose from improper citation practice or AI-generated material.">
+            Fabricated
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (1)
+            
+          </span>
+        </div>
+      
+    
+  
+</td>
+
+        <td>Admonishment</td>
+        <td>
+		  
+			—
+		  
+		</td>
+		<td style="width:2em; text-align:center">
+		  
+		</td>
+		<td style="text-align:center">
+		  
+			—
+		  
+		</td>
+    </tr>
+    
+	
+	<tr class="pointer-row pointer-source" id="pointer-2504">
+	  <td colspan="10">
+		<div style="display: flex; justify-content: space-between; align-items: center;">
+		  <span style="font-size: 0.85em; color: #555; font-style: italic;">
+			
+			  
+				Source: <a href="https://www.womblebonddickinson.com/us/people/jesse-schaefer" class="link" target="_blank">Jesse Schaefer</a>
+			  
+			
+		  </span>
+		  <span style="font-size: 0.85em; color: #AF1616; font-style: italic;">
+			
+			
+		  </span>
+		</div>
+	  </td>
+	</tr>
+	
+    
+      <tr>
+        <td>
+		
+		  <a href="/documents/2889/Davos_Francois_B-424592_Aug._17_2026.pdf" class="link">Davos Francois</a>
+		
+		</td>
+        <td>
+		  GAO (Comptroller General of the United States)
+		  
+			 (USA)
+		  
+		  
+		</td>
+        <td class="text-center">17 August 2026</td>
+        <td>
+		  
+			Pro Se Litigant
+		  
+		</td>
+        <td>Implied</td>
+		
+
+<td>
+  
+    
+      
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="">
+            Misrepresented
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (1)
+            
+          </span>
+        </div>
+      
+    
+  
+</td>
+
+        <td></td>
+        <td>
+		  
+			—
+		  
+		</td>
+		<td style="width:2em; text-align:center">
+		  
+		</td>
+		<td style="text-align:center">
+		  
+			—
+		  
+		</td>
+    </tr>
+    
+	
+	<tr class="pointer-row pointer-source" id="pointer-2470">
+	  <td colspan="10">
+		<div style="display: flex; justify-content: space-between; align-items: center;">
+		  <span style="font-size: 0.85em; color: #555; font-style: italic;">
+			
+			  
+				Source: <a href="https://www.linkedin.com/in/timmdavid/" class="link" target="_blank">David Timm</a>
+			  
+			
+		  </span>
+		  <span style="font-size: 0.85em; color: #AF1616; font-style: italic;">
+			
+			  ⚠ Alleged AI Use
+			
+			
+		  </span>
+		</div>
+	  </td>
+	</tr>
+	
+    
+      <tr>
+        <td>
+		
+		  <a href="/documents/2927/yunes.pdf" class="link">סע&quot;ש 7669-06-24</a>
+		
+		</td>
+        <td>
+		  Haifa Regional Labor Court
+		  
+			 (Israel)
+		  
+		  
+		</td>
+        <td class="text-center">17 August 2026</td>
+        <td>
+		  
+			Lawyer
+		  
+		</td>
+        <td>Unidentified</td>
+		
+
+<td>
+  
+    
+      
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Counsel cited &#x27;ע&quot;ע (ארצי300360/98) טליובסקי נ&#x27; אטלס שירותי כוח אדם בע&quot;מ&#x27; which the court could not find and treated as non-existent.<br>• A cited judgment &#x27;ע&quot;א407/89 צוק אור בע&quot;מ נ&#x27; קאר סקיוריטי בע&quot;מ, מח(5) 661 (1994)&#x27; was found not to exist by the court.<br>• Several additional citations relied on by counsel (e.g., ע&quot;א6601/96; ע&quot;א721/94; ע&quot;א243/83; ע&quot;ע (ארצי1076/04)) were identified by the court as non-existent and indicative of AI-generated errors.<br>• Plaintiff&#x27;s counsel cited &#x27;ע&quot;ע ארצי1201 חנוך אלי נ&#x27; רמטקס&#x27; which the court could not locate; counsel later admitted it likely derived from AI search.">
+            Fabricated
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (4)
+            
+          </span>
+        </div>
+      
+    
+  
+</td>
+
+        <td>Monetary Sanction</td>
+        <td>
+		  
+			6000 ILS
+		  
+		</td>
+		<td style="width:2em; text-align:center">
+		  
+		</td>
+		<td style="text-align:center">
+		  
+			—
+		  
+		</td>
+    </tr>
+    
+	
+    
+      <tr>
+        <td>
+		
+		  <a href="/documents/2899/BOETTCHER_v._BOETTCHER_USA_14_August_2026.pdf" class="link">Boettcher v. Boettcher</a>
+		
+		</td>
+        <td>
+		  CA Arizona
+		  
+			 (USA)
+		  
+		  
+		</td>
+        <td class="text-center">14 August 2026</td>
+        <td>
+		  
+			Lawyer
+		  
+		</td>
+        <td>Implied</td>
+		
+
+<td>
+  
+    
+      
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Appellant included a purported quotation in his filing that does not appear in the cited cases; the appellate court found the quotation apparently false and struck it.">
+            False Quotes
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (1)
+            
+          </span>
+        </div>
+      
+    
+  
+</td>
+
+        <td>False quote struck from record</td>
+        <td>
+		  
+			—
+		  
+		</td>
+		<td style="width:2em; text-align:center">
+		  
+		</td>
+		<td style="text-align:center">
+		  
+			—
+		  
+		</td>
+    </tr>
+    
+	
+    
+      <tr>
+        <td>
+		
+		  <a href="/documents/2900/Quezada_v._USA_USA_14_August_2026.pdf" class="link">Guerra-Quezada v. United States; Guerra-Vasquez v. United States (consolidated)</a>
+		
+		</td>
+        <td>
+		  5th Cir. CA
+		  
+			 (USA)
+		  
+		  
+		</td>
+        <td class="text-center">14 August 2026</td>
+        <td>
+		  
+			Lawyer
+		  
+		</td>
+        <td>Implied</td>
+		
+
+<td>
+  
+    
+      
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Briefs quote Ng Fung Ho for the sentence &#x27;[N]o deportable alien may be expelled until it has first been determined . . . that he is in fact an alien,&#x27; but the court&#x27;s research could not locate that quote in Ng Fung Ho or any opinion.<br>• Briefs attribute the phrase &#x27;[i]t is wrong to deport a United States citizen&#x27; to Ng Fung Ho though that phrase does not appear in the opinion.<br>• A quotation the briefs attribute to Afroyim v. Rusk actually originates from a dissent in Perez v. Brownell (Warren, C.J., dissenting).">
+            False Quotes
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (3)
+            
+          </span>
+        </div>
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Counsel cited Doe v. McAleenan as a Fourth Circuit opinion, but the decision is actually a Seventh Circuit opinion and begins on a different page of the Federal Reporter.">
+            Misrepresented
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (1)
+            
+          </span>
+        </div>
+      
+    
+  
+</td>
+
+        <td>Warning</td>
+        <td>
+		  
+			—
+		  
+		</td>
+		<td style="width:2em; text-align:center">
+		  
+		</td>
+		<td style="text-align:center">
+		  
+			—
+		  
+		</td>
+    </tr>
+    
+	
+    
+      <tr>
+        <td>
+		
+		  <a href="/documents/2901/Harris_v._Wray_USA_14_August_2026.pdf" class="link">Daryl Harris v. Christopher A. Wray</a>
+		
+		</td>
+        <td>
+		  S.D. Indiana
+		  
+			 (USA)
+		  
+		  
+		</td>
+        <td class="text-center">14 August 2026</td>
+        <td>
+		  
+			Pro Se Litigant
+		  
+		</td>
+        <td>Unidentified</td>
+		
+
+<td>
+  
+    
+      
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Plaintiff cited Walsh v. Kreiger as &#x27;No. 19-cv-1764, 2020 WL 6325983, at 2 (E.D. Wis. Oct. 28, 2020)&#x27;; the Court found the docket number linked to a different case and the Westlaw citation led nowhere, indicating an incorrect/misrepresented citation.<br>• Editor&#x27;s Note and Court observation that the complaint contains multiple unverified citations likely generated by AI; links to those citations are unavailable in the record.">
+            Misrepresented
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (1), 
+            
+              other
+              (1)
+            
+          </span>
+        </div>
+      
+    
+  
+</td>
+
+        <td>Warning</td>
+        <td>
+		  
+			—
+		  
+		</td>
+		<td style="width:2em; text-align:center">
+		  
+		</td>
+		<td style="text-align:center">
+		  
+			—
+		  
+		</td>
+    </tr>
+    
+	
+    
+      <tr>
+        <td>
+		
+		  <a href="/documents/2920/Brankle_v._Schmell_USA_14_August_2026.pdf" class="link">Brankle v. Schmell</a>
+		
+		</td>
+        <td>
+		  CA Indiana
+		  
+			 (USA)
+		  
+		  
+		</td>
+        <td class="text-center">14 August 2026</td>
+        <td>
+		  
+			Pro Se Litigant
+		  
+		</td>
+        <td>ChatGPT</td>
+		
+
+<td>
+  
+    
+      
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Cited rules that do not exist (inapplicable/nonexistent Commercial Court Rules); court described repeated citations to rules that do not exist.<br>• Cited fictitious case law (repeated references to &#x27;fictitious cases&#x27;); court found motion &#x27;riddled with hallucinated authorities.&#x27;">
+            Fabricated
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (1), 
+            
+              Legal Norm
+              
+              (1)
+            
+          </span>
+        </div>
+      
+    
+  
+</td>
+
+        <td>Monetary Sanction (upheld)</td>
+        <td>
+		  
+			1546 USD
+		  
+		</td>
+		<td style="width:2em; text-align:center">
+		  
+			<button class="toggle-details" data-target="#details-2500">
+			  ▸
+			</button>
+		  
+		</td>
+		<td style="text-align:center">
+		  
+			—
+		  
+		</td>
+    </tr>
+    
+    <tr id="details-2500" class="details-row">
+      <td colspan="10">
+        <div class="details-box"><p data-block-key="of421">The trial court found that Brankle's filings contained repeated citations to rules that do not exist and fictitious cases, stating he appeared to be using ChatGPT to prepare filings. The trial court denied his motion to compel and ordered him to pay Schmell's expenses; the Court of Appeals affirmed, concluding the motion was not substantially justified because it was riddled with hallucinated authorities and that as a pro se litigant he is held to the same standards as trained attorneys.</p></div>
+      </td>
+    </tr>
+    
+	
+	<tr class="pointer-row pointer-source" id="pointer-2500">
+	  <td colspan="10">
+		<div style="display: flex; justify-content: space-between; align-items: center;">
+		  <span style="font-size: 0.85em; color: #555; font-style: italic;">
+			
+			  
+				Source: <a href="https://www.womblebonddickinson.com/us/people/jesse-schaefer" class="link" target="_blank">Jesse Schaefer</a>
+			  
+			
+		  </span>
+		  <span style="font-size: 0.85em; color: #AF1616; font-style: italic;">
+			
+			
+		  </span>
+		</div>
+	  </td>
+	</tr>
+	
+    
+      <tr>
+        <td>
+		
+		  <a href="/documents/2953/Rivard_v_Vermont_Dept_of_Corrections_USA_14_August_2026.pdf" class="link">Rivard v. Vermont Dept. of Corrections</a>
+		
+		</td>
+        <td>
+		  SC Vermont
+		  
+			 (USA)
+		  
+		  
+		</td>
+        <td class="text-center">14 August 2026</td>
+        <td>
+		  
+			Pro Se Litigant
+		  
+		</td>
+        <td>Implied</td>
+		
+
+<td>
+  
+    
+      
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Plaintiff cited multiple non-existent Vermont opinions (court could not identify any case matching the citations).<br>• Court noted a specific cited authority did not exist at the cited location and could not be verified.">
+            Fabricated
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (2)
+            
+          </span>
+        </div>
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Plaintiff purported to quote from submitted exhibits and court records but the quoted language does not appear in the referenced documents (misquoted exhibits).">
+            False Quotes
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Exhibits or Submissions
+              
+              (1)
+            
+          </span>
+        </div>
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Plaintiff provided Vermont Reports citations that correspond to different opinions than those named; court unable to identify matching opinions.">
+            Misrepresented
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (1)
+            
+          </span>
+        </div>
+      
+    
+  
+</td>
+
+        <td>Admonishment</td>
+        <td>
+		  
+			—
+		  
+		</td>
+		<td style="width:2em; text-align:center">
+		  
+		</td>
+		<td style="text-align:center">
+		  
+			—
+		  
+		</td>
+    </tr>
+    
+	
+    
+      <tr>
+        <td>
+		
+		  <a href="/documents/2848/20260000779792.pdf" class="link">Apelação Cível nº 1032884-04.2025.8.26.0224</a>
+		
+		</td>
+        <td>
+		  TJ San Paulo
+		  
+			 (Brazil)
+		  
+		  
+		</td>
+        <td class="text-center">13 August 2026</td>
+        <td>
+		  
+			Lawyer
+		  
+		</td>
+        <td>Unidentified</td>
+		
+
+<td>
+  
+    
+      
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Attorney cited non-existent judicial precedents produced by an AI tool in the initial petition; court treated the citations as fabricated case law and relied on that finding to recognize litigância de má-fé.">
+            Fabricated
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (1)
+            
+          </span>
+        </div>
+      
+    
+  
+</td>
+
+        <td>Monetary Fine; Bar Referral</td>
+        <td>
+		  
+			1 BRL
+		  
+		</td>
+		<td style="width:2em; text-align:center">
+		  
+			<button class="toggle-details" data-target="#details-2436">
+			  ▸
+			</button>
+		  
+		</td>
+		<td style="text-align:center">
+		  
+			—
+		  
+		</td>
+    </tr>
+    
+    <tr id="details-2436" class="details-row">
+      <td colspan="10">
+        <div class="details-box"><p data-block-key="2ye2m">The court determined that the author's attorney used an AI tool without critical review to generate and cite non-existent jurisprudential precedents in the initial petition. The conduct was held to constitute litigância de má-fé; the court imposed a procedural fine (2% of the updated value of the cause) and ordered that the decision be forwarded to the OAB for possible professional measures, reasoning that using AI to fabricate authorities undermines the integrity of the judicial debate and violates duties of probity and good faith.</p></div>
+      </td>
+    </tr>
+    
+	
+    
+      <tr>
+        <td>
+		
+		  <a href="/documents/2828/Arbuckle-v.-Tanner-2026-NSCA-62.pdf" class="link">Arbuckle v. Tanner, 2026 NSCA 62</a>
+		
+		</td>
+        <td>
+		  N.S. C.A.
+		  
+			 (Canada)
+		  
+		  
+		</td>
+        <td class="text-center">12 August 2026</td>
+        <td>
+		  
+			Pro Se Litigant
+		  
+		</td>
+        <td>Unidentified</td>
+		
+
+<td>
+  
+    
+      
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• AI appended a certified court transcriber certification page (name, NS registration number and signature of Sue Loney) to the September and October 2025 transcripts that were not certified.<br>• AI-produced transcripts contained material inaccuracies and &#x27;phantom testimony&#x27; not present in the certified audio-based transcript provided by the respondent.">
+            Fabricated
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Exhibits or Submissions
+              
+              (2)
+            
+          </span>
+        </div>
+      
+    
+  
+</td>
+
+        <td>Adverse Costs Order</td>
+        <td>
+		  
+			20000 CAD
+		  
+		</td>
+		<td style="width:2em; text-align:center">
+		  
+			<button class="toggle-details" data-target="#details-2414">
+			  ▸
+			</button>
+		  
+		</td>
+		<td style="text-align:center">
+		  
+			—
+		  
+		</td>
+    </tr>
+    
+    <tr id="details-2414" class="details-row">
+      <td colspan="10">
+        <div class="details-box"><p data-block-key="51a37">The self-represented appellant admitted using unspecified AI tools to transcribe and assemble his appeal book. The AI-generated transcripts included material inaccuracies and, according to the appellant, appended a certified court-transcriber certificate (including name, registration number and signature) belonging to Sue Loney. The respondent discovered 39 discrepancies and the transcriber denied certifying those transcripts. The Court found the appellant knowingly filed misleading certifications and uncertified transcripts, rejected reliance on an AI excuse, dismissed the appeal for failure to perfect, and awarded indemnity costs of $20,000.</p></div>
+      </td>
+    </tr>
+    
+	
+    
+      <tr>
+        <td>
+		
+		  <a href="/documents/2831/Rose_v_Arts_Bonita_Inc_USA_12_August_2026.pdf" class="link">Rose v. Arts Bonita, Inc.</a>
+		
+		</td>
+        <td>
+		  M.D. Florida
+		  
+			 (USA)
+		  
+		  
+		</td>
+        <td class="text-center">12 August 2026</td>
+        <td>
+		  
+			Pro Se Litigant
+		  
+		</td>
+        <td>Implied</td>
+		
+
+<td>
+  
+    
+      
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Plaintiff cited a nonexistent case; defendant flagged it and plaintiff withdrew the citation as &quot;incorrect or unverifiable.&quot; The Court characterized this as a fabricated citation and issued an admonishment.">
+            Fabricated
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (1)
+            
+          </span>
+        </div>
+      
+    
+  
+</td>
+
+        <td>Admonishment</td>
+        <td>
+		  
+			—
+		  
+		</td>
+		<td style="width:2em; text-align:center">
+		  
+			<button class="toggle-details" data-target="#details-2416">
+			  ▸
+			</button>
+		  
+		</td>
+		<td style="text-align:center">
+		  
+			—
+		  
+		</td>
+    </tr>
+    
+    <tr id="details-2416" class="details-row">
+      <td colspan="10">
+        <div class="details-box"><p data-block-key="m5f38">Earlier Warning is <a href="https://www.damiencharlotin.com/documents/2613/Rose_v._Ars_Bonita_USA_12_July_2026.pdf">here</a>.</p></div>
+      </td>
+    </tr>
+    
+	
+	<tr class="pointer-row pointer-source" id="pointer-2416">
+	  <td colspan="10">
+		<div style="display: flex; justify-content: space-between; align-items: center;">
+		  <span style="font-size: 0.85em; color: #555; font-style: italic;">
+			
+			  
+				Source: <a href="https://www.womblebonddickinson.com/us/people/jesse-schaefer" class="link" target="_blank">Jesse Schaefer</a>
+			  
+			
+		  </span>
+		  <span style="font-size: 0.85em; color: #AF1616; font-style: italic;">
+			
+			
+		  </span>
+		</div>
+	  </td>
+	</tr>
+	
+    
+      <tr>
+        <td>
+		
+		  <a href="/documents/2836/Chapman_v._City_of_Priceville_USA_12_August_2026.pdf" class="link">Garry Chapman v. City of Priceville, et al.</a>
+		
+		</td>
+        <td>
+		  N.D. Alabama
+		  
+			 (USA)
+		  
+		  
+		</td>
+        <td class="text-center">12 August 2026</td>
+        <td>
+		  
+			Lawyer
+		  
+		</td>
+        <td>Implied</td>
+		
+
+<td>
+  
+    
+      
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Cited a non-existent Alabama case as authority.<br>• Cited a non-existent Alabama case as authority.">
+            Fabricated
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (2)
+            
+          </span>
+        </div>
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Attributed a quoted formulation not found in the opinion.<br>• Attributed a quoted formulation not found in the opinion.<br>• Attributed a quoted formulation about independent decisionmakers not contained in the cited opinion.<br>• Attributed a quoted formulation about &#x27;similarly situated&#x27; language not present as quoted.<br>• Attributed a quoted characterization of appellate review of agency proceedings not found in the cited opinion.<br>• Attributed a quoted admonition regarding judges with an interest not appearing as quoted in the cited case.<br>• Attributed a quoted requirement that an official municipal policy be the &#x27;moving force&#x27; to the cited Supreme Court decision in a way the court found unsupported.">
+            False Quotes
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (7)
+            
+          </span>
+        </div>
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Cited Mt. Healthy for the proposition that allegations of direct evidence of motive suffice at the pleading stage; court found the citation did not support the claimed proposition as presented.<br>• Asserted a scope of municipal contract immunity and cited an Alabama statute in a manner the court deemed a misrepresentation of that authority (combined with a fabricated case).">
+            Misrepresented
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (1), 
+            
+              Legal Norm
+              
+              (1)
+            
+          </span>
+        </div>
+      
+    
+  
+</td>
+
+        <td>Public reprimand; Order to Notice</td>
+        <td>
+		  
+			—
+		  
+		</td>
+		<td style="width:2em; text-align:center">
+		  
+		</td>
+		<td style="text-align:center">
+		  
+			—
+		  
+		</td>
+    </tr>
+    
+	
+	<tr class="pointer-row pointer-source" id="pointer-2423">
+	  <td colspan="10">
+		<div style="display: flex; justify-content: space-between; align-items: center;">
+		  <span style="font-size: 0.85em; color: #555; font-style: italic;">
+			
+			  
+				Source: <a href="https://www.womblebonddickinson.com/us/people/jesse-schaefer" class="link" target="_blank">Jesse Schaefer</a>
+			  
+			
+		  </span>
+		  <span style="font-size: 0.85em; color: #AF1616; font-style: italic;">
+			
+			
+		  </span>
+		</div>
+	  </td>
+	</tr>
+	
+    
+      <tr>
+        <td>
+		
+		  <a href="/documents/2839/JMOR_Properties_LLC_v._Artist_Alley_Townhomes_LLC_et_al._USA_12_August_2026.pdf" class="link">JMOR Properties v. Artist Alley Townhomes et al.</a>
+		
+		</td>
+        <td>
+		  CA Florida (4d)
+		  
+			 (USA)
+		  
+		  
+		</td>
+        <td class="text-center">12 August 2026</td>
+        <td>
+		  
+			Lawyer
+		  
+		</td>
+        <td>Unidentified</td>
+		
+
+<td>
+  
+    
+      
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Petition cited a non-existent opinion allegedly from this Court; court identified it as fabricated authority and noted it does not exist.">
+            Fabricated
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (1)
+            
+          </span>
+        </div>
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Petition relied on existing cases as if they supported the proposition that this Court repeatedly grants certiorari to review orders vacating clerk&#x27;s defaults, but cited authorities did not support that proposition.">
+            Misrepresented
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (1)
+            
+          </span>
+        </div>
+      
+    
+  
+</td>
+
+        <td>Bar Referral</td>
+        <td>
+		  
+			—
+		  
+		</td>
+		<td style="width:2em; text-align:center">
+		  
+		</td>
+		<td style="text-align:center">
+		  
+			—
+		  
+		</td>
+    </tr>
+    
+	
+	<tr class="pointer-row pointer-source" id="pointer-2426">
+	  <td colspan="10">
+		<div style="display: flex; justify-content: space-between; align-items: center;">
+		  <span style="font-size: 0.85em; color: #555; font-style: italic;">
+			
+			  
+				Source: <a href="https://www.womblebonddickinson.com/us/people/jesse-schaefer" class="link" target="_blank">Jesse Schaefer</a>
+			  
+			
+		  </span>
+		  <span style="font-size: 0.85em; color: #AF1616; font-style: italic;">
+			
+			
+		  </span>
+		</div>
+	  </td>
+	</tr>
+	
+    
+      <tr>
+        <td>
+		
+		  <a href="/documents/2846/IN_RE_Bard_Implanted_Port_Catheter_Products_Liability_Litigation_USA_12_August_2026.pdf" class="link">IN RE: Bard Implanted Port Catheter Products Liability Litigation</a>
+		
+		</td>
+        <td>
+		  D. Arizona
+		  
+			 (USA)
+		  
+		  
+		</td>
+        <td class="text-center">12 August 2026</td>
+        <td>
+		  
+			Expert
+		  
+		</td>
+        <td>ChatGPT</td>
+		
+
+<td>
+  
+    
+      
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Defendants alleged numerous hallucinated (fabricated) citations appeared in El‑Ghannam&#x27;s case‑specific report in this MDL; the court noted Bard had not identified any fully hallucinated citations in El‑Ghannam&#x27;s General Report and found the AI challenge raised in reply untimely and insufficient to exclude the expert.">
+            Fabricated
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (1)
+            
+          </span>
+        </div>
+      
+    
+  
+</td>
+
+        <td>No exclusion of Expert Report</td>
+        <td>
+		  
+			—
+		  
+		</td>
+		<td style="width:2em; text-align:center">
+		  
+			<button class="toggle-details" data-target="#details-2432">
+			  ▸
+			</button>
+		  
+		</td>
+		<td style="text-align:center">
+		  
+			—
+		  
+		</td>
+    </tr>
+    
+    <tr id="details-2432" class="details-row">
+      <td colspan="10">
+        <div class="details-box"><p data-block-key="22dpa">Defendants raised in reply that Dr. El‑Ghannam used ChatGPT and that his case‑specific report contained hallucinated (fabricated) citations, citing a different MDL filing where hallucinated sources were confirmed. The Court found the AI argument untimely, noted Bard had not identified any fully hallucinated citations in the General Report, and observed El‑Ghannam admitted limited ChatGPT use but testified he wrote and verified the report. The Court refused to exclude opinions on that basis and imposed no sanction.</p></div>
+      </td>
+    </tr>
+    
+	
+	<tr class="pointer-row pointer-source" id="pointer-2432">
+	  <td colspan="10">
+		<div style="display: flex; justify-content: space-between; align-items: center;">
+		  <span style="font-size: 0.85em; color: #555; font-style: italic;">
+			
+			  
+				Source: <a href="https://www.womblebonddickinson.com/us/people/jesse-schaefer" class="link" target="_blank">Jesse Schaefer</a>
+			  
+			
+		  </span>
+		  <span style="font-size: 0.85em; color: #AF1616; font-style: italic;">
+			
+			  ⚠ Alleged AI Use
+			
+			
+		  </span>
+		</div>
+	  </td>
+	</tr>
+	
+    
+      <tr>
+        <td>
+		
+		  <a href="/documents/2898/DAVENPORT_v._CHURILLA_et_al_USA_12_August_2026.pdf" class="link">Davenport v. Churilla et al</a>
+		
+		</td>
+        <td>
+		  W.D. Pennsylvania
+		  
+			 (USA)
+		  
+		  
+		</td>
+        <td class="text-center">12 August 2026</td>
+        <td>
+		  
+			Pro Se Litigant
+		  
+		</td>
+        <td>Implied</td>
+		
+
+<td>
+  
+    
+      
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Plaintiff cited a nonexistent case in his brief; the Court identified it as AI‑hallucinated and did not rely on it.">
+            Fabricated
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (1)
+            
+          </span>
+        </div>
+      
+    
+  
+</td>
+
+        <td>Admonishment</td>
+        <td>
+		  
+			—
+		  
+		</td>
+		<td style="width:2em; text-align:center">
+		  
+		</td>
+		<td style="text-align:center">
+		  
+			—
+		  
+		</td>
+    </tr>
+    
+	
+    
+      <tr>
+        <td>
+		
+		  <a href="/documents/2806/Egan_v_Commonwealth_of_Australia_2026_FCA_1104.pdf" class="link">Egan v Commonwealth of Australia [2026] FCA 1104</a>
+		
+		</td>
+        <td>
+		  Federal Court
+		  
+			 (Australia)
+		  
+		  
+		</td>
+        <td class="text-center">11 August 2026</td>
+        <td>
+		  
+			Pro Se Litigant
+		  
+		</td>
+        <td>Unidentified</td>
+		
+
+<td>
+  
+    
+      
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Applicant cited various authorities and legislation in supplementary submissions that the Commonwealth identified as non-existent (fabricated) and required correction.">
+            Fabricated
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (1)
+            
+          </span>
+        </div>
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Applicant included an incorrect quotation/recital from Alati v Kruger which was later corrected by the applicant after it was identified.<br>• Applicant relied on a purported quoted passage attributed to Taylor v Johnson that does not exist; Court checked reports and found the passage absent.">
+            False Quotes
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (2)
+            
+          </span>
+        </div>
+      
+    
+  
+</td>
+
+        <td></td>
+        <td>
+		  
+			—
+		  
+		</td>
+		<td style="width:2em; text-align:center">
+		  
+		</td>
+		<td style="text-align:center">
+		  
+			—
+		  
+		</td>
+    </tr>
+    
+	
+    
+      <tr>
+        <td>
+		
+		  <a href="/documents/2830/AP_v._SK_Canada_11_August_2026.pdf" class="link">A. P. v. S. K.</a>
+		
+		</td>
+        <td>
+		  CA Québec
+		  
+			 (Canada)
+		  
+		  
+		</td>
+        <td class="text-center">11 August 2026</td>
+        <td>
+		  
+			Pro Se Litigant
+		  
+		</td>
+        <td>ChatGPT</td>
+		
+
+<td>
+  
+    
+      
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Memorandum cited two non-existent Supreme Court judgments generated by AI and attributed legal principles to them; Court found the judgments do not exist.<br>• Memorandum cited two non-existent lower court judgments generated by AI and quoted purported holdings from them; Court found the judgments do not exist.<br>• Appellant reproduced specific quotations of legal principles attributed to the fabricated decisions; Court determined the quotations were invented along with the decisions.<br>• Appellant acknowledged the authorities and quotations were produced by ChatGPT and that some were removed from his book of authorities; Court found he nonetheless filed a memorandum containing fabricated references.">
+            Fabricated
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (4)
+            
+          </span>
+        </div>
+      
+    
+  
+</td>
+
+        <td>Monetary Sanction</td>
+        <td>
+		  
+			1000 CAD
+		  
+		</td>
+		<td style="width:2em; text-align:center">
+		  
+		</td>
+		<td style="text-align:center">
+		  
+			—
+		  
+		</td>
+    </tr>
+    
+	
+    
+      <tr>
+        <td>
+		
+		  <a href="/documents/2837/Tate_Marriage_USA_11_August_2026.pdf" class="link">In re Marriage of Katelyn Jill Tate</a>
+		
+		</td>
+        <td>
+		  CA Illinois (5d)
+		  
+			 (USA)
+		  
+		  
+		</td>
+        <td class="text-center">11 August 2026</td>
+        <td>
+		  
+			Pro Se Litigant
+		  
+		</td>
+        <td>Unidentified</td>
+		
+
+<td>
+  
+    
+      
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Father&#x27;s pro se appellate brief, allegedly drafted with AI, contained general citations to existing cases that did not support his propositions; Mother characterized this as fabricated precedent.">
+            Misrepresented
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (1)
+            
+          </span>
+        </div>
+      
+    
+  
+</td>
+
+        <td>Admonishment</td>
+        <td>
+		  
+			—
+		  
+		</td>
+		<td style="width:2em; text-align:center">
+		  
+		</td>
+		<td style="text-align:center">
+		  
+			—
+		  
+		</td>
+    </tr>
+    
+	
+    
+      <tr>
+        <td>
+		
+		  <a href="/documents/2840/Nesbitt_v._Transunion_USA_11_AUgust_2026.pdf" class="link">Nicholas Evan Nesbitt v. Trans Union, LLC, et al.</a>
+		
+		</td>
+        <td>
+		  W.D. Arkansas
+		  
+			 (USA)
+		  
+		  
+		</td>
+        <td class="text-center">11 August 2026</td>
+        <td>
+		  
+			Pro Se Litigant
+		  
+		</td>
+        <td>Unidentified</td>
+		
+
+<td>
+  
+    
+      
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Court found at least two of Plaintiff&#x27;s motions contained citations to nonexistent case law; Plaintiff admitted reliance on AI for legal research.<br>• Multiple pleadings and motions filed rapidly contained fabricated caselaw and misrepresentations of federal rules, as identified by the Court.">
+            Fabricated
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Case Law
+              
+              (2)
+            
+          </span>
+        </div>
+      
+    
+  
+</td>
+
+        <td>Warning</td>
+        <td>
+		  
+			—
+		  
+		</td>
+		<td style="width:2em; text-align:center">
+		  
+		</td>
+		<td style="text-align:center">
+		  
+			—
+		  
+		</td>
+    </tr>
+    
+	
+    
+      <tr>
+        <td>
+		
+		  <a href="/documents/2844/Voyton_v._Voyton_USA_11_AUgust_2026.pdf" class="link">Courtney Voyton v. Joseph Voyton, et al.</a>
+		
+		</td>
+        <td>
+		  M.D. Pennsylvania
+		  
+			 (USA)
+		  
+		  
+		</td>
+        <td class="text-center">11 August 2026</td>
+        <td>
+		  
+			Pro Se Litigant
+		  
+		</td>
+        <td>Unidentified</td>
+		
+
+<td>
+  
+    
+      
+      
+        <div class="hallucination-group">
+          <span class="badge bg-light text-dark border me-1"
+                data-bs-toggle="tooltip"
+                data-bs-html="true"
+                title="• Plaintiff cited 42 Pa. Cons. Stat. § 5522 and described it as governing a government lawyer&#x27;s professional responsibility, but the court found the statute actually concerns notice of intent to sue and that the plaintiff misrepresented the law.<br>• Plaintiff&#x27;s objections advanced legal doctrines (Younger abstention, Rooker-Feldman, quasi-judicial immunity) not discussed in the R&amp;R—the court concluded these were &#x27;ghost arguments&#x27; steered by generative AI and misleading.">
+            Misrepresented
+            
+          </span>
+
+          
+          <span class="text-muted">
+            
+              Doctrinal Work
+              
+              (1), 
+            
+              Legal Norm
+              
+              (1)
+            
+          </span>
+        </div>
+      
+    
+  
+</td>
+
+        <td>Admonishment &amp; Warning</td>
+        <td>
+		  
+			—
+		  
+		</td>
+		<td style="width:2em; text-align:center">
+		  
+		</td>
+		<td style="text-align:center">
+		  
+			—
+		  
+		</td>
+    </tr>
+    
+	
+    
+    </tbody>
+  </table>
+  
+  <nav class="pagination-nav text-center my-4">
+    <ul class="pagination justify-content-center">
+      
+
+      <li class="page-item disabled">
+        <span class="page-link">Page 1 of 40</span>
+      </li>
+
+      
+        <li class="page-item">
+          <a class="page-link" href="?page=2">Next »</a>
+        </li>
+      
+    </ul>
+  </nav>
+
+  </div>
+
+  
+  <div id="graphsPanel" style="display:none;">
+    <p class="graphs-intro small mb-3">
+      Graphs reflect the cases currently matching your search and filters
+      (<span id="graphsN">0</span> cases).
+    </p>
+    <div class="row g-3">
+      <div class="col-12 col-lg-6">
+        <div class="graph-card">
+          <h6>Cases over time (by decision date)</h6>
+          <div class="graph-wrap"><canvas data-chart="growth"></canvas><div class="graph-nodata">Not enough data</div></div>
+          <div class="graph-caption" data-caption="growth"></div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="graph-card">
+          <h6>Timing: offending document vs. decision
+            <span style="cursor: help; font-size: 0.85em;"
+                  data-bs-toggle="tooltip" data-bs-html="true"
+                  title="Limited to cases where both dates are known. The date of the offending document is parsed automatically from court records and may occasionally be wrong.">
+              ⓘ
+            </span>
+          </h6>
+          <div class="graph-wrap"><canvas data-chart="compare"></canvas><div class="graph-nodata">Not enough data</div></div>
+          <div class="graph-caption" data-caption="compare"></div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="graph-card">
+          <h6>Who used AI, over time</h6>
+          <div class="graph-wrap"><canvas data-chart="party_mix"></canvas><div class="graph-nodata">Not enough data</div></div>
+          <div class="graph-caption" data-caption="party_mix"></div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="graph-card">
+          <h6>By jurisdiction</h6>
+          <div class="graph-wrap"><canvas data-chart="jurisdiction"></canvas><div class="graph-nodata">Not enough data</div></div>
+          <div class="graph-caption" data-caption="jurisdiction"></div>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="graph-card">
+          <h6 data-map-title>Cases by jurisdiction
+            <span style="cursor: help; font-size: 0.85em;"
+                  data-bs-toggle="tooltip" data-bs-html="true"
+                  title="Countries come from the jurisdiction tag. For the US and Canada, the state/province is parsed automatically from the court field and harmonised, so it is indicative rather than exact; courts with no identifiable state/province are omitted.">
+              ⓘ
+            </span>
+          </h6>
+          <div class="graph-wrap" style="height: 440px;"><canvas data-chart="geo"></canvas><div class="graph-nodata">Not enough data</div></div>
+          <div class="graph-caption" data-caption="geo"></div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="graph-card">
+          <h6>Nature of hallucination</h6>
+          <div class="graph-wrap"><canvas data-chart="nature_category"></canvas><div class="graph-nodata">Not enough data</div></div>
+          <div class="graph-caption" data-caption="nature_category"></div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="graph-card">
+          <h6>Nature – subcategory</h6>
+          <div class="graph-wrap"><canvas data-chart="nature_subcategory"></canvas><div class="graph-nodata">Not enough data</div></div>
+          <div class="graph-caption" data-caption="nature_subcategory"></div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="graph-card">
+          <h6>Outcome severity</h6>
+          <div class="graph-wrap"><canvas data-chart="outcome"></canvas><div class="graph-nodata">Not enough data</div></div>
+          <div class="graph-caption" data-caption="outcome"></div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="graph-card">
+          <h6>Monetary penalty distribution (<span data-penalty-ccy>USD</span>)</h6>
+          <div class="graph-wrap"><canvas data-chart="penalty"></canvas><div class="graph-nodata">Not enough data</div></div>
+          <div class="graph-caption" data-caption="penalty"></div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="graph-card">
+          <h6>By legal field</h6>
+          <div class="graph-wrap"><canvas data-chart="legal_field"></canvas><div class="graph-nodata">Not enough data</div></div>
+          <div class="graph-caption" data-caption="legal_field"></div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="graph-card">
+          <h6 data-doc-month-title>Offending document by month of year</h6>
+          <div class="graph-wrap"><canvas data-chart="doc_month"></canvas><div class="graph-nodata">Not enough data</div></div>
+          <div class="graph-caption" data-caption="doc_month"></div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="graph-card">
+          <h6>AI tools named
+            <span style="cursor: help; font-size: 0.85em;"
+                  data-bs-toggle="tooltip" data-bs-html="true"
+                  title="Limited to cases that named a specific tool. Free-text variants are grouped into families (e.g. all ChatGPT/GPT/OpenAI spellings together), and a case naming several tools is counted for each. Cases logged as 'Implied' or 'Unidentified' are excluded.">
+              ⓘ
+            </span>
+          </h6>
+          <div class="graph-wrap"><canvas data-chart="tools"></canvas><div class="graph-nodata">Not enough data</div></div>
+          <div class="graph-caption" data-caption="tools"></div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="graph-card">
+          <h6>Excuses &amp; responses when caught
+            <span style="cursor: help; font-size: 0.85em;"
+                  data-bs-toggle="tooltip" data-bs-html="true"
+                  title="How counsel reacted once the hallucination was raised. These responses are extracted automatically from the decisions and simplified into set categories, so treat them as indicative rather than exact. A case may show several responses; cases the court did not address are excluded.">
+              ⓘ
+            </span>
+          </h6>
+          <div class="graph-wrap"><canvas data-chart="remediation"></canvas><div class="graph-nodata">Not enough data</div></div>
+          <div class="graph-caption" data-caption="remediation"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  </div>
+
+ <script>
+  function setSort(field) {
+    const input = document.getElementById('sortByInput');
+    // toggle asc/desc if same field clicked twice
+    if (input.value === field) {
+      input.value = '-' + field;
+    } else {
+      input.value = field;
+    }
+    document.getElementById('filterForm').submit();
+  }
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+  tooltipTriggerList.forEach(function (el) {
+    new bootstrap.Tooltip(el, {
+      container: 'body',
+      html: true,
+      trigger: 'hover focus',
+      placement: 'auto'
+    });
+  });
+});
+</script>
+
+
+<script>
+(function () {
+  const dataEl = document.getElementById('graphData');
+  if (!dataEl) return;
+  let G;
+  try { G = JSON.parse(dataEl.textContent || '{}'); } catch (e) { return; }
+
+  const MIN = 5;  // minimum sample size before a chart is drawn
+  // Rubrication palette: theme red as the highlight, ink/greys as the foil.
+  const RED = '#AF1616', RED_DARK = '#7a0f0f', RED_SOFT = '#d98b86', INK = '#333333', GREY = '#9a9a9a';
+  // Red-to-grey ramp for multi-category charts (doughnut/subcategory).
+  const palette = ['#AF1616','#7a0f0f','#cf5a52','#e39a95','#9a4b46','#5d5d5d','#9a9a9a','#c7c7c7'];
+  let rendered = false;
+
+  if (typeof Chart !== 'undefined') {
+    Chart.defaults.font.family = '"Century Schoolbook", Georgia, "Times New Roman", serif';
+    Chart.defaults.color = INK;
+  }
+
+  const wrapFor = k => document.querySelector('[data-chart="'+k+'"]').closest('.graph-wrap');
+  const ctxFor  = k => document.querySelector('[data-chart="'+k+'"]').getContext('2d');
+  const caption = (k, html) => { const el = document.querySelector('[data-caption="'+k+'"]'); if (el) el.innerHTML = html; };
+  const markEmpty = (k, empty) => wrapFor(k).classList.toggle('is-empty', empty);
+  const baseOpts = extra => Object.assign({ responsive: true, maintainAspectRatio: false }, extra || {});
+
+  function renderAll() {
+    if (rendered || typeof Chart === 'undefined') return;
+    rendered = true;
+    document.getElementById('graphsN').textContent = G.n_total || 0;
+
+    const t = G.timeline || {};
+    caption('growth', 'n = ' + (t.n_decision || 0) + ' decisions');
+    if ((t.n_decision || 0) >= MIN && (t.labels || []).length) {
+      new Chart(ctxFor('growth'), {
+        data: { labels: t.labels, datasets: [
+          { type:'bar',  label:'Per quarter', data:t.decision_per_quarter, backgroundColor:RED_SOFT, yAxisID:'y' },
+          { type:'line', label:'Cumulative',  data:t.cumulative, borderColor:RED, backgroundColor:RED, tension:0.25, yAxisID:'y1' }
+        ]},
+        options: baseOpts({ scales: {
+          y:  { beginAtZero:true, position:'left' },
+          y1: { beginAtZero:true, position:'right', grid:{ drawOnChartArea:false } } } })
+      });
+    } else { markEmpty('growth', true); }
+
+    const tc = G.timeline_compare || {};
+    caption('compare', 'n = ' + (tc.n_matched || 0) + ' cases with both dates known' +
+      ' (' + (tc.doc_not_addressed || 0) + ' without a stated document date, ' + (tc.doc_unparsed || 0) + ' unparseable)');
+    if ((tc.n_matched || 0) >= MIN && (tc.labels || []).length) {
+      new Chart(ctxFor('compare'), {
+        type:'line',
+        data:{ labels:tc.labels, datasets:[
+          { label:'Decision date', data:tc.decision_per_quarter, borderColor:RED, backgroundColor:RED, tension:0.25 },
+          { label:'Offending document date', data:tc.document_per_quarter, borderColor:INK, backgroundColor:INK, borderDash:[6,4], tension:0.25 }
+        ]},
+        options: baseOpts({ scales:{ y:{ beginAtZero:true } } })
+      });
+    } else { markEmpty('compare', true); }
+
+    const pm = G.party_mix || {};
+    caption('party_mix', 'n = ' + (pm.n || 0) + ' cases with a known party' +
+      (pm.no_party ? ' · ' + pm.no_party + ' without one' : '') + '. Shares are of cases per quarter.');
+    if ((pm.n || 0) >= MIN && (pm.labels || []).length) {
+      const area = (data, border, fill) => ({ label:undefined, data:data, borderColor:border,
+        backgroundColor:fill, fill:true, tension:0.2, pointRadius:0, borderWidth:1 });
+      new Chart(ctxFor('party_mix'), {
+        type:'line',
+        data:{ labels:pm.labels, datasets:[
+          Object.assign(area(pm.lawyer, RED,   'rgba(175,22,22,0.65)'),  { label:'Lawyer' }),
+          Object.assign(area(pm.prose,  RED_DARK,'rgba(122,15,15,0.55)'), { label:'Pro se' }),
+          Object.assign(area(pm.other,  GREY,  'rgba(154,154,154,0.55)'),{ label:'Other' })
+        ]},
+        options: baseOpts({
+          plugins:{ tooltip:{ callbacks:{ label:c => c.dataset.label + ': ' + c.parsed.y + '%' } } },
+          scales:{ x:{ stacked:true }, y:{ stacked:true, min:0, max:100,
+            ticks:{ callback:v => v + '%' } } } })
+      });
+    } else { markEmpty('party_mix', true); }
+
+    const j = G.jurisdiction || {};
+    caption('jurisdiction', 'n = ' + (j.n || 0) + ' (counted once per state) · ' + (j.untagged || 0) + ' untagged');
+    if ((j.n || 0) >= MIN && (j.labels || []).length) {
+      new Chart(ctxFor('jurisdiction'), {
+        type:'bar',
+        data:{ labels:j.labels, datasets:[{ label:'Cases', data:j.counts, backgroundColor:RED }] },
+        options: baseOpts({ indexAxis:'y', plugins:{ legend:{ display:false } },
+          scales:{ x:{ beginAtZero:true }, y:{ ticks:{ autoSkip:false } } } })
+      });
+    } else { markEmpty('jurisdiction', true); }
+
+    const nc = G.nature_category || {};
+    caption('nature_category', 'n = ' + (nc.n_items || 0) + ' items across ' + (nc.n_cases_with_items || 0) +
+      ' cases · ' + (nc.n_cases_without || 0) + ' cases without items');
+    if ((nc.n_items || 0) >= MIN && (nc.labels || []).length) {
+      new Chart(ctxFor('nature_category'), {
+        type:'doughnut',
+        data:{ labels:nc.labels, datasets:[{ data:nc.counts, backgroundColor:palette }] },
+        options: baseOpts({ plugins:{ legend:{ position:'right' } } })
+      });
+    } else { markEmpty('nature_category', true); }
+
+    const ns = G.nature_subcategory || {};
+    caption('nature_subcategory', 'n = ' + (ns.n_items || 0) + ' items');
+    if ((ns.n_items || 0) >= MIN && (ns.labels || []).length) {
+      new Chart(ctxFor('nature_subcategory'), {
+        type:'bar',
+        data:{ labels:ns.labels, datasets:[{ label:'Items', data:ns.counts, backgroundColor:RED }] },
+        options: baseOpts({ indexAxis:'y', plugins:{ legend:{ display:false } },
+          scales:{ x:{ beginAtZero:true }, y:{ ticks:{ autoSkip:false } } } })
+      });
+    } else { markEmpty('nature_subcategory', true); }
+
+    const o = G.outcome || {};
+    caption('outcome', 'n = ' + (o.n || 0) + ' cases (excludes ' + (o.excluded_alleged || 0) + ' alleged-only)');
+    if ((o.n || 0) >= MIN) {
+      const pct = (o.counts || []).map(c => o.n ? Math.round(1000 * c / o.n) / 10 : 0);
+      new Chart(ctxFor('outcome'), {
+        type:'bar',
+        data:{ labels:o.labels, datasets:[{ label:'Cases', data:o.counts, backgroundColor:[RED, INK] }] },
+        options: baseOpts({ plugins:{ legend:{ display:false },
+          tooltip:{ callbacks:{ label:c => c.parsed.y + ' (' + pct[c.dataIndex] + '% of n)' } } },
+          scales:{ y:{ beginAtZero:true } } })
+      });
+    } else { markEmpty('outcome', true); }
+
+    const p = G.penalty || {};
+    const pccy = p.currency || 'USD';
+    document.querySelectorAll('[data-penalty-ccy]').forEach(el => { el.textContent = pccy; });
+    caption('penalty', 'n = ' + (p.n || 0) + ' ' + pccy + ' penalties' +
+      (p.other_currencies ? ' · ' + p.other_currencies + ' in other currencies (not shown)' : ''));
+    if ((p.n || 0) >= MIN) {
+      new Chart(ctxFor('penalty'), {
+        type:'bar',
+        data:{ labels:p.labels, datasets:[{ label:pccy + ' penalties', data:p.counts, backgroundColor:RED }] },
+        options: baseOpts({ plugins:{ legend:{ display:false } }, scales:{ y:{ beginAtZero:true } } })
+      });
+    } else { markEmpty('penalty', true); }
+
+    const lf = G.legal_field || {};
+    caption('legal_field', 'n = ' + (lf.n || 0) + ' cases · ' + (lf.blank || 0) + ' with no legal field recorded');
+    if ((lf.n || 0) >= MIN && (lf.labels || []).length) {
+      new Chart(ctxFor('legal_field'), {
+        type:'bar',
+        data:{ labels:lf.labels, datasets:[{ label:'Cases', data:lf.counts, backgroundColor:RED }] },
+        options: baseOpts({ indexAxis:'y', plugins:{ legend:{ display:false } },
+          scales:{ x:{ beginAtZero:true }, y:{ ticks:{ autoSkip:false } } } })
+      });
+    } else { markEmpty('legal_field', true); }
+
+    const dm = G.doc_month || {};
+    document.querySelectorAll('[data-doc-month-title]').forEach(el => {
+      el.textContent = dm.usa_only
+        ? 'Offending document by month — blame the summer interns?'
+        : 'Offending document by month of year';
+    });
+    caption('doc_month', 'n = ' + (dm.n || 0) + ' documents with a parsed date (month of filing, all years combined)');
+    if ((dm.n || 0) >= MIN && (dm.labels || []).length) {
+      new Chart(ctxFor('doc_month'), {
+        type:'bar',
+        data:{ labels:dm.labels, datasets:[{ label:'Documents', data:dm.counts, backgroundColor:RED }] },
+        options: baseOpts({ plugins:{ legend:{ display:false } },
+          scales:{ y:{ beginAtZero:true } } })
+      });
+    } else { markEmpty('doc_month', true); }
+
+    const tl = G.tools || {};
+    caption('tools', 'n = ' + (tl.n || 0) + ' cases named a specific tool · ' +
+      (tl.placeholder || 0) + ' logged as “Implied” / “Unidentified” (excluded). A case naming several tools counts for each.');
+    if ((tl.n || 0) >= MIN && (tl.labels || []).length) {
+      let hasTreemap = false;
+      try { hasTreemap = !!Chart.registry.getController('treemap'); } catch (e) { hasTreemap = false; }
+      if (hasTreemap) {
+        // Treemap: boxes sized by frequency, deeper red = more cases.
+        const tree = tl.labels.map((l, i) => ({ label: l, value: tl.counts[i] }));
+        const maxV = Math.max.apply(null, tl.counts.concat([1]));
+        new Chart(ctxFor('tools'), {
+          type:'treemap',
+          data:{ datasets:[{
+            tree: tree, key:'value', groups:['label'],
+            spacing:1, borderWidth:1, borderColor:'#fff',
+            backgroundColor(c){
+              if (c.type !== 'data') return 'transparent';
+              if (c.raw.g === 'Other') return 'rgba(154,154,154,0.65)';
+              const t = c.raw.v / maxV;
+              return 'rgba(175,22,22,' + (0.4 + 0.55 * t).toFixed(3) + ')';
+            },
+            labels:{ display:true, color:'#fff', overflow:'hidden',
+              font:{ family:'"Century Schoolbook", Georgia, serif', size:11 },
+              formatter:(c) => [c.raw.g, String(c.raw.v)] }
+          }]},
+          options: baseOpts({ plugins:{ legend:{ display:false },
+            tooltip:{ callbacks:{ label:(c) => c.raw.g + ': ' + c.raw.v } } } })
+        });
+      } else {
+        new Chart(ctxFor('tools'), {
+          type:'bar',
+          data:{ labels:tl.labels, datasets:[{ label:'Cases', data:tl.counts, backgroundColor:RED }] },
+          options: baseOpts({ indexAxis:'y', plugins:{ legend:{ display:false } },
+            scales:{ x:{ beginAtZero:true }, y:{ ticks:{ autoSkip:false } } } })
+        });
+      }
+    } else { markEmpty('tools', true); }
+
+    const rm = G.remediation || {};
+    caption('remediation', 'n = ' + (rm.n || 0) + ' cases with a recorded response · ' +
+      (rm.not_addressed || 0) + ' not addressed (excluded). Red = defensive / blame-shifting, dark = corrective, grey = other. A case may show several.');
+    if ((rm.n || 0) >= MIN && (rm.labels || []).length) {
+      const rmColor = cat => cat === 'defensive' ? RED : cat === 'corrective' ? INK : GREY;
+      const rmColors = (rm.categories || []).map(rmColor);
+      new Chart(ctxFor('remediation'), {
+        type:'bar',
+        data:{ labels:rm.labels, datasets:[{ label:'Cases', data:rm.counts, backgroundColor:rmColors }] },
+        options: baseOpts({ indexAxis:'y', plugins:{ legend:{ display:false } },
+          scales:{ x:{ beginAtZero:true }, y:{ ticks:{ autoSkip:false } } } })
+      });
+    } else { markEmpty('remediation', true); }
+
+    renderMap(G.geo || {});
+  }
+
+  // ── Choropleth map (world, or US states / Canada provinces when filtered) ──
+  const MAP_SRC = {
+    world:  { url:'https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json', topo:'countries', projection:'naturalEarth1' },
+    us:     { url:'https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json',       topo:'states',    projection:'albersUsa' },
+    canada: { url:'https://cdn.jsdelivr.net/gh/codeforgermany/click_that_hood@main/public/data/canada.geojson', geojson:true, projection:'mercator' },
+  };
+  const MAP_TITLES = { world:'Cases by country', us:'US cases by state', canada:'Canadian cases by province / territory' };
+  const _atlasCache = {};
+
+  function ensureGeoRegistered() {
+    try {
+      if (typeof ChartGeo !== 'undefined' && ChartGeo.ChoroplethController) {
+        Chart.register(ChartGeo.ChoroplethController, ChartGeo.ProjectionScale, ChartGeo.ColorScale, ChartGeo.GeoFeature);
+      }
+    } catch (e) {}
+  }
+
+  function renderMap(geo) {
+    const mode = geo.mode || 'world';
+    document.querySelectorAll('[data-map-title]').forEach(el => { el.textContent = MAP_TITLES[mode] || MAP_TITLES.world; });
+    const counts = geo[mode] || {};
+    caption('geo',
+      mode === 'us'     ? 'n = ' + (geo.n_us || 0) + ' US cases mapped to a state · ' + (geo.us_unmatched || 0) + ' federal / other courts not mapped' :
+      mode === 'canada' ? 'n = ' + (geo.n_canada || 0) + ' Canadian cases mapped to a province · ' + (geo.canada_unmatched || 0) + ' not mapped' :
+                          'n = ' + (geo.n_world || 0) + ' cases by country');
+
+    const total = Object.values(counts).reduce((a, b) => a + b, 0);
+    ensureGeoRegistered();
+    let geoReady = false;
+    try { geoReady = !!Chart.registry.getController('choropleth'); } catch (e) { geoReady = false; }
+    if (total < MIN || !geoReady) { markEmpty('geo', true); return; }
+
+    const src = MAP_SRC[mode];
+    const cached = _atlasCache[src.url] ? Promise.resolve(_atlasCache[src.url]) : fetch(src.url).then(r => r.json()).then(j => (_atlasCache[src.url] = j));
+    cached.then(atlas => {
+      let features = src.geojson
+        ? atlas.features
+        : (typeof topojson !== 'undefined' ? topojson : ChartGeo.topojson).feature(atlas, atlas.objects[src.topo]).features;
+      if (mode === 'world') features = features.filter(f => Number(f.id) !== 10);  // drop Antarctica → trims the empty pole
+      const keyOf = f => mode === 'world' ? String(Number(f.id)) : (f.properties && f.properties.name);
+      const data = features.map(f => { const v = counts[keyOf(f)]; return { feature: f, value: (v == null ? null : v) }; });
+      new Chart(ctxFor('geo'), {
+        type:'choropleth',
+        data:{ labels: features.map(keyOf), datasets:[{ label:'Cases', outline: features, data: data }] },
+        options: baseOpts({
+          showOutline:true, showGraticule:false,
+          plugins:{ legend:{ display:false },
+            tooltip:{ callbacks:{ label:(c) => {
+              const p = c.raw.feature.properties || {}; const v = c.raw.value;
+              return (p.name || '') + ': ' + (v == null ? '0' : v);
+            } } } },
+          scales:{
+            projection:{ axis:'x', projection: src.projection },
+            color:{ axis:'x', missing:'#eeeeee', quantize:5,
+              interpolate:(t) => 'rgba(175,22,22,' + (0.12 + 0.88 * t).toFixed(3) + ')',
+              legend:{ position:'bottom-right', align:'right' } }
+          }
+        })
+      });
+    }).catch(() => markEmpty('geo', true));
+  }
+
+  const btn   = document.getElementById('nerdToggle');
+  const panel = document.getElementById('graphsPanel');
+  const list  = document.getElementById('caseListView');
+  const input = document.getElementById('graphsInput');
+
+  function setUrlParam(open) {
+    try {
+      const u = new URL(window.location);
+      if (open) u.searchParams.set('graphs', '1'); else u.searchParams.delete('graphs');
+      history.replaceState(null, '', u);
+    } catch (e) {}
+  }
+
+  function setMode(open) {
+    if (panel) panel.style.display = open ? '' : 'none';
+    if (list)  list.style.display  = open ? 'none' : '';
+    if (btn) {
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      btn.textContent = open ? 'Show the cases' : 'I want graphs';
+    }
+    if (input) input.value = open ? '1' : '0';
+    if (open) renderAll();
+  }
+
+  if (btn && panel) {
+    btn.addEventListener('click', function () {
+      setMode(panel.style.display === 'none');
+      setUrlParam(panel.style.display !== 'none');
+    });
+  }
+
+  // Render immediately when the panel is open on page load (?graphs=1)
+  if (panel && panel.style.display !== 'none') renderAll();
+})();
+</script>
+
+
+</div>
+<footer class="footer.mx-auto" style="color:#D3D3D3; text-align:center; margin-top:80px">Mentions Légales, etc, some
+    year (c)
+    .</footer>
+

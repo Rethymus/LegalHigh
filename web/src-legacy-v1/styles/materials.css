@@ -1,0 +1,83 @@
+/* ============================================================
+   Material 材质层 —— 可复用玻璃面板（屏幕采样模糊 + 叠色 + 内高光 + hairline）
+   参数对应 docs/design/视觉系统规范.md §4
+   ============================================================ */
+
+.material-ultrathin,
+.material-thin,
+.material-regular,
+.material-thick,
+.material-bar {
+  position: relative;
+  border-radius: var(--r-l);
+  border: 0.5px solid var(--hairline);
+  box-shadow:
+    inset 0 1px 0 var(--edge-highlight-top),
+    inset 0 0 0 0.5px var(--edge-highlight-soft);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  backdrop-filter: blur(24px) saturate(160%);
+  overflow: hidden;
+}
+
+/* 顶部光带：玻璃上沿的高光渐变 */
+.material-ultrathin::before,
+.material-thin::before,
+.material-regular::before,
+.material-thick::before,
+.material-bar::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 42%;
+  background: linear-gradient(180deg, var(--sheen), transparent);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* 材质阶梯（fill 透明度递增 = 越来越「实」） */
+.material-ultrathin { background: rgba(255, 255, 255, 0.46); }
+.material-thin      { background: rgba(255, 255, 255, 0.58); border-radius: var(--r-l); }
+.material-thin      { -webkit-backdrop-filter: blur(28px) saturate(180%); backdrop-filter: blur(28px) saturate(180%); }
+.material-regular   { background: rgba(255, 255, 255, 0.72); -webkit-backdrop-filter: blur(32px) saturate(180%); backdrop-filter: blur(32px) saturate(180%); }
+.material-thick     { background: rgba(255, 255, 255, 0.84); -webkit-backdrop-filter: blur(36px) saturate(190%); backdrop-filter: blur(36px) saturate(190%); }
+.material-bar       { background: rgba(255, 255, 255, 0.90); -webkit-backdrop-filter: blur(40px) saturate(190%); backdrop-filter: blur(40px) saturate(190%); border-radius: 0; border-left: none; border-right: none; border-top: none; }
+
+[data-theme="dark"] .material-ultrathin { background: rgba(28, 28, 30, 0.42); }
+[data-theme="dark"] .material-thin      { background: rgba(28, 28, 30, 0.55); }
+[data-theme="dark"] .material-regular   { background: rgba(28, 28, 30, 0.68); }
+[data-theme="dark"] .material-thick     { background: rgba(28, 28, 30, 0.80); }
+[data-theme="dark"] .material-bar       { background: rgba(18, 18, 20, 0.88); }
+
+/* 材质内容需在光带之上 */
+.material-ultrathin > *, .material-thin > *, .material-regular > *,
+.material-thick > *, .material-bar > * { position: relative; z-index: 1; }
+
+/* 高对比降级：材质转实体 */
+@media (prefers-contrast: more) {
+  .material-ultrathin, .material-thin, .material-regular, .material-thick, .material-bar {
+    -webkit-backdrop-filter: none; backdrop-filter: none;
+  }
+  .material-ultrathin, .material-thin { background: var(--n50); }
+  .material-regular { background: var(--n0); }
+  .material-thick, .material-bar { background: var(--n0); }
+}
+
+/* 不支持 backdrop-filter 的环境：提升不透明度保层次 */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .material-ultrathin { background: rgba(255, 255, 255, 0.62); }
+  .material-thin      { background: rgba(255, 255, 255, 0.74); }
+  .material-regular   { background: rgba(255, 255, 255, 0.88); }
+  .material-thick     { background: rgba(255, 255, 255, 0.96); }
+  .material-bar       { background: rgba(255, 255, 255, 1); }
+  [data-theme="dark"] .material-ultrathin { background: rgba(28, 28, 30, 0.58); }
+  [data-theme="dark"] .material-thin      { background: rgba(28, 28, 30, 0.71); }
+  [data-theme="dark"] .material-regular   { background: rgba(28, 28, 30, 0.84); }
+  [data-theme="dark"] .material-thick     { background: rgba(28, 28, 30, 0.93); }
+  [data-theme="dark"] .material-bar       { background: rgba(18, 18, 20, 1); }
+}
+
+/* —— 面板阴影辅助（材质 × 阴影组合） —— */
+.elev-1 { box-shadow: var(--shadow-1), inset 0 1px 0 var(--edge-highlight-top), inset 0 0 0 0.5px var(--edge-highlight-soft); }
+.elev-2 { box-shadow: var(--shadow-2), inset 0 1px 0 var(--edge-highlight-top), inset 0 0 0 0.5px var(--edge-highlight-soft); }
+.elev-3 { box-shadow: var(--shadow-3), inset 0 1px 0 var(--edge-highlight-top), inset 0 0 0 0.5px var(--edge-highlight-soft); }
+.elev-4 { box-shadow: var(--shadow-4), inset 0 1px 0 var(--edge-highlight-top), inset 0 0 0 0.5px var(--edge-highlight-soft); }

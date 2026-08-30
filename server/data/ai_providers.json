@@ -1,0 +1,79 @@
+{
+  "note": "AI 模型插件目录（OpenAI 协议兼容）。本文件只含公开的端点地址与模型名提示，不含任何密钥；密钥一律来自环境变量（见 env_key）或用户在请求中瞬态提供。设计参考：openai SDK base_url 机制（各厂商官方接入文档）、LiteLLM provider 路由、one-api 渠道模型、Open WebUI connections。",
+  "providers": [
+    {
+      "id": "openai",
+      "name": "OpenAI",
+      "base_url": "https://api.openai.com/v1",
+      "env_key": "OPENAI_API_KEY",
+      "default_model": "gpt-4o-mini",
+      "models_hint": ["gpt-4o-mini", "gpt-4o"],
+      "docs": "https://platform.openai.com/docs"
+    },
+    {
+      "id": "deepseek",
+      "name": "DeepSeek（深度求索）",
+      "base_url": "https://api.deepseek.com/v1",
+      "env_key": "DEEPSEEK_API_KEY",
+      "default_model": "deepseek-chat",
+      "models_hint": ["deepseek-chat", "deepseek-reasoner"],
+      "docs": "https://api-docs.deepseek.com/"
+    },
+    {
+      "id": "moonshot",
+      "name": "Moonshot（Kimi）",
+      "base_url": "https://api.moonshot.cn/v1",
+      "env_key": "MOONSHOT_API_KEY",
+      "default_model": "moonshot-v1-8k",
+      "models_hint": ["moonshot-v1-8k", "moonshot-v1-32k", "moonshot-v1-128k"],
+      "docs": "https://platform.kimi.com/docs"
+    },
+    {
+      "id": "zhipu",
+      "name": "智谱 GLM",
+      "base_url": "https://open.bigmodel.cn/api/paas/v4",
+      "env_key": "ZHIPU_API_KEY",
+      "default_model": "glm-4-flash",
+      "models_hint": ["glm-4-flash", "glm-4-plus"],
+      "docs": "https://docs.bigmodel.cn/cn/guide/develop/openai/introduction"
+    },
+    {
+      "id": "dashscope",
+      "name": "阿里通义千问（DashScope 兼容模式）",
+      "base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+      "env_key": "DASHSCOPE_API_KEY",
+      "default_model": "qwen-plus",
+      "models_hint": ["qwen-plus", "qwen-turbo", "qwen-max"],
+      "docs": "https://help.aliyun.com/zh/dashscope/developer-reference/compatibility-of-openai-with-dashscope"
+    },
+    {
+      "id": "ollama",
+      "name": "Ollama（本地部署）",
+      "base_url": "http://127.0.0.1:11434/v1",
+      "env_key": null,
+      "default_model": "qwen2.5:7b",
+      "models_hint": ["以本机 ollama list 为准，如 qwen2.5:7b / llama3.2 / deepseek-r1"],
+      "docs": "https://docs.ollama.com/api/openai-compatibility",
+      "local": true
+    },
+    {
+      "id": "vllm",
+      "name": "vLLM（自托管推理）",
+      "base_url": "http://127.0.0.1:8001/v1",
+      "env_key": null,
+      "default_model": "以 vllm serve 启动的模型为准",
+      "models_hint": ["以 /v1/models 返回为准"],
+      "docs": "https://docs.vllm.ai/en/latest/serving/openai_compatible_server.html",
+      "local": true
+    },
+    {
+      "id": "custom",
+      "name": "自定义 OpenAI 兼容端点（LiteLLM / one-api / new-api 等网关）",
+      "base_url": "",
+      "env_key": null,
+      "default_model": "",
+      "models_hint": ["填入网关地址与模型名；网关侧完成多厂商路由"],
+      "docs": "https://github.com/BerriAI/litellm"
+    }
+  ]
+}

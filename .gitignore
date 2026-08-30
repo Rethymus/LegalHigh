@@ -1,0 +1,21 @@
+# Python
+server/.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Node
+web/node_modules/
+web/dist/
+
+# 运行时数据（语料由 build_corpus.py 从证据快照重建；应用库为本地状态）
+server/data/app.db
+server/data/app.db-*
+
+# 临时 / 本地工具状态
+.tmp/
+*.log
+.mimosa/
+server/.mimosa/
+docs/qa-evidence/.chrome-profile/
+web/node_modules/.tmp-chrome/
