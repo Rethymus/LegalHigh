@@ -443,13 +443,14 @@ class ComplaintBody(BaseModel):
     subject: str
     content: str
     contact: str | None = None
+    kind: str = "general"  # general | mobile（决策11：移动端体验反馈入口）
 
 
 @app.post("/api/complaints")
 def create_complaint(body: ComplaintBody):
     if not body.subject.strip() or not body.content.strip():
         raise HTTPException(422, "主题与内容不能为空")
-    cid = storage.create_complaint(body.contact, body.subject.strip(), body.content.strip())
+    cid = storage.create_complaint(body.contact, body.subject.strip(), body.content.strip(), body.kind)
     return {"complaint_id": cid, "status": "open",
             "message": "已受理并留痕。我们将在核实后通过您留下的联系方式反馈。"}
 

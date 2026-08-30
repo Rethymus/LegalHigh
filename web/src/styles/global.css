@@ -955,6 +955,9 @@ del.diff-del { text-decoration: line-through; background: var(--danger-soft); bo
 @media (prefers-reduced-motion: reduce) { body::before { animation: none; } }
 .reduce-motion body::before { animation: none; }
 
+/* 移动端体验反馈入口（决策11）：仅窄屏显示 */
+.mobile-feedback { display: none; }
+
 /* ---------- 大字模式（适老化；决策项1，2026-08-30）----------
    只放大内容台面内的阅读区，外壳（侧栏/顶栏）保持布局稳定；
    zoom 已入 CSS 标准并获主流浏览器支持；不支持时回退为正文字号提升。 */
@@ -1046,4 +1049,13 @@ del.diff-del { text-decoration: line-through; background: var(--danger-soft); bo
       calc(8px + env(safe-area-inset-left));
   }
   .sb { top: calc(8px + env(safe-area-inset-top)); bottom: calc(8px + env(safe-area-inset-bottom)); left: calc(8px + env(safe-area-inset-left)); }
+
+  /* 移动端体验反馈浮动入口（决策11）：复用投诉通道，kind=mobile 落库+审计 */
+  .mobile-feedback {
+    display: grid; place-items: center;
+    position: fixed; right: calc(12px + env(safe-area-inset-right)); bottom: calc(14px + env(safe-area-inset-bottom));
+    z-index: 50; width: 44px; height: 44px; border-radius: 999px;
+    background: var(--accent); color: #fff; border: none;
+    box-shadow: var(--shadow-2); text-decoration: none;
+  }
 }

@@ -221,10 +221,10 @@ export const api = {
     }>('/qa/ask', { method: 'POST', body: JSON.stringify({ question, top_k: topK }) }),
 
   // 合规中心：投诉工单（真实落库 + 审计留痕）
-  createComplaint: (subject: string, content: string, contact?: string) =>
+  createComplaint: (subject: string, content: string, contact?: string, kind: 'general' | 'mobile' = 'general') =>
     req<{ complaint_id: string; status: string }>('/complaints', {
       method: 'POST',
-      body: JSON.stringify({ subject, content, contact: contact || undefined }),
+      body: JSON.stringify({ subject, content, contact: contact || undefined, kind }),
     }),
 
   // 案例样本库（仅可公开查证案件；sample=true 为未核实占位）

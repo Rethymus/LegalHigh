@@ -58,6 +58,28 @@ COMPLAINT_FILING_FIELDS = [
     {"key": "legal_basis", "label": "法律依据（选择库内条文，可选）", "type": "citation_picker", "required": False},
 ]
 
+ANSWER_FIELDS = [
+    {"key": "defendant", "label": "答辩人（被告）", "type": "text", "required": True},
+    {"key": "plaintiff", "label": "被答辩人（原告）", "type": "text", "required": True},
+    {"key": "case_no", "label": "案号", "type": "text", "required": True, "placeholder": "如：（2026）某民初某号"},
+    {"key": "court", "label": "受诉法院", "type": "text", "required": True},
+    {"key": "answer_points", "label": "答辩要点（每行一条）", "type": "textarea_list", "required": True, "placeholder": "逐条针对原告诉请回应"},
+    {"key": "facts", "label": "事实与理由", "type": "textarea", "required": True},
+    {"key": "claims_response", "label": "对各项诉讼请求的意见（每行一条）", "type": "textarea_list", "required": False},
+    {"key": "legal_basis", "label": "法律依据（选择库内条文，可选）", "type": "citation_picker", "required": False},
+]
+
+POA_FIELDS = [
+    {"key": "principal", "label": "委托人（姓名/名称）", "type": "text", "required": True},
+    {"key": "principal_info", "label": "委托人信息（住址或统一社会信用代码）", "type": "text", "required": False},
+    {"key": "agent", "label": "受托人（律师姓名）", "type": "text", "required": True},
+    {"key": "firm", "label": "律师事务所", "type": "text", "required": True},
+    {"key": "license_no", "label": "律师执业证号", "type": "text", "required": True},
+    {"key": "authority_scope", "label": "委托权限（可多选）", "type": "multi_select", "required": True,
+     "options": ["一般授权（代为出庭、陈述、答辩）", "代为承认、放弃、变更诉讼请求", "代为和解、调解", "代收法律文书", "代为提起上诉"]},
+    {"key": "term", "label": "委托期限", "type": "text", "required": True, "placeholder": "如：自委托之日起至本案审结止"},
+]
+
 TEMPLATES = {
     "lawyer_letter": {
         "template_id": "lawyer_letter",
@@ -72,6 +94,20 @@ TEMPLATES = {
         "description": "场景化合同草稿：条款结构对齐常见实务体例，生成后可一键转入「合同审查」模块做三类条款批注审查。",
         "gate": {"verify_label": "人工核验", "issue_label": "确认定稿", "require_role": "执业律师"},
         "fields": CONTRACT_FIELDS,
+    },
+    "civil_answer": {
+        "template_id": "civil_answer",
+        "name": "民事答辩状",
+        "description": "要素式答辩状模板（程序指引属性）：按被告视角组织答辩要点与对诉请的逐项意见，明示不构成法律意见。",
+        "gate": {"verify_label": "人工核验", "issue_label": "确认定稿", "require_role": "执业律师"},
+        "fields": ANSWER_FIELDS,
+    },
+    "power_of_attorney": {
+        "template_id": "power_of_attorney",
+        "name": "授权委托书（诉讼）",
+        "description": "诉讼授权委托书模板：权限选项对齐民诉实务的一般授权/特别授权区分，转委托须另行书面授权。",
+        "gate": {"verify_label": "人工核验", "issue_label": "确认定稿", "require_role": "执业律师"},
+        "fields": POA_FIELDS,
     },
     "civil_complaint": {
         "template_id": "civil_complaint",
@@ -212,7 +248,61 @@ def build_civil_complaint(f: dict):
     return {"sections": sections, "citations": citations, "gate_note": gate_note}
 
 
-BUILDERS = {"lawyer_letter": build_lawyer_letter, "contract": build_contract, "civil_complaint": build_civil_complaint}
+def build_civil_answer(f: dict):
+    points = [x.strip() for x in (f.get("answer_points") or "").splitlines() if x.strip()]
+    responses = [x.strip() for x in (f.get("claims_response") or "").splitlines() if x.strip()]
+    citations = parse_citations(f.get("legal_basis"))
+    sections = [
+        {"type": "title", "text": "民事答辩状"},
+        {"type": "party", "lines": [
+            f"答辩人（本案被告）：{f.get('defendant', '')}",
+            f"被答辩人（本案原告）：{f.get('plaintiff', '')}",
+        ]},
+        {"type": "para_noindent", "text": f"答辩人因{f.get('plaintiff', '')}诉答辩人一案（案号：{f.get('case_no', '')}），现提出答辩如下："},
+        {"type": "heading", "text": "答辩要点"},
+    ]
+    for i, pt in enumerate(points, 1):
+        sections.append({"type": "numbered", "n": i, "text": pt})
+    sections.append({"type": "heading", "text": "事实与理由"})
+    sections.append({"type": "para", "text": f.get("facts", "")})
+    if responses:
+        sections.append({"type": "heading", "text": "对各项诉讼请求的意见"})
+        for i, r in enumerate(responses, 1):
+            sections.append({"type": "numbered", "n": i, "text": r})
+    if citations:
+        sections.append({"type": "heading", "text": "法律依据"})
+        for c in citations:
+            sections.append({"type": "para", "text": f"《{c['law_title']}》{c['article_label']}（{c['status']}）：{c['text']}"})
+    sections += [
+        {"type": "closing", "text": f"此致\n{f.get('court', '')}"},
+        {"type": "signature", "lines": [f"答辩人：{f.get('defendant', '')}", date.today().strftime("%Y年%m月%d日")]},
+    ]
+    gate_note = "本答辩状为要素式模板生成的草稿（程序指引属性）：不构成法律意见；提交法院前请经人工核验，并逐项核对答辩期限（15日）与证据清单。"
+    return {"sections": sections, "citations": citations, "gate_note": gate_note}
+
+
+def build_power_of_attorney(f: dict):
+    scope = [x.strip() for x in (f.get("authority_scope") or []) if x.strip()]
+    sections = [
+        {"type": "title", "text": "授权委托书"},
+        {"type": "party", "lines": [
+            f"委托人：{f.get('principal', '')}" + (f"（{f['principal_info']}）" if f.get("principal_info") else ""),
+            f"受托人：{f.get('agent', '')}（{f.get('firm', '')} 律师，执业证号：{f.get('license_no', '')}）",
+        ]},
+        {"type": "para", "text": f"委托人因需要，委托上述受托人作为与本案相关的代理人。"},
+        {"type": "heading", "text": "委托权限"},
+    ]
+    for i, sc in enumerate(scope, 1):
+        sections.append({"type": "numbered", "n": i, "text": sc})
+    sections += [
+        {"type": "para", "text": f"委托期限：{f.get('term', '自委托之日起至本案审结止')}。受托人无转委托权；如需转委托，须另行取得委托人书面授权。"},
+        {"type": "signature", "lines": [f"委托人（签名/盖章）：{f.get('principal', '')}", f"受托人（签名）：{f.get('agent', '')}", date.today().strftime("%Y年%m月%d日")]},
+    ]
+    gate_note = "本授权委托书为模板生成的草稿：权限分为一般授权与特别授权，特别授权须逐项明示；提交法院前请经人工核验。"
+    return {"sections": sections, "citations": [], "gate_note": gate_note}
+
+
+BUILDERS = {"lawyer_letter": build_lawyer_letter, "contract": build_contract, "civil_complaint": build_civil_complaint, "civil_answer": build_civil_answer, "power_of_attorney": build_power_of_attorney}
 
 
 def generate(template_id: str, fields: dict):

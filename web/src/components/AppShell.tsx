@@ -166,6 +166,12 @@ export default function AppShell() {
           <Link to="/settings" className="tb-icon" title="账号与设置"><Icon name="user" size={15} /></Link>
         </header>
 
+        {narrow && (
+          <Link to="/settings?feedback=mobile" className="mobile-feedback" title="反馈移动端体验问题">
+            <Icon name="send" size={14} />
+          </Link>
+        )}
+
         <main className="content">
           <div key={pathname + tone}>
             <Suspense>

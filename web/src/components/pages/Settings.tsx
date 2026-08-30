@@ -35,7 +35,8 @@ function Row({ icon, t, d, ctl }: { icon: IconName; t: string; d: string; ctl: R
 }
 
 export default function Settings() {
-  const [sec, setSec] = useState('ai')
+  // ?feedback=mobile 时直落隐私区（移动反馈入口的落点，决策11）
+  const [sec, setSec] = useState(() => (new URLSearchParams(window.location.search).get('feedback') === 'mobile' ? 'privacy' : 'ai'))
   const toast = useToast()
   const { data: laws } = useLaws()
   const lawCount = laws?.laws.length ?? 0
@@ -48,7 +49,8 @@ export default function Settings() {
   const [tone, setTone] = useState(() => localStorage.getItem('le-tone-override') ?? 'auto')
   const [motion, setMotion] = useState(() => localStorage.getItem('le-reduce-motion') === '1')
   const [fontLarge, setFontLarge] = useState(() => localStorage.getItem('le-font-large') === '1')
-  const [cSubject, setCSubject] = useState('')
+  const [cSubject, setCSubject] = useState(() => (new URLSearchParams(window.location.search).get('feedback') === 'mobile' ? '移动端体验反馈' : ''))
+  const [cKind] = useState<'general' | 'mobile'>(() => (new URLSearchParams(window.location.search).get('feedback') === 'mobile' ? 'mobile' : 'general'))
   const [cContent, setCContent] = useState('')
   const [cContact, setCContact] = useState('')
   const [busyC, setBusyC] = useState(false)
@@ -225,7 +227,7 @@ export default function Settings() {
                     onClick={async () => {
                       setBusyC(true)
                       try {
-                        const r = await api.createComplaint(cSubject.trim(), cContent.trim(), cContact.trim() || undefined)
+                        const r = await api.createComplaint(cSubject.trim(), cContent.trim(), cContact.trim() || undefined, cKind)
                         toast(`投诉已受理：工单号 ${r.complaint_id}（状态 ${r.status}）`, 'ok')
                         setCSubject(''); setCContent(''); setCContact('')
                       } catch (e) {

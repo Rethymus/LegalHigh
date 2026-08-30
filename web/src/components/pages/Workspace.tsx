@@ -46,9 +46,13 @@ export default function Workspace() {
     api.listDrafts().then((d) => alive && setDrafts(d.drafts), err)
     api.listComplaints().then((d) => alive && setComplaints(d.complaints), err)
     api.auditAll(10).then((d) => alive && setAudit(d.entries), err)
+    api.explainsQueue().then((d) => alive && setExplains(d.queue), () => { /* 审核队列加载失败不阻塞其他 Tab */ })
     try { setResearchList(JSON.parse(localStorage.getItem(LS_LIST) ?? '[]')) } catch { /* 本机记录 */ }
     return () => { alive = false }
   }, [])
+
+  // 切到「解读审核」Tab 时刷新队列
+  useEffect(() => { if (tab === 'explains') loadExplains() }, [tab])
 
   return (
     <div className="page" style={{ maxWidth: 'none' }}>
@@ -188,5 +192,5 @@ export default function Workspace() {
 }
 
 function TEMPLATE_NAME(id: string): string {
-  return ({ lawyer_letter: '律师函', contract: '合同', civil_complaint: '民事起诉状' } as Record<string, string>)[id] ?? id
+  return ({ lawyer_letter: '律师函', contract: '合同', civil_complaint: '民事起诉状', civil_answer: '民事答辩状', power_of_attorney: '授权委托书' } as Record<string, string>)[id] ?? id
 }

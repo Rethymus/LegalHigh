@@ -72,6 +72,11 @@ def get_conn() -> sqlite3.Connection:
         _conn.row_factory = sqlite3.Row
         _conn.executescript(SCHEMA)
         _conn.commit()
+        try:
+            _conn.execute("ALTER TABLE complaints ADD COLUMN kind TEXT NOT NULL DEFAULT 'general'")
+            _conn.commit()
+        except sqlite3.OperationalError:
+            pass  # 列已存在（重复启动）
     return _conn
 
 
@@ -289,16 +294,17 @@ def export_all() -> dict:
     }
 
 
-def create_complaint(contact: str | None, subject: str, content: str) -> str:
+def create_complaint(contact: str | None, subject: str, content: str, kind: str = "general") -> str:
+    kind = kind if kind in ("general", "mobile") else "general"
     cid = "cp_" + uuid.uuid4().hex[:12]
     with _lock:
         conn = get_conn()
         conn.execute(
-            "INSERT INTO complaints (id, created_at, contact, subject, content, status) VALUES (?,?,?,?,?,?)",
-            (cid, _now(), contact, subject, content, "open"),
+            "INSERT INTO complaints (id, created_at, contact, subject, content, status, kind) VALUES (?,?,?,?,?,?,?)",
+            (cid, _now(), contact, subject, content, "open", kind),
         )
         conn.commit()
-    audit("system", "complaint", cid, "create", {"subject": subject})
+    audit("system", "complaint", cid, "create", {"subject": subject, "kind": kind})
     return cid
 
 
