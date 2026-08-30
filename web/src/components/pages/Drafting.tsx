@@ -394,7 +394,7 @@ export default function Drafting() {
                       <Link to={`/laws/${c.law_id}?art=${c.article_no}`} className="tiny row mt-8" style={{ gap: 3, color: 'var(--accent-text)' }}>查看详情 <Icon name="chevR" size={11} /></Link>
                     </div>
                   ))}
-                  <div className="tiny mt-12">引用生成时即带版本快照；语料与 flk 逐条比对列入 M5。</div>
+                  <div className="tiny mt-12">引用生成时即带版本快照；语料与 flk 的抽查比对（≥10%+字段全量，不爬取）列入 M6。</div>
                 </>
               ) : <EmptyState icon="link" title="本文书未引用法条" desc="如律师函场景未选择法律依据，此处不虚构引用。" />
             )}

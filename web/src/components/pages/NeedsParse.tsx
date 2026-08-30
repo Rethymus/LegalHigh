@@ -89,7 +89,7 @@ export default function NeedsParse() {
               </div>
             )}
             <div className="row-wrap mt-8" style={{ gap: 6 }}>
-              {result.parse.keywords.map((k) => <span key={k} className="chip">{k}</span>)}
+              {(result.parse.keywords_display ?? result.parse.keywords).map((k) => <span key={k} className="chip">{k}</span>)}
             </div>
             {result.parse.cautions.length > 0 && (
               <ul className="tiny mt-12" style={{ lineHeight: 2, display: 'flex', flexDirection: 'column', gap: 4 }}>

@@ -1,0 +1,39 @@
+# -*- coding: utf-8 -*-
+"""法条通俗解读库测试（决策项4 双轨）：引用不变量 + 审核门。"""
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
+from app import explains  # noqa: E402
+from app.corpus import get_corpus  # noqa: E402
+
+
+def test_all_explains_resolve_in_corpus():
+    """引用不变量硬门：每条解读绑定的 (law_id, no) 必须真实存在于语料（加载器启动校验）。"""
+    corpus = get_corpus()
+    for e in explains.load_explains():
+        assert corpus.get_article(e["law_id"], e["no"]), e
+
+
+def test_approved_gate_blocks_drafts():
+    """审核门：draft/未填审核人的条目一律不对外（宁缺毋假）。"""
+    raw = explains.load_explains()
+    assert any(e["status"] == "draft" for e in raw), "种子数据应含 AI 草稿（测试前置）"
+    approved = explains.approved_for(raw[0]["law_id"])
+    for no, item in approved.items():
+        assert item["reviewer"], f"approved 条目缺审核人: {no}"
+    # draft 条目不得出现在任何 approved 输出
+    for law_id in {e["law_id"] for e in raw}:
+        for no in explains.approved_for(law_id):
+            src = next(e for e in raw if e["law_id"] == law_id and int(e["no"]) == no)
+            assert src["status"] == "approved" and src["reviewer"]
+
+
+def test_explain_texts_stay_within_source():
+    """诚实护栏：草稿解读不得出现承诺性/引诱性表述（红线词级检查）；AI 起草条目不得伪装人工。"""
+    from app.ai_governor import REDLINE_RE
+    for e in explains.load_explains():
+        assert not REDLINE_RE.search(e["text"]), e["law_id"]
+        if e["status"] == "draft":
+            assert "AI" in e["author"], e

@@ -62,6 +62,7 @@ export default function AppShell() {
   }, [collapsed])
   useEffect(() => {
     document.documentElement.classList.toggle('reduce-motion', readReduceMotion())
+    document.documentElement.classList.toggle('font-large', localStorage.getItem('le-font-large') === '1')
     const sync = () => setOverride(readOverride())
     window.addEventListener('le-tone-changed', sync)
     const mq = window.matchMedia('(max-width: 767.98px)')
@@ -126,7 +127,7 @@ export default function AppShell() {
             <div className="sb-bar"><i style={{ width: corpus ? '100%' : '0%' }} /></div>
             <div className="sb-plan-top" style={{ marginTop: 5 }}>
               <span>{corpusArts ? `${corpusArts.toLocaleString()} 条条文` : ''}</span>
-              <span>flk 比对待 M6</span>
+              <span>flk 抽查比对 · M6</span>
             </div>
           </div>
         </div>

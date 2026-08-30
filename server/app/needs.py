@@ -75,6 +75,28 @@ def clean_keywords(raw: list[str], domain: list[str]) -> list[str]:
     return out
 
 
+def curate_display(keywords: list[str], domain: list[str], cap: int = 8) -> list[str]:
+    """展示层降噪（决策项2，2026-08-30 决议：不引入 jieba）：检索仍用完整 keywords
+    （bigram 跨词噪声对 BM25 无害）。对外展示：
+    - 命中规则域词时，只显示域词——域词即人工维护的规范词表，生成二元组属检索内部词，
+      不作为面向用户的「关键词」呈现（跨词噪声如「板拖」无法在无分词器下可靠判定）；
+    - 未命中域词时，显示生成词（做包含去重 + 截断），并由 cautions 如实标注来源。
+    结果确定可测。"""
+    if domain:
+        return list(domain)[:cap]
+    kept: list[str] = []
+    for t in keywords:
+        t = (t or "").strip()
+        if not t or t in kept:
+            continue
+        if any(t in k or k in t for k in kept):
+            continue
+        kept.append(t)
+        if len(kept) >= cap:
+            break
+    return kept
+
+
 def deterministic_parse(text: str) -> dict:
     """无 AI 降级：领域词表增强 + 关键词抽取（复用 research.extract_keywords）+ 噪声清洗。"""
     terms = domain_terms(text)
@@ -187,6 +209,9 @@ def parse_needs(text: str, *, ai: dict | None = None) -> dict:
 
     evidence = fetch_evidence(parse["keywords"])
     corpus = get_corpus()
+    # 展示降噪（决策项2）：域词从原文重算（deterministic 路径已并入 keywords 首位；
+    # AI 路径域词为空，AI 产出的已是规范法律术语，原样展示）
+    parse["keywords_display"] = curate_display(parse["keywords"], domain_terms(text))
     return {
         "input": text,
         "parse": parse,

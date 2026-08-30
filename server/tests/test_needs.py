@@ -61,3 +61,13 @@ def test_deterministic_keywords_noise_filtered():
     assert "三个" not in kws and "个月" not in kws, kws
     assert "工资" not in kws, kws  # 是「工资支付」的子串
     assert "劳动报酬" in kws and "工资支付" in kws  # 域词保留且在前
+
+
+def test_keywords_display_curated():
+    """决策项2 回归：有域词时展示层只显示域词（跨词二元组「板拖」不外露）；
+    检索用完整 keywords（bigram 噪声对 BM25 无害），两列分离。"""
+    out = needs.parse_needs("老板拖欠我三个月工资还不给离职证明")
+    disp = out["parse"]["keywords_display"]
+    assert disp == ["劳动报酬", "劳动合同", "工资支付"], disp
+    assert "板拖" not in disp and "资还" not in disp
+    assert "板拖" in out["parse"]["keywords"]  # 检索层不动

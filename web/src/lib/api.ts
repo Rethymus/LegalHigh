@@ -204,6 +204,10 @@ export const api = {
     req<{ cases: CaseRecord[] }>(`/cases?q=${encodeURIComponent(q)}${level ? `&level=${encodeURIComponent(level)}` : ''}`),
   getCase: (caseId: string) => req<CaseRecord>(`/cases/${caseId}`),
 
+  // 法条人工通俗解读（仅已审核条目；AI 草稿审核前服务端不返回——决策项4 双轨）
+  lawExplains: (lawId: string) =>
+    req<{ law_id: string; explains: Record<string, ArticleExplain> }>(`/laws/${encodeURIComponent(lawId)}/explains`),
+
   // 主检索（server BM25，与问答/研究同一引擎；多词/口语化查询可命中）
   search: (q: string, topK = 20, lawId?: string) =>
     req<SearchResult>(`/search?q=${encodeURIComponent(q)}&top_k=${topK}${lawId ? `&law_id=${encodeURIComponent(lawId)}` : ''}`),
@@ -264,6 +268,15 @@ export const api = {
   // 版本对比（server difflib 行级结构差异）
   compareTexts: (textA: string, textB: string) =>
     req<CompareResult>('/compare', { method: 'POST', body: JSON.stringify({ text_a: textA, text_b: textB }) }),
+}
+
+/* ---------- 法条人工通俗解读（双轨：AI 草稿 → 人工审核 → approved 对外） ---------- */
+export interface ArticleExplain {
+  text: string
+  author: string
+  reviewer: string
+  date?: string
+  source_note?: string
 }
 
 /* ---------- 主检索（server BM25 结果；排序唯一来源） ---------- */
@@ -329,6 +342,8 @@ export interface NeedsParseResult {
   parse: {
     understood: string; issue_type: string
     assumed_causes: string[]; keywords: string[]; cautions: string[]
+    /** 展示降噪后的关键词（决策项2：有域词时仅显示域词）；缺省回退 keywords */
+    keywords_display?: string[]
     by: string  // 'deterministic' | 'ai:provider/model'
   }
   ai_error: string | null

@@ -58,7 +58,7 @@ export default function LawsBrowse() {
           <div className="doc-statusbar">
             <span>文本来源：证据快照语料（Wikisource 转录） · 构建 {data.builtAt.slice(0, 10)}</span>
             <span className="sp" />
-            <span>flk.npc.gov.cn 逐条比对：M5 计划中</span>
+            <span>flk.npc.gov.cn 抽查比对（≥10%+字段全量）：M6 计划中</span>
           </div>
         </div>
       )}

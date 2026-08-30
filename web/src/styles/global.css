@@ -955,6 +955,15 @@ del.diff-del { text-decoration: line-through; background: var(--danger-soft); bo
 @media (prefers-reduced-motion: reduce) { body::before { animation: none; } }
 .reduce-motion body::before { animation: none; }
 
+/* ---------- 大字模式（适老化；决策项1，2026-08-30）----------
+   只放大内容台面内的阅读区，外壳（侧栏/顶栏）保持布局稳定；
+   zoom 已入 CSS 标准并获主流浏览器支持；不支持时回退为正文字号提升。 */
+.font-large .content > div { zoom: 1.15; }
+@supports not (zoom: 1) {
+  .font-large .page { font-size: 17px; }
+  .font-large .ot-tx, .font-large .res-snip, .font-large .doc-paper { font-size: 16.5px; }
+}
+
 /* ==================================================================
    窄屏基线（<768px）——W4-C4（2026-08-30）
    口径：这是「可用性底线」而非 v3 完整自适应形态（BottomSheet/底部标签栏/
@@ -1014,4 +1023,27 @@ del.diff-del { text-decoration: line-through; background: var(--danger-soft); bo
   .set-ctl { margin-left: 45px; }
   .tabs { overflow-x: auto; }
   .tab { white-space: nowrap; flex: none; }
+
+  /* ---- 44pt 触摸目标（v3 规格；决策项1）---- */
+  .tb-icon, .tb-pill { height: 44px; }
+  .tb-icon { width: 44px; }
+  .sb-item { padding: 13px 10px; }
+  .tab, .chip { min-height: 44px; display: inline-flex; align-items: center; }
+  .btn { min-height: 44px; }
+  .btn-sm { min-height: 40px; }
+  .res-act, .lrow, .ht { min-height: 40px; }
+  .ckbox span.ckbox { width: 22px; height: 22px; }
+  .sw { width: 46px; height: 28px; }
+  /* 16px 输入：防 iOS 聚焦自动放大（v3 规格） */
+  .inp, .ta, .sel { font-size: 16px; }
+
+  /* ---- safe-area 避让（刘海/Home Indicator；决策项1）---- */
+  .app {
+    padding:
+      calc(8px + env(safe-area-inset-top))
+      calc(8px + env(safe-area-inset-right))
+      calc(8px + env(safe-area-inset-bottom))
+      calc(8px + env(safe-area-inset-left));
+  }
+  .sb { top: calc(8px + env(safe-area-inset-top)); bottom: calc(8px + env(safe-area-inset-bottom)); left: calc(8px + env(safe-area-inset-left)); }
 }

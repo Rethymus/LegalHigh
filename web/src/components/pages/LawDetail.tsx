@@ -6,7 +6,7 @@ import { Icon } from '../icons'
 import { WARM_TIPS, findArticle, findLaw, lawChapters, useLaws } from '../../data/model'
 import { EmptyState, PageHeader, SkeletonLines, Tabs, useCopy, useToast, ValidityBadge } from '../ui'
 import { AIBlock, CitationChip, OfficialArticle, SourceBadge } from '../domain'
-import { api, isFav as isFavKey, toggleFav } from '../../lib/api'
+import { api, isFav as isFavKey, toggleFav, type ArticleExplain } from '../../lib/api'
 
 const TABS = [
   { key: 'rel-js', label: '关联司法解释' },
@@ -26,8 +26,21 @@ export default function LawDetail() {
   const [tab, setTab] = useState('rel-case')
 
   const law = findLaw(data, lawId)
+  // 人工通俗解读（决策项4 双轨：仅 approved 对外；无审核条目时保持 AI 通用指引）
+  const [explains, setExplains] = useState<Record<string, ArticleExplain>>({})
+  useEffect(() => {
+    if (!lawId) return
+    let alive = true
+    api.lawExplains(lawId).then(
+      (d) => alive && setExplains(d.explains ?? {}),
+      () => { /* 解读库不可用不影响法条阅读 */ },
+    )
+    return () => { alive = false }
+  }, [lawId])
   const no = Number(sp.get('art') ?? '496')
   const article = law ? findArticle(law, no) : undefined
+  // 当前条号的已审核人工解读（决策项4：无则保持 AI 通用指引）
+  const explain = article ? explains[String(article.no)] : undefined
   const [favState, setFavState] = useState(false)
   useEffect(() => { setFavState(lawId ? isFavKey(`law:${lawId}#${no}`) : false) }, [lawId, no])
 
@@ -152,8 +165,20 @@ export default function LawDetail() {
           </div>
         </div>
 
-        {/* 右：AI 解释（明确标注，永不与原文混排）——诚实口径：通用阅读指引，非逐条解释 */}
+        {/* 右：人工通俗解读（已审核才显示）+ AI 通用指引（永不与原文混排）——决策项4 双轨 */}
         <aside style={{ minWidth: 0 }}>
+          {explain && (
+            <div className="card mb-16" style={{ padding: 16 }}>
+              <div className="row mb-8" style={{ gap: 8 }}>
+                <span className="tiny bold">人工通俗解读</span>
+                <span className="bdg bdg-green"><span className="dot" />已审核</span>
+              </div>
+              <div style={{ fontSize: 13.5, lineHeight: 1.9 }}>{explain.text}</div>
+              <div className="tiny mt-8">编写：{explain.author} · 人工审核：{explain.reviewer}{explain.date ? ` · ${explain.date}` : ''}</div>
+              {explain.source_note && <div className="tiny mt-8" style={{ color: 'var(--tx-3)' }}>{explain.source_note}</div>}
+              <div className="tiny mt-8"><Icon name="info" size={12} /> 解读不替代法条原文，不构成法律意见。</div>
+            </div>
+          )}
           <AIBlock label="AI 通用阅读指引（非本条逐条解释）">
             <p>本条位于「{article.chapter.split('>').slice(-1)[0]?.trim()}」。逐条通俗解释尚未接入（见数据源页规划）；以下为通用读法指引，具体含义请以左侧官方原文为准。</p>
             <ul>

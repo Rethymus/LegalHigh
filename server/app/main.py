@@ -24,6 +24,7 @@ from app import (  # noqa: E402
     compare as compare_mod,
     drafting,
     docxgen,
+    explains as explains_mod,
     needs,
     qa,
     research,
@@ -63,6 +64,15 @@ def get_law(law_id: str):
     if law_id not in corpus.laws:
         raise HTTPException(404, "law not found")
     return corpus.laws[law_id]
+
+
+@app.get("/api/laws/{law_id}/explains")
+def law_explains(law_id: str):
+    """法条人工通俗解读（仅 status=approved 且已填审核人；AI 草稿审核前不对外——决策项4 双轨）。"""
+    corpus = get_corpus()
+    if law_id not in corpus.laws:
+        raise HTTPException(404, "law not found")
+    return {"law_id": law_id, "explains": explains_mod.approved_for(law_id)}
 
 
 @app.get("/api/search")

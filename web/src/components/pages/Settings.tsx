@@ -47,6 +47,7 @@ export default function Settings() {
   const [explainLevel, setExplainLevel] = useState(() => localStorage.getItem('le-explain-level') ?? '通俗')
   const [tone, setTone] = useState(() => localStorage.getItem('le-tone-override') ?? 'auto')
   const [motion, setMotion] = useState(() => localStorage.getItem('le-reduce-motion') === '1')
+  const [fontLarge, setFontLarge] = useState(() => localStorage.getItem('le-font-large') === '1')
   const [cSubject, setCSubject] = useState('')
   const [cContent, setCContent] = useState('')
   const [cContact, setCContact] = useState('')
@@ -69,6 +70,7 @@ export default function Settings() {
   useEffect(() => localStorage.setItem('le-explain-level', explainLevel), [explainLevel])
   useEffect(() => { localStorage.setItem('le-tone-override', tone); window.dispatchEvent(new CustomEvent('le-tone-changed')) }, [tone])
   useEffect(() => { localStorage.setItem('le-reduce-motion', motion ? '1' : '0'); document.documentElement.classList.toggle('reduce-motion', motion) }, [motion])
+  useEffect(() => { localStorage.setItem('le-font-large', fontLarge ? '1' : '0'); document.documentElement.classList.toggle('font-large', fontLarge) }, [fontLarge])
 
   return (
     <div className="page">
@@ -167,6 +169,8 @@ export default function Settings() {
                     <option value="dark">强制深色</option>
                   </select>
                 } />
+              <Row icon="eye" t="大字模式（适老化）" d="正文阅读区整体放大 15%，便于视力不佳的用户阅读法条与文书。仅存本机。"
+                ctl={<Switch on={fontLarge} onChange={setFontLarge} />} />
               <Row icon="sparkle" t="强调色" d="Accent Blue #0A84FF（两套模式共用同一语义 Token）。"
                 ctl={<span className="bdg bdg-blue">#0A84FF</span>} />
             </>
