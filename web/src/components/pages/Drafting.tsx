@@ -49,12 +49,25 @@ export default function Drafting() {
     api.draftTemplates().then(
       (d) => {
         setTemplates(d.templates)
-        setPool(d.citation_pool)
+        setPool(d.citation_laws.map((l) => ({ ...l, articles: [] })))  // A7：条文按需加载
         setTplId((cur) => cur ?? d.templates[0]?.template_id ?? null)
+        setPickerLaw((cur) => cur || d.citation_laws[0]?.law_id || '')
       },
       (e) => setError(e instanceof ApiError ? e.message : String(e)),
     )
   }, [])
+
+  // 引用池按需加载：picker 选中某部法律时才取其条文（缓存不重复拉取）
+  useEffect(() => {
+    if (!pickerLaw) return
+    if (pool.find((p) => p.law_id === pickerLaw)?.articles.length) return
+    let alive = true
+    api.draftCitationPool(pickerLaw).then(
+      (d) => alive && setPool((cur) => cur.map((p) => (p.law_id === d.law_id ? { ...p, articles: d.articles } : p))),
+      () => { /* 引用池加载失败不阻塞起草主流程 */ },
+    )
+    return () => { alive = false }
+  }, [pickerLaw, pool])
 
   useEffect(() => { setValues({}); setDraft(null); setRiskFindings(null); setError(null) }, [tplId])
 

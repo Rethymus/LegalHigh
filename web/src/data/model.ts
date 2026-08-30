@@ -51,6 +51,12 @@ export function lawChapters(law: Law): string[] {
   return seen
 }
 
+/** 引注显示标题（D2）：status 含修订年份时并入标题，如《民事诉讼法（2023修正）》 */
+export function lawDisplayTitle(title: string, status?: string): string {
+  const m = status?.match(/（(\d{4}(?:修正|修订))）/)
+  return m ? `${title}（${m[1]}）` : title
+}
+
 /* 检索统一走 server BM25（GET /api/search）：前端子串匹配版本已于 2026-08-30 移除，
    防止双检索路径回归（多词查询在子串匹配下必然空结果，见查漏补缺计划 P0-3）。 */
 

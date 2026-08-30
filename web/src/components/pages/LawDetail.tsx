@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useParams, useSearchParams } from 'react-router-dom'
 import { Icon } from '../icons'
-import { WARM_TIPS, findArticle, findLaw, lawChapters, useLaws } from '../../data/model'
+import { WARM_TIPS, findArticle, findLaw, lawChapters, lawDisplayTitle, useLaws } from '../../data/model'
 import { EmptyState, PageHeader, SkeletonLines, Tabs, useCopy, useToast, ValidityBadge } from '../ui'
 import { AIBlock, CitationChip, OfficialArticle, SourceBadge } from '../domain'
 import { api, isFav as isFavKey, toggleFav, type ArticleExplain } from '../../lib/api'
@@ -78,7 +78,7 @@ export default function LawDetail() {
     <div className="page">
       <PageHeader
         back={<Link to="/laws" className="tiny row" style={{ gap: 4 }}><Icon name="arrowL" size={13} />法规条文</Link>}
-        title={<>《{law.title.replace(/^中华人民共和国/, '')}》{article.label}</>}
+        title={<>《{lawDisplayTitle(law.title, law.status).replace(/^中华人民共和国/, '')}》{article.label}</>}
         sub={article.chapter}
         actions={
           <>

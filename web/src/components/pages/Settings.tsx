@@ -205,8 +205,11 @@ export default function Settings() {
           {sec === 'privacy' && (
             <>
               <div className="sec-h"><span className="sec-t">隐私</span></div>
-              <Row icon="lock" t="数据脱敏" d="上传文档中的个人信息在分析前自动脱敏；可申请删除。" ctl={<Switch on onChange={() => toast('为必选项，不可关闭')} disabled />} />
-              <Row icon="reject" t="拒绝与删除通道" d="对含个人信息的数据行使拒绝/删除权（合规红线）。" ctl={<button className="btn btn-danger btn-sm" onClick={() => toast('已提交删除申请（示例）', 'ok')}>发起申请</button>} />
+              <Row icon="lock" t="数据脱敏" d="上传文档中的个人信息在分析前自动脱敏；分析无状态、不落盘。" ctl={<Switch on onChange={() => toast('为必选项，不可关闭')} disabled />} />
+              <Row icon="download" t="导出我的全部数据" d="审查记录、文书草稿、投诉工单与全量审计，一次下载为 JSON（PIPL 导出权）。"
+                ctl={<button className="btn btn-secondary btn-sm" onClick={() => api.privacyExport().catch((e) => toast(e?.message ?? '导出失败', 'err'))}>导出</button>} />
+              <Row icon="reject" t="拒绝与删除通道" d="逐条删除审查/草稿/工单：入口在「律师工作台」对应行（删除动作写入审计，可追溯）。"
+                ctl={<Link to="/workspace" className="btn btn-danger btn-sm">前往工作台删除</Link>} />
               <div className="mt-16" style={{ borderTop: '1px solid var(--div-soft)', paddingTop: 14 }}>
                 <div className="tiny bold mb-8">投诉与纠错通道（提交后写入工单库并留痕 · 《生成式AI办法》第 14/15 条）</div>
                 <div className="form-grid">

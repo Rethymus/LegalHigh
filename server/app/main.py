@@ -4,6 +4,7 @@
 合规设计：所有产出都带 disclaimer；律师函签发前强制执业律师核验 gate；
 投诉通道真实落库；备案信息如实标注「未接入大模型/待登记」，不虚构备案号。
 """
+import json
 import sys
 from datetime import date
 from pathlib import Path
@@ -219,6 +220,45 @@ def get_review(rid: str):
     return r
 
 
+@app.delete("/api/reviews/{rid}")
+def delete_review(rid: str):
+    """PIPL 删除通道：审查记录级联删除批注；删除动作本身写入 append-only 审计。"""
+    try:
+        storage.delete_review(rid)
+    except KeyError as e:
+        raise HTTPException(404, str(e))
+    return {"deleted": rid}
+
+
+@app.delete("/api/drafts/{did}")
+def delete_draft(did: str):
+    try:
+        storage.delete_draft(did)
+    except KeyError as e:
+        raise HTTPException(404, str(e))
+    return {"deleted": did}
+
+
+@app.delete("/api/complaints/{cid}")
+def delete_complaint(cid: str):
+    try:
+        storage.delete_complaint(cid)
+    except KeyError as e:
+        raise HTTPException(404, str(e))
+    return {"deleted": cid}
+
+
+@app.get("/api/privacy/export")
+def privacy_export():
+    """PIPL 导出通道：全量本机数据 JSON 下载（reviews/annotations/drafts/complaints/audit_log）。"""
+    data = storage.export_all()
+    return Response(
+        content=json.dumps(data, ensure_ascii=False, indent=2),
+        media_type="application/json",
+        headers={"Content-Disposition": 'attachment; filename="legalhigh_data_export.json"'},
+    )
+
+
 class TransitionBody(BaseModel):
     action: str  # adopt / amend / reject / reopen
     actor: str = "律师"
@@ -242,12 +282,22 @@ def review_audit(rid: str):
 
 @app.get("/api/drafts/templates")
 def templates():
+    """模板清单（轻量）：引用池只返回法律目录，条文按需取 /citation-pool/{law_id}（A7）。"""
     corpus = get_corpus()
     return {"templates": list(drafting.TEMPLATES.values()),
-            "citation_pool": [{"law_id": l["law_id"], "title": l["title"],
-                               "articles": [{"no": a["no"], "label": a["label"], "chapter": a["chapter"],
-                                             "excerpt": a["text"][:80]} for a in corpus.laws[l["law_id"]]["articles"]]}
-                              for l in corpus.manifest["laws"]]}
+            "citation_laws": [{"law_id": l["law_id"], "title": l["title"]} for l in corpus.manifest["laws"]]}
+
+
+@app.get("/api/drafts/citation-pool/{law_id}")
+def citation_pool(law_id: str):
+    """单部法律的引用池（A7：按需加载，替代原先全量 8 部随模板下发）。"""
+    corpus = get_corpus()
+    if law_id not in corpus.laws:
+        raise HTTPException(404, "law not found")
+    law = corpus.laws[law_id]
+    return {"law_id": law_id, "title": law["title"],
+            "articles": [{"no": a["no"], "label": a["label"], "chapter": a["chapter"],
+                          "excerpt": a["text"][:80]} for a in law["articles"]]}
 
 
 class DraftBody(BaseModel):

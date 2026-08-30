@@ -130,7 +130,7 @@
     "consoleWarnings": [],
     "pageErrors": [],
     "failedRequests": [],
-    "step1": "no-btn"
+    "step1": "clicked"
   },
   {
     "name": "17-compare",

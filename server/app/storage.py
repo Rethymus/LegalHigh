@@ -238,6 +238,57 @@ def transition_draft(did: str, action: str, actor: str, role: str | None = None,
     return {"draft_id": did, "from": current, "to": target, "actor": actor, "role": role}
 
 
+def delete_review(rid: str, actor: str = "anonymous"):
+    """PIPL 删除通道：删除审查记录及其全部批注（append-only 审计保留删除痕迹）。"""
+    with _lock:
+        conn = get_conn()
+        cur = conn.execute("SELECT id FROM reviews WHERE id=?", (rid,))
+        if not cur.fetchone():
+            raise KeyError(f"review not found: {rid}")
+        with_anno = conn.execute("SELECT COUNT(*) FROM annotations WHERE review_id=?", (rid,)).fetchone()[0]
+        conn.execute("DELETE FROM annotations WHERE review_id=?", (rid,))
+        conn.execute("DELETE FROM reviews WHERE id=?", (rid,))
+        conn.commit()
+    audit(actor, "review", rid, "delete", {"cascade_annotations": with_anno})
+
+
+def delete_draft(did: str, actor: str = "anonymous"):
+    """PIPL 删除通道：删除文书草稿（含其快照）；已签发文书的删除同样留痕。"""
+    with _lock:
+        conn = get_conn()
+        cur = conn.execute("SELECT id, status FROM drafts WHERE id=?", (did,))
+        row = cur.fetchone()
+        if not row:
+            raise KeyError(f"draft not found: {did}")
+        conn.execute("DELETE FROM drafts WHERE id=?", (did,))
+        conn.commit()
+    audit(actor, "draft", did, "delete", {"status_at_delete": row["status"]})
+
+
+def delete_complaint(cid: str, actor: str = "anonymous"):
+    """PIPL 删除通道：删除投诉工单（删除行为本身留痕）。"""
+    with _lock:
+        conn = get_conn()
+        cur = conn.execute("SELECT id FROM complaints WHERE id=?", (cid,))
+        if not cur.fetchone():
+            raise KeyError(f"complaint not found: {cid}")
+        conn.execute("DELETE FROM complaints WHERE id=?", (cid,))
+        conn.commit()
+    audit(actor, "complaint", cid, "delete", {})
+
+
+def export_all() -> dict:
+    """PIPL 导出通道：全量本机数据（不含审计 payload 以外的派生文件），一次导出。"""
+    conn = get_conn()
+    return {
+        "reviews": [dict(r) for r in conn.execute("SELECT * FROM reviews").fetchall()],
+        "annotations": [dict(r) for r in conn.execute("SELECT * FROM annotations").fetchall()],
+        "drafts": [dict(r) for r in conn.execute("SELECT * FROM drafts").fetchall()],
+        "complaints": [dict(r) for r in conn.execute("SELECT * FROM complaints").fetchall()],
+        "audit_log": [dict(r) for r in conn.execute("SELECT * FROM audit_log ORDER BY id").fetchall()],
+    }
+
+
 def create_complaint(contact: str | None, subject: str, content: str) -> str:
     cid = "cp_" + uuid.uuid4().hex[:12]
     with _lock:

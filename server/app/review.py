@@ -172,7 +172,8 @@ def build_checkpoints():
         {"id": "F5", "category": "fee", "risk": "low",
          "title": "金额缺少大写约定（实务建议）",
          "detail": "条款出现小写金额但未见大写金额。实务中大写金额可有效防止篡改与争议（实务建议，不构成法律依据）。",
-         "match": lambda t: bool(re.search(r"(\d+(?:\.\d+)?\s*元|￥|¥)", t)) and not re.search(r"(大写|人民币（大写）)", t),
+         # 大写金额（壹拾万元整等）视为已满足防篡改要求——审查点金标（M6-T5）发现的精度缺口
+         "match": lambda t: bool(re.search(r"(\d+(?:\.\d+)?\s*元|￥|¥)", t)) and not re.search(r"(大写|[壹贰叁肆伍陆柒捌玖拾佰仟万亿]{2,})", t),
          "citation": None,
          "suggestion": "补充大写金额，如「人民币壹万元整（¥10,000.00）」。"},
         {"id": "F6", "category": "fee", "risk": "low",

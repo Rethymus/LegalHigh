@@ -5,7 +5,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { Icon } from '../icons'
-import { useLaws } from '../../data/model'
+import { lawDisplayTitle, useLaws } from '../../data/model'
 import { EmptyState, SkeletonLines, Tabs, useSimLoad, ValidityBadge } from '../ui'
 import { api, ApiError, toggleFav, isFav, type CaseRecord, type SearchHit } from '../../lib/api'
 import { CitationChip, SourceBadge } from '../domain'
@@ -56,7 +56,7 @@ function FavButton({ favKey, item }: { favKey: string; item: Parameters<typeof t
 
 function LawResultCard({ r, q }: { r: ResolvedHit; q: string }) {
   const { hit, law } = r
-  const title = (law?.title ?? hit.law_title).replace(/^中华人民共和国/, '')
+  const title = lawDisplayTitle((law?.title ?? hit.law_title).replace(/^中华人民共和国/, ''), law?.status)
   const to = `/laws/${hit.law_id}?art=${hit.no}`
   return (
     <article className="res-card">
@@ -146,10 +146,11 @@ export default function SearchResults() {
   const [qa, setQa] = useState<QaResult | null>(null)
   const [qaBusy, setQaBusy] = useState(false)
   const [qaError, setQaError] = useState<string | null>(null)
+  // 案例命中同样下推 server（C7：与法条检索同口径；无 q 时返回已核实样本）
   const [allCases, setAllCases] = useState<CaseRecord[]>([])
   useEffect(() => {
-    api.listCases().then((d) => setAllCases(d.cases), () => setAllCases([]))
-  }, [])
+    api.listCases(q.trim()).then((d) => setAllCases(d.cases), () => setAllCases([]))
+  }, [q])
   const runQa = async () => {
     if (!qaQ.trim()) return
     setQaBusy(true); setQaError(null)
@@ -168,8 +169,7 @@ export default function SearchResults() {
   const lawHits = resolved
   const caseHits = useMemo(() => {
     if (!q) return allCases.filter((c) => c.verified).slice(0, 3)
-    const query = q.toLowerCase()
-    return allCases.filter((c) => (c.name + c.cause + c.summary + c.no).toLowerCase().includes(query))
+    return allCases.filter((c) => c.verified || c.sample)  // server 已按 q 过滤；此处仅保留展示口径
   }, [allCases, q])
 
   const counts = {

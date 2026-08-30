@@ -1,0 +1,70 @@
+{
+  "date": "2026-08-30",
+  "laws": {
+    "civl-2020": {
+      "manifest_count": 1260,
+      "actual_count": 1260,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false
+    },
+    "cl-2013": {
+      "manifest_count": 63,
+      "actual_count": 63,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": true
+    },
+    "lcl-2012": {
+      "manifest_count": 98,
+      "actual_count": 98,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false
+    },
+    "ll-2017": {
+      "manifest_count": 60,
+      "actual_count": 60,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": true
+    },
+    "ecom-2018": {
+      "manifest_count": 89,
+      "actual_count": 89,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": true
+    },
+    "pcl-2023": {
+      "manifest_count": 306,
+      "actual_count": 306,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false
+    },
+    "crpl-imp-2024": {
+      "manifest_count": 53,
+      "actual_count": 53,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false
+    },
+    "genai-2023": {
+      "manifest_count": 24,
+      "actual_count": 24,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false
+    }
+  },
+  "problems": []
+}

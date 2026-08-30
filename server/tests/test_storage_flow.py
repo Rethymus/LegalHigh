@@ -105,3 +105,23 @@ def test_complaint_channel(tmp_db):
     assert any(c["id"] == cid for c in items)
     entries = storage.list_audit(None, cid)
     assert entries and entries[0]["action"] == "create"
+
+
+def test_pipl_delete_and_export(tmp_db):
+    """D8 回归：删除通道级联批注且审计留痕；导出通道返回全量数据。"""
+    import json as _json
+    from app import storage as st
+    rid = st.create_review("删除测试", "第一条 价格：总价 100 元。", {"findings": [], "summary": {"high": 0, "medium": 0, "low": 0}})
+    did = st.create_draft("lawyer_letter", {}, {"sections": [{"type": "title", "text": "律师函"}]}, [], {})
+    cid = st.create_complaint(None, "测试投诉", "内容")
+    st.delete_review(rid, actor="用户")
+    st.delete_draft(did, actor="用户")
+    st.delete_complaint(cid, actor="用户")
+    assert st.get_review(rid) is None and st.get_draft(did) is None
+    data = st.export_all()
+    assert data["reviews"] == [] and data["drafts"] == [] and data["complaints"] == []
+    deletes = [e for e in st.list_audit(None, None, limit=200) if e["action"] == "delete"]
+    assert len(deletes) == 3, deletes
+    # 导出含全量审计（append-only 可追溯，含删除痕迹）
+    exported_ids = [e["action"] for e in data["audit_log"]]
+    assert exported_ids.count("delete") == 3

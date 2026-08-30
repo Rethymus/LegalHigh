@@ -74,25 +74,22 @@ export default function CaseSearch() {
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
 
+  // 检索下推 server（C7：/api/cases?q=&level= 与法条检索同一「单一引擎」口径）
   useEffect(() => {
     let alive = true
-    api.listCases().then(
+    const level = tab === '指导性案例' || tab === '外国判例' ? tab : undefined
+    api.listCases(q.trim(), level).then(
       (d) => alive && (setCases(d.cases), setLoading(false)),
       (e) => alive && (setError(e instanceof ApiError ? e.message : String(e)), setLoading(false)),
     )
     return () => { alive = false }
-  }, [])
+  }, [q, tab])
 
   const hits = useMemo(() => {
-    let list = cases
-    if (q.trim()) {
-      const query = q.trim().toLowerCase()
-      list = list.filter((c) => (c.name + c.cause + c.summary + c.no + c.focus.join('')).toLowerCase().includes(query))
-    }
-    if (tab === '指导性案例' || tab === '外国判例') list = list.filter((c) => c.level === tab)
-    if (tab === 'wenshu' || tab === 'alk') list = []
-    return list
-  }, [cases, q, tab])
+    // wenshu / alk 为未接入来源，诚实空态（不虚构数据源）
+    if (tab === 'wenshu' || tab === 'alk') return []
+    return cases
+  }, [cases, tab])
 
   return (
     <div className="page">

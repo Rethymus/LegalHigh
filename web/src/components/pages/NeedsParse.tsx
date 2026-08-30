@@ -8,7 +8,7 @@ import { Link, useSearchParams } from 'react-router-dom'
 import { Icon } from '../icons'
 import { EmptyState, PageHeader, SkeletonLines, useToast, ValidityBadge } from '../ui'
 import { CitationChip, SourceBadge } from '../domain'
-import { WARM_TIPS } from '../../data/model'
+import { WARM_TIPS , lawDisplayTitle } from '../../data/model'
 import { api, ApiError, loadAiProfile, type NeedsParseResult } from '../../lib/api'
 
 export default function NeedsParse() {
@@ -113,7 +113,7 @@ export default function NeedsParse() {
               <div key={`${a.law_id}-${a.article_no}`} className="ot mb-12">
                 <div className="ot-h">
                   <span className="ot-tag">官方原文</span>
-                  <b style={{ fontSize: 13.5 }}>《{a.law_title.replace(/^中华人民共和国/, '')}》{a.article_label}</b>
+                  <b style={{ fontSize: 13.5 }}>《{lawDisplayTitle(a.law_title, a.status).replace(/^中华人民共和国/, '')}》{a.article_label}</b>
                   <ValidityBadge v={a.status} />
                   <span className="ot-src">相关度 {a.score}</span>
                 </div>

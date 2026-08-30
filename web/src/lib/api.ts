@@ -163,10 +163,30 @@ export const api = {
       body: JSON.stringify({ action, actor, amended_text: amendedText }),
     }),
   reviewAudit: (rid: string) => req<{ entries: AuditEntry[] }>(`/reviews/${rid}/audit`),
+  /** PIPL 删除通道：删除审查记录（级联批注，审计留痕） */
+  deleteReview: (rid: string) => req<{ deleted: string }>(`/reviews/${rid}`, { method: 'DELETE' }),
+  /** PIPL 删除通道：删除文书草稿 */
+  deleteDraft: (did: string) => req<{ deleted: string }>(`/drafts/${did}`, { method: 'DELETE' }),
+  /** PIPL 删除通道：删除投诉工单 */
+  deleteComplaint: (cid: string) => req<{ deleted: string }>(`/complaints/${cid}`, { method: 'DELETE' }),
+  /** PIPL 导出通道：全量本机数据 JSON 下载 */
+  privacyExport: async (): Promise<void> => {
+    const res = await fetch(`${API_BASE}/privacy/export`)
+    if (!res.ok) throw new ApiError(res.status, `导出失败（HTTP ${res.status}）`)
+    const blob = await res.blob()
+    const a = document.createElement('a')
+    a.href = URL.createObjectURL(blob)
+    a.download = 'legalhigh_data_export.json'
+    a.click()
+    URL.revokeObjectURL(a.href)
+  },
 
   // 文书起草
   draftTemplates: () =>
-    req<{ templates: DocTemplate[]; citation_pool: { law_id: string; title: string; articles: { no: number; label: string; chapter: string; excerpt: string }[] }[] }>('/drafts/templates'),
+    req<{ templates: DocTemplate[]; citation_laws: { law_id: string; title: string }[] }>('/drafts/templates'),
+  /** 单部法律的引用池（A7 按需加载） */
+  draftCitationPool: (lawId: string) =>
+    req<{ law_id: string; title: string; articles: { no: number; label: string; chapter: string; excerpt: string }[] }>(`/drafts/citation-pool/${encodeURIComponent(lawId)}`),
   createDraft: (templateId: string, fields: Record<string, unknown>) =>
     req<{ draft_id: string; status: string; content: DraftContent }>('/drafts', {
       method: 'POST',
