@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Icon } from '../icons'
 import { Dialog, EmptyState, PageHeader, SkeletonLines, Tabs, fmtTime, useToast } from '../ui'
-import { api, ApiError, type AuditEntry } from '../../lib/api'
+import { api, ApiError, loadIdentity, type AuditEntry } from '../../lib/api'
 
 const LS_LIST = 'lh:research:list'
 
@@ -19,7 +19,7 @@ export default function Workspace() {
   const [audit, setAudit] = useState<AuditEntry[] | null>(null)
   const [researchList, setResearchList] = useState<{ rid: string; question: string; ts: string }[]>([])
   const [explains, setExplains] = useState<{ law_id: string; no: number; text: string; author: string; date?: string; source_note?: string }[] | null>(null)
-  const [reviewerName, setReviewerName] = useState('')
+  const [reviewerName, setReviewerName] = useState(() => loadIdentity().name)
   const loadExplains = () => api.explainsQueue().then((d) => setExplains(d.queue), (e) => toast(e instanceof ApiError ? e.message : String(e), 'err'))
   const [pending, setPending] = useState<{ kind: 'review' | 'draft' | 'complaint'; id: string; label: string } | null>(null)
   const reload = () => {

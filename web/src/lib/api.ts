@@ -382,6 +382,20 @@ export interface NeedsParseResult {
   disclaimer: string
 }
 
+/* ---------- 工作身份档案（决策9 最小可行版：本机自报，内网部署后升级为认证账号） ----------
+   审核人/核验人/复核人字段默认取此身份，保证担责字段的一致性；
+   注意：本机自报不等于认证身份——多用户场景须待最小账号体系（M7-T3 前置）。 */
+export interface WorkIdentity { name: string; role: string }
+const IDENTITY_KEY = 'lh:identity'
+export function loadIdentity(): WorkIdentity {
+  try {
+    return { name: '', role: '执业律师', ...JSON.parse(localStorage.getItem(IDENTITY_KEY) ?? '{}') }
+  } catch { return { name: '', role: '执业律师' } }
+}
+export function saveIdentity(v: WorkIdentity) {
+  localStorage.setItem(IDENTITY_KEY, JSON.stringify(v))
+}
+
 /* ---------- AI 模型档案（仅存本机 localStorage，密钥随请求瞬态发送） ---------- */
 export interface AiProfile {
   provider_id: string

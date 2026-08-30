@@ -4,7 +4,7 @@ import { useEffect, useState, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { Icon, type IconName } from '../icons'
 import { PageHeader, Switch, useToast } from '../ui'
-import { api, ApiError, loadAiProfile, saveAiProfile } from '../../lib/api'
+import { api, ApiError, loadAiProfile, loadIdentity, saveAiProfile, saveIdentity, type WorkIdentity } from '../../lib/api'
 import { useLaws } from '../../data/model'
 
 const SECTIONS: { key: string; label: string; icon: IconName }[] = [
@@ -49,6 +49,8 @@ export default function Settings() {
   const [tone, setTone] = useState(() => localStorage.getItem('le-tone-override') ?? 'auto')
   const [motion, setMotion] = useState(() => localStorage.getItem('le-reduce-motion') === '1')
   const [fontLarge, setFontLarge] = useState(() => localStorage.getItem('le-font-large') === '1')
+  const [identity, setIdentity] = useState<WorkIdentity>(() => loadIdentity())
+  useEffect(() => { saveIdentity(identity) }, [identity])
   const [cSubject, setCSubject] = useState(() => (new URLSearchParams(window.location.search).get('feedback') === 'mobile' ? '移动端体验反馈' : ''))
   const [cKind] = useState<'general' | 'mobile'>(() => (new URLSearchParams(window.location.search).get('feedback') === 'mobile' ? 'mobile' : 'general'))
   const [cContent, setCContent] = useState('')
@@ -190,6 +192,15 @@ export default function Settings() {
 
           {sec === 'account' && (
             <>
+              <div className="sec-h"><span className="sec-t">工作身份</span></div>
+              <Row icon="user" t="姓名（担责署名）" d="审核人/核验人/复核人字段默认使用此姓名。本机自报，内网部署后升级为认证账号。"
+                ctl={<input className="inp" style={{ width: 180 }} value={identity.name} placeholder="真实姓名"
+                  onChange={(e) => setIdentity({ ...identity, name: e.target.value })} />} />
+              <Row icon="briefcase" t="角色" d="核验类动作受角色 gate 约束（如「仅执业律师可核验」）。"
+                ctl={<select className="sel" style={{ width: 160 }} value={identity.role}
+                  onChange={(e) => setIdentity({ ...identity, role: e.target.value })}>
+                  <option>执业律师</option><option>法务</option><option>其他</option>
+                </select>} />
               <div className="sec-h"><span className="sec-t">账号</span></div>
               <Row icon="user" t="Alex Wang（演示账号）" d="执业律师 · 原型无真实用户体系；正式版接入统一身份认证。" ctl={<button className="btn btn-ghost btn-sm">编辑资料</button>} />
               <Row icon="logout" t="退出登录" d="结束本设备会话。" ctl={<button className="btn btn-danger btn-sm">退出</button>} />

@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom'
 import { Icon, type IconName } from '../icons'
 import { PageHeader, useToast, EmptyState } from '../ui'
 import { CitationChip } from '../domain'
-import { api, ApiError, type Citation, type DocTemplate, type Draft, type DraftBlock, type Finding } from '../../lib/api'
+import { api, ApiError, loadIdentity, type Citation, type DocTemplate, type Draft, type DraftBlock, type Finding } from '../../lib/api'
 
 const TEMPLATE_ICONS: Record<string, IconName> = { lawyer_letter: 'send', contract: 'docShield', civil_complaint: 'gavel' }
 // 设计板左侧分类：前 3 类映射 server 真实模板；后 2 类为规划（灰态，不虚构模板）
@@ -33,6 +33,7 @@ export default function Drafting() {
   const toast = useToast()
   const [templates, setTemplates] = useState<DocTemplate[]>([])
   const [pool, setPool] = useState<{ law_id: string; title: string; articles: { no: number; label: string; excerpt: string }[] }[]>([])
+    const _id = loadIdentity()
   const [tplId, setTplId] = useState<string | null>(null)
   const [values, setValues] = useState<Record<string, string | string[] | { law_id: string; article_no: number }[]>>({})
   const [draft, setDraft] = useState<Draft | null>(null)
@@ -128,8 +129,8 @@ export default function Drafting() {
     setBusy(true)
     try {
       const res = action === 'verify'
-        ? await api.verifyDraft(draft.id, 'Alex Wang（演示账号）')
-        : await api.issueDraft(draft.id, 'Alex Wang（演示账号）')
+        ? await api.verifyDraft(draft.id, _id.name || '未署名', _id.role)
+        : await api.issueDraft(draft.id, _id.name || '未署名', _id.role)
       setDraft({ ...draft, status: res.to as Draft['status'] })
       toast(action === 'verify' ? '已通过执业律师核验' : '已签发：文书状态 issued，可对外交付', 'ok')
     } catch (e) {

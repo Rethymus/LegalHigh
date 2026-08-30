@@ -7,7 +7,7 @@ import { Icon } from '../icons'
 import { CONTRACTS } from '../../data/model'
 import { EmptyState, PageHeader, useToast, fmtTime } from '../ui'
 import { CitationChip } from '../domain'
-import { api, ApiError, type Annotation, type AuditEntry, type Finding, type Review } from '../../lib/api'
+import { api, ApiError, loadIdentity, type Annotation, type AuditEntry, type Finding, type Review } from '../../lib/api'
 
 const CATEGORY_LABEL: Record<string, string> = { fee: '费用', account: '账户', liability: '责任' }
 const STATE_LABEL: Record<Annotation['state'], { label: string; cls: string }> = {
@@ -46,7 +46,8 @@ export default function ContractReview() {
   const [activeFinding, setActiveFinding] = useState<string | null>(null)
   const [amending, setAmending] = useState<string | null>(null)
   const [amendText, setAmendText] = useState('')
-  const [actor, setActor] = useState('Alex Wang（演示账号）')
+  const _id = loadIdentity()
+  const [actor, setActor] = useState(_id.name ? `${_id.name}（${_id.role}）` : 'Alex Wang（演示账号）')
   // 审查文本：初始为样例合同（示例），可直接修改或粘贴替换为真实合同文本
   const [reviewText, setReviewText] = useState(sample?.text ?? '')
 
