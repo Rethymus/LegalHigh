@@ -5,7 +5,7 @@ __pycache__/
 .pytest_cache/
 
 # Node
-web/node_modules/
+node_modules/
 web/dist/
 
 # 运行时数据（语料由 build_corpus.py 从证据快照重建；应用库为本地状态）
