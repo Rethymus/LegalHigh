@@ -134,6 +134,7 @@ export default function ContractReview() {
               <input className="inp" style={{ width: 170, height: 30 }} value={actor} onChange={(e) => setActor(e.target.value)} />
             </label>
             {review && <button className="btn btn-ghost btn-sm" disabled={busy} onClick={() => review && load(review.id)}><Icon name="refresh" size={13} />刷新</button>}
+            {review && <a className="btn btn-secondary btn-sm" href={api.reviewDocxUrl(review.id)}><Icon name="download" size={13} />下载修订稿（Word）</a>}
             {!rid && <button className="btn btn-primary" disabled={busy} onClick={createReview}><Icon name="zap" size={14} />{busy ? '审查中…' : '发起 AI 审查'}</button>}
           </>
         }

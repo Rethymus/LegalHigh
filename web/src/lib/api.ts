@@ -163,6 +163,14 @@ export const api = {
       body: JSON.stringify({ action, actor, amended_text: amendedText }),
     }),
   reviewAudit: (rid: string) => req<{ entries: AuditEntry[] }>(`/reviews/${rid}/audit`),
+  /** 审查记录 DOCX（Word 修订双轨：AI 建议以 w:ins 修订插入写入） */
+  reviewDocxUrl: (rid: string) => `${API_BASE}/reviews/${rid}/docx`,
+  /** 解读审核队列（草稿可见于审核面，法条页仍不展示） */
+  explainsQueue: () => req<{ queue: { law_id: string; no: number; text: string; author: string; date?: string; source_note?: string }[] }>('/explains/queue'),
+  /** 审核动作：approve 须填真实审核人；写入审计 */
+  reviewExplain: (lawId: string, no: number, action: 'approve' | 'reopen', reviewer: string) =>
+    req<{ status: string }>(`/explains/${encodeURIComponent(lawId)}/${no}`, { method: 'PATCH', body: JSON.stringify({ action, reviewer }) }),
+
   /** PIPL 删除通道：删除审查记录（级联批注，审计留痕） */
   deleteReview: (rid: string) => req<{ deleted: string }>(`/reviews/${rid}`, { method: 'DELETE' }),
   /** PIPL 删除通道：删除文书草稿 */

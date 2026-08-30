@@ -1,0 +1,56 @@
+# LegalHigh 五道质量门（与本地 run_qa.cmd 一致）——云端 CI 预备文件
+# 说明（决策项3·选项C）：本文件为「就绪待启用」状态——仅当代码推送到 GitHub 等远端时
+# 才会生效；数据/代码是否托管属业主决策（决策清单-2026-08-30.md 决策3），本地不受影响。
+# Windows 依赖：server/.venv 由 cache/安装步生成；视觉巡检在 CI 中默认以 fast 模式跳过
+# （无头 Chrome 在 ubuntu runner 需另配，先跑四道门）。
+name: qa
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install server deps
+        run: |
+          cd server
+          python -m venv .venv
+          .venv/bin/pip install fastapi "uvicorn[standard]" rank-bm25 python-docx pytest httpx openai
+
+      - name: Gate 1 pytest（含金标 100 组评测门）
+        run: |
+          cd server
+          .venv/bin/python -m pytest tests -q
+
+      - name: Gate 2 web build（tsc + vite）
+        run: |
+          cd web
+          npm install
+          npm run build
+
+      - name: Gate 3 data-discipline grep
+        run: |
+          cd web
+          node scripts/qa_gates.mjs
+
+      - name: Gate 4 WCAG contrast（--strict）
+        run: |
+          cd web
+          node scripts/qa_contrast.mjs --strict
+
+      # Gate 5 视觉巡检：CI 需 headless Chrome + 前后端服务，先以 fast 语义跳过；
+      # 启用方法：装 chromium（actions/setup-chrome）→ 起 uvicorn+vite → node scripts/qa_shots.mjs --strict

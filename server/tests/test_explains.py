@@ -37,3 +37,29 @@ def test_explain_texts_stay_within_source():
         assert not REDLINE_RE.search(e["text"]), e["law_id"]
         if e["status"] == "draft":
             assert "AI" in e["author"], e
+
+
+def test_review_workflow_approve_and_reopen(tmp_path, monkeypatch):
+    """审核工作流回归（在 tmp 副本上操作，绝不污染真实解读库）：
+    approve 须填审核人→对外可见；reopen→重新隐藏。"""
+    import json as _json
+    import shutil as _shutil
+    import pytest
+    from app import storage as st
+    tmp_file = tmp_path / "article_explains.json"
+    _shutil.copy(explains.DATA_PATH, tmp_file)
+    monkeypatch.setattr(explains, "DATA_PATH", tmp_file)
+    explains.load_explains.cache_clear()
+    try:
+        queue = explains.review_queue()
+        assert queue, "种子应含 draft"
+        target = queue[0]
+        law_id, no = target["law_id"], int(target["no"])
+        with pytest.raises(ValueError):
+            explains.set_review(law_id, no, "approve", "  ")
+        explains.set_review(law_id, no, "approve", "测试审核人")
+        assert no in explains.approved_for(law_id)
+        explains.set_review(law_id, no, "reopen", "测试审核人")
+        assert no not in explains.approved_for(law_id)
+    finally:
+        explains.load_explains.cache_clear()

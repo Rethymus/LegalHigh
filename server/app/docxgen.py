@@ -127,3 +127,57 @@ def generate_docx(draft: dict) -> bytes:
     buf = io.BytesIO()
     doc.save(buf)
     return buf.getvalue()
+
+
+# ---------------- 审查记录 DOCX（Word 修订双轨·M7-T1 前半） ----------------
+
+def _add_tracked_insert(paragraph, text: str, author: str, date: str, doc):
+    """在段落中追加一段「修订插入」文本（w:ins 包裹 w:r）——Word/WPS 打开即为修订标记，
+    律师可接受/拒绝。python-docx 无原生 API，直接操作底层 XML。"""
+    from docx.oxml.ns import qn
+    run = paragraph.add_run(text)
+    r_el = run._r
+    ins = r_el.makeelement(qn("w:ins"), {})
+    ins.set(qn("w:id"), str(doc._next_id))
+    doc._next_id += 1
+    ins.set(qn("w:author"), author)
+    ins.set(qn("w:date"), date)
+    r_el.addprevious(ins)
+    ins.append(r_el)
+    return run
+
+
+def generate_review_docx(review: dict) -> bytes:
+    """审查记录导出：合同条款原文 + 每条 AI 建议以「修订插入」写入（作者=LegalHigh AI）。
+    修订版式由结构化数据（findings.suggestion）决定，不让自由生成决定版式。"""
+    import re
+    from datetime import datetime, timezone
+    from docx import Document
+    doc = Document()
+    doc._next_id = 1
+    date = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    doc.add_heading(review.get("title") or "合同审查记录", level=0)
+    doc.add_paragraph(f"审查时间：{review.get('created_at', '')}　审查点：{review['result']['engine_meta']['checkpoint_count']} 个　风险：高 {review['result']['summary']['high']} / 中 {review['result']['summary']['medium']} / 低 {review['result']['summary']['low']}")
+    by_clause: dict = {}
+    for f in review["result"]["findings"]:
+        by_clause.setdefault(f.get("clause_id") or "__whole__", []).append(f)
+    for c in review["result"]["clauses"]:
+        doc.add_heading(c.get("heading") or c["label"], level=2)
+        p = doc.add_paragraph(c["text"])
+        for f in by_clause.get(c["id"], []):
+            sug = f.get("suggestion", "").strip()
+            if not sug:
+                continue
+            p2 = doc.add_paragraph()
+            p2.add_run(f"[{f['checkpoint_title']}｜{ {'high': '高风险', 'medium': '中风险', 'low': '低风险' }[f['risk']]}] ")
+            _add_tracked_insert(p2, f"建议：{sug}", "LegalHigh AI", date, doc)
+    for f in by_clause.get("__whole__", []):
+        p3 = doc.add_paragraph()
+        p3.add_run(f"[全文级｜{f['checkpoint_title']}] ")
+        _add_tracked_insert(p3, f"建议：{f['suggestion']}", "LegalHigh AI", date, doc)
+    doc.add_paragraph(review["result"]["disclaimer"])
+
+    from io import BytesIO
+    buf = BytesIO()
+    doc.save(buf)
+    return buf.getvalue()

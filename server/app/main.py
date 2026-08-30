@@ -67,6 +67,31 @@ def get_law(law_id: str):
     return corpus.laws[law_id]
 
 
+class ExplainReviewBody(BaseModel):
+    action: str  # approve / reopen
+    reviewer: str
+
+
+@app.patch("/api/explains/{law_id}/{no}")
+def review_explain(law_id: str, no: int, body: ExplainReviewBody):
+    """解读审核（决策项4 双轨的人工一环）：approve 须填真实审核人；动作写入 append-only 审计。"""
+    try:
+        e = explains_mod.set_review(law_id, no, body.action, body.reviewer)
+    except KeyError as ex:
+        raise HTTPException(404, str(ex))
+    except ValueError as ex:
+        raise HTTPException(422, str(ex))
+    storage.audit(body.reviewer or "anonymous", "explain", f"{law_id}#{no}",
+                  f"explain_{body.action}", {"status": e["status"]})
+    return {"law_id": law_id, "no": no, "status": e["status"], "reviewer": e.get("reviewer")}
+
+
+@app.get("/api/explains/queue")
+def explains_queue():
+    """待审核队列（审核工作台数据源；草稿可见于审核面，仍不进入对外法条页）。"""
+    return {"queue": explains_mod.review_queue()}
+
+
 @app.get("/api/laws/{law_id}/explains")
 def law_explains(law_id: str):
     """法条人工通俗解读（仅 status=approved 且已填审核人；AI 草稿审核前不对外——决策项4 双轨）。"""
@@ -218,6 +243,20 @@ def get_review(rid: str):
     if not r:
         raise HTTPException(404, "review not found")
     return r
+
+
+@app.get("/api/reviews/{rid}/docx")
+def review_docx(rid: str):
+    """审查记录 DOCX 导出：AI 建议以 Word 修订插入（w:ins）写入，律师可在 Word/WPS 中接受或拒绝。"""
+    r = storage.get_review(rid)
+    if not r:
+        raise HTTPException(404, "review not found")
+    data = docxgen.generate_review_docx(r)
+    return Response(
+        content=data,
+        media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        headers={"Content-Disposition": f'attachment; filename="review_{rid}.docx"'},
+    )
 
 
 @app.delete("/api/reviews/{rid}")

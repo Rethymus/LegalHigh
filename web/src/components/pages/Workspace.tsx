@@ -18,6 +18,9 @@ export default function Workspace() {
   const [complaints, setComplaints] = useState<{ id: string; created_at: string; subject: string; status: string }[] | null>(null)
   const [audit, setAudit] = useState<AuditEntry[] | null>(null)
   const [researchList, setResearchList] = useState<{ rid: string; question: string; ts: string }[]>([])
+  const [explains, setExplains] = useState<{ law_id: string; no: number; text: string; author: string; date?: string; source_note?: string }[] | null>(null)
+  const [reviewerName, setReviewerName] = useState('')
+  const loadExplains = () => api.explainsQueue().then((d) => setExplains(d.queue), (e) => toast(e instanceof ApiError ? e.message : String(e), 'err'))
   const [pending, setPending] = useState<{ kind: 'review' | 'draft' | 'complaint'; id: string; label: string } | null>(null)
   const reload = () => {
     const fail = (e: unknown) => toast(e instanceof ApiError ? e.message : String(e), 'err')
@@ -25,6 +28,7 @@ export default function Workspace() {
     api.listDrafts().then((d) => setDrafts(d.drafts), fail)
     api.listComplaints().then((d) => setComplaints(d.complaints), fail)
     api.auditAll(10).then((d) => setAudit(d.entries), fail)
+    if (tab === 'explains') api.explainsQueue().then((d) => setExplains(d.queue), fail)
   }
   const confirmDelete = () => {
     if (!pending) return
@@ -75,7 +79,7 @@ export default function Workspace() {
           <div className="panel-h" style={{ padding: 0 }}>
             <div style={{ flex: 1, padding: '0 12px' }}>
               <Tabs
-                tabs={[{ key: 'reviews', label: '审查记录' }, { key: 'drafts', label: '文书草稿' }, { key: 'complaints', label: '投诉工单' }]}
+                tabs={[{ key: 'reviews', label: '审查记录' }, { key: 'drafts', label: '文书草稿' }, { key: 'complaints', label: '投诉工单' }, { key: 'explains', label: '解读审核' }]}
                 active={tab} onChange={setTab}
               />
             </div>
@@ -122,6 +126,30 @@ export default function Workspace() {
                     <button className="btn btn-ghost btn-sm" onClick={() => setPending({ kind: 'complaint', id: c.id, label: c.subject })} title="删除（PIPL 删除通道，写入审计）"><Icon name="trash" size={13} /></button>
                   </div>
                 )) : <EmptyState icon="send" title="暂无投诉工单" desc="设置 → Privacy 提交后在此展示（真实落库）。" />
+            )}
+            {tab === 'explains' && (
+              explains === null ? <SkeletonLines n={4} tall /> :
+                explains.length ? explains.map((e) => (
+                  <div key={`${e.law_id}-${e.no}`} className="lrow" style={{ border: '1px solid var(--div-soft)', marginBottom: 10, cursor: 'default', alignItems: 'flex-start' }}>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div className="row mb-8" style={{ gap: 6 }}>
+                        <span className="bdg bdg-orange">待审核</span>
+                        <Link to={`/laws/${e.law_id}?art=${e.no}`} className="tiny" style={{ color: 'var(--accent-text)' }}>《{e.law_id}》第{e.no}条</Link>
+                      </div>
+                      <div className="tiny" style={{ lineHeight: 1.8 }}>{e.text}</div>
+                      <div className="tiny mt-8" style={{ color: 'var(--tx-3)' }}>起草：{e.author}{e.date ? ` · ${e.date}` : ''}{e.source_note ? ` · ${e.source_note}` : ''}</div>
+                      <div className="row mt-8" style={{ gap: 6 }}>
+                        <input className="inp" style={{ width: 160, height: 30 }} placeholder="审核人真实姓名（担责）" value={reviewerName} onChange={(ev) => setReviewerName(ev.target.value)} />
+                        <button className="btn btn-primary btn-sm" disabled={!reviewerName.trim()} onClick={() =>
+                          api.reviewExplain(e.law_id, e.no, 'approve', reviewerName.trim()).then(
+                            () => { toast(`已审核通过：${e.law_id}#${e.no}（法条页将展示，审核人：${reviewerName.trim()}）`, 'ok'); loadExplains() },
+                            (er) => toast(er instanceof ApiError ? er.message : String(er), 'err'),
+                          )}><Icon name="verify" size={12} />审核通过</button>
+                        <Link to={`/laws/${e.law_id}?art=${e.no}`} className="btn btn-ghost btn-sm">对照原文</Link>
+                      </div>
+                    </div>
+                  </div>
+                )) : <EmptyState icon="verify" title="解读队列已清空" desc="全部 AI 起草解读均已人工审核。" />
             )}
           </div>
         </section>

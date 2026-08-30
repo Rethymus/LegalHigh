@@ -125,3 +125,21 @@ def test_pipl_delete_and_export(tmp_db):
     # 导出含全量审计（append-only 可追溯，含删除痕迹）
     exported_ids = [e["action"] for e in data["audit_log"]]
     assert exported_ids.count("delete") == 3
+
+
+def test_review_docx_tracked_insertions(tmp_db):
+    """D9 前半回归：审查 DOCX 导出含 w:ins 修订插入（作者=LegalHigh AI）与建议文本。"""
+    import io as _io
+    import re as _re
+    import zipfile as _zip
+    from app import review as _review, docxgen as _docxgen
+    text = "第一条 服务：乙方提供咨询服务。第二条 免责：乙方对一切损失概不负责。"
+    rid = storage.create_review("修订导出测试", text, _review.analyze_contract(text, "修订导出测试"))
+    r = storage.get_review(rid)
+    assert r["result"]["findings"], "样例应至少触发一条审查点"
+    data = _docxgen.generate_review_docx(r)
+    assert data[:2] == b"PK"
+    xml = _zip.ZipFile(_io.BytesIO(data)).read("word/document.xml").decode("utf-8")
+    ins = _re.findall(r'<w:ins [^>]*w:author="LegalHigh AI"', xml)
+    assert len(ins) == len(r["result"]["findings"]), (len(ins), len(r["result"]["findings"]))
+    assert "建议：" in xml

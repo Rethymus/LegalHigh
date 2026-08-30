@@ -24,6 +24,31 @@ def load_explains() -> list[dict]:
     return data["explains"]
 
 
+def review_queue() -> list[dict]:
+    """待审核队列（draft 条目，供审核工作台）。"""
+    return [e for e in load_explains() if e.get("status") != "approved" or not e.get("reviewer")]
+
+
+def set_review(law_id: str, no: int, action: str, reviewer: str) -> dict:
+    """审核动作：approve（draft→approved，须填真实审核人）/ reopen（approved→draft 重新审核）。
+    写入 article_explains.json 的同时，审核责任字段（reviewer）落库——双轨的「人工」一环。"""
+    data = json.loads(DATA_PATH.read_text(encoding="utf-8"))
+    for e in data["explains"]:
+        if e["law_id"] == law_id and int(e["no"]) == no:
+            if action == "approve":
+                if not reviewer.strip():
+                    raise ValueError("approve 须填写真实审核人姓名（审核责任不可空）")
+                e["status"], e["reviewer"] = "approved", reviewer.strip()
+            elif action == "reopen":
+                e["status"], e["reviewer"] = "draft", None
+            else:
+                raise ValueError(f"未知审核动作: {action}")
+            DATA_PATH.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+            load_explains.cache_clear()
+            return e
+    raise KeyError(f"explain not found: {law_id}#{no}")
+
+
 def approved_for(law_id: str) -> dict[int, dict]:
     """指定法律的已审核解读（key=条号）。draft/缺 reviewer 的条目一律不返回。"""
     out: dict[int, dict] = {}
