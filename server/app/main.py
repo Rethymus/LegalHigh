@@ -24,6 +24,7 @@ from app import (  # noqa: E402
     cases as cases_mod,
     compare as compare_mod,
     drafting,
+    docx_return,
     docxgen,
     explains as explains_mod,
     needs,
@@ -257,6 +258,24 @@ def review_docx(rid: str):
         media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
         headers={"Content-Disposition": f'attachment; filename="review_{rid}.docx"'},
     )
+
+
+from fastapi import UploadFile, File  # noqa: E402
+
+
+@app.post("/api/reviews/{rid}/docx-return")
+async def review_docx_return(rid: str, file: UploadFile = File(...)):
+    """律师回传修订稿（M7-T1 后半）：解析 Word 修订状态（接受→采纳 / 拒绝→驳回 / 未处理→不动），
+    经既有批注状态机流转并写审计；非法流转如实记 skipped。"""
+    r = storage.get_review(rid)
+    if not r:
+        raise HTTPException(404, "review not found")
+    parsed = docx_return.parse_review_docx(await file.read())
+    summary = docx_return.apply_return(rid, parsed, r)
+    storage.audit("docx回传", "review", rid, "docx_return", {
+        "accepted": summary["accepted_n"], "rejected": summary["rejected_n"],
+        "pending": summary["pending"], "skipped": len(summary["skipped"])})
+    return summary
 
 
 @app.delete("/api/reviews/{rid}")

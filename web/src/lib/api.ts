@@ -165,6 +165,18 @@ export const api = {
   reviewAudit: (rid: string) => req<{ entries: AuditEntry[] }>(`/reviews/${rid}/audit`),
   /** 审查记录 DOCX（Word 修订双轨：AI 建议以 w:ins 修订插入写入） */
   reviewDocxUrl: (rid: string) => `${API_BASE}/reviews/${rid}/docx`,
+  /** 律师回传修订稿（M7-T1 后半）：解析 Word 修订状态并同步批注状态机 */
+  reviewDocxReturn: async (rid: string, file: File): Promise<{ accepted: string[]; rejected: string[]; pending: number; skipped: { id: string; reason: string }[]; accepted_n: number; rejected_n: number }> => {
+    const fd = new FormData()
+    fd.append('file', file)
+    const res = await fetch(`${API_BASE}/reviews/${rid}/docx-return`, { method: 'POST', body: fd })
+    if (!res.ok) {
+      let detail = `HTTP ${res.status}`
+      try { const b = await res.json(); if (typeof b?.detail === 'string') detail = b.detail } catch { /* 保留状态码 */ }
+      throw new ApiError(res.status, detail)
+    }
+    return res.json()
+  },
   /** 解读审核队列（草稿可见于审核面，法条页仍不展示） */
   explainsQueue: () => req<{ queue: { law_id: string; no: number; text: string; author: string; date?: string; source_note?: string }[] }>('/explains/queue'),
   /** 审核动作：approve 须填真实审核人；写入审计 */

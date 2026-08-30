@@ -143,3 +143,68 @@ def test_review_docx_tracked_insertions(tmp_db):
     ins = _re.findall(r'<w:ins [^>]*w:author="LegalHigh AI"', xml)
     assert len(ins) == len(r["result"]["findings"]), (len(ins), len(r["result"]["findings"]))
     assert "建议：" in xml
+
+
+def test_docx_return_roundtrip(tmp_db):
+    """D9 后半回归：导出→（模拟律师接受 f1、拒绝 f2）→回传解析→状态机同步→审计。"""
+    import io as _io
+    import json as _json
+    import zipfile as _zip
+    from app import docx_return, docxgen, review as _review
+    W = "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}"
+
+    text = ("第一条 服务：乙方提供咨询服务。"
+            "第二条 违约：任何一方违约的，按合同总价的 30% 支付违约金。"
+            "第三条 免责：乙方对一切损失概不负责。")
+    rid = storage.create_review("回传验证", text, _review.analyze_contract(text, "回传验证"))
+    review = storage.get_review(rid)
+    findings = review["result"]["findings"]
+    assert len(findings) >= 2
+    data = docxgen.generate_review_docx(review)
+
+    # raw 导出：全部 pending
+    parsed = docx_return.parse_review_docx(data)
+    assert all(v == "pending" for v in parsed.values()) and parsed, parsed
+
+    # 模拟律师在 Word 中：接受 f1（去掉 w:ins 包裹、保留文本）、拒绝 f2（清空文本）
+    doc = _review  # noqa: F841
+    from docx import Document as _Doc
+    document = _Doc(_io.BytesIO(data))
+    body = document.element.body
+    for fid, keep in (("f1", True), ("f2", False)):
+        bs = body.find(f'.//{W}bookmarkStart[@{W}name="LH_{fid}"]')
+        assert bs is not None, fid
+        be = body.find(f'.//{W}bookmarkEnd[@{W}id="{bs.get(W + "id")}"]')
+        # 区间内的 w:ins：keep=True 解包（保留 w:r），keep=False 清空其中的 w:t
+        started = False
+        for el in body.iterchildren():
+            if el is bs:
+                started = True
+                continue
+            if el is be:
+                break
+            if not started:
+                continue
+            for ins in list(el.iter(f"{W}ins")):
+                if keep:
+                    parent = el  # ins 的宿主段落
+                    for r_el in list(ins.findall(f"{W}r")):
+                        parent.append(r_el)  # 移出修订标记 → 视为接受
+                    el.remove(ins)
+                else:
+                    for t_el in ins.iter(f"{W}t"):
+                        t_el.text = ""
+    buf = _io.BytesIO()
+    document.save(buf)
+    returned = buf.getvalue()
+
+    parsed2 = docx_return.parse_review_docx(returned)
+    assert parsed2.get("f1") == "accepted", parsed2
+    assert parsed2.get("f2") == "rejected", parsed2
+
+    summary = docx_return.apply_return(rid, parsed2, storage.get_review(rid))
+    assert summary["accepted"] == ["f1"] and summary["rejected"] == ["f2"], summary
+    states = {a["finding_id"]: a["state"] for a in storage.get_review(rid)["annotations"]}
+    assert states["f1"] == "adopted" and states["f2"] == "rejected"
+    deletes = [e for e in storage.list_audit(None, None, limit=100) if e["action"] in ("adopt", "reject")]
+    assert len(deletes) >= 2

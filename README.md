@@ -16,7 +16,7 @@
 # 后端（Python 3.12，首次需安装依赖）
 cd server
 python -m venv .venv
-.venv/Scripts/pip install fastapi "uvicorn[standard]" rank-bm25 python-docx pytest httpx   # Windows
+.venv/Scripts/pip install fastapi "uvicorn[standard]" rank-bm25 python-docx pytest httpx python-multipart   # Windows
 # Linux/macOS: .venv/bin/pip install ...
 python build_corpus.py          # 从证据快照构建法条语料（幂等）
 .venv/Scripts/python -m uvicorn app.main:app --port 8000

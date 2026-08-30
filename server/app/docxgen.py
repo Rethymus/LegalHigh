@@ -161,6 +161,19 @@ def generate_review_docx(review: dict) -> bytes:
     by_clause: dict = {}
     for f in review["result"]["findings"]:
         by_clause.setdefault(f.get("clause_id") or "__whole__", []).append(f)
+    def _bookmark(paragraph, name: str):
+        """书签锚定回传解析的定位（M7-T1 后半）：LH_{finding_id} 包裹建议段落。"""
+        from docx.oxml import OxmlElement
+        from docx.oxml.ns import qn
+        bs = OxmlElement("w:bookmarkStart")
+        bs.set(qn("w:id"), str(doc._next_id))
+        bs.set(qn("w:name"), name)
+        be = OxmlElement("w:bookmarkEnd")
+        be.set(qn("w:id"), str(doc._next_id))
+        doc._next_id += 1
+        paragraph._p.addprevious(bs)
+        paragraph._p.addnext(be)
+
     for c in review["result"]["clauses"]:
         doc.add_heading(c.get("heading") or c["label"], level=2)
         p = doc.add_paragraph(c["text"])
@@ -169,10 +182,12 @@ def generate_review_docx(review: dict) -> bytes:
             if not sug:
                 continue
             p2 = doc.add_paragraph()
+            _bookmark(p2, f"LH_{f['id']}")
             p2.add_run(f"[{f['checkpoint_title']}｜{ {'high': '高风险', 'medium': '中风险', 'low': '低风险' }[f['risk']]}] ")
             _add_tracked_insert(p2, f"建议：{sug}", "LegalHigh AI", date, doc)
     for f in by_clause.get("__whole__", []):
         p3 = doc.add_paragraph()
+        _bookmark(p3, f"LH_{f['id']}")
         p3.add_run(f"[全文级｜{f['checkpoint_title']}] ")
         _add_tracked_insert(p3, f"建议：{f['suggestion']}", "LegalHigh AI", date, doc)
     doc.add_paragraph(review["result"]["disclaimer"])

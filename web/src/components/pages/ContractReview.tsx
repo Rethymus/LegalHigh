@@ -1,7 +1,7 @@
 // FRAME 10 · Contract Review —— 三栏工作台（真实 API 驱动）
 // server: POST /api/reviews（费用/账户/责任审查点引擎）→ 批注状态机（adopt/amend/reject/reopen）→ append-only 审计
 // 演示合同（model.ts，已标「示例」）在此仅作为受审样例文本；审查结论/依据条文/批注/审计全部来自后端真实数据。
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { Icon } from '../icons'
 import { CONTRACTS } from '../../data/model'
@@ -47,6 +47,7 @@ export default function ContractReview() {
   const [amending, setAmending] = useState<string | null>(null)
   const [amendText, setAmendText] = useState('')
   const _id = loadIdentity()
+  const returnFileRef = useRef<HTMLInputElement>(null)
   const [actor, setActor] = useState(_id.name ? `${_id.name}（${_id.role}）` : 'Alex Wang（演示账号）')
   // 审查文本：初始为样例合同（示例），可直接修改或粘贴替换为真实合同文本
   const [reviewText, setReviewText] = useState(sample?.text ?? '')
@@ -136,6 +137,22 @@ export default function ContractReview() {
             </label>
             {review && <button className="btn btn-ghost btn-sm" disabled={busy} onClick={() => review && load(review.id)}><Icon name="refresh" size={13} />刷新</button>}
             {review && <a className="btn btn-secondary btn-sm" href={api.reviewDocxUrl(review.id)}><Icon name="download" size={13} />下载修订稿（Word）</a>}
+            {review && (
+              <>
+                <input ref={returnFileRef} type="file" accept=".docx" style={{ display: 'none' }}
+                  onChange={async (e) => {
+                    const f = e.target.files?.[0]
+                    e.target.value = ''
+                    if (!f || !review) return
+                    try {
+                      const r = await api.reviewDocxReturn(review.id, f)
+                      toast(`回传完成：采纳 ${r.accepted_n} · 拒绝 ${r.rejected_n} · 未处理 ${r.pending}${r.skipped.length ? ` · 跳过 ${r.skipped.length}` : ''}`, r.skipped.length ? 'err' : 'ok')
+                      if (review) load(review.id)
+                    } catch (er) { toast(er instanceof ApiError ? er.message : String(er), 'err') }
+                  }} />
+                <button className="btn btn-ghost btn-sm" disabled={busy} onClick={() => returnFileRef.current?.click()} title="律师在 Word 中接受/拒绝修订后回传，批注状态机将同步"><Icon name="refresh" size={13} />回传修订稿</button>
+              </>
+            )}
             {!rid && <button className="btn btn-primary" disabled={busy} onClick={createReview}><Icon name="zap" size={14} />{busy ? '审查中…' : '发起 AI 审查'}</button>}
           </>
         }
