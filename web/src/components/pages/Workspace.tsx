@@ -144,9 +144,9 @@ export default function Workspace() {
                       <div className="tiny" style={{ lineHeight: 1.8 }}>{e.text}</div>
                       <div className="tiny mt-8" style={{ color: 'var(--tx-3)' }}>起草：{e.author}{e.date ? ` · ${e.date}` : ''}{e.source_note ? ` · ${e.source_note}` : ''}</div>
                       <div className="row mt-8" style={{ gap: 6 }}>
-                        <input className="inp" style={{ width: 150, height: 30 }} placeholder="审核人真实姓名（担责）" value={reviewerName} onChange={(ev) => setReviewerName(ev.target.value)} />
-                        <input className="inp" style={{ width: 150, height: 30 }} placeholder="执业证号（依法公示）" value={reviewerLicense} onChange={(ev) => setReviewerLicense(ev.target.value)} />
-                        <button className="btn btn-primary btn-sm" disabled={!reviewerName.trim() || !/\d{10,20}/.test(reviewerLicense.trim())} title="律师法§2/§13：审核签发人须执业律师，姓名与执业证号依法公示"
+                        <input className="inp" style={{ width: 150, height: 30 }} placeholder="审核人姓名" value={reviewerName} onChange={(ev) => setReviewerName(ev.target.value)} />
+                        <input className="inp" style={{ width: 150, height: 30 }} placeholder="执业证号（可选）" value={reviewerLicense} onChange={(ev) => setReviewerLicense(ev.target.value)} />
+                        <button className="btn btn-primary btn-sm" disabled={!reviewerName.trim()} title="AI 起草内容经运营方审核后展示（生成式AI办法§9）"
                           onClick={() =>
                           api.reviewExplain(e.law_id, e.no, 'approve', reviewerName.trim(), reviewerLicense.trim()).then(
                             () => { toast(`已审核通过：${e.law_id}#${e.no}（审核人：${reviewerName.trim()}）`, 'ok'); loadExplains() },

@@ -34,26 +34,35 @@ import re
 LICENSE_NO_RE = re.compile(r"^\d{10,20}$")
 
 
-def set_review(law_id: str, no: int, action: str, reviewer: str, license_no: str | None = None) -> dict:
-    """审核动作：approve（draft→approved，须执业律师真实姓名+执业证号）/ reopen。
-    合法性依据（决策10·2026-08-31）：《律师法》第2条——律师是依法取得执业证书、
-    为当事人提供法律服务的执业人员，第13条禁止非律师以律师名义执业；《生成式AI办法》
-    第9条——内容生产者责任。故面向公众的「人工审核」签发人必须为执业律师，
-    姓名与执业证号一并公示（担责可核）。"""
+def set_review(law_id: str, no: int, action: str, reviewer: str,
+               license_no: str | None = None, reviewer_role: str = "运营方") -> dict:
+    """审核动作（2026-08-31 决策：降级为运营方自审+多层标识）。
+
+    合规框架：
+    - 《生成式AI办法》§9：提供者（平台运营方）承担内容生产者责任——
+      运营方自审即履行该责任的形态，不强制要求律师审核。
+    - 《标识办法》（2025-09-01 施行）：AI 生成内容须显著标识"AI 生成"——
+      前端在解读卡上永久标注 AI 作者，本函数在 approved 条目中保留 author 字段。
+    - 《律师法》§13：不以律师名义执业——审核人角色如实标注（运营方/执业律师），
+      仅"执业律师"角色填写证号（非强制，但公示后可核）。
+    """
     data = json.loads(DATA_PATH.read_text(encoding="utf-8"))
     for e in data["explains"]:
         if e["law_id"] == law_id and int(e["no"]) == no:
             if action == "approve":
                 name = (reviewer or "").strip()
-                lic = (license_no or "").strip()
                 if not name:
-                    raise ValueError("approve 须填写审核人真实姓名（审核责任不可空）")
-                if not LICENSE_NO_RE.match(lic):
-                    raise ValueError("approve 须填写审核人《律师执业证》证号（10-20 位数字，依法公示可核）")
+                    raise ValueError("approve 须填写审核人姓名（审核责任不可空）")
+                lic = (license_no or "").strip()
+                if lic and not LICENSE_NO_RE.match(lic):
+                    raise ValueError("执业证号格式不正确（10-20 位数字，依法公示可核）")
                 e["status"], e["reviewer"] = "approved", name
-                e["reviewer_license_no"] = lic
+                e["reviewer_license_no"] = lic if lic else None
+                e["reviewer_role"] = reviewer_role
             elif action == "reopen":
-                e["status"], e["reviewer"], e["reviewer_license_no"] = "draft", None, None
+                e["status"], e["reviewer"] = "draft", None
+                e["reviewer_license_no"] = None
+                e["reviewer_role"] = None
             else:
                 raise ValueError(f"未知审核动作: {action}")
             DATA_PATH.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
@@ -73,6 +82,7 @@ def approved_for(law_id: str) -> dict[int, dict]:
             "author": e["author"],
             "reviewer": e["reviewer"],
             "reviewer_license_no": e.get("reviewer_license_no"),
+            "reviewer_role": e.get("reviewer_role"),
             "date": e.get("date"),
             "source_note": e.get("source_note"),
         }

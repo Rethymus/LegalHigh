@@ -204,7 +204,7 @@ export default function LawDetail() {
                 <span className="bdg bdg-green"><span className="dot" />已审核</span>
               </div>
               <div style={{ fontSize: 13.5, lineHeight: 1.9 }}>{explain.text}</div>
-              <div className="tiny mt-8">编写：{explain.author} · 人工审核：{explain.reviewer}{explain.date ? ` · ${explain.date}` : ''}</div>
+              <div className="tiny mt-8">编写：{explain.author} · 审核发布：{explain.reviewer}{explain.reviewer_role ? `（${explain.reviewer_role}）` : ''}{explain.date ? ` · ${explain.date}` : ''}</div>
               {explain.source_note && <div className="tiny mt-8" style={{ color: 'var(--tx-3)' }}>{explain.source_note}</div>}
               <div className="tiny mt-8"><Icon name="info" size={12} /> 解读不替代法条原文，不构成法律意见。</div>
             </div>

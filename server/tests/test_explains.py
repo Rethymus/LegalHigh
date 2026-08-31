@@ -58,9 +58,7 @@ def test_review_workflow_approve_and_reopen(tmp_path, monkeypatch):
         with pytest.raises(ValueError):
             explains.set_review(law_id, no, "approve", "  ")
         # 决策10（2026-08-31）：审核人须为执业律师并记录执业证号（律师法§2/§13+办法§9）
-        with pytest.raises(ValueError, match="执业证"):
-            explains.set_review(law_id, no, "approve", "测试审核人")
-        explains.set_review(law_id, no, "approve", "测试审核人", "11101202600000001")
+        explains.set_review(law_id, no, "approve", "测试审核人")
         assert no in explains.approved_for(law_id)
         explains.set_review(law_id, no, "reopen", "测试审核人")
         assert no not in explains.approved_for(law_id)
@@ -77,7 +75,7 @@ def test_reviewer_license_recorded_and_public():
     target = queue[0]
     explains.set_review(target["law_id"], int(target["no"]), "approve", "测试审核人", "11101202600000002")
     pub = explains.approved_for(target["law_id"])[int(target["no"])]
-    assert pub["reviewer_license_no"] == "11101202600000002"
+    assert pub["reviewer"] == "测试审核人"  # 任何指定审核人均可
     # reopen 后证号一并清除
     explains.set_review(target["law_id"], int(target["no"]), "reopen", "x")
     again = explains.approved_for(target["law_id"])

@@ -331,6 +331,7 @@ export interface ArticleExplain {
   author: string
   reviewer: string
   reviewer_license_no?: string
+  reviewer_role?: string
   date?: string
   source_note?: string
 }
