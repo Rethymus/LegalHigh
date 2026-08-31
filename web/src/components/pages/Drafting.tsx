@@ -10,15 +10,16 @@ import { PageHeader, useToast, EmptyState } from '../ui'
 import { CitationChip } from '../domain'
 import { api, ApiError, loadIdentity, type Citation, type DocTemplate, type Draft, type DraftBlock, type Finding } from '../../lib/api'
 
-const TEMPLATE_ICONS: Record<string, IconName> = { lawyer_letter: 'send', contract: 'docShield', civil_complaint: 'gavel' }
-// 设计板左侧分类：前 3 类映射 server 真实模板；后 2 类为规划（灰态，不虚构模板）
-const CATEGORIES: { name: string; tpl?: string }[] = [
-  { name: '律师函', tpl: 'lawyer_letter' },
-  { name: '诉讼模板', tpl: 'civil_complaint' },
-  { name: '合同', tpl: 'contract' },
-  { name: '法律意见书' },
-  { name: '律师文书' },
-]
+const TEMPLATE_ICONS: Record<string, IconName> = {
+  lawyer_letter: 'send', contract: 'docShield', civil_complaint: 'gavel',
+  civil_answer: 'file', power_of_attorney: 'docpen', legal_opinion: 'book', preservation_application: 'docShield',
+}
+// 分类面板：以 server 模板清单为唯一来源（M7-T2 收官后 7 类全真实，无规划灰态）
+const CATEGORY_NAMES: Record<string, string> = {
+  lawyer_letter: '律师函', civil_complaint: '起诉状', civil_answer: '答辩状',
+  contract: '合同', power_of_attorney: '授权委托书', legal_opinion: '法律意见书',
+  preservation_application: '财产保全',
+}
 
 function blocksText(content: Draft['content']): string {
   const parts: string[] = []
@@ -202,23 +203,13 @@ export default function Drafting() {
               <input className="inp" style={{ height: 30, fontSize: 12.5 }} placeholder="搜索模板" value={libQuery} onChange={(e) => setLibQuery(e.target.value)} />
             </div>
             <div className="tiny bold mb-8" style={{ letterSpacing: 0.5 }}>分类</div>
-            {CATEGORIES.map((cat) => {
-              const t = cat.tpl ? templates.find((x) => x.template_id === cat.tpl) : undefined
-              if (!cat.tpl) {
-                return (
-                  <div key={cat.name} className="doc-type" style={{ opacity: 0.5, cursor: 'not-allowed' }} title="该类别模板化排期 M7——原型不提供未模板化的文书">
-                    <span className="dt-ic"><Icon name="file" size={14} /></span>{cat.name}
-                    <span className="tiny" style={{ marginLeft: 'auto' }}>规划</span>
-                  </div>
-                )
-              }
-              if (!t) return null // 模板清单尚未加载完成
+            {templates.map((t) => {
               const on = tplId === t.template_id
               return (
-                <button key={cat.name} className={'doc-type' + (on ? ' is-on' : '')}
-                  disabled={libQuery.trim() ? !filteredTemplates.some((x) => x.template_id === cat.tpl) : false}
+                <button key={t.template_id} className={'doc-type' + (on ? ' is-on' : '')}
+                  disabled={libQuery.trim() ? !filteredTemplates.some((x) => x.template_id === t.template_id) : false}
                   onClick={() => setTplId(t.template_id)}>
-                  <span className="dt-ic"><Icon name={TEMPLATE_ICONS[t.template_id] ?? 'file'} size={14} /></span>{cat.name}
+                  <span className="dt-ic"><Icon name={TEMPLATE_ICONS[t.template_id] ?? 'file'} size={14} /></span>{CATEGORY_NAMES[t.template_id] ?? t.name}
                 </button>
               )
             })}
@@ -231,7 +222,7 @@ export default function Drafting() {
             ))}
             {filteredTemplates.length === 0 && <div className="tiny">无匹配模板</div>}
           </div>
-          <div className="panel-f tiny">其余文书类型模板化排期 M7——原型不提供未模板化的文书。</div>
+          <div className="panel-f tiny">全部文书由 server 结构化模板引擎生成（引用自带版本快照）；新文书类型按需求逐步模板化。</div>
         </aside>
 
         {/* CENTER · 生成前=结构化表单；生成后=Word 式文档纸面（工具栏+状态栏） */}
