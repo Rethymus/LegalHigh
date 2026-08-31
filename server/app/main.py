@@ -24,6 +24,7 @@ from app import (  # noqa: E402
     case_report,
     cases as cases_mod,
     compare as compare_mod,
+    article_links as links_mod,
     drafting,
     docx_return,
     docxgen,
@@ -87,6 +88,12 @@ def review_explain(law_id: str, no: int, body: ExplainReviewBody):
     storage.audit(body.reviewer or "anonymous", "explain", f"{law_id}#{no}",
                   f"explain_{body.action}", {"status": e["status"], "license_no": e.get("reviewer_license_no")})
     return {"law_id": law_id, "no": no, "status": e["status"], "reviewer": e.get("reviewer")}
+
+
+@app.get("/api/article-links/{law_id}/{no}")
+def article_links(law_id: str, no: int):
+    """官方解读关联层（决策项15）：法条 → 对应司法解释条文的映射（来源已逐条核实）。"""
+    return {"law_id": law_id, "no": no, "links": links_mod.links_for(law_id, no)}
 
 
 @app.get("/api/explains/queue")

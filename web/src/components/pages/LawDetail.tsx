@@ -6,7 +6,7 @@ import { Icon } from '../icons'
 import { WARM_TIPS, findArticle, findLaw, lawChapters, lawDisplayTitle, useLaws } from '../../data/model'
 import { EmptyState, PageHeader, SkeletonLines, Tabs, useCopy, useToast, ValidityBadge } from '../ui'
 import { AIBlock, CitationChip, OfficialArticle, SourceBadge } from '../domain'
-import { api, isFav as isFavKey, toggleFav, type ArticleExplain } from '../../lib/api'
+import { api, isFav as isFavKey, toggleFav, type ArticleExplain, type ArticleLink } from '../../lib/api'
 
 const TABS = [
   { key: 'rel-js', label: '关联司法解释' },
@@ -39,6 +39,17 @@ export default function LawDetail() {
   }, [lawId])
   const no = Number(sp.get('art') ?? '496')
   const article = law ? findArticle(law, no) : undefined
+  // 官方解读关联层（决策项15）：有映射时展示司法解释条文卡
+  const [articleLinks, setArticleLinks] = useState<ArticleLink[]>([])
+  useEffect(() => {
+    if (!lawId || !article) return
+    let alive = true
+    api.articleLinks(lawId, article.no).then(
+      (d) => alive && setArticleLinks(d.links ?? []),
+      () => alive && setArticleLinks([]),
+    )
+    return () => { alive = false }
+  }, [lawId, article?.no])
   // 当前条号的已审核人工解读（决策项4：无则保持 AI 通用指引）
   const explain = article ? explains[String(article.no)] : undefined
   const [favState, setFavState] = useState(false)
@@ -131,7 +142,26 @@ export default function LawDetail() {
                   <div className="tiny">本地案例样本中未检出直接引用本条的公开案例；接入裁判文书网/案例库后自动关联（原型不虚构案例）。</div>
                 )
               )}
-              {tab === 'rel-js' && <div className="tiny">司法解释库未接入（见数据洞察）。原型不虚构司法解释内容。</div>}
+              {tab === 'rel-js' && (
+                articleLinks.length ? (
+                  <div style={{ display: 'grid', gap: 12 }}>
+                    {articleLinks.map((l) => (
+                      <div key={`${l.law_id}-${l.no}`} className="card" style={{ padding: 14 }}>
+                        <div className="row mb-8" style={{ gap: 6 }}>
+                          <span className="bdg bdg-teal">官方解读</span>
+                          <Link to={`/laws/${l.law_id}?art=${l.no}`} className="tiny bold" style={{ color: 'var(--accent-text)' }}>
+                            {l.note ? `${l.note}` : `${l.law_id} 第${l.no}条`}
+                          </Link>
+                        </div>
+                        <div style={{ fontSize: 12.5, lineHeight: 1.9, color: 'var(--tx)' }}>{l.text}</div>
+                        <div className="tiny mt-8" style={{ color: 'var(--tx-3)' }}>来源：{l.ref_title} {l.label}（{l.ref_status}）· 司法解释 · 官方发布文本</div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="tiny">本地已收录的司法解释中未检出直接关联本条的条文；后续将随司法解释语料扩容自动关联（原型不虚构内容）。</div>
+                )
+              )}
               {tab === 'cite' && (
                 <div className="citations">
                   <CitationChip label={`${law.title} ${article.label}`} />

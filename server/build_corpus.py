@@ -39,6 +39,8 @@ LAW_FILES = {
     "pcl_json": "ws_民事诉讼法2023.json",
     "crpl_html": "消保法实施条例_govcn.html",
     "genai_html": "生成式AI办法_govcn.html",
+    "htjs_json": "ws_合同编通则解释2023.json",
+    "wlxf_json": "ws_网络消费纠纷规定2022.json",
 }
 
 
@@ -181,6 +183,28 @@ def main():
                 "effective_date": "2024-01-01",
             },
             "%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E6%B0%91%E4%BA%8B%E8%AF%89%E8%AE%BC%E6%B3%95_(2023%E5%B9%B4)",
+        ),
+        build_wikisource_law(
+            "htjs_json", "htjs-2023", "最高人民法院关于适用《中华人民共和国民法典》合同编通则若干问题的解释",
+            {
+                "status": "现行有效",
+                "kind": "司法解释",
+                "promulgation": {"date": "2023-12-04", "organ": "最高人民法院"},
+                "promulgation_instrument": "法释〔2023〕13号",
+                "effective_date": "2023-12-05",
+            },
+            "%E6%9C%80%E9%AB%98%E4%BA%BA%E6%B0%91%E6%B3%95%E9%99%A2%E5%85%B3%E4%BA%8E%E9%80%82%E7%94%A8%E3%80%8A%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E6%B0%91%E6%B3%95%E5%85%B8%E3%80%8B%E5%90%88%E5%90%8C%E7%BC%96%E9%80%9A%E5%88%99%E8%8B%A5%E5%B9%B2%E9%97%AE%E9%A2%98%E7%9A%84%E8%A7%A3%E9%87%8A",
+        ),
+        build_wikisource_law(
+            "wlxf_json", "wlxf-2022", "最高人民法院关于审理网络消费纠纷案件适用法律若干问题的规定（一）",
+            {
+                "status": "现行有效",
+                "kind": "司法解释",
+                "promulgation": {"date": "2022-03-01", "organ": "最高人民法院"},
+                "promulgation_instrument": "法释〔2022〕8号",
+                "effective_date": "2022-03-15",
+            },
+            "%E6%9C%80%E9%AB%98%E4%BA%BA%E6%B0%91%E6%B3%95%E9%99%A2%E5%85%B3%E4%BA%8E%E5%AE%A1%E7%90%86%E7%BD%91%E7%BB%9C%E6%B6%88%E8%B4%B9%E7%BA%A0%E7%BA%B7%E6%A1%88%E4%BB%B6%E9%80%82%E7%94%A8%E6%B3%95%E5%BE%8B%E8%8B%A5%E5%B9%B2%E9%97%AE%E9%A2%98%E7%9A%84%E8%A7%84%E5%AE%9A%EF%BC%88%E4%B8%80%EF%BC%89",
         ),
         build_govcn_law(
             "crpl_html", "crpl-imp-2024", "中华人民共和国消费者权益保护法实施条例",

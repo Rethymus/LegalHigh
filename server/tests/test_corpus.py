@@ -25,8 +25,8 @@ def make_corpus():
 
 def test_corpus_shape():
     c = make_corpus()
-    assert len(c.laws) == 8
-    assert len(c.articles) == 1953
+    assert len(c.laws) == 10
+    assert len(c.articles) == 2042
     for law_id, n in EXPECTED.items():
         got = sum(1 for a in c.articles if a["law_id"] == law_id)
         assert got == n, f"{law_id}: {got} != {n}"

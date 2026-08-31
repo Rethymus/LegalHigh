@@ -244,6 +244,10 @@ export const api = {
     req<{ cases: CaseRecord[] }>(`/cases?q=${encodeURIComponent(q)}${level ? `&level=${encodeURIComponent(level)}` : ''}`),
   getCase: (caseId: string) => req<CaseRecord>(`/cases/${caseId}`),
 
+  // 官方解读关联层（决策项15）：法条 → 对应司法解释条文（来源已核实）
+  articleLinks: (lawId: string, no: number) =>
+    req<{ law_id: string; no: number; links: ArticleLink[] }>(`/article-links/${encodeURIComponent(lawId)}/${no}`),
+
   // 法条人工通俗解读（仅已审核条目；AI 草稿审核前服务端不返回——决策项4 双轨）
   lawExplains: (lawId: string) =>
     req<{ law_id: string; explains: Record<string, ArticleExplain> }>(`/laws/${encodeURIComponent(lawId)}/explains`),
@@ -308,6 +312,17 @@ export const api = {
   // 版本对比（server difflib 行级结构差异）
   compareTexts: (textA: string, textB: string) =>
     req<CompareResult>('/compare', { method: 'POST', body: JSON.stringify({ text_a: textA, text_b: textB }) }),
+}
+
+/* ---------- 官方解读关联层（法条 → 司法解释条文，来源已核实） ---------- */
+export interface ArticleLink {
+  law_id: string
+  no: number
+  label: string
+  text: string
+  note: string
+  ref_title: string
+  ref_status: string
 }
 
 /* ---------- 法条人工通俗解读（双轨：AI 草稿 → 人工审核 → approved 对外） ---------- */

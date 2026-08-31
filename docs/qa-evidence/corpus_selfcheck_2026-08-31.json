@@ -49,6 +49,22 @@
       "duplicate_no": 0,
       "no_effective_date": false
     },
+    "htjs-2023": {
+      "manifest_count": 69,
+      "actual_count": 69,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false
+    },
+    "wlxf-2022": {
+      "manifest_count": 20,
+      "actual_count": 20,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false
+    },
     "crpl-imp-2024": {
       "manifest_count": 53,
       "actual_count": 53,
