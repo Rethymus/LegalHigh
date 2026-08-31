@@ -179,9 +179,9 @@ export const api = {
   },
   /** 解读审核队列（草稿可见于审核面，法条页仍不展示） */
   explainsQueue: () => req<{ queue: { law_id: string; no: number; text: string; author: string; date?: string; source_note?: string }[] }>('/explains/queue'),
-  /** 审核动作：approve 须填真实审核人；写入审计 */
-  reviewExplain: (lawId: string, no: number, action: 'approve' | 'reopen', reviewer: string) =>
-    req<{ status: string }>(`/explains/${encodeURIComponent(lawId)}/${no}`, { method: 'PATCH', body: JSON.stringify({ action, reviewer }) }),
+  /** 审核动作：approve 须填执业律师真实姓名+执业证号（律师法§2/§13，依法公示）；写入审计 */
+  reviewExplain: (lawId: string, no: number, action: 'approve' | 'reopen', reviewer: string, licenseNo?: string) =>
+    req<{ status: string }>(`/explains/${encodeURIComponent(lawId)}/${no}`, { method: 'PATCH', body: JSON.stringify({ action, reviewer, license_no: licenseNo }) }),
 
   /** PIPL 删除通道：删除审查记录（级联批注，审计留痕） */
   deleteReview: (rid: string) => req<{ deleted: string }>(`/reviews/${rid}`, { method: 'DELETE' }),
@@ -315,6 +315,7 @@ export interface ArticleExplain {
   text: string
   author: string
   reviewer: string
+  reviewer_license_no?: string
   date?: string
   source_note?: string
 }

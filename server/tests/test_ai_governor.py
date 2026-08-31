@@ -119,3 +119,35 @@ def test_chat_clean_output_passes(tmp_db, monkeypatch):
         "deepseek", "deepseek-chat", [{"role": "user", "content": "q"}],
         allowed_refs=[{"law_title": "中华人民共和国民法典", "article_no": 585}])
     assert out["blocked"] is False and out["text"]
+
+
+def test_custom_endpoint_requires_base_url():
+    """OpenAI 协议任意端点（决策7 执行）：custom 必须提供 Base URL；缺失即拒绝。"""
+    import pytest
+    with pytest.raises(ValueError, match="Base URL"):
+        ai_governor.test_connection("custom", "any-model")
+    with pytest.raises(ValueError, match="Base URL"):
+        ai_governor.chat("custom", "any-model", [{"role": "user", "content": "q"}])
+
+
+def test_custom_endpoint_with_base_url_runs_gates(tmp_db, monkeypatch):
+    """custom + Base URL + 瞬态 key：走同一三道 gate 与审计（复用 openai SDK base_url 机制）。"""
+    class FakeMsg:
+        def __init__(self, c): self.content = c
+    class FakeChoice:
+        def __init__(self, m): self.message = m
+    class FakeResp:
+        def __init__(self, ch): self.choices = [ch]; self.usage = None
+    class FakeComp:
+        def __init__(self, resp): self._resp = resp
+        def create(self, **kw): return self._resp
+    class FakeClient:
+        def __init__(self, resp): self.chat = type("C", (), {"completions": FakeComp(resp)})()
+    msg = "依据《民法典》第五百八十五条回答。"
+    fake = FakeClient(FakeResp(FakeChoice(FakeMsg(msg))))
+    monkeypatch.setattr(ai_governor, "_client", lambda *a, **k: fake)
+    out = ai_governor.chat(
+        "custom", "any-model", [{"role": "user", "content": "q"}],
+        api_key="ut-stub", base_url_override="https://gw.example/v1",
+        allowed_refs=[{"law_title": "中华人民共和国民法典", "article_no": 585}], actor="tester")
+    assert out["blocked"] is False and out["gates"]["citations"]["pass"] is True

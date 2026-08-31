@@ -169,10 +169,18 @@ export default function AppShell() {
         {narrow && (
           <Link to="/settings?feedback=mobile" className="mobile-feedback" title="反馈移动端体验问题">
             <Icon name="send" size={14} />
-          </Link>
-        )}
+        </Link>
+      )}
 
-        <main className="content">
+      {/* 演示模式横幅（GitHub Pages 静态预览）：诚实标注只读演示边界 */}
+      {import.meta.env.VITE_DEMO === '1' && (
+        <div className="banner banner-info" style={{ margin: '0 12px', borderRadius: 12 }}>
+          <Icon name="info" size={15} />
+          <span className="banner-tx">静态预览模式：法条/案例/检索为内置快照数据的只读演示；合同审查、文书起草等写入功能需下载桌面端或本地运行后端。</span>
+        </div>
+      )}
+
+      <main className="content">
           <div key={pathname + tone}>
             <Suspense>
               <Outlet />

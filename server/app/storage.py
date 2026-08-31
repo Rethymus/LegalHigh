@@ -11,7 +11,9 @@ import uuid
 from datetime import datetime, timezone
 from pathlib import Path
 
-DB_PATH = Path(__file__).resolve().parent.parent / "data" / "app.db"
+import os as _os
+# 桌面端打包（PyInstaller sidecar）经 LH_DB_PATH 指向用户数据目录；默认仓库内路径
+DB_PATH = Path(_os.environ.get("LH_DB_PATH", str(Path(__file__).resolve().parent.parent / "data" / "app.db")))
 
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS reviews (

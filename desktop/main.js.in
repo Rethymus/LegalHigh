@@ -1,0 +1,41 @@
+// LegalHigh 桌面端主进程模板（构建期由 workflow 物化为 main.js，CMake @VAR@ 惯例）
+// 模式：Electron 壳 + FastAPI sidecar（ChatGPT/ZCode 同款本地分发模式）。
+// 安全说明：spawn 不经 shell（Node 默认 shell:false）；可执行路径与端口均为
+// 构建期常量（SIDECAR_EXE 静态映射，无用户输入参与），参数以数组逐项传递。
+const { app, BrowserWindow, shell } = require('electron')
+const { spawn } = require('child_process')
+const http = require('http')
+const path = require('path')
+const PORT = 8765
+const BASE = `http://127.0.0.1:${PORT}`
+
+// backend/ = PyInstaller 产物目录（legalhigh-backend 可执行 + web/ 静态资源）
+const SIDECAR_EXE = {
+  win32: ['legalhigh-backend-windows', 'legalhigh-backend-windows.exe'],
+  darwin: ['legalhigh-backend-macos', 'legalhigh-backend-macos'],
+  linux: ['legalhigh-backend-ubuntu', 'legalhigh-backend-ubuntu'],
+}
+const BACKEND_DIR = path.join(__dirname, 'backend')
+
+let win = null
+
+app.whenReady().then(() => {
+  const [dirName, exeName] = SIDECAR_EXE[process.platform] ?? SIDECAR_EXE.linux
+  const child = spawn(path.join(BACKEND_DIR, dirName, exeName), [PORT], {
+    cwd: BACKEND_DIR,
+    stdio: 'ignore',
+  })
+
+  const poll = (n = 60) => {
+    http.get(`${BASE}/api/health`, (res) => {
+      if (res.statusCode === 200) {
+        win = new BrowserWindow({ width: 1440, height: 900, autoHideMenuBar: true })
+        win.webContents.setWindowOpenHandler(({ url }) => { shell.openExternal(url); return { action: 'deny' } })
+        win.loadURL(BASE)
+      } else if (n > 0) setTimeout(() => poll(n - 1), 500)
+    }).on('error', () => { if (n > 0) setTimeout(() => poll(n - 1), 500) })
+  }
+  poll()
+})
+
+app.on('window-all-closed', () => app.quit())

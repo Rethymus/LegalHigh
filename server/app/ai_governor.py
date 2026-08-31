@@ -127,10 +127,14 @@ def _cn_to_int_safe(s: str) -> int | None:
 def chat(provider_id: str, model: str, messages: list[dict], *, api_key: str | None = None,
          base_url_override: str | None = None, allowed_refs: list[dict] | None = None,
          temperature: float = 0.3, actor: str = "anonymous") -> dict:
-    """统一对话入口：OpenAI 协议调用 → 三道 gate → 审计留痕。密钥瞬态使用，不落库。"""
+    """统一对话入口：OpenAI 协议调用 → 三道 gate → 审计留痕。密钥瞬态使用，不落库。
+    provider_id="custom" 时必须提供 base_url_override——任意 OpenAI 协议端点均可接入
+    （参照 LiteLLM/one-api/new-api 网关模式，目录不锁厂商）。"""
     provider = get_provider(provider_id)
     if not provider:
         raise ValueError(f"未知模型提供方：{provider_id}")
+    if provider_id == "custom" and not (base_url_override or "").strip():
+        raise ValueError("自定义 OpenAI 协议端点必须提供 Base URL（如 https://your-gateway/v1）")
     key = _resolve_key(provider, api_key)
     if not key:
         raise PermissionError(
@@ -182,6 +186,8 @@ def test_connection(provider_id: str, model: str, *, api_key: str | None = None,
     provider = get_provider(provider_id)
     if not provider:
         raise ValueError(f"未知模型提供方：{provider_id}")
+    if provider_id == "custom" and not (base_url_override or "").strip():
+        raise ValueError("自定义 OpenAI 协议端点必须提供 Base URL")
     key = _resolve_key(provider, api_key)
     if not key:
         raise PermissionError(f"未配置密钥（环境变量 {provider.get('env_key')} 或请求提供）。")
