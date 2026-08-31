@@ -5,7 +5,7 @@ import { Link, useParams, useSearchParams } from 'react-router-dom'
 import { Icon } from '../icons'
 import { WARM_TIPS, findArticle, findLaw, lawChapters, lawDisplayTitle, useLaws } from '../../data/model'
 import { EmptyState, PageHeader, SkeletonLines, Tabs, useCopy, useToast, ValidityBadge } from '../ui'
-import { AIBlock, CitationChip, OfficialArticle, SourceBadge } from '../domain'
+import { AIBlock, AIWarning, CitationChip, OfficialArticle, SourceBadge } from '../domain'
 import { api, isFav as isFavKey, toggleFav, type ArticleExplain, type ArticleLink } from '../../lib/api'
 
 const TABS = [
@@ -202,8 +202,10 @@ export default function LawDetail() {
               <div className="row mb-8" style={{ gap: 8 }}>
                 <span className="tiny bold">人工通俗解读</span>
                 <span className="bdg bdg-green"><span className="dot" />已审核</span>
+                {/AI/.test(explain.author) && <span className="bdg bdg-gray" title="本内容由 AI 起草、经人工审核后发布">AI 起草</span>}
               </div>
               <div style={{ fontSize: 13.5, lineHeight: 1.9 }}>{explain.text}</div>
+              <AIWarning compact />
               <div className="tiny mt-8">编写：{explain.author} · 审核发布：{explain.reviewer}{explain.reviewer_role ? `（${explain.reviewer_role}）` : ''}{explain.date ? ` · ${explain.date}` : ''}</div>
               {explain.source_note && <div className="tiny mt-8" style={{ color: 'var(--tx-3)' }}>{explain.source_note}</div>}
               <div className="tiny mt-8"><Icon name="info" size={12} /> 解读不替代法条原文，不构成法律意见。</div>

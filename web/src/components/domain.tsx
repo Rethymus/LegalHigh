@@ -43,11 +43,49 @@ export function AIBlock({ label, children, acts, note }: {
         {acts}
       </header>
       <div className="ai-block-b">{children}</div>
+      <AIWarning />
       <div className="ai-note">
         <Icon name="info" size={12} />
         {note ?? 'AI 生成内容，供研究参考；不构成法律意见，请以官方文本与专业人士判断为准。'}
       </div>
     </section>
+  )
+}
+
+/* ---------- AI 内容醒目免责声明（独立组件，可在任何 AI 内容面复用） ---------- */
+export function AIWarning({ compact }: { compact?: boolean }) {
+  if (compact) {
+    return (
+      <div style={{
+        padding: '8px 12px', borderRadius: 8, marginTop: 8,
+        background: 'var(--warn-soft, rgba(255,159,10,0.12))',
+        border: '1px solid rgba(255,159,10,0.3)',
+        fontSize: 12, lineHeight: 1.7, color: 'var(--tx)',
+      }}>
+        <b>⚠ AI 生成内容，可能犯错，请核查重要信息。</b>
+        {' '}本系统仅提供法律科普，不能替代执业律师。如有侵权请联系开发者删改。
+      </div>
+    )
+  }
+  return (
+    <div style={{
+      padding: '14px 16px', borderRadius: 10, margin: '12px 0',
+      background: 'var(--warn-soft, rgba(255,159,10,0.12))',
+      border: '1px solid rgba(255,159,10,0.35)',
+      fontSize: 13, lineHeight: 1.8, color: 'var(--tx)',
+    }}>
+      <div style={{ fontWeight: 700, marginBottom: 6 }}>
+        ⚠ AI 生成内容 · 可能犯错 · 请核查重要信息
+      </div>
+      <div style={{ color: 'var(--tx-2)', fontSize: 12.5 }}>
+        本系统仅提供法律科普与信息检索，<b>不能替代执业律师</b>。
+        输出内容不构成法律意见，请以官方发布文本为准。
+        具体个案请咨询执业律师或拨打 12348 公共法律服务热线。
+      </div>
+      <div style={{ color: 'var(--tx-3)', fontSize: 11.5, marginTop: 6 }}>
+        如发现内容存在错误或侵权，请通过「设置 → 隐私 → 投诉与纠错通道」联系我们，我们将及时删改。
+      </div>
+    </div>
   )
 }
 
