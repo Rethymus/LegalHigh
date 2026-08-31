@@ -29,7 +29,7 @@ jobs:
         run: |
           cd server
           python -m venv .venv
-          .venv/bin/pip install fastapi "uvicorn[standard]" rank-bm25 python-docx pytest httpx openai
+          .venv/bin/pip install fastapi "uvicorn[standard]" rank-bm25 python-docx pytest httpx openai python-multipart
 
       - name: Gate 1 pytest（含金标 100 组评测门）
         run: |
