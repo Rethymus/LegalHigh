@@ -192,5 +192,5 @@ export default function Workspace() {
 }
 
 function TEMPLATE_NAME(id: string): string {
-  return ({ lawyer_letter: '律师函', contract: '合同', civil_complaint: '民事起诉状', civil_answer: '民事答辩状', power_of_attorney: '授权委托书' } as Record<string, string>)[id] ?? id
+  return ({ lawyer_letter: '律师函', contract: '合同', civil_complaint: '民事起诉状', civil_answer: '民事答辩状', power_of_attorney: '授权委托书', legal_opinion: '法律意见书', preservation_application: '财产保全申请书' } as Record<string, string>)[id] ?? id
 }

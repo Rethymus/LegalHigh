@@ -80,6 +80,27 @@ POA_FIELDS = [
     {"key": "term", "label": "委托期限", "type": "text", "required": True, "placeholder": "如：自委托之日起至本案审结止"},
 ]
 
+OPINION_FIELDS = [
+    {"key": "recipient", "label": "委托人/受文对象", "type": "text", "required": True},
+    {"key": "matter", "label": "咨询事项", "type": "text", "required": True},
+    {"key": "background", "label": "背景与已知事实", "type": "textarea", "required": True},
+    {"key": "analysis_points", "label": "分析意见（每行一条）", "type": "textarea_list", "required": True},
+    {"key": "risk_notes", "label": "风险提示（每行一条）", "type": "textarea_list", "required": False},
+    {"key": "legal_basis", "label": "法律依据（选择库内条文）", "type": "citation_picker", "required": True},
+    {"key": "firm", "label": "出具机构", "type": "text", "required": True},
+]
+
+PRESERVATION_FIELDS = [
+    {"key": "applicant", "label": "申请人", "type": "text", "required": True},
+    {"key": "respondent", "label": "被申请人", "type": "text", "required": True},
+    {"key": "case_info", "label": "案由/仲裁案件信息", "type": "text", "required": True},
+    {"key": "court", "label": "受理法院", "type": "text", "required": True},
+    {"key": "property_desc", "label": "请求查封/扣押/冻结的财产（每行一项）", "type": "textarea_list", "required": True},
+    {"key": "reason", "label": "事实与理由（情况紧急的说明）", "type": "textarea", "required": True},
+    {"key": "guarantee", "label": "担保安排", "type": "select", "required": True,
+     "options": ["申请人提供自有财产担保", "通过保险公司出具诉讼财产保全责任保函", "另行协商担保方式"]},
+]
+
 TEMPLATES = {
     "lawyer_letter": {
         "template_id": "lawyer_letter",
@@ -94,6 +115,20 @@ TEMPLATES = {
         "description": "场景化合同草稿：条款结构对齐常见实务体例，生成后可一键转入「合同审查」模块做三类条款批注审查。",
         "gate": {"verify_label": "人工核验", "issue_label": "确认定稿", "require_role": "执业律师"},
         "fields": CONTRACT_FIELDS,
+    },
+    "legal_opinion": {
+        "template_id": "legal_opinion",
+        "name": "法律意见书",
+        "description": "结构化法律意见书模板：背景/分析/风险/依据四段式，明示意见基于委托人提供的事实、不构成诉讼结果承诺。",
+        "gate": {"verify_label": "人工核验", "issue_label": "确认定稿", "require_role": "执业律师"},
+        "fields": OPINION_FIELDS,
+    },
+    "preservation_application": {
+        "template_id": "preservation_application",
+        "name": "财产保全申请书",
+        "description": "诉讼财产保全申请书模板：财产逐项列明、担保安排选项化，提示保全错误赔偿责任（民诉法相关规定）。",
+        "gate": {"verify_label": "人工核验", "issue_label": "确认定稿", "require_role": "执业律师"},
+        "fields": PRESERVATION_FIELDS,
     },
     "civil_answer": {
         "template_id": "civil_answer",
@@ -302,7 +337,64 @@ def build_power_of_attorney(f: dict):
     return {"sections": sections, "citations": [], "gate_note": gate_note}
 
 
-BUILDERS = {"lawyer_letter": build_lawyer_letter, "contract": build_contract, "civil_complaint": build_civil_complaint, "civil_answer": build_civil_answer, "power_of_attorney": build_power_of_attorney}
+def build_legal_opinion(f: dict):
+    points = [x.strip() for x in (f.get("analysis_points") or "").splitlines() if x.strip()]
+    risks = [x.strip() for x in (f.get("risk_notes") or "").splitlines() if x.strip()]
+    citations = parse_citations(f.get("legal_basis"))
+    sections = [
+        {"type": "title", "text": "法律意见书"},
+        {"type": "para_noindent", "text": f"致：{f.get('recipient', '')}"},
+        {"type": "heading", "text": "一、咨询事项"},
+        {"type": "para", "text": f"就{f.get('recipient', '')}提出的「{f.get('matter', '')}」事宜，本所基于你提供的事实与现行有效的法律规定，出具如下意见。"},
+        {"type": "heading", "text": "二、背景与已知事实"},
+        {"type": "para", "text": f.get("background", "")},
+        {"type": "heading", "text": "三、分析意见"},
+    ]
+    for i, pt in enumerate(points, 1):
+        sections.append({"type": "numbered", "n": i, "text": pt})
+    if citations:
+        sections.append({"type": "heading", "text": "四、法律依据"})
+        for c in citations:
+            sections.append({"type": "para", "text": f"《{c['law_title']}》{c['article_label']}（{c['status']}）：{c['text']}"})
+    if risks:
+        sections.append({"type": "heading", "text": "五、风险提示"})
+        for i, r in enumerate(risks, 1):
+            sections.append({"type": "numbered", "n": i, "text": r})
+    sections += [
+        {"type": "para", "text": "本意见仅基于委托人提供的书面材料与出具日的现行法律规定作出；委托人应保证所提供事实的真实性。本意见不构成对诉讼或仲裁结果的任何承诺。"},
+        {"type": "signature", "lines": [f"{f.get('firm', '')}", date.today().strftime("%Y年%m月%d日")]},
+    ]
+    gate_note = "本法律意见书为模板生成的草稿：意见质量取决于所提供事实的完整与真实；对外出具前须经执业律师核验定稿。"
+    return {"sections": sections, "citations": citations, "gate_note": gate_note}
+
+
+def build_preservation_application(f: dict):
+    props = [x.strip() for x in (f.get("property_desc") or "").splitlines() if x.strip()]
+    sections = [
+        {"type": "title", "text": "财产保全申请书"},
+        {"type": "party", "lines": [
+            f"申请人：{f.get('applicant', '')}",
+            f"被申请人：{f.get('respondent', '')}",
+        ]},
+        {"type": "para", "text": f"申请人因{f.get('case_info', '')}一案，为防止被申请人在判决生效前转移、隐匿财产，致使判决难以执行，特依据《中华人民共和国民事诉讼法》有关规定，申请对被申请人的下列财产采取保全措施："},
+        {"type": "heading", "text": "请求保全的财产"},
+    ]
+    for i, pr in enumerate(props, 1):
+        sections.append({"type": "numbered", "n": i, "text": pr})
+    sections += [
+        {"type": "heading", "text": "事实与理由"},
+        {"type": "para", "text": f.get("reason", "")},
+        {"type": "heading", "text": "担保安排"},
+        {"type": "para", "text": f.get("guarantee", "")},
+        {"type": "para", "text": "如因本次保全申请错误给被申请人造成损失，申请人愿意依法承担赔偿责任。"},
+        {"type": "closing", "text": f"此致\n{f.get('court', '')}"},
+        {"type": "signature", "lines": [f"申请人：{f.get('applicant', '')}", date.today().strftime("%Y年%m月%d日")]},
+    ]
+    gate_note = "本申请书为模板生成的草稿（程序指引属性）：保全错误的赔偿责任与担保要求请与受理法院确认；提交前请经人工核验。"
+    return {"sections": sections, "citations": [], "gate_note": gate_note}
+
+
+BUILDERS = {"lawyer_letter": build_lawyer_letter, "contract": build_contract, "civil_complaint": build_civil_complaint, "civil_answer": build_civil_answer, "power_of_attorney": build_power_of_attorney, "legal_opinion": build_legal_opinion, "preservation_application": build_preservation_application}
 
 
 def generate(template_id: str, fields: dict):

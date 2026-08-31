@@ -27,8 +27,8 @@ POA_FILL = {
 
 def test_new_templates_registered():
     """M7-T2：答辩状与授权委托书进入模板库（文书家族 3→5）。"""
-    assert {"civil_answer", "power_of_attorney"} <= set(TEMPLATES)
-    assert len(TEMPLATES) == 5
+    assert {"civil_answer", "power_of_attorney", "legal_opinion", "preservation_application"} <= set(TEMPLATES)
+    assert len(TEMPLATES) == 7
 
 
 def test_generate_civil_answer():
