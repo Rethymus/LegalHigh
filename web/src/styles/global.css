@@ -51,13 +51,13 @@
   --elevated: rgba(255, 255, 255, 0.92);  /* Elevated Surface */
   --tx: #1d1d1f;
   --tx-2: #6e6e73;
-  --tx-3: #707075;  /* WCAG AA：台面 4.54 / 卡片 4.95（原 #98989d 仅 2.87，D7 审计调整；已逼近 tx-2，层级以字重区分） */
-  --accent-text: #0069d9;  /* accent 作小字文本：5.22/4.79 达标（品牌蓝作文本仅 3.65，D7） */
+  --tx-3: #707075;  /* WCAG AA：台面 4.54 / 卡片 4.95 */
+  --accent-text: #0069d9;  /* accent 文本色（5.22/4.79 达标）；品牌蓝仅作填充/描边/图形 */
   --div: rgba(60, 60, 67, 0.16);
   --div-soft: rgba(60, 60, 67, 0.09);
   --accent: var(--blue);
   --accent-soft: rgba(10, 132, 255, 0.12);
-  --ok: #1f7a35;  --ok-soft: rgba(48, 209, 88, 0.16);  /* ok 深化：4.40→5.39 达标（D7） */
+  --ok: #1f7a35;  --ok-soft: rgba(48, 209, 88, 0.16);
   --warn: #b25000; --warn-soft: rgba(255, 159, 10, 0.16);
   --danger: #d70015; --danger-soft: rgba(255, 69, 58, 0.12);
   --purple-t: #9d3fd0; --purple-soft: rgba(191, 90, 242, 0.13);
@@ -85,7 +85,7 @@
   --elevated: #2c2c2e;
   --tx: #f5f5f7;
   --tx-2: #aeaeb2;
-  --tx-3: #8a8a8e;  /* 卡片上 4.09→5.3+（D7） */
+  --tx-3: #8a8a8e;
   --accent-text: var(--blue);  /* 暗色品牌蓝作文本已达标 */
   --div: rgba(255, 255, 255, 0.12);
   --div-soft: rgba(255, 255, 255, 0.07);

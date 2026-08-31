@@ -83,8 +83,7 @@ MIXED_PCT = """服务合同
 
 
 def test_f3_deposit_threshold_is_sentence_scoped():
-    """F3 回归：定金 10% + 违约金 30% 同条款时，不得因条款内最大百分比误判「定金超 20%」
-    （2026-08-30 起改为句级定位：以「定金」所在句的比例为准）。"""
+    """定金超限判定为句级定位：以「定金」所在句的比例为准，条款内其他比例不参与。"""
     r = review.analyze_contract(MIXED_PCT, "混合比例")
     ids = [f["checkpoint_id"] for f in r["findings"]]
     assert "F3" not in ids, f"F3 误触发：{ids}"
@@ -100,8 +99,7 @@ def test_f3_fires_when_deposit_itself_exceeds():
 
 
 def test_first_unnumbered_line_not_duplicated():
-    """回归：segment_clauses 曾把首个未编号段落的首行 append 两次，导致
-    「合同标题」在条款正文与纸面渲染中翻倍（2026-08-30 修复）。"""
+    """首个未编号段落的首行在条款正文中只出现一次。"""
     clauses = review.segment_clauses(MIXED_PCT)
     c1 = clauses[0]
     assert c1["text"].count("服务合同") == 1, repr(c1["text"])

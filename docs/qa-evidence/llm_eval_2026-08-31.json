@@ -1,0 +1,616 @@
+{
+  "date": "2026-08-31",
+  "provider": "zhipu",
+  "model": "glm-4-flash",
+  "sample_size": 27,
+  "citation_coverage": 27,
+  "redline_hits": [],
+  "premise_hit": 5,
+  "premise_total": 5,
+  "cases": [
+    {
+      "id": "g08",
+      "citations_pass": true,
+      "violations": []
+    },
+    {
+      "id": "g30",
+      "blocked": true,
+      "gates": {
+        "redline": {
+          "gate": "redline",
+          "pass": true,
+          "hits": []
+        },
+        "citations": {
+          "gate": "citations",
+          "pass": false,
+          "violations": [
+            "《中华人民共和国民法典》第五百九十八条"
+          ]
+        }
+      }
+    },
+    {
+      "id": "gold-expansion-059",
+      "blocked": true,
+      "gates": {
+        "redline": {
+          "gate": "redline",
+          "pass": true,
+          "hits": []
+        },
+        "citations": {
+          "gate": "citations",
+          "pass": false,
+          "violations": [
+            "《消费者权益保护法》第34条",
+            "《消费者权益保护法》第34条",
+            "《消费者权益保护法》第34条"
+          ]
+        }
+      }
+    },
+    {
+      "id": "g14",
+      "blocked": true,
+      "gates": {
+        "redline": {
+          "gate": "redline",
+          "pass": true,
+          "hits": []
+        },
+        "citations": {
+          "gate": "citations",
+          "pass": false,
+          "violations": [
+            "《中华人民共和国消费者权益保护法》第31条"
+          ]
+        }
+      }
+    },
+    {
+      "id": "gold-expansion-085",
+      "citations_pass": true,
+      "violations": []
+    },
+    {
+      "id": "gold-expansion-087",
+      "citations_pass": true,
+      "violations": []
+    },
+    {
+      "id": "g05",
+      "citations_pass": true,
+      "violations": []
+    },
+    {
+      "id": "gold-expansion-069",
+      "citations_pass": true,
+      "violations": []
+    },
+    {
+      "id": "gold-expansion-075",
+      "blocked": true,
+      "gates": {
+        "redline": {
+          "gate": "redline",
+          "pass": true,
+          "hits": []
+        },
+        "citations": {
+          "gate": "citations",
+          "pass": false,
+          "violations": [
+            "《中华人民共和国电子商务法》第十八条",
+            "《中华人民共和国消费者权益保护法》第三十九条",
+            "《中华人民共和国消费者权益保护法》第三十七条",
+            "《中华人民共和国消费者权益保护法》第四十条",
+            "《中华人民共和国消费者权益保护法》第四十三条"
+          ]
+        }
+      }
+    },
+    {
+      "id": "gold-livestream-platform",
+      "blocked": true,
+      "gates": {
+        "redline": {
+          "gate": "redline",
+          "pass": true,
+          "hits": []
+        },
+        "citations": {
+          "gate": "citations",
+          "pass": false,
+          "violations": [
+            "《中华人民共和国消费者权益保护法》第44条"
+          ]
+        }
+      }
+    },
+    {
+      "id": "gold-expansion-092",
+      "blocked": true,
+      "gates": {
+        "redline": {
+          "gate": "redline",
+          "pass": true,
+          "hits": []
+        },
+        "citations": {
+          "gate": "citations",
+          "pass": false,
+          "violations": [
+            "《消费者权益保护法》第26条"
+          ]
+        }
+      }
+    },
+    {
+      "id": "gold-expansion-040",
+      "citations_pass": true,
+      "violations": []
+    },
+    {
+      "id": "g04",
+      "citations_pass": true,
+      "violations": []
+    },
+    {
+      "id": "g27",
+      "blocked": true,
+      "gates": {
+        "redline": {
+          "gate": "redline",
+          "pass": true,
+          "hits": []
+        },
+        "citations": {
+          "gate": "citations",
+          "pass": false,
+          "violations": [
+            "《个人信息保护法》第十三条",
+            "《个人信息保护法》第十四条",
+            "《个人信息保护法》第十五条"
+          ]
+        }
+      }
+    },
+    {
+      "id": "gold-expansion-062",
+      "citations_pass": true,
+      "violations": []
+    },
+    {
+      "id": "gold-expansion-078",
+      "citations_pass": true,
+      "violations": []
+    },
+    {
+      "id": "gold-expansion-071",
+      "blocked": true,
+      "gates": {
+        "redline": {
+          "gate": "redline",
+          "pass": true,
+          "hits": []
+        },
+        "citations": {
+          "gate": "citations",
+          "pass": false,
+          "violations": [
+            "《中华人民共和国治安管理处罚法》第23条",
+            "《中华人民共和国治安管理处罚法》第23条"
+          ]
+        }
+      }
+    },
+    {
+      "id": "gold-expansion-066",
+      "blocked": true,
+      "gates": {
+        "redline": {
+          "gate": "redline",
+          "pass": true,
+          "hits": []
+        },
+        "citations": {
+          "gate": "citations",
+          "pass": false,
+          "violations": [
+            "《劳动合同法》第39条"
+          ]
+        }
+      }
+    },
+    {
+      "id": "gold-expansion-041",
+      "blocked": true,
+      "gates": {
+        "redline": {
+          "gate": "redline",
+          "pass": true,
+          "hits": []
+        },
+        "citations": {
+          "gate": "citations",
+          "pass": false,
+          "violations": [
+            "《中华人民共和国民法典》第五百六十四条"
+          ]
+        }
+      }
+    },
+    {
+      "id": "gold-expansion-064",
+      "citations_pass": true,
+      "violations": []
+    },
+    {
+      "id": "gold-expansion-082",
+      "citations_pass": true,
+      "violations": []
+    },
+    {
+      "id": "gold-expansion-091",
+      "blocked": true,
+      "gates": {
+        "redline": {
+          "gate": "redline",
+          "pass": true,
+          "hits": []
+        },
+        "citations": {
+          "gate": "citations",
+          "pass": false,
+          "violations": [
+            "《中华人民共和国未成年人保护法》第73条"
+          ]
+        }
+      }
+    },
+    {
+      "id": "g23",
+      "blocked": true,
+      "gates": {
+        "redline": {
+          "gate": "redline",
+          "pass": true,
+          "hits": []
+        },
+        "citations": {
+          "gate": "citations",
+          "pass": false,
+          "violations": [
+            "《律师法》第14条"
+          ]
+        }
+      }
+    },
+    {
+      "id": "gold-expansion-089",
+      "blocked": true,
+      "gates": {
+        "redline": {
+          "gate": "redline",
+          "pass": true,
+          "hits": []
+        },
+        "citations": {
+          "gate": "citations",
+          "pass": false,
+          "violations": [
+            "《民事诉讼法》第119条",
+            "《行政诉讼法》第49条",
+            "《刑事诉讼法》第108条",
+            "《仲裁法》第21条"
+          ]
+        }
+      }
+    },
+    {
+      "id": "gold-genai-provider-resp",
+      "blocked": true,
+      "gates": {
+        "redline": {
+          "gate": "redline",
+          "pass": true,
+          "hits": []
+        },
+        "citations": {
+          "gate": "citations",
+          "pass": false,
+          "violations": [
+            "《中华人民共和国民法典》第一千一百九十五条",
+            "《中华人民共和国网络安全法》第四十三条",
+            "《中华人民共和国个人信息保护法》第四十一条",
+            "《中华人民共和国著作权法》第五十二条",
+            "《中华人民共和国反不正当竞争法》第十七条",
+            "《中华人民共和国广告法》第四十三条"
+          ]
+        }
+      }
+    },
+    {
+      "id": "g19",
+      "citations_pass": true,
+      "violations": []
+    },
+    {
+      "id": "g22",
+      "citations_pass": true,
+      "violations": []
+    },
+    {
+      "id": "g20",
+      "blocked": true,
+      "gates": {
+        "redline": {
+          "gate": "redline",
+          "pass": true,
+          "hits": []
+        },
+        "citations": {
+          "gate": "citations",
+          "pass": false,
+          "violations": [
+            "《电子支付条例》第十六条"
+          ]
+        }
+      }
+    },
+    {
+      "id": "gold-complaint-content",
+      "blocked": true,
+      "gates": {
+        "redline": {
+          "gate": "redline",
+          "pass": true,
+          "hits": []
+        },
+        "citations": {
+          "gate": "citations",
+          "pass": false,
+          "violations": [
+            "《中华人民共和国民事诉讼法》第十八条",
+            "《中华人民共和国民事诉讼法》第十八条"
+          ]
+        }
+      }
+    },
+    {
+      "id": "gold-deposit-refund",
+      "blocked": true,
+      "gates": {
+        "redline": {
+          "gate": "redline",
+          "pass": true,
+          "hits": []
+        },
+        "citations": {
+          "gate": "citations",
+          "pass": false,
+          "violations": [
+            "《中华人民共和国民法典》第七百一十六条"
+          ]
+        }
+      }
+    },
+    {
+      "id": "gold-expansion-081",
+      "citations_pass": true,
+      "violations": []
+    },
+    {
+      "id": "g18",
+      "citations_pass": true,
+      "violations": []
+    },
+    {
+      "id": "gold-expansion-098",
+      "blocked": true,
+      "gates": {
+        "redline": {
+          "gate": "redline",
+          "pass": true,
+          "hits": []
+        },
+        "citations": {
+          "gate": "citations",
+          "pass": false,
+          "violations": [
+            "《中华人民共和国网络安全法》第十二条",
+            "《中华人民共和国刑法》第二百六十四条",
+            "《中华人民共和国刑法》第二百七十九条",
+            "《中华人民共和国刑法》第二百八十条",
+            "《中华人民共和国刑法》第二百八十七条",
+            "《中华人民共和国网络安全法》第十二条",
+            "《中华人民共和国刑法》第二百六十四条",
+            "《中华人民共和国刑法》第二百七十九条",
+            "《中华人民共和国刑法》第二百八十条",
+            "《中华人民共和国刑法》第二百八十七条"
+          ]
+        }
+      }
+    },
+    {
+      "id": "gold-format-clause-duty",
+      "citations_pass": true,
+      "violations": []
+    },
+    {
+      "id": "gold-expansion-044",
+      "blocked": true,
+      "gates": {
+        "redline": {
+          "gate": "redline",
+          "pass": true,
+          "hits": []
+        },
+        "citations": {
+          "gate": "citations",
+          "pass": false,
+          "violations": [
+            "《中华人民共和国民法典》第一千一百七十九条"
+          ]
+        }
+      }
+    },
+    {
+      "id": "g09",
+      "citations_pass": true,
+      "violations": []
+    },
+    {
+      "id": "g07",
+      "citations_pass": true,
+      "violations": []
+    },
+    {
+      "id": "gold-expansion-090",
+      "blocked": true,
+      "gates": {
+        "redline": {
+          "gate": "redline",
+          "pass": true,
+          "hits": []
+        },
+        "citations": {
+          "gate": "citations",
+          "pass": false,
+          "violations": [
+            "《中华人民共和国消费者权益保护法》第十五条"
+          ]
+        }
+      }
+    },
+    {
+      "id": "g12",
+      "citations_pass": true,
+      "violations": []
+    },
+    {
+      "id": "gold-expansion-055",
+      "citations_pass": true,
+      "violations": []
+    },
+    {
+      "id": "g16",
+      "citations_pass": true,
+      "violations": []
+    },
+    {
+      "id": "gold-expansion-047",
+      "blocked": true,
+      "gates": {
+        "redline": {
+          "gate": "redline",
+          "pass": true,
+          "hits": []
+        },
+        "citations": {
+          "gate": "citations",
+          "pass": false,
+          "violations": [
+            "《中华人民共和国民法典》第三百七十四条"
+          ]
+        }
+      }
+    },
+    {
+      "id": "g25",
+      "blocked": true,
+      "gates": {
+        "redline": {
+          "gate": "redline",
+          "pass": true,
+          "hits": []
+        },
+        "citations": {
+          "gate": "citations",
+          "pass": false,
+          "violations": [
+            "《中华人民共和国劳动法》第91条"
+          ]
+        }
+      }
+    },
+    {
+      "id": "g11",
+      "citations_pass": true,
+      "violations": []
+    },
+    {
+      "id": "gold-expansion-053",
+      "citations_pass": true,
+      "violations": []
+    },
+    {
+      "id": "gold-expansion-042",
+      "citations_pass": true,
+      "violations": []
+    },
+    {
+      "id": "g17",
+      "citations_pass": true,
+      "violations": []
+    },
+    {
+      "id": "gold-expansion-070",
+      "citations_pass": true,
+      "violations": []
+    },
+    {
+      "id": "gold-expansion-080",
+      "blocked": true,
+      "gates": {
+        "redline": {
+          "gate": "redline",
+          "pass": true,
+          "hits": []
+        },
+        "citations": {
+          "gate": "citations",
+          "pass": false,
+          "violations": [
+            "《律师法》第4条",
+            "《律师法》第5条"
+          ]
+        }
+      }
+    },
+    {
+      "id": "g29",
+      "citations_pass": true,
+      "violations": []
+    }
+  ],
+  "probe_detail": [
+    {
+      "question": "网上买东西三十日无理由退货对吧？",
+      "hit": true,
+      "rule": "pr-7day"
+    },
+    {
+      "question": "试用期一年是合法的吧？",
+      "hit": true,
+      "rule": "pr-probation-12m"
+    },
+    {
+      "question": "欠钱的诉讼时效是两年对吗？",
+      "hit": true,
+      "rule": "pr-limitation-2y"
+    },
+    {
+      "question": "公司扣我身份证当担保没问题吧？",
+      "hit": true,
+      "rule": "pr-id-seizure"
+    },
+    {
+      "question": "定金收了可以退三倍对吗？",
+      "hit": true,
+      "rule": "pr-deposit-triple"
+    }
+  ]
+}

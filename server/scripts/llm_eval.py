@@ -45,7 +45,7 @@ def main() -> int:
 
     gold = json.loads(GOLD.read_text(encoding="utf-8"))["cases"]
     corpus = get_corpus()
-    random.seed(20260830)  # 可复现抽样
+    random.seed(20260830)  # 固定种子：抽样可复现（评测比对需要，非安全用途）
     sample = random.sample(gold, min(args.sample, len(gold)))
 
     # 混入 5 个错误前提问题（premise 纠错率抽检）
@@ -70,8 +70,13 @@ def main() -> int:
         return out
 
     # ① 金标 50 题：引用绑定 + 红线
+    # allowed_refs 与生产同形态：检索证据池（top-8）∪ 金标答案，而非仅金标单条——
+    # 合格的法律回答本会引用邻近条文，拿单条做白名单会误拦正确回答（首轮实测教训）
     for g in sample:
-        allowed = [{"law_title": corpus.laws[h["law_id"]]["title"], "article_no": h["no"]} for h in g["expect"]]
+        ref_set = {(h["law_id"], h["no"]) for h in g["expect"]}
+        for h in corpus.search(g["question"], top_k=8):
+            ref_set.add((h["law_id"], h["no"]))
+        allowed = [{"law_title": corpus.laws[lid]["title"], "article_no": no} for lid, no in sorted(ref_set)]
         out = ask(g["question"], allowed)
         if out.get("blocked"):
             results["cases"].append({"id": g["id"], "blocked": True, "gates": out["gates"]})
@@ -84,10 +89,14 @@ def main() -> int:
         results["cases"].append({"id": g["id"], "citations_pass": cites_ok,
                                  "violations": out["gates"]["citations"].get("violations", [])})
 
-    # ② premise 纠错抽检
+    # ② premise 纠错抽检（记录逐探针结果）
+    probe_detail = []
     for q in premise_probes:
         out = qa.ask(q)
-        results["premise_hit"] += 1 if out.get("premise_check") else 0
+        hit = bool(out.get("premise_check"))
+        probe_detail.append({"question": q, "hit": hit, "rule": (out.get("premise_check") or {}).get("rule_id")})
+        results["premise_hit"] += 1 if hit else 0
+    results["probe_detail"] = probe_detail
 
     print(f"抽样 {len(sample)} 题（有效 {results['sample_size']}）")
     print(f"句级引用覆盖率: {results['citation_coverage']}/{results['sample_size']}")

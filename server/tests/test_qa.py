@@ -69,8 +69,7 @@ def test_gold_retrieval_gate():
 
 
 def test_no_answer_message_uses_live_corpus_size():
-    """回归：无答案文案曾硬编码「7 部 1,647 条」，语料扩至 8 部 1,953 条后失真。
-    断言文案与语料实时规模一致，禁止回退为字面量。"""
+    """无答案文案必须携带语料实时规模（与字面量脱钩）。"""
     out = qa.ask("zzqq vvveoo xkcdq")  # 语料外无意义词：任何真实语料扩张都不应命中
     assert out["no_answer"] is True
     msg = out["no_answer_message"]
