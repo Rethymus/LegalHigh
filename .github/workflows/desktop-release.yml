@@ -1,9 +1,8 @@
 name: desktop-release
 
-# 桌面端 release（决策 8 执行件）：Electron 壳 + PyInstaller 后端 sidecar
-# —— ChatGPT/ZCode 同款分发模式：tag 推送 → 三平台构建 → GitHub Release 附产物
-# 说明：首次 tag 构建预计需在线调试（PyInstaller 路径/electron-builder 签名配置）；
-#       桌面端=本地全功能运行（FastAPI sidecar + 前端），无公网服务、不涉备案服务提供。
+# 桌面端 release：Electron 壳 + PyInstaller 后端 sidecar
+# tag 推送 → 三平台构建 → GitHub Release 附产物
+# 首次 tag 构建预计需在线调试（PyInstaller 路径/electron-builder 签名配置）
 on:
   push:
     tags: ['v*']
@@ -18,34 +17,64 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [windows-latest, ubuntu-latest, macos-latest]
+        include:
+          - os: windows-latest
+            sep: ';'
+            exe_ext: .exe
+            artifact_name: backend-windows
+          - os: ubuntu-latest
+            sep: ':'
+            exe_ext: ''
+            artifact_name: backend-linux
+          - os: macos-latest
+            sep: ':'
+            exe_ext: ''
+            artifact_name: backend-macos
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+
       - name: Install server deps
+        run: pip install fastapi uvicorn[standard] rank-bm25 python-docx httpx python-multipart pyinstaller
+
+      - name: Build web frontend
         run: |
-          cd server
-          pip install fastapi "uvicorn[standard]" rank-bm25 python-docx httpx python-multipart pyinstaller
-      - name: Build web (bundled into backend static)
-        run: |
-          cd web && npm ci && npm run build
-          mkdir -p ../server/desktop-dist
-          cp -r dist ../server/desktop-dist/web
+          cd web
+          npm ci
+          npm run build
+          mkdir -p ../server/desktop-dist/web
+          cp -r dist/* ../server/desktop-dist/web/
+
       - name: PyInstaller backend sidecar
+        shell: bash
+        env:
+          ADD_SEP: ${{ matrix.sep }}
         run: |
           cd server
-          pyinstaller --name legalhigh-backend-${{ matrix.os }} --contents-directory . \
-            --add-data "data:app_data" --add-data "../server/desktop-dist/web:web" \
-            --hidden-import uvicorn.logging --hidden-import uvicorn.loops.auto \
-            --hidden-import uvicorn.protocols.http.auto --hidden-import uvicorn.protocols.websockets.auto \
-            --hidden-import uvicorn.lifespan.on --hidden-import app.main \
+          mkdir -p desktop-dist/web
+          if [ -d "../web/dist" ]; then
+            cp -r ../web/dist/* desktop-dist/web/
+          fi
+          SEP="$ADD_SEP"
+          if [ "$SEP" = ";" ]; then SEP=";"; fi
+          pyinstaller --name legalhigh-backend --contents-directory . \
+            --add-data "data${SEP}app_data" \
+            --add-data "desktop-dist/web${SEP}web" \
+            --hidden-import uvicorn.logging \
+            --hidden-import uvicorn.loops.auto \
+            --hidden-import uvicorn.protocols.http.auto \
+            --hidden-import uvicorn.protocols.websockets.auto \
+            --hidden-import uvicorn.lifespan.on \
+            --hidden-import app.main \
             desktop_entry.py
+
       - uses: actions/upload-artifact@v4
         with:
-          name: backend-${{ matrix.os }}
-          path: server/dist/legalhigh-backend-*/
+          name: backend-${{ matrix.artifact_name }}
+          path: server/dist/legalhigh-backend*/
 
   desktop:
     needs: backend
@@ -53,20 +82,49 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [windows-latest, ubuntu-latest, macos-latest]
+        include:
+          - os: windows-latest
+            artifact_name: backend-windows
+          - os: ubuntu-latest
+            artifact_name: backend-linux
+          - os: macos-latest
+            artifact_name: backend-macos
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+
       - uses: actions/download-artifact@v4
         with:
-          name: backend-${{ matrix.os }}
+          name: backend-${{ matrix.artifact_name }}
           path: desktop/backend
-      - name: Electron package + release
+
+      - name: Electron package
         working-directory: desktop
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           npm install
-          npx electron-builder --publish always
+          npx electron-builder --publish never
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: desktop-${{ matrix.artifact_name }}
+          path: desktop/dist/
+
+  release:
+    needs: [backend, desktop]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Create Release and attach artifacts
+        uses: softprops/action-ghrelease@v2
+        with:
+          files: artifacts/**/*
+          draft: true
+          prerelease: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

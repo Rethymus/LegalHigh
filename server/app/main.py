@@ -479,6 +479,8 @@ def compliance():
         "data_sources": corpus.manifest["laws"],
         "checkpoints": checkpoints,
         "complaint_channel": "本页「投诉与纠错」表单提交后即写入本地工单库并留痕。",
+        "infringement_notice": "如发现本系统内容存在任何侵权（包括但不限于著作权、商标权、隐私权），请通过「设置 → 隐私 → 投诉与纠错通道」提交，或发送邮件至开发者。我们承诺在收到通知后及时核实并做删改处理。",
+        "ai_content_label": "本系统中标注「AI 起草」或「AI 生成」的内容由人工智能自动生成、经人工审核后发布。AI 可能犯错，请务必核查重要信息并以官方发布文本为准。",
     }
 
 
