@@ -25,6 +25,7 @@ from app import (  # noqa: E402
     cases as cases_mod,
     compare as compare_mod,
     article_links as links_mod,
+    scenarios as scenarios_mod,
     drafting,
     docx_return,
     docxgen,
@@ -94,6 +95,20 @@ def review_explain(law_id: str, no: int, body: ExplainReviewBody):
 def article_links(law_id: str, no: int):
     """官方解读关联层（决策项15）：法条 → 对应司法解释条文的映射（来源已逐条核实）。"""
     return {"law_id": law_id, "no": no, "links": links_mod.links_for(law_id, no)}
+
+
+@app.get("/api/scenarios")
+def list_scenarios():
+    """场景化法律路径：高频场景的端到端指引（步骤+法条+时效+风险）。"""
+    return {"scenarios": scenarios_mod.load_scenarios()}
+
+
+@app.get("/api/scenarios/match")
+def match_scenario(text: str = ""):
+    """按关键词匹配场景路径。"""
+    if len(text.strip()) < 2:
+        raise HTTPException(422, "请输入场景关键词")
+    return {"matches": scenarios_mod.match_scenarios(text.strip())}
 
 
 @app.get("/api/explains/queue")
