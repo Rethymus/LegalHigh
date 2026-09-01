@@ -2,7 +2,6 @@ name: desktop-release
 
 # 桌面端 release：Electron 壳 + PyInstaller 后端 sidecar
 # tag 推送 → 三平台构建 → GitHub Release 附产物
-# 首次 tag 构建预计需在线调试（PyInstaller 路径/electron-builder 签名配置）
 on:
   push:
     tags: ['v*']
@@ -20,15 +19,12 @@ jobs:
         include:
           - os: windows-latest
             sep: ';'
-            exe_ext: .exe
             artifact_name: backend-windows
           - os: ubuntu-latest
             sep: ':'
-            exe_ext: ''
             artifact_name: backend-linux
           - os: macos-latest
             sep: ':'
-            exe_ext: ''
             artifact_name: backend-macos
     steps:
       - uses: actions/checkout@v4
@@ -38,7 +34,7 @@ jobs:
           python-version: '3.12'
 
       - name: Install server deps
-        run: pip install fastapi uvicorn[standard] rank-bm25 python-docx httpx python-multipart pyinstaller
+        run: pip install fastapi "uvicorn[standard]" rank-bm25 python-docx httpx python-multipart pyinstaller
 
       - name: Build web frontend
         run: |
@@ -50,19 +46,15 @@ jobs:
 
       - name: PyInstaller backend sidecar
         shell: bash
-        env:
-          ADD_SEP: ${{ matrix.sep }}
         run: |
           cd server
           mkdir -p desktop-dist/web
           if [ -d "../web/dist" ]; then
             cp -r ../web/dist/* desktop-dist/web/
           fi
-          SEP="$ADD_SEP"
-          if [ "$SEP" = ";" ]; then SEP=";"; fi
           pyinstaller --name legalhigh-backend --contents-directory . \
-            --add-data "data${SEP}app_data" \
-            --add-data "desktop-dist/web${SEP}web" \
+            --add-data "data${{ matrix.sep }}app_data" \
+            --add-data "desktop-dist/web${{ matrix.sep }}web" \
             --hidden-import uvicorn.logging \
             --hidden-import uvicorn.loops.auto \
             --hidden-import uvicorn.protocols.http.auto \
@@ -101,30 +93,14 @@ jobs:
           name: backend-${{ matrix.artifact_name }}
           path: desktop/backend
 
-      - name: Electron package
+      - name: Materialize launcher from template
         working-directory: desktop
+        run: cp main.js.in main.js
+
+      - name: Electron package + Release
+        working-directory: desktop
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           npm install
-          npx electron-builder --publish never
-
-      - uses: actions/upload-artifact@v4
-        with:
-          name: desktop-${{ matrix.artifact_name }}
-          path: desktop/dist/
-
-  release:
-    needs: [backend, desktop]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/download-artifact@v4
-        with:
-          path: artifacts
-
-      - name: Create Release and attach artifacts
-        uses: softprops/action-ghrelease@v2
-        with:
-          files: artifacts/**/*
-          draft: true
-          prerelease: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          npx electron-builder --publish always
