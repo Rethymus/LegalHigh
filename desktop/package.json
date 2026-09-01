@@ -5,6 +5,10 @@
   "main": "main.js",
   "author": "LegalHigh",
   "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Rethymus/LegalHigh.git"
+  },
   "scripts": {
     "dist": "electron-builder"
   },
