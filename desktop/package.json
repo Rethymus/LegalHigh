@@ -1,6 +1,6 @@
 {
   "name": "legalhigh-desktop",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "LegalHigh 桌面端：本地全功能运行（FastAPI sidecar + Web 前端），数据不出本机",
   "main": "main.js",
   "author": "LegalHigh",
