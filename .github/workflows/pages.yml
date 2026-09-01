@@ -50,6 +50,8 @@ jobs:
           cd web
           npx vite build --outDir dist-demo --emptyOutDir
           cp public/data/cases.json public/data/evals.json dist-demo/data/
+          # SPA 回退：GitHub Pages 对未知路径返回 404.html → React Router 接管路由
+          cp dist-demo/index.html dist-demo/404.html
 
       - uses: actions/configure-pages@v5
         with:
