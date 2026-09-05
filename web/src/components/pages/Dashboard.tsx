@@ -53,7 +53,15 @@ export default function Dashboard() {
   const [reviewsLoading, setReviewsLoading] = useState(true)
   const [reviewsError, setReviewsError] = useState<string | null>(null)
   const [researchList] = useState<LocalResearchItem[]>(loadResearchList)
+  const STATIC_PREVIEW = import.meta.env.VITE_STATIC_PREVIEW === '1'
   useEffect(() => {
+    // 静态说明站（GitHub Pages）不部署后端：不发任何 /api 请求（发了也只是 404，
+    // 且与「所有读写 API 均未部署」的站点横幅矛盾——R21 发现首页曾照常请求）。
+    if (STATIC_PREVIEW) {
+      setCaseLoading(false); setReviewsLoading(false)
+      setCaseCount(null); setToday(null); setReviews([])
+      return
+    }
     let alive = true
     const casesRequest = api.listCases()
     const reviewsRequest = api.listReviews(2)
@@ -147,6 +155,8 @@ export default function Dashboard() {
             <div className="card-b">
               {caseLoading ? <SkeletonLines n={4} /> : caseError ? (
                 <EmptyState icon="alert" title="案例服务暂不可用" desc={caseError} />
+              ) : STATIC_PREVIEW ? (
+                <EmptyState icon="search" title="静态说明站不含案例服务" desc="本页为 GitHub Pages 静态预览；案例检索在本地完整版或桌面版中可用。" />
               ) : !today ? (
                 <EmptyState icon="caseSearch" title="暂无已核实案例" desc="案例服务当前没有返回可公开展示且已核实的记录。" />
               ) : (
@@ -221,7 +231,8 @@ export default function Dashboard() {
                   <span className="tiny">{fmtTime(r.created_at, 'd')}</span>
                 </Link>
               ))}
-              {!reviewsLoading && reviewsError && <div className="tiny mb-8">审查服务不可用：{reviewsError}</div>}
+              {!reviewsLoading && STATIC_PREVIEW && <div className="tiny mb-8">静态说明站不含合同审查服务；完整版在本地运行后可在此看到本机审查记录。</div>}
+              {!reviewsLoading && !STATIC_PREVIEW && reviewsError && <div className="tiny mb-8">审查服务不可用：{reviewsError}</div>}
               {!reviewsLoading && !reviewsError && reviews.length === 0 && <div className="tiny mb-8">尚无本机审查记录</div>}
               <Link to="/contracts/new" className="lrow"><Icon name="plus" size={14} className="muted" /><span className="lrow-t muted">开始合同审查</span></Link>
             </div>

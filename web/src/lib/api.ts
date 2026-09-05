@@ -33,6 +33,11 @@ function requestHeaders(init?: RequestInit, json = true): Headers {
 }
 
 async function apiFetch(path: string, init?: RequestInit, json = true): Promise<Response> {
+  // 静态说明站（GitHub Pages，VITE_STATIC_PREVIEW=1）不部署后端：所有 /api 请求在
+  // 客户端直接拒绝，不发注定 404 的网络请求（R21：曾出现逐页静默 404 噪声）。
+  if (import.meta.env.VITE_STATIC_PREVIEW === '1') {
+    throw new ApiError(503, '静态说明站不部署后端服务；请使用本地完整版或桌面版。')
+  }
   return fetch(`${API_BASE}${path}`, { ...init, headers: requestHeaders(init, json) })
 }
 
