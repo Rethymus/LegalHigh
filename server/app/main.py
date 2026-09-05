@@ -788,17 +788,21 @@ def _static_file_candidate(full_path: str) -> Path | None:
     return candidate
 
 
-if WEB_DIST.exists():
-    if (WEB_DIST / "assets").exists():
-        app.mount("/assets", StaticFiles(directory=str(WEB_DIST / "assets")), name="assets")
+if (WEB_DIST / "assets").exists():
+    app.mount("/assets", StaticFiles(directory=str(WEB_DIST / "assets")), name="assets")
 
-    @app.get("/{full_path:path}", include_in_schema=False)
-    def spa_fallback(full_path: str):
-        if full_path.startswith("api/") or full_path == "api":
-            raise HTTPException(404, "Not Found")
-        if "\\" in full_path or any(part in (".", "..") for part in full_path.split("/")):
-            raise HTTPException(404, "Not Found")
-        candidate = _static_file_candidate(full_path)
-        if candidate is not None:
-            return FileResponse(candidate)
-        return FileResponse(WEB_DIST / "index.html")
+
+@app.get("/{full_path:path}", include_in_schema=False)
+def spa_fallback(full_path: str):
+    # 路由无条件注册（无前端构建时也要 404，而不是不注册——曾使 CI 与本地行为分叉）；
+    # 安全检查先于任何文件访问，穿越路径即使在有 dist 的环境也一律 404。
+    if full_path.startswith("api/") or full_path == "api":
+        raise HTTPException(404, "Not Found")
+    if "\\" in full_path or any(part in (".", "..") for part in full_path.split("/")):
+        raise HTTPException(404, "Not Found")
+    if not WEB_DIST.exists():
+        raise HTTPException(404, "前端未构建")
+    candidate = _static_file_candidate(full_path)
+    if candidate is not None:
+        return FileResponse(candidate)
+    return FileResponse(WEB_DIST / "index.html")
