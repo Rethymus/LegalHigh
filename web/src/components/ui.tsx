@@ -1,5 +1,5 @@
 // 通用 UI 原子组件：按钮/输入等直接使用 global.css 类；此处封装交互态组件
-import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode } from 'react'
+import { createContext, useCallback, useContext, useRef, useState, type ReactNode } from 'react'
 import { Icon, type IconName } from './icons'
 
 /* ---------- 时间显示：server 存 UTC ISO，展示一律转本地时区 ----------
@@ -140,18 +140,6 @@ export function SkeletonLines({ n = 4, tall }: { n?: number; tall?: boolean }) {
       ))}
     </div>
   )
-}
-
-/* ---------- 模拟加载（原型用于演示 Loading 态） ---------- */
-export function useSimLoad(deps: unknown[] = [], ms = 500): boolean {
-  const [loading, setLoading] = useState(false)
-  useEffect(() => {
-    setLoading(true)
-    const t = setTimeout(() => setLoading(false), ms)
-    return () => clearTimeout(t)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, deps)
-  return loading
 }
 
 /* ---------- 状态徽章映射（§42 统一颜色） ---------- */

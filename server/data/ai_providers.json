@@ -1,5 +1,5 @@
 {
-  "note": "AI 模型插件目录（OpenAI 协议兼容）。本文件只含公开的端点地址与模型名提示，不含任何密钥；密钥一律来自环境变量（见 env_key）或用户在请求中瞬态提供。设计参考：openai SDK base_url 机制（各厂商官方接入文档）、LiteLLM provider 路由、one-api 渠道模型、Open WebUI connections。",
+  "note": "AI 模型插件目录（OpenAI 协议兼容）。本文件只含公开端点与模型名提示，不含密钥；密钥只可来自环境变量或单次请求。custom 端点默认关闭，部署方必须通过 LH_AI_CUSTOM_HOSTS 登记精确 HTTPS 公网主机名。",
   "providers": [
     {
       "id": "openai",
@@ -68,11 +68,11 @@
     },
     {
       "id": "custom",
-      "name": "自定义 OpenAI 兼容端点（LiteLLM / one-api / new-api 等网关）",
+      "name": "自定义 OpenAI 兼容端点（部署方允许名单）",
       "base_url": "",
       "env_key": null,
       "default_model": "",
-      "models_hint": ["填入网关地址与模型名；网关侧完成多厂商路由"],
+      "models_hint": ["仅允许 LH_AI_CUSTOM_HOSTS 中由部署方登记的精确主机名"],
       "docs": "https://github.com/BerriAI/litellm"
     }
   ]

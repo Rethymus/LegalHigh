@@ -3,8 +3,8 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Icon, type IconName } from '../icons'
-import { CORPUS_DYNAMICS, CONTRACTS, HOT_SEARCHES, WARM_TIPS, useLaws } from '../../data/model'
-import { useSimLoad, SkeletonLines } from '../ui'
+import { CORPUS_DYNAMICS, HOT_SEARCHES, WARM_TIPS, useLaws } from '../../data/model'
+import { EmptyState, SkeletonLines, fmtTime } from '../ui'
 import { CitationChip } from '../domain'
 import { api, type CaseRecord } from '../../lib/api'
 
@@ -12,27 +12,68 @@ import { api, type CaseRecord } from '../../lib/api'
 // 语料扩张后文案未同步而失真——查漏补缺计划 P0-2，新增派生数据一律走此口径）。
 const ACTIONS: { title: string; lines: [string | null, string]; tone: string; icon: IconName; to: string }[] = [
   { title: '法律检索', lines: [null, '条条文 · 支持逐条引用'], tone: 'ac-blue', icon: 'bigSearch', to: '/search' },
-  { title: '案例检索', lines: ['指导案例与公开判例样本', '语义检索 · 争议焦点定位'], tone: 'ac-green', icon: 'gavel', to: '/cases' },
+  { title: '案例检索', lines: ['逐件核实的指导案例与公开判例', '关键词检索 · 争议焦点定位'], tone: 'ac-green', icon: 'gavel', to: '/cases' },
   { title: '合同审查', lines: ['风险条款检测与建议文本', '审查留痕 · 版本对比'], tone: 'ac-purple', icon: 'docShield', to: '/contracts' },
-  { title: '文书生成', lines: ['起草律师函、合同、诉讼文书', '[待填写] 占位 · 律师核验签发'], tone: 'ac-orange', icon: 'docpen', to: '/draft' },
+  { title: '专业文书工具', lines: ['律师函、合同与诉讼文书模板', '程序校验 · 使用者复核定稿'], tone: 'ac-orange', icon: 'docpen', to: '/draft' },
 ]
+
+interface ReviewSummary {
+  id: string
+  created_at: string
+  title: string
+  high: number
+  medium: number
+  low: number
+  findings: number
+}
+
+interface LocalResearchItem { rid: string; question: string; ts: string }
+function loadResearchList(): LocalResearchItem[] {
+  try {
+    const raw: unknown = JSON.parse(localStorage.getItem('lh:research:list') ?? '[]')
+    if (!Array.isArray(raw)) return []
+    return raw.filter((item): item is LocalResearchItem => !!item && typeof item === 'object'
+      && typeof (item as LocalResearchItem).rid === 'string'
+      && typeof (item as LocalResearchItem).question === 'string'
+      && typeof (item as LocalResearchItem).ts === 'string')
+  } catch { return [] }
+}
 
 export default function Dashboard() {
   const nav = useNavigate()
   const [q, setQ] = useState('')
-  const loading = useSimLoad([], 400)
-  const { data: laws } = useLaws()
+  const { data: laws, error: lawsError } = useLaws()
   const lawCount = laws?.laws.length ?? 0
   const artCount = laws ? laws.laws.reduce((s, l) => s + l.articles.length, 0) : 0
   const [today, setToday] = useState<CaseRecord | null>(null)
-  const [researchList, setResearchList] = useState<{ rid: string; question: string; ts: string }[]>([])
+  const [caseCount, setCaseCount] = useState<number | null>(null)
+  const [caseLoading, setCaseLoading] = useState(true)
+  const [caseError, setCaseError] = useState<string | null>(null)
+  const [reviews, setReviews] = useState<ReviewSummary[]>([])
+  const [reviewsLoading, setReviewsLoading] = useState(true)
+  const [reviewsError, setReviewsError] = useState<string | null>(null)
+  const [researchList] = useState<LocalResearchItem[]>(loadResearchList)
   useEffect(() => {
     let alive = true
-    api.listCases().then(
-      (d) => alive && setToday(d.cases.find((c) => c.verified && !c.sample) ?? null),
-      () => { /* 首屏案例卡降级为占位，不阻塞仪表盘 */ },
-    )
-    try { alive && setResearchList(JSON.parse(localStorage.getItem('lh:research:list') ?? '[]')) } catch { /* ignore */ }
+    const casesRequest = api.listCases()
+    const reviewsRequest = api.listReviews(2)
+    void Promise.allSettled([casesRequest, reviewsRequest]).then(([caseResult, reviewResult]) => {
+      if (!alive) return
+      if (caseResult.status === 'fulfilled') {
+        const verifiedCases = caseResult.value.cases.filter((item) => item.verified && !item.sample)
+        setToday(verifiedCases[0] ?? null)
+        setCaseCount(verifiedCases.length)
+      } else {
+        setCaseError(caseResult.reason instanceof Error ? caseResult.reason.message : String(caseResult.reason))
+      }
+      if (reviewResult.status === 'fulfilled') {
+        setReviews(reviewResult.value.reviews)
+      } else {
+        setReviewsError(reviewResult.reason instanceof Error ? reviewResult.reason.message : String(reviewResult.reason))
+      }
+      setCaseLoading(false)
+      setReviewsLoading(false)
+    })
     return () => { alive = false }
   }, [])
 
@@ -42,11 +83,11 @@ export default function Dashboard() {
       <section className="dash-hero">
         <div className="dash-hero-inner">
           <div className="hero-badges">
-            <Link to="/research" className="hero-badge is-accent"><Icon name="sparkle" size={13} />AI 助手</Link>
+            <Link to="/research" className="hero-badge is-accent"><Icon name="sparkle" size={13} />研究工作台</Link>
             <Link to="/learning" className="hero-badge"><Icon name="compass" size={13} />新手引导</Link>
           </div>
           <h1 className="hero-t">让法律更有温度，让正义触手可及</h1>
-          <p className="hero-s">整合可信法律知识，以 AI 辅助法律检索、研究、审查与文书工作</p>
+          <p className="hero-s">整合可信法律知识：可溯源的法条检索、规则化的合同审查与受控 AI 辅助研究，全程证据留痕</p>
           <form
             className="searchbar"
             onSubmit={(e) => { e.preventDefault(); if (q.trim()) nav(`/needs?q=${encodeURIComponent(q.trim())}`) }}
@@ -71,11 +112,13 @@ export default function Dashboard() {
       </section>
 
       <div className="page" style={{ maxWidth: 1240 }}>
+        {lawsError && <div className="banner banner-danger mb-12"><Icon name="alert" size={15} /><span className="banner-tx">本地法条语料加载失败：{lawsError}</span></div>}
         {/* 普法温度提示（公共法律常识 + 语料内条文引用） */}
         <div className="banner-warm mb-12">
           <Icon name="bulb" size={16} />
           <span className="banner-tx">
             {WARM_TIPS.aid}
+            {' '}<a href={WARM_TIPS.aidSourceUrl} target="_blank" rel="noreferrer">司法部来源</a>（{WARM_TIPS.aidSourceCheckedAt} 查阅；【{WARM_TIPS.aidSourceGrade}】）。
             {' '}{WARM_TIPS.limit.text}
             <CitationChip label="《民法典》第188条" to="/laws/civl-2020?art=188" />
           </span>
@@ -100,9 +143,13 @@ export default function Dashboard() {
         {/* 三栏 */}
         <div className="tri-grid">
           <section className="card">
-            <div className="card-h"><b className="card-h-t">今日推荐案例</b><span className="spacer" /><Link to="/cases" className="tiny row" style={{ gap: 3 }}>更多 <Icon name="chevR" size={11} /></Link></div>
+            <div className="card-h"><b className="card-h-t">案例库选读</b><span className="spacer" /><Link to="/cases" className="tiny row" style={{ gap: 3 }}>更多 <Icon name="chevR" size={11} /></Link></div>
             <div className="card-b">
-              {loading || !today ? <SkeletonLines n={4} /> : (
+              {caseLoading ? <SkeletonLines n={4} /> : caseError ? (
+                <EmptyState icon="alert" title="案例服务暂不可用" desc={caseError} />
+              ) : !today ? (
+                <EmptyState icon="caseSearch" title="暂无已核实案例" desc="案例服务当前没有返回可公开展示且已核实的记录。" />
+              ) : (
                 <>
                   <div className="row-wrap mb-8">
                     <span className="bdg bdg-teal">{today.level}</span>
@@ -165,13 +212,18 @@ export default function Dashboard() {
           <div className="tri-grid">
             <div className="card card-pad" style={{ paddingBlock: 14 }}>
               <div className="tiny bold mb-8">最近合同</div>
-              {CONTRACTS.slice(0, 2).map((c) => (
-                <Link key={c.id} to={`/contracts/${c.id}`} className="lrow">
+              {reviewsLoading && <SkeletonLines n={2} />}
+              {!reviewsLoading && reviews.map((r) => (
+                <Link key={r.id} to={`/contracts/${r.id}`} className="lrow">
                   <Icon name="docShield" size={15} className="muted" />
-                  <span className="lrow-t">{c.name}</span>
-                  <span className="bdg bdg-gray">{c.version}</span>
+                  <span className="lrow-t">{r.title}</span>
+                  <span className={r.high ? 'bdg bdg-red' : r.medium ? 'bdg bdg-orange' : 'bdg bdg-gray'}>{r.findings} 项</span>
+                  <span className="tiny">{fmtTime(r.created_at, 'd')}</span>
                 </Link>
               ))}
+              {!reviewsLoading && reviewsError && <div className="tiny mb-8">审查服务不可用：{reviewsError}</div>}
+              {!reviewsLoading && !reviewsError && reviews.length === 0 && <div className="tiny mb-8">尚无本机审查记录</div>}
+              <Link to="/contracts/new" className="lrow"><Icon name="plus" size={14} className="muted" /><span className="lrow-t muted">开始合同审查</span></Link>
             </div>
             <div className="card card-pad" style={{ paddingBlock: 14 }}>
               <div className="tiny bold mb-8">最近研究</div>
@@ -192,10 +244,10 @@ export default function Dashboard() {
                 <span className="lrow-t">本地证据快照语料（{lawCount || '…'} 部 · {artCount ? artCount.toLocaleString() : '…'} 条）</span>
               </Link>
               <Link to="/data-sources" className="lrow">
-                <span className="bdg bdg-gray">规划接入</span>
-                <span className="lrow-t">flk / 裁判文书网 / 案例库…</span>
+                <span className="bdg bdg-teal">逐件核实</span>
+                <span className="lrow-t">{caseCount === null ? '案例服务状态待读取' : `${caseCount} 件公开案例（均带直达来源）`}</span>
               </Link>
-              <div className="tiny mt-8">原型不虚构已接入的数据库。</div>
+              <div className="tiny mt-8">查看数据源页可逐项打开来源，并核对尚未提供的覆盖范围。</div>
             </div>
           </div>
         </div>

@@ -46,7 +46,8 @@ def test_annotation_transitions_and_audit(review_id):
     assert adopt["actor"] == "王律师" and adopt["payload_json"]
 
 
-def test_draft_gate_requires_lawyer(tmp_db):
+def test_draft_state_machine_progress_and_responsibility(tmp_db):
+    """文书状态机只记录本机使用者的复核/定稿进度：顺序强制 + 责任确认强制。"""
     from app import drafting
     gen = drafting.generate("lawyer_letter", {
         "firm": "某某律师事务所", "lawyer": "张三", "license_no": "11101202611111111",
@@ -57,28 +58,29 @@ def test_draft_gate_requires_lawyer(tmp_db):
         "deadline": "本函发出之日起七日内", "contact": "010-12345678",
     })
     did = storage.create_draft("lawyer_letter", gen["fields"], gen["content"], gen["content"]["citations"], gen["snapshot"])
-    # 非律师不能核验
+    # 未复核不能定稿
     with pytest.raises(ValueError):
-        storage.transition_draft(did, "verify", "李助理", role="法务助理")
-    # 未核验不能签发
+        storage.transition_draft(did, "finalize", "张三", responsibility_confirmed=True)
+    # 复核；未确认责任不能定稿
+    storage.transition_draft(did, "review", "张三", note="已逐项核对事实与引用")
     with pytest.raises(ValueError):
-        storage.transition_draft(did, "issue", "张三", role="执业律师")
-    # 律师核验 → 签发
-    storage.transition_draft(did, "verify", "张三", role="执业律师", note="已核对事实与引用")
+        storage.transition_draft(did, "finalize", "张三", responsibility_confirmed=False)
+    # 确认责任 → 定稿
+    storage.transition_draft(did, "finalize", "张三", responsibility_confirmed=True)
     d = storage.get_draft(did)
-    assert d["status"] == "verified" and d["verified_role"] == "执业律师"
-    storage.transition_draft(did, "issue", "张三", role="执业律师")
-    d = storage.get_draft(did)
-    assert d["status"] == "issued" and d["issued_by"] == "张三"
-    # 已签发是终态
+    assert d["status"] == "finalized" and d["finalized_by"] == "张三" and d["responsibility_confirmed"] == 1
+    # 定稿是终态
     with pytest.raises(ValueError):
-        storage.transition_draft(did, "issue", "张三", role="执业律师")
-    # 审计含 verify 与 issue
+        storage.transition_draft(did, "finalize", "张三", responsibility_confirmed=True)
+    # 审计含 review 与 finalize
     actions = [e["action"] for e in storage.list_audit(None, did)]
-    assert "verify" in actions and "issue" in actions
+    assert "review" in actions and "finalize" in actions
 
 
 def test_docx_generation_watermark_states(tmp_db):
+    """未定稿律师函带红色工具草稿横幅；定稿后横幅换为责任声明且字节不同。"""
+    import io as _io
+    import zipfile as _zip
     from app import drafting, docxgen
     gen = drafting.generate("lawyer_letter", {
         "firm": "某某律师事务所", "lawyer": "张三", "license_no": "11101202611111111",
@@ -90,13 +92,17 @@ def test_docx_generation_watermark_states(tmp_db):
     did = storage.create_draft("lawyer_letter", gen["fields"], gen["content"], gen["content"]["citations"], gen["snapshot"])
     d = storage.get_draft(did)
     data_draft = docxgen.generate_docx(d)
-    assert len(data_draft) > 5000  # 未签发草稿可导出，但 docxgen 已加红色横幅
-    storage.transition_draft(did, "verify", "张三", role="执业律师")
-    storage.transition_draft(did, "issue", "张三", role="执业律师")
+    assert len(data_draft) > 5000
+    draft_xml = _zip.ZipFile(_io.BytesIO(data_draft)).read("word/document.xml").decode("utf-8")
+    assert "工具草稿" in draft_xml and "不核验执业资格" in draft_xml
+    storage.transition_draft(did, "review", "张三")
+    storage.transition_draft(did, "finalize", "张三", responsibility_confirmed=True)
     d = storage.get_draft(did)
-    data_issued = docxgen.generate_docx(d)
-    assert len(data_issued) > 5000
-    assert data_issued != data_draft
+    data_final = docxgen.generate_docx(d)
+    assert len(data_final) > 5000
+    final_xml = _zip.ZipFile(_io.BytesIO(data_final)).read("word/document.xml").decode("utf-8")
+    assert "已确认定稿" in final_xml and "工具草稿" not in final_xml
+    assert data_final != data_draft
 
 
 def test_complaint_channel(tmp_db):

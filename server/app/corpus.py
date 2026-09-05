@@ -45,6 +45,7 @@ class LawCorpus:
                     "law_title": law["title"],
                     "law_status": law["status"],
                     "effective_date": law.get("effective_date"),
+                    "effective_date_evidence": law.get("effective_date_evidence"),
                     "promulgation_instrument": law.get("promulgation_instrument"),
                     "source_url": law["source"]["url"],
                     "source_kind": law["source"]["kind"],
@@ -105,6 +106,8 @@ class LawCorpus:
             "text": a["text"],
             "status": a["law_status"],
             "effective_date": a["effective_date"],
+            "effective_date_evidence": a["effective_date_evidence"],
+            "promulgation_instrument": a["promulgation_instrument"],
             "source_url": a["source_url"],
             "source_kind": a["source_kind"],
         }

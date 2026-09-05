@@ -106,14 +106,14 @@ class TestDataIntegrity:
             "demands": "七日内支付", "deadline": "七日内",
         })
         did = st.create_draft("lawyer_letter", {}, g["content"], g["content"]["citations"], g["snapshot"])
-        # draft→issued 应被拒绝（必须经过 verified）
+        # draft→finalize 应被拒绝（必须先复核，且确认责任）
         import pytest
         with pytest.raises(ValueError):
-            st.transition_draft(did, "issue", "测试", role="执业律师")
-        # draft→verified→issued 全链通过
-        st.transition_draft(did, "verify", "测试", role="执业律师")
-        st.transition_draft(did, "issue", "测试", role="执业律师")
-        assert st.get_draft(did)["status"] == "issued"
+            st.transition_draft(did, "finalize", "测试", responsibility_confirmed=True)
+        # draft→review→finalize 全链通过
+        st.transition_draft(did, "review", "测试")
+        st.transition_draft(did, "finalize", "测试", responsibility_confirmed=True)
+        assert st.get_draft(did)["status"] == "finalized"
 
     def test_corpus_snapshot_integrity(self):
         """语料完整性：10 部法律全部存在、条号连续、文本非空。"""

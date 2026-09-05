@@ -1,6 +1,6 @@
 {
- "note": "案例样本库：仅收录可公开查证的案件；摘要为研究性转述并以官方发布文本为准。sample=true 为演示「未核实」状态的占位记录，禁止引用。接入官方判例库（M6，授权路径）后由核验流程替换。",
- "fetched_basis": "字段依据最高人民法院官方发布文本 / U.S. Reports / Appeal Cases 官方判决原文人工录入（2026-08-29 审计口径，见 docs/2026-08-29-数据真实性审计.md）",
+ "note": "案例库仅收录可公开核验的真实案件。facts/summary 是项目依据所列来源编写的结构化摘要，不是判决原文；holding 中的英文引文或中文裁判要点须回到 source_url 核验后再引用。",
+ "fetched_basis": "字段依据最高人民法院官方发布文本、美国国会图书馆 U.S. Reports 扫描件及 BAILII 获授权发布的判决文本人工核验；最近核验日期见各条 source_accessed_at。",
  "cases": [
   {
    "id": "brown-v-board",
@@ -20,13 +20,11 @@
    "holding": "\"Separate educational facilities are inherently unequal.\" — Segregation of children in public schools solely on the basis of race deprives minority children of equal educational opportunities, in violation of the Equal Protection Clause of the Fourteenth Amendment.",
    "statutes": [],
    "research_refs": [],
-   "impact": [
-    "推翻公立教育领域「隔离但平等」原则（此前 Plessy v. Ferguson 确立）。",
-    "为后续民权立法与判例提供宪法基础。",
-    "在中国法语境下常用于平等保护议题的比较研究说理。"
-   ],
    "kind": "foreign",
    "grade": "强",
+   "source_title": "U.S. Reports: Brown v. Board of Education, 347 U.S. 483 (1954)",
+   "source_url": "https://tile.loc.gov/storage-services/service/ll/usrep/usrep347/usrep347483/usrep347483.pdf",
+   "source_accessed_at": "2026-09-01",
    "source_note": "美国联邦最高法院判决原文（U.S. Reports 第347卷第483页）；域外资料，不构成中国司法裁判依据。",
    "verified": true,
    "sample": false
@@ -56,13 +54,12 @@
      "label": "《民法典》第1165条（过错责任 · 比较研究参照）"
     }
    ],
-   "impact": [
-    "突破合同相对性，确立过失侵权的一般注意义务。",
-    "为产品责任等现代侵权制度提供起点。"
-   ],
    "kind": "foreign",
-   "grade": "强",
-   "source_note": "英国上议院判决原文（Appeal Cases 1932 年卷第562页）；域外资料，不构成中国司法裁判依据。",
+   "grade": "中",
+   "source_title": "Donoghue v Stevenson [1932] UKHL 100 (26 May 1932)",
+   "source_url": "https://www.bailii.org/uk/cases/UKHL/1932/100.html",
+   "source_accessed_at": "2026-09-01",
+   "source_note": "英国上议院判决文本；BAILII 页面载明其发布许可由英格兰及威尔士法律报告委员会授予。域外资料，不构成中国司法裁判依据。",
    "verified": true,
    "sample": false
   },
@@ -92,12 +89,12 @@
    ],
    "kind": "case",
    "grade": "强",
+   "source_title": "指导案例1号：上海中原物业顾问有限公司诉陶德华居间合同纠纷案",
+   "source_url": "https://www.court.gov.cn/shenpan/xiangqing/4214.html",
+   "source_accessed_at": "2026-09-01",
    "source_note": "最高人民法院 2011 年发布的第一批指导案例（指导案例1号）；本条目裁判要点与事实为摘要，以最高人民法院官方发布文本为准；发布时依据《合同法》居间合同规则，现已由《民法典》第965条承继",
    "verified": true,
-   "impact": [
-    "首次以指导案例形式明确「跳单」条款的效力边界",
-    "《民法典》合同编中介合同章节吸收了本案规则"
-   ]
+   "sample": false
   },
   {
    "id": "guidance-23",
@@ -117,12 +114,11 @@
    "holding": "消费者购买不符合食品安全标准的食品并主张价款十倍赔偿的，人民法院应予支持，不因其明知食品存在瑕疵而受影响。",
    "statutes": [],
    "research_refs": [],
-   "impact": [
-    "作为指导性案例，各级法院审判类似案件时应当参照。",
-    "本页摘要为研究性转述，引用时以最高法发布文本为准。"
-   ],
    "kind": "case",
    "grade": "强",
+   "source_title": "指导案例23号：孙银山诉南京欧尚超市有限公司江宁店买卖合同纠纷案",
+   "source_url": "https://www.court.gov.cn/shenpan/xiangqing/13326.html",
+   "source_accessed_at": "2026-09-01",
    "source_note": "最高人民法院发布的指导案例（第23号），以最高法官网发布文本核对。其裁判依据为《食品安全法》（2009）第96条第2款——该法未在本地语料，待接入核验，此处不虚构引用。",
    "verified": true,
    "sample": false
@@ -151,12 +147,11 @@
      "label": "《民法典》第1165条（过错责任 · 研究参照）"
     }
    ],
-   "impact": [
-    "作为指导性案例，各级法院审判类似案件时应当参照。",
-    "本页摘要为研究性转述，引用时以最高法发布文本为准。"
-   ],
    "kind": "case",
    "grade": "强",
+   "source_title": "指导案例24号：荣宝英诉王阳、永诚财产保险股份有限公司江阴支公司机动车交通事故责任纠纷案",
+   "source_url": "https://www.court.gov.cn/shenpan/xiangqing/13327.html",
+   "source_accessed_at": "2026-09-01",
    "source_note": "最高人民法院发布的指导案例（第24号），以最高法官网发布文本核对。其裁判依据为当时施行的《侵权责任法》相关条款——该法未在本地语料，待接入核验；《民法典》第1165条仅为研究性参照，非本案裁判依据。",
    "verified": true,
    "sample": false
@@ -180,63 +175,14 @@
    "holding": "The prosecution may not use statements stemming from custodial interrogation unless it demonstrates the use of procedural safeguards effective to secure the privilege against self-incrimination: prior notice of the right to remain silent and the right to counsel.",
    "statutes": [],
    "research_refs": [],
-   "impact": [
-    "确立羁押讯问前的告知义务（Miranda warnings）。",
-    "未告知所获供述原则上不得作为控诉证据。"
-   ],
    "kind": "foreign",
    "grade": "强",
+   "source_title": "U.S. Reports: Miranda v. Arizona, 384 U.S. 436 (1966)",
+   "source_url": "https://tile.loc.gov/storage-services/service/ll/usrep/usrep384/usrep384436/usrep384436.pdf",
+   "source_accessed_at": "2026-09-01",
    "source_note": "美国联邦最高法院判决原文（U.S. Reports 第384卷第436页）；域外资料，不构成中国司法裁判依据。",
    "verified": true,
    "sample": false
-  },
-  {
-   "id": "sample-unverified-1",
-   "name": "某网络服务合同纠纷（示例记录）",
-   "no": "（2021）示例案号",
-   "court": "示例法院",
-   "date": "2021-xx-xx",
-   "jurisdiction": "中国",
-   "cause": "网络服务合同纠纷",
-   "level": "示例占位",
-   "focus": [
-    "格式条款效力（占位演示）"
-   ],
-   "summary": "本条为演示「未核实」状态的占位示例：字段不完整、未经来源核验，接入官方数据源后由核验流程替换。",
-   "facts": "（示例占位：无事实内容）",
-   "holding": "",
-   "statutes": [],
-   "research_refs": [],
-   "impact": [],
-   "kind": "case",
-   "grade": "弱",
-   "source_note": "示例占位数据，禁止引用。",
-   "verified": false,
-   "sample": true
-  },
-  {
-   "id": "sample-unverified-2",
-   "name": "某教育培训合同纠纷（示例记录）",
-   "no": "（2022）示例案号",
-   "court": "示例法院",
-   "date": "2022-xx-xx",
-   "jurisdiction": "中国",
-   "cause": "教育培训合同纠纷",
-   "level": "示例占位",
-   "focus": [
-    "格式条款效力（占位演示）"
-   ],
-   "summary": "本条为演示「未核实」状态的占位示例：字段不完整、未经来源核验，接入官方数据源后由核验流程替换。",
-   "facts": "（示例占位：无事实内容）",
-   "holding": "",
-   "statutes": [],
-   "research_refs": [],
-   "impact": [],
-   "kind": "case",
-   "grade": "弱",
-   "source_note": "示例占位数据，禁止引用。",
-   "verified": false,
-   "sample": true
   }
  ]
 }

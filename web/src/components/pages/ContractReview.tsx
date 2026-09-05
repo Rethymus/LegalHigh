@@ -1,13 +1,11 @@
 // FRAME 10 · Contract Review —— 三栏工作台（真实 API 驱动）
 // server: POST /api/reviews（费用/账户/责任审查点引擎）→ 批注状态机（adopt/amend/reject/reopen）→ append-only 审计
-// 演示合同（model.ts，已标「示例」）在此仅作为受审样例文本；审查结论/依据条文/批注/审计全部来自后端真实数据。
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { Icon } from '../icons'
-import { CONTRACTS } from '../../data/model'
 import { EmptyState, PageHeader, useToast, fmtTime } from '../ui'
 import { CitationChip } from '../domain'
-import { api, ApiError, loadIdentity, type Annotation, type AuditEntry, type Finding, type Review } from '../../lib/api'
+import { api, ApiError, type Annotation, type AuditEntry, type Finding, type Review } from '../../lib/api'
 
 const CATEGORY_LABEL: Record<string, string> = { fee: '费用', account: '账户', liability: '责任' }
 const STATE_LABEL: Record<Annotation['state'], { label: string; cls: string }> = {
@@ -20,24 +18,12 @@ const RISK_CLS: Record<string, string> = { high: 'r-high', medium: 'r-mid', low:
 const RISK_BDG: Record<string, string> = { high: 'bdg-red', medium: 'bdg-orange', low: 'bdg-green' }
 const RISK_LABEL: Record<string, string> = { high: '高风险', medium: '中风险', low: '低风险' }
 
-/** 把演示合同（示例样例文本）组装为纯文本交给审查引擎 */
-function sampleContractText(cid: string | undefined): { title: string; text: string } | null {
-  const c = CONTRACTS.find((x) => x.id === cid)
-  if (!c) return null
-  const lines: string[] = [c.name.replace('（示例）', '')]
-  for (const s of c.sections) {
-    lines.push('', s.h)
-    for (const p of s.paras) lines.push(typeof p === 'string' ? p : p.risk)
-  }
-  return { title: c.name, text: lines.join('\n') }
-}
-
 export default function ContractReview() {
   const { cid } = useParams()
-  const sample = useMemo(() => sampleContractText(cid), [cid])
+  const validTarget = cid === 'new' || !!cid?.startsWith('rv_')
   const toast = useToast()
 
-  const [rid, setRid] = useState<string | null>(() => (cid ? localStorage.getItem(`lh:review:${cid}`) : null))
+  const [rid, setRid] = useState<string | null>(() => cid?.startsWith('rv_') ? cid : null)
   const [review, setReview] = useState<Review | null>(null)
   const [audit, setAudit] = useState<AuditEntry[]>([])
   const [busy, setBusy] = useState(false)
@@ -46,11 +32,9 @@ export default function ContractReview() {
   const [activeFinding, setActiveFinding] = useState<string | null>(null)
   const [amending, setAmending] = useState<string | null>(null)
   const [amendText, setAmendText] = useState('')
-  const _id = loadIdentity()
   const returnFileRef = useRef<HTMLInputElement>(null)
-  const [actor, setActor] = useState(_id.name ? `${_id.name}（${_id.role}）` : 'Alex Wang（演示账号）')
-  // 审查文本：初始为样例合同（示例），可直接修改或粘贴替换为真实合同文本
-  const [reviewText, setReviewText] = useState(sample?.text ?? '')
+  const [reviewTitle, setReviewTitle] = useState('')
+  const [reviewText, setReviewText] = useState('')
 
   const load = useCallback(async (id: string) => {
     setBusy(true); setError(null)
@@ -63,9 +47,9 @@ export default function ContractReview() {
       try { setAudit((await api.reviewAudit(id)).entries.slice().reverse().slice(0, 8)) } catch { setAudit([]) }
     } catch (e) {
       setError(e instanceof ApiError ? e.message : String(e))
-      if (e instanceof ApiError && e.status === 404) { localStorage.removeItem(`lh:review:${cid}`); setRid(null) }
+      if (e instanceof ApiError && e.status === 404) setRid(null)
     } finally { setBusy(false) }
-  }, [cid])
+  }, [])
 
   useEffect(() => { if (rid) void load(rid) }, [rid, load])
 
@@ -73,10 +57,9 @@ export default function ContractReview() {
     if (!reviewText.trim()) { toast('审查文本为空', 'err'); return }
     setBusy(true); setError(null)
     try {
-      const created = await api.createReview(reviewText, sample?.title)
-      localStorage.setItem(`lh:review:${cid}`, created.review_id)
+      const created = await api.createReview(reviewText, reviewTitle.trim() || undefined)
       setRid(created.review_id)
-      toast('AI 审查完成：费用/账户/责任审查点已扫描', 'ok')
+      toast('规则审查完成：费用、账户与责任审查点已扫描', 'ok')
     } catch (e) {
       setError(e instanceof ApiError ? e.message : String(e))
     } finally { setBusy(false) }
@@ -86,7 +69,7 @@ export default function ContractReview() {
     if (!rid) return
     setBusy(true)
     try {
-      await api.transitionAnnotation(rid, findingId, action, actor, amended)
+      await api.transitionAnnotation(rid, findingId, action, amended)
       await load(rid)
       toast(`批注已${action === 'adopt' ? '采纳' : action === 'amend' ? '修改' : action === 'reject' ? '驳回' : '重开'}并写入审计`, 'ok')
     } catch (e) {
@@ -114,7 +97,7 @@ export default function ContractReview() {
     return fs.filter((f) => f.clause_id === section || f.clause_id === null)
   }, [review, section])
 
-  if (!sample) {
+  if (!validTarget) {
     return (
       <div className="page">
         <EmptyState icon="file" title="未找到该合同" action={<Link to="/contracts" className="btn btn-secondary">返回合同中心</Link>} />
@@ -126,17 +109,14 @@ export default function ContractReview() {
     <div className="page" style={{ maxWidth: 'none' }}>
       <PageHeader
         back={<Link to="/contracts" className="tiny row" style={{ gap: 4 }}><Icon name="arrowL" size={13} />合同中心</Link>}
-        title={sample.title}
+        title={review?.title ?? '新合同审查'}
         sub={review
           ? `审查引擎：${review.result.engine_meta.checkpoint_count} 个审查点 · ${review.result.engine_meta.clause_count} 条条款 · 批注 ${review.annotations.length} 条（全部操作已审计）`
-          : '样例合同（示例文本）待审查：发起后将由费用/账户/责任三类审查点引擎逐条扫描'}
+          : '粘贴你有权处理的合同文本；发起后由本地费用、账户与责任规则引擎逐条扫描'}
         actions={
           <>
-            <label className="tiny row" style={{ gap: 6 }}>复核人
-              <input className="inp" style={{ width: 170, height: 30 }} value={actor} onChange={(e) => setActor(e.target.value)} />
-            </label>
             {review && <button className="btn btn-ghost btn-sm" disabled={busy} onClick={() => review && load(review.id)}><Icon name="refresh" size={13} />刷新</button>}
-            {review && <a className="btn btn-secondary btn-sm" href={api.reviewDocxUrl(review.id)}><Icon name="download" size={13} />下载修订稿（Word）</a>}
+            {review && <button className="btn btn-secondary btn-sm" onClick={() => api.reviewDocxDownload(review.id).catch((e) => toast(e instanceof Error ? e.message : String(e), 'err'))}><Icon name="download" size={13} />下载修订稿（Word）</button>}
             {review && (
               <>
                 <input ref={returnFileRef} type="file" accept=".docx" style={{ display: 'none' }}
@@ -153,7 +133,7 @@ export default function ContractReview() {
                 <button className="btn btn-ghost btn-sm" disabled={busy} onClick={() => returnFileRef.current?.click()} title="律师在 Word 中接受/拒绝修订后回传，批注状态机将同步"><Icon name="refresh" size={13} />回传修订稿</button>
               </>
             )}
-            {!rid && <button className="btn btn-primary" disabled={busy} onClick={createReview}><Icon name="zap" size={14} />{busy ? '审查中…' : '发起 AI 审查'}</button>}
+            {!rid && <button className="btn btn-primary" disabled={busy} onClick={createReview}><Icon name="zap" size={14} />{busy ? '审查中…' : '发起规则审查'}</button>}
           </>
         }
       />
@@ -169,15 +149,14 @@ export default function ContractReview() {
         <div className="cols cols-2">
           <div className="card card-pad">
             <div className="row mb-8">
-              <div className="tiny bold">合同文本（可直接粘贴替换样例）</div>
-              <span className="spacer" />
-              <button className="btn btn-ghost btn-sm" onClick={() => setReviewText(sample.text)}><Icon name="refresh" size={12} />恢复样例</button>
+              <div className="tiny bold">合同名称与文本</div>
             </div>
-            <textarea className="ta" style={{ minHeight: 400, fontSize: 12.5, lineHeight: 1.9 }} value={reviewText} onChange={(e) => setReviewText(e.target.value)} />
-            <div className="tiny mt-8">提示：按「第X条」分段可让审查引擎定位条款；至少 30 字。上传文档仅在本机与本地服务间处理。</div>
+            <input className="inp mb-12" aria-label="合同名称" placeholder="合同名称（可选；不填写时由正文标题派生）" value={reviewTitle} onChange={(e) => setReviewTitle(e.target.value)} />
+            <textarea className="ta" aria-label="合同文本" placeholder="粘贴你有权处理的合同全文（至少 30 字）" style={{ minHeight: 400, fontSize: 12.5, lineHeight: 1.9 }} value={reviewText} onChange={(e) => setReviewText(e.target.value)} />
+            <div className="tiny mt-8">提示：按「第X条」分段可让审查引擎定位条款；至少 30 字。文本会写入当前本机服务的 SQLite 审查记录；如配置远程模型，合同规则审查本身仍不调用该模型。</div>
           </div>
           <div className="card">
-            <EmptyState icon="shield" title="输入合同开始审查" desc="发起后：① 条款切分 → ② 费用/账户/责任审查点扫描 → ③ 每条风险绑定现行有效条文（带版本/施行日）→ ④ 批注留痕 + 审计日志。" action={<button className="btn btn-primary" disabled={busy || !reviewText.trim()} onClick={createReview}><Icon name="zap" size={14} />{busy ? '审查中…' : '发起 AI 审查'}</button>} />
+            <EmptyState icon="shield" title="输入合同开始审查" desc="发起后：① 条款切分 → ② 费用、账户与责任审查点扫描 → ③ 有法源的发现绑定语料条文 → ④ 批注留痕与审计。规则命中不是法律结论，仍须人工复核。" action={<button className="btn btn-primary" disabled={busy || reviewText.trim().length < 30} onClick={createReview}><Icon name="zap" size={14} />{busy ? '审查中…' : '发起规则审查'}</button>} />
           </div>
         </div>
       )}

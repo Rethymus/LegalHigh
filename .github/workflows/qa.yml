@@ -1,8 +1,7 @@
-# LegalHigh 五道质量门（与本地 run_qa.cmd 一致）——云端 CI 预备文件
+# LegalHigh 云端质量门——本文件配置后仍须以实际 Actions 运行记录为准。
 # 说明（决策项3·选项C）：本文件为「就绪待启用」状态——仅当代码推送到 GitHub 等远端时
 # 才会生效；数据/代码是否托管属业主决策（决策清单-2026-08-30.md 决策3），本地不受影响。
-# Windows 依赖：server/.venv 由 cache/安装步生成；视觉巡检在 CI 中默认以 fast 模式跳过
-# （无头 Chrome 在 ubuntu runner 需另配，先跑四道门）。
+# 视觉巡检需要同时启动隔离后端、Vite 与 Chrome，目前由本地终验执行，不在本工作流中伪装为已覆盖。
 name: qa
 
 on:
@@ -29,7 +28,7 @@ jobs:
         run: |
           cd server
           python -m venv .venv
-          .venv/bin/pip install fastapi "uvicorn[standard]" rank-bm25 python-docx pytest httpx openai python-multipart
+          .venv/bin/pip install --require-hashes -r requirements-dev.lock
 
       - name: Gate 1 pytest（含金标 100 组评测门）
         run: |
@@ -39,7 +38,7 @@ jobs:
       - name: Gate 2 web build（tsc + vite）
         run: |
           cd web
-          npm install
+          npm ci
           npm run build
 
       - name: Gate 3 data-discipline grep
@@ -52,5 +51,15 @@ jobs:
           cd web
           node scripts/qa_contrast.mjs --strict
 
-      # Gate 5 视觉巡检：CI 需 headless Chrome + 前后端服务，先以 fast 语义跳过；
-      # 启用方法：装 chromium（actions/setup-chrome）→ 起 uvicorn+vite → node scripts/qa_shots.mjs --strict
+      - name: Gate 5 Python dependency audit
+        run: |
+          cd server
+          .venv/bin/pip-audit -r requirements.lock
+
+      - name: Gate 6 npm dependency audits
+        run: |
+          cd web
+          npm audit --audit-level=high --registry=https://registry.npmjs.org
+          cd ../desktop
+          npm ci
+          npm audit --audit-level=high --registry=https://registry.npmjs.org

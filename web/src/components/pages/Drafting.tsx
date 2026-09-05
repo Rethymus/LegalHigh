@@ -1,14 +1,14 @@
 // FRAME 12 · Document Drafting —— 文书起草（设计板视觉：模板库｜Word 式文档纸面｜智能建议）
 // 数据链路全部真实：GET /api/drafts/templates（结构化模板）→ POST /api/drafts（模板引擎，禁自由生成）
-//   → /api/reviews/analyze（合同草稿的结构化风险扫描）→ verify/issue 状态机 → /docx（未签发带水印）
+//   → /api/reviews/analyze（合同草稿的结构化风险扫描）→ review/finalize 工作进度 → /docx
 // 视觉与图示对齐：左＝模板库（搜索+分类+常用模板）；中＝文档纸面（工具栏+状态栏，生成后）；
-// 右＝智能建议（风险提示[真实审查点]/相关法条[真实语料引用]/拓展建议[规划中，不虚构]）。
+// 右＝确定性校验辅助（风险提示[真实审查点]/相关法条[真实语料引用]）。
 import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Icon, type IconName } from '../icons'
 import { PageHeader, useToast, EmptyState } from '../ui'
 import { CitationChip } from '../domain'
-import { api, ApiError, loadIdentity, type Citation, type DocTemplate, type Draft, type DraftBlock, type Finding } from '../../lib/api'
+import { api, ApiError, type Citation, type DocTemplate, type Draft, type DraftBlock, type Finding } from '../../lib/api'
 
 const TEMPLATE_ICONS: Record<string, IconName> = {
   lawyer_letter: 'send', contract: 'docShield', civil_complaint: 'gavel',
@@ -34,12 +34,11 @@ export default function Drafting() {
   const toast = useToast()
   const [templates, setTemplates] = useState<DocTemplate[]>([])
   const [pool, setPool] = useState<{ law_id: string; title: string; articles: { no: number; label: string; excerpt: string }[] }[]>([])
-    const _id = loadIdentity()
   const [tplId, setTplId] = useState<string | null>(null)
   const [values, setValues] = useState<Record<string, string | string[] | { law_id: string; article_no: number }[]>>({})
   const [draft, setDraft] = useState<Draft | null>(null)
   const [riskFindings, setRiskFindings] = useState<Finding[] | null>(null)
-  const [suggestTab, setSuggestTab] = useState<'risk' | 'law' | 'ext'>('risk')
+  const [suggestTab, setSuggestTab] = useState<'risk' | 'law'>('risk')
   const [error, setError] = useState<string | null>(null)
   const [busy, setBusy] = useState(false)
   const [pickerLaw, setPickerLaw] = useState('')
@@ -119,21 +118,21 @@ export default function Drafting() {
       } else {
         setRiskFindings(null)
       }
-      toast('草稿已生成（draft 状态：须核验签发后方可对外）', 'ok')
+      toast('草稿已生成；请逐项复核事实、引用与格式后再确认定稿', 'ok')
     } catch (e) {
       setError(e instanceof ApiError ? e.message : String(e))
     } finally { setBusy(false) }
   }
 
-  const gate = async (action: 'verify' | 'issue') => {
+  const gate = async (action: 'review' | 'finalize') => {
     if (!draft) return
     setBusy(true)
     try {
-      const res = action === 'verify'
-        ? await api.verifyDraft(draft.id, _id.name || '未署名', _id.role)
-        : await api.issueDraft(draft.id, _id.name || '未署名', _id.role)
+      const res = action === 'review'
+        ? await api.reviewDraft(draft.id)
+        : await api.finalizeDraft(draft.id)
       setDraft({ ...draft, status: res.to as Draft['status'] })
-      toast(action === 'verify' ? '已通过执业律师核验' : '已签发：文书状态 issued，可对外交付', 'ok')
+      toast(action === 'review' ? `已记录 ${res.actor} 完成人工复核` : `已由 ${res.actor} 确认定稿；平台未核验其身份或资格`, 'ok')
     } catch (e) {
       toast(e instanceof ApiError ? e.message : String(e), 'err')
     } finally { setBusy(false) }
@@ -171,19 +170,19 @@ export default function Drafting() {
       <PageHeader
         back={<Link to="/" className="tiny row" style={{ gap: 4 }}><Icon name="arrowL" size={13} />文书工具</Link>}
         title={tpl ? `${tpl.name}` : '文书起草'}
-        sub="结构化模板引擎（非自由生成）：版式由模板决定，引用条文来自本地语料并带版本快照；律师函须执业律师核验签发后方可对外。"
+        sub="结构化模板引擎（非自由生成）：版式由模板决定，引用来自本地语料。平台不核验律师身份、不签发文书；专业使用者在线下独立复核并负责。"
         actions={
           <>
-            {draft && <span className={'bdg ' + (draft.status === 'issued' ? 'bdg-green' : draft.status === 'verified' ? 'bdg-blue' : 'bdg-orange')} style={{ height: 32, fontSize: 13 }}>
-              {draft.status === 'issued' ? '已签发 · 可交付' : draft.status === 'verified' ? '已核验 · 待签发' : '草稿 · 未核验'}
+            {draft && <span className={'bdg ' + (draft.status === 'finalized' ? 'bdg-green' : draft.status === 'reviewed' ? 'bdg-blue' : 'bdg-orange')} style={{ height: 32, fontSize: 13 }}>
+              {draft.status === 'finalized' ? '使用者已确认定稿' : draft.status === 'reviewed' ? '已复核 · 待定稿' : '工具草稿 · 待复核'}
             </span>}
             <Link to="/draft/validation" className="btn btn-ghost"><Icon name="shieldCheck" size={14} />校验</Link>
-            {draft && <a className="btn btn-ghost" href={api.draftDocxUrl(draft.id)} target="_blank" rel="noreferrer"><Icon name="download" size={14} />下载{draft.status !== 'issued' ? '（含水印）' : ''}</a>}
+            {draft && <button className="btn btn-ghost" onClick={() => api.draftDocxDownload(draft.id, draft.template_id).catch((e) => toast(e instanceof Error ? e.message : String(e), 'err'))}><Icon name="download" size={14} />下载{draft.status !== 'finalized' ? '（草稿标识）' : ''}</button>}
             {draft && (
               draft.status === 'draft'
-                ? <button className="btn btn-secondary" disabled={busy} onClick={() => gate('verify')}><Icon name="verify" size={14} />{tpl?.gate.verify_label ?? '人工核验'}</button>
-                : draft.status === 'verified'
-                  ? <button className="btn btn-secondary" disabled={busy} onClick={() => gate('issue')}><Icon name="stamp" size={14} />{tpl?.gate.issue_label ?? '确认签发'}</button>
+                ? <button className="btn btn-secondary" disabled={busy} title="记录本机使用者已逐项复核；不代表平台认证" onClick={() => gate('review')}><Icon name="verify" size={14} />{tpl?.gate.review_label ?? '完成内容复核'}</button>
+                : draft.status === 'reviewed'
+                  ? <button className="btn btn-secondary" disabled={busy} title="确认已核对事实、引用与格式并自行承担使用责任" onClick={() => gate('finalize')}><Icon name="stamp" size={14} />{tpl?.gate.finalize_label ?? '使用者确认定稿'}</button>
                   : null
             )}
             <button className="btn btn-primary" disabled={!tpl || busy} onClick={generate}><Icon name="zap" size={14} />生成</button>
@@ -321,8 +320,8 @@ export default function Drafting() {
               <div className="panel-b" style={{ background: 'var(--bg-2)', padding: 0 }}>
                 <div className="doc-paper">
                   {((draft.content.blocks ?? draft.content.sections ?? []) as DraftBlock[]).map(renderBlock)}
-                  {draft.status !== 'issued' && (
-                    <div className="gate"><b>签发 Gate：</b>本预览为草稿，未经执业律师核验签发不得对外发出。</div>
+                  {draft.status !== 'finalized' && (
+                    <div className="gate"><b>人工复核：</b>本预览仍是工具草稿。LegalHigh 不核验身份或资格，也不代表任何律所签发。</div>
                   )}
                 </div>
               </div>
@@ -338,20 +337,18 @@ export default function Drafting() {
           )}
         </section>
 
-        {/* RIGHT · 智能建议（设计板：风险提示 / 相关法条 / 拓展建议——数据全部真实） */}
+        {/* RIGHT · 确定性辅助：规则命中与草稿实际引用。 */}
         <aside className="panel" style={{ maxHeight: 'calc(100vh - 300px)' }}>
-          <div className="panel-h"><Icon name="sparkle" size={14} />智能建议<span className="spacer" />
-            <span className="ai-tag" style={{ height: 18, fontSize: 10 }}>AI</span>
-          </div>
+          <div className="panel-h"><Icon name="shieldCheck" size={14} />校验辅助</div>
           <div style={{ padding: '0 14px' }}>
             <div className="tabs">
-              {([['risk', '风险提示'], ['law', '相关法条'], ['ext', '拓展建议']] as const).map(([k, label]) => (
+              {([['risk', '规则提示'], ['law', '实际引用']] as const).map(([k, label]) => (
                 <button key={k} className={'tab' + (suggestTab === k ? ' is-on' : '')} onClick={() => setSuggestTab(k)}>{label}</button>
               ))}
             </div>
           </div>
           <div className="panel-b">
-            {!draft && <EmptyState icon="sparkle" title="生成草稿后提供建议" desc="智能建议基于真实引擎：风险提示来自费用/账户/责任审查点扫描，相关法条来自草稿实际引用的本地语料条文。" />}
+            {!draft && <EmptyState icon="shieldCheck" title="生成草稿后开始校验" desc="规则提示来自费用、账户与责任审查点扫描；法条列表只显示草稿实际绑定的本地语料条文。" />}
             {draft && suggestTab === 'risk' && (
               tpl?.template_id === 'contract' ? (
                 riskFindings === null
@@ -382,7 +379,7 @@ export default function Drafting() {
                     </>
                   ) : <EmptyState icon="verify" title="未检出结构化风险" desc="审查点引擎未命中：不虚构风险。" />
               ) : (
-                <EmptyState icon="info" title="该文书类型未接入风险扫描" desc="结构化风险扫描目前覆盖合同类文书（费用/账户/责任审查点）。律师函与诉讼文书的安全性由引用校验与签发 gate 保障。" />
+                <EmptyState icon="info" title="该文书类型不适用合同规则扫描" desc="费用、账户与责任审查点只用于合同类文本。其他文书仍须由使用者逐项核对事实、管辖、请求、期限与引用后定稿。" />
               )
             )}
             {draft && suggestTab === 'law' && (
@@ -395,16 +392,13 @@ export default function Drafting() {
                         <span className="bdg bdg-green">{c.status}</span>
                       </div>
                       <div className="src-item-q">{c.text.slice(0, 60)}…</div>
-                      <div className="tiny mt-8">{c.effective_date} 施行 · 来源：国家法律法规数据库对照（本地快照）</div>
+                      <div className="tiny mt-8">{c.effective_date ? `${c.effective_date} 施行` : '生效日期待官方核对'} · 本地证据快照；具体来源见法条详情</div>
                       <Link to={`/laws/${c.law_id}?art=${c.article_no}`} className="tiny row mt-8" style={{ gap: 3, color: 'var(--accent-text)' }}>查看详情 <Icon name="chevR" size={11} /></Link>
                     </div>
                   ))}
-                  <div className="tiny mt-12">引用生成时即带版本快照；语料与 flk 的抽查比对（≥10%+字段全量，不爬取）列入 M6。</div>
+                  <div className="tiny mt-12">引用绑定当前语料快照；使用前仍应打开详情页，对照来源与效力字段。</div>
                 </>
               ) : <EmptyState icon="link" title="本文书未引用法条" desc="如律师函场景未选择法律依据，此处不虚构引用。" />
-            )}
-            {draft && suggestTab === 'ext' && (
-              <EmptyState icon="bulb" title="拓展建议规划中" desc="关联条款补全、类案条款推荐等拓展建议将在 M6–M7 提供真实引擎支持；原型阶段不提供未经引擎验证的建议。" />
             )}
           </div>
         </aside>

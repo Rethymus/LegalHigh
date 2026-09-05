@@ -6,14 +6,25 @@
   "date": "2013-10-25",
   "organ": "全国人民代表大会常务委员会"
  },
+ "effective_date": "2014-03-15",
+ "effective_date_evidence": {
+  "title": "全国人民代表大会常务委员会关于修改《中华人民共和国消费者权益保护法》的决定",
+  "url": "https://www.npc.gov.cn/WZWSREL2MxNzczL2MxODQ4L2MyMTExNC9jMjExNzAvYzIxMTc0LzIwMTkwNS90MjAxOTA1MjFfMjEwNjkzLmh0bWw%3D",
+  "accessed_at": "2026-09-01",
+  "grade": "强",
+  "source_kind": "official-npc",
+  "version": "2013修正",
+  "record_snapshot": "docs/research/evidence/official_version_effective_dates_2026-09-01.json",
+  "record_sha256": "07227737652708bde558223eff0ca92161ce495c516a7005b28cda0dbded6b4e"
+ },
  "promulgation_instrument": null,
- "effective_date": null,
  "source": {
   "kind": "wikisource-transcription",
   "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E6%B6%88%E8%B4%B9%E8%80%85%E6%9D%83%E7%9B%8A%E4%BF%9D%E6%8A%A4%E6%B3%95_(2013%E5%B9%B4)",
   "pageid": 179152,
   "snapshot": "docs/research/evidence/ws_消保法2013.json",
-  "fetched_at": "2026-08-29"
+  "fetched_at": "2026-08-29",
+  "sha256": "f2c675c89a2f83f715551824e0cac3f2182812eeaba8d2478dac8b6d60a287c4"
  },
  "authority_pointer": "国家法律法规数据库 https://flk.npc.gov.cn （检索该法条目核对）",
  "articles": [

@@ -8,12 +8,21 @@
  },
  "promulgation_instrument": "中华人民共和国主席令第十一号",
  "effective_date": "2024-01-01",
+ "effective_date_evidence": {
+  "title": "中华人民共和国民事诉讼法",
+  "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E6%B0%91%E4%BA%8B%E8%AF%89%E8%AE%BC%E6%B3%95_(2023%E5%B9%B4)",
+  "accessed_at": "2026-08-29",
+  "grade": "中",
+  "source_kind": "wikisource-transcription",
+  "version": "现行有效（2023修正）"
+ },
  "source": {
   "kind": "wikisource-transcription",
   "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E6%B0%91%E4%BA%8B%E8%AF%89%E8%AE%BC%E6%B3%95_(2023%E5%B9%B4)",
   "pageid": 1136669,
   "snapshot": "docs/research/evidence/ws_民事诉讼法2023.json",
-  "fetched_at": "2026-08-29"
+  "fetched_at": "2026-08-29",
+  "sha256": "7543240b2a31ced297c9481933acfa94ff412c5ee3cfab8321dec65659a434b4"
  },
  "authority_pointer": "国家法律法规数据库 https://flk.npc.gov.cn （检索该法条目核对）",
  "articles": [

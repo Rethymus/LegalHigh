@@ -1,92 +1,98 @@
-// FRAME 14 · Comparative Law —— 跨法域对比（规格 §21）
-// China | 可比性分析 | Foreign；域外资料醒目免责
-import { useState } from 'react'
+// 跨法域对比只展示已进入本地证据语料/案例库的可核验材料。
+// 不提供任意主题输入，也不把静态项目文字标成 AI 分析。
+import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Icon } from '../icons'
-import { FOREIGN_TERMS } from '../../data/model'
-import { PageHeader } from '../ui'
-import { AIBlock, ForeignDisclaimer, SourceBadge } from '../domain'
-
-const TOPICS = ['格式条款是否构成显失公平', '侵权中的注意义务边界', '惩罚性赔偿的适用']
+import { EmptyState, PageHeader, SkeletonLines } from '../ui'
+import { ForeignDisclaimer, OfficialArticle, SourceBadge } from '../domain'
+import { findArticle, findLaw, lawEvidenceGrade, useLaws } from '../../data/model'
+import { api, ApiError, type CaseRecord } from '../../lib/api'
 
 export default function ComparativeLaw() {
-  const [topic, setTopic] = useState(TOPICS[0])
-  const [jur, setJur] = useState(0)
-  const foreign = FOREIGN_TERMS[jur]
+  const { data: laws, error: lawsError } = useLaws()
+  const [foreignCase, setForeignCase] = useState<CaseRecord | null>(null)
+  const [caseError, setCaseError] = useState<string | null>(null)
+
+  useEffect(() => {
+    let alive = true
+    api.getCase('donoghue-v-stevenson').then(
+      (value) => { if (alive) setForeignCase(value) },
+      (error) => { if (alive) setCaseError(error instanceof ApiError ? error.message : String(error)) },
+    )
+    return () => { alive = false }
+  }, [])
+
+  const civilCode = findLaw(laws, 'civl-2020')
+  const article1165 = findArticle(civilCode, 1165)
+  const error = lawsError ?? caseError
 
   return (
     <div className="page">
       <PageHeader
         title="跨法域对比"
-        sub="就同一法律争议并置中国法与域外法源，输出可比性分析。域外法律与案例仅作比较研究资料。"
+        sub="当前只开放一组已核验材料：以《民法典》第1165条与 Donoghue v Stevenson 的注意义务说理作方法论对照。"
       />
 
-      <div className="card card-pad mb-16">
-        <div className="row" style={{ gap: 12, flexWrap: 'wrap' }}>
-          <div className="fld" style={{ flex: 1, minWidth: 320 }}>
-            <span className="fld-l">法律争议问题</span>
-            <input className="inp" value={topic} onChange={(e) => setTopic(e.target.value)} />
-          </div>
-          <div className="fld" style={{ width: 200 }}>
-            <span className="fld-l">对比法域</span>
-            <select className="sel" value={jur} onChange={(e) => setJur(Number(e.target.value))}>
-              {FOREIGN_TERMS.map((t, i) => <option key={t.name} value={i}>{t.name}</option>)}
-            </select>
-          </div>
-        </div>
-        <div className="chips mt-12">
-          {TOPICS.map((t) => <button key={t} className={'chip' + (topic === t ? ' is-on' : '')} onClick={() => setTopic(t)}>{t}</button>)}
-        </div>
-      </div>
-
       <div className="mb-16"><ForeignDisclaimer /></div>
-
-      <div className="cols cols-3">
-        {/* 中国 */}
-        <section className="card">
-          <div className="card-h"><span className="jur-flag">🇨🇳</span><div><b className="card-h-t">中国</b><small className="tiny" style={{ display: 'block' }}>法律 · 司法解释 · 案例</small></div></div>
-          <div className="card-b" style={{ paddingTop: 8 }}>
-            <div className="src-item">
-              <div className="src-item-t"><SourceBadge kind="law" grade="强" />《民法典》第497条</div>
-              <div className="src-item-q">不合理地免除或减轻提供方责任、加重对方责任、限制对方主要权利的格式条款无效。</div>
-            </div>
-            <div className="src-item">
-              <div className="src-item-t"><SourceBadge kind="law" grade="强" />《消费者权益保护法》第26条</div>
-              <div className="src-item-q">经营者不得以格式条款等方式排除或限制消费者权利、加重消费者责任。</div>
-            </div>
-            <div className="src-item">
-              <div className="src-item-t"><SourceBadge kind="case" />指导案例24号</div>
-              <div className="src-item-q">责任减免须有法定事由——受害人体质不属于减轻责任的情形（责任边界议题的类案参照）。</div>
-            </div>
-          </div>
-        </section>
-
-        {/* 可比性分析（AI） */}
-        <section>
-          <AIBlock label={`可比性分析（中国 × ${foreign.name}）`}>
-            <ul>
-              <li><b>共同点：</b>均反对利用优势地位施加显著失衡的合同条款，均要求条款公平与程序正当。</li>
-              <li><b>区别：</b>中国以列举式无效情形（第497条）为主；美国采判例式双要素（程序性＋实质性显失公平）；英国/欧盟以制定法的「合理性/公平性」检验为中心。</li>
-              <li><b>制度背景：</b>法源结构不同（成文法主导 vs 判例法主导），法院对「显失公平」的审查强度与阶段（缔约时）不同。</li>
-              <li><b>不可类推部分：</b>外国法院的裁判结论对中国法院无拘束力；涉及公共政策的认定不可直接移植。</li>
-            </ul>
-          </AIBlock>
-          <div className="banner banner-warn mt-12"><Icon name="alert" size={15} /><span className="banner-tx">方法论边界：外国判例只作说理性/教育性材料，不作证据。</span></div>
-        </section>
-
-        {/* 域外 */}
-        <section className="card">
-          <div className="card-h"><span className="jur-flag">{foreign.flag}</span><div><b className="card-h-t">{foreign.name}</b><small className="tiny" style={{ display: 'block' }}>Foreign Statute / Case</small></div><span className="spacer" /><SourceBadge kind="foreign" /></div>
-          <div className="card-b" style={{ paddingTop: 8 }}>
-            {foreign.items.map((it) => (
-              <div key={it.t} className="src-item">
-                <div className="src-item-t">{it.t}<span className="bdg bdg-gray">{it.c}</span></div>
-                <div className="src-item-q">{it.q}</div>
-              </div>
-            ))}
-            <div className="tiny mt-12">Court / Holding 字段以官方判决与制定法文本核对为准；接入域外数据源后提供逐字原文。</div>
-          </div>
-        </section>
+      <div className="banner banner-info mb-16">
+        <Icon name="info" size={15} />
+        <span className="banner-tx">本页不主张两套规则等同，也不把外国判例作为中国案件的证据或裁判依据。中间栏是项目编写的方法提示，不是模型生成结论。</span>
       </div>
+
+      {error && <div className="banner banner-danger mb-16"><Icon name="alert" size={15} />{error}</div>}
+      {!error && (!laws || !foreignCase) && <div className="card card-pad"><SkeletonLines n={6} tall /></div>}
+
+      {!error && laws && foreignCase && civilCode && article1165 ? (
+        <div className="cols cols-3">
+          <section className="card">
+            <div className="card-h">
+              <div><b className="card-h-t">中国制定法</b><small className="tiny" style={{ display: 'block' }}>中华人民共和国民法典</small></div>
+              <span className="spacer" /><SourceBadge kind="law" grade={lawEvidenceGrade(civilCode.sourceUrl)} />
+            </div>
+            <div className="card-b" style={{ paddingTop: 10 }}>
+              <OfficialArticle law={civilCode} article={article1165} dense />
+              <div className="tiny mt-12">证据等级随本地法规快照来源显示；正式使用前仍须回到现行官方文本复核。</div>
+              <Link to="/laws/civl-2020?art=1165" className="btn btn-secondary btn-sm mt-12">查看本地法条详情</Link>
+            </div>
+          </section>
+
+          <section className="card">
+            <div className="card-h"><b className="card-h-t">可比性边界（项目整理）</b></div>
+            <div className="card-b" style={{ paddingTop: 10 }}>
+              <ol className="tiny" style={{ lineHeight: 2, paddingLeft: 4, display: 'flex', flexDirection: 'column', gap: 7 }}>
+                <li>1. 可比较的是“过错侵权的一般规则”与“注意义务说理”如何组织论证，不是法源效力。</li>
+                <li>2. 《民法典》第1165条是中国制定法；Donoghue 是英国历史判例，适用制度、程序和事实背景均不同。</li>
+                <li>3. 外国判决中的邻人原则可作为法学教育材料，但不能替代中国法上的请求权基础、构成要件与证据审查。</li>
+                <li>4. 具体案件仍须核对现行中国法律、司法解释及有权机关发布材料，并由专业人员判断。</li>
+              </ol>
+            </div>
+          </section>
+
+          <section className="card">
+            <div className="card-h">
+              <div><b className="card-h-t">英国判例</b><small className="tiny" style={{ display: 'block' }}>{foreignCase.no}</small></div>
+              <span className="spacer" /><SourceBadge kind="foreign" grade={foreignCase.grade} />
+            </div>
+            <div className="card-b" style={{ paddingTop: 10 }}>
+              <h3 style={{ fontSize: 16, margin: '0 0 8px' }}>{foreignCase.name_en ?? foreignCase.name}</h3>
+              <div className="tiny mb-12">{foreignCase.court} · {foreignCase.date}</div>
+              <div className="src-item">
+                <div className="src-item-t">项目结构化摘要</div>
+                <div className="src-item-q">{foreignCase.summary}</div>
+              </div>
+              <div className="tiny mt-12">来源：{foreignCase.source_title}；核验于 {foreignCase.source_accessed_at}。</div>
+              <div className="row-wrap mt-12" style={{ gap: 8 }}>
+                <a href={foreignCase.source_url} target="_blank" rel="noreferrer" className="btn btn-secondary btn-sm"><Icon name="external" size={12} />打开判决文本</a>
+                <Link to={`/cases/${foreignCase.id}`} className="btn btn-ghost btn-sm">查看结构化摘要</Link>
+              </div>
+            </div>
+          </section>
+        </div>
+      ) : null}
+
+      {!error && laws && (!civilCode || !article1165) && (
+        <EmptyState icon="alert" title="对照法条未进入证据语料" desc="为避免手写或猜测法条，本页已停止展示该对比。" />
+      )}
     </div>
   )
 }

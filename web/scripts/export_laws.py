@@ -21,6 +21,7 @@ for entry in manifest["laws"]:
             "promulgationDate": prom.get("date", ""),
             "instrument": d.get("promulgation_instrument", ""),
             "effectiveDate": d.get("effective_date", ""),
+            "effectiveDateEvidence": d.get("effective_date_evidence"),
             "sourceUrl": (d.get("source") or {}).get("url", ""),
             "authority": d.get("authority_pointer", ""),
             "articles": [

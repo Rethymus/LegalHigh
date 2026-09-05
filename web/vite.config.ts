@@ -2,11 +2,12 @@ import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 
 // https://vite.dev/config/
-export default defineConfig({
+// base 条件化：GitHub Pages 静态说明站（VITE_STATIC_PREVIEW=1）使用子路径，
+// 本地开发/桌面端构建用 /（根路径），避免资源路径偏移。
+// BrowserRouter 的 basename 由 main.tsx 从 import.meta.env.BASE_URL 读取，自动同步。
+export default defineConfig(() => ({
+  base: process.env.VITE_STATIC_PREVIEW === '1' ? '/LegalHigh/' : '/',
   plugins: [react()],
-  // GitHub Pages 项目站点部署在 /LegalHigh/ 子路径——base 必须与之一致，
-  // 否则构建产物的 /assets/... 引用会 404 导致白屏。本地开发/桌面端不受影响。
-  base: '/LegalHigh/',
   server: {
     proxy: {
       // 开发期把 /api 代理到本地 FastAPI（server/.venv: uvicorn app.main:app --port 8000），
@@ -14,7 +15,10 @@ export default defineConfig({
       '/api': {
         target: 'http://127.0.0.1:8000',
         changeOrigin: true,
+        // 与后端在同一终端设置 LH_ADMIN_TOKEN 时，由开发代理附加请求头；
+        // 密钥不进入前端 bundle、localStorage 或 URL。
+        ...(process.env.LH_ADMIN_TOKEN ? { headers: { 'X-LegalHigh-Admin-Token': process.env.LH_ADMIN_TOKEN } } : {}),
       },
     },
   },
-})
+}))

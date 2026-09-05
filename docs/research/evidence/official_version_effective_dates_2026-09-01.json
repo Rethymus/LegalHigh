@@ -1,0 +1,47 @@
+{
+  "purpose": "仅核对当前语料所用修订版本的施行日期；不替代法律正文证据快照。",
+  "verified_at": "2026-09-01",
+  "method": "人工打开全国人大及其常委会官方发布页，读取修改决定或法律附则中的施行日期；每项保留直达 URL 与证据等级。",
+  "records": [
+    {
+      "law_id": "cl-2013",
+      "version": "2013修正",
+      "effective_date": "2014-03-15",
+      "source_title": "全国人民代表大会常务委员会关于修改《中华人民共和国消费者权益保护法》的决定",
+      "source_url": "https://www.npc.gov.cn/WZWSREL2MxNzczL2MxODQ4L2MyMTExNC9jMjExNzAvYzIxMTc0LzIwMTkwNS90MjAxOTA1MjFfMjEwNjkzLmh0bWw%3D",
+      "source_kind": "official-npc",
+      "evidence_grade": "强",
+      "fact": "修改决定明确自 2014-03-15 起施行；这是 2013 修正版本日期，不是原法 1994 年的首次施行日期。"
+    },
+    {
+      "law_id": "lcl-2012",
+      "version": "2012修正",
+      "effective_date": "2013-07-01",
+      "source_title": "全国人民代表大会常务委员会关于修改《中华人民共和国劳动合同法》的决定",
+      "source_url": "https://www.npc.gov.cn/WZWSREL3pncmR3L25wYy94aW53ZW4vMjAxMi0xMi8yOS9jb250ZW50XzE3NDk1MjcuaHRt",
+      "source_kind": "official-npc",
+      "evidence_grade": "强",
+      "fact": "修改决定明确自 2013-07-01 起施行。"
+    },
+    {
+      "law_id": "ll-2017",
+      "version": "2017修正",
+      "effective_date": "2018-01-01",
+      "source_title": "全国人民代表大会常务委员会关于修改《中华人民共和国法官法》等八部法律的决定",
+      "source_url": "https://www.npc.gov.cn/zgrdw/npc/lfzt/rlyw/2018-10/19/content_2062826.htm",
+      "source_kind": "official-npc",
+      "evidence_grade": "强",
+      "fact": "包含律师法修改的八部法律修改决定自 2018-01-01 起施行；律师法第六十条所载 2008-06-01 是 2007 修订后整部法律的基础施行日期。"
+    },
+    {
+      "law_id": "ecom-2018",
+      "version": "2018通过",
+      "effective_date": "2019-01-01",
+      "source_title": "中华人民共和国电子商务法",
+      "source_url": "https://www.npc.gov.cn/WZWSREL3pncmR3L25wYy9sZnp0L3JseXcvMjAxOC0wOC8zMS9jb250ZW50XzIwNjA4MjcuaHRt",
+      "source_kind": "official-npc",
+      "evidence_grade": "强",
+      "fact": "第八十九条明确本法自 2019-01-01 起施行。"
+    }
+  ]
+}

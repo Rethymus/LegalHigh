@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 """语料完整性测试：不编造的硬门——条数、连续性、关键条文内容断言。"""
+import hashlib
+import json
 import sys
 from pathlib import Path
 
@@ -68,10 +70,29 @@ def test_key_articles_content():
 def test_citation_object_carries_invariants():
     c = make_corpus()
     cite = c.citation_of("civl-2020", 497)
-    for k in ("law_title", "article_no", "article_label", "text", "status", "effective_date", "source_url"):
+    for k in ("law_title", "article_no", "article_label", "text", "status", "effective_date", "effective_date_evidence", "source_url"):
         assert k in cite and cite[k]
+    assert cite["effective_date_evidence"]["url"].startswith("https://")
+    assert cite["effective_date_evidence"]["grade"] in {"强", "中"}
     try:
         c.citation_of("civl-2020", 99999)
         assert False, "越界条文应报错"
     except KeyError:
         pass
+
+
+def test_manifest_snapshot_and_output_hashes_match():
+    """构建清单绑定当前证据快照与生成 JSON，防止静默替换数据。"""
+    root = Path(__file__).resolve().parents[2]
+    manifest = json.loads((root / "server" / "data" / "laws" / "manifest.json").read_text(encoding="utf-8"))
+    evidence_root = (root / "docs" / "research" / "evidence").resolve()
+    for item in manifest["laws"]:
+        snapshot = (root / item["snapshot"]).resolve()
+        assert snapshot.is_relative_to(evidence_root)
+        assert len(item["snapshot_sha256"]) == 64
+        actual_snapshot = hashlib.sha256(snapshot.read_bytes()).hexdigest()
+        assert actual_snapshot == item["snapshot_sha256"]
+        law_path = root / "server" / "data" / "laws" / f"{item['law_id']}.json"
+        assert hashlib.sha256(law_path.read_bytes()).hexdigest() == item["output_sha256"]
+        law = json.loads(law_path.read_text(encoding="utf-8"))
+        assert law["source"]["sha256"] == item["snapshot_sha256"]

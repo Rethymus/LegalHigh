@@ -9,12 +9,59 @@
 解析只读；状态流转由 apply_return 走既有批注状态机（非法流转如实记 skipped）。
 """
 from io import BytesIO
+from pathlib import PurePosixPath
+from zipfile import BadZipFile, ZipFile
 
 W_NS = "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}"
+
+# 回传文件来自不可信客户端：先限制容器大小/条目数/解压总量，再交给
+# python-docx 解析，避免把任意 ZIP/XML 当作无限制输入。
+MAX_DOCX_BYTES = 10 * 1024 * 1024
+MAX_ZIP_MEMBERS = 512
+MAX_UNCOMPRESSED_BYTES = 50 * 1024 * 1024
+MAX_COMPRESSION_RATIO = 100
+ALLOWED_MIME_TYPES = frozenset({
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    "application/zip",
+    "application/octet-stream",
+})
+
+
+def _validate_docx_container(data: bytes) -> None:
+    if len(data) < 4 or data[:4] not in (b"PK\x03\x04", b"PK\x05\x06", b"PK\x07\x08"):
+        raise ValueError("文件不是有效的 DOCX 压缩包。")
+    if len(data) > MAX_DOCX_BYTES:
+        raise ValueError("DOCX 文件超过 10 MiB 大小限制。")
+    try:
+        with ZipFile(BytesIO(data)) as package:
+            infos = package.infolist()
+            if not infos or len(infos) > MAX_ZIP_MEMBERS:
+                raise ValueError("DOCX 压缩包条目数量超出限制。")
+            total_uncompressed = 0
+            total_compressed = 0
+            for info in infos:
+                name = info.filename.replace("\\", "/")
+                parts = PurePosixPath(name).parts
+                if name.startswith("/") or ".." in parts:
+                    raise ValueError("DOCX 压缩包包含非法路径。")
+                if name.lower().endswith(("vbaproject.bin", ".exe", ".dll")):
+                    raise ValueError("不支持含宏或可执行内容的 DOCX。")
+                total_uncompressed += max(info.file_size, 0)
+                total_compressed += max(info.compress_size, 1)
+                if total_uncompressed > MAX_UNCOMPRESSED_BYTES:
+                    raise ValueError("DOCX 解压后大小超出限制。")
+            if total_uncompressed / max(total_compressed, 1) > MAX_COMPRESSION_RATIO:
+                raise ValueError("DOCX 压缩比异常，已拒绝可能的压缩炸弹。")
+            names = {info.filename for info in infos}
+            if "[Content_Types].xml" not in names or "word/document.xml" not in names:
+                raise ValueError("文件缺少 DOCX 必需部件。")
+    except BadZipFile as exc:
+        raise ValueError("文件不是有效的 DOCX 压缩包。") from exc
 
 
 def parse_review_docx(data: bytes) -> dict[str, str]:
     """解析回传 DOCX → {finding_id: pending|accepted|rejected}。"""
+    _validate_docx_container(data)
     from docx import Document
 
     doc = Document(BytesIO(data))

@@ -1,116 +1,244 @@
 {
-  "built_at": "2026-08-31T19:42:16.023745",
+  "built_at": "2026-09-02T10:44:23.421053",
   "fetch_date": "2026-08-29",
   "laws": [
     {
       "law_id": "civl-2020",
       "title": "中华人民共和国民法典",
       "status": "现行有效",
+      "effective_date": "2021-01-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国民法典",
+        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E6%B0%91%E6%B3%95%E5%85%B8",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "wikisource-transcription",
+        "version": "现行有效"
+      },
+      "promulgation_instrument": "中华人民共和国主席令第四十五号",
       "article_count": 1260,
       "expected_count": 1260,
       "missing_numbers": [],
       "source_url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E6%B0%91%E6%B3%95%E5%85%B8",
       "snapshot": "docs/research/evidence/ws_中华人民共和国民法典.html",
-      "fetched_at": "2026-08-29"
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "b94ab740ff2da5d2050fabedf86b81d0329da6bc925747484604c79ce8144df0",
+      "output_sha256": "4e1ebe417541d265cf1259a669119655ddc0736f6405f54a88c99a44532b59b7"
     },
     {
       "law_id": "cl-2013",
       "title": "中华人民共和国消费者权益保护法",
       "status": "现行有效（2013修正）",
+      "effective_date": "2014-03-15",
+      "effective_date_evidence": {
+        "title": "全国人民代表大会常务委员会关于修改《中华人民共和国消费者权益保护法》的决定",
+        "url": "https://www.npc.gov.cn/WZWSREL2MxNzczL2MxODQ4L2MyMTExNC9jMjExNzAvYzIxMTc0LzIwMTkwNS90MjAxOTA1MjFfMjEwNjkzLmh0bWw%3D",
+        "accessed_at": "2026-09-01",
+        "grade": "强",
+        "source_kind": "official-npc",
+        "version": "2013修正",
+        "record_snapshot": "docs/research/evidence/official_version_effective_dates_2026-09-01.json",
+        "record_sha256": "07227737652708bde558223eff0ca92161ce495c516a7005b28cda0dbded6b4e"
+      },
+      "promulgation_instrument": null,
       "article_count": 63,
       "expected_count": 63,
       "missing_numbers": [],
       "source_url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E6%B6%88%E8%B4%B9%E8%80%85%E6%9D%83%E7%9B%8A%E4%BF%9D%E6%8A%A4%E6%B3%95_(2013%E5%B9%B4)",
       "snapshot": "docs/research/evidence/ws_消保法2013.json",
-      "fetched_at": "2026-08-29"
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "f2c675c89a2f83f715551824e0cac3f2182812eeaba8d2478dac8b6d60a287c4",
+      "output_sha256": "478a10aff0d42c0bc32d034ad8b26404d2ddec4bd0427e0124de0477e9dd89bc"
     },
     {
       "law_id": "lcl-2012",
       "title": "中华人民共和国劳动合同法",
       "status": "现行有效（2012修正）",
+      "effective_date": "2013-07-01",
+      "effective_date_evidence": {
+        "title": "全国人民代表大会常务委员会关于修改《中华人民共和国劳动合同法》的决定",
+        "url": "https://www.npc.gov.cn/WZWSREL3pncmR3L25wYy94aW53ZW4vMjAxMi0xMi8yOS9jb250ZW50XzE3NDk1MjcuaHRt",
+        "accessed_at": "2026-09-01",
+        "grade": "强",
+        "source_kind": "official-npc",
+        "version": "2012修正",
+        "record_snapshot": "docs/research/evidence/official_version_effective_dates_2026-09-01.json",
+        "record_sha256": "07227737652708bde558223eff0ca92161ce495c516a7005b28cda0dbded6b4e"
+      },
+      "promulgation_instrument": null,
       "article_count": 98,
       "expected_count": 98,
       "missing_numbers": [],
       "source_url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%8A%B3%E5%8A%A8%E5%90%88%E5%90%8C%E6%B3%95_(2012%E5%B9%B4)",
       "snapshot": "docs/research/evidence/ws_劳动合同法2012.json",
-      "fetched_at": "2026-08-29"
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "54cd3f82626634b3b0e8b5a13c07b8339d2649942fbcc47cc8f69796d7e49cf1",
+      "output_sha256": "6cbb6b779cb3233a161ce5cac472ba60a395d4f69141e3dcf0f18ee98de6df0b"
     },
     {
       "law_id": "ll-2017",
       "title": "中华人民共和国律师法",
       "status": "现行有效（2017修正）",
+      "effective_date": "2018-01-01",
+      "effective_date_evidence": {
+        "title": "全国人民代表大会常务委员会关于修改《中华人民共和国法官法》等八部法律的决定",
+        "url": "https://www.npc.gov.cn/zgrdw/npc/lfzt/rlyw/2018-10/19/content_2062826.htm",
+        "accessed_at": "2026-09-01",
+        "grade": "强",
+        "source_kind": "official-npc",
+        "version": "2017修正",
+        "record_snapshot": "docs/research/evidence/official_version_effective_dates_2026-09-01.json",
+        "record_sha256": "07227737652708bde558223eff0ca92161ce495c516a7005b28cda0dbded6b4e"
+      },
+      "promulgation_instrument": null,
       "article_count": 60,
       "expected_count": 60,
       "missing_numbers": [],
       "source_url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%BE%8B%E5%B8%88%E6%B3%95_(2017%E5%B9%B4)",
       "snapshot": "docs/research/evidence/ws_律师法2017.json",
-      "fetched_at": "2026-08-29"
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "429e5f7ef8f0e44f090b63aede735121c9febc5f39538bcb006cbf59cd4d5fd8",
+      "output_sha256": "3523c1f0304a77d823644f0f47062d7531512b555e4abd68be064b2c1d6d3069"
     },
     {
       "law_id": "ecom-2018",
       "title": "中华人民共和国电子商务法",
       "status": "现行有效",
+      "effective_date": "2019-01-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国电子商务法",
+        "url": "https://www.npc.gov.cn/WZWSREL3pncmR3L25wYy9sZnp0L3JseXcvMjAxOC0wOC8zMS9jb250ZW50XzIwNjA4MjcuaHRt",
+        "accessed_at": "2026-09-01",
+        "grade": "强",
+        "source_kind": "official-npc",
+        "version": "2018通过",
+        "record_snapshot": "docs/research/evidence/official_version_effective_dates_2026-09-01.json",
+        "record_sha256": "07227737652708bde558223eff0ca92161ce495c516a7005b28cda0dbded6b4e"
+      },
+      "promulgation_instrument": null,
       "article_count": 89,
       "expected_count": 89,
       "missing_numbers": [],
       "source_url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E7%94%B5%E5%AD%90%E5%95%86%E5%8A%A1%E6%B3%95",
       "snapshot": "docs/research/evidence/ws_电子商务法.json",
-      "fetched_at": "2026-08-29"
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "699753a0a04a20687d02c2a920db9e68bc7cb985d7c15cb5d933b4b60cd9408d",
+      "output_sha256": "0eefb0717133aa8cddfb1f7e814f8359eb622a36bdd84eb3ecf90ee4bac67b83"
     },
     {
       "law_id": "pcl-2023",
       "title": "中华人民共和国民事诉讼法",
       "status": "现行有效（2023修正）",
+      "effective_date": "2024-01-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国民事诉讼法",
+        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E6%B0%91%E4%BA%8B%E8%AF%89%E8%AE%BC%E6%B3%95_(2023%E5%B9%B4)",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "wikisource-transcription",
+        "version": "现行有效（2023修正）"
+      },
+      "promulgation_instrument": "中华人民共和国主席令第十一号",
       "article_count": 306,
       "expected_count": 306,
       "missing_numbers": [],
       "source_url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E6%B0%91%E4%BA%8B%E8%AF%89%E8%AE%BC%E6%B3%95_(2023%E5%B9%B4)",
       "snapshot": "docs/research/evidence/ws_民事诉讼法2023.json",
-      "fetched_at": "2026-08-29"
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "7543240b2a31ced297c9481933acfa94ff412c5ee3cfab8321dec65659a434b4",
+      "output_sha256": "83e0b6a583f3d34584ddd76aea4c1576ae0f9d71ac1042823fdf8139f3f63db2"
     },
     {
       "law_id": "htjs-2023",
       "title": "最高人民法院关于适用《中华人民共和国民法典》合同编通则若干问题的解释",
       "status": "现行有效",
+      "effective_date": "2023-12-05",
+      "effective_date_evidence": {
+        "title": "最高人民法院关于适用《中华人民共和国民法典》合同编通则若干问题的解释",
+        "url": "https://zh.wikisource.org/wiki/%E6%9C%80%E9%AB%98%E4%BA%BA%E6%B0%91%E6%B3%95%E9%99%A2%E5%85%B3%E4%BA%8E%E9%80%82%E7%94%A8%E3%80%8A%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E6%B0%91%E6%B3%95%E5%85%B8%E3%80%8B%E5%90%88%E5%90%8C%E7%BC%96%E9%80%9A%E5%88%99%E8%8B%A5%E5%B9%B2%E9%97%AE%E9%A2%98%E7%9A%84%E8%A7%A3%E9%87%8A",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "wikisource-transcription",
+        "version": "现行有效"
+      },
+      "promulgation_instrument": "法释〔2023〕13号",
       "article_count": 69,
       "expected_count": null,
       "missing_numbers": [],
       "source_url": "https://zh.wikisource.org/wiki/%E6%9C%80%E9%AB%98%E4%BA%BA%E6%B0%91%E6%B3%95%E9%99%A2%E5%85%B3%E4%BA%8E%E9%80%82%E7%94%A8%E3%80%8A%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E6%B0%91%E6%B3%95%E5%85%B8%E3%80%8B%E5%90%88%E5%90%8C%E7%BC%96%E9%80%9A%E5%88%99%E8%8B%A5%E5%B9%B2%E9%97%AE%E9%A2%98%E7%9A%84%E8%A7%A3%E9%87%8A",
       "snapshot": "docs/research/evidence/ws_合同编通则解释2023.json",
-      "fetched_at": "2026-08-29"
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "c9a8e6a6fbf676f4611a199b04937bafa041dbb1db21224f95c67e54a88e179c",
+      "output_sha256": "159d3859746c0eaef3170117de239d1fdd02f02e63cd8b56273b4ad533f45b32"
     },
     {
       "law_id": "wlxf-2022",
       "title": "最高人民法院关于审理网络消费纠纷案件适用法律若干问题的规定（一）",
       "status": "现行有效",
+      "effective_date": "2022-03-15",
+      "effective_date_evidence": {
+        "title": "最高人民法院关于审理网络消费纠纷案件适用法律若干问题的规定（一）",
+        "url": "https://zh.wikisource.org/wiki/%E6%9C%80%E9%AB%98%E4%BA%BA%E6%B0%91%E6%B3%95%E9%99%A2%E5%85%B3%E4%BA%8E%E5%AE%A1%E7%90%86%E7%BD%91%E7%BB%9C%E6%B6%88%E8%B4%B9%E7%BA%A0%E7%BA%B7%E6%A1%88%E4%BB%B6%E9%80%82%E7%94%A8%E6%B3%95%E5%BE%8B%E8%8B%A5%E5%B9%B2%E9%97%AE%E9%A2%98%E7%9A%84%E8%A7%84%E5%AE%9A%EF%BC%88%E4%B8%80%EF%BC%89",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "wikisource-transcription",
+        "version": "现行有效"
+      },
+      "promulgation_instrument": "法释〔2022〕8号",
       "article_count": 20,
       "expected_count": null,
       "missing_numbers": [],
       "source_url": "https://zh.wikisource.org/wiki/%E6%9C%80%E9%AB%98%E4%BA%BA%E6%B0%91%E6%B3%95%E9%99%A2%E5%85%B3%E4%BA%8E%E5%AE%A1%E7%90%86%E7%BD%91%E7%BB%9C%E6%B6%88%E8%B4%B9%E7%BA%A0%E7%BA%B7%E6%A1%88%E4%BB%B6%E9%80%82%E7%94%A8%E6%B3%95%E5%BE%8B%E8%8B%A5%E5%B9%B2%E9%97%AE%E9%A2%98%E7%9A%84%E8%A7%84%E5%AE%9A%EF%BC%88%E4%B8%80%EF%BC%89",
       "snapshot": "docs/research/evidence/ws_网络消费纠纷规定2022.json",
-      "fetched_at": "2026-08-29"
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "6077e29378edf222ab06138a790f41671244d86ddaa3e0ba30ed0eb0def48c10",
+      "output_sha256": "c0c125b7d5bd479161d9a8eb87d89b786a0eacb7d99a791d103e759979925f52"
     },
     {
       "law_id": "crpl-imp-2024",
       "title": "中华人民共和国消费者权益保护法实施条例",
       "status": "现行有效",
+      "effective_date": "2024-07-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国消费者权益保护法实施条例",
+        "url": "https://www.gov.cn/zhengce/zhengceku/202403/content_6940159.htm",
+        "accessed_at": "2026-08-29",
+        "grade": "强",
+        "source_kind": "official-gazette-republication",
+        "version": "现行有效"
+      },
+      "promulgation_instrument": "中华人民共和国国务院令第778号",
       "article_count": 53,
       "expected_count": 53,
       "missing_numbers": [],
       "source_url": "https://www.gov.cn/zhengce/zhengceku/202403/content_6940159.htm",
       "snapshot": "docs/research/evidence/消保法实施条例_govcn.html",
-      "fetched_at": "2026-08-29"
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "d80073087b9792f844381290613dcd56a8d2efc8155bafde0996f6e56d1b9d8f",
+      "output_sha256": "b614056d92a747f4ca1025977c1e7db15314b0fedd2015b6b060e1b5122c4eed"
     },
     {
       "law_id": "genai-2023",
       "title": "生成式人工智能服务管理暂行办法",
       "status": "现行有效",
+      "effective_date": "2023-08-15",
+      "effective_date_evidence": {
+        "title": "生成式人工智能服务管理暂行办法",
+        "url": "https://www.gov.cn/zhengce/zhengceku/202307/content_6891752.htm",
+        "accessed_at": "2026-08-29",
+        "grade": "强",
+        "source_kind": "official-gazette-republication",
+        "version": "现行有效"
+      },
+      "promulgation_instrument": "国家互联网信息办公室等七部门令第15号",
       "article_count": 24,
       "expected_count": 24,
       "missing_numbers": [],
       "source_url": "https://www.gov.cn/zhengce/zhengceku/202307/content_6891752.htm",
       "snapshot": "docs/research/evidence/生成式AI办法_govcn.html",
-      "fetched_at": "2026-08-29"
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "00bd290a9d14e7354b7131d30255daae26ce7ff73588483cbeb2030f56878277",
+      "output_sha256": "747d75f0484a63949f06a7c3b6f96c9e2838807d1ceef31dc1d38672ffd07680"
     }
   ]
 }

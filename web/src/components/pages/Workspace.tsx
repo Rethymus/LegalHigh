@@ -1,14 +1,25 @@
 // FRAME 16 · Workspace —— 工作台总览（真实数据驱动）
-// 左：本机研究列表（localStorage）+ 团队协作（规划中，诚实标注）
+// 左：经结构校验的本机研究列表（localStorage）
 // 中：server 真实数据 —— 审查记录（/api/reviews）· 文书草稿（/api/drafts）· 投诉工单（/api/complaints）
-// 右：最近审计（/api/audit）—— 协作/多用户为规划功能，不虚构成员。
+// 右：最近审计（/api/audit）。
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Icon } from '../icons'
 import { Dialog, EmptyState, PageHeader, SkeletonLines, Tabs, fmtTime, useToast } from '../ui'
-import { api, ApiError, loadIdentity, type AuditEntry } from '../../lib/api'
+import { api, ApiError, type AuditEntry } from '../../lib/api'
 
 const LS_LIST = 'lh:research:list'
+interface LocalResearchItem { rid: string; question: string; ts: string }
+function loadResearchList(): LocalResearchItem[] {
+  try {
+    const raw: unknown = JSON.parse(localStorage.getItem(LS_LIST) ?? '[]')
+    if (!Array.isArray(raw)) return []
+    return raw.filter((item): item is LocalResearchItem => !!item && typeof item === 'object'
+      && typeof (item as LocalResearchItem).rid === 'string'
+      && typeof (item as LocalResearchItem).question === 'string'
+      && typeof (item as LocalResearchItem).ts === 'string')
+  } catch { return [] }
+}
 
 export default function Workspace() {
   const [tab, setTab] = useState('reviews')
@@ -16,12 +27,9 @@ export default function Workspace() {
   const [reviews, setReviews] = useState<{ id: string; created_at: string; title: string; high: number; medium: number; low: number; findings: number }[] | null>(null)
   const [drafts, setDrafts] = useState<{ id: string; created_at: string; template_id: string; status: string }[] | null>(null)
   const [complaints, setComplaints] = useState<{ id: string; created_at: string; subject: string; status: string }[] | null>(null)
-  const [audit, setAudit] = useState<AuditEntry[] | null>(null)
-  const [researchList, setResearchList] = useState<{ rid: string; question: string; ts: string }[]>([])
   const [explains, setExplains] = useState<{ law_id: string; no: number; text: string; author: string; date?: string; source_note?: string }[] | null>(null)
-  const [reviewerName, setReviewerName] = useState(() => loadIdentity().name)
-  const [reviewerLicense, setReviewerLicense] = useState('')
-  const loadExplains = () => api.explainsQueue().then((d) => setExplains(d.queue), (e) => toast(e instanceof ApiError ? e.message : String(e), 'err'))
+  const [audit, setAudit] = useState<AuditEntry[] | null>(null)
+  const [researchList] = useState<LocalResearchItem[]>(loadResearchList)
   const [pending, setPending] = useState<{ kind: 'review' | 'draft' | 'complaint'; id: string; label: string } | null>(null)
   const reload = () => {
     const fail = (e: unknown) => toast(e instanceof ApiError ? e.message : String(e), 'err')
@@ -29,7 +37,6 @@ export default function Workspace() {
     api.listDrafts().then((d) => setDrafts(d.drafts), fail)
     api.listComplaints().then((d) => setComplaints(d.complaints), fail)
     api.auditAll(10).then((d) => setAudit(d.entries), fail)
-    if (tab === 'explains') api.explainsQueue().then((d) => setExplains(d.queue), fail)
   }
   const confirmDelete = () => {
     if (!pending) return
@@ -40,6 +47,9 @@ export default function Workspace() {
     )
   }
   const [error, setError] = useState<string | null>(null)
+  // 解读审核队列按需加载：切到该 Tab 才请求（未配置管理令牌时给出明确提示而非阻塞其他 Tab）。
+  const loadExplains = () => api.explainsQueue().then((d) => setExplains(d.queue), (e) => toast(e instanceof ApiError ? e.message : String(e), 'err'))
+  useEffect(() => { if (tab === 'explains') loadExplains() }, [tab]) // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => {
     let alive = true
     const err = (e: unknown) => alive && setError(e instanceof ApiError ? e.message : String(e))
@@ -47,19 +57,14 @@ export default function Workspace() {
     api.listDrafts().then((d) => alive && setDrafts(d.drafts), err)
     api.listComplaints().then((d) => alive && setComplaints(d.complaints), err)
     api.auditAll(10).then((d) => alive && setAudit(d.entries), err)
-    api.explainsQueue().then((d) => alive && setExplains(d.queue), () => { /* 审核队列加载失败不阻塞其他 Tab */ })
-    try { setResearchList(JSON.parse(localStorage.getItem(LS_LIST) ?? '[]')) } catch { /* 本机记录 */ }
     return () => { alive = false }
   }, [])
-
-  // 切到「解读审核」Tab 时刷新队列
-  useEffect(() => { if (tab === 'explains') loadExplains() }, [tab])
 
   return (
     <div className="page" style={{ maxWidth: 'none' }}>
       <PageHeader
-        title="律师工作台"
-        sub="你的全部工作记录：审查、文书、研究、投诉——全部来自 server 真实数据与本机记录；协作与多用户为规划功能（原型不虚构成员）。"
+        title="专业工具工作台"
+        sub="面向专业使用者汇总合同审查、文书、研究、投诉与审计记录；它不是律师入驻、派单或在线法律服务平台。"
         actions={<Link to="/contracts" className="btn btn-primary"><Icon name="shield" size={14} />发起合同审查</Link>}
       />
 
@@ -106,7 +111,7 @@ export default function Workspace() {
                     <button className="btn btn-ghost btn-sm" onClick={(e) => { e.preventDefault(); setPending({ kind: 'review', id: r.id, label: r.title }) }} title="删除（PIPL 删除通道，写入审计）"><Icon name="trash" size={13} /></button>
                     <Icon name="chevR" size={13} className="muted" />
                   </Link>
-                )) : <EmptyState icon="shield" title="暂无审查记录" desc="发起一次合同审查后在此展示（真实落库）。" action={<Link className="btn btn-secondary btn-sm" to="/contracts/c-1">发起审查</Link>} />
+                )) : <EmptyState icon="shield" title="暂无审查记录" desc="粘贴你有权处理的合同文本后，审查记录会写入当前服务端数据库。" action={<Link className="btn btn-secondary btn-sm" to="/contracts/new">发起审查</Link>} />
             )}
             {tab === 'drafts' && (
               drafts === null ? <SkeletonLines n={4} tall /> :
@@ -114,8 +119,8 @@ export default function Workspace() {
                   <Link key={d.id} to={`/draft/validation?draft=${d.id}`} className="lrow" style={{ border: '1px solid var(--div-soft)', marginBottom: 7 }}>
                     <Icon name="file" size={15} className="muted" />
                     <span className="lrow-t">{TEMPLATE_NAME(d.template_id)} · {d.id}</span>
-                    <span className={'bdg ' + (d.status === 'issued' ? 'bdg-green' : d.status === 'verified' ? 'bdg-blue' : 'bdg-orange')}>
-                      {d.status === 'issued' ? '已签发' : d.status === 'verified' ? '已核验' : '草稿'}
+                    <span className={'bdg ' + (d.status === 'finalized' ? 'bdg-green' : d.status === 'reviewed' ? 'bdg-blue' : 'bdg-orange')}>
+                      {d.status === 'finalized' ? '使用者已定稿' : d.status === 'reviewed' ? '已复核' : '草稿'}
                     </span>
                     <button className="btn btn-ghost btn-sm" onClick={(e) => { e.preventDefault(); setPending({ kind: 'draft', id: d.id, label: TEMPLATE_NAME(d.template_id) + ' ' + d.id }) }} title="删除（PIPL 删除通道，写入审计）"><Icon name="trash" size={13} /></button>
                   </Link>
@@ -138,25 +143,23 @@ export default function Workspace() {
                   <div key={`${e.law_id}-${e.no}`} className="lrow" style={{ border: '1px solid var(--div-soft)', marginBottom: 10, cursor: 'default', alignItems: 'flex-start' }}>
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <div className="row mb-8" style={{ gap: 6 }}>
-                        <span className="bdg bdg-orange">待审核</span>
+                        <span className="bdg bdg-orange">AI 起草 · 待审核</span>
                         <Link to={`/laws/${e.law_id}?art=${e.no}`} className="tiny" style={{ color: 'var(--accent-text)' }}>《{e.law_id}》第{e.no}条</Link>
                       </div>
                       <div className="tiny" style={{ lineHeight: 1.8 }}>{e.text}</div>
                       <div className="tiny mt-8" style={{ color: 'var(--tx-3)' }}>起草：{e.author}{e.date ? ` · ${e.date}` : ''}{e.source_note ? ` · ${e.source_note}` : ''}</div>
                       <div className="row mt-8" style={{ gap: 6 }}>
-                        <input className="inp" style={{ width: 150, height: 30 }} placeholder="审核人姓名" value={reviewerName} onChange={(ev) => setReviewerName(ev.target.value)} />
-                        <input className="inp" style={{ width: 150, height: 30 }} placeholder="执业证号（可选）" value={reviewerLicense} onChange={(ev) => setReviewerLicense(ev.target.value)} />
-                        <button className="btn btn-primary btn-sm" disabled={!reviewerName.trim()} title="AI 起草内容经运营方审核后展示（生成式AI办法§9）"
+                        <button className="btn btn-primary btn-sm" title="审核通过=当前本机主体对内容负责（生成式AI办法§9），审核人写入审计不可自报"
                           onClick={() =>
-                          api.reviewExplain(e.law_id, e.no, 'approve', reviewerName.trim(), reviewerLicense.trim()).then(
-                            () => { toast(`已审核通过：${e.law_id}#${e.no}（审核人：${reviewerName.trim()}）`, 'ok'); loadExplains() },
+                          api.reviewExplain(e.law_id, e.no, 'approve').then(
+                            () => { toast(`已审核通过：${e.law_id}#${e.no}（审核人=本机主体）`, 'ok'); loadExplains() },
                             (er) => toast(er instanceof ApiError ? er.message : String(er), 'err'),
                           )}><Icon name="verify" size={12} />审核通过</button>
                         <Link to={`/laws/${e.law_id}?art=${e.no}`} className="btn btn-ghost btn-sm">对照原文</Link>
                       </div>
                     </div>
                   </div>
-                )) : <EmptyState icon="verify" title="解读队列已清空" desc="全部 AI 起草解读均已人工审核。" />
+                )) : <EmptyState icon="verify" title="解读队列已清空" desc="全部 AI 起草解读均已审核。" />
             )}
           </div>
         </section>
@@ -174,7 +177,7 @@ export default function Workspace() {
             ))}
             {audit?.length === 0 && <span className="tiny">暂无操作记录</span>}
           </div>
-          <div className="panel-f tiny">团队协作与多用户为规划功能（M7+）——原型不虚构成员。</div>
+          <div className="panel-f tiny">审计主体来自服务端认证会话；本页面不生成虚构成员。</div>
         </aside>
       </div>
 

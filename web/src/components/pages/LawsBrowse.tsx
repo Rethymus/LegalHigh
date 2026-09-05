@@ -2,7 +2,7 @@
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Icon } from '../icons'
-import { useLaws } from '../../data/model'
+import { lawEvidenceGrade, useLaws } from '../../data/model'
 import { EmptyState, PageHeader, SkeletonLines, ValidityBadge } from '../ui'
 import { SourceBadge } from '../domain'
 
@@ -40,7 +40,7 @@ export default function LawsBrowse() {
                   <div className="row-wrap" style={{ gap: 8 }}>
                     <b style={{ fontSize: 15 }}>{l.title}</b>
                     <ValidityBadge v={l.status} />
-                    <SourceBadge kind="law" grade="强" />
+                    <SourceBadge kind="law" grade={lawEvidenceGrade(l.sourceUrl)} />
                   </div>
                   <div className="law-meta">
                     <span>发布机关：<b>{l.organ}</b></span>

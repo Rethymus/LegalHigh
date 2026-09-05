@@ -1,15 +1,15 @@
 // FRAME 06 · Case Detail —— Dark Elevated Workspace（规格 §11）
-// 案例数据来自 server /api/cases/{id}（仅收录可公开查证案件；sample=true 为未核实占位，禁止引用）。
-// 官方原文与 AI 内容视觉严格分离；域外判例全程免责横幅。
+// 案例数据来自 server /api/cases/{id}；仅收录带直接来源链接的可核验真实案件。
+// 页面展示项目结构化摘要，不把摘要伪装为法院原文；域外判例全程免责横幅。
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { Icon } from '../icons'
 import { useToast } from '../ui'
 import { EmptyState, SkeletonLines, Tabs } from '../ui'
-import { AIBlock, CitationCard, CitationChip, ForeignDisclaimer, SourceBadge } from '../domain'
+import { CitationCard, CitationChip, ForeignDisclaimer, SourceBadge } from '../domain'
 import { api, ApiError, isFav, toggleFav, type CaseRecord } from '../../lib/api'
 
-const TABS = ['基本信息', '案件事实', '法律争议', '裁判理由', '判决结果', '影响与意义', '相关案例']
+const TABS = ['基本信息', '案件事实', '法律争议', '裁判理由', '判决结果', '相关案例']
 
 /* 类案检索顺位（法发〔2020〕24号第四条：①指导性案例 ②典型案例 ③高院参考性案例 ④上级/本院生效裁判）——
    数据取舍的官方标准，作为产品可见的秩序展示 */
@@ -51,14 +51,14 @@ export default function CaseDetail() {
   if (!c) {
     return (
       <div className="case-wrap">
-        <EmptyState icon="search" title="未找到该案件" desc="案例样本仅收录可公开查证案件。" action={<Link to="/cases" className="btn btn-secondary">返回案例检索</Link>} />
+        <EmptyState icon="search" title="未找到该案件" desc="当前案例清单只收录可公开查证并带直接来源的案件。" action={<Link to="/cases" className="btn btn-secondary">返回案例检索</Link>} />
       </div>
     )
   }
   if (!c.verified) {
     return (
       <div className="case-wrap">
-        <EmptyState icon="alert" title="该记录未通过来源核验" desc="示例占位记录不可查看全文；接入官方数据源并通过核验流程后解锁。" action={<Link to="/cases" className="btn btn-secondary">返回案例检索</Link>} />
+        <EmptyState icon="alert" title="该记录未通过来源核验" desc="系统拒绝展示未通过来源核验的案例记录。" action={<Link to="/cases" className="btn btn-secondary">返回案例检索</Link>} />
       </div>
     )
   }
@@ -102,7 +102,7 @@ export default function CaseDetail() {
         <div className="row" style={{ flexDirection: 'column', alignItems: 'stretch', gap: 8, minWidth: 150 }}>
           <button className="btn btn-secondary btn-sm" onClick={fav}><Icon name="star" size={13} />{faved ? '已收藏' : '加入收藏'}</button>
           <Link to="/research/r-format-terms" className="btn btn-ghost btn-sm"><Icon name="sparkle" size={13} />加入研究</Link>
-          <button className="btn btn-ghost btn-sm" title="官方来源" onClick={() => toast(c.source_note)}><Icon name="shieldCheck" size={13} />官方来源</button>
+          <a className="btn btn-ghost btn-sm" href={c.source_url} target="_blank" rel="noreferrer" title={`${c.source_title}（核验于 ${c.source_accessed_at}）`}><Icon name="external" size={13} />核验原始来源</a>
         </div>
       </div>
 
@@ -111,11 +111,11 @@ export default function CaseDetail() {
       </div>
 
       <div className="case-grid">
-        {/* 正文：法院/官方原文 */}
+        {/* 项目结构化摘要；原始发布文本始终通过 source_url 单独打开。 */}
         <section className="case-doc">
           <div className="card-h" style={{ background: 'var(--elevated)' }}>
-            <span className="ot-tag">官方原文</span>
-            <span className="tiny">{c.source_note}</span>
+            <span className="ot-tag">核验后结构化摘要</span>
+            <span className="tiny">非判决全文 · 来源核验于 {c.source_accessed_at}</span>
           </div>
           <div className="case-doc-b">
             {tab === '基本信息' && (
@@ -146,7 +146,7 @@ export default function CaseDetail() {
             {tab === '裁判理由' && (
               <>
                 <h4>法院认为（要旨）</h4>
-                {c.holding ? <p className="q">{c.holding}</p> : <p>（本样本未录入裁判理由全文，以官方发布文本为准。）</p>}
+                {c.holding ? <p className="q">{c.holding}</p> : <p>当前结构化记录没有摘录裁判理由；请打开原始来源核对。</p>}
                 <p>以上为裁判要旨摘录，完整说理以官方发布文本为准。</p>
               </>
             )}
@@ -156,23 +156,12 @@ export default function CaseDetail() {
                 <p>{c.summary}</p>
               </>
             )}
-            {tab === '影响与意义' && (
-              <>
-                <h4>影响与意义（AI 研究性概述）</h4>
-                <div className="ai-block" style={{ marginTop: 4 }}>
-                  <div className="ai-block-h"><span className="ai-tag"><Icon name="sparkle" size={11} strokeWidth={2} />AI</span><b style={{ fontSize: 12.5 }}>AI 分析</b></div>
-                  <div className="ai-block-b">
-                    <ul>{c.impact.map((x) => <li key={x}>{x}</li>)}</ul>
-                  </div>
-                </div>
-              </>
-            )}
             {tab === '相关案例' && (
               <>
                 <h4>关联案例</h4>
                 <Link to="/cases" className="lrow" style={{ background: 'var(--elevated)' }}>
                   <Icon name="caseSearch" size={14} className="muted" />
-                  <span className="lrow-t">在案例检索中按争议焦点查找关联样本</span>
+                  <span className="lrow-t">在案例检索中按争议焦点查找其他已核实案例</span>
                   <Icon name="chevR" size={12} className="muted" />
                 </Link>
               </>
@@ -200,7 +189,7 @@ export default function CaseDetail() {
                 <div className="tiny" style={{ lineHeight: 1.8 }}>
                   {isForeign
                     ? '外国判例：引用其本国法源（见判决原文），不与中国法条建立直接引用关系。'
-                    : '案件裁判依据所引法律未在本地语料（如《侵权责任法》《食品安全法》2009 版），待接入官方数据源后展示——不虚构引用。'}
+                    : '案件裁判依据所引法律不在当前本地语料中（如《侵权责任法》《食品安全法》2009 版），因此本页不生成替代引用；请回到案例原始来源核对。'}
                 </div>
               )}
               {c.research_refs && c.research_refs.length > 0 && (
@@ -237,11 +226,13 @@ export default function CaseDetail() {
               </div>
             </section>
           ) : (
-            <AIBlock label="AI 类案关联" note="AI 生成的研究性关联，仅供检索线索；非法院认定。">
-              <ul>
-                <li>同议题可通过案例检索按焦点关键词查找（如「违约金」「格式条款」）。</li>
-              </ul>
-            </AIBlock>
+            <section className="card">
+              <div className="card-h"><b className="card-h-t">类案检索入口</b></div>
+              <div className="card-b tiny" style={{ lineHeight: 1.8 }}>
+                按本案争议焦点前往案例检索；系统只做关键词检索，不自动认定案件相似，也不预测裁判结果。
+                <div className="mt-12"><Link to="/cases" className="btn btn-secondary btn-sm">打开案例检索</Link></div>
+              </div>
+            </section>
           )}
         </aside>
       </div>

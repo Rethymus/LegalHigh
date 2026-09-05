@@ -8,13 +8,22 @@
  },
  "promulgation_instrument": "中华人民共和国主席令第四十五号",
  "effective_date": "2021-01-01",
+ "effective_date_evidence": {
+  "title": "中华人民共和国民法典",
+  "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E6%B0%91%E6%B3%95%E5%85%B8",
+  "accessed_at": "2026-08-29",
+  "grade": "中",
+  "source_kind": "wikisource-transcription",
+  "version": "现行有效"
+ },
  "source": {
   "kind": "wikisource-transcription",
   "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E6%B0%91%E6%B3%95%E5%85%B8",
   "pageid": null,
   "revid": "2590895",
   "snapshot": "docs/research/evidence/ws_中华人民共和国民法典.html",
-  "fetched_at": "2026-08-29"
+  "fetched_at": "2026-08-29",
+  "sha256": "b94ab740ff2da5d2050fabedf86b81d0329da6bc925747484604c79ce8144df0"
  },
  "authority_pointer": "国家法律法规数据库 https://flk.npc.gov.cn （检索该法条目核对）",
  "articles": [

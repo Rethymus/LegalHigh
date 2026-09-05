@@ -1,300 +1,235 @@
-// FRAME 21 · Settings —— 设置（规格 §28）
-// AI 默认：Strict Evidence Mode ON；外观/可访问性设置写入 localStorage 并实时生效
+// FRAME 21 · Settings —— 只呈现已实现且能说明真实边界的设置。
 import { useEffect, useState, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { Icon, type IconName } from '../icons'
 import { PageHeader, Switch, useToast } from '../ui'
-import { api, ApiError, loadAiProfile, loadIdentity, saveAiProfile, saveIdentity, type WorkIdentity } from '../../lib/api'
+import {
+  api, ApiError, clearAdminToken, clearAiProfile, loadAdminToken, loadAiProfile, loadIdentity,
+  saveAdminToken, saveAiProfile, saveIdentity,
+  type AiProfile, type WorkIdentity,
+} from '../../lib/api'
 import { useLaws } from '../../data/model'
 
 const SECTIONS: { key: string; label: string; icon: IconName }[] = [
-  { key: 'account', label: 'Account', icon: 'user' },
-  { key: 'workspace', label: 'Workspace', icon: 'briefcase' },
-  { key: 'privacy', label: 'Privacy', icon: 'lock' },
-  { key: 'security', label: 'Security', icon: 'shield' },
-  { key: 'ai', label: 'AI', icon: 'sparkle' },
-  { key: 'data', label: 'Data Source', icon: 'database' },
-  { key: 'appearance', label: 'Appearance', icon: 'sun' },
-  { key: 'accessibility', label: 'Accessibility', icon: 'eye' },
-  { key: 'notifications', label: 'Notifications', icon: 'bell' },
-  { key: 'language', label: 'Language', icon: 'globe' },
-  { key: 'export', label: 'Export', icon: 'download' },
+  { key: 'identity', label: '本机身份', icon: 'user' },
+  { key: 'ai', label: 'AI 模型', icon: 'sparkle' },
+  { key: 'privacy', label: '隐私与纠错', icon: 'lock' },
+  { key: 'data', label: '数据源', icon: 'database' },
+  { key: 'appearance', label: '外观', icon: 'sun' },
+  { key: 'accessibility', label: '可访问性', icon: 'eye' },
 ]
 
 function Row({ icon, t, d, ctl }: { icon: IconName; t: string; d: string; ctl: ReactNode }) {
   return (
     <div className="set-row">
       <span className="set-ic"><Icon name={icon} size={15} /></span>
-      <div style={{ minWidth: 0 }}>
-        <div className="set-t">{t}</div>
-        <div className="set-d">{d}</div>
-      </div>
+      <div style={{ minWidth: 0 }}><div className="set-t">{t}</div><div className="set-d">{d}</div></div>
       <div className="set-ctl">{ctl}</div>
     </div>
   )
 }
 
+interface ProviderInfo {
+  id: string
+  name: string
+  base_url: string
+  default_model: string
+  docs: string
+  env_key_set: boolean
+  local: boolean
+}
+
 export default function Settings() {
-  // ?feedback=mobile 时直落隐私区（移动反馈入口的落点，决策11）
-  const [sec, setSec] = useState(() => (new URLSearchParams(window.location.search).get('feedback') === 'mobile' ? 'privacy' : 'ai'))
+  const mobileFeedback = new URLSearchParams(window.location.search).get('feedback') === 'mobile'
+  const [sec, setSec] = useState(mobileFeedback ? 'privacy' : 'identity')
   const toast = useToast()
-  const { data: laws } = useLaws()
+  const { data: laws, error: lawsError } = useLaws()
   const lawCount = laws?.laws.length ?? 0
   const artCount = laws ? laws.laws.reduce((s, l) => s + l.articles.length, 0) : 0
 
-  const [strict, setStrict] = useState(() => localStorage.getItem('le-strict-evidence') !== '0')
-  const [citation, setCitation] = useState(() => localStorage.getItem('le-citation-required') !== '0')
-  const [foreign, setForeign] = useState(() => localStorage.getItem('le-allow-foreign') === '1')
-  const [explainLevel, setExplainLevel] = useState(() => localStorage.getItem('le-explain-level') ?? '通俗')
   const [tone, setTone] = useState(() => localStorage.getItem('le-tone-override') ?? 'auto')
   const [motion, setMotion] = useState(() => localStorage.getItem('le-reduce-motion') === '1')
   const [fontLarge, setFontLarge] = useState(() => localStorage.getItem('le-font-large') === '1')
   const [identity, setIdentity] = useState<WorkIdentity>(() => loadIdentity())
+  const [serviceToken, setServiceToken] = useState(() => loadAdminToken())
+  const [serverSession, setServerSession] = useState<{ principal: string; assurance: string } | null>(null)
+  const [sessionError, setSessionError] = useState<string | null>(null)
   useEffect(() => { saveIdentity(identity) }, [identity])
-  const [cSubject, setCSubject] = useState(() => (new URLSearchParams(window.location.search).get('feedback') === 'mobile' ? '移动端体验反馈' : ''))
-  const [cKind] = useState<'general' | 'mobile'>(() => (new URLSearchParams(window.location.search).get('feedback') === 'mobile' ? 'mobile' : 'general'))
-  const [cContent, setCContent] = useState('')
-  const [cContact, setCContact] = useState('')
-  const [busyC, setBusyC] = useState(false)
-  // 模型插件档案（仅本机）
-  const aiProfile = loadAiProfile()
-  const [aiCatalog, setAiCatalog] = useState<{ id: string; name: string; base_url: string; default_model: string; docs: string; env_key_set: boolean; local: boolean }[]>([])
-  const [aiProv, setAiProv] = useState(aiProfile?.provider_id ?? '')
-  const [aiModel, setAiModel] = useState(aiProfile?.model ?? '')
-  const [aiBase, setAiBase] = useState(aiProfile?.base_url_override ?? '')
-  const [aiKey, setAiKey] = useState(aiProfile?.api_key ?? '')
-  const [busyAi, setBusyAi] = useState(false)
   useEffect(() => {
-    api.aiProviders().then((d) => setAiCatalog(d.providers), () => setAiCatalog([]))
+    api.session().then((s) => { setServerSession(s); setSessionError(null) }, (e) => setSessionError(e instanceof ApiError ? e.message : String(e)))
   }, [])
-
-  useEffect(() => localStorage.setItem('le-strict-evidence', strict ? '1' : '0'), [strict])
-  useEffect(() => localStorage.setItem('le-citation-required', citation ? '1' : '0'), [citation])
-  useEffect(() => localStorage.setItem('le-allow-foreign', foreign ? '1' : '0'), [foreign])
-  useEffect(() => localStorage.setItem('le-explain-level', explainLevel), [explainLevel])
   useEffect(() => { localStorage.setItem('le-tone-override', tone); window.dispatchEvent(new CustomEvent('le-tone-changed')) }, [tone])
   useEffect(() => { localStorage.setItem('le-reduce-motion', motion ? '1' : '0'); document.documentElement.classList.toggle('reduce-motion', motion) }, [motion])
   useEffect(() => { localStorage.setItem('le-font-large', fontLarge ? '1' : '0'); document.documentElement.classList.toggle('font-large', fontLarge) }, [fontLarge])
 
+  const initialProfile = loadAiProfile()
+  const [savedProfile, setSavedProfile] = useState<AiProfile | null>(initialProfile)
+  const [aiCatalog, setAiCatalog] = useState<ProviderInfo[]>([])
+  const [catalogError, setCatalogError] = useState<string | null>(null)
+  const [aiProv, setAiProv] = useState(initialProfile?.provider_id ?? '')
+  const [aiModel, setAiModel] = useState(initialProfile?.model ?? '')
+  const [aiBase, setAiBase] = useState(initialProfile?.base_url_override ?? '')
+  const [aiKey, setAiKey] = useState('')
+  const [busyAi, setBusyAi] = useState(false)
+  useEffect(() => {
+    let alive = true
+    api.aiProviders().then(
+      (d) => { if (alive) setAiCatalog(d.providers) },
+      (e) => { if (alive) setCatalogError(e instanceof ApiError ? e.message : String(e)) },
+    )
+    return () => { alive = false }
+  }, [])
+  const selectedProvider = aiCatalog.find((p) => p.id === aiProv)
+  const currentProfile = (): AiProfile & { api_key?: string } => ({
+    provider_id: aiProv,
+    model: aiModel.trim(),
+    base_url_override: aiProv === 'custom' && aiBase.trim() ? aiBase.trim() : undefined,
+    api_key: aiKey || undefined,
+  })
+  const persistProfile = () => {
+    const p = currentProfile()
+    saveAiProfile(p)
+    setSavedProfile({ provider_id: p.provider_id, model: p.model, base_url_override: p.base_url_override })
+    setAiKey('')
+    toast('非秘密模型配置已保存；API Key 未保存', 'ok')
+  }
+
+  const [cSubject, setCSubject] = useState(mobileFeedback ? '移动端体验反馈' : '')
+  const cKind: 'general' | 'mobile' = mobileFeedback ? 'mobile' : 'general'
+  const [cContent, setCContent] = useState('')
+  const [cContact, setCContact] = useState('')
+  const [busyC, setBusyC] = useState(false)
+
   return (
     <div className="page">
-      {/* 假「保存」按钮已移除（C8）：所有设置项均即时写本机生效，无需保存动作 */}
-      <PageHeader title="设置" sub="账号、工作区、隐私与 AI 行为。所有设置修改后即时生效（仅存本机）；AI 相关默认遵循「严格证据模式」。" />
+      <PageHeader title="设置" sub="使用视图和署名只保存在本机，不构成账号或资格认证；远程模型会改变数据是否离开本机的边界。" />
 
       <div className="st-layout">
         <nav className="st-nav">
           <div className="card" style={{ padding: 8 }}>
             {SECTIONS.map((s) => (
               <button key={s.key} className={'lrow' + (sec === s.key ? ' is-on' : '')} style={{ width: '100%', textAlign: 'left' }} onClick={() => setSec(s.key)}>
-                <Icon name={s.icon} size={14} />
-                <span className="lrow-t">{s.label}</span>
+                <Icon name={s.icon} size={14} /><span className="lrow-t">{s.label}</span>
               </button>
             ))}
           </div>
-          <Link to="/design-system" className="tiny row mt-12" style={{ gap: 4, paddingLeft: 6 }}>
-            <Icon name="layers" size={12} />内部：设计系统规范（仅供团队）
-          </Link>
         </nav>
 
         <div className="card card-pad">
+          {sec === 'identity' && (
+            <>
+              <div className="sec-h"><span className="sec-t">敏感接口会话</span></div>
+              <div className="banner banner-info mb-12"><Icon name="info" size={15} /><span className="banner-tx">桌面端由 Electron 主进程注入随机令牌，开发模式可由 Vite 代理注入；两者都不向页面暴露令牌。只有直接在普通浏览器打开后端静态页面时，才需要在下方输入与服务端 LH_ADMIN_TOKEN 一致的令牌，且仅保存在当前标签页。</span></div>
+              <Row icon="key" t="本机服务令牌" d={serverSession ? `本机审计署名已连接：${serverSession.principal}；不代表身份或执业资格核验` : `会话未建立${sessionError ? `：${sessionError}` : ''}`}
+                ctl={<div className="row">
+                  <input className="inp" type="password" style={{ width: 220 }} value={serviceToken} placeholder="至少 32 字符；仅当前标签页" onChange={(e) => setServiceToken(e.target.value)} />
+                  <button className="btn btn-secondary btn-sm" onClick={async () => {
+                    saveAdminToken(serviceToken)
+                    try { const s = await api.session(); setServerSession(s); setSessionError(null); toast(`已连接服务端主体：${s.principal}`, 'ok') }
+                    catch (e) { setServerSession(null); setSessionError(e instanceof ApiError ? e.message : String(e)); toast(e instanceof Error ? e.message : String(e), 'err') }
+                  }}>验证</button>
+                  {serviceToken && <button className="btn btn-ghost btn-sm" onClick={() => { clearAdminToken(); setServiceToken(''); setServerSession(null); setSessionError('会话令牌已清除') }}>清除</button>}
+                </div>} />
+              <div className="sec-h"><span className="sec-t">本机使用视图</span></div>
+              <div className="banner banner-warn mb-12"><Icon name="alert" size={15} /><span className="banner-tx">视图仅调整入口和文案组织。专业工具视图不是律师入驻，也不表示系统核验了任何人的执业资格。</span></div>
+              <Row icon="user" t="姓名" d="批注等普通留痕动作可预填此姓名；请填写真实姓名。"
+                ctl={<input className="inp" style={{ width: 200 }} value={identity.name} placeholder="真实姓名" onChange={(e) => setIdentity({ ...identity, name: e.target.value })} />} />
+              <Row icon="briefcase" t="使用视图" d="公众用于求助准备，学生用于学习，专业视图提供合同和文书工具；三者都不构成身份认证。"
+                ctl={<select className="sel" style={{ width: 180 }} value={identity.mode} onChange={(e) => setIdentity({ ...identity, mode: e.target.value as WorkIdentity['mode'] })}>
+                  <option value="public">公众求助准备</option><option value="student">法学学习</option><option value="professional">专业工具</option>
+                </select>} />
+            </>
+          )}
+
           {sec === 'ai' && (
             <>
-              <div className="sec-h"><span className="sec-t">AI 行为</span></div>
-              <Row icon="shieldCheck" t="Strict Evidence Mode（严格证据模式）" d="无可靠来源支持的结论将被阻止生成，并标注「缺少可靠依据」。默认开启，建议保持。"
-                ctl={<Switch on={strict} onChange={setStrict} />} />
-              {!strict && <div className="banner banner-danger mb-8"><Icon name="alert" size={15} /><span className="banner-tx">已关闭严格证据模式：AI 输出可能包含无法溯源的断言，仅限内部测试使用。</span></div>}
-              <Row icon="link" t="Citation Required（强制引用）" d="每条结论必须绑定来源段落；引用法条附版本/生效/效力字段。"
-                ctl={<Switch on={citation} onChange={setCitation} />} />
-              <Row icon="globe" t="Allow Foreign Sources（允许域外资料）" d="引入域外法律与案例，仅作比较研究材料，不作中国裁判依据。默认关闭。"
-                ctl={<Switch on={foreign} onChange={setForeign} />} />
-              <Row icon="compass" t="AI Explanation Level（解释深度）" d="通俗解释面向公众；专业解释面向执业者。"
-                ctl={
-                  <select className="sel" style={{ width: 140 }} value={explainLevel} onChange={(e) => setExplainLevel(e.target.value)}>
-                    <option>通俗</option><option>专业</option>
-                  </select>
-                } />
-
-              <div className="sec-h mt-20"><span className="sec-t">模型插件（OpenAI 协议 harness）</span></div>
-              <div className="banner banner-info mb-12" style={{ padding: '9px 13px' }}><Icon name="info" size={14} />
-                <span className="banner-tx">
-                  本项目作为 harness 运行：模型由你自主选择并驱动，一切兼容 OpenAI 协议的服务均可接入（OpenAI / DeepSeek / Kimi / 智谱 / 通义 / Ollama / vLLM / LiteLLM·one-api 网关）。默认关闭——不配置即不调用任何模型。
-                  密钥仅保存在<b>本机浏览器</b>并随请求瞬态发送，服务端不落库不记日志；也可改用环境变量（如 DEEPSEEK_API_KEY）。
-                </span>
-              </div>
+              <div className="sec-h"><span className="sec-t">可选模型插件</span></div>
+              <div className="banner banner-info mb-12"><Icon name="info" size={14} /><span className="banner-tx">默认不配置模型，也不会发生 LLM 调用。合同规则审查与 BM25 检索不依赖远程模型。所有模型生成请求必须经过服务端红线、语料引用绑定和审计 gate。</span></div>
+              {selectedProvider && !selectedProvider.local && <div className="banner banner-danger mb-12"><Icon name="alert" size={14} /><span className="banner-tx">远程提供方会接收你提交给模型的消息。不得发送未经授权的合同、案件个人信息或秘密；第三方的保留、训练和跨境政策不由 LegalHigh 控制。</span></div>}
+              {catalogError && <div className="banner banner-danger mb-12"><Icon name="alert" size={14} /><span className="banner-tx">模型目录加载失败：{catalogError}</span></div>}
               <div className="form-grid mb-8">
-                <label className="fld">
-                  <span className="fld-l">提供方</span>
+                <label className="fld"><span className="fld-l">提供方</span>
                   <select className="sel" value={aiProv} onChange={(e) => {
                     const p = aiCatalog.find((x) => x.id === e.target.value)
                     setAiProv(e.target.value)
-                    if (p) { setAiModel(p.default_model); setAiBase(p.base_url) }
+                    if (p) { setAiModel(p.default_model); setAiBase(p.id === 'custom' ? '' : p.base_url) }
                   }}>
                     <option value="">未配置（默认关闭）</option>
-                    {aiCatalog.map((p) => <option key={p.id} value={p.id}>{p.name}{p.env_key_set ? '（已检测到环境变量密钥）' : p.local ? '（本地）' : ''}</option>)}
+                    {aiCatalog.map((p) => <option key={p.id} value={p.id}>{p.name}{p.env_key_set ? '（服务端已配置环境密钥）' : p.local ? '（本地）' : ''}</option>)}
                   </select>
                 </label>
-                <label className="fld"><span className="fld-l">模型名</span>
-                  <input className="inp" placeholder={aiCatalog.find((x) => x.id === aiProv)?.default_model || '如 deepseek-chat'} value={aiModel} onChange={(e) => setAiModel(e.target.value)} /></label>
-                <label className="fld full"><span className="fld-l">Base URL（可覆盖为网关/本地端点）</span>
-                  <input className="inp" placeholder="https://api.deepseek.com/v1" value={aiBase} onChange={(e) => setAiBase(e.target.value)} /></label>
-                <label className="fld full"><span className="fld-l">API Key（仅存本机；留空则使用环境变量）</span>
-                  <input className="inp" type="password" placeholder="sk-…（不回显）" value={aiKey} onChange={(e) => setAiKey(e.target.value)} /></label>
+                <label className="fld"><span className="fld-l">模型名</span><input className="inp" value={aiModel} placeholder="由提供方目录给出默认值" onChange={(e) => setAiModel(e.target.value)} /></label>
+                {aiProv === 'custom' && <label className="fld full"><span className="fld-l">自定义 HTTPS Base URL</span><input className="inp" value={aiBase} placeholder="主机名必须由部署方写入 LH_AI_CUSTOM_HOSTS 允许名单" onChange={(e) => setAiBase(e.target.value)} /></label>}
+                <label className="fld full"><span className="fld-l">API Key（仅用于本次连接测试）</span><input className="inp" type="password" value={aiKey} autoComplete="off" placeholder="不会保存；正式调用建议使用服务端环境变量" onChange={(e) => setAiKey(e.target.value)} /></label>
               </div>
-              <div className="row">
-                <button className="btn btn-secondary btn-sm" disabled={!aiProv || busyAi} onClick={async () => {
+              <div className="row-wrap">
+                <button className="btn btn-secondary btn-sm" disabled={!aiProv || !aiModel.trim() || busyAi} onClick={async () => {
                   setBusyAi(true)
                   try {
-                    const r = await api.aiTest({ provider_id: aiProv, model: aiModel, api_key: aiKey || undefined, base_url_override: aiBase || undefined })
-                    if (r.ok) { toast(`连接成功：模型返回「${r.sample ?? 'OK'}」`, 'ok'); saveAiProfile({ provider_id: aiProv, model: aiModel, base_url_override: aiBase || undefined, api_key: aiKey || undefined }) }
-                    else toast(`连接失败：${r.error}`, 'err')
-                  } catch (e) { toast(e instanceof ApiError ? e.message : String(e), 'err') } finally { setBusyAi(false) }
+                    const r = await api.aiTest(currentProfile())
+                    if (!r.ok) throw new Error(r.error || '提供方未返回成功状态')
+                    toast(`连接成功：${r.sample ?? '服务端已确认响应'}`, 'ok')
+                  } catch (e) { toast(e instanceof Error ? e.message : String(e), 'err') }
+                  finally { setBusyAi(false) }
                 }}><Icon name="zap" size={13} />{busyAi ? '测试中…' : '测试连接'}</button>
-                <button className="btn btn-primary btn-sm" disabled={!aiProv || !aiModel}
-                  onClick={() => { saveAiProfile({ provider_id: aiProv, model: aiModel, base_url_override: aiBase || undefined, api_key: aiKey || undefined }); toast('模型档案已保存（仅本机）', 'ok') }}>
-                  <Icon name="save" size={13} />保存模型档案</button>
-                {aiProfile && <span className="tiny">当前档案：{aiProfile.provider_id} / {aiProfile.model}</span>}
-                <span className="spacer" />
-                {aiCatalog.find((x) => x.id === aiProv)?.docs && (
-                  <a className="tiny" href={aiCatalog.find((x) => x.id === aiProv)!.docs} target="_blank" rel="noreferrer">接入文档 ↗</a>
-                )}
+                <button className="btn btn-primary btn-sm" disabled={!aiProv || !aiModel.trim()} onClick={persistProfile}><Icon name="save" size={13} />保存配置</button>
+                {savedProfile && <button className="btn btn-ghost btn-sm" onClick={() => {
+                  clearAiProfile(); setSavedProfile(null); setAiProv(''); setAiModel(''); setAiBase(''); setAiKey(''); toast('模型配置已清除', 'ok')
+                }}>清除配置</button>}
+                {selectedProvider?.docs && <a className="tiny" href={selectedProvider.docs} target="_blank" rel="noreferrer">提供方文档 ↗</a>}
               </div>
-              <div className="tiny mt-8">调用将经过三道合规 gate：红线词拦截（禁「包赢/胜诉率」表述）、引用绑定校验（AI 提及的条文必须在给定依据集合内）、审计留痕（不含密钥与消息明文）。</div>
+              <div className="tiny mt-8">保存后只持久化提供方、模型名和地址配置。API Key 不写 localStorage、sessionStorage 或服务端数据库；研究页可单次输入，或由部署方设置服务端环境变量。</div>
+            </>
+          )}
+
+          {sec === 'privacy' && (
+            <>
+              <div className="sec-h"><span className="sec-t">本机数据与权利通道</span></div>
+              <Row icon="database" t="实际存储" d="合同审查、文书草稿、投诉和审计写入本机 SQLite；收藏、外观与研究索引写入浏览器存储。系统目前不承诺自动脱敏。" ctl={<span className="bdg bdg-gray">本机存储</span>} />
+              <Row icon="download" t="导出服务端数据" d="导出当前本机数据库中的审查、草稿、投诉、批注和审计 JSON；不包含第三方模型可能保留的数据。"
+                ctl={<button className="btn btn-secondary btn-sm" onClick={() => api.privacyExport().catch((e) => toast(e instanceof Error ? e.message : '导出失败', 'err'))}>导出</button>} />
+              <Row icon="reject" t="逐条删除" d="审查、草稿和投诉可在工作台逐条删除；删除动作保留审计记录。" ctl={<Link to="/workspace" className="btn btn-danger btn-sm">前往工作台</Link>} />
+              <div className="mt-16" style={{ borderTop: '1px solid var(--div-soft)', paddingTop: 14 }}>
+                <div className="tiny bold mb-8">投诉与纠错通道</div>
+                <div className="form-grid">
+                  <label className="fld"><span className="fld-l">主题</span><input className="inp" value={cSubject} placeholder="如：某条引用有误" onChange={(e) => setCSubject(e.target.value)} /></label>
+                  <label className="fld"><span className="fld-l">联系方式（可选）</span><input className="inp" value={cContact} placeholder="邮箱 / 电话" onChange={(e) => setCContact(e.target.value)} /></label>
+                  <label className="fld full"><span className="fld-l">内容</span><textarea className="ta" style={{ minHeight: 80 }} value={cContent} placeholder="请说明页面、记录 ID、错误与期望更正内容…" onChange={(e) => setCContent(e.target.value)} /></label>
+                </div>
+                <button className="btn btn-primary btn-sm mt-12" disabled={busyC || !cSubject.trim() || !cContent.trim()} onClick={async () => {
+                  setBusyC(true)
+                  try {
+                    const r = await api.createComplaint(cSubject.trim(), cContent.trim(), cContact.trim() || undefined, cKind)
+                    toast(`投诉已写入：${r.complaint_id}（${r.status}）`, 'ok'); setCSubject(''); setCContent(''); setCContact('')
+                  } catch (e) { toast(e instanceof ApiError ? e.message : String(e), 'err') }
+                  finally { setBusyC(false) }
+                }}><Icon name="send" size={13} />{busyC ? '提交中…' : '提交投诉'}</button>
+              </div>
+            </>
+          )}
+
+          {sec === 'data' && (
+            <>
+              <div className="sec-h"><span className="sec-t">证据快照语料</span></div>
+              {lawsError && <div className="banner banner-danger mb-12"><Icon name="alert" size={14} /><span className="banner-tx">语料清单读取失败：{lawsError}</span></div>}
+              <Row icon="database" t="当前导出" d={laws ? `${lawCount} 部、${artCount.toLocaleString()} 条；含来源 URL、状态与快照日期。Wikisource 转录不等于官方权威版本。` : '正在读取本地 laws.json…'} ctl={<Link to="/data-sources" className="btn btn-secondary btn-sm">查看来源</Link>} />
+              <Row icon="download" t="下载语料 JSON" d="下载前端当前使用的只读导出文件；其上游必须由证据快照经 build_corpus.py 构建。" ctl={<a className="btn btn-ghost btn-sm" href={`${import.meta.env.BASE_URL}data/laws.json`} download="legalhigh_laws.json">下载</a>} />
             </>
           )}
 
           {sec === 'appearance' && (
             <>
               <div className="sec-h"><span className="sec-t">外观</span></div>
-              <Row icon="sun" t="整体明暗" d="默认「跟随页面」：深色 Dashboard/案件阅读，浅色文档工作区。可强制浅色或深色。"
-                ctl={
-                  <select className="sel" style={{ width: 160 }} value={tone} onChange={(e) => setTone(e.target.value)}>
-                    <option value="auto">跟随页面</option>
-                    <option value="light">强制浅色</option>
-                    <option value="dark">强制深色</option>
-                  </select>
-                } />
-              <Row icon="eye" t="大字模式（适老化）" d="正文阅读区整体放大 15%，便于视力不佳的用户阅读法条与文书。仅存本机。"
-                ctl={<Switch on={fontLarge} onChange={setFontLarge} />} />
-              <Row icon="sparkle" t="强调色" d="Accent Blue #0A84FF（两套模式共用同一语义 Token）。"
-                ctl={<span className="bdg bdg-blue">#0A84FF</span>} />
+              <Row icon="sun" t="整体明暗" d="跟随页面，或强制浅色/深色；即时保存到本机。" ctl={<select className="sel" style={{ width: 150 }} value={tone} onChange={(e) => setTone(e.target.value)}><option value="auto">跟随页面</option><option value="light">强制浅色</option><option value="dark">强制深色</option></select>} />
+              <Row icon="eye" t="大字模式" d="放大正文与控件，便于视力不佳者阅读。" ctl={<Switch on={fontLarge} onChange={setFontLarge} />} />
             </>
           )}
 
           {sec === 'accessibility' && (
             <>
               <div className="sec-h"><span className="sec-t">可访问性</span></div>
-              <Row icon="eye" t="Reduce Motion（减少动效）" d="关闭过渡与脉冲动画（120–220ms ease-out 为默认；遵循系统 prefers-reduced-motion）。"
-                ctl={<Switch on={motion} onChange={setMotion} />} />
-              <Row icon="target" t="Focus Ring" d="所有可键盘聚焦元素使用 3px #0A84FF 外侧 Ring（不可关闭）。"
-                ctl={<span className="bdg bdg-green">始终开启</span>} />
-            </>
-          )}
-
-          {sec === 'account' && (
-            <>
-              <div className="sec-h"><span className="sec-t">工作身份</span></div>
-              <Row icon="user" t="姓名（担责署名）" d="审核人/核验人/复核人字段默认使用此姓名。本机自报，内网部署后升级为认证账号。"
-                ctl={<input className="inp" style={{ width: 180 }} value={identity.name} placeholder="真实姓名"
-                  onChange={(e) => setIdentity({ ...identity, name: e.target.value })} />} />
-              <Row icon="briefcase" t="角色" d="核验类动作受角色 gate 约束（如「仅执业律师可核验」）。"
-                ctl={<select className="sel" style={{ width: 160 }} value={identity.role}
-                  onChange={(e) => setIdentity({ ...identity, role: e.target.value })}>
-                  <option>执业律师</option><option>法务</option><option>其他</option>
-                </select>} />
-              <div className="sec-h"><span className="sec-t">账号</span></div>
-              <Row icon="user" t="Alex Wang（演示账号）" d="执业律师 · 原型无真实用户体系；正式版接入统一身份认证。" ctl={<button className="btn btn-ghost btn-sm">编辑资料</button>} />
-              <Row icon="logout" t="退出登录" d="结束本设备会话。" ctl={<button className="btn btn-danger btn-sm">退出</button>} />
-            </>
-          )}
-
-          {sec === 'workspace' && (
-            <>
-              <div className="sec-h"><span className="sec-t">工作区</span></div>
-              <Row icon="briefcase" t="当前工作区" d="A 律所 · 示例工作区（3 名成员）" ctl={<button className="btn btn-ghost btn-sm">管理</button>} />
-              <Row icon="key" t="成员权限" d="主办律师 / 协办 / 助理三级权限。" ctl={<button className="btn btn-ghost btn-sm">配置</button>} />
-            </>
-          )}
-
-          {sec === 'privacy' && (
-            <>
-              <div className="sec-h"><span className="sec-t">隐私</span></div>
-              <Row icon="lock" t="数据脱敏" d="上传文档中的个人信息在分析前自动脱敏；分析无状态、不落盘。" ctl={<Switch on onChange={() => toast('为必选项，不可关闭')} disabled />} />
-              <Row icon="download" t="导出我的全部数据" d="审查记录、文书草稿、投诉工单与全量审计，一次下载为 JSON（PIPL 导出权）。"
-                ctl={<button className="btn btn-secondary btn-sm" onClick={() => api.privacyExport().catch((e) => toast(e?.message ?? '导出失败', 'err'))}>导出</button>} />
-              <Row icon="reject" t="拒绝与删除通道" d="逐条删除审查/草稿/工单：入口在「律师工作台」对应行（删除动作写入审计，可追溯）。"
-                ctl={<Link to="/workspace" className="btn btn-danger btn-sm">前往工作台删除</Link>} />
-              <div className="mt-16" style={{ borderTop: '1px solid var(--div-soft)', paddingTop: 14 }}>
-                <div className="tiny bold mb-8">投诉与纠错通道（提交后写入工单库并留痕 · 《生成式AI办法》第 14/15 条）</div>
-                <div className="form-grid">
-                  <label className="fld"><span className="fld-l">主题</span>
-                    <input className="inp" placeholder="如：某回答引用有误" value={cSubject} onChange={(e) => setCSubject(e.target.value)} /></label>
-                  <label className="fld"><span className="fld-l">联系方式（可选）</span>
-                    <input className="inp" placeholder="邮箱 / 电话" value={cContact} onChange={(e) => setCContact(e.target.value)} /></label>
-                  <label className="fld full"><span className="fld-l">内容</span>
-                    <textarea className="ta" style={{ minHeight: 70 }} placeholder="请描述问题：涉及哪个页面/回答/文书，问题是什么…" value={cContent} onChange={(e) => setCContent(e.target.value)} /></label>
-                </div>
-                <div className="row mt-12">
-                  <button className="btn btn-primary btn-sm" disabled={busyC || !cSubject.trim() || !cContent.trim()}
-                    onClick={async () => {
-                      setBusyC(true)
-                      try {
-                        const r = await api.createComplaint(cSubject.trim(), cContent.trim(), cContact.trim() || undefined, cKind)
-                        toast(`投诉已受理：工单号 ${r.complaint_id}（状态 ${r.status}）`, 'ok')
-                        setCSubject(''); setCContent(''); setCContact('')
-                      } catch (e) {
-                        toast(e instanceof ApiError ? e.message : String(e), 'err')
-                      } finally { setBusyC(false) }
-                    }}><Icon name="send" size={13} />{busyC ? '提交中…' : '提交投诉'}</button>
-                  <span className="tiny">投诉记录进入 append-only 审计日志，处置结果将通过联系方式反馈。</span>
-                </div>
-              </div>
-            </>
-          )}
-
-          {sec === 'security' && (
-            <>
-              <div className="sec-h"><span className="sec-t">安全</span></div>
-              <Row icon="key" t="两步验证（规划）" d="登录时要求动态验证码——规划功能，原型未实现。" ctl={<Switch on disabled />} />
-              <Row icon="history" t="登录设备（示例）" d="2 台活跃设备（示例数据，原型无真实用户体系）。" ctl={<button className="btn btn-ghost btn-sm" disabled title="原型无真实用户体系">查看</button>} />
-            </>
-          )}
-
-          {sec === 'data' && (
-            <>
-              <div className="sec-h"><span className="sec-t">数据源</span></div>
-              <Row icon="database" t="已接入数据源" d={laws ? `本地证据快照语料（${lawCount} 部法律 · ${artCount.toLocaleString()} 条）。` : '本地证据快照语料（规模读取中…）。'} ctl={<Link to="/data-sources" className="btn btn-secondary btn-sm">查看全部</Link>} />
-              <Row icon="download" t="语料导出" d="下载本地语料文件（含来源 URL 与快照日期），与线上数据同源。" ctl={<button className="btn btn-ghost btn-sm" onClick={() => {
-                fetch(`${import.meta.env.BASE_URL}data/laws.json`, { cache: 'no-cache' })
-                  .then((r) => { if (!r.ok) throw new Error(String(r.status)); return r.blob() })
-                  .then((b) => {
-                    const a = document.createElement('a')
-                    a.href = URL.createObjectURL(b)
-                    a.download = 'legalhigh_laws.json'
-                    a.click(); URL.revokeObjectURL(a.href)
-                  })
-                  .catch(() => toast('语料导出失败：laws.json 不可达', 'err'))
-              }}>导出</button>} />
-            </>
-          )}
-
-          {sec === 'notifications' && (
-            <>
-              <div className="sec-h"><span className="sec-t">通知</span></div>
-              <Row icon="bell" t="审查完成通知" d="合同审查完成时提醒。" ctl={<Switch on onChange={() => {}} />} />
-              <Row icon="alert" t="风险升级提醒" d="合同风险等级变化时提醒。" ctl={<Switch on onChange={() => {}} />} />
-            </>
-          )}
-
-          {sec === 'language' && (
-            <Row icon="globe" t="界面语言" d="当前：简体中文（英文界面在路线图中）。"
-              ctl={<select className="sel" style={{ width: 140 }} defaultValue="zh"><option value="zh">简体中文</option><option value="en" disabled>English（规划）</option></select>} />
-          )}
-
-          {sec === 'export' && (
-            <>
-              <div className="sec-h"><span className="sec-t">导出</span></div>
-              <Row icon="download" t="个人数据导出" d="导出账号相关数据（JSON）。" ctl={<button className="btn btn-ghost btn-sm" onClick={() => toast('导出任务已创建（示例）', 'ok')}>导出</button>} />
-              <Row icon="file" t="文书导出格式" d="Word（修订双轨）与 PDF。" ctl={<span className="bdg bdg-gray">docx / pdf</span>} />
+              <Row icon="eye" t="减少动效" d="关闭界面过渡与脉冲动画，并继续遵循系统 prefers-reduced-motion。" ctl={<Switch on={motion} onChange={setMotion} />} />
+              <Row icon="target" t="键盘焦点环" d="始终启用，不能关闭。" ctl={<span className="bdg bdg-green">已启用</span>} />
             </>
           )}
         </div>

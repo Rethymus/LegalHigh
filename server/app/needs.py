@@ -1,29 +1,14 @@
 # -*- coding: utf-8 -*-
-"""需求解析管线（Needs Parse）：抽象/语序不当的用户描述 → 可溯源的法条 + 案例。
+"""确定性需求解析：生活化描述 → 领域词 → BM25 法条与已核验案例。
 
-「薄 AI」双轨（调研 docs/research/需求解析与可溯源检索调研-2026-08-30.md）：
-- Stage A 理解层（AI 可选，受控）：LLM 仅做改写与结构化（固定 schema），不产出事实；
-  未配置模型 / 解析失败 → 降级为确定性关键词抽取。
-- Stage B 取证层（确定性）：keywords → BM25 法条检索（citation_of 逐条校验）+ 案例样本检索。
-- Stage C 呈现层：全部条目携带官方核对入口 / 快照链接；案由等判断显式标注「假设」。
-
-幻觉防线：AI 只写查询，不写证据；证据一律来自本地语料与样本库。
+用户描述常含个人或案件敏感信息，因此本入口不调用远程模型。证据只来自本地语料
+与案例库；无法匹配时明确返回空结果，不让生成模型补写查询、事实或依据。
 """
-import json
 import re
 
 from . import cases as cases_mod
-from . import ai_governor
 from .corpus import get_corpus
 from .research import extract_keywords
-
-PARSE_SCHEMA = (
-    '输出严格 JSON（不要代码块）：{"understood": "用中性语言重述用户问题(≤60字)", '
-    '"issue_type": "民事|刑事|行政|劳动|其他", '
-    '"assumed_causes": ["可能的案由假设(1-3个)"], '
-    '"keywords": ["法律术语检索词(3-8个，如：劳动合同/违约金/格式条款)"], '
-    '"cautions": ["用户应注意的证据或时效事项(1-3条)"]}。'
-)
 
 
 # 领域词表增强（规则级，确定性）：生活语言 → 规范法律术语。词表可随语料扩充，均为通用法律概念而非虚构引用。
@@ -114,40 +99,6 @@ def deterministic_parse(text: str) -> dict:
     }
 
 
-def ai_parse(text: str, *, provider_id: str, model: str, api_key: str | None = None,
-             base_url_override: str | None = None) -> dict:
-    """Stage A：受控 LLM 结构化理解。JSON 解析失败抛 ValueError（调用方降级）。"""
-    out = ai_governor.chat(
-        provider_id, model,
-        [
-            {"role": "system", "content":
-                "你是法律需求解析器。任务：把用户可能抽象、语序不当的描述改写为结构化检索计划。"
-                "规则：①不解释法条、不引用任何具体法条或案例（取证由系统完成）；②keywords 用规范法律术语；"
-                "③无法确定的信息放入 cautions 而不是臆测；" + PARSE_SCHEMA},
-            {"role": "user", "content": text},
-        ],
-        api_key=api_key, base_url_override=base_url_override, temperature=0.1)
-    if out.get("blocked"):
-        raise ValueError("解析输出未通过合规 gate（红线词），已拦截")
-    raw = out["text"].strip()
-    raw = re.sub(r"^```(json)?|```$", "", raw, flags=re.M).strip()
-    start, end = raw.find("{"), raw.rfind("}")
-    if start == -1 or end == -1:
-        raise ValueError("AI 输出中未找到 JSON 结构")
-    parsed = json.loads(raw[start:end + 1])
-    kws = [str(k).strip() for k in parsed.get("keywords", []) if str(k).strip()]
-    if not kws:
-        raise ValueError("AI 输出缺少 keywords")
-    return {
-        "understood": str(parsed.get("understood") or text[:60])[:80],
-        "issue_type": str(parsed.get("issue_type") or "其他"),
-        "assumed_causes": [str(x) for x in (parsed.get("assumed_causes") or [])][:3],
-        "keywords": kws[:8],
-        "cautions": [str(x) for x in (parsed.get("cautions") or [])][:3],
-        "by": f"ai:{provider_id}/{model}",
-    }
-
-
 def fetch_evidence(keywords: list[str], *, article_limit: int = 6, case_limit: int = 4) -> dict:
     """Stage B：确定性取证（无 AI）。多关键词合并去重，按「命中词数→相关度」排序抑制噪声。"""
     corpus = get_corpus()
@@ -190,49 +141,124 @@ def fetch_evidence(keywords: list[str], *, article_limit: int = 6, case_limit: i
     return {"articles": articles, "cases": matched_cases}
 
 
-def parse_needs(text: str, *, ai: dict | None = None) -> dict:
-    """入口：text 为用户模糊描述。ai = {provider_id, model, api_key?, base_url_override?} 可选。"""
+def parse_needs(text: str) -> dict:
+    """入口：仅在本机执行确定性规则与检索，不发送用户描述。"""
     text = (text or "").strip()
     if len(text) < 4:
         raise ValueError("描述过短：请补充具体情形（如「老板拖欠三个月工资」）")
 
-    parse = None
-    ai_error = None
-    if ai and ai.get("provider_id") and ai.get("model"):
-        try:
-            parse = ai_parse(text, provider_id=ai["provider_id"], model=ai["model"],
-                             api_key=ai.get("api_key"), base_url_override=ai.get("base_url_override"))
-        except (ValueError, RuntimeError, PermissionError) as e:
-            ai_error = str(e)  # AI 理解失败 → 降级，不阻塞取证
-    if parse is None:
-        parse = deterministic_parse(text)
+    parse = deterministic_parse(text)
 
     evidence = fetch_evidence(parse["keywords"])
     corpus = get_corpus()
-    # 展示降噪（决策项2）：域词从原文重算（deterministic 路径已并入 keywords 首位；
-    # AI 路径域词为空，AI 产出的已是规范法律术语，原样展示）
+    # 展示降噪：域词从原文重算；内部 bigram 只参与检索，不作为专业判断展示。
     parse["keywords_display"] = curate_display(parse["keywords"], domain_terms(text))
     return {
         "input": text,
         "parse": parse,
-        "ai_error": ai_error,
+        "ai_error": None,
         "articles": evidence["articles"],
         "cases": [
             {"id": c["id"], "name": c["name"], "name_en": c.get("name_en"), "no": c["no"],
              "court": c["court"], "date": c["date"], "cause": c["cause"], "level": c["level"],
              "summary": c["summary"], "kind": c["kind"], "grade": c["grade"],
-             "source_note": c["source_note"], "verified": c["verified"],
-             "official_entries": [
-                 {"name": "最高法典型案例栏目（官方发布入口）", "url": "https://www.court.gov.cn/zixun/gengduo/104_3.html"},
-                 {"name": "人民法院案例库（官方检索）", "url": "https://rmfyalk.court.gov.cn"},
-                 {"name": "最高检网上发布厅", "url": "https://www.spp.gov.cn"},
-             ] if c["level"] == "指导性案例" else [
-                 {"name": "CourtListener 站内检索（官方镜像库）", "url": "https://www.courtlistener.com/?q=" + c["name_en"] if c.get("name_en") else "https://www.courtlistener.com"},
-             ] or None}
+             "source_note": c["source_note"], "source_title": c["source_title"],
+             "source_url": c["source_url"], "source_accessed_at": c["source_accessed_at"],
+             "verified": c["verified"],
+             "official_entries": [{"name": c["source_title"], "url": c["source_url"]}]}
             for c in evidence["cases"]
         ],
         "articles_none": len(evidence["articles"]) == 0,
         "corpus_size": len(corpus.articles),
-        "disclaimer": "解析结果为检索线索（AI 仅参与改写，证据来自本地语料），不构成法律意见；"
+        "disclaimer": "解析结果为确定性规则与本地证据检索线索，不构成法律意见；"
                       "真实法律求助请咨询执业律师，经济困难可申请法律援助或拨打 12348。",
+    }
+
+
+def build_intake_plan(payload: dict) -> dict:
+    """把用户逐步确认的信息整理为事实/证据清单，再执行确定性检索。
+
+    模型不得补齐事实。每个事实项都来自用户输入；缺失内容以问题返回，供用户继续
+    梳理。由此让“计划模式”推进求助准备，而不是替用户作案件结论。
+    """
+    summary = str(payload.get("summary") or "").strip()
+    if len(summary) < 4:
+        raise ValueError("请先用一句话说明发生了什么（至少 4 个字）")
+
+    def clean_list(key: str, limit: int = 50) -> list[str]:
+        raw = payload.get(key) or []
+        if not isinstance(raw, list):
+            raise ValueError(f"{key} 必须是列表")
+        return [str(item).strip()[:500] for item in raw if str(item).strip()][:limit]
+
+    timeline = clean_list("timeline")
+    parties = clean_list("parties")
+    evidence_owned = clean_list("evidence_owned")
+    evidence_missing = clean_list("evidence_missing")
+    questions = clean_list("questions", 20)
+    desired_outcome = str(payload.get("desired_outcome") or "").strip()[:2000]
+
+    missing_questions: list[str] = []
+    if not timeline:
+        missing_questions.append("关键事件分别在什么时候发生？请按先后顺序补充日期或大致时间。")
+    if not parties:
+        missing_questions.append("涉及哪些人或机构？请只写称谓/角色，避免输入身份证号等敏感信息。")
+    if not evidence_owned:
+        missing_questions.append("你目前掌握哪些合同、聊天、付款、通知、照片或其他材料？")
+    if not desired_outcome:
+        missing_questions.append("你希望解决什么问题，例如退款、支付工资、停止侵害或了解办理路径？")
+
+    combined = "\n".join([summary, *timeline, *parties, desired_outcome, *questions])
+    parsed = deterministic_parse(combined)
+    parsed["keywords_display"] = curate_display(parsed["keywords"], domain_terms(combined))
+    terms = domain_terms(combined)
+    parsed["issue_type"] = "、".join(terms[:3]) if terms else "尚待进一步分类"
+    parsed["understood"] = "已按用户确认的信息形成事实记录，并在本地语料中检索可能相关的依据。"
+
+    checklist = [{"item": item, "state": "已掌握", "source": "用户填写"} for item in evidence_owned]
+    checklist += [{"item": item, "state": "待取得/待确认", "source": "用户填写"} for item in evidence_missing]
+    if re.search(r"合同|协议|租房|劳动|借款", combined) and not any("合同" in x for x in evidence_owned):
+        checklist.append({"item": "合同、协议或能够证明约定内容的记录", "state": "建议核对", "source": "确定性规则提示"})
+    if re.search(r"付款|工资|押金|借款|欠钱|退款", combined) and not any(re.search(r"付款|转账|工资|收据", x) for x in evidence_owned):
+        checklist.append({"item": "付款、转账、工资或收据记录", "state": "建议核对", "source": "确定性规则提示"})
+    if not any(re.search(r"聊天|短信|邮件|通知", x) for x in evidence_owned):
+        checklist.append({"item": "与对方沟通的原始记录及其时间", "state": "建议核对", "source": "确定性规则提示"})
+
+    evidence = fetch_evidence(parsed["keywords"])
+    corpus = get_corpus()
+    next_steps = [
+        "逐项核对事实记录；不确定的内容保留为“待确认”，不要猜测补写。",
+        "保留材料原件及原始载体，另做副本；记录取得时间和来源，不修改原始内容。",
+        "逐条打开下方来源，核对现行状态、施行日期和原文，不只阅读系统摘要。",
+    ]
+    if missing_questions:
+        next_steps.insert(0, "先回答缺失问题，再据更新后的事实重新检索。")
+    next_steps.append("需要采取诉讼、仲裁、签署文件等行动时，把本记录交给法律援助机构或受委托的专业律师复核。")
+
+    return {
+        "input": summary,
+        "intake": {
+            "summary": summary, "timeline": timeline, "parties": parties,
+            "desired_outcome": desired_outcome, "questions": questions,
+            "missing_questions": missing_questions, "evidence_checklist": checklist,
+            "next_steps": next_steps,
+            "method": "user-confirmed-facts + deterministic-rules + local-BM25",
+        },
+        "parse": parsed,
+        "ai_error": None,
+        "articles": evidence["articles"],
+        "cases": [
+            {"id": c["id"], "name": c["name"], "name_en": c.get("name_en"), "no": c["no"],
+             "court": c["court"], "date": c["date"], "cause": c["cause"], "level": c["level"],
+             "summary": c["summary"], "kind": c["kind"], "grade": c["grade"],
+             "source_note": c["source_note"], "source_title": c["source_title"],
+             "source_url": c["source_url"], "source_accessed_at": c["source_accessed_at"],
+             "verified": c["verified"],
+             "official_entries": [{"name": c["source_title"], "url": c["source_url"]}]}
+            for c in evidence["cases"]
+        ],
+        "articles_none": len(evidence["articles"]) == 0,
+        "corpus_size": len(corpus.articles),
+        "disclaimer": "这是求助前的事实与证据准备记录，不是案件定性、法律意见或结果预测。"
+                      "系统没有替你确认事实；正式行动前请核对官方来源并向法律援助机构或受委托的专业律师咨询。",
     }

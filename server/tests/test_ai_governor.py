@@ -47,8 +47,15 @@ def test_citation_gate_binding():
     assert ok["pass"] is True
     bad = ai_governor.gate_citations("另见《公司法》第71条与《民法典》第1条。", allowed)
     assert bad["pass"] is False and any("公司法" in v for v in bad["violations"])
-    skipped = ai_governor.gate_citations("任意内容", None)
-    assert skipped["pass"] is True and skipped["note"]
+    no_legal_cite = ai_governor.gate_citations("任意内容", None)
+    assert no_legal_cite["pass"] is False
+    assert any("依据集合" in v for v in no_legal_cite["violations"])
+    assert any("未包含" in v for v in no_legal_cite["violations"])
+    missing_refs = ai_governor.gate_citations("依据《虚构法》第999条。", None)
+    assert missing_refs["pass"] is False
+    fake_refs = ai_governor.gate_citations(
+        "依据《虚构法》第999条。", [{"law_title": "虚构法", "article_no": 999}])
+    assert fake_refs["pass"] is False
 
 
 def test_citation_gate_article_number_binding():
@@ -103,6 +110,7 @@ def test_chat_gated_with_stub(tmp_db, monkeypatch):
         "deepseek", "deepseek-chat", [{"role": "user", "content": "q"}],
         allowed_refs=[{"law_title": "中华人民共和国民法典", "article_no": 585}])
     assert out["blocked"] is True
+    assert out["output_withheld"] is True and out["text"] == ""
     assert out["gates"]["redline"]["pass"] is False
     assert out["gates"]["citations"]["pass"] is False
     assert STUB_KEY not in str(out)
@@ -118,7 +126,28 @@ def test_chat_clean_output_passes(tmp_db, monkeypatch):
     out = ai_governor.chat(
         "deepseek", "deepseek-chat", [{"role": "user", "content": "q"}],
         allowed_refs=[{"law_title": "中华人民共和国民法典", "article_no": 585}])
-    assert out["blocked"] is False and out["text"]
+    assert out["blocked"] is False and out["output_withheld"] is False and out["text"]
+
+
+def test_chat_withholds_uncited_model_output(tmp_db, monkeypatch):
+    _fake_client(monkeypatch, "约定违约金过高时，可以请求适当减少。")
+    monkeypatch.setenv("DEEPSEEK_API_KEY", STUB_KEY)
+    out = ai_governor.chat(
+        "deepseek", "deepseek-chat", [{"role": "user", "content": "q"}],
+        allowed_refs=[{"law_title": "中华人民共和国民法典", "article_no": 585}],
+    )
+    assert out["blocked"] is True and out["text"] == ""
+    assert any("未包含" in v for v in out["gates"]["citations"]["violations"])
+
+
+def test_chat_rejects_empty_reference_set_before_model_call(tmp_db, monkeypatch):
+    _fake_client(monkeypatch, "任意文本")
+    monkeypatch.setenv("DEEPSEEK_API_KEY", STUB_KEY)
+    with pytest.raises(ValueError, match="非空引用集合"):
+        ai_governor.chat(
+            "deepseek", "deepseek-chat", [{"role": "user", "content": "q"}],
+            allowed_refs=None,
+        )
 
 
 def test_custom_endpoint_requires_base_url():
@@ -128,6 +157,52 @@ def test_custom_endpoint_requires_base_url():
         ai_governor.test_connection("custom", "any-model")
     with pytest.raises(ValueError, match="Base URL"):
         ai_governor.chat("custom", "any-model", [{"role": "user", "content": "q"}])
+
+
+def test_custom_endpoint_rejects_non_public_or_unsafe_urls(monkeypatch):
+    """自定义端点不能绕过 HTTPS、公网地址与 URL 用户信息约束。"""
+    monkeypatch.setattr(ai_governor, "_client", lambda *a, **k: pytest.fail("unsafe URL reached client"))
+    for url in (
+        "http://127.0.0.1:9999/v1",
+        "https://localhost/v1",
+        "https://user:secret@example.com/v1",
+        "ftp://example.com/v1",
+        "https://example.com/v1?next=http://127.0.0.1",
+        "https://192.0.2.1/v1",  # TEST-NET 保留地址，不是公网
+    ):
+        with pytest.raises(ValueError):
+            ai_governor.chat("custom", "m", [{"role": "user", "content": "q"}],
+                              api_key="ut-stub", base_url_override=url)
+
+
+def test_local_provider_ignores_transient_key_and_override():
+    local = ai_governor.get_provider("ollama")
+    assert local and local["local"] is True
+    assert ai_governor._resolve_key(local, "user-secret") == "local"
+    assert ai_governor._resolve_endpoint(local, None) == local["base_url"]
+    with pytest.raises(ValueError):
+        ai_governor._resolve_endpoint(local, "https://example.com/v1")
+
+
+def test_custom_endpoint_rejects_dns_that_resolves_private(monkeypatch):
+    monkeypatch.setattr(
+        ai_governor.socket, "getaddrinfo",
+        lambda *a, **k: [(0, 0, 0, "", ("10.0.0.7", 443))],
+    )
+    with pytest.raises(ValueError, match="非公网"):
+        ai_governor._public_https_url("https://gateway.example/v1")
+
+
+def test_custom_endpoint_is_disabled_without_deployment_allowlist(monkeypatch):
+    monkeypatch.delenv(ai_governor.CUSTOM_HOSTS_ENV, raising=False)
+    monkeypatch.setattr(
+        ai_governor.socket, "getaddrinfo",
+        lambda *a, **k: [(0, 0, 0, "", ("93.184.216.34", 443))],
+    )
+    with pytest.raises(ValueError, match="默认关闭"):
+        ai_governor._resolve_endpoint(
+            ai_governor.get_provider("custom"), "https://gw.example/v1"
+        )
 
 
 def test_custom_endpoint_with_base_url_runs_gates(tmp_db, monkeypatch):
@@ -146,6 +221,12 @@ def test_custom_endpoint_with_base_url_runs_gates(tmp_db, monkeypatch):
     msg = "依据《民法典》第五百八十五条回答。"
     fake = FakeClient(FakeResp(FakeChoice(FakeMsg(msg))))
     monkeypatch.setattr(ai_governor, "_client", lambda *a, **k: fake)
+    # URL 安全门会做 DNS 公网解析；单元测试固定解析结果，避免依赖外网 DNS。
+    monkeypatch.setattr(
+        ai_governor.socket, "getaddrinfo",
+        lambda *a, **k: [(0, 0, 0, "", ("93.184.216.34", 443))],
+    )
+    monkeypatch.setenv(ai_governor.CUSTOM_HOSTS_ENV, "gw.example")
     out = ai_governor.chat(
         "custom", "any-model", [{"role": "user", "content": "q"}],
         api_key="ut-stub", base_url_override="https://gw.example/v1",

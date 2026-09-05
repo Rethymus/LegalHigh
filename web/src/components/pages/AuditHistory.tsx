@@ -1,6 +1,6 @@
 // FRAME 20 · Audit History —— 操作审计 + 浏览历史（真实数据驱动）
 // server GET /api/audit：append-only 审计（who/when/entity/action/payload）——合同审查、批注流转、
-// 文书签发、投诉等全部真实落库记录在此；浏览历史为 AppShell 真实记录的本机浏览史。均无记录时诚实空态。
+// 文书复核/定稿、投诉等真实落库记录在此；浏览历史为本机浏览史。
 import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Icon } from '../icons'
@@ -19,7 +19,7 @@ const ENTITY_LABEL: Record<string, string> = {
 }
 const ACTION_LABEL: Record<string, string> = {
   create: '创建', adopt: '采纳', amend: '修改', reject: '驳回', reopen: '重开',
-  verify: '人工核验', issue: '签发', complaint: '投诉受理', transition: '状态流转',
+  review: '人工复核', finalize: '使用者确认定稿', verify: '旧版核验记录', issue: '旧版签发记录', complaint: '投诉受理', transition: '状态流转',
 }
 
 function parsePayload(raw: unknown): string {
@@ -63,7 +63,7 @@ export default function AuditHistory() {
     <div className="page">
       <PageHeader
         title="历史记录与操作审计"
-        sub="append-only 审计：合同审查、批注流转、文书核验签发、投诉受理等全量真实记录（who/when/entity/action/payload），可复核不可篡改。"
+        sub="append-only 审计：合同审查、批注流转、文书复核与定稿确认、投诉受理等本机操作记录。旧版 verify/issue 仅作为历史日志保留，不代表平台核验或签发。"
         actions={<button className="btn btn-ghost btn-sm" onClick={() => { setBrowse(loadBrowse()); api.auditAll(200).then((d) => { setEntries(d.entries); }).catch(() => { }) }}><Icon name="refresh" size={13} />刷新</button>}
       />
 
@@ -80,7 +80,7 @@ export default function AuditHistory() {
           </div>
           <div className="card">
             {loading && <div className="card-pad"><SkeletonLines n={6} tall /></div>}
-            {error && <div className="banner banner-danger m-16"><Icon name="alert" size={15} /><span className="banner-tx">{error}</span></div>}
+            {error && <div className="banner banner-danger mb-12"><Icon name="alert" size={15} /><span className="banner-tx">{error}</span></div>}
             {!loading && !error && (
               <div style={{ overflowX: 'auto' }}>
                 <table className="tbl">
@@ -116,10 +116,10 @@ export default function AuditHistory() {
             )}
             {!loading && !error && logs.length === 0 && (
               <EmptyState icon="history" title={action === '全部' ? '暂无审计记录' : `暂无「${action}」记录`}
-                desc="发起一次合同审查、批注流转或文书签发后，操作将真实落库并在此展示。" />
+                desc="发起合同审查、批注流转或文书复核后，操作将真实落库并在此展示。" />
             )}
           </div>
-          <p className="tiny mt-12">审计为 append-only：任何状态变更（创建/流转/签发/投诉）都写入 audit_log，可重放不可修改。</p>
+          <p className="tiny mt-12">审计为 append-only：创建、流转、复核、定稿与投诉等操作写入 audit_log，可复核不可静默修改。</p>
         </>
       )}
 

@@ -1,25 +1,12 @@
-# 桌面端 release（Electron + PyInstaller sidecar）
+# LegalHigh Desktop
 
-> 分发模式参照 ChatGPT/ZCode 桌面端：**本地全功能运行，数据不出本机**。
-> 触发：推送 `v*` tag → `.github/workflows/desktop-release.yml` 三平台构建 → GitHub Release 附产物。
+Electron 只负责启动本机 PyInstaller sidecar 并显示其 Web UI。主进程使用随机回环端口、随机管理令牌和独立实例证明；只有 `/api/health` 返回本次实例证明后才创建窗口和附加认证请求头。渲染进程启用 sandbox、context isolation，关闭 Node integration，且不接收管理令牌。SQLite 位于 `app.getPath('userData')`，不写安装资源；sidecar 只继承运行所需系统变量和明确登记的模型密钥。
 
-## 架构
-
-```
-Electron 壳（desktop/main.js ← main.js.in 构建期物化）
-  └─ spawn FastAPI sidecar（PyInstaller 打包 server/desktop_entry.py）
-       ├─ /api/*（全部 server 能力）
-       └─ web/dist（前端静态，PyInstaller --add-data 打入）
+```bash
+npm ci
+npm run check
 ```
 
-## 安全要点（对应安全扫描关注面）
+`main.js.in` 是受版本控制的源文件；`npm run check` 先生成被 `.gitignore` 排除的 `main.js` 再做语法检查。完整 `npm run dist` 需要 `desktop/backend/` 中存在当前平台的 `legalhigh-backend` sidecar。普通源码检出不包含该产物。
 
-- sidecar 启动：`spawn(常量路径, [常量端口])`，不经 shell；路径来自构建期静态映射 `SIDECAR_EXE`，无用户输入参与。
-- 代码以 `main.js.in` 模板入库、构建期物化（CMake 惯例）——因「动态路径 + spawn」模式会被静态扫描器判为注入（无法区分构建常量与用户输入），模板内安全说明完整保留。
-- 数据库写入用户数据目录（`LH_DB_PATH`），不改安装目录；前端 dist 由后端托管（`WEB_DIST_DIR`）。
-
-## 首次构建须知（诚实声明）
-
-- PyInstaller 的 `--add-data` 分隔符在 Windows 为 `;`、类 Unix 为 `:`，工作流按 matrix OS 已分跑但**首次 tag 构建需在线调试**（uvicorn 隐藏导入、macOS 签名公证未配）。
-- `desktop/package.json` 的 electron-builder 三平台 target：NSIS / DMG / AppImage。
-- 发布产物命名：`LegalHigh-<版本>-<平台>`，附于 GitHub Release。
+当前手动工作流只上传 `unsigned-desktop-candidate-*` 候选包，不创建正式 Release。发布前还必须：在目标平台构建 sidecar、运行安装/卸载测试、验证后端意外退出提示、进行代码签名与签名校验、生成 SBOM/许可证包，并确认安装包不含测试数据库、密钥或真实用户材料。工作流存在不代表这些发布步骤已经完成。

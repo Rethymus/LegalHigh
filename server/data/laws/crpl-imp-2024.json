@@ -8,11 +8,20 @@
  },
  "promulgation_instrument": "中华人民共和国国务院令第778号",
  "effective_date": "2024-07-01",
+ "effective_date_evidence": {
+  "title": "中华人民共和国消费者权益保护法实施条例",
+  "url": "https://www.gov.cn/zhengce/zhengceku/202403/content_6940159.htm",
+  "accessed_at": "2026-08-29",
+  "grade": "强",
+  "source_kind": "official-gazette-republication",
+  "version": "现行有效"
+ },
  "source": {
   "kind": "official-gazette-republication",
   "url": "https://www.gov.cn/zhengce/zhengceku/202403/content_6940159.htm",
   "snapshot": "docs/research/evidence/消保法实施条例_govcn.html",
-  "fetched_at": "2026-08-29"
+  "fetched_at": "2026-08-29",
+  "sha256": "d80073087b9792f844381290613dcd56a8d2efc8155bafde0996f6e56d1b9d8f"
  },
  "authority_pointer": "国务院公报 / 国家法律法规数据库 https://flk.npc.gov.cn",
  "articles": [

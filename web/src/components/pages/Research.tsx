@@ -5,7 +5,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { Icon } from '../icons'
-import { PIPELINE_STEPS } from '../../data/model'
+import { lawEvidenceGrade, useLaws } from '../../data/model'
 import { EmptyState, PageHeader, SkeletonLines, Tabs, useToast } from '../ui'
 import { CitationChip, SourceBadge } from '../domain'
 import { api, ApiError, loadAiProfile, type ResearchMemo } from '../../lib/api'
@@ -19,7 +19,16 @@ const CENTER_TABS = [
 const LS_LIST = 'lh:research:list'
 const hash = (s: string) => { let h = 0; for (let i = 0; i < s.length; i++) { h = (h * 31 + s.charCodeAt(i)) | 0 } return 'r' + Math.abs(h).toString(36) }
 interface ResearchRef { rid: string; question: string; ts: string }
-const loadList = (): ResearchRef[] => { try { return JSON.parse(localStorage.getItem(LS_LIST) ?? '[]') } catch { return [] } }
+const loadList = (): ResearchRef[] => {
+  try {
+    const parsed: unknown = JSON.parse(localStorage.getItem(LS_LIST) ?? '[]')
+    if (!Array.isArray(parsed)) return []
+    return parsed.filter((v): v is ResearchRef => !!v && typeof v === 'object'
+      && typeof (v as Record<string, unknown>).rid === 'string'
+      && typeof (v as Record<string, unknown>).question === 'string'
+      && typeof (v as Record<string, unknown>).ts === 'string')
+  } catch { return [] }
+}
 
 export function useNotes(rid: string) {
   const [notes, setNotes] = useState(() => localStorage.getItem(`lh:research:notes:${rid}`) ?? '')
@@ -30,12 +39,14 @@ export function useNotes(rid: string) {
 export default function Research() {
   const { rid } = useParams()
   const toast = useToast()
+  const { data: laws } = useLaws()
+  const lawCount = laws?.laws.length ?? 0
+  const articleCount = laws ? laws.laws.reduce((sum, law) => sum + law.articles.length, 0) : 0
   const [list, setList] = useState<ResearchRef[]>(loadList)
   const [question, setQuestion] = useState('')
   const [memo, setMemo] = useState<ResearchMemo | null>(null)
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [step, setStep] = useState(-1)
   const [tab, setTab] = useState('canvas')
 
   const activeRid = rid && rid !== 'new' ? rid : null
@@ -43,7 +54,7 @@ export default function Research() {
 
   const run = useCallback(async (q: string) => {
     if (!q.trim()) return
-    setBusy(true); setError(null); setStep(0)
+    setBusy(true); setError(null)
     try {
       const m = await api.researchMemo(q.trim())
       const id = hash(q.trim())
@@ -54,7 +65,7 @@ export default function Research() {
         return next
       })
     } catch (e) {
-      setError(e instanceof ApiError ? e.message : String(e)); setStep(-1)
+      setError(e instanceof ApiError ? e.message : String(e))
     } finally { setBusy(false) }
   }, [])
 
@@ -64,16 +75,10 @@ export default function Research() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeRid])
 
-  useEffect(() => {
-    if (step < 0 || step >= PIPELINE_STEPS.length) return
-    const t = setTimeout(() => setStep((s) => s + 1), busy || step < PIPELINE_STEPS.length - 2 ? 480 : 140)
-    return () => clearTimeout(t)
-  }, [step, busy])
-
   return (
     <div className="page" style={{ maxWidth: 'none' }}>
       <PageHeader
-        title={memo ? memo.question : 'AI 法律研究'}
+        title={memo ? memo.question : '法律研究'}
         sub={memo
           ? `检索方法：${memo.meta.method} · 语料 ${memo.meta.corpus_size.toLocaleString()} 条 · 命中 ${memo.cards.length} 条依据（引用逐条经 citation 校验，无自由生成）`
           : '输入研究问题，引擎对本地语料做多查询检索并给出可溯源依据；分析结论由研究者本人撰写。'}
@@ -98,18 +103,7 @@ export default function Research() {
             <Icon name="sparkle" size={13} />{busy ? '检索中…' : '开始研究'}
           </button>
         </div>
-        {step >= 0 && (
-          <div className="pipe mt-12">
-            {PIPELINE_STEPS.map((s, i) => (
-              <span key={s} className="row" style={{ gap: 0 }}>
-                <span className={'pipe-step ' + (step > i ? 'done' : step === i ? 'doing' : '')}>
-                  <span className="st-dot">{step > i ? '✓' : i + 1}</span>{s}
-                </span>
-                {i < PIPELINE_STEPS.length - 1 && <span className="pipe-sep" />}
-              </span>
-            ))}
-          </div>
-        )}
+        <div className="tiny mt-8">实际流程：问题拆解与多查询生成由确定性规则完成 → 服务端 BM25 检索 → 逐条返回来源元数据；这里只显示真实请求状态，不模拟步骤进度。</div>
         {error && <div className="banner banner-danger mt-12" style={{ padding: '8px 12px' }}><Icon name="alert" size={14} /><span className="banner-tx">{error}</span></div>}
       </div>
 
@@ -158,7 +152,7 @@ export default function Research() {
           <div className="panel-b rs-canvas">
             {!memo && !busy && (
               <div className="card">
-                <EmptyState icon="sparkle" title="输入法律问题开始研究" desc="引擎将对本地语料（8 部法律 · 1,953 条）做三组查询检索：原句 / 关键词 / 编章扩展。每条依据可溯源到条文原文与施行日期；检索无命中时明确声明，不作推断。"
+                <EmptyState icon="sparkle" title="输入法律问题开始研究" desc={`引擎将对本地语料（${lawCount || '…'} 部 · ${articleCount ? articleCount.toLocaleString() : '…'} 条）执行确定性多查询 BM25 检索。每条命中可回溯到来源快照与施行日期；检索无命中时明确声明，不作推断。`}
                   action={<button className="btn btn-secondary" onClick={() => { setQuestion('格式条款免除自身责任何时无效'); void run('格式条款免除自身责任何时无效') }}>试试：格式条款效力</button>} />
               </div>
             )}
@@ -174,7 +168,7 @@ export default function Research() {
                 </div>
                 {memo.framework.map((f) => (
                   <div key={f.law_id} className="rs-sec">
-                    <div className="rs-sec-h"><SourceBadge kind="law" grade="强" /><b>{f.law_title}</b>
+                    <div className="rs-sec-h"><SourceBadge kind="law" grade={lawEvidenceGrade(memo.cards.find((c) => c.law_id === f.law_id)?.source_url)} /><b>{f.law_title}</b>
                       <span className="bdg bdg-blue">{f.hit_count} 条命中</span>
                       <span className="spacer" />
                       <Link to={`/laws/${f.law_id}`} className="tiny row" style={{ gap: 3, color: 'var(--accent-text)' }}>法规详情 <Icon name="external" size={11} /></Link>
@@ -203,7 +197,7 @@ export default function Research() {
               <>
                 {memo.references.map((r) => (
                   <div key={`${r.law_id}-${r.article_no}`} className="rs-sec">
-                    <div className="rs-sec-h"><SourceBadge kind="law" grade="强" /><b>《{r.law_title.replace(/^中华人民共和国/, '')}》{r.article_label}</b>
+                    <div className="rs-sec-h"><SourceBadge kind="law" grade={lawEvidenceGrade(r.source_url)} /><b>《{r.law_title.replace(/^中华人民共和国/, '')}》{r.article_label}</b>
                       <span className="bdg bdg-green">{r.status}</span>
                       <span className="spacer" />
                       <CitationChip label="查看原文" to={`/laws/${r.law_id}?art=${r.article_no}`} />
@@ -229,7 +223,7 @@ export default function Research() {
               <div key={`${c.law_id}-${c.article_no}`} className="evc" style={{ padding: '10px 12px' }}>
                 <div className="row-wrap mb-8" style={{ gap: 6 }}>
                   <span className="evc-id">EV-{String(i + 1).padStart(3, '0')}</span>
-                  <span className="bdg bdg-green">已支持</span>
+                  <span className="bdg bdg-green">已检索</span>
                 </div>
                 <div className="tiny" style={{ lineHeight: 1.7 }}>
                   《{c.law_title.replace(/^中华人民共和国/, '')}》{c.article_label} · {c.law_status} · {c.effective_date} 施行
@@ -262,26 +256,29 @@ function ConclusionDraft({ rid, question, cards, references }: {
   const [aiDraft, setAiDraft] = useState<{ text: string; gates: { redline: { pass: boolean; hits: string[] }; citations: { pass: boolean; violations: string[] } }; blocked: boolean; model: string } | null>(null)
   const [aiBusy, setAiBusy] = useState(false)
   const [aiErr, setAiErr] = useState<string | null>(null)
+  const [aiKey, setAiKey] = useState('')
+  const [sendAuthorized, setSendAuthorized] = useState(false)
   const profile = loadAiProfile()
 
   const genAiDraft = async () => {
     if (!profile) { setAiErr('未配置模型插件：请到 设置 → AI 配置模型档案（自备密钥）。'); return }
+    if (references.length === 0) { setAiErr('当前研究没有可验证的引用集合，已阻止模型起草。'); return }
     setAiBusy(true); setAiErr(null)
     try {
       const ctx = references.map((r, i) => `[${i + 1}] 《${r.law_title}》${r.article_label}（${r.status}，${r.effective_date} 施行）：${r.text}`).join('\n')
       const r = await api.aiChat({
         provider_id: profile.provider_id, model: profile.model,
-        api_key: profile.api_key, base_url_override: profile.base_url_override,
+        api_key: aiKey.trim() || undefined, base_url_override: profile.base_url_override,
         allowed_refs: references.map((r) => ({ law_title: r.law_title, article_no: r.article_no })),
         messages: [
-          { role: 'system', content: '你是法律研究助理。规则：①只基于提供的条文依据起草研究结论，禁止编造任何法条、案例、数据；②每个论断标注依据编号如[1]；③禁止使用「胜诉率/包赢/必胜/法院会判」等确定性承诺表述；④结尾列「仍需人工核验事项」。' },
+          { role: 'system', content: '你是法律研究助理。规则：①只基于提供的条文依据起草研究结论，禁止编造任何法条、案例、数据；②每个法律论断必须写出可核验的《法律全名》第X条，可同时标注依据编号[1]；③禁止使用胜诉率、包赢、必胜、稳赢、法院必然裁判等确定性承诺；④结尾列“仍需人工核验事项”。' },
           { role: 'user', content: `研究问题：${question}\n\n可用条文依据（仅限这些）：\n${ctx}\n\n请起草一段研究结论（250 字内）。` },
         ],
       })
       setAiDraft({ text: r.text, gates: r.gates, blocked: r.blocked, model: `${r.provider_name}/${r.model}` })
     } catch (e) {
       setAiErr(e instanceof ApiError ? e.message : String(e))
-    } finally { setAiBusy(false) }
+    } finally { setAiBusy(false); setAiKey('') }
   }
 
   return (
@@ -292,9 +289,18 @@ function ConclusionDraft({ rid, question, cards, references }: {
       </div>
       <div className="rs-sec">
         <div className="rs-sec-h"><Icon name="quote" size={14} />结论文稿（研究者撰写）</div>
-        <textarea className="ta" style={{ minHeight: 120 }} placeholder={`基于上方 ${cards.length} 条可溯源依据，撰写你的研究结论。AI 不代写结论——引用请标注条文号（如《民法典》第497条）。`} value={draft} onChange={(e) => setDraft(e.target.value)} />
+        <textarea className="ta" style={{ minHeight: 120 }} placeholder={`基于上方 ${cards.length} 条可溯源依据，撰写你的研究结论。可选 AI 草稿会独立显示，不会自动写入此人工稿；引用请标注条文号。`} value={draft} onChange={(e) => setDraft(e.target.value)} />
+        {profile && (
+          <div className="card mt-8" style={{ padding: 10 }}>
+            <label className="fld"><span className="fld-l">单次 API Key（可留空使用服务端环境变量）</span><input className="inp" type="password" autoComplete="off" value={aiKey} onChange={(e) => setAiKey(e.target.value)} placeholder="仅保存在本组件内存，请求结束后清空" /></label>
+            <label className="row tiny mt-8" style={{ alignItems: 'flex-start', gap: 8 }}>
+              <input type="checkbox" checked={sendAuthorized} onChange={(e) => setSendAuthorized(e.target.checked)} />
+              <span>我确认有权把本页研究问题与所列法条发送到已选择的模型端点，并已了解远程端点的保留、训练、跨境与删除规则不由 LegalHigh 控制。</span>
+            </label>
+          </div>
+        )}
         <div className="row mt-8">
-          <button className="btn btn-secondary btn-sm" disabled={aiBusy || !profile} onClick={genAiDraft}>
+          <button className="btn btn-secondary btn-sm" disabled={aiBusy || !profile || references.length === 0 || !sendAuthorized} onClick={genAiDraft}>
             <Icon name="sparkle" size={12} />{aiBusy ? '生成中…' : 'AI 结论草稿（可选 · 需自备模型）'}
           </button>
           <span className="tiny">生成将过三道 gate：红线词拦截 / 引用绑定校验 / 审计留痕。</span>
@@ -309,9 +315,11 @@ function ConclusionDraft({ rid, question, cards, references }: {
                 <span className="spacer" />
                 {aiDraft.blocked
                   ? <span className="bdg bdg-red">已拦截：不合规表述</span>
-                  : <span className="bdg bdg-green">gate 通过</span>}
+                  : <span className="bdg bdg-green">基础 gate 通过 · 仍须人工核验</span>}
               </div>
-              <div className="ai-block-b" style={{ whiteSpace: 'pre-wrap' }}>{aiDraft.text}</div>
+              {aiDraft.blocked
+                ? <div className="ai-block-b">模型原始输出已被安全门截断，不在界面展示，也不会写入人工文稿。</div>
+                : <div className="ai-block-b" style={{ whiteSpace: 'pre-wrap' }}>{aiDraft.text}</div>}
               {!aiDraft.gates.redline.pass && (
                 <div className="banner banner-danger mt-8" style={{ padding: '8px 12px' }}><Icon name="alert" size={13} />
                   <span className="banner-tx">红线词命中：{aiDraft.gates.redline.hits.join('、')}——该草稿不可直接使用。</span>

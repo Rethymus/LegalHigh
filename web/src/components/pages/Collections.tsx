@@ -1,29 +1,42 @@
 // FRAME 18 · Collections —— 我的收藏（真实数据：本机收藏夹 + server 研究记录）
 // 收藏来自各页星标（CaseDetail/LawDetail 真实写入 localStorage）；研究来自本机研究列表。
-// 分享/导出为规划功能（诚实标注），不虚构已实现能力。
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Icon } from '../icons'
 import { EmptyState, PageHeader } from '../ui'
-import { loadFavs, removeFav, type FavItem } from '../../lib/api'
+import { loadFavs, loadFavsState, removeFav, type FavItem } from '../../lib/api'
 
 const FOLDERS = ['全部', '法条', '案例', '研究']
+interface ResearchRef { rid: string; question: string; ts: string }
+function loadResearchList(): { items: ResearchRef[]; warning: string | null } {
+  const raw = localStorage.getItem('lh:research:list')
+  if (!raw) return { items: [], warning: null }
+  try {
+    const parsed: unknown = JSON.parse(raw)
+    if (!Array.isArray(parsed) || !parsed.every((v) => v && typeof v === 'object'
+      && typeof (v as Record<string, unknown>).rid === 'string'
+      && typeof (v as Record<string, unknown>).question === 'string'
+      && typeof (v as Record<string, unknown>).ts === 'string')) {
+      return { items: [], warning: '本机研究索引格式不兼容，原始数据仍保留，当前未读取。' }
+    }
+    return { items: parsed as ResearchRef[], warning: null }
+  } catch {
+    return { items: [], warning: '本机研究索引无法解析，原始数据仍保留，当前未读取。' }
+  }
+}
 
 export default function Collections() {
-  const [favs, setFavs] = useState<FavItem[]>(loadFavs())
-  const [researchList, setResearchList] = useState<{ rid: string; question: string; ts: string }[]>([])
+  const [initial] = useState(() => ({ favs: loadFavsState(), research: loadResearchList() }))
+  const [favs, setFavs] = useState<FavItem[]>(initial.favs.items)
+  const [researchList] = useState<ResearchRef[]>(initial.research.items)
+  const [storageWarning] = useState<string | null>(initial.favs.warning ?? initial.research.warning)
   const [folder, setFolder] = useState('全部')
   const [q, setQ] = useState('')
 
-  useEffect(() => {
-    setFavs(loadFavs())
-    try { setResearchList(JSON.parse(localStorage.getItem('lh:research:list') ?? '[]')) } catch { /* 本机 */ }
-  }, [])
-
-  const all: { key: string; type: string; title: string; meta: string; to: string }[] = [
-    ...favs.map((f) => ({ key: f.key, type: f.type, title: f.title, meta: f.meta, to: f.to })),
-    ...researchList.map((r) => ({ key: r.rid, type: '研究', title: r.question, meta: `本机研究 · ${r.ts.slice(0, 10)}`, to: `/research/${r.rid}` })),
-  ]
+  const all = useMemo(() => [
+    ...favs.map((f) => ({ key: f.key, type: f.type, title: f.title, meta: f.meta, to: f.to, removable: true })),
+    ...researchList.map((r) => ({ key: r.rid, type: '研究', title: r.question, meta: `本机研究记录 · ${r.ts.slice(0, 10)}`, to: `/research/${r.rid}`, removable: false })),
+  ], [favs, researchList])
   const items = useMemo(() => all.filter((it) => {
     if (folder !== '全部' && it.type !== folder) return false
     if (q && !(it.title + it.meta).toLowerCase().includes(q.toLowerCase())) return false
@@ -44,10 +57,11 @@ export default function Collections() {
               a.download = 'legalhigh_favs.json'
               a.click(); URL.revokeObjectURL(a.href)
             }}><Icon name="download" size={13} />导出（JSON）</button>
-            <button className="btn btn-secondary btn-sm" disabled title="成组管理为规划功能（原型未实现）"><Icon name="plus" size={13} />新建合集（规划）</button>
           </>
         }
       />
+
+      {storageWarning && <div className="banner banner-warn mb-12"><Icon name="alert" size={15} /><span className="banner-tx">{storageWarning} 系统没有自动删除原始内容。</span></div>}
 
       <div className="cols" style={{ gridTemplateColumns: '240px minmax(0,1fr)', alignItems: 'start' }}>
         <aside className="panel" style={{ maxHeight: 'calc(100vh - 300px)' }}>
@@ -61,7 +75,6 @@ export default function Collections() {
               </button>
             ))}
           </div>
-          <div className="panel-f tiny">合集（成组管理）为规划功能。</div>
         </aside>
 
         <div>
@@ -78,7 +91,9 @@ export default function Collections() {
                 <Link to={it.to} style={{ fontWeight: 600, fontSize: 14, color: 'var(--tx)' }}>{it.title}</Link>
                 <div className="tiny mt-8">{it.meta}</div>
                 <div className="row mt-8">
-                  <button className="res-act" onClick={() => { removeFav(it.key); setFavs(loadFavs()) }}><Icon name="trash" size={12} />移除</button>
+                  {it.removable
+                    ? <button className="res-act" onClick={() => { removeFav(it.key); setFavs(loadFavs()) }}><Icon name="trash" size={12} />移除收藏</button>
+                    : <span className="tiny">研究记录由研究工作台管理</span>}
                 </div>
               </div>
             ))}

@@ -1,12 +1,12 @@
 // FRAME 03 · Search Results —— 综合结果（规格 §8）
-// Tabs / 排序 / 官方来源与有效性徽章 / 引用式问答分离 / 未核实态
+// Tabs / 排序 / 证据来源与有效性徽章 / 引用式问答分离
 // 检索排序唯一来源：server GET /api/search（BM25，与问答/研究同一引擎）；
 // 前端不再做子串匹配（多词/口语化查询在子串匹配下必然空结果，2026-08-30 修复）。
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { Icon } from '../icons'
-import { lawDisplayTitle, useLaws } from '../../data/model'
-import { EmptyState, SkeletonLines, Tabs, useSimLoad, ValidityBadge } from '../ui'
+import { lawDisplayTitle, lawEvidenceGrade, useLaws } from '../../data/model'
+import { EmptyState, SkeletonLines, Tabs, ValidityBadge } from '../ui'
 import { api, ApiError, toggleFav, isFav, type CaseRecord, type SearchHit } from '../../lib/api'
 import { CitationChip, SourceBadge } from '../domain'
 
@@ -22,15 +22,8 @@ const TAB_DEFS = [
   { key: 'law', label: '法规' },
   { key: 'case', label: '案例' },
   { key: 'js', label: '司法解释' },
-  { key: 'academic', label: '学术' },
 ]
-const SORTS = ['按相关性', '按最新', '按引用程度']
-const FILTERS: { t: string; opts: string[] }[] = [
-  { t: '法域', opts: ['中国', '美国', '英国', '欧盟'] },
-  { t: '发布机构', opts: ['全国人民代表大会', '全国人大常委会', '国务院', '最高人民法院'] },
-  { t: '时效性', opts: ['仅现行有效', '含历史版本'] },
-  { t: '来源', opts: ['官方法源', '司法案例', '学术资料', '域外资料'] },
-]
+const JUDICIAL_INTERPRETATION_IDS = new Set(['htjs-2023', 'wlxf-2022'])
 
 function highlight(text: string, q: string) {
   const kw = q.trim()
@@ -42,7 +35,7 @@ function highlight(text: string, q: string) {
 /** 检索命中视图模型：server 排序 + laws.json 元数据（机关/公布/施行）合并 */
 interface ResolvedHit {
   hit: SearchHit
-  law: { id: string; title: string; organ: string; promulgationDate: string; effectiveDate: string; status: string } | null
+  law: { id: string; title: string; organ: string; promulgationDate: string; effectiveDate: string; status: string; sourceUrl: string } | null
 }
 
 function FavButton({ favKey, item }: { favKey: string; item: Parameters<typeof toggleFav>[0] }) {
@@ -65,8 +58,8 @@ function LawResultCard({ r, q }: { r: ResolvedHit; q: string }) {
           <Link to={to} className="res-t">《{title}》{hit.label}</Link>
         </div>
         <span className="spacer" />
-        <SourceBadge kind="law" grade="强" />
-        <ValidityBadge v={law?.status ?? '现行有效'} />
+        <SourceBadge kind="law" grade={lawEvidenceGrade(law?.sourceUrl)} />
+        <ValidityBadge v={law?.status ?? '未核实'} />
       </div>
       <div className="res-meta">
         {law && <span>来源：<b>{law.organ}</b></span>}
@@ -79,9 +72,8 @@ function LawResultCard({ r, q }: { r: ResolvedHit; q: string }) {
       <p className="res-snip">{highlight(hit.text, q)}</p>
       <div className="res-acts">
         <CitationChip label={`引用 ${hit.law_id}#${hit.no}`} to={to} />
-        <span className="tiny">引用统计待接入（不虚构计数）</span>
         <span className="spacer" />
-        <Link className="res-act" to={to}><Icon name="external" size={12} />查看原文</Link>
+        <Link className="res-act" to={to}><Icon name="external" size={12} />查看证据快照</Link>
         <FavButton favKey={`law:${hit.law_id}:${hit.no}`} item={{ key: `law:${hit.law_id}:${hit.no}`, type: '法条', title: `《${title}》${hit.label}`, meta: hit.text.slice(0, 40) + '…', to }} />
       </div>
     </article>
@@ -90,14 +82,14 @@ function LawResultCard({ r, q }: { r: ResolvedHit; q: string }) {
 
 function CaseResultCard({ c, q }: { c: CaseRecord; q: string }) {
   return (
-    <article className="res-card" style={c.sample ? { borderStyle: 'dashed' } : undefined}>
+    <article className="res-card">
       <div className="res-h">
         <div style={{ minWidth: 0 }}>
           <Link to={`/cases/${c.id}`} className="res-t">{highlight(c.name, q)}</Link>
         </div>
         <span className="spacer" />
         <SourceBadge kind={c.kind} grade={c.grade} />
-        <ValidityBadge v={c.verified ? '有效' : '未核实'} />
+        <span className="bdg bdg-green">来源已核验</span>
       </div>
       <div className="res-meta">
         <span>{c.no}</span>
@@ -110,7 +102,8 @@ function CaseResultCard({ c, q }: { c: CaseRecord; q: string }) {
       <div className="res-acts">
         <CitationChip label={c.no} to={`/cases/${c.id}`} />
         <span className="spacer" />
-        <Link className="res-act" to={`/cases/${c.id}`}><Icon name="external" size={12} />查看原文</Link>
+        <Link className="res-act" to={`/cases/${c.id}`}><Icon name="external" size={12} />查看结构化摘要</Link>
+        <a className="res-act" href={c.source_url} target="_blank" rel="noreferrer"><Icon name="link" size={12} />原始来源</a>
         <FavButton favKey={`case:${c.id}`} item={{ key: `case:${c.id}`, type: '案例', title: c.name, meta: `${c.no} · ${c.court}`, to: `/cases/${c.id}` }} />
       </div>
     </article>
@@ -121,15 +114,18 @@ export default function SearchResults() {
   const [sp] = useSearchParams()
   const nav = useNavigate()
   const q = sp.get('q') ?? ''
+  const requestedScope = sp.get('scope') ?? '全部'
+  const scopeTab = requestedScope === '法规' ? 'law' : requestedScope === '司法解释' ? 'js' : requestedScope === '案例' ? 'case' : 'all'
   const [input, setInput] = useState(q)
-  const [tab, setTab] = useState('all')
-  const [sort, setSort] = useState(SORTS[0])
-  const lawHitsLoading = useSimLoad([q, tab], 550)
+  const [tab, setTab] = useState(scopeTab)
   const { data: laws, error } = useLaws()
 
   // 主检索：server BM25（与问答/研究同一引擎）；laws.json 仅用于补齐机关/日期等元数据
   const [srv, setSrv] = useState<{ hits: SearchHit[]; corpus: number } | null>(null)
   const [srvError, setSrvError] = useState<string | null>(null)
+  useEffect(() => {
+    setTab(scopeTab)
+  }, [scopeTab])
   useEffect(() => {
     if (!q.trim()) { setSrv(null); setSrvError(null); return }
     let alive = true
@@ -146,10 +142,18 @@ export default function SearchResults() {
   const [qa, setQa] = useState<QaResult | null>(null)
   const [qaBusy, setQaBusy] = useState(false)
   const [qaError, setQaError] = useState<string | null>(null)
-  // 案例命中同样下推 server（C7：与法条检索同口径；无 q 时返回已核实样本）
+  // 案例命中同样下推 server；无检索词时不请求或展示默认案例。
   const [allCases, setAllCases] = useState<CaseRecord[]>([])
+  const [caseError, setCaseError] = useState<string | null>(null)
   useEffect(() => {
-    api.listCases(q.trim()).then((d) => setAllCases(d.cases), () => setAllCases([]))
+    if (!q.trim()) { setAllCases([]); setCaseError(null); return }
+    let alive = true
+    setCaseError(null)
+    api.listCases(q.trim()).then(
+      (d) => { if (alive) setAllCases(d.cases) },
+      (e) => { if (alive) { setAllCases([]); setCaseError(e instanceof ApiError ? e.message : String(e)) } },
+    )
+    return () => { alive = false }
   }, [q])
   const runQa = async () => {
     if (!qaQ.trim()) return
@@ -166,30 +170,31 @@ export default function SearchResults() {
       return { hit: h, law }
     })
   }, [srv, laws])
-  const lawHits = resolved
+  const lawHits = useMemo(() => resolved.filter((r) => !JUDICIAL_INTERPRETATION_IDS.has(r.hit.law_id)), [resolved])
+  const judicialHits = useMemo(() => resolved.filter((r) => JUDICIAL_INTERPRETATION_IDS.has(r.hit.law_id)), [resolved])
   const caseHits = useMemo(() => {
-    if (!q) return allCases.filter((c) => c.verified).slice(0, 3)
-    return allCases.filter((c) => c.verified || c.sample)  // server 已按 q 过滤；此处仅保留展示口径
+    if (!q) return []
+    return allCases.filter((c) => c.verified)
   }, [allCases, q])
 
   const counts = {
-    all: lawHits.length + caseHits.length,
+    all: resolved.length + caseHits.length,
     law: lawHits.length,
     case: caseHits.length,
-    js: 0,
-    academic: 0,
+    js: judicialHits.length,
   }
-  const loading = !error && (lawHitsLoading || (!!q && !srv && !srvError) || !laws)
+  const loading = !error && ((!!q && !srv && !srvError) || !laws)
   // 命中法律的分布（程序统计，非 AI 生成）
   const hitDist = useMemo(() => {
     const m = new Map<string, number>()
-    for (const r of lawHits) {
+    for (const r of resolved) {
       const t = (r.law?.title ?? r.hit.law_title).replace(/^中华人民共和国/, '')
       m.set(t, (m.get(t) ?? 0) + 1)
     }
     return [...m.entries()].sort((a, b) => b[1] - a[1])
-  }, [lawHits])
-  const empty = !srvError && !!laws && !!q && !!srv && counts.all === 0
+  }, [resolved])
+  const visibleCount = tab === 'all' ? counts.all : tab === 'law' ? counts.law : tab === 'case' ? counts.case : counts.js
+  const empty = !srvError && !!laws && !!q && !!srv && visibleCount === 0
 
   return (
     <div className="page">
@@ -203,7 +208,7 @@ export default function SearchResults() {
           <input className="inp" value={input} onChange={(e) => setInput(e.target.value)} placeholder="修改检索词…" aria-label="修改检索词" />
           <button className="btn btn-primary">重新检索</button>
         </form>
-        <button className="btn btn-ghost"><Icon name="sliders" size={14} />高级检索</button>
+        <Link className="btn btn-ghost" to="/search"><Icon name="sliders" size={14} />检索说明</Link>
       </div>
 
       <Tabs
@@ -211,12 +216,7 @@ export default function SearchResults() {
         active={tab}
         onChange={setTab}
         right={
-          <div className="row">
-            <Icon name="sort" size={13} className="muted" />
-            <select className="sel" style={{ width: 130, height: 32 }} value={sort} onChange={(e) => setSort(e.target.value)} aria-label="排序">
-              {SORTS.map((s) => <option key={s}>{s}</option>)}
-            </select>
-          </div>
+          <span className="tiny row"><Icon name="sort" size={13} className="muted" />服务端 BM25 相关性排序</span>
         }
       />
 
@@ -245,9 +245,9 @@ export default function SearchResults() {
             {qa.answer_cards.slice(0, 3).map((c) => (
               <div key={`${c.law_id}-${c.article_no}`} className="ot" style={{ marginBottom: 8, padding: '11px 14px' }}>
                 <div className="ot-h" style={{ marginBottom: 6 }}>
-                  <span className="ot-tag">官方原文</span>
+                  <span className="ot-tag">证据快照原文</span>
                   <Link to={`/laws/${c.law_id}?art=${c.article_no}`} className="tiny bold" style={{ color: 'var(--accent-text)' }}>《{c.law_title.replace(/^中华人民共和国/, '')}》{c.article_label}</Link>
-                  <span className="ot-src">{c.law_status} · {c.effective_date} 施行 · 相关度 {c.score.toFixed(3)}</span>
+                  <span className="ot-src">{c.law_status} · {c.effective_date || '施行日期待核'}{c.effective_date ? ' 施行' : ''} · 相关度 {c.score.toFixed(3)}</span>
                 </div>
                 <div style={{ fontSize: 13, lineHeight: 1.9 }}>{c.text}</div>
               </div>
@@ -258,19 +258,14 @@ export default function SearchResults() {
       </div>
 
       <div className="cols cols-2l mt-16" style={{ gridTemplateColumns: '236px minmax(0,1fr)' }}>
-        {/* 左：过滤 */}
-        <aside className="card" style={{ padding: '6px 16px', position: 'sticky', top: 0 }}>
-          {FILTERS.map((g) => (
-            <div key={g.t} className="flt-group">
-              <div className="flt-t">{g.t}</div>
-              {g.opts.map((o) => (
-                <label key={o} className="flt-opt">
-                  <input type="checkbox" style={{ accentColor: 'var(--accent)' }} />
-                  {o}
-                </label>
-              ))}
-            </div>
-          ))}
+        {/* 左：真实检索口径（不存在尚未实现的假筛选） */}
+        <aside className="card card-pad" style={{ position: 'sticky', top: 0 }}>
+          <div className="flt-t">当前检索口径</div>
+          <p className="tiny">条文：本地证据快照语料，统一由服务端 BM25 排序。</p>
+          <p className="tiny">案例：生产库只收录带直接来源链接与核验日期的公开真实案件。</p>
+          <p className="tiny">司法解释：已接入的两部解释与规定会单列展示。</p>
+          <p className="tiny">历史版本、学术资料和域外数据库尚未接入综合检索。</p>
+          <Link to="/data-sources" className="btn btn-ghost btn-sm mt-8">查看数据源边界</Link>
         </aside>
 
         {/* 中：结果 */}
@@ -278,6 +273,7 @@ export default function SearchResults() {
           {error && (
             <div className="banner banner-danger mb-12"><Icon name="alert" size={15} />语料加载失败：{error}<span className="spacer" /><button className="btn btn-ghost btn-sm" onClick={() => location.reload()}>重试</button></div>
           )}
+          {caseError && <div className="banner banner-warn mb-12"><Icon name="alert" size={15} /><span className="banner-tx">案例检索暂不可用：{caseError}；条文结果不受影响。</span></div>}
           {loading && (
             <div className="card card-pad">{<SkeletonLines n={5} tall />}</div>
           )}
@@ -290,25 +286,22 @@ export default function SearchResults() {
               {q && counts.all > 0 && (
                 <div className="banner banner-info mb-12"><Icon name="info" size={15} />
                   <span className="banner-tx">
-                    「{q}」命中 <b>{counts.law}</b> 条条文（{hitDist.slice(0, 3).map(([t, n]) => `${t} ${n} 条`).join(' · ')}{hitDist.length > 3 ? ' 等' : ''}）、<b>{counts.case}</b> 件公开案例样本。本行为程序统计（BM25 词法检索），非 AI 生成摘要。
+                    「{q}」命中 <b>{counts.law}</b> 条法律/行政法规条文、<b>{counts.js}</b> 条司法解释、<b>{counts.case}</b> 件已核实公开案例（{hitDist.slice(0, 3).map(([t, n]) => `${t} ${n} 条`).join(' · ')}{hitDist.length > 3 ? ' 等' : ''}）。本行为程序统计（BM25 词法检索），非 AI 生成摘要。
                   </span>
                 </div>
               )}
               <div className="mt-16">
                 {(tab === 'all' || tab === 'case') && caseHits.map((c) => <CaseResultCard key={c.id} c={c} q={q} />)}
-                {(tab === 'all' || tab === 'law') && lawHits.map((r) => <LawResultCard key={`${r.hit.law_id}-${r.hit.no}`} r={r} q={q} />)}
+                {tab === 'all' && resolved.map((r) => <LawResultCard key={`${r.hit.law_id}-${r.hit.no}`} r={r} q={q} />)}
+                {tab === 'law' && lawHits.map((r) => <LawResultCard key={`${r.hit.law_id}-${r.hit.no}`} r={r} q={q} />)}
+                {tab === 'js' && judicialHits.map((r) => <LawResultCard key={`${r.hit.law_id}-${r.hit.no}`} r={r} q={q} />)}
 
-                {tab === 'js' && (
+                {tab === 'js' && q && judicialHits.length === 0 && (
                   <div className="card">
-                    <EmptyState icon="database" title="司法解释库未接入" desc="原型不虚构已接入的司法解释数据源。接入后此处将展示司法解释及其效力字段。" action={<Link className="btn btn-secondary" to="/data-sources">查看数据源规划</Link>} />
+                    <EmptyState icon="database" title="已接入司法解释中没有本次命中" desc="当前语料含合同编通则司法解释与网络消费纠纷规定；请更换检索词。" action={<Link className="btn btn-secondary" to="/data-sources">查看数据源边界</Link>} />
                   </div>
                 )}
-                {tab === 'academic' && (
-                  <div className="card">
-                    <EmptyState icon="book" title="学术资料源规划中" desc="规划接入 LegalBench-RAG 等评测与文献来源，用于引用质量评测，不参与裁判依据。" />
-                  </div>
-                )}
-                {empty && (
+                {empty && tab !== 'js' && (
                   <div className="card">
                     <EmptyState icon="search" title={`未找到与「${q}」相关的内容`} desc="尝试更换关键词、放宽筛选，或使用争议焦点描述问题。" action={<button className="btn btn-secondary" onClick={() => nav('/search')}>返回高级检索</button>} />
                   </div>

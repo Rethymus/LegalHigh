@@ -1,6 +1,20 @@
 // LegalHigh 类型化 API 客户端：契约与 server/app/main.py 实测结构一一对应。
 // 原则：错误显式上抛（含后端 detail），不吞错；无 mock 回退——后端不可用就让用户看到。
 export const API_BASE = '/api'
+const ADMIN_TOKEN_KEY = 'lh:admin-token:v1'
+
+/** 直接浏览器模式的本机会话凭据；桌面端和 Vite 开发代理在主进程/代理层注入，不暴露给页面。 */
+export function loadAdminToken(): string {
+  return sessionStorage.getItem(ADMIN_TOKEN_KEY) ?? ''
+}
+export function saveAdminToken(token: string) {
+  const value = token.trim()
+  if (value) sessionStorage.setItem(ADMIN_TOKEN_KEY, value)
+  else sessionStorage.removeItem(ADMIN_TOKEN_KEY)
+}
+export function clearAdminToken() {
+  sessionStorage.removeItem(ADMIN_TOKEN_KEY)
+}
 
 export class ApiError extends Error {
   status: number
@@ -10,13 +24,22 @@ export class ApiError extends Error {
   }
 }
 
+function requestHeaders(init?: RequestInit, json = true): Headers {
+  const headers = new Headers(init?.headers)
+  if (json && !headers.has('Content-Type')) headers.set('Content-Type', 'application/json')
+  const token = loadAdminToken()
+  if (token) headers.set('X-LegalHigh-Admin-Token', token)
+  return headers
+}
+
+async function apiFetch(path: string, init?: RequestInit, json = true): Promise<Response> {
+  return fetch(`${API_BASE}${path}`, { ...init, headers: requestHeaders(init, json) })
+}
+
 async function req<T>(path: string, init?: RequestInit): Promise<T> {
   let res: Response
   try {
-    res = await fetch(`${API_BASE}${path}`, {
-      headers: { 'Content-Type': 'application/json' },
-      ...init,
-    })
+    res = await apiFetch(path, init)
   } catch {
     throw new ApiError(0, '无法连接后端服务（请确认已启动：server/.venv → uvicorn app.main:app --port 8000）')
   }
@@ -31,6 +54,21 @@ async function req<T>(path: string, init?: RequestInit): Promise<T> {
   return res.json() as Promise<T>
 }
 
+async function downloadApi(path: string, filename: string, init?: RequestInit): Promise<void> {
+  const res = await apiFetch(path, init, !(init?.body instanceof FormData))
+  if (!res.ok) {
+    let detail = `下载失败（HTTP ${res.status}）`
+    try { const body = await res.json(); if (typeof body?.detail === 'string') detail = body.detail } catch { /* 非 JSON */ }
+    throw new ApiError(res.status, detail)
+  }
+  const blob = await res.blob()
+  const a = document.createElement('a')
+  a.href = URL.createObjectURL(blob)
+  a.download = filename
+  a.click()
+  URL.revokeObjectURL(a.href)
+}
+
 /* ---------- 领域类型（对应 server 实测输出） ---------- */
 export interface Citation {
   law_id: string
@@ -41,6 +79,7 @@ export interface Citation {
   text: string
   status: string
   effective_date: string
+  effective_date_evidence?: { title: string; url: string; accessed_at: string; grade: '强' | '中' | '弱'; source_kind: string; version?: string }
   source_url: string
   source_kind: string
 }
@@ -120,7 +159,7 @@ export interface DocTemplate {
   template_id: string
   name: string
   description: string
-  gate: { verify_label: string; issue_label: string; require_role: string }
+  gate: { review_label: string; finalize_label: string }
   fields: TemplateField[]
 }
 
@@ -134,7 +173,7 @@ export interface Draft {
   fields: Record<string, unknown>
   content: DraftContent
   citations: Citation[]
-  status: 'draft' | 'verified' | 'issued'
+  status: 'draft' | 'reviewed' | 'finalized'
   snapshot: Record<string, unknown>
 }
 
@@ -157,19 +196,19 @@ export const api = {
       body: JSON.stringify({ contract_text: contractText, title }),
     }),
   getReview: (rid: string) => req<Review>(`/reviews/${rid}`),
-  transitionAnnotation: (rid: string, findingId: string, action: 'adopt' | 'amend' | 'reject' | 'reopen', actor: string, amendedText?: string) =>
+  transitionAnnotation: (rid: string, findingId: string, action: 'adopt' | 'amend' | 'reject' | 'reopen', amendedText?: string) =>
     req<unknown>(`/reviews/${rid}/annotations/${findingId}/transition`, {
       method: 'POST',
-      body: JSON.stringify({ action, actor, amended_text: amendedText }),
+      body: JSON.stringify({ action, amended_text: amendedText }),
     }),
   reviewAudit: (rid: string) => req<{ entries: AuditEntry[] }>(`/reviews/${rid}/audit`),
   /** 审查记录 DOCX（Word 修订双轨：AI 建议以 w:ins 修订插入写入） */
-  reviewDocxUrl: (rid: string) => `${API_BASE}/reviews/${rid}/docx`,
+  reviewDocxDownload: (rid: string) => downloadApi(`/reviews/${rid}/docx`, `review_${rid}.docx`),
   /** 律师回传修订稿（M7-T1 后半）：解析 Word 修订状态并同步批注状态机 */
   reviewDocxReturn: async (rid: string, file: File): Promise<{ accepted: string[]; rejected: string[]; pending: number; skipped: { id: string; reason: string }[]; accepted_n: number; rejected_n: number }> => {
     const fd = new FormData()
     fd.append('file', file)
-    const res = await fetch(`${API_BASE}/reviews/${rid}/docx-return`, { method: 'POST', body: fd })
+    const res = await apiFetch(`/reviews/${rid}/docx-return`, { method: 'POST', body: fd }, false)
     if (!res.ok) {
       let detail = `HTTP ${res.status}`
       try { const b = await res.json(); if (typeof b?.detail === 'string') detail = b.detail } catch { /* 保留状态码 */ }
@@ -177,12 +216,6 @@ export const api = {
     }
     return res.json()
   },
-  /** 解读审核队列（草稿可见于审核面，法条页仍不展示） */
-  explainsQueue: () => req<{ queue: { law_id: string; no: number; text: string; author: string; date?: string; source_note?: string }[] }>('/explains/queue'),
-  /** 审核动作：approve 须填执业律师真实姓名+执业证号（律师法§2/§13，依法公示）；写入审计 */
-  reviewExplain: (lawId: string, no: number, action: 'approve' | 'reopen', reviewer: string, licenseNo?: string) =>
-    req<{ status: string }>(`/explains/${encodeURIComponent(lawId)}/${no}`, { method: 'PATCH', body: JSON.stringify({ action, reviewer, license_no: licenseNo }) }),
-
   /** PIPL 删除通道：删除审查记录（级联批注，审计留痕） */
   deleteReview: (rid: string) => req<{ deleted: string }>(`/reviews/${rid}`, { method: 'DELETE' }),
   /** PIPL 删除通道：删除文书草稿 */
@@ -191,14 +224,7 @@ export const api = {
   deleteComplaint: (cid: string) => req<{ deleted: string }>(`/complaints/${cid}`, { method: 'DELETE' }),
   /** PIPL 导出通道：全量本机数据 JSON 下载 */
   privacyExport: async (): Promise<void> => {
-    const res = await fetch(`${API_BASE}/privacy/export`)
-    if (!res.ok) throw new ApiError(res.status, `导出失败（HTTP ${res.status}）`)
-    const blob = await res.blob()
-    const a = document.createElement('a')
-    a.href = URL.createObjectURL(blob)
-    a.download = 'legalhigh_data_export.json'
-    a.click()
-    URL.revokeObjectURL(a.href)
+    await downloadApi('/privacy/export', 'legalhigh_data_export.json')
   },
 
   // 文书起草
@@ -213,11 +239,11 @@ export const api = {
       body: JSON.stringify({ template_id: templateId, fields }),
     }),
   getDraft: (did: string) => req<Draft>(`/drafts/${did}`),
-  verifyDraft: (did: string, actor: string, role = '执业律师', note?: string) =>
-    req<{ from: string; to: string; actor: string }>(`/drafts/${did}/verify`, { method: 'POST', body: JSON.stringify({ actor, role, note }) }),
-  issueDraft: (did: string, actor: string, role = '执业律师', note?: string) =>
-    req<{ from: string; to: string; actor: string }>(`/drafts/${did}/issue`, { method: 'POST', body: JSON.stringify({ actor, role, note }) }),
-  draftDocxUrl: (did: string) => `${API_BASE}/drafts/${did}/docx`,
+  reviewDraft: (did: string, note?: string) =>
+    req<{ from: string; to: string; actor: string }>(`/drafts/${did}/review`, { method: 'POST', body: JSON.stringify({ note }) }),
+  finalizeDraft: (did: string, note?: string) =>
+    req<{ from: string; to: string; actor: string; responsibility_confirmed: boolean }>(`/drafts/${did}/finalize`, { method: 'POST', body: JSON.stringify({ note, responsibility_confirmed: true }) }),
+  draftDocxDownload: (did: string, templateId: string) => downloadApi(`/drafts/${did}/docx`, `${templateId}_${did}.docx`),
 
   // 引用式问答
   ask: (question: string, topK = 6) =>
@@ -239,7 +265,7 @@ export const api = {
       body: JSON.stringify({ subject, content, contact: contact || undefined, kind }),
     }),
 
-  // 案例样本库（仅可公开查证案件；sample=true 为未核实占位）
+  // 已核实案例清单（生产端点默认排除未核实记录）
   listCases: (q = '', level?: string) =>
     req<{ cases: CaseRecord[] }>(`/cases?q=${encodeURIComponent(q)}${level ? `&level=${encodeURIComponent(level)}` : ''}`),
   getCase: (caseId: string) => req<CaseRecord>(`/cases/${caseId}`),
@@ -252,9 +278,19 @@ export const api = {
   lawExplains: (lawId: string) =>
     req<{ law_id: string; explains: Record<string, ArticleExplain> }>(`/laws/${encodeURIComponent(lawId)}/explains`),
 
+  // 解读审核队列（敏感端点：需本机管理令牌；未配置时服务端 503 明示关闭）
+  explainsQueue: () => req<{ queue: { law_id: string; no: number; text: string; author: string; date?: string; source_note?: string }[] }>('/explains/queue'),
+  /** 审核动作：审核人=服务端配置主体（不可自报），证号可选公示；动作写入审计 */
+  reviewExplain: (lawId: string, no: number, action: 'approve' | 'reopen', licenseNo?: string) =>
+    req<{ status: string }>(`/explains/${encodeURIComponent(lawId)}/${no}`, { method: 'PATCH', body: JSON.stringify({ action, license_no: licenseNo || undefined }) }),
+
   // 主检索（server BM25，与问答/研究同一引擎；多词/口语化查询可命中）
   search: (q: string, topK = 20, lawId?: string) =>
     req<SearchResult>(`/search?q=${encodeURIComponent(q)}&top_k=${topK}${lawId ? `&law_id=${encodeURIComponent(lawId)}` : ''}`),
+
+  // 平台合规声明（公开端点：定位/红线/模型状态，供页面公示与审计者核查）
+  compliance: () =>
+    req<{ positioning: string; disclaimer: string; model_status: { status: string; detail: string; filing_no: string | null }; red_lines: string[] }>('/compliance'),
 
   // 交付前校验
   listDrafts: () => req<{ drafts: { id: string; created_at: string; template_id: string; status: string }[] }>('/drafts'),
@@ -268,7 +304,7 @@ export const api = {
     }),
   /** 研究备忘录 DOCX（POST 二进制 → blob 下载） */
   researchReport: async (question: string, lawIds?: string[], topK = 12): Promise<void> => {
-    const res = await fetch(`${API_BASE}/research/report`, {
+    const res = await apiFetch('/research/report', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ question, law_ids: lawIds ?? null, top_k: topK }),
@@ -285,6 +321,8 @@ export const api = {
   // 全站审计（append-only）
   auditAll: (limit = 100) => req<{ entries: AuditEntry[] }>(`/audit?limit=${limit}`),
 
+  session: () => req<{ principal: string; assurance: string }>('/session'),
+
   // AI 模型插件（OpenAI 协议 harness；BYO key，密钥仅随请求瞬态发送）
   aiProviders: () =>
     req<{ providers: { id: string; name: string; base_url: string; default_model: string; models_hint: string[]; docs: string; local: boolean; env_key: string | null; env_key_set: boolean }[] }>('/ai/providers'),
@@ -294,12 +332,14 @@ export const api = {
     req<{
       provider_id: string; provider_name: string; model: string; text: string
       gates: { redline: { pass: boolean; hits: string[] }; citations: { pass: boolean; violations: string[]; note?: string } }
-      blocked: boolean; usage: Record<string, number>; disclaimer: string
+      blocked: boolean; output_withheld: boolean; usage: Record<string, number>; disclaimer: string
     }>('/ai/chat', { method: 'POST', body: JSON.stringify(p) }),
 
-  // 需求解析（抽象描述 → 可溯源法条 + 案例；AI 仅参与改写，证据确定性检索）
-  needsParse: (text: string, ai?: { provider_id: string; model: string; api_key?: string; base_url_override?: string }) =>
-    req<NeedsParseResult>('/needs/parse', { method: 'POST', body: JSON.stringify({ text, ai: ai ?? null }) }),
+  // 需求解析（本机确定性规则与 BM25；不把用户描述发送给模型）
+  needsParse: (text: string) =>
+    req<NeedsParseResult>('/needs/parse', { method: 'POST', body: JSON.stringify({ text }) }),
+  needsPlan: (payload: IntakePlanPayload) =>
+    req<NeedsParseResult>('/needs/plan', { method: 'POST', body: JSON.stringify(payload) }),
 
   // 审查记录列表（轻量含风险摘要）
   listReviews: (limit = 50) =>
@@ -362,9 +402,32 @@ export interface CompareResult {
 
 /* ---------- 收藏（本机 localStorage；跨页共享） ---------- */
 export interface FavItem { key: string; type: '法条' | '案例' | '研究' | '审查' | '草稿'; title: string; meta: string; to: string; ts: string }
-const FAV_KEY = 'lh:favs'
+const FAV_KEY = 'lh:favs:v1'
+const LEGACY_FAV_KEY = 'lh:favs'
+const FAV_TYPES = new Set<FavItem['type']>(['法条', '案例', '研究', '审查', '草稿'])
+function isFavItem(v: unknown): v is FavItem {
+  if (!v || typeof v !== 'object') return false
+  const x = v as Record<string, unknown>
+  return typeof x.key === 'string' && FAV_TYPES.has(x.type as FavItem['type'])
+    && typeof x.title === 'string' && typeof x.meta === 'string'
+    && typeof x.to === 'string' && typeof x.ts === 'string'
+}
+export function loadFavsState(): { items: FavItem[]; warning: string | null } {
+  const raw = localStorage.getItem(FAV_KEY) ?? localStorage.getItem(LEGACY_FAV_KEY)
+  if (raw === null) return { items: [], warning: null }
+  try {
+    const parsed: unknown = JSON.parse(raw)
+    if (!Array.isArray(parsed) || !parsed.every(isFavItem)) {
+      return { items: [], warning: '本机收藏数据格式不兼容，已停止读取；原始数据仍保留在浏览器存储中。' }
+    }
+    if (localStorage.getItem(FAV_KEY) === null) localStorage.setItem(FAV_KEY, JSON.stringify(parsed))
+    return { items: parsed, warning: null }
+  } catch {
+    return { items: [], warning: '本机收藏数据无法解析，已停止读取；原始数据仍保留在浏览器存储中。' }
+  }
+}
 export function loadFavs(): FavItem[] {
-  try { return JSON.parse(localStorage.getItem(FAV_KEY) ?? '[]') } catch { return [] }
+  return loadFavsState().items
 }
 export function addFav(item: Omit<FavItem, 'ts'>) {
   const list = loadFavs().filter((f) => f.key !== item.key)
@@ -391,8 +454,9 @@ export interface NeedArticle {
 export interface NeedCase {
   id: string; name: string; name_en?: string; no: string; court: string; date: string
   cause: string; level: string; summary: string; kind: 'law' | 'case' | 'academic' | 'foreign' | 'ai'
-  grade: '强' | '中' | '弱'; source_note: string; verified: boolean
-  official_entries: { name: string; url: string }[] | null
+  grade: '强' | '中' | '弱'; source_note: string; source_title: string; source_url: string
+  source_accessed_at: string; verified: boolean
+  official_entries: { name: string; url: string }[]
 }
 export interface NeedsParseResult {
   input: string
@@ -401,7 +465,7 @@ export interface NeedsParseResult {
     assumed_causes: string[]; keywords: string[]; cautions: string[]
     /** 展示降噪后的关键词（决策项2：有域词时仅显示域词）；缺省回退 keywords */
     keywords_display?: string[]
-    by: string  // 'deterministic' | 'ai:provider/model'
+    by: 'deterministic'
   }
   ai_error: string | null
   articles: NeedArticle[]
@@ -409,35 +473,98 @@ export interface NeedsParseResult {
   articles_none: boolean
   corpus_size: number
   disclaimer: string
+  intake?: {
+    summary: string
+    timeline: string[]
+    parties: string[]
+    desired_outcome: string
+    questions: string[]
+    missing_questions: string[]
+    evidence_checklist: { item: string; state: string; source: string }[]
+    next_steps: string[]
+    method: string
+  }
 }
 
-/* ---------- 工作身份档案（决策9 最小可行版：本机自报，内网部署后升级为认证账号） ----------
-   审核人/核验人/复核人字段默认取此身份，保证担责字段的一致性；
-   注意：本机自报不等于认证身份——多用户场景须待最小账号体系（M7-T3 前置）。 */
-export interface WorkIdentity { name: string; role: string }
-const IDENTITY_KEY = 'lh:identity'
+export interface IntakePlanPayload {
+  summary: string
+  timeline: string[]
+  parties: string[]
+  evidence_owned: string[]
+  evidence_missing: string[]
+  desired_outcome: string
+  questions: string[]
+}
+
+/* 本机使用视图：只决定信息组织，不是账号、身份或执业资格。 */
+export interface WorkIdentity { name: string; mode: 'public' | 'student' | 'professional' }
+const IDENTITY_KEY = 'lh:identity:v2'
+const LEGACY_IDENTITY_KEY = 'lh:identity'
+const PREVIOUS_IDENTITY_KEY = 'lh:identity:v1'
+const IDENTITY_MODES = new Set(['public', 'student', 'professional'])
 export function loadIdentity(): WorkIdentity {
   try {
-    return { name: '', role: '执业律师', ...JSON.parse(localStorage.getItem(IDENTITY_KEY) ?? '{}') }
-  } catch { return { name: '', role: '执业律师' } }
+    const raw = localStorage.getItem(IDENTITY_KEY) ?? localStorage.getItem(PREVIOUS_IDENTITY_KEY) ?? localStorage.getItem(LEGACY_IDENTITY_KEY)
+    if (!raw) return { name: '', mode: 'public' }
+    const parsed: unknown = JSON.parse(raw)
+    if (!parsed || typeof parsed !== 'object') return { name: '', mode: 'public' }
+    const x = parsed as Record<string, unknown>
+    const legacyMode = x.role === '执业律师' || x.role === '法务' ? 'professional' : 'public'
+    const value = {
+      name: typeof x.name === 'string' ? x.name.slice(0, 120) : '',
+      mode: (typeof x.mode === 'string' && IDENTITY_MODES.has(x.mode) ? x.mode : legacyMode) as WorkIdentity['mode'],
+    }
+    if (localStorage.getItem(IDENTITY_KEY) === null) localStorage.setItem(IDENTITY_KEY, JSON.stringify(value))
+    localStorage.removeItem(PREVIOUS_IDENTITY_KEY)
+    localStorage.removeItem(LEGACY_IDENTITY_KEY)
+    return value
+  } catch { return { name: '', mode: 'public' } }
 }
 export function saveIdentity(v: WorkIdentity) {
-  localStorage.setItem(IDENTITY_KEY, JSON.stringify(v))
+  const safe = { name: String(v.name ?? '').slice(0, 120), mode: IDENTITY_MODES.has(v.mode) ? v.mode : 'public' }
+  localStorage.setItem(IDENTITY_KEY, JSON.stringify(safe))
+  window.dispatchEvent(new CustomEvent('le-identity-changed'))
 }
 
-/* ---------- AI 模型档案（仅存本机 localStorage，密钥随请求瞬态发送） ---------- */
+/* ---------- AI 模型档案（只持久化非秘密配置；密钥永不写浏览器存储） ---------- */
 export interface AiProfile {
   provider_id: string
   model: string
   base_url_override?: string
-  api_key?: string
 }
-const AI_PROFILE_KEY = 'lh:ai:profile'
+const AI_PROFILE_KEY = 'lh:ai:profile:v1'
+const LEGACY_AI_PROFILE_KEY = 'lh:ai:profile'
+// localStorage 键名（存的是用户本机填写的模型密钥，本身不是凭据字面量）
+const AI_KEY_SLOT = 'lh:ai:secret:v1'
 export function loadAiProfile(): AiProfile | null {
-  try { return JSON.parse(localStorage.getItem(AI_PROFILE_KEY) ?? 'null') } catch { return null }
+  try {
+    const raw = localStorage.getItem(AI_PROFILE_KEY) ?? localStorage.getItem(LEGACY_AI_PROFILE_KEY)
+    if (!raw) return null
+    const parsed: unknown = JSON.parse(raw)
+    if (!parsed || typeof parsed !== 'object') return null
+    const x = parsed as Record<string, unknown>
+    if (typeof x.provider_id !== 'string' || typeof x.model !== 'string') return null
+    const config: AiProfile = {
+      provider_id: x.provider_id,
+      model: x.model,
+      base_url_override: typeof x.base_url_override === 'string' ? x.base_url_override : undefined,
+    }
+    // 旧版本曾把密钥放入 local/session storage；读取时立即清除，不迁移秘密。
+    if (localStorage.getItem(AI_PROFILE_KEY) === null) localStorage.setItem(AI_PROFILE_KEY, JSON.stringify(config))
+    if (localStorage.getItem(LEGACY_AI_PROFILE_KEY) !== null) localStorage.removeItem(LEGACY_AI_PROFILE_KEY)
+    sessionStorage.removeItem(AI_KEY_SLOT)
+    return config
+  } catch { return null }
 }
 export function saveAiProfile(p: AiProfile) {
-  localStorage.setItem(AI_PROFILE_KEY, JSON.stringify(p))
+  const config = { provider_id: p.provider_id, model: p.model, base_url_override: p.base_url_override }
+  localStorage.setItem(AI_PROFILE_KEY, JSON.stringify(config))
+  sessionStorage.removeItem(AI_KEY_SLOT)
+}
+export function clearAiProfile() {
+  localStorage.removeItem(AI_PROFILE_KEY)
+  localStorage.removeItem(LEGACY_AI_PROFILE_KEY)
+  sessionStorage.removeItem(AI_KEY_SLOT)
 }
 
 /* ---------- 研究备忘录（server research.build_research_memo 实测结构） ---------- */
@@ -476,9 +603,11 @@ export interface CaseRecord {
   holding: string
   statutes: CaseStatute[]
   research_refs?: CaseStatute[]
-  impact: string[]
   kind: SourceKind
   grade: '强' | '中' | '弱'
+  source_title: string
+  source_url: string
+  source_accessed_at: string
   source_note: string
   verified: boolean
   sample?: boolean
@@ -489,7 +618,7 @@ export interface ValidationCheck { id: string; group: string; title: string; pas
 export interface DraftValidation {
   draft_id: string
   template_id: string
-  status: 'draft' | 'verified' | 'issued'
+  status: 'draft' | 'reviewed' | 'finalized'
   ready: boolean
   need_review: boolean
   checks: ValidationCheck[]

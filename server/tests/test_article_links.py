@@ -25,3 +25,12 @@ def test_mapping_targets_are_known():
     """链接映射只收录已核实的条目：当前 5 条引用关系（585/496×2/25×2），宁缺毋假。"""
     n = sum(len(refs) for law in article_links.load_links().values() for refs in law.values())
     assert n >= 5, n
+
+
+def test_link_target_carries_citation_invariants():
+    """关联司法解释不能丢失版本/生效日期/来源字段。"""
+    item = article_links.links_for("civl-2020", 496)[0]
+    for key in ("ref_status", "ref_effective_date", "ref_promulgation_instrument",
+                "ref_source_url", "ref_source_kind"):
+        assert key in item
+    assert item["ref_effective_date"] and item["ref_source_url"].startswith("http")

@@ -4,12 +4,13 @@ import { Suspense, useEffect, useState } from 'react'
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
 import { Icon, type IconName } from './icons'
 import { BRAND, NAV_MAIN, NAV_SUB, useLaws } from '../data/model'
-import { SkeletonLines, useToast } from './ui'
+import { SkeletonLines } from './ui'
+import { loadIdentity, type WorkIdentity } from '../lib/api'
 
 /* 路由 → 面包屑 + 明暗基调 */
 const ROUTE_META: { re: RegExp; crumb: string[]; tone: 'light' | 'dark' }[] = [
   { re: /^\/$/, crumb: ['首页'], tone: 'dark' },
-  { re: /^\/needs/, crumb: ['首页', '需求解析'], tone: 'dark' },
+  { re: /^\/needs/, crumb: ['首页', '事实与证据梳理'], tone: 'dark' },
   { re: /^\/search\/results/, crumb: ['法律检索', '检索结果'], tone: 'light' },
   { re: /^\/search/, crumb: ['法律检索'], tone: 'light' },
   { re: /^\/laws\/[^/]+$/, crumb: ['法规条文', '法条详情'], tone: 'light' },
@@ -25,8 +26,8 @@ const ROUTE_META: { re: RegExp; crumb: string[]; tone: 'light' | 'dark' }[] = [
   { re: /^\/draft/, crumb: ['文书工具', '文书起草'], tone: 'light' },
   { re: /^\/comparative/, crumb: ['跨法域对比'], tone: 'light' },
   { re: /^\/learning/, crumb: ['学习中心'], tone: 'light' },
-  { re: /^\/workspace\/matters\/[^/]+$/, crumb: ['律师工作台', '案件详情'], tone: 'light' },
-  { re: /^\/workspace/, crumb: ['律师工作台'], tone: 'light' },
+  { re: /^\/workspace\/matters\/[^/]+$/, crumb: ['专业工具工作台', '案件详情'], tone: 'light' },
+  { re: /^\/workspace/, crumb: ['专业工具工作台'], tone: 'light' },
   { re: /^\/collections/, crumb: ['我的收藏'], tone: 'light' },
   { re: /^\/data-sources/, crumb: ['数据洞察', '数据源状态'], tone: 'light' },
   { re: /^\/audit/, crumb: ['历史记录', '操作审计'], tone: 'light' },
@@ -47,9 +48,9 @@ export default function AppShell() {
   const [collapsed, setCollapsed] = useState(() => localStorage.getItem('le-sb-collapsed') === '1')
   const [override, setOverride] = useState<ToneOverride>(readOverride)
   const { pathname } = useLocation()
-  const toast = useToast()
   const { data: corpus } = useLaws()
-  // 窄屏（<768px）：侧栏转抽屉（C4 基线；完整 v3 形态待移植，见查漏补缺计划）
+  const [identity, setIdentity] = useState<WorkIdentity>(() => loadIdentity())
+  // 窄屏（<768px）：侧栏转抽屉。
   const [narrow, setNarrow] = useState(() => window.matchMedia('(max-width: 767.98px)').matches)
   const [mobileOpen, setMobileOpen] = useState(false)
   const corpusArts = corpus ? corpus.laws.reduce((s, l) => s + l.articles.length, 0) : 0
@@ -63,12 +64,18 @@ export default function AppShell() {
   useEffect(() => {
     document.documentElement.classList.toggle('reduce-motion', readReduceMotion())
     document.documentElement.classList.toggle('font-large', localStorage.getItem('le-font-large') === '1')
-    const sync = () => setOverride(readOverride())
-    window.addEventListener('le-tone-changed', sync)
+    const syncTone = () => setOverride(readOverride())
+    const syncIdentity = () => setIdentity(loadIdentity())
+    window.addEventListener('le-tone-changed', syncTone)
+    window.addEventListener('le-identity-changed', syncIdentity)
     const mq = window.matchMedia('(max-width: 767.98px)')
     const onMq = (e: MediaQueryListEvent) => { setNarrow(e.matches); if (!e.matches) setMobileOpen(false) }
     mq.addEventListener('change', onMq)
-    return () => { window.removeEventListener('le-tone-changed', sync); mq.removeEventListener('change', onMq) }
+    return () => {
+      window.removeEventListener('le-tone-changed', syncTone)
+      window.removeEventListener('le-identity-changed', syncIdentity)
+      mq.removeEventListener('change', onMq)
+    }
   }, [])
   // 路由变化即收起抽屉（顶栏/页内链接导航同样生效）
   useEffect(() => { setMobileOpen(false) }, [pathname])
@@ -77,7 +84,12 @@ export default function AppShell() {
   useEffect(() => {
     try {
       const title = meta.crumb.join(' / ')
-      const list = JSON.parse(localStorage.getItem('lh:browse-history') ?? '[]') as { p: string; t: string; ts: number }[]
+      const raw: unknown = JSON.parse(localStorage.getItem('lh:browse-history') ?? '[]')
+      const list = Array.isArray(raw) ? raw.filter((item): item is { p: string; t: string; ts: number } =>
+        !!item && typeof item === 'object'
+        && typeof (item as { p?: unknown }).p === 'string'
+        && typeof (item as { t?: unknown }).t === 'string'
+        && typeof (item as { ts?: unknown }).ts === 'number') : []
       const next = [{ p: pathname, t: title, ts: Date.now() }, ...list.filter((x) => x.p !== pathname)].slice(0, 50)
       localStorage.setItem('lh:browse-history', JSON.stringify(next))
     } catch { /* 本机存储不可用时静默 */ }
@@ -116,10 +128,10 @@ export default function AppShell() {
         </nav>
         <div className="sb-user">
           <Link to="/settings" className="sb-usercard" title="账号设置">
-            <span className="avatar av-sb">A</span>
+            <span className="avatar av-sb">{identity.name.trim().slice(0, 1) || '?'}</span>
             <div className="sb-uinfo">
-              <div className="sb-uname">{BRAND.user}</div>
-              <div className="sb-urole">{BRAND.role}</div>
+              <div className="sb-uname">{identity.name.trim() || '未署名'}</div>
+              <div className="sb-urole">{{ public: '公众求助准备', student: '法学学习', professional: '专业工具' }[identity.mode]} · 本机视图</div>
             </div>
           </Link>
           <div className="sb-plan">
@@ -127,7 +139,7 @@ export default function AppShell() {
             <div className="sb-bar"><i style={{ width: corpus ? '100%' : '0%' }} /></div>
             <div className="sb-plan-top" style={{ marginTop: 5 }}>
               <span>{corpusArts ? `${corpusArts.toLocaleString()} 条条文` : ''}</span>
-              <span>flk 抽查比对 · M6</span>
+              <span>{corpus?.fetchDate ? `证据抓取 ${corpus.fetchDate}` : '正在读取证据日期'}</span>
             </div>
           </div>
         </div>
@@ -156,13 +168,8 @@ export default function AppShell() {
             <Icon name={tone === 'dark' ? 'sun' : 'moon'} size={15} />
           </button>
           <Link to="/search" className="tb-pill"><Icon name="search" size={13} />全局检索<span className="kbd">/</span></Link>
-          <Link to="/research" className="tb-pill is-accent"><Icon name="sparkle" size={13} />AI 助手</Link>
-          <button className="tb-icon" onClick={() => toast('通知中心为原型占位：3 条系统动态')} title="通知">
-            <span className="row" style={{ position: 'relative' }}>
-              <Icon name="bell" size={15} />
-              <i style={{ position: 'absolute', top: -1, right: -1, width: 7, height: 7, borderRadius: 99, background: 'var(--danger)', border: '1.5px solid var(--bg)' }} />
-            </span>
-          </button>
+          <Link to="/research" className="tb-pill is-accent"><Icon name="sparkle" size={13} />研究工作台</Link>
+          <Link to="/audit" className="tb-icon" title="操作与浏览记录"><Icon name="history" size={15} /></Link>
           <Link to="/settings" className="tb-icon" title="账号与设置"><Icon name="user" size={15} /></Link>
         </header>
 
@@ -172,17 +179,17 @@ export default function AppShell() {
         </Link>
       )}
 
-      {/* 演示模式横幅（GitHub Pages 静态预览）：诚实标注只读演示边界 */}
-      {import.meta.env.VITE_DEMO === '1' && (
+      {/* Pages 仅作静态说明与法规快照浏览，不在浏览器内伪造任何后端接口。 */}
+      {import.meta.env.VITE_STATIC_PREVIEW === '1' && (
         <div className="banner banner-info" style={{ margin: '0 12px', borderRadius: 12 }}>
           <Icon name="info" size={15} />
-          <span className="banner-tx">静态预览模式：法条/案例/检索为内置快照数据的只读演示；合同审查、文书起草等写入功能需下载桌面端或本地运行后端。</span>
+          <span className="banner-tx">静态说明站：仅法规证据快照浏览可用；检索、案例、AI、合同、文书及所有读写 API 均未在本页面部署。请本地运行完整服务后使用。</span>
         </div>
       )}
 
       <main className="content">
           <div key={pathname + tone}>
-            <Suspense>
+            <Suspense fallback={<PageFallback />}>
               <Outlet />
             </Suspense>
           </div>

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""SQLite 存储层：审查会话、批注（状态机）、文书草稿（签发状态机）、投诉、审计日志。
+"""SQLite 存储层：审查会话、批注（状态机）、文书草稿（复核/定稿状态机）、投诉、审计日志。
 
 审计纪律：一切状态变更 append-only 写入 audit_log（who/when/entity/action/payload），
 满足 EU AI Act 高风险场景日志可追溯义务的工程形态；状态流转非法即抛错。
@@ -13,7 +13,10 @@ from pathlib import Path
 
 import os as _os
 # 桌面端打包（PyInstaller sidecar）经 LH_DB_PATH 指向用户数据目录；默认仓库内路径
-DB_PATH = Path(_os.environ.get("LH_DB_PATH", str(Path(__file__).resolve().parent.parent / "data" / "app.db")))
+_DB_PATH_VALUE = _os.environ.get("LH_DB_PATH", str(Path(__file__).resolve().parent.parent / "data" / "app.db"))
+# `:memory:` 是明确支持的隔离模式，供浏览器 E2E/临时验收使用；不能先转成 Path，
+# 否则会被误当作磁盘文件名。普通路径继续使用 Path，便于测试替换和父目录创建。
+DB_PATH: Path | str = ":memory:" if _DB_PATH_VALUE == ":memory:" else Path(_DB_PATH_VALUE)
 
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS reviews (
@@ -30,8 +33,10 @@ CREATE TABLE IF NOT EXISTS drafts (
   id TEXT PRIMARY KEY, created_at TEXT NOT NULL, template_id TEXT NOT NULL,
   fields_json TEXT NOT NULL, content_json TEXT NOT NULL,
   citations_json TEXT NOT NULL, status TEXT NOT NULL,
-  verified_by TEXT, verified_role TEXT, verified_at TEXT,
-  issued_by TEXT, issued_at TEXT, snapshot_json TEXT NOT NULL
+  reviewed_by TEXT, reviewed_at TEXT,
+  finalized_by TEXT, finalized_at TEXT,
+  responsibility_confirmed INTEGER NOT NULL DEFAULT 0,
+  snapshot_json TEXT NOT NULL
 );
 CREATE TABLE IF NOT EXISTS complaints (
   id TEXT PRIMARY KEY, created_at TEXT NOT NULL, contact TEXT,
@@ -51,11 +56,11 @@ ANNOTATION_TRANSITIONS = {
     "amended": set(),
     "rejected": {"pending"},  # 驳回后可恢复为待复核（恢复动作同样留痕）
 }
-# 文书状态机：draft → verified → issued（律师函双轨；verified 前导出自动加草稿水印）
+# 文书状态机只记录本机使用者的工作进度，不宣称平台核验执业资格或签发文书。
 DRAFT_TRANSITIONS = {
-    "draft": {"verified"},
-    "verified": {"issued"},
-    "issued": set(),
+    "draft": {"reviewed"},
+    "reviewed": {"finalized"},
+    "finalized": set(),
 }
 
 _conn = None
@@ -69,8 +74,9 @@ def _now():
 def get_conn() -> sqlite3.Connection:
     global _conn
     if _conn is None:
-        DB_PATH.parent.mkdir(parents=True, exist_ok=True)
-        _conn = sqlite3.connect(DB_PATH, check_same_thread=False)
+        if isinstance(DB_PATH, Path):
+            DB_PATH.parent.mkdir(parents=True, exist_ok=True)
+        _conn = sqlite3.connect(str(DB_PATH), check_same_thread=False)
         _conn.row_factory = sqlite3.Row
         _conn.executescript(SCHEMA)
         _conn.commit()
@@ -79,6 +85,26 @@ def get_conn() -> sqlite3.Connection:
             _conn.commit()
         except sqlite3.OperationalError:
             pass  # 列已存在（重复启动）
+        # 兼容早期原型数据库：旧的 verified/issued 只是本机操作记录，迁移后不再
+        # 对外声称“平台律师核验/签发”。旧审计日志保持原样，作为历史证据。
+        draft_columns = {r[1] for r in _conn.execute("PRAGMA table_info(drafts)").fetchall()}
+        # 字面量语句表（无插值）：按缺失列名选取，杜绝字符串拼 SQL
+        draft_migrations = {
+            "reviewed_by": "ALTER TABLE drafts ADD COLUMN reviewed_by TEXT",
+            "reviewed_at": "ALTER TABLE drafts ADD COLUMN reviewed_at TEXT",
+            "finalized_by": "ALTER TABLE drafts ADD COLUMN finalized_by TEXT",
+            "finalized_at": "ALTER TABLE drafts ADD COLUMN finalized_at TEXT",
+            "responsibility_confirmed": "ALTER TABLE drafts ADD COLUMN responsibility_confirmed INTEGER NOT NULL DEFAULT 0",
+        }
+        for name in ("reviewed_by", "reviewed_at", "finalized_by", "finalized_at", "responsibility_confirmed"):
+            if name not in draft_columns:
+                _conn.execute(draft_migrations[name])
+        if "verified_by" in draft_columns:
+            _conn.execute("UPDATE drafts SET reviewed_by=COALESCE(reviewed_by, verified_by), reviewed_at=COALESCE(reviewed_at, verified_at)")
+        if "issued_by" in draft_columns:
+            _conn.execute("UPDATE drafts SET finalized_by=COALESCE(finalized_by, issued_by), finalized_at=COALESCE(finalized_at, issued_at)")
+        _conn.execute("UPDATE drafts SET status=CASE status WHEN 'verified' THEN 'reviewed' WHEN 'issued' THEN 'finalized' ELSE status END")
+        _conn.commit()
     return _conn
 
 
@@ -110,7 +136,7 @@ def list_audit(entity_type: str | None = None, entity_id: str | None = None, lim
     return [dict(r) for r in conn.execute(q, args).fetchall()]
 
 
-def create_review(title: str, contract_text: str, result: dict) -> str:
+def create_review(title: str, contract_text: str, result: dict, actor: str = "system") -> str:
     rid = "rv_" + uuid.uuid4().hex[:12]
     with _lock:
         conn = get_conn()
@@ -124,7 +150,7 @@ def create_review(title: str, contract_text: str, result: dict) -> str:
                 ("an_" + uuid.uuid4().hex[:12], rid, f["id"], "pending", f["detail"], None, "system", _now()),
             )
         conn.commit()
-    audit("system", "review", rid, "create", {"title": title, "findings": len(result["findings"])})
+    audit(actor or "system", "review", rid, "create", {"title": title, "findings": len(result["findings"])})
     return rid
 
 
@@ -185,7 +211,8 @@ def transition_annotation(review_id: str, finding_id: str, action: str, actor: s
     return {"finding_id": finding_id, "from": current, "to": target, "actor": actor}
 
 
-def create_draft(template_id: str, fields: dict, content: dict, citations: list, snapshot: dict) -> str:
+def create_draft(template_id: str, fields: dict, content: dict, citations: list, snapshot: dict,
+                 actor: str = "system") -> str:
     did = "df_" + uuid.uuid4().hex[:12]
     with _lock:
         conn = get_conn()
@@ -195,7 +222,7 @@ def create_draft(template_id: str, fields: dict, content: dict, citations: list,
              json.dumps(citations, ensure_ascii=False), "draft", json.dumps(snapshot, ensure_ascii=False)),
         )
         conn.commit()
-    audit("system", "draft", did, "create", {"template_id": template_id})
+    audit(actor or "system", "draft", did, "create", {"template_id": template_id})
     return did
 
 
@@ -220,8 +247,9 @@ def list_drafts(limit: int = 50) -> list[dict]:
     return [dict(r) for r in rows]
 
 
-def transition_draft(did: str, action: str, actor: str, role: str | None = None, note: str | None = None):
-    target = {"verify": "verified", "issue": "issued"}[action]
+def transition_draft(did: str, action: str, actor: str, *, responsibility_confirmed: bool = False,
+                     note: str | None = None):
+    target = {"review": "reviewed", "finalize": "finalized"}[action]
     with _lock:
         conn = get_conn()
         row = conn.execute("SELECT * FROM drafts WHERE id=?", (did,)).fetchone()
@@ -230,19 +258,21 @@ def transition_draft(did: str, action: str, actor: str, role: str | None = None,
         current = row["status"]
         if target not in DRAFT_TRANSITIONS[current]:
             raise ValueError(f"非法状态流转: {current} → {target}")
-        if action == "verify":
-            if role != "执业律师":
-                raise ValueError("人工核验 gate：仅执业律师（role=执业律师）可执行核验。")
-            conn.execute("UPDATE drafts SET status=?, verified_by=?, verified_role=?, verified_at=? WHERE id=?",
-                         (target, actor, role, _now(), did))
+        if action == "review":
+            conn.execute("UPDATE drafts SET status=?, reviewed_by=?, reviewed_at=? WHERE id=?",
+                         (target, actor, _now(), did))
         else:
-            if row["status"] != "verified":
-                raise ValueError("签发前必须先通过执业律师核验。")
-            conn.execute("UPDATE drafts SET status=?, issued_by=?, issued_at=? WHERE id=?",
+            if row["status"] != "reviewed":
+                raise ValueError("定稿前必须先完成人工复核。")
+            if not responsibility_confirmed:
+                raise ValueError("定稿前须确认：使用者已核对事实、引用和格式，并自行承担使用责任。")
+            conn.execute("UPDATE drafts SET status=?, finalized_by=?, finalized_at=?, responsibility_confirmed=1 WHERE id=?",
                          (target, actor, _now(), did))
         conn.commit()
-    audit(actor, "draft", did, action, {"from": current, "to": target, "role": role, "note": note})
-    return {"draft_id": did, "from": current, "to": target, "actor": actor, "role": role}
+    audit(actor, "draft", did, action, {"from": current, "to": target,
+          "responsibility_confirmed": bool(responsibility_confirmed), "note": note})
+    return {"draft_id": did, "from": current, "to": target, "actor": actor,
+            "responsibility_confirmed": bool(responsibility_confirmed)}
 
 
 def delete_review(rid: str, actor: str = "anonymous"):
@@ -260,7 +290,7 @@ def delete_review(rid: str, actor: str = "anonymous"):
 
 
 def delete_draft(did: str, actor: str = "anonymous"):
-    """PIPL 删除通道：删除文书草稿（含其快照）；已签发文书的删除同样留痕。"""
+    """PIPL 删除通道：删除文书草稿（含其快照）；已定稿文书的删除同样留痕。"""
     with _lock:
         conn = get_conn()
         cur = conn.execute("SELECT id, status FROM drafts WHERE id=?", (did,))
@@ -296,7 +326,8 @@ def export_all() -> dict:
     }
 
 
-def create_complaint(contact: str | None, subject: str, content: str, kind: str = "general") -> str:
+def create_complaint(contact: str | None, subject: str, content: str, kind: str = "general",
+                     actor: str = "system") -> str:
     kind = kind if kind in ("general", "mobile") else "general"
     cid = "cp_" + uuid.uuid4().hex[:12]
     with _lock:
@@ -306,7 +337,7 @@ def create_complaint(contact: str | None, subject: str, content: str, kind: str 
             (cid, _now(), contact, subject, content, "open", kind),
         )
         conn.commit()
-    audit("system", "complaint", cid, "create", {"subject": subject, "kind": kind})
+    audit(actor or "system", "complaint", cid, "create", {"subject": subject, "kind": kind})
     return cid
 
 

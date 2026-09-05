@@ -1,7 +1,7 @@
 {
   "name": "legalhigh-desktop",
   "version": "1.0.0",
-  "description": "LegalHigh 桌面端：本地全功能运行（FastAPI sidecar + Web 前端），数据不出本机",
+  "description": "LegalHigh 桌面端：FastAPI 本机 sidecar + Web 前端；数据默认本机处理，只有用户明确配置并授权远程模型时才向该端点发送输入",
   "main": "main.js",
   "author": "LegalHigh",
   "license": "UNLICENSED",
@@ -10,21 +10,41 @@
     "url": "https://github.com/Rethymus/LegalHigh.git"
   },
   "scripts": {
+    "materialize-main": "node -e \"require('fs').copyFileSync('main.js.in','main.js')\"",
+    "check": "npm run materialize-main && node --check main.js",
+    "predist": "npm run materialize-main",
     "dist": "electron-builder"
   },
   "devDependencies": {
-    "electron": "^33.0.0",
-    "electron-builder": "^25.1.8"
+    "electron": "44.1.1",
+    "electron-builder": "26.15.3"
   },
   "build": {
     "appId": "app.legalhigh.desktop",
     "productName": "LegalHigh",
-    "files": ["main.js", "backend/**"],
-    "extraResources": [
-      { "from": "backend", "to": "backend" }
+    "files": [
+      "main.js"
     ],
-    "win": { "target": ["nsis"] },
-    "mac": { "target": ["dmg"] },
-    "linux": { "target": ["AppImage"] }
+    "extraResources": [
+      {
+        "from": "backend",
+        "to": "backend"
+      }
+    ],
+    "win": {
+      "target": [
+        "nsis"
+      ]
+    },
+    "mac": {
+      "target": [
+        "dmg"
+      ]
+    },
+    "linux": {
+      "target": [
+        "AppImage"
+      ]
+    }
   }
 }

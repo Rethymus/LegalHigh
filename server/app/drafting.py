@@ -4,7 +4,7 @@
 设计原则（对应调研报告 §8）：
 - 版式由结构化模板（字段+条件分支）决定，不让自由生成决定版式；
 - 文书中的法条引用全部来自本库语料并携带版本/施行日期快照（时效护栏）；
-- 状态机在 storage.transition_draft 强制执行：draft → verified(执业律师) → issued。
+- 状态机只记录本机工作进度：draft → reviewed → finalized；平台不核验执业资格、不签发。
 """
 from datetime import date
 
@@ -105,50 +105,50 @@ TEMPLATES = {
     "lawyer_letter": {
         "template_id": "lawyer_letter",
         "name": "律师函（催告函）",
-        "description": "以律所名义发出的催告函草稿。须由执业律师核验并签发后方可对外发送（《律师法》第13条：非律师不得以律师名义执业——本系统仅生成草稿，签发权在执业律师）。",
-        "gate": {"verify_label": "执业律师核验", "issue_label": "律师签发", "require_role": "执业律师"},
+        "description": "供专业律师准备的催告函模板。系统不核验执业资格、不代表律所签发；非律师不得以律师名义使用，专业使用者须在线下自行核对并承担责任。",
+        "gate": {"review_label": "完成内容复核", "finalize_label": "使用者确认定稿"},
         "fields": LETTER_FIELDS,
     },
     "contract": {
         "template_id": "contract",
         "name": "合同（服务/租赁）",
         "description": "场景化合同草稿：条款结构对齐常见实务体例，生成后可一键转入「合同审查」模块做三类条款批注审查。",
-        "gate": {"verify_label": "人工核验", "issue_label": "确认定稿", "require_role": "执业律师"},
+        "gate": {"review_label": "完成内容复核", "finalize_label": "使用者确认定稿"},
         "fields": CONTRACT_FIELDS,
     },
     "legal_opinion": {
         "template_id": "legal_opinion",
-        "name": "法律意见书",
+        "name": "法律意见书（专业工作草稿）",
         "description": "结构化法律意见书模板：背景/分析/风险/依据四段式，明示意见基于委托人提供的事实、不构成诉讼结果承诺。",
-        "gate": {"verify_label": "人工核验", "issue_label": "确认定稿", "require_role": "执业律师"},
+        "gate": {"review_label": "完成内容复核", "finalize_label": "使用者确认定稿"},
         "fields": OPINION_FIELDS,
     },
     "preservation_application": {
         "template_id": "preservation_application",
         "name": "财产保全申请书",
         "description": "诉讼财产保全申请书模板：财产逐项列明、担保安排选项化，提示保全错误赔偿责任（民诉法相关规定）。",
-        "gate": {"verify_label": "人工核验", "issue_label": "确认定稿", "require_role": "执业律师"},
+        "gate": {"review_label": "完成内容复核", "finalize_label": "使用者确认定稿"},
         "fields": PRESERVATION_FIELDS,
     },
     "civil_answer": {
         "template_id": "civil_answer",
         "name": "民事答辩状",
         "description": "要素式答辩状模板（程序指引属性）：按被告视角组织答辩要点与对诉请的逐项意见，明示不构成法律意见。",
-        "gate": {"verify_label": "人工核验", "issue_label": "确认定稿", "require_role": "执业律师"},
+        "gate": {"review_label": "完成内容复核", "finalize_label": "使用者确认定稿"},
         "fields": ANSWER_FIELDS,
     },
     "power_of_attorney": {
         "template_id": "power_of_attorney",
         "name": "授权委托书（诉讼）",
         "description": "诉讼授权委托书模板：权限选项对齐民诉实务的一般授权/特别授权区分，转委托须另行书面授权。",
-        "gate": {"verify_label": "人工核验", "issue_label": "确认定稿", "require_role": "执业律师"},
+        "gate": {"review_label": "完成内容复核", "finalize_label": "使用者确认定稿"},
         "fields": POA_FIELDS,
     },
     "civil_complaint": {
         "template_id": "civil_complaint",
         "name": "民事起诉状",
         "description": "要素式诉讼文书模板（程序指引属性）：按最高法诉讼文书样式的要素结构生成，明示不构成法律意见、不建立委托关系。",
-        "gate": {"verify_label": "人工核验", "issue_label": "确认定稿", "require_role": "执业律师"},
+        "gate": {"review_label": "完成内容复核", "finalize_label": "使用者确认定稿"},
         "fields": COMPLAINT_FILING_FIELDS,
     },
 }
@@ -205,7 +205,7 @@ def build_lawyer_letter(f: dict):
             date.today().strftime("%Y年%m月%d日"),
         ]},
     ]
-    gate_note = "本文件由系统生成的草稿状态输出，未经执业律师核验签发，不得以律所/律师名义对外发送。"
+    gate_note = "本文件由工具按用户输入生成。LegalHigh 不核验使用者执业资格、不代表律所签发；非律师不得以律所或律师名义使用。"
     return {"sections": [s for s in sections if s], "citations": citations, "gate_note": gate_note}
 
 
@@ -364,7 +364,7 @@ def build_legal_opinion(f: dict):
         {"type": "para", "text": "本意见仅基于委托人提供的书面材料与出具日的现行法律规定作出；委托人应保证所提供事实的真实性。本意见不构成对诉讼或仲裁结果的任何承诺。"},
         {"type": "signature", "lines": [f"{f.get('firm', '')}", date.today().strftime("%Y年%m月%d日")]},
     ]
-    gate_note = "本法律意见书为模板生成的草稿：意见质量取决于所提供事实的完整与真实；对外出具前须经执业律师核验定稿。"
+    gate_note = "本法律意见书为专业工作草稿：意见质量取决于输入事实与引用的完整、真实；平台不核验资格或内容，使用者须在线下独立复核并承担责任。"
     return {"sections": sections, "citations": citations, "gate_note": gate_note}
 
 

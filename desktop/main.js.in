@@ -1,41 +1,191 @@
-// LegalHigh 桌面端主进程模板（构建期由 workflow 物化为 main.js，CMake @VAR@ 惯例）
-// 模式：Electron 壳 + FastAPI sidecar（ChatGPT/ZCode 同款本地分发模式）。
-// 安全说明：spawn 不经 shell（Node 默认 shell:false）；可执行路径与端口均为
-// 构建期常量（SIDECAR_EXE 静态映射，无用户输入参与），参数以数组逐项传递。
-const { app, BrowserWindow, shell } = require('electron')
+// LegalHigh desktop main process. The release workflow materializes this file as main.js.
+// Security boundary: the renderer is sandboxed; the random admin token stays in the main
+// process and sidecar environment; navigation outside the verified local origin is denied.
+const { app, BrowserWindow, dialog, session, shell } = require('electron')
 const { spawn } = require('child_process')
+const { randomBytes } = require('crypto')
+const { existsSync } = require('fs')
 const http = require('http')
+const net = require('net')
 const path = require('path')
-const PORT = 8765
-const BASE = `http://127.0.0.1:${PORT}`
-
-// backend/ = PyInstaller 产物目录（legalhigh-backend 可执行 + web/ 静态资源）
-const SIDECAR_EXE = {
-  win32: ['legalhigh-backend-windows', 'legalhigh-backend-windows.exe'],
-  darwin: ['legalhigh-backend-macos', 'legalhigh-backend-macos'],
-  linux: ['legalhigh-backend-ubuntu', 'legalhigh-backend-ubuntu'],
-}
-const BACKEND_DIR = path.join(__dirname, 'backend')
 
 let win = null
+let backendChild = null
+let backendReady = false
+let fatalShown = false
+let quitting = false
 
-app.whenReady().then(() => {
-  const [dirName, exeName] = SIDECAR_EXE[process.platform] ?? SIDECAR_EXE.linux
-  const child = spawn(path.join(BACKEND_DIR, dirName, exeName), [PORT], {
-    cwd: BACKEND_DIR,
+const ADMIN_TOKEN = app.isPackaged
+  ? randomBytes(32).toString('hex')
+  : (process.env.LH_ADMIN_TOKEN || randomBytes(32).toString('hex'))
+const INSTANCE_PROOF = randomBytes(32).toString('hex')
+const ADMIN_PRINCIPAL = app.isPackaged ? 'desktop-local-operator' : (process.env.LH_ADMIN_PRINCIPAL || 'desktop-local-operator')
+// electron-builder puts extraResources beside app.asar, not inside it. Development keeps the
+// same directory name next to this source-generated main.js.
+const BACKEND_DIR = app.isPackaged
+  ? path.join(process.resourcesPath, 'backend')
+  : path.join(__dirname, 'backend')
+
+function openExternalHttp(url) {
+  try {
+    const parsed = new URL(url)
+    if (parsed.protocol === 'https:' || parsed.protocol === 'http:') void shell.openExternal(parsed.href)
+  } catch (_) {
+    // Invalid and non-web targets are deliberately ignored.
+  }
+}
+
+function allocateLoopbackPort() {
+  return new Promise((resolve, reject) => {
+    const server = net.createServer()
+    server.unref()
+    server.once('error', reject)
+    server.listen(0, '127.0.0.1', () => {
+      const address = server.address()
+      const port = typeof address === 'object' && address ? address.port : null
+      server.close((error) => error ? reject(error) : resolve(port))
+    })
+  })
+}
+
+function sidecarCandidates() {
+  const executable = process.platform === 'win32' ? 'legalhigh-backend.exe' : 'legalhigh-backend'
+  return [
+    path.join(BACKEND_DIR, executable),
+    path.join(BACKEND_DIR, 'legalhigh-backend', executable),
+  ]
+}
+
+function resolveSidecar() {
+  return sidecarCandidates().find((candidate) => existsSync(candidate)) || null
+}
+
+function sidecarEnvironment(dbPath) {
+  const allowed = [
+    'SystemRoot', 'WINDIR', 'PATH', 'TEMP', 'TMP', 'HOME', 'USERPROFILE',
+    'APPDATA', 'LOCALAPPDATA', 'LANG', 'LC_ALL',
+    'OPENAI_API_KEY', 'DEEPSEEK_API_KEY', 'MOONSHOT_API_KEY', 'ZHIPU_API_KEY',
+    'DASHSCOPE_API_KEY', 'LH_AI_CUSTOM_HOSTS',
+  ]
+  const inherited = Object.fromEntries(allowed.flatMap((key) => process.env[key] ? [[key, process.env[key]]] : []))
+  return {
+    ...inherited,
+    LH_DB_PATH: dbPath,
+    LH_ADMIN_TOKEN: ADMIN_TOKEN,
+    LH_ADMIN_PRINCIPAL: ADMIN_PRINCIPAL,
+    LH_DESKTOP_INSTANCE_PROOF: INSTANCE_PROOF,
+  }
+}
+
+function showStartupFailure(message) {
+  if (fatalShown || quitting) return
+  fatalShown = true
+  void dialog.showMessageBox({
+    type: 'error',
+    title: backendReady ? 'LegalHigh 服务中断' : 'LegalHigh 启动失败',
+    message: backendReady ? '本地法律服务已停止' : '本地法律服务未能安全启动',
+    detail: message,
+  }).finally(() => app.quit())
+}
+
+function verifyHealth(base, attempts = 60) {
+  const request = http.get(`${base}/api/health`, (response) => {
+    let body = ''
+    response.setEncoding('utf8')
+    response.on('data', (chunk) => { if (body.length < 16_384) body += chunk })
+    response.on('end', () => {
+      let payload = null
+      try { payload = JSON.parse(body) } catch (_) { /* handled below */ }
+      if (response.statusCode === 200 && payload?.service === 'LegalHigh' && payload?.instance_proof === INSTANCE_PROOF) {
+        backendReady = true
+        createWindow(base)
+        return
+      }
+      if (response.statusCode === 200) {
+        showStartupFailure('随机本机端口返回了无法验证的服务。为避免向其他进程泄露管理凭据，应用已停止。')
+      } else if (attempts > 0) {
+        setTimeout(() => verifyHealth(base, attempts - 1), 500)
+      } else {
+        showStartupFailure('本地服务健康检查超时。请重新启动；如仍失败，请查看发布包完整性。')
+      }
+    })
+  })
+  request.on('error', () => {
+    if (attempts > 0) setTimeout(() => verifyHealth(base, attempts - 1), 500)
+    else showStartupFailure('本地服务在 30 秒内没有响应。请重新启动；如仍失败，请查看发布包完整性。')
+  })
+  request.setTimeout(1500, () => request.destroy())
+}
+
+function createWindow(base) {
+  const baseOrigin = new URL(base).origin
+  win = new BrowserWindow({
+    width: 1440,
+    height: 900,
+    autoHideMenuBar: true,
+    webPreferences: {
+      contextIsolation: true,
+      nodeIntegration: false,
+      sandbox: true,
+      webSecurity: true,
+      allowRunningInsecureContent: false,
+    },
+  })
+  win.webContents.setWindowOpenHandler(({ url }) => { openExternalHttp(url); return { action: 'deny' } })
+  win.webContents.on('will-navigate', (event, url) => {
+    let isLocal = false
+    try { isLocal = new URL(url).origin === baseOrigin } catch (_) { /* deny */ }
+    if (!isLocal) { event.preventDefault(); openExternalHttp(url) }
+  })
+  void win.loadURL(base)
+}
+
+app.whenReady().then(async () => {
+  const sidecar = resolveSidecar()
+  if (!sidecar) {
+    showStartupFailure('发布包中缺少 legalhigh-backend 可执行文件。请重新下载完整且来源可信的安装包。')
+    return
+  }
+
+  let port
+  try {
+    port = await allocateLoopbackPort()
+  } catch (error) {
+    showStartupFailure(`无法分配本机回环端口：${error instanceof Error ? error.message : String(error)}`)
+    return
+  }
+  if (!Number.isInteger(port)) {
+    showStartupFailure('无法取得有效的本机回环端口。')
+    return
+  }
+
+  const base = `http://127.0.0.1:${port}`
+  backendChild = spawn(sidecar, [String(port)], {
+    cwd: path.dirname(sidecar),
     stdio: 'ignore',
+    shell: false,
+    windowsHide: true,
+    env: sidecarEnvironment(path.join(app.getPath('userData'), 'app.db')),
+  })
+  backendChild.once('error', (error) => showStartupFailure(`本地服务进程无法启动：${error.message}`))
+  backendChild.once('exit', (code) => {
+    if (!quitting) showStartupFailure(`本地服务意外退出（退出码 ${String(code)}）。请重新启动应用；如仍失败，请重新下载完整且来源可信的安装包。`)
   })
 
-  const poll = (n = 60) => {
-    http.get(`${BASE}/api/health`, (res) => {
-      if (res.statusCode === 200) {
-        win = new BrowserWindow({ width: 1440, height: 900, autoHideMenuBar: true })
-        win.webContents.setWindowOpenHandler(({ url }) => { shell.openExternal(url); return { action: 'deny' } })
-        win.loadURL(BASE)
-      } else if (n > 0) setTimeout(() => poll(n - 1), 500)
-    }).on('error', () => { if (n > 0) setTimeout(() => poll(n - 1), 500) })
-  }
-  poll()
-})
+  // The header is attached only after the unauthenticated health response proves that the
+  // random port belongs to this exact sidecar instance. The renderer never receives the token.
+  session.defaultSession.webRequest.onBeforeSendHeaders(
+    { urls: [`${base}/api/*`] },
+    (details, callback) => {
+      details.requestHeaders['X-LegalHigh-Admin-Token'] = ADMIN_TOKEN
+      callback({ requestHeaders: details.requestHeaders })
+    },
+  )
+  verifyHealth(base)
+}).catch((error) => showStartupFailure(error instanceof Error ? error.message : String(error)))
 
+app.on('before-quit', () => {
+  quitting = true
+  if (backendChild && !backendChild.killed) backendChild.kill()
+})
 app.on('window-all-closed', () => app.quit())

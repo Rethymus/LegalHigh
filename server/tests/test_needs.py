@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""需求解析管线测试：确定性降级 / 法条引用不变量 / 官方链接在场 / AI 解析 JSON 契约。"""
+"""确定性需求解析：关键词、引用不变量与案例直接来源。"""
 import pytest
 
 from app import needs  # noqa: E402
@@ -21,7 +21,9 @@ def test_parse_cases_official_entries(tmp_db):
     out = needs.parse_needs("交通事故受伤对方全责能不能获得赔偿")
     for c in out["cases"]:
         assert c["verified"] is True
-        assert c["official_entries"], "案例必须携带官方发布入口"
+        assert c["official_entries"], "案例必须携带直接核验来源"
+        assert c["source_url"] == c["official_entries"][0]["url"]
+        assert c["source_accessed_at"] == "2026-09-01"
         for e in c["official_entries"]:
             assert e["url"].startswith("https://")
 
@@ -29,28 +31,6 @@ def test_parse_cases_official_entries(tmp_db):
 def test_parse_too_short(tmp_db):
     with pytest.raises(ValueError):
         needs.parse_needs("合同")
-
-
-def test_ai_parse_json_contract(tmp_db, monkeypatch):
-    """AI 理解层契约：合法 JSON → 结构化；非法 JSON → ValueError 降级路径。"""
-    good = '{"understood":"拖欠劳动报酬","issue_type":"劳动","assumed_causes":["追索劳动报酬"],' \
-           '"keywords":["劳动报酬","拖欠工资"],"cautions":["保留劳动合同与考勤记录"]}'
-    monkeypatch.setattr(needs.ai_governor, "chat",
-                        lambda *a, **k: {"text": "```json\n" + good + "\n```", "blocked": False})
-    p = needs.ai_parse("老板不发工资", provider_id="deepseek", model="m", api_key="k" + "ey")
-    assert p["issue_type"] == "劳动" and "劳动报酬" in p["keywords"] and p["by"].startswith("ai:")
-
-    monkeypatch.setattr(needs.ai_governor, "chat",
-                        lambda *a, **k: {"text": "抱歉我不能输出JSON", "blocked": False})
-    with pytest.raises(ValueError):
-        needs.ai_parse("老板不发工资", provider_id="deepseek", model="m", api_key="k" + "ey")
-
-
-def test_ai_blocked_output(tmp_db, monkeypatch):
-    monkeypatch.setattr(needs.ai_governor, "chat",
-                        lambda *a, **k: {"text": "……", "blocked": True})
-    with pytest.raises(ValueError, match="红线"):
-        needs.ai_parse("x", provider_id="deepseek", model="m", api_key="k" + "ey")
 
 
 def test_deterministic_keywords_noise_filtered():
@@ -71,3 +51,28 @@ def test_keywords_display_curated():
     assert disp == ["劳动报酬", "劳动合同", "工资支付"], disp
     assert "板拖" not in disp and "资还" not in disp
     assert "板拖" in out["parse"]["keywords"]  # 检索层不动
+
+
+def test_intake_plan_keeps_user_facts_and_reports_gaps(tmp_db):
+    out = needs.build_intake_plan({
+        "summary": "公司拖欠两个月工资",
+        "timeline": ["2026年6月开始未发工资", "2026年8月向公司询问未获答复"],
+        "parties": ["劳动者（本人）", "用人单位"],
+        "evidence_owned": ["劳动合同", "与人事的聊天记录"],
+        "evidence_missing": ["工资表"],
+        "desired_outcome": "了解追索工资前应准备什么",
+        "questions": ["应当先向哪里反映"],
+    })
+    assert out["intake"]["timeline"][0] == "2026年6月开始未发工资"
+    assert out["intake"]["method"].startswith("user-confirmed-facts")
+    assert out["intake"]["missing_questions"] == []
+    assert any(x["item"] == "工资表" and x["state"] == "待取得/待确认" for x in out["intake"]["evidence_checklist"])
+    assert out["articles"]
+
+
+def test_intake_plan_never_invents_missing_facts(tmp_db):
+    out = needs.build_intake_plan({"summary": "房东不退押金"})
+    assert out["intake"]["timeline"] == []
+    assert out["intake"]["parties"] == []
+    assert len(out["intake"]["missing_questions"]) >= 3
+    assert all(x["source"] != "AI" for x in out["intake"]["evidence_checklist"])

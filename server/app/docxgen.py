@@ -3,7 +3,7 @@
 
 排版取实务惯例参数：A4、公文式页边距（上3.7/下3.5/左2.8/右2.6 cm）、正文仿宋四号
 （14pt）、行距固定 28pt、首行缩进两字符、标题黑体居中；引用条文随文附版本与施行日期。
-合规护栏：律师函在「律师签发」前输出红色草稿横幅；未核验文书输出提示横幅。
+合规护栏：草稿输出醒目提示；定稿只记录使用者责任确认，平台不核验资格、不签发。
 """
 import io
 
@@ -79,18 +79,17 @@ def generate_docx(draft: dict) -> bytes:
     sec.top_margin, sec.bottom_margin = Cm(3.7), Cm(3.5)
     sec.left_margin, sec.right_margin = Cm(2.8), Cm(2.6)
 
-    # 合规横幅：状态机驱动的可交付性标注
-    if template_id == "lawyer_letter" and status != "issued":
-        _banner(doc, "草稿 · 未经执业律师核验签发 —— 不得以律所/律师名义对外发送（《律师法》第13条）")
+    # 合规横幅：状态机仅代表本机使用者工作进度。
+    if template_id == "lawyer_letter" and status != "finalized":
+        _banner(doc, "工具草稿 · LegalHigh 不核验执业资格、不代表律所签发；非律师不得以律师名义使用")
     elif template_id != "lawyer_letter" and status == "draft":
         _banner(doc, "草稿 · 供内部审阅，未经人工核验定稿", color=RGBColor(0x8A, 0x6D, 0x00))
-    if status in ("verified", "issued"):
-        meta = draft.get("verified_by") or ""
-        _banner(doc, f"已通过人工核验（核验人：{meta}，{draft.get('verified_role') or ''}）",
+    if status == "reviewed":
+        _banner(doc, f"本机使用者已记录内容复核（{draft.get('reviewed_at', '')[:10]}）；平台未核验身份或内容",
                 color=RGBColor(0x1F, 0x7A, 0x33))
-        if status == "issued":
-            _banner(doc, f"已签发（签发人：{draft.get('issued_by', '')}，{draft.get('issued_at', '')[:10]}）",
-                    color=RGBColor(0x1F, 0x7A, 0x33))
+    elif status == "finalized":
+        _banner(doc, "使用者已确认定稿并自行承担使用责任；LegalHigh 未核验身份、事实或法律判断",
+                color=RGBColor(0x1F, 0x7A, 0x33))
 
     for s in sections:
         t = s["type"]
@@ -117,8 +116,8 @@ def generate_docx(draft: dict) -> bytes:
         else:  # para / para_noindent
             _para(doc, s["text"], indent=(t == "para"))
 
-    # 草稿说明仅对未签发文书显示；已签发版本是对外交付物，不再携带草稿警示
-    if gate_note and status != "issued":
+    # 定稿版仍保留来源与责任边界，但不再显示草稿说明。
+    if gate_note and status != "finalized":
         _para(doc, "【说明】" + gate_note, indent=False, size=Pt(10), east="宋体",
               color=RGBColor(0x63, 0x63, 0x66), line=Pt(18), before=10)
 

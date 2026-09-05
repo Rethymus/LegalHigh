@@ -28,7 +28,13 @@ def load_links() -> dict[str, list[dict]]:
             cit = corpus.citation_of(r["law_id"], int(r["no"]))  # 不存在即 KeyError
             cleaned.append({"law_id": r["law_id"], "no": int(r["no"]), "label": cit["article_label"],
                             "text": cit["text"], "note": r.get("note", ""),
-                            "ref_title": cit["law_title"], "ref_status": cit["status"]})
+                            # 关联解释也是对外引用，不能只给标题/正文而丢失版本、
+                            # 生效日期与快照来源字段。
+                            "ref_title": cit["law_title"], "ref_status": cit["status"],
+                            "ref_effective_date": cit["effective_date"],
+                            "ref_promulgation_instrument": cit["promulgation_instrument"],
+                            "ref_source_url": cit["source_url"],
+                            "ref_source_kind": cit["source_kind"]})
         out.setdefault(law_id, {})[no] = cleaned
     return out
 

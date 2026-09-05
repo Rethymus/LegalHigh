@@ -1,11 +1,11 @@
 // FRAME 04 · Law Detail —— 法条详情（规格 §9）
-// 官方原文不可被 AI 改写；右侧 AI 解释；底部：关联案例/相关条文/修订历史/版本对比
+// 证据快照文本不可被 AI 改写；已审核解读与项目阅读方法必须明确分层。
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useParams, useSearchParams } from 'react-router-dom'
 import { Icon } from '../icons'
-import { WARM_TIPS, findArticle, findLaw, lawChapters, lawDisplayTitle, useLaws } from '../../data/model'
+import { WARM_TIPS, findArticle, findLaw, lawChapters, lawDisplayTitle, lawEvidenceGrade, useLaws } from '../../data/model'
 import { EmptyState, PageHeader, SkeletonLines, Tabs, useCopy, useToast, ValidityBadge } from '../ui'
-import { AIBlock, AIWarning, CitationChip, OfficialArticle, SourceBadge } from '../domain'
+import { AIWarning, CitationChip, OfficialArticle, SourceBadge } from '../domain'
 import { api, isFav as isFavKey, toggleFav, type ArticleExplain, type ArticleLink } from '../../lib/api'
 
 const TABS = [
@@ -39,17 +39,18 @@ export default function LawDetail() {
   }, [lawId])
   const no = Number(sp.get('art') ?? '496')
   const article = law ? findArticle(law, no) : undefined
+  const articleNo = article?.no
   // 官方解读关联层（决策项15）：有映射时展示司法解释条文卡
   const [articleLinks, setArticleLinks] = useState<ArticleLink[]>([])
   useEffect(() => {
-    if (!lawId || !article) return
+    if (!lawId || articleNo === undefined) return
     let alive = true
-    api.articleLinks(lawId, article.no).then(
+    api.articleLinks(lawId, articleNo).then(
       (d) => alive && setArticleLinks(d.links ?? []),
       () => alive && setArticleLinks([]),
     )
     return () => { alive = false }
-  }, [lawId, article?.no])
+  }, [lawId, articleNo])
   // 当前条号的已审核人工解读（决策项4：无则保持 AI 通用指引）
   const explain = article ? explains[String(article.no)] : undefined
   const [favState, setFavState] = useState(false)
@@ -63,7 +64,7 @@ export default function LawDetail() {
   const [linkedCases, setLinkedCases] = useState<{ id: string; name: string; no: string; level: string }[]>([])
   useEffect(() => {
     let alive = true
-    // 关联案例：server 样本库中 research_refs / statutes 指向本条的记录
+    // 关联案例：server 已核实案例中 research_refs / statutes 指向本条的记录
     api.listCases().then(
       (d) => alive && setLinkedCases(
         d.cases.filter((c) => c.verified && [...(c.statutes ?? []), ...(c.research_refs ?? [])]
@@ -94,7 +95,7 @@ export default function LawDetail() {
         actions={
           <>
             <ValidityBadge v={law.status} />
-            <SourceBadge kind="law" grade="强" />
+            <SourceBadge kind="law" grade={lawEvidenceGrade(law.sourceUrl)} />
             <button className="btn btn-ghost btn-sm" onClick={() => copy(`${law.title} ${article.label}：${article.text}`, '已复制法条原文')}><Icon name="copy" size={13} />复制原文</button>
             <button className="btn btn-secondary btn-sm" onClick={() => {
               const now = toggleFav({ key: `law:${lawId}#${no}`, type: '法条', title: `《${law.title.replace(/^中华人民共和国/, '')}》${article.label}`, meta: `${law.status} · ${law.effectiveDate} 施行`, to: `/laws/${lawId}?art=${no}` })
@@ -139,7 +140,7 @@ export default function LawDetail() {
                     </Link>
                   ))
                 ) : (
-                  <div className="tiny">本地案例样本中未检出直接引用本条的公开案例；接入裁判文书网/案例库后自动关联（原型不虚构案例）。</div>
+                  <div className="tiny">当前已核实案例清单中没有检出直接引用本条的记录。</div>
                 )
               )}
               {tab === 'rel-js' && (
@@ -159,7 +160,7 @@ export default function LawDetail() {
                     ))}
                   </div>
                 ) : (
-                  <div className="tiny">本地已收录的司法解释中未检出直接关联本条的条文；后续将随司法解释语料扩容自动关联（原型不虚构内容）。</div>
+                  <div className="tiny">当前本地司法解释证据快照中没有检出直接关联本条的条文。</div>
                 )
               )}
               {tab === 'cite' && (
@@ -205,27 +206,30 @@ export default function LawDetail() {
                 {/AI/.test(explain.author) && <span className="bdg bdg-gray" title="本内容由 AI 起草、经人工审核后发布">AI 起草</span>}
               </div>
               <div style={{ fontSize: 13.5, lineHeight: 1.9 }}>{explain.text}</div>
-              <AIWarning compact />
+              {/AI/.test(explain.author) && <AIWarning compact />}
               <div className="tiny mt-8">编写：{explain.author} · 审核发布：{explain.reviewer}{explain.reviewer_role ? `（${explain.reviewer_role}）` : ''}{explain.date ? ` · ${explain.date}` : ''}</div>
               {explain.source_note && <div className="tiny mt-8" style={{ color: 'var(--tx-3)' }}>{explain.source_note}</div>}
               <div className="tiny mt-8"><Icon name="info" size={12} /> 解读不替代法条原文，不构成法律意见。</div>
             </div>
           )}
-          <AIBlock label="AI 通用阅读指引（非本条逐条解释）">
-            <p>本条位于「{article.chapter.split('>').slice(-1)[0]?.trim()}」。逐条通俗解释尚未接入（见数据源页规划）；以下为通用读法指引，具体含义请以左侧官方原文为准。</p>
-            <ul>
-              <li>读法：先看行为模式（要求什么/禁止什么），再看法律后果（有效/无效/责任承担）。</li>
-              <li>适用：需结合具体事实与证据逐项核对，个案请咨询执业律师或拨打 12348。</li>
+          <section className="card" style={{ padding: 16 }}>
+            <div className="tiny bold mb-8">通用阅读方法（项目整理，非逐条解读）</div>
+            <p className="tiny" style={{ lineHeight: 1.9 }}>本条位于「{article.chapter.split('>').slice(-1)[0]?.trim()}」。当前没有已审核的逐条通俗解读；具体含义请先以左侧证据快照文本为线索，并在正式使用前核对官方现行文本。</p>
+            <ul className="tiny" style={{ lineHeight: 1.9 }}>
+              <li>先区分行为规范：条文要求、禁止或允许什么。</li>
+              <li>再核对适用条件、例外与法律后果，并结合具体事实和证据。</li>
             </ul>
-            <div className="ai-note" style={{ marginTop: 10 }}><Icon name="info" size={12} />AI 解释不替代法条原文与专业判断。</div>
-          </AIBlock>
+          </section>
 
           <div className="card mt-16" style={{ padding: 16 }}>
             <div className="tiny bold mb-8">本法分编（{chapters.length}）</div>
             <div style={{ display: 'flex', flexDirection: 'column' }}>
-              {chapters.map((ch) => (
-                <button key={ch} className="ol-item" style={{ textAlign: 'left' }} title={ch}>{ch}</button>
-              ))}
+              {chapters.map((ch) => {
+                const first = law.articles.find((a) => a.chapter.split('>')[0]?.trim() === ch)
+                return first
+                  ? <Link key={ch} className="ol-item" to={`/laws/${law.id}?art=${first.no}`} title={`跳到 ${ch} 第一条`}>{ch}</Link>
+                  : <span key={ch} className="ol-item">{ch}</span>
+              })}
             </div>
           </div>
         </aside>
@@ -236,6 +240,7 @@ export default function LawDetail() {
         <Icon name="bulb" size={15} />
         <span className="banner-tx">
           {WARM_TIPS.aid}
+          {' '}<a href={WARM_TIPS.aidSourceUrl} target="_blank" rel="noreferrer">司法部来源</a>（{WARM_TIPS.aidSourceCheckedAt} 查阅；【{WARM_TIPS.aidSourceGrade}】）。
           {' '}{WARM_TIPS.limit.text}
           <CitationChip label="《民法典》第188条" to="/laws/civl-2020?art=188" />
         </span>

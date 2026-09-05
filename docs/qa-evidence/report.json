@@ -5,7 +5,9 @@
     "consoleErrors": [],
     "consoleWarnings": [],
     "pageErrors": [],
-    "failedRequests": []
+    "failedRequests": [],
+    "finalUrl": "http://localhost:5173/",
+    "title": "LegalHigh · 法律智能知识库"
   },
   {
     "name": "02-dashboard-dark",
@@ -13,7 +15,9 @@
     "consoleErrors": [],
     "consoleWarnings": [],
     "pageErrors": [],
-    "failedRequests": []
+    "failedRequests": [],
+    "finalUrl": "http://localhost:5173/",
+    "title": "LegalHigh · 法律智能知识库"
   },
   {
     "name": "03-needs",
@@ -21,7 +25,9 @@
     "consoleErrors": [],
     "consoleWarnings": [],
     "pageErrors": [],
-    "failedRequests": []
+    "failedRequests": [],
+    "finalUrl": "http://localhost:5173/needs",
+    "title": "LegalHigh · 法律智能知识库"
   },
   {
     "name": "04-needs-run",
@@ -31,7 +37,13 @@
     "pageErrors": [],
     "failedRequests": [],
     "step1": "ok",
-    "step2": "clicked"
+    "step2": "clicked",
+    "step3": "clicked",
+    "step4": "clicked",
+    "step5": "clicked",
+    "step6": "clicked",
+    "finalUrl": "http://localhost:5173/needs",
+    "title": "LegalHigh · 法律智能知识库"
   },
   {
     "name": "05-search-home",
@@ -39,7 +51,9 @@
     "consoleErrors": [],
     "consoleWarnings": [],
     "pageErrors": [],
-    "failedRequests": []
+    "failedRequests": [],
+    "finalUrl": "http://localhost:5173/search",
+    "title": "LegalHigh · 法律智能知识库"
   },
   {
     "name": "06-search-results",
@@ -47,7 +61,9 @@
     "consoleErrors": [],
     "consoleWarnings": [],
     "pageErrors": [],
-    "failedRequests": []
+    "failedRequests": [],
+    "finalUrl": "http://localhost:5173/search/results?q=%E8%AF%95%E7%94%A8%E6%9C%9F%20%E4%B8%80%E5%B9%B4",
+    "title": "LegalHigh · 法律智能知识库"
   },
   {
     "name": "07-law-detail",
@@ -55,7 +71,9 @@
     "consoleErrors": [],
     "consoleWarnings": [],
     "pageErrors": [],
-    "failedRequests": []
+    "failedRequests": [],
+    "finalUrl": "http://localhost:5173/laws/civl-2020?art=25",
+    "title": "LegalHigh · 法律智能知识库"
   },
   {
     "name": "08-laws-browse",
@@ -63,7 +81,9 @@
     "consoleErrors": [],
     "consoleWarnings": [],
     "pageErrors": [],
-    "failedRequests": []
+    "failedRequests": [],
+    "finalUrl": "http://localhost:5173/laws",
+    "title": "LegalHigh · 法律智能知识库"
   },
   {
     "name": "09-case-search",
@@ -71,7 +91,9 @@
     "consoleErrors": [],
     "consoleWarnings": [],
     "pageErrors": [],
-    "failedRequests": []
+    "failedRequests": [],
+    "finalUrl": "http://localhost:5173/cases",
+    "title": "LegalHigh · 法律智能知识库"
   },
   {
     "name": "10-case-detail-cn",
@@ -79,7 +101,9 @@
     "consoleErrors": [],
     "consoleWarnings": [],
     "pageErrors": [],
-    "failedRequests": []
+    "failedRequests": [],
+    "finalUrl": "http://localhost:5173/cases/guidance-24",
+    "title": "LegalHigh · 法律智能知识库"
   },
   {
     "name": "11-case-detail-foreign",
@@ -87,7 +111,9 @@
     "consoleErrors": [],
     "consoleWarnings": [],
     "pageErrors": [],
-    "failedRequests": []
+    "failedRequests": [],
+    "finalUrl": "http://localhost:5173/cases/brown-v-board",
+    "title": "LegalHigh · 法律智能知识库"
   },
   {
     "name": "12-research",
@@ -95,7 +121,9 @@
     "consoleErrors": [],
     "consoleWarnings": [],
     "pageErrors": [],
-    "failedRequests": []
+    "failedRequests": [],
+    "finalUrl": "http://localhost:5173/research",
+    "title": "LegalHigh · 法律智能知识库"
   },
   {
     "name": "13-research-run",
@@ -105,7 +133,9 @@
     "pageErrors": [],
     "failedRequests": [],
     "step1": "ok",
-    "step2": "clicked:开始研究"
+    "step2": "clicked:开始研究",
+    "finalUrl": "http://localhost:5173/research",
+    "title": "LegalHigh · 法律智能知识库"
   },
   {
     "name": "14-contracts",
@@ -113,24 +143,19 @@
     "consoleErrors": [],
     "consoleWarnings": [],
     "pageErrors": [],
-    "failedRequests": []
+    "failedRequests": [],
+    "finalUrl": "http://localhost:5173/contracts",
+    "title": "LegalHigh · 法律智能知识库"
   },
   {
     "name": "15-contract-review",
-    "path": "/contracts/c-1",
-    "consoleErrors": [],
-    "consoleWarnings": [],
-    "pageErrors": [],
-    "failedRequests": []
-  },
-  {
-    "name": "16-contract-review-run",
-    "path": "/contracts/c-1",
+    "path": "/contracts/new",
     "consoleErrors": [],
     "consoleWarnings": [],
     "pageErrors": [],
     "failedRequests": [],
-    "step1": "no-btn"
+    "finalUrl": "http://localhost:5173/contracts/new",
+    "title": "LegalHigh · 法律智能知识库"
   },
   {
     "name": "17-compare",
@@ -138,7 +163,9 @@
     "consoleErrors": [],
     "consoleWarnings": [],
     "pageErrors": [],
-    "failedRequests": []
+    "failedRequests": [],
+    "finalUrl": "http://localhost:5173/compare",
+    "title": "LegalHigh · 法律智能知识库"
   },
   {
     "name": "18-draft",
@@ -146,7 +173,9 @@
     "consoleErrors": [],
     "consoleWarnings": [],
     "pageErrors": [],
-    "failedRequests": []
+    "failedRequests": [],
+    "finalUrl": "http://localhost:5173/draft",
+    "title": "LegalHigh · 法律智能知识库"
   },
   {
     "name": "19-draft-validation",
@@ -154,7 +183,9 @@
     "consoleErrors": [],
     "consoleWarnings": [],
     "pageErrors": [],
-    "failedRequests": []
+    "failedRequests": [],
+    "finalUrl": "http://localhost:5173/draft/validation",
+    "title": "LegalHigh · 法律智能知识库"
   },
   {
     "name": "20-comparative",
@@ -162,7 +193,9 @@
     "consoleErrors": [],
     "consoleWarnings": [],
     "pageErrors": [],
-    "failedRequests": []
+    "failedRequests": [],
+    "finalUrl": "http://localhost:5173/comparative",
+    "title": "LegalHigh · 法律智能知识库"
   },
   {
     "name": "21-learning",
@@ -170,7 +203,9 @@
     "consoleErrors": [],
     "consoleWarnings": [],
     "pageErrors": [],
-    "failedRequests": []
+    "failedRequests": [],
+    "finalUrl": "http://localhost:5173/learning",
+    "title": "LegalHigh · 法律智能知识库"
   },
   {
     "name": "22-workspace",
@@ -178,7 +213,9 @@
     "consoleErrors": [],
     "consoleWarnings": [],
     "pageErrors": [],
-    "failedRequests": []
+    "failedRequests": [],
+    "finalUrl": "http://localhost:5173/workspace",
+    "title": "LegalHigh · 法律智能知识库"
   },
   {
     "name": "23-collections",
@@ -186,7 +223,9 @@
     "consoleErrors": [],
     "consoleWarnings": [],
     "pageErrors": [],
-    "failedRequests": []
+    "failedRequests": [],
+    "finalUrl": "http://localhost:5173/collections",
+    "title": "LegalHigh · 法律智能知识库"
   },
   {
     "name": "24-data-sources",
@@ -194,7 +233,9 @@
     "consoleErrors": [],
     "consoleWarnings": [],
     "pageErrors": [],
-    "failedRequests": []
+    "failedRequests": [],
+    "finalUrl": "http://localhost:5173/data-sources",
+    "title": "LegalHigh · 法律智能知识库"
   },
   {
     "name": "25-audit",
@@ -202,7 +243,9 @@
     "consoleErrors": [],
     "consoleWarnings": [],
     "pageErrors": [],
-    "failedRequests": []
+    "failedRequests": [],
+    "finalUrl": "http://localhost:5173/audit",
+    "title": "LegalHigh · 法律智能知识库"
   },
   {
     "name": "26-settings",
@@ -210,7 +253,9 @@
     "consoleErrors": [],
     "consoleWarnings": [],
     "pageErrors": [],
-    "failedRequests": []
+    "failedRequests": [],
+    "finalUrl": "http://localhost:5173/settings",
+    "title": "LegalHigh · 法律智能知识库"
   },
   {
     "name": "27-design-system",
@@ -218,7 +263,9 @@
     "consoleErrors": [],
     "consoleWarnings": [],
     "pageErrors": [],
-    "failedRequests": []
+    "failedRequests": [],
+    "finalUrl": "http://localhost:5173/design-system",
+    "title": "LegalHigh · 法律智能知识库"
   },
   {
     "name": "28-narrow-needs",
@@ -226,7 +273,9 @@
     "consoleErrors": [],
     "consoleWarnings": [],
     "pageErrors": [],
-    "failedRequests": []
+    "failedRequests": [],
+    "finalUrl": "http://localhost:5173/needs",
+    "title": "LegalHigh · 法律智能知识库"
   },
   {
     "name": "29-narrow-dashboard",
@@ -234,7 +283,9 @@
     "consoleErrors": [],
     "consoleWarnings": [],
     "pageErrors": [],
-    "failedRequests": []
+    "failedRequests": [],
+    "finalUrl": "http://localhost:5173/",
+    "title": "LegalHigh · 法律智能知识库"
   },
   {
     "name": "30-narrow-nav-open",
@@ -243,7 +294,9 @@
     "consoleWarnings": [],
     "pageErrors": [],
     "failedRequests": [],
-    "step1": "clicked"
+    "step1": "clicked",
+    "finalUrl": "http://localhost:5173/",
+    "title": "LegalHigh · 法律智能知识库"
   },
   {
     "name": "31-narrow-search-results",
@@ -251,7 +304,9 @@
     "consoleErrors": [],
     "consoleWarnings": [],
     "pageErrors": [],
-    "failedRequests": []
+    "failedRequests": [],
+    "finalUrl": "http://localhost:5173/search/results?q=%E8%AF%95%E7%94%A8%E6%9C%9F",
+    "title": "LegalHigh · 法律智能知识库"
   },
   {
     "name": "32-narrow-law-detail",
@@ -259,15 +314,19 @@
     "consoleErrors": [],
     "consoleWarnings": [],
     "pageErrors": [],
-    "failedRequests": []
+    "failedRequests": [],
+    "finalUrl": "http://localhost:5173/laws/civl-2020?art=25",
+    "title": "LegalHigh · 法律智能知识库"
   },
   {
     "name": "33-narrow-contract-review",
-    "path": "/contracts/c-1",
+    "path": "/contracts/new",
     "consoleErrors": [],
     "consoleWarnings": [],
     "pageErrors": [],
-    "failedRequests": []
+    "failedRequests": [],
+    "finalUrl": "http://localhost:5173/contracts/new",
+    "title": "LegalHigh · 法律智能知识库"
   },
   {
     "name": "34-dark-search-results",
@@ -275,7 +334,9 @@
     "consoleErrors": [],
     "consoleWarnings": [],
     "pageErrors": [],
-    "failedRequests": []
+    "failedRequests": [],
+    "finalUrl": "http://localhost:5173/search/results?q=%E8%AF%95%E7%94%A8%E6%9C%9F",
+    "title": "LegalHigh · 法律智能知识库"
   },
   {
     "name": "35-dark-law-detail",
@@ -283,15 +344,19 @@
     "consoleErrors": [],
     "consoleWarnings": [],
     "pageErrors": [],
-    "failedRequests": []
+    "failedRequests": [],
+    "finalUrl": "http://localhost:5173/laws/civl-2020?art=25",
+    "title": "LegalHigh · 法律智能知识库"
   },
   {
     "name": "36-dark-contract-review",
-    "path": "/contracts/c-1",
+    "path": "/contracts/new",
     "consoleErrors": [],
     "consoleWarnings": [],
     "pageErrors": [],
-    "failedRequests": []
+    "failedRequests": [],
+    "finalUrl": "http://localhost:5173/contracts/new",
+    "title": "LegalHigh · 法律智能知识库"
   },
   {
     "name": "37-dark-audit",
@@ -299,6 +364,8 @@
     "consoleErrors": [],
     "consoleWarnings": [],
     "pageErrors": [],
-    "failedRequests": []
+    "failedRequests": [],
+    "finalUrl": "http://localhost:5173/audit",
+    "title": "LegalHigh · 法律智能知识库"
   }
 ]

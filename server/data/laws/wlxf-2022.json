@@ -9,12 +9,21 @@
  },
  "promulgation_instrument": "法释〔2022〕8号",
  "effective_date": "2022-03-15",
+ "effective_date_evidence": {
+  "title": "最高人民法院关于审理网络消费纠纷案件适用法律若干问题的规定（一）",
+  "url": "https://zh.wikisource.org/wiki/%E6%9C%80%E9%AB%98%E4%BA%BA%E6%B0%91%E6%B3%95%E9%99%A2%E5%85%B3%E4%BA%8E%E5%AE%A1%E7%90%86%E7%BD%91%E7%BB%9C%E6%B6%88%E8%B4%B9%E7%BA%A0%E7%BA%B7%E6%A1%88%E4%BB%B6%E9%80%82%E7%94%A8%E6%B3%95%E5%BE%8B%E8%8B%A5%E5%B9%B2%E9%97%AE%E9%A2%98%E7%9A%84%E8%A7%84%E5%AE%9A%EF%BC%88%E4%B8%80%EF%BC%89",
+  "accessed_at": "2026-08-29",
+  "grade": "中",
+  "source_kind": "wikisource-transcription",
+  "version": "现行有效"
+ },
  "source": {
   "kind": "wikisource-transcription",
   "url": "https://zh.wikisource.org/wiki/%E6%9C%80%E9%AB%98%E4%BA%BA%E6%B0%91%E6%B3%95%E9%99%A2%E5%85%B3%E4%BA%8E%E5%AE%A1%E7%90%86%E7%BD%91%E7%BB%9C%E6%B6%88%E8%B4%B9%E7%BA%A0%E7%BA%B7%E6%A1%88%E4%BB%B6%E9%80%82%E7%94%A8%E6%B3%95%E5%BE%8B%E8%8B%A5%E5%B9%B2%E9%97%AE%E9%A2%98%E7%9A%84%E8%A7%84%E5%AE%9A%EF%BC%88%E4%B8%80%EF%BC%89",
   "pageid": 1092613,
   "snapshot": "docs/research/evidence/ws_网络消费纠纷规定2022.json",
-  "fetched_at": "2026-08-29"
+  "fetched_at": "2026-08-29",
+  "sha256": "6077e29378edf222ab06138a790f41671244d86ddaa3e0ba30ed0eb0def48c10"
  },
  "authority_pointer": "国家法律法规数据库 https://flk.npc.gov.cn （检索该法条目核对）",
  "articles": [

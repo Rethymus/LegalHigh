@@ -1,14 +1,11 @@
-name: desktop-release
+name: desktop-package-candidate
 
-# 桌面端 release：Electron 壳 + PyInstaller 后端 sidecar
-# tag 推送 → 三平台构建 → GitHub Release 附产物
+# 手动构建未签名候选包；签名、验签与三平台安装 smoke test 完成前禁止自动发布 Release。
 on:
-  push:
-    tags: ['v*']
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   backend:
@@ -33,14 +30,28 @@ jobs:
         with:
           python-version: '3.12'
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
       - name: Install server deps
-        run: pip install fastapi "uvicorn[standard]" rank-bm25 python-docx httpx python-multipart pyinstaller
+        working-directory: server
+        run: pip install --require-hashes -r requirements-desktop.lock
+
+      - name: Verify backend and corpus
+        working-directory: server
+        run: |
+          python -m pytest tests -q
+          python scripts/corpus_selfcheck.py
 
       - name: Build web frontend
+        shell: bash
         run: |
           cd web
           npm ci
           npm run build
+          node scripts/qa_gates.mjs
+          node scripts/qa_contrast.mjs --strict
           mkdir -p ../server/desktop-dist/web
           cp -r dist/* ../server/desktop-dist/web/
 
@@ -48,12 +59,21 @@ jobs:
         shell: bash
         run: |
           cd server
+          rm -rf release-data
+          mkdir -p release-data
+          cp data/ai_providers.json data/article_explains.json data/article_links.json \
+             data/cases.json data/scenarios.json release-data/
+          cp -r data/laws release-data/laws
+          if find release-data -type f \( -name '*.db' -o -name '*.db-*' -o -name '*.sqlite*' \) | grep -q .; then
+            echo 'Refusing to package a database file' >&2
+            exit 1
+          fi
           mkdir -p desktop-dist/web
           if [ -d "../web/dist" ]; then
             cp -r ../web/dist/* desktop-dist/web/
           fi
           pyinstaller --name legalhigh-backend --contents-directory . \
-            --add-data "data${{ matrix.sep }}app_data" \
+            --add-data "release-data${{ matrix.sep }}data" \
             --add-data "desktop-dist/web${{ matrix.sep }}web" \
             --hidden-import uvicorn.logging \
             --hidden-import uvicorn.loops.auto \
@@ -62,6 +82,10 @@ jobs:
             --hidden-import uvicorn.lifespan.on \
             --hidden-import app.main \
             desktop_entry.py
+          while IFS= read -r binary; do
+            echo "$binary"
+            if command -v sha256sum >/dev/null 2>&1; then sha256sum "$binary"; else shasum -a 256 "$binary"; fi
+          done < <(find dist/legalhigh-backend* -maxdepth 2 -type f -name 'legalhigh-backend*')
 
       - uses: actions/upload-artifact@v4
         with:
@@ -93,14 +117,21 @@ jobs:
           name: backend-${{ matrix.artifact_name }}
           path: desktop/backend
 
-      - name: Materialize launcher from template
-        working-directory: desktop
-        run: cp main.js.in main.js
-
-      - name: Electron package + Release
-        working-directory: desktop
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Restore Unix sidecar executable bit
+        if: runner.os != 'Windows'
+        shell: bash
         run: |
-          npm install
-          npx electron-builder --publish always
+          find desktop/backend -type f -name legalhigh-backend -exec chmod +x {} +
+          test -n "$(find desktop/backend -type f -name legalhigh-backend -perm -u+x -print -quit)"
+
+      - name: Electron candidate package
+        working-directory: desktop
+        run: |
+          npm ci
+          npm run check
+          npm run dist
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: unsigned-desktop-candidate-${{ matrix.os }}
+          path: desktop/dist/**

@@ -1,6 +1,6 @@
 // FRAME 13 · Document Validation —— 交付前校验（规格 §20，真实 API 驱动）
-// server GET /api/drafts/{did}/validation：程序化检查（必填要素/占位符/主体一致/日期一致/引用有效且可溯源/结构/签发 gate）
-// 存在问题 → Need Review 且不可视为可交付；全部通过且已签发 → Ready
+// server GET /api/drafts/{did}/validation：程序化检查（必填要素/占位符/主体一致/日期一致/引用有效且可溯源/结构/定稿确认）
+// 存在问题 → Need Review；全部通过且使用者确认定稿 → Ready
 import { useEffect, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { Icon } from '../icons'
@@ -41,7 +41,7 @@ export default function DraftValidation() {
       <PageHeader
         back={<Link to="/draft" className="tiny row" style={{ gap: 4 }}><Icon name="arrowL" size={13} />返回文书起草</Link>}
         title="交付前校验 · Pre-delivery Validation"
-        sub="生成文书后强制校验：要素完整性、法律引用（语料解析 + 现行有效）、格式规范与签发 gate。存在问题则状态为 Need Review。"
+        sub="生成文书后检查要素完整性、法律引用、格式规范与使用者定稿确认。Ready 不代表平台核验身份、事实或法律判断。"
       />
 
       {/* 草稿选择 */}
@@ -54,8 +54,8 @@ export default function DraftValidation() {
                 onClick={() => setSp({ draft: d.id })}>
                 <Icon name="file" size={15} className="muted" />
                 <span className="lrow-t">{TEMPLATE_NAMES[d.template_id] ?? d.template_id} · {d.id}</span>
-                <span className={'bdg ' + (d.status === 'issued' ? 'bdg-green' : d.status === 'verified' ? 'bdg-blue' : 'bdg-orange')}>
-                  {d.status === 'issued' ? '已签发' : d.status === 'verified' ? '已核验' : '草稿'}
+                <span className={'bdg ' + (d.status === 'finalized' ? 'bdg-green' : d.status === 'reviewed' ? 'bdg-blue' : 'bdg-orange')}>
+                  {d.status === 'finalized' ? '使用者已定稿' : d.status === 'reviewed' ? '已复核' : '草稿'}
                 </span>
                 <span className="tiny mono">{fmtTime(d.created_at)}</span>
               </button>
@@ -88,13 +88,13 @@ export default function DraftValidation() {
             <Icon name={v.ready ? 'verify' : 'alert'} size={15} />
             <span className="banner-tx">
               {v.ready
-                ? '全部程序化校验通过且已完成签发。注意：对外交付前请再次确认实体事实与授权范围。'
+                ? '程序化校验通过且使用者已确认定稿。平台仍未核验身份、事实、授权范围或法律判断。'
                 : v.need_review
                   ? '存在未通过的校验项（见下方红项）。修正后重新校验。'
-                  : '程序化校验全部通过，但文书尚未完成签发 gate（执业律师核验签发）——未签发不得对外发出。'}
+                  : '程序化校验通过，但使用者尚未完成复核与定稿责任确认。'}
             </span>
             <span className="spacer" />
-            {v.status !== 'issued' && <Link to="/draft" className="btn btn-secondary btn-sm">返回起草页走签发流程</Link>}
+            {v.status !== 'finalized' && <Link to="/draft" className="btn btn-secondary btn-sm">返回起草页完成复核</Link>}
           </div>
 
           {groups.map((g) => {
@@ -121,7 +121,7 @@ export default function DraftValidation() {
           })}
 
           <div className="banner banner-info"><Icon name="info" size={15} />
-            <span className="banner-tx">{v.disclaimer} 校验 Gate 对应 ABA 512 与「AI 不得代替法官裁判」要求：高风险文书必须经人工核验签出。</span>
+            <span className="banner-tx">{v.disclaimer} 高风险文书必须由实际使用者独立复核；系统既不代替专业判断，也不实施签发。</span>
           </div>
         </>
       )}

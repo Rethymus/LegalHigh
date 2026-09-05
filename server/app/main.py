@@ -1,20 +1,24 @@
 # -*- coding: utf-8 -*-
 """LegalHigh 原型 API（FastAPI）。
 
-合规设计：所有产出都带 disclaimer；律师函签发前强制执业律师核验 gate；
-投诉通道真实落库；备案信息如实标注「未接入大模型/待登记」，不虚构备案号。
+合规设计：所有产出都带 disclaimer；平台不核验律师资格、不签发文书；文书状态
+只记录本机使用者的复核与定稿进度。投诉通道真实落库，备案状态如实呈现。
 """
+import hashlib
 import json
 import os as _os
+import secrets
 import sys
+from dataclasses import dataclass
 from datetime import date
 from pathlib import Path
 
-from fastapi import FastAPI, HTTPException
+from fastapi import Depends, FastAPI, File, Header, HTTPException, Request, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import Response
 from fastapi.staticfiles import StaticFiles
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict, Field
+from typing import Literal
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
@@ -42,18 +46,94 @@ from app.corpus import get_corpus  # noqa: E402
 
 app = FastAPI(title="LegalHigh 原型 API", version="0.1.0")
 
+# 本机原型没有账号/会话系统。任何会读写用户数据、写审核结果或调用外部模型的
+# 接口必须默认关闭，不能把请求体中的 actor/role 当作身份凭据。启用时由启动环境
+# 注入令牌与非敏感的审计主体名；令牌只在请求头中瞬态比较，绝不写入数据库、日志
+# 或响应。前端在没有认证传递能力时会收到清晰的 503/401/403，而公开检索仍可用。
+ADMIN_TOKEN_ENV = "LH_ADMIN_TOKEN"
+ADMIN_PRINCIPAL_ENV = "LH_ADMIN_PRINCIPAL"
+ADMIN_TOKEN_HEADER = "X-LegalHigh-Admin-Token"
+
+
+@dataclass(frozen=True)
+class AdminPrincipal:
+    """由服务端配置确定的本机可信主体；不接受客户端 actor/role 覆盖。"""
+
+    name: str
+
+
+def _admin_config() -> tuple[str, str]:
+    token = (_os.environ.get(ADMIN_TOKEN_ENV) or "").strip()
+    principal = (_os.environ.get(ADMIN_PRINCIPAL_ENV) or "").strip()
+    if not token or not principal or len(token) < 32:
+        raise HTTPException(
+            status_code=503,
+            detail="敏感接口未启用：服务端须配置至少 32 字符的管理令牌与可信主体。",
+        )
+    return token, principal
+
+
+def require_admin(
+    supplied_token: str | None = Header(default=None, alias=ADMIN_TOKEN_HEADER),
+) -> AdminPrincipal:
+    """敏感端点依赖：配置缺失 503，缺令牌 401，令牌错误 403。
+
+    对哈希后的固定长度摘要做 constant-time 比较，避免把令牌长度差异暴露给
+    请求方；服务端配置值本身从不进入返回值或审计 payload。
+    """
+    expected, principal = _admin_config()
+    if not supplied_token:
+        raise HTTPException(status_code=401, detail="需要本机管理令牌。")
+    expected_digest = hashlib.sha256(expected.encode("utf-8")).digest()
+    supplied_digest = hashlib.sha256(supplied_token.encode("utf-8")).digest()
+    if not secrets.compare_digest(supplied_digest, expected_digest):
+        raise HTTPException(status_code=403, detail="本机管理令牌无效。")
+    return AdminPrincipal(name=principal)
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:5173", "http://127.0.0.1:5173", "http://localhost:4173", "http://127.0.0.1:4173"],
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
+    allow_headers=["Content-Type", ADMIN_TOKEN_HEADER],
 )
+
+
+@app.middleware("http")
+async def security_headers(request: Request, call_next):
+    """本机 Web 壳与 API 的最小浏览器安全基线。"""
+    response = await call_next(request)
+    response.headers.setdefault(
+        "Content-Security-Policy",
+        "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; "
+        "img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; "
+        "base-uri 'self'; frame-ancestors 'none'; form-action 'self'",
+    )
+    response.headers.setdefault("X-Content-Type-Options", "nosniff")
+    response.headers.setdefault("X-Frame-Options", "DENY")
+    response.headers.setdefault("Referrer-Policy", "no-referrer")
+    response.headers.setdefault("Permissions-Policy", "camera=(), microphone=(), geolocation=()")
+    response.headers.setdefault("Cross-Origin-Resource-Policy", "same-origin")
+    if request.url.path.startswith("/api/"):
+        response.headers.setdefault("Cache-Control", "no-store")
+    return response
 
 
 @app.get("/api/health")
 def health():
     corpus = get_corpus()
-    return {"status": "ok", "laws": len(corpus.laws), "articles": len(corpus.articles)}
+    result = {"status": "ok", "service": "LegalHigh", "laws": len(corpus.laws), "articles": len(corpus.articles)}
+    # 桌面壳先通过随机实例证明确认端口确由本次 sidecar 占用，再加载页面或发送管理令牌。
+    # 普通 Web 部署不配置该值，也不会伪造桌面实例身份。
+    instance_proof = (_os.environ.get("LH_DESKTOP_INSTANCE_PROOF") or "").strip()
+    if instance_proof:
+        result["instance_proof"] = instance_proof
+    return result
+
+
+@app.get("/api/session")
+def authenticated_session(admin: AdminPrincipal = Depends(require_admin)):
+    """返回本机审计署名；不表示账号身份、律师资格或组织关系已经核验。"""
+    return {"principal": admin.name, "assurance": "local-audit-label-only"}
 
 
 @app.get("/api/laws")
@@ -69,26 +149,6 @@ def get_law(law_id: str):
     if law_id not in corpus.laws:
         raise HTTPException(404, "law not found")
     return corpus.laws[law_id]
-
-
-class ExplainReviewBody(BaseModel):
-    action: str  # approve / reopen
-    reviewer: str
-    license_no: str | None = None  # 律师执业证号（approve 必填，依法公示）
-
-
-@app.patch("/api/explains/{law_id}/{no}")
-def review_explain(law_id: str, no: int, body: ExplainReviewBody):
-    """解读审核（决策项4 双轨的人工一环）：approve 须填真实审核人；动作写入 append-only 审计。"""
-    try:
-        e = explains_mod.set_review(law_id, no, body.action, body.reviewer, body.license_no)
-    except KeyError as ex:
-        raise HTTPException(404, str(ex))
-    except ValueError as ex:
-        raise HTTPException(422, str(ex))
-    storage.audit(body.reviewer or "anonymous", "explain", f"{law_id}#{no}",
-                  f"explain_{body.action}", {"status": e["status"], "license_no": e.get("reviewer_license_no")})
-    return {"law_id": law_id, "no": no, "status": e["status"], "reviewer": e.get("reviewer")}
 
 
 @app.get("/api/article-links/{law_id}/{no}")
@@ -111,19 +171,39 @@ def match_scenario(text: str = ""):
     return {"matches": scenarios_mod.match_scenarios(text.strip())}
 
 
-@app.get("/api/explains/queue")
-def explains_queue():
-    """待审核队列（审核工作台数据源；草稿可见于审核面，仍不进入对外法条页）。"""
-    return {"queue": explains_mod.review_queue()}
-
-
 @app.get("/api/laws/{law_id}/explains")
 def law_explains(law_id: str):
-    """法条人工通俗解读（仅 status=approved 且已填审核人；AI 草稿审核前不对外——决策项4 双轨）。"""
+    """法条通俗解读（仅 status=approved 且已填审核人；AI 草稿审核前不对外——决策项4 双轨）。"""
     corpus = get_corpus()
     if law_id not in corpus.laws:
         raise HTTPException(404, "law not found")
     return {"law_id": law_id, "explains": explains_mod.approved_for(law_id)}
+
+
+class ExplainReviewBody(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    action: str  # approve / reopen
+    license_no: str | None = None  # 可选公示证号（10-20 位数字，格式由 explains 模块校验）
+
+
+@app.get("/api/explains/queue")
+def explains_queue(admin: AdminPrincipal = Depends(require_admin)):
+    """解读审核队列（敏感：审核面数据不对未配置主体开放）。"""
+    return {"queue": explains_mod.review_queue()}
+
+
+@app.patch("/api/explains/{law_id}/{no}")
+def review_explain(law_id: str, no: int, body: ExplainReviewBody, admin: AdminPrincipal = Depends(require_admin)):
+    """解读审核（决策项4 双轨的人工一环）。审核人=服务端主体，不接受客户端自报；动作写入 append-only 审计。"""
+    try:
+        e = explains_mod.set_review(law_id, no, body.action, admin.name, body.license_no)
+    except KeyError as ex:
+        raise HTTPException(404, str(ex))
+    except ValueError as ex:
+        raise HTTPException(422, str(ex))
+    storage.audit(admin.name, "explain", f"{law_id}#{no}",
+                  f"explain_{body.action}", {"status": e["status"], "license_no": e.get("reviewer_license_no")})
+    return {"law_id": law_id, "no": no, "status": e["status"], "reviewer": e.get("reviewer")}
 
 
 @app.get("/api/search")
@@ -154,8 +234,8 @@ def search_articles(q: str, top_k: int = 20, law_id: str | None = None):
 
 
 class AskBody(BaseModel):
-    question: str
-    top_k: int = 6
+    question: str = Field(min_length=1, max_length=20_000)
+    top_k: int = Field(default=6, ge=1, le=60)
 
 
 @app.post("/api/qa/ask")
@@ -166,9 +246,9 @@ def ask(body: AskBody):
 
 
 class ResearchBody(BaseModel):
-    question: str
-    law_ids: list[str] | None = None
-    top_k: int = 12
+    question: str = Field(min_length=1, max_length=20_000)
+    law_ids: list[str] | None = Field(default=None, max_length=32)
+    top_k: int = Field(default=12, ge=1, le=60)
 
 
 @app.post("/api/research/memo")
@@ -197,9 +277,9 @@ def research_report_docx(body: ResearchBody):
 
 
 class CaseBody(BaseModel):
-    title: str | None = None
-    case_text: str
-    claim_id: str = "loan_repayment"
+    title: str | None = Field(default=None, max_length=256)
+    case_text: str = Field(min_length=1, max_length=200_000)
+    claim_id: str = Field(default="loan_repayment", max_length=64)
 
 
 @app.post("/api/case/analyze")
@@ -227,8 +307,8 @@ def case_report_docx(body: CaseBody):
 
 
 class AnalyzeBody(BaseModel):
-    title: str | None = None
-    contract_text: str
+    title: str | None = Field(default=None, max_length=256)
+    contract_text: str = Field(min_length=1, max_length=200_000)
 
 
 @app.post("/api/reviews/analyze")
@@ -239,20 +319,20 @@ def analyze(body: AnalyzeBody):
 
 
 @app.post("/api/reviews")
-def create_review(body: AnalyzeBody):
+def create_review(body: AnalyzeBody, admin: AdminPrincipal = Depends(require_admin)):
     result = analyze(body)
-    rid = storage.create_review(result["title"], body.contract_text, result)
+    rid = storage.create_review(result["title"], body.contract_text, result, actor=admin.name)
     return {"review_id": rid, **result}
 
 
 @app.get("/api/reviews")
-def reviews_list(limit: int = 50):
+def reviews_list(limit: int = 50, admin: AdminPrincipal = Depends(require_admin)):
     return {"reviews": storage.list_reviews(min(max(limit, 1), 200))}
 
 
 class CompareBody(BaseModel):
-    text_a: str
-    text_b: str
+    text_a: str = Field(min_length=1, max_length=200_000)
+    text_b: str = Field(min_length=1, max_length=200_000)
 
 
 @app.post("/api/compare")
@@ -263,7 +343,7 @@ def compare_texts(body: CompareBody):
 
 
 @app.get("/api/reviews/{rid}")
-def get_review(rid: str):
+def get_review(rid: str, admin: AdminPrincipal = Depends(require_admin)):
     r = storage.get_review(rid)
     if not r:
         raise HTTPException(404, "review not found")
@@ -271,7 +351,7 @@ def get_review(rid: str):
 
 
 @app.get("/api/reviews/{rid}/docx")
-def review_docx(rid: str):
+def review_docx(rid: str, admin: AdminPrincipal = Depends(require_admin)):
     """审查记录 DOCX 导出：AI 建议以 Word 修订插入（w:ins）写入，律师可在 Word/WPS 中接受或拒绝。"""
     r = storage.get_review(rid)
     if not r:
@@ -284,54 +364,66 @@ def review_docx(rid: str):
     )
 
 
-from fastapi import UploadFile, File  # noqa: E402
-
-
 @app.post("/api/reviews/{rid}/docx-return")
-async def review_docx_return(rid: str, file: UploadFile = File(...)):
+async def review_docx_return(
+    rid: str,
+    file: UploadFile = File(...),
+    admin: AdminPrincipal = Depends(require_admin),
+):
     """律师回传修订稿（M7-T1 后半）：解析 Word 修订状态（接受→采纳 / 拒绝→驳回 / 未处理→不动），
     经既有批注状态机流转并写审计；非法流转如实记 skipped。"""
     r = storage.get_review(rid)
     if not r:
         raise HTTPException(404, "review not found")
-    parsed = docx_return.parse_review_docx(await file.read())
-    summary = docx_return.apply_return(rid, parsed, r)
-    storage.audit("docx回传", "review", rid, "docx_return", {
+    content_type = (file.content_type or "").lower()
+    if content_type not in docx_return.ALLOWED_MIME_TYPES:
+        raise HTTPException(status_code=415, detail="仅支持 DOCX 文件。")
+    data = await file.read(docx_return.MAX_DOCX_BYTES + 1)
+    if len(data) > docx_return.MAX_DOCX_BYTES:
+        raise HTTPException(status_code=413, detail="DOCX 文件超过 10 MiB 大小限制。")
+    try:
+        parsed = docx_return.parse_review_docx(data)
+        summary = docx_return.apply_return(rid, parsed, r, actor=admin.name)
+    except ValueError as ex:
+        raise HTTPException(status_code=422, detail=str(ex)) from ex
+    except Exception as ex:  # noqa: BLE001 - 第三方 DOCX 解析异常统一转为输入错误
+        raise HTTPException(status_code=422, detail="DOCX 文件无法解析。") from ex
+    storage.audit(admin.name, "review", rid, "docx_return", {
         "accepted": summary["accepted_n"], "rejected": summary["rejected_n"],
         "pending": summary["pending"], "skipped": len(summary["skipped"])})
     return summary
 
 
 @app.delete("/api/reviews/{rid}")
-def delete_review(rid: str):
+def delete_review(rid: str, admin: AdminPrincipal = Depends(require_admin)):
     """PIPL 删除通道：审查记录级联删除批注；删除动作本身写入 append-only 审计。"""
     try:
-        storage.delete_review(rid)
+        storage.delete_review(rid, actor=admin.name)
     except KeyError as e:
         raise HTTPException(404, str(e))
     return {"deleted": rid}
 
 
 @app.delete("/api/drafts/{did}")
-def delete_draft(did: str):
+def delete_draft(did: str, admin: AdminPrincipal = Depends(require_admin)):
     try:
-        storage.delete_draft(did)
+        storage.delete_draft(did, actor=admin.name)
     except KeyError as e:
         raise HTTPException(404, str(e))
     return {"deleted": did}
 
 
 @app.delete("/api/complaints/{cid}")
-def delete_complaint(cid: str):
+def delete_complaint(cid: str, admin: AdminPrincipal = Depends(require_admin)):
     try:
-        storage.delete_complaint(cid)
+        storage.delete_complaint(cid, actor=admin.name)
     except KeyError as e:
         raise HTTPException(404, str(e))
     return {"deleted": cid}
 
 
 @app.get("/api/privacy/export")
-def privacy_export():
+def privacy_export(admin: AdminPrincipal = Depends(require_admin)):
     """PIPL 导出通道：全量本机数据 JSON 下载（reviews/annotations/drafts/complaints/audit_log）。"""
     data = storage.export_all()
     return Response(
@@ -342,15 +434,16 @@ def privacy_export():
 
 
 class TransitionBody(BaseModel):
-    action: str  # adopt / amend / reject / reopen
-    actor: str = "律师"
-    amended_text: str | None = None
+    model_config = ConfigDict(extra="forbid")
+    action: Literal["adopt", "amend", "reject", "reopen"]
+    amended_text: str | None = Field(default=None, max_length=20_000)
 
 
 @app.post("/api/reviews/{rid}/annotations/{finding_id}/transition")
-def transition_annotation(rid: str, finding_id: str, body: TransitionBody):
+def transition_annotation(rid: str, finding_id: str, body: TransitionBody,
+                          admin: AdminPrincipal = Depends(require_admin)):
     try:
-        return storage.transition_annotation(rid, finding_id, body.action, body.actor, body.amended_text)
+        return storage.transition_annotation(rid, finding_id, body.action, admin.name, body.amended_text)
     except KeyError as e:
         raise HTTPException(404, str(e))
     except ValueError as e:
@@ -358,7 +451,7 @@ def transition_annotation(rid: str, finding_id: str, body: TransitionBody):
 
 
 @app.get("/api/reviews/{rid}/audit")
-def review_audit(rid: str):
+def review_audit(rid: str, admin: AdminPrincipal = Depends(require_admin)):
     return {"entries": storage.list_audit(None, rid)}
 
 
@@ -372,7 +465,7 @@ def templates():
 
 @app.get("/api/drafts/citation-pool/{law_id}")
 def citation_pool(law_id: str):
-    """单部法律的引用池（A7：按需加载，替代原先全量 8 部随模板下发）。"""
+    """单部法律的引用池：按需加载，避免把整套语料随模板下发。"""
     corpus = get_corpus()
     if law_id not in corpus.laws:
         raise HTTPException(404, "law not found")
@@ -383,24 +476,24 @@ def citation_pool(law_id: str):
 
 
 class DraftBody(BaseModel):
-    template_id: str
-    fields: dict
+    template_id: str = Field(min_length=1, max_length=64)
+    fields: dict = Field(max_length=64)
 
 
 @app.post("/api/drafts")
-def create_draft(body: DraftBody):
+def create_draft(body: DraftBody, admin: AdminPrincipal = Depends(require_admin)):
     try:
         gen = drafting.generate(body.template_id, body.fields)
     except KeyError as e:
         raise HTTPException(404, str(e))
     except ValueError as e:
         raise HTTPException(422, str(e))
-    did = storage.create_draft(body.template_id, body.fields, gen["content"], gen["content"]["citations"], gen["snapshot"])
+    did = storage.create_draft(body.template_id, body.fields, gen["content"], gen["content"]["citations"], gen["snapshot"], actor=admin.name)
     return {"draft_id": did, "status": "draft", **gen}
 
 
 @app.get("/api/drafts/{did}")
-def get_draft(did: str):
+def get_draft(did: str, admin: AdminPrincipal = Depends(require_admin)):
     d = storage.get_draft(did)
     if not d:
         raise HTTPException(404, "draft not found")
@@ -408,25 +501,29 @@ def get_draft(did: str):
 
 
 class GateBody(BaseModel):
-    actor: str
-    role: str = "执业律师"
-    note: str | None = None
+    model_config = ConfigDict(extra="forbid")
+    note: str | None = Field(default=None, max_length=2000)
+    responsibility_confirmed: bool = False
 
 
-@app.post("/api/drafts/{did}/verify")
-def verify_draft(did: str, body: GateBody):
+@app.post("/api/drafts/{did}/review")
+def review_draft(did: str, body: GateBody, admin: AdminPrincipal = Depends(require_admin)):
+    """记录本机使用者已逐项复核；不表示平台核验了身份、资格或内容正确性。"""
     try:
-        return storage.transition_draft(did, "verify", body.actor, role=body.role, note=body.note)
+        return storage.transition_draft(did, "review", admin.name, note=body.note)
     except KeyError as e:
         raise HTTPException(404, str(e))
     except ValueError as e:
         raise HTTPException(422, str(e))
 
 
-@app.post("/api/drafts/{did}/issue")
-def issue_draft(did: str, body: GateBody):
+@app.post("/api/drafts/{did}/finalize")
+def finalize_draft(did: str, body: GateBody, admin: AdminPrincipal = Depends(require_admin)):
+    """由使用者确认定稿；平台不实施签发，也不据此授予任何法律身份。"""
     try:
-        return storage.transition_draft(did, "issue", body.actor, role=body.role, note=body.note)
+        return storage.transition_draft(did, "finalize", admin.name,
+                                        responsibility_confirmed=body.responsibility_confirmed,
+                                        note=body.note)
     except KeyError as e:
         raise HTTPException(404, str(e))
     except ValueError as e:
@@ -434,7 +531,7 @@ def issue_draft(did: str, body: GateBody):
 
 
 @app.get("/api/drafts/{did}/docx")
-def draft_docx(did: str):
+def draft_docx(did: str, admin: AdminPrincipal = Depends(require_admin)):
     d = storage.get_draft(did)
     if not d:
         raise HTTPException(404, "draft not found")
@@ -457,11 +554,11 @@ def compliance():
         for cp in review.get_checkpoints()
     ]
     return {
-        "positioning": "LegalHigh 是法律信息检索与文书辅助工具原型：输出法条原文与程序性信息，不提供诉讼代理、辩护或以律师名义的法律服务（《律师法》第13条）；AI 文书仅生成草稿，高风险产出设执业律师人工核验 gate。",
+        "positioning": "LegalHigh 是法律信息检索与文书辅助工具原型：输出法条原文与程序性信息，不提供诉讼代理、辩护或以律师名义的法律服务（《律师法》第13条）。AI 文书仅生成草稿；平台不核验使用者身份与执业资格、不实施签发，高风险产出应由执业律师等专业人员在平台外独立复核后使用，定稿责任由使用者自行确认承担。",
         "disclaimer": qa.DISCLAIMER,
         "model_status": {
-            "status": "原型未接入任何大模型服务",
-            "detail": "当前版本问答为检索式（BM25 词法检索 + 命中条文原文展示），不进行生成式输出。未来接入生成能力时，将仅调用已完成备案的大模型服务，并按《生成式人工智能服务管理暂行办法》第17条完成登记与在显著位置公示模型名称与备案号。",
+            "status": "默认未启用大模型服务",
+            "detail": "公开问答端点仅执行 BM25 词法检索并展示证据快照，不进行生成式输出。管理员可自行配置模型插件用于标注为 AI 草稿的研究流程；面向公众提供生成式服务前，运营方仍须完成适用的备案/登记、模型公示与内容治理义务。",
             "filing_no": None,
         },
         "red_lines": [
@@ -479,37 +576,37 @@ def compliance():
         "data_sources": corpus.manifest["laws"],
         "checkpoints": checkpoints,
         "complaint_channel": "本页「投诉与纠错」表单提交后即写入本地工单库并留痕。",
-        "infringement_notice": "如发现本系统内容存在任何侵权（包括但不限于著作权、商标权、隐私权），请通过「设置 → 隐私 → 投诉与纠错通道」提交，或发送邮件至开发者。我们承诺在收到通知后及时核实并做删改处理。",
-        "ai_content_label": "本系统中标注「AI 起草」或「AI 生成」的内容由人工智能自动生成、经人工审核后发布。AI 可能犯错，请务必核查重要信息并以官方发布文本为准。",
+        "infringement_notice": "如发现内容可能侵犯著作权、商标权、隐私权或其他权益，请通过「设置 → 隐私 → 投诉与纠错通道」提交。工单会写入本机数据库并保留审计记录；具体响应主体与时限须由实际部署运营方另行公示。",
+        "ai_content_label": "标注「AI 草稿」的内容由外部模型生成，仅供授权用户核验；未经人工审核不得作为已核实法律结论或对外文书。AI 可能犯错，请逐条核查引用并以可验证来源为准。",
     }
 
 
 class ComplaintBody(BaseModel):
-    subject: str
-    content: str
-    contact: str | None = None
-    kind: str = "general"  # general | mobile（决策11：移动端体验反馈入口）
+    subject: str = Field(min_length=1, max_length=200)
+    content: str = Field(min_length=1, max_length=20_000)
+    contact: str | None = Field(default=None, max_length=320)
+    kind: Literal["general", "mobile"] = "general"  # 决策11：移动端体验反馈入口
 
 
 @app.post("/api/complaints")
-def create_complaint(body: ComplaintBody):
+def create_complaint(body: ComplaintBody, admin: AdminPrincipal = Depends(require_admin)):
     if not body.subject.strip() or not body.content.strip():
         raise HTTPException(422, "主题与内容不能为空")
-    cid = storage.create_complaint(body.contact, body.subject.strip(), body.content.strip(), body.kind)
+    cid = storage.create_complaint(body.contact, body.subject.strip(), body.content.strip(), body.kind, actor=admin.name)
     return {"complaint_id": cid, "status": "open",
             "message": "已受理并留痕。我们将在核实后通过您留下的联系方式反馈。"}
 
 
 @app.get("/api/complaints")
-def complaints():
+def complaints(admin: AdminPrincipal = Depends(require_admin)):
     return {"complaints": storage.list_complaints()}
 
 
-# ---------- 案例样本库（仅收录可公开查证案件；sample=true 为未核实占位） ----------
+# ---------- 案例库（只收录带直接来源与核验日期的公开真实案件） ----------
 
 @app.get("/api/cases")
 def list_cases(q: str | None = None, level: str | None = None):
-    return {"cases": cases_mod.search_cases(q or "", level)}
+    return {"cases": cases_mod.search_cases(q or "", level, verified_only=True)}
 
 
 @app.get("/api/cases/{case_id}")
@@ -523,19 +620,19 @@ def get_case(case_id: str):
 # ---------- 文书交付前校验（程序化检查） ----------
 
 @app.get("/api/drafts")
-def list_drafts():
+def list_drafts(admin: AdminPrincipal = Depends(require_admin)):
     return {"drafts": storage.list_drafts()}
 
 
 @app.get("/api/audit")
-def audit_all(limit: int = 100):
+def audit_all(limit: int = 100, admin: AdminPrincipal = Depends(require_admin)):
     """全站审计日志（append-only；who/when/entity/action/payload）。"""
     entries = storage.list_audit(None, None, limit=min(max(limit, 1), 500))
     return {"entries": entries}
 
 
 @app.get("/api/drafts/{did}/validation")
-def draft_validation(did: str):
+def draft_validation(did: str, admin: AdminPrincipal = Depends(require_admin)):
     d = storage.get_draft(did)
     if not d:
         raise HTTPException(404, "draft not found")
@@ -545,13 +642,13 @@ def draft_validation(did: str):
 # ---------- AI 模型插件层（OpenAI 协议 harness；默认关闭，BYO key，三道合规 gate） ----------
 
 class AiChatBody(BaseModel):
-    provider_id: str
-    model: str
-    messages: list[dict]
-    api_key: str | None = None          # 瞬态使用，服务端不落库不记日志
-    base_url_override: str | None = None
-    allowed_refs: list[dict] | None = None  # gate2 引用绑定：允许的 {law_title, article_no}
-    temperature: float = 0.3
+    provider_id: str = Field(min_length=1, max_length=64)
+    model: str = Field(min_length=1, max_length=256)
+    messages: list[dict] = Field(min_length=1, max_length=64)
+    api_key: str | None = Field(default=None, max_length=512)  # 瞬态使用，服务端不落库不记日志
+    base_url_override: str | None = Field(default=None, max_length=2048)
+    allowed_refs: list[dict] | None = Field(default=None, max_length=128)  # gate2 引用绑定
+    temperature: float = Field(default=0.3, ge=0, le=2)
 
 
 @app.get("/api/ai/providers")
@@ -560,7 +657,7 @@ def ai_providers():
 
 
 @app.post("/api/ai/test")
-def ai_test(body: AiChatBody):
+def ai_test(body: AiChatBody, admin: AdminPrincipal = Depends(require_admin)):
     try:
         return ai_governor.test_connection(
             body.provider_id, body.model,
@@ -572,12 +669,12 @@ def ai_test(body: AiChatBody):
 
 
 @app.post("/api/ai/chat")
-def ai_chat(body: AiChatBody):
+def ai_chat(body: AiChatBody, admin: AdminPrincipal = Depends(require_admin)):
     try:
         return ai_governor.chat(
             body.provider_id, body.model, body.messages,
             api_key=body.api_key, base_url_override=body.base_url_override,
-            allowed_refs=body.allowed_refs, temperature=body.temperature)
+            allowed_refs=body.allowed_refs, temperature=body.temperature, actor=admin.name)
     except ValueError as e:
         raise HTTPException(422, str(e))
     except PermissionError as e:
@@ -589,8 +686,28 @@ def ai_chat(body: AiChatBody):
 # ---------- 需求解析（抽象描述 → 可溯源法条 + 案例；「薄 AI」双轨） ----------
 
 class NeedsBody(BaseModel):
-    text: str
-    ai: dict | None = None  # {provider_id, model, api_key?, base_url_override?} 可选；缺省为确定性降级
+    model_config = ConfigDict(extra="forbid")
+    text: str = Field(min_length=1, max_length=20_000)
+
+
+class IntakePlanBody(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    summary: str = Field(min_length=1, max_length=5_000)
+    timeline: list[str] = Field(default_factory=list, max_length=50)
+    parties: list[str] = Field(default_factory=list, max_length=50)
+    evidence_owned: list[str] = Field(default_factory=list, max_length=50)
+    evidence_missing: list[str] = Field(default_factory=list, max_length=50)
+    desired_outcome: str = Field(default="", max_length=2_000)
+    questions: list[str] = Field(default_factory=list, max_length=20)
+
+
+@app.post("/api/needs/plan")
+def needs_plan(body: IntakePlanBody):
+    """分阶段事实梳理：只整理用户确认的信息，不调用模型补事实或作案件定性。"""
+    try:
+        return needs.build_intake_plan(body.model_dump())
+    except ValueError as e:
+        raise HTTPException(422, str(e))
 
 
 @app.post("/api/needs/parse")
@@ -598,7 +715,7 @@ def needs_parse(body: NeedsBody):
     if len(body.text.strip()) < 4:
         raise HTTPException(422, "描述过短：请补充具体情形（如「老板拖欠三个月工资」）")
     try:
-        return needs.parse_needs(body.text, ai=body.ai)
+        return needs.parse_needs(body.text)
     except ValueError as e:
         raise HTTPException(422, str(e))
 
@@ -655,6 +772,22 @@ def evals():
 from fastapi.responses import FileResponse  # noqa: E402
 
 WEB_DIST = Path(_os.environ.get("WEB_DIST_DIR", str(Path(__file__).resolve().parent.parent.parent / "web" / "dist")))
+
+
+def _static_file_candidate(full_path: str) -> Path | None:
+    """返回位于 WEB_DIST 内的文件；用路径关系判断而非字符串前缀。"""
+    if not full_path:
+        return None
+    candidate = (WEB_DIST / full_path).resolve()
+    if not candidate.is_file():
+        return None
+    try:
+        candidate.relative_to(WEB_DIST.resolve())
+    except ValueError:
+        return None
+    return candidate
+
+
 if WEB_DIST.exists():
     if (WEB_DIST / "assets").exists():
         app.mount("/assets", StaticFiles(directory=str(WEB_DIST / "assets")), name="assets")
@@ -663,7 +796,9 @@ if WEB_DIST.exists():
     def spa_fallback(full_path: str):
         if full_path.startswith("api/") or full_path == "api":
             raise HTTPException(404, "Not Found")
-        candidate = (WEB_DIST / full_path).resolve()
-        if full_path and candidate.is_file() and str(candidate).startswith(str(WEB_DIST.resolve())):
+        if "\\" in full_path or any(part in (".", "..") for part in full_path.split("/")):
+            raise HTTPException(404, "Not Found")
+        candidate = _static_file_candidate(full_path)
+        if candidate is not None:
             return FileResponse(candidate)
         return FileResponse(WEB_DIST / "index.html")

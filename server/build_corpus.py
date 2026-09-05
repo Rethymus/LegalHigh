@@ -13,6 +13,7 @@
 用法：python server/build_corpus.py
 """
 import datetime
+import hashlib
 import json
 import os
 import re
@@ -29,6 +30,7 @@ OUT_DIR = REPO_ROOT / "server" / "data" / "laws"
 FETCH_DATE = "2026-08-29"
 WS_BASE = "https://zh.wikisource.org/wiki/"
 SAFE_FILE = re.compile(r"^[\w\u4e00-\u9fff()（）.-]+\.(json|html)$")
+VERSION_META_FILE = "official_version_effective_dates_2026-09-01.json"
 
 LAW_FILES = {
     "civl_html": "ws_中华人民共和国民法典.html",
@@ -62,22 +64,87 @@ def read_evidence_text(key: str) -> str:
         return raw.decode("gbk", errors="ignore")
 
 
+def snapshot_sha256(key: str) -> str:
+    """返回白名单证据快照原始字节的 SHA-256（不对解码后的文本取 hash）。"""
+    return hashlib.sha256(_evidence_path(key).read_bytes()).hexdigest()
+
+
+def version_metadata_for(law_id: str) -> dict:
+    """从独立的官方版本日期核验记录读取元数据；禁止在调用点重新手写日期。"""
+    if not SAFE_FILE.match(VERSION_META_FILE):
+        raise ValueError(f"unsafe version metadata filename: {VERSION_META_FILE!r}")
+    path = (EVIDENCE_DIR / VERSION_META_FILE).resolve()
+    if path.parent != EVIDENCE_DIR:
+        raise ValueError(f"version metadata escapes evidence dir: {path}")
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    verified_at = payload.get("verified_at")
+    if not isinstance(verified_at, str) or not re.fullmatch(r"\d{4}-\d{2}-\d{2}", verified_at):
+        raise ValueError("version metadata verified_at must be an ISO date")
+    records = [record for record in payload.get("records", []) if record.get("law_id") == law_id]
+    if len(records) != 1:
+        raise ValueError(f"expected exactly one version metadata record for {law_id}, got {len(records)}")
+    record = records[0]
+    effective_date = record.get("effective_date")
+    source_url = record.get("source_url")
+    if not isinstance(effective_date, str) or not re.fullmatch(r"\d{4}-\d{2}-\d{2}", effective_date):
+        raise ValueError(f"invalid effective_date for {law_id}")
+    if not isinstance(source_url, str) or not source_url.startswith("https://www.npc.gov.cn/"):
+        raise ValueError(f"version metadata for {law_id} must use an npc.gov.cn HTTPS source")
+    if record.get("evidence_grade") != "强":
+        raise ValueError(f"version metadata for {law_id} must be verified as 强 evidence")
+    return {
+        "effective_date": effective_date,
+        "effective_date_evidence": {
+            "title": record["source_title"],
+            "url": source_url,
+            "accessed_at": verified_at,
+            "grade": record["evidence_grade"],
+            "source_kind": record["source_kind"],
+            "version": record["version"],
+            "record_snapshot": "docs/research/evidence/" + VERSION_META_FILE,
+            "record_sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+        },
+    }
+
+
+def date_evidence(meta: dict, *, title: str, url: str, accessed_at: str, grade: str, source_kind: str):
+    """为施行日期绑定证据；显式官方核验记录优先，否则绑定同一正文快照。"""
+    if not meta.get("effective_date"):
+        return None
+    return meta.get("effective_date_evidence") or {
+        "title": title,
+        "url": url,
+        "accessed_at": accessed_at,
+        "grade": grade,
+        "source_kind": source_kind,
+        "version": meta.get("status", ""),
+    }
+
+
 def build_wikisource_law(key, law_id, title, meta, html_page):
     p = json.loads(read_evidence_text(key))["parse"]
     wt_raw = p["wikitext"]["*"]
     articles, expected = split_articles(clean_wikitext(wt_raw))
+    source_url = WS_BASE + html_page
+    effective_date = meta.get("effective_date") or parse_header_field(wt_raw, "生效日期")
+    complete_meta = {**meta, "effective_date": effective_date}
     return {
         "law_id": law_id,
         "title": title,
         **meta,
         "promulgation_instrument": meta.get("promulgation_instrument") or parse_header_field(wt_raw, "公布字号"),
-        "effective_date": meta.get("effective_date") or parse_header_field(wt_raw, "生效日期"),
+        "effective_date": effective_date,
+        "effective_date_evidence": date_evidence(
+            complete_meta, title=title, url=source_url, accessed_at=FETCH_DATE,
+            grade="中", source_kind="wikisource-transcription",
+        ),
         "source": {
             "kind": "wikisource-transcription",
-            "url": WS_BASE + html_page,
+            "url": source_url,
             "pageid": p.get("pageid"),
             "snapshot": "docs/research/evidence/" + LAW_FILES[key],
             "fetched_at": FETCH_DATE,
+            "sha256": snapshot_sha256(key),
         },
         "authority_pointer": "国家法律法规数据库 https://flk.npc.gov.cn （检索该法条目核对）",
         "articles": articles,
@@ -88,17 +155,23 @@ def build_wikisource_html_law(key, law_id, title, meta, html_page):
     html = read_evidence_text(key)
     articles, expected = split_articles(clean_html_to_text(html))
     m = re.search(r'wgCurRevisionId[":=\s]+(\d+)', html)
+    source_url = WS_BASE + html_page
     return {
         "law_id": law_id,
         "title": title,
         **meta,
+        "effective_date_evidence": date_evidence(
+            meta, title=title, url=source_url, accessed_at=FETCH_DATE,
+            grade="中", source_kind="wikisource-transcription",
+        ),
         "source": {
             "kind": "wikisource-transcription",
-            "url": WS_BASE + html_page,
+            "url": source_url,
             "pageid": None,
             "revid": m.group(1) if m else None,
             "snapshot": "docs/research/evidence/" + LAW_FILES[key],
             "fetched_at": FETCH_DATE,
+            "sha256": snapshot_sha256(key),
         },
         "authority_pointer": "国家法律法规数据库 https://flk.npc.gov.cn （检索该法条目核对）",
         "articles": articles,
@@ -114,18 +187,23 @@ def build_govcn_law(key, law_id, title, meta):
         "law_id": law_id,
         "title": title,
         **meta,
+        "effective_date_evidence": date_evidence(
+            meta, title=title, url=url, accessed_at=FETCH_DATE,
+            grade="强", source_kind="official-gazette-republication",
+        ),
         "source": {
             "kind": "official-gazette-republication",
             "url": url,
             "snapshot": "docs/research/evidence/" + LAW_FILES[key],
             "fetched_at": FETCH_DATE,
+            "sha256": snapshot_sha256(key),
         },
         "authority_pointer": "国务院公报 / 国家法律法规数据库 https://flk.npc.gov.cn",
         "articles": articles,
     }
 
 
-# 预期条数（用于构建后一致性提示；2026-08-29 经维基文库/LawRefBook/gov.cn 三源交叉核验）：
+# 预期条数（用于构建一致性提示；以仓库证据快照切分结果与 gov.cn 已保存页面核验）：
 # 民法典 1260 / 消保法(2013修正) 63 / 劳动合同法 98 / 律师法 60 / 电商法 89 / 消保条例 53 / 生成式AI办法 24
 # 民诉法(2023修正) 306：以快照切分+顺序递增校验为准（末条"试行废止"表述疑为维基文库页面残留，
 # 待 flk 逐条比对（M6-T1）确认；引用第 300-306 条前需人工复核）——诚实标注，不臆删
@@ -156,22 +234,22 @@ def main():
         ),
         build_wikisource_law(
             "cl_json", "cl-2013", "中华人民共和国消费者权益保护法",
-            {"status": "现行有效（2013修正）", "promulgation": {"date": "2013-10-25", "organ": "全国人民代表大会常务委员会"}},
+            {"status": "现行有效（2013修正）", "promulgation": {"date": "2013-10-25", "organ": "全国人民代表大会常务委员会"}, **version_metadata_for("cl-2013")},
             "%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E6%B6%88%E8%B4%B9%E8%80%85%E6%9D%83%E7%9B%8A%E4%BF%9D%E6%8A%A4%E6%B3%95_(2013%E5%B9%B4)",
         ),
         build_wikisource_law(
             "lcl_json", "lcl-2012", "中华人民共和国劳动合同法",
-            {"status": "现行有效（2012修正）", "promulgation": {"date": "2012-12-28", "organ": "全国人民代表大会常务委员会"}},
+            {"status": "现行有效（2012修正）", "promulgation": {"date": "2012-12-28", "organ": "全国人民代表大会常务委员会"}, **version_metadata_for("lcl-2012")},
             "%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%8A%B3%E5%8A%A8%E5%90%88%E5%90%8C%E6%B3%95_(2012%E5%B9%B4)",
         ),
         build_wikisource_law(
             "ll_json", "ll-2017", "中华人民共和国律师法",
-            {"status": "现行有效（2017修正）", "promulgation": {"date": "2017-09-01", "organ": "全国人民代表大会常务委员会"}},
+            {"status": "现行有效（2017修正）", "promulgation": {"date": "2017-09-01", "organ": "全国人民代表大会常务委员会"}, **version_metadata_for("ll-2017")},
             "%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%BE%8B%E5%B8%88%E6%B3%95_(2017%E5%B9%B4)",
         ),
         build_wikisource_law(
             "ecom_json", "ecom-2018", "中华人民共和国电子商务法",
-            {"status": "现行有效", "promulgation": {"date": "2018-08-31", "organ": "全国人民代表大会常务委员会"}},
+            {"status": "现行有效", "promulgation": {"date": "2018-08-31", "organ": "全国人民代表大会常务委员会"}, **version_metadata_for("ecom-2018")},
             "%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E7%94%B5%E5%AD%90%E5%95%86%E5%8A%A1%E6%B3%95",
         ),
         build_wikisource_law(
@@ -239,11 +317,16 @@ def main():
         if out_path.parent != OUT_DIR.resolve():
             raise ValueError(f"output escapes laws dir: {out_path}")
         out_path.write_text(json.dumps(law, ensure_ascii=False, indent=1), encoding="utf-8")
+        output_sha256 = hashlib.sha256(out_path.read_bytes()).hexdigest()
         manifest.append({
             "law_id": law["law_id"], "title": law["title"], "status": law["status"],
+            "effective_date": law.get("effective_date"),
+            "effective_date_evidence": law.get("effective_date_evidence"),
+            "promulgation_instrument": law.get("promulgation_instrument"),
             "article_count": got, "expected_count": expect, "missing_numbers": gaps[:10],
             "source_url": law["source"]["url"], "snapshot": law["source"]["snapshot"],
-            "fetched_at": FETCH_DATE,
+            "fetched_at": FETCH_DATE, "snapshot_sha256": law["source"]["sha256"],
+            "output_sha256": output_sha256,
         })
         print(f"[{law['law_id']}] {law['title']}: {got} 条 {flag} | 缺号: {gaps[:10]}")
         if law["articles"]:

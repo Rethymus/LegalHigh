@@ -1,10 +1,8 @@
 name: pages
 
-# GitHub Pages 静态预览（决策 8 执行件）：VITE_DEMO=1 构建只读演示站
-# —— 浏览器内置演示 API（JS BM25 复刻 + 快照数据），写入功能诚实降级为 501 引导桌面端
+# GitHub Pages 静态说明站：只发布前端壳与法规证据快照。
+# 不复制 server 检索逻辑，不拦截 /api，也不把浏览器内结果冒充正式服务。
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -28,30 +26,21 @@ jobs:
           cache: npm
           cache-dependency-path: web/package-lock.json
 
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-
       - name: Install deps
-        run: |
-          cd web && npm ci
-          pip install rank-bm25
+        working-directory: web
+        run: npm ci
 
-      - name: Generate demo data (evals snapshot from gold×corpus)
-        run: |
-          cd server
-          python scripts/gen_demo_evals.py
-          cp data/cases.json ../web/public/data/cases.json
-
-      - name: Build demo bundle
+      - name: Build static documentation bundle
         env:
-          VITE_DEMO: '1'
+          VITE_STATIC_PREVIEW: '1'
+        working-directory: web
         run: |
-          cd web
-          npx vite build --outDir dist-demo --emptyOutDir
-          cp public/data/cases.json public/data/evals.json dist-demo/data/
+          npx tsc -b
+          node scripts/qa_gates.mjs
+          node scripts/qa_contrast.mjs --strict
+          npx vite build --outDir dist-pages --emptyOutDir
           # SPA 回退：GitHub Pages 对未知路径返回 404.html → React Router 接管路由
-          cp dist-demo/index.html dist-demo/404.html
+          cp dist-pages/index.html dist-pages/404.html
 
       - uses: actions/configure-pages@v5
         with:
@@ -59,7 +48,7 @@ jobs:
 
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: web/dist-demo
+          path: web/dist-pages
 
   deploy:
     needs: build

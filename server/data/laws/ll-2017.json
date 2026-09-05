@@ -6,14 +6,25 @@
   "date": "2017-09-01",
   "organ": "全国人民代表大会常务委员会"
  },
+ "effective_date": "2018-01-01",
+ "effective_date_evidence": {
+  "title": "全国人民代表大会常务委员会关于修改《中华人民共和国法官法》等八部法律的决定",
+  "url": "https://www.npc.gov.cn/zgrdw/npc/lfzt/rlyw/2018-10/19/content_2062826.htm",
+  "accessed_at": "2026-09-01",
+  "grade": "强",
+  "source_kind": "official-npc",
+  "version": "2017修正",
+  "record_snapshot": "docs/research/evidence/official_version_effective_dates_2026-09-01.json",
+  "record_sha256": "07227737652708bde558223eff0ca92161ce495c516a7005b28cda0dbded6b4e"
+ },
  "promulgation_instrument": null,
- "effective_date": null,
  "source": {
   "kind": "wikisource-transcription",
   "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%BE%8B%E5%B8%88%E6%B3%95_(2017%E5%B9%B4)",
   "pageid": 758258,
   "snapshot": "docs/research/evidence/ws_律师法2017.json",
-  "fetched_at": "2026-08-29"
+  "fetched_at": "2026-08-29",
+  "sha256": "429e5f7ef8f0e44f090b63aede735121c9febc5f39538bcb006cbf59cd4d5fd8"
  },
  "authority_pointer": "国家法律法规数据库 https://flk.npc.gov.cn （检索该法条目核对）",
  "articles": [

@@ -8,11 +8,20 @@
  },
  "promulgation_instrument": "国家互联网信息办公室等七部门令第15号",
  "effective_date": "2023-08-15",
+ "effective_date_evidence": {
+  "title": "生成式人工智能服务管理暂行办法",
+  "url": "https://www.gov.cn/zhengce/zhengceku/202307/content_6891752.htm",
+  "accessed_at": "2026-08-29",
+  "grade": "强",
+  "source_kind": "official-gazette-republication",
+  "version": "现行有效"
+ },
  "source": {
   "kind": "official-gazette-republication",
   "url": "https://www.gov.cn/zhengce/zhengceku/202307/content_6891752.htm",
   "snapshot": "docs/research/evidence/生成式AI办法_govcn.html",
-  "fetched_at": "2026-08-29"
+  "fetched_at": "2026-08-29",
+  "sha256": "00bd290a9d14e7354b7131d30255daae26ce7ff73588483cbeb2030f56878277"
  },
  "authority_pointer": "国务院公报 / 国家法律法规数据库 https://flk.npc.gov.cn",
  "articles": [

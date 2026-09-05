@@ -1,32 +1,101 @@
 # -*- coding: utf-8 -*-
-"""终验脚本：D8 删除链 / premise 纠错 / 评测指标 / A7 池 / 解读审核 / C7 —— 全部走真实 API。
-运行：server/.venv/Scripts/python.exe scripts/final_verify.py
+"""终验脚本：D8 删除链 / premise 纠错 / 评测指标 / A7 池 / 解读审核 / C7。
 
-安全说明：目标仅限本机回环上的开发服务；BASE 经 allowlist 校验（SSRF 防护）。
+默认通过 FastAPI TestClient 走真实路由，并把所有写入自动隔离到临时 SQLite；不要求先
+启动 uvicorn，也不会接触 ``server/data/app.db``。若确需验证一个已运行的本机服务，须
+同时设置 ``LH_VERIFY_BASE`` 与 ``LH_VERIFY_ALLOW_WRITES=1``。外部目标仅允许回环地址。
+
+运行：server/.venv/Scripts/python.exe scripts/final_verify.py
 """
+import atexit
 import json
+import os
+import secrets
 import sys
+import tempfile
 import urllib.error
 import urllib.request
+from pathlib import Path
 from urllib.parse import urlsplit
 
-BASE = "http://127.0.0.1:8000"
-_ALLOWED_HOSTS = {"127.0.0.1", "localhost"}
-_host = urlsplit(BASE).hostname or ""
-if urlsplit(BASE).scheme != "http" or _host not in _ALLOWED_HOSTS:
-    raise SystemExit(f"BASE 不在允许的主机清单内: {BASE}")
-
 sys.path.insert(0, ".")
+
+_external_base = os.environ.get("LH_VERIFY_BASE", "").strip()
+_client = None
+_tmp_dir = None
+_storage = None
+_admin_token = None
+
+if _external_base:
+    BASE = _external_base.rstrip("/")
+    _target = urlsplit(BASE)
+    if (
+        _target.scheme != "http"
+        or (_target.hostname or "") not in {"127.0.0.1", "localhost"}
+        or _target.username is not None
+        or _target.password is not None
+        or _target.query
+        or _target.fragment
+        or _target.path not in ("", "/")
+    ):
+        raise SystemExit(f"LH_VERIFY_BASE 仅允许本机回环 HTTP 服务: {BASE}")
+    if os.environ.get("LH_VERIFY_ALLOW_WRITES") != "1":
+        raise SystemExit(
+            "外部服务终验会创建并删除测试记录；确认其使用隔离数据库后，"
+            "再设置 LH_VERIFY_ALLOW_WRITES=1。"
+        )
+    _admin_token = os.environ.get("LH_VERIFY_ADMIN_TOKEN", "").strip()
+    if not _admin_token:
+        raise SystemExit("外部服务终验需要 LH_VERIFY_ADMIN_TOKEN（仅通过请求头瞬态传递）。")
+else:
+    from fastapi.testclient import TestClient
+
+    from app import storage as _storage
+
+    _tmp_dir = tempfile.TemporaryDirectory(prefix="legalhigh-final-verify-")
+    if _storage._conn is not None:
+        _storage._conn.close()
+    _storage._conn = None
+    _storage.DB_PATH = Path(_tmp_dir.name) / "app.db"
+    # 内置 TestClient 使用一次性令牌访问敏感路由；令牌只存在于本进程环境和
+    # 请求头，不写入临时数据库或终验输出。外部模式则必须由调用者显式提供。
+    _admin_token = "final-verify-" + secrets.token_urlsafe(24)
+    os.environ["LH_ADMIN_TOKEN"] = _admin_token
+    os.environ["LH_ADMIN_PRINCIPAL"] = "final-verify"
+
+    from app.main import app as _app
+
+    _client = TestClient(_app)
+
+
+def _cleanup():
+    if _client is not None:
+        _client.close()
+    if _storage is not None and _storage._conn is not None:
+        _storage._conn.close()
+        _storage._conn = None
+    if _tmp_dir is not None:
+        _tmp_dir.cleanup()
+
+
+atexit.register(_cleanup)
 
 
 def call(method: str, path: str, body: dict | None = None):
     if not path.startswith("/"):
         raise ValueError("path 必须以 / 开头")
+    if _client is not None:
+        response = _client.request(
+            method, path, json=body,
+            headers={"X-LegalHigh-Admin-Token": _admin_token},
+        )
+        return response.status_code, response.json()
     req = urllib.request.Request(BASE + path, method=method,
                                  data=json.dumps(body).encode() if body else None,
-                                 headers={"Content-Type": "application/json"})
+                                 headers={"Content-Type": "application/json",
+                                          "X-LegalHigh-Admin-Token": _admin_token})
     try:
-        with urllib.request.urlopen(req) as r:
+        with urllib.request.urlopen(req, timeout=10) as r:
             return r.status, json.loads(r.read().decode())
     except urllib.error.HTTPError as e:
         return e.code, json.loads(e.read().decode())

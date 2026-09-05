@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 """文书交付前校验（Pre-delivery Validation）：程序化检查，非自由判断。
 
-规格（FRAMES 13）：存在问题时状态为 Need Review 且禁止视为可交付；全部通过且已签发才为 Ready。
+规格（FRAMES 13）：存在问题时状态为 Need Review；全部通过且使用者确认定稿才为 Ready。
 检查口径全部可程序化复现：
 - 事实完整性：必填字段非空；正文不含未填占位（[待填写] / 连续下划线 / ____）；主体名称出现在正文中
 - 法律引用：每条引用均可在本地语料解析且为现行有效版本（引用不变量双保险）
-- 格式规范：标题块与签名块存在；签发 gate 状态（draft/verified/issued）
+- 格式规范：标题块与签名块存在；工作进度（draft/reviewed/finalized）
 """
 import re
 
@@ -87,18 +87,20 @@ def validate_draft(draft: dict) -> dict:
         "含签名落款块" if kinds & {"signature"} else "缺少签名/落款区域")
 
     status = draft.get("status") or "draft"
-    add("签发 Gate", "v9", "人工核验签发", status == "issued",
-        {"draft": "草稿尚未经执业律师核验签发，不得对外发出", "verified": "已核验、待签发", "issued": "已签发，可对外交付"}[status])
+    responsibility_confirmed = bool(draft.get("responsibility_confirmed"))
+    add("定稿确认", "v9", "使用者复核与责任确认", status == "finalized" and responsibility_confirmed,
+        {"draft": "仍为工具草稿，尚未完成人工复核", "reviewed": "已记录人工复核，尚未由使用者确认定稿",
+         "finalized": "使用者已确认定稿；平台未核验身份、事实或法律判断"}.get(status, "未知状态"))
 
-    core_ok = all(c["pass"] for c in checks if c["group"] != "签发 Gate")
+    core_ok = all(c["pass"] for c in checks if c["group"] != "定稿确认")
     return {
         "draft_id": draft["id"],
         "template_id": draft.get("template_id"),
         "status": status,
-        "ready": core_ok and status == "issued",
+        "ready": core_ok and status == "finalized" and responsibility_confirmed,
         "need_review": not core_ok,
         "checks": checks,
-        "disclaimer": "校验为程序化检查（要素/引用/格式），不构成法律意见；实体事实仍须人工复核。",
+        "disclaimer": "Ready 仅表示程序化要素检查通过且使用者确认定稿；平台不核验执业资格、不签发文书，也不保证事实或法律判断正确。",
     }
 
 

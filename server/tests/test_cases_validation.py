@@ -9,16 +9,17 @@ from app import drafting, storage, validation  # noqa: E402
 # ---------- 案例样本库 ----------
 
 def test_cases_data_discipline():
-    """真实案例必须有来源核验说明；示例占位必须标记未核实（数据纪律硬约束）。"""
+    """案例必须是真实记录，并有可直接打开的来源与核验日期。"""
     cases = cases_mod.load_cases()
     assert len(cases) >= 5
     for c in cases:
         assert c.get("source_note"), f"缺少来源说明: {c['id']}"
+        assert c.get("source_title"), f"缺少来源标题: {c['id']}"
+        assert c.get("source_url", "").startswith("https://"), f"缺少 HTTPS 来源: {c['id']}"
+        assert c.get("source_accessed_at") == "2026-09-01", f"来源核验日期异常: {c['id']}"
         assert c.get("kind") in ("case", "foreign", "law", "academic", "ai")
-        if c.get("sample"):
-            assert c["verified"] is False, "示例占位必须 verified=false"
-        else:
-            assert c["verified"] is True and c["no"], f"真实案例缺案号: {c['id']}"
+        assert c.get("sample") is not True, f"生产案例库禁止示例占位: {c['id']}"
+        assert c["verified"] is True and c["no"], f"真实案例缺案号: {c['id']}"
 
 
 def test_cases_search_and_get():
@@ -29,6 +30,8 @@ def test_cases_search_and_get():
     assert cases_mod.get_case("nonexistent") is None
     lv = cases_mod.search_cases(level="外国判例")
     assert lv and all(x["kind"] == "foreign" for x in lv)
+    assert all(c["verified"] and not c.get("sample") for c in cases_mod.search_cases())
+    assert cases_mod.search_cases(verified_only=False) == cases_mod.search_cases()
 
 
 # ---------- 交付前校验 ----------
@@ -50,23 +53,23 @@ def draft_id(tmp_db):
     return storage.create_draft("lawyer_letter", LETTER_FIELDS, gen["content"], gen["content"]["citations"], gen["snapshot"])
 
 
-def test_validation_need_review_before_issue(draft_id):
+def test_validation_not_ready_before_finalize(draft_id):
     d = storage.get_draft(draft_id)
     v = validation.validate_draft(d)
     assert v["need_review"] is False  # 要素齐备的草稿核心检查应全过
-    assert v["ready"] is False        # 未签发 → 不可对外交付
+    assert v["ready"] is False        # 未定稿 → 不可对外交付
     gate = next(c for c in v["checks"] if c["id"] == "v9")
-    assert gate["pass"] is False and "核验签发" in gate["detail"]
+    assert gate["pass"] is False and "人工复核" in gate["detail"]
     # 引用不变量：579 条必须被解析为现行有效
     cite = next(c for c in v["checks"] if c["id"] == "v5")
     assert cite["pass"] is True
 
 
-def test_validation_ready_after_issue(draft_id):
-    storage.transition_draft(draft_id, "verify", "李律师（示例）", role="执业律师")
-    storage.transition_draft(draft_id, "issue", "李律师（示例）", role="执业律师")
+def test_validation_ready_after_finalize(draft_id):
+    storage.transition_draft(draft_id, "review", "李律师（示例）")
+    storage.transition_draft(draft_id, "finalize", "李律师（示例）", responsibility_confirmed=True)
     v = validation.validate_draft(storage.get_draft(draft_id))
-    assert v["ready"] is True and v["status"] == "issued"
+    assert v["ready"] is True and v["status"] == "finalized"
 
 
 def test_validation_detects_missing_party(draft_id):
