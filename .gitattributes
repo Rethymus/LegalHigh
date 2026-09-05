@@ -1,0 +1,10 @@
+# 证据快照与生成语料是绑定哈希的字节级证据：不做任何 EOL 转换，
+# 保证 Windows 检出 / CI 检出 / manifest.sha256 三者字节一致（R20 定位）。
+docs/research/evidence/** -text
+server/data/laws/** -text
+server/data/cases.json -text
+server/data/article_explains.json -text
+server/data/article_links.json -text
+server/data/scenarios.json -text
+server/data/ai_providers.json -text
+web/public/data/laws.json -text

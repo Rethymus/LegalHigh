@@ -43,5 +43,6 @@ OUT.write_text(
         separators=(",", ":"),
     ),
     encoding="utf-8",
+    newline="\n",
 )
 print("exported", len(laws_out), "laws ->", OUT, OUT.stat().st_size, "bytes")

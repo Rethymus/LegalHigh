@@ -316,7 +316,7 @@ def main():
         out_path = (OUT_DIR / (law["law_id"] + ".json")).resolve()
         if out_path.parent != OUT_DIR.resolve():
             raise ValueError(f"output escapes laws dir: {out_path}")
-        out_path.write_text(json.dumps(law, ensure_ascii=False, indent=1), encoding="utf-8")
+        out_path.write_text(json.dumps(law, ensure_ascii=False, indent=1), encoding="utf-8", newline="\n")
         output_sha256 = hashlib.sha256(out_path.read_bytes()).hexdigest()
         manifest.append({
             "law_id": law["law_id"], "title": law["title"], "status": law["status"],
@@ -336,6 +336,7 @@ def main():
     manifest_path.write_text(
         json.dumps({"built_at": datetime.datetime.now().isoformat(), "fetch_date": FETCH_DATE, "laws": manifest}, ensure_ascii=False, indent=2),
         encoding="utf-8",
+        newline="\n",
     )
     print("manifest ->", manifest_path)
 

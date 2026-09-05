@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-02T10:44:23.421053",
+  "built_at": "2026-09-05T20:10:19.779693",
   "fetch_date": "2026-08-29",
   "laws": [
     {
@@ -23,7 +23,7 @@
       "snapshot": "docs/research/evidence/ws_中华人民共和国民法典.html",
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "b94ab740ff2da5d2050fabedf86b81d0329da6bc925747484604c79ce8144df0",
-      "output_sha256": "4e1ebe417541d265cf1259a669119655ddc0736f6405f54a88c99a44532b59b7"
+      "output_sha256": "328949c4df2148ca2fce0049e4e0e08f6848f32c3a497f366d76ddf032a8a27d"
     },
     {
       "law_id": "cl-2013",
@@ -48,7 +48,7 @@
       "snapshot": "docs/research/evidence/ws_消保法2013.json",
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "f2c675c89a2f83f715551824e0cac3f2182812eeaba8d2478dac8b6d60a287c4",
-      "output_sha256": "478a10aff0d42c0bc32d034ad8b26404d2ddec4bd0427e0124de0477e9dd89bc"
+      "output_sha256": "55d58ef4db8fed5114d55c0138e8fd5259aef70ed8d4c2814c249bf228d36b59"
     },
     {
       "law_id": "lcl-2012",
@@ -73,7 +73,7 @@
       "snapshot": "docs/research/evidence/ws_劳动合同法2012.json",
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "54cd3f82626634b3b0e8b5a13c07b8339d2649942fbcc47cc8f69796d7e49cf1",
-      "output_sha256": "6cbb6b779cb3233a161ce5cac472ba60a395d4f69141e3dcf0f18ee98de6df0b"
+      "output_sha256": "de9009fa1a0691434f4f489a60c1ef3316274f63607cba3b95272b8338eb67ae"
     },
     {
       "law_id": "ll-2017",
@@ -98,7 +98,7 @@
       "snapshot": "docs/research/evidence/ws_律师法2017.json",
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "429e5f7ef8f0e44f090b63aede735121c9febc5f39538bcb006cbf59cd4d5fd8",
-      "output_sha256": "3523c1f0304a77d823644f0f47062d7531512b555e4abd68be064b2c1d6d3069"
+      "output_sha256": "31375f74d5c3b8e1dd48e335aca0d67b455f34f63b4e1b5b77332c8901237f4e"
     },
     {
       "law_id": "ecom-2018",
@@ -123,7 +123,7 @@
       "snapshot": "docs/research/evidence/ws_电子商务法.json",
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "699753a0a04a20687d02c2a920db9e68bc7cb985d7c15cb5d933b4b60cd9408d",
-      "output_sha256": "0eefb0717133aa8cddfb1f7e814f8359eb622a36bdd84eb3ecf90ee4bac67b83"
+      "output_sha256": "c05af3b634965cfebafbc6b5773d4ac1a13d40273445d4b32d1bacb66d371767"
     },
     {
       "law_id": "pcl-2023",
@@ -146,7 +146,7 @@
       "snapshot": "docs/research/evidence/ws_民事诉讼法2023.json",
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "7543240b2a31ced297c9481933acfa94ff412c5ee3cfab8321dec65659a434b4",
-      "output_sha256": "83e0b6a583f3d34584ddd76aea4c1576ae0f9d71ac1042823fdf8139f3f63db2"
+      "output_sha256": "5e2162643470206e2ba6e34406f2542d271355ace98fba637b06fd504bdc6c29"
     },
     {
       "law_id": "htjs-2023",
@@ -168,8 +168,8 @@
       "source_url": "https://zh.wikisource.org/wiki/%E6%9C%80%E9%AB%98%E4%BA%BA%E6%B0%91%E6%B3%95%E9%99%A2%E5%85%B3%E4%BA%8E%E9%80%82%E7%94%A8%E3%80%8A%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E6%B0%91%E6%B3%95%E5%85%B8%E3%80%8B%E5%90%88%E5%90%8C%E7%BC%96%E9%80%9A%E5%88%99%E8%8B%A5%E5%B9%B2%E9%97%AE%E9%A2%98%E7%9A%84%E8%A7%A3%E9%87%8A",
       "snapshot": "docs/research/evidence/ws_合同编通则解释2023.json",
       "fetched_at": "2026-08-29",
-      "snapshot_sha256": "c9a8e6a6fbf676f4611a199b04937bafa041dbb1db21224f95c67e54a88e179c",
-      "output_sha256": "159d3859746c0eaef3170117de239d1fdd02f02e63cd8b56273b4ad533f45b32"
+      "snapshot_sha256": "2700594a29aaa6640d2872d8a7ec6629b67b1059a4ac6e7afb11842a2067050d",
+      "output_sha256": "1ba3f2f621a0748445b5af8b7af86e53d0f9edbb8063c7181e8acfb8bebbca2c"
     },
     {
       "law_id": "wlxf-2022",
@@ -191,8 +191,8 @@
       "source_url": "https://zh.wikisource.org/wiki/%E6%9C%80%E9%AB%98%E4%BA%BA%E6%B0%91%E6%B3%95%E9%99%A2%E5%85%B3%E4%BA%8E%E5%AE%A1%E7%90%86%E7%BD%91%E7%BB%9C%E6%B6%88%E8%B4%B9%E7%BA%A0%E7%BA%B7%E6%A1%88%E4%BB%B6%E9%80%82%E7%94%A8%E6%B3%95%E5%BE%8B%E8%8B%A5%E5%B9%B2%E9%97%AE%E9%A2%98%E7%9A%84%E8%A7%84%E5%AE%9A%EF%BC%88%E4%B8%80%EF%BC%89",
       "snapshot": "docs/research/evidence/ws_网络消费纠纷规定2022.json",
       "fetched_at": "2026-08-29",
-      "snapshot_sha256": "6077e29378edf222ab06138a790f41671244d86ddaa3e0ba30ed0eb0def48c10",
-      "output_sha256": "c0c125b7d5bd479161d9a8eb87d89b786a0eacb7d99a791d103e759979925f52"
+      "snapshot_sha256": "82e3160d940239144e618f7710d7117a1cf3c655612e273fb1630627c9f53923",
+      "output_sha256": "6ad722638265d2d5c371346a6f0f51f3f1a1efa5197a84ee2a61400937a10231"
     },
     {
       "law_id": "crpl-imp-2024",
@@ -215,7 +215,7 @@
       "snapshot": "docs/research/evidence/消保法实施条例_govcn.html",
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "d80073087b9792f844381290613dcd56a8d2efc8155bafde0996f6e56d1b9d8f",
-      "output_sha256": "b614056d92a747f4ca1025977c1e7db15314b0fedd2015b6b060e1b5122c4eed"
+      "output_sha256": "af4a6d034e1b73446290d01b002f2e71e180316e7b1e69c844a926904841740f"
     },
     {
       "law_id": "genai-2023",
@@ -238,7 +238,7 @@
       "snapshot": "docs/research/evidence/生成式AI办法_govcn.html",
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "00bd290a9d14e7354b7131d30255daae26ce7ff73588483cbeb2030f56878277",
-      "output_sha256": "747d75f0484a63949f06a7c3b6f96c9e2838807d1ceef31dc1d38672ffd07680"
+      "output_sha256": "89ef49818a0b410a8a7f93315b07ddd3f45ff649c39f7f532f5c2679f1ee5973"
     }
   ]
 }
