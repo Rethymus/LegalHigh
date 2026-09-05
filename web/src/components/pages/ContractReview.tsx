@@ -204,18 +204,26 @@ export default function ContractReview() {
                 {review.result.clauses.map((c) => {
                   const fs = findingsByClause.get(c.id) ?? []
                   const worst = fs.some((f) => f.risk === 'high') ? 'high' : fs.length ? 'mid' : undefined
+                  // heading 是 text 首行的截断前缀（单行条款/未编号段会 heading===text 或被截断）。
+                  // 只有确有剩余正文才把 heading 渲染为标题行；否则整段进正文——
+                  // 保证任何切条形态恰好渲染一次，不出现空白条款（R18：单行条款曾整栏不可见）。
+                  const rest = c.heading && c.text.startsWith(c.heading) ? c.text.slice(c.heading.length).replace(/^\n+/, '') : c.text
+                  const hasSeparateHeading = !!c.heading && rest.length > 0
+                  const riskBadge = fs.length > 0 && (
+                    <span className={`bdg ${RISK_BDG[worst === 'high' ? 'high' : 'medium']}`} style={{ marginLeft: 8, verticalAlign: '2px' }}>{fs.length} 处风险</span>
+                  )
                   return (
                     <section key={c.id} id={c.id} onClick={() => setSection(c.id)} style={{ cursor: 'pointer' }}>
                       {/* 未编号标题段 heading===text，避免同文重复渲染两次 */}
-                      {c.heading && c.heading !== c.text && (
+                      {hasSeparateHeading && (
                         <h3 style={worst ? { borderLeft: `3px solid ${worst === 'high' ? 'var(--danger)' : 'var(--warn)'}`, paddingLeft: 8 } : undefined}>
                           {c.heading}
-                          {fs.length > 0 && <span className={`bdg ${RISK_BDG[worst === 'high' ? 'high' : 'medium']}`} style={{ marginLeft: 8, verticalAlign: '2px' }}>{fs.length} 处风险</span>}
                         </h3>
                       )}
                       {/* 切条口径保留 heading 行在 text 首位，渲染时跳过避免标题重复出现 */}
+                      {!hasSeparateHeading && fs.length > 0 && <div style={{ marginBottom: 4 }}>{riskBadge}</div>}
                       <pre style={{ whiteSpace: 'pre-wrap', fontFamily: 'inherit', fontSize: 'inherit', lineHeight: 2.1, margin: 0, color: 'var(--tx)' }}>
-                        {c.heading && c.text.startsWith(c.heading) ? c.text.slice(c.heading.length).replace(/^\n+/, '') : c.text}
+                        {hasSeparateHeading ? rest : c.text}
                       </pre>
                     </section>
                   )
@@ -264,7 +272,7 @@ export default function ContractReview() {
                       <dt>建议修改</dt>
                       <dd><div className="risk-suggest">{f.suggestion}</div></dd>
                       {anno?.amended_text && (<><dt>修改文本</dt><dd className="tiny">{anno.amended_text}</dd></>)}
-                      {anno && anno.state !== 'pending' && (<><dt>复核记录</dt><dd className="tiny">{anno.actor} · {anno.updated_at}</dd></>)}
+                      {anno && anno.state !== 'pending' && (<><dt>复核记录</dt><dd className="tiny">{anno.actor} · {fmtTime(anno.updated_at)}</dd></>)}
                     </dl>
                     {amending === f.id ? (
                       <div className="mt-8">

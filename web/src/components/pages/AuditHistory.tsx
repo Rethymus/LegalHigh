@@ -12,14 +12,33 @@ function loadBrowse(): BrowseItem[] {
   try { return JSON.parse(localStorage.getItem('lh:browse-history') ?? '[]') } catch { return [] }
 }
 
-const ACTION_FILTERS = ['全部', 'create', 'adopt', 'amend', 'reject', 'verify', 'issue', 'complaint']
+// 筛选 chips = 现行动作（中文标签）+ 旧版 verify/issue（仅历史日志）；与 ACTION_LABEL 同源，防止漂移。
+const ACTION_FILTERS: { key: string; label: string }[] = [
+  { key: '全部', label: '全部' },
+  { key: 'create', label: '创建' },
+  { key: 'review', label: '人工复核' },
+  { key: 'finalize', label: '确认定稿' },
+  { key: 'adopt', label: '采纳' },
+  { key: 'amend', label: '修改' },
+  { key: 'reject', label: '驳回' },
+  { key: 'delete', label: '删除' },
+  { key: 'generate', label: 'AI 调用' },
+  { key: 'complaint', label: '投诉' },
+  { key: 'explain_approve', label: '解读审核' },
+  { key: 'docx_return', label: '回传修订' },
+  { key: 'verify', label: '旧版核验' },
+  { key: 'issue', label: '旧版签发' },
+]
 
 const ENTITY_LABEL: Record<string, string> = {
   review: '合同审查', draft: '文书起草', annotation: '批注', complaint: '投诉', research: '研究',
+  ai_chat: 'AI 调用', explain: '法条解读',
 }
 const ACTION_LABEL: Record<string, string> = {
   create: '创建', adopt: '采纳', amend: '修改', reject: '驳回', reopen: '重开',
   review: '人工复核', finalize: '使用者确认定稿', verify: '旧版核验记录', issue: '旧版签发记录', complaint: '投诉受理', transition: '状态流转',
+  delete: '删除', generate: 'AI 生成调用', docx_return: '回传修订',
+  explain_approve: '解读审核通过', explain_reopen: '解读重开为草稿',
 }
 
 function parsePayload(raw: unknown): string {
@@ -72,8 +91,8 @@ export default function AuditHistory() {
       {tab === 'audit' && (
         <>
           <div className="row-wrap mt-16 mb-12">
-            {ACTION_FILTERS.map((a) => (
-              <button key={a} className={'chip' + (action === a ? ' is-on' : '')} onClick={() => setAction(a)}>{a}</button>
+            {ACTION_FILTERS.map((f) => (
+              <button key={f.key} className={'chip' + (action === f.key ? ' is-on' : '')} onClick={() => setAction(f.key)}>{f.label}</button>
             ))}
             <span className="spacer" />
             <span className="tiny">{logs.length} 条</span>
@@ -95,7 +114,7 @@ export default function AuditHistory() {
                           <td className="tiny mono">{fmtTime(l.ts)}</td>
                           <td>{String(l.actor ?? '')}</td>
                           <td><span className="bdg bdg-blue">{ACTION_LABEL[String(l.action ?? '')] ?? String(l.action ?? '')}</span></td>
-                          <td className="muted">{ENTITY_LABEL[String(l.entity_type ?? '')] ?? String(l.entity_type ?? '')}</td>
+                          <td className="muted" style={{ whiteSpace: 'nowrap' }}>{ENTITY_LABEL[String(l.entity_type ?? '')] ?? String(l.entity_type ?? '')}</td>
                           <td className="tiny">
                             {readable ? (
                               <span className="row" style={{ gap: 6 }}>
@@ -115,7 +134,7 @@ export default function AuditHistory() {
               </div>
             )}
             {!loading && !error && logs.length === 0 && (
-              <EmptyState icon="history" title={action === '全部' ? '暂无审计记录' : `暂无「${action}」记录`}
+              <EmptyState icon="history" title={action === '全部' ? '暂无审计记录' : `暂无「${ACTION_LABEL[action] ?? action}」记录`}
                 desc="发起合同审查、批注流转或文书复核后，操作将真实落库并在此展示。" />
             )}
           </div>

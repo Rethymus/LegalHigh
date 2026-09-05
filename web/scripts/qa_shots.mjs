@@ -85,11 +85,14 @@ const ROUTES = [
       if (!title || !body) return 'no-contract-fields';
       const inputSet = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set;
       const textSet = Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype, 'value').set;
+      // 各自原型上的 setter 必须与元素标签匹配：混用（如用 input 的 setter 写 textarea）
+      // 不会抛错但对 React 受控组件无效——曾使 write-E2E 静默空转（2026-09-05 R18 定位）。
+      if (!(title instanceof HTMLInputElement) || !(body instanceof HTMLTextAreaElement)) return 'bad-element-types';
       inputSet.call(title, 'QA 隔离数据库合同审查');
       title.dispatchEvent(new Event('input', { bubbles: true }));
       textSet.call(body, '合同测试输入（仅写入本次唯一临时数据库）。第一条 服务费用由双方另行约定。第二条 任何情况下服务方赔偿责任不超过已收费用的百分之十。第三条 收款账户以书面通知为准。');
       body.dispatchEvent(new Event('input', { bubbles: true }));
-      return 'ok';
+      return title.value && body.value.length > 30 ? 'ok' : 'set-did-not-stick';
     })()` },
     { t: 'eval', expr: `(() => { const btn = [...document.querySelectorAll('button')].find(b => /发起规则审查/.test(b.textContent)); if (!btn) return 'no-btn'; btn.click(); return 'clicked' })()` },
     { t: 'wait', ms: 3000 },
