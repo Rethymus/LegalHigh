@@ -11,9 +11,9 @@ export default defineConfig(() => ({
   server: {
     proxy: {
       // 开发期把 /api 代理到本地 FastAPI（server/.venv: uvicorn app.main:app --port 8000），
-      // 浏览器侧同源、无 CORS。
+      // 浏览器侧同源、无 CORS。8000 被其他本机服务占用时可用 LH_API_PORT 指向备用端口。
       '/api': {
-        target: 'http://127.0.0.1:8000',
+        target: `http://127.0.0.1:${process.env.LH_API_PORT || '8000'}`,
         changeOrigin: true,
         // 与后端在同一终端设置 LH_ADMIN_TOKEN 时，由开发代理附加请求头；
         // 密钥不进入前端 bundle、localStorage 或 URL。

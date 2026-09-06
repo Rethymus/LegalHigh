@@ -165,6 +165,14 @@ def parse_citations(items):
     return out
 
 
+def _lines(v) -> list[str]:
+    """textarea_list 字段归一化：前端契约是多行字符串（server 按行切分），
+    但客户端直接提交字符串列表同样优雅接收——畸形输入不应 500。"""
+    if isinstance(v, list):
+        return [str(x).strip() for x in v if str(x).strip()]
+    return [x.strip() for x in str(v or "").split("\n") if x.strip()]
+
+
 def _snapshot():
     corpus = get_corpus()
     return {
@@ -179,7 +187,7 @@ def _snapshot():
 
 def build_lawyer_letter(f: dict):
     citations = parse_citations(f.get("legal_basis"))
-    demands = [x.strip() for x in (f.get("demands") or "").split("\n") if x.strip()]
+    demands = _lines(f.get("demands"))
     sections = [
         {"type": "title", "text": "律师函"},
         {"type": "subtitle", "text": f"——关于{f.get('subject', '')}的函"},
@@ -252,8 +260,8 @@ def build_contract(f: dict):
 
 
 def build_civil_complaint(f: dict):
-    claims = [x.strip() for x in (f.get("claims") or "").split("\n") if x.strip()]
-    evidence = [x.strip() for x in (f.get("evidence") or "").split("\n") if x.strip()]
+    claims = _lines(f.get("claims"))
+    evidence = _lines(f.get("evidence"))
     citations = parse_citations(f.get("legal_basis"))
     sections = [
         {"type": "title", "text": "民事起诉状"},

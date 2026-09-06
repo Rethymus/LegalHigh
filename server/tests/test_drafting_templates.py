@@ -23,6 +23,13 @@ POA_FILL = {
     "principal": "某人", "agent": "某律师", "firm": "某律师事务所", "license_no": "111012026000000",
     "authority_scope": ["一般授权（代为出庭、陈述、答辩）", "代收法律文书"], "term": "自委托之日起至本案审结止",
 }
+LETTER_FILL = {
+    "firm": "某律师事务所", "lawyer": "某律师", "license_no": "1110120XX00000000",
+    "client": "某公司", "recipient": "另一公司", "subject": "催告双倍返还定金",
+    "facts": "乙方依约支付定金后甲方拒绝签订正式合同。",
+    "legal_basis": [{"law_id": "civl-2020", "article_no": 586}],
+    "demands": "于本函发出之日起七日内双倍返还定金", "deadline": "本函发出之日起七日内",
+}
 
 
 def test_new_templates_registered():
@@ -54,6 +61,20 @@ def test_new_templates_required_validation():
         generate("civil_answer", {k: v for k, v in ANSWER_FILL.items() if k != "court"})
     with pytest.raises(ValueError):
         generate("power_of_attorney", {k: v for k, v in POA_FILL.items() if k != "term"})
+
+
+def test_textarea_list_accepts_string_and_list():
+    """textarea_list 归一化（r27 全流程 E2E 发现）：前端契约=多行字符串原样提交、
+    server 按行切分；客户端直接提交字符串列表同样优雅接收——畸形输入不得 500。"""
+    from app.drafting import generate
+    as_list = dict(LETTER_FILL, demands=["第一项催告要求", "第二项催告要求"])
+    as_str = dict(LETTER_FILL, demands="第一项催告要求\n第二项催告要求")
+    g_list = generate("lawyer_letter", as_list)
+    g_str = generate("lawyer_letter", as_str)
+    def demands_of(g):
+        return [s["text"] for s in g["content"]["sections"] if s.get("type") == "numbered"]
+    assert demands_of(g_list) == ["第一项催告要求", "第二项催告要求"]
+    assert demands_of(g_list) == demands_of(g_str)
 
 
 def test_new_templates_docx_export(tmp_db):
