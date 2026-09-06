@@ -211,6 +211,38 @@ async function main() {
       }
     }
     check('大字模式弹簧联测（zoom 1.15）', largeCheck.ok, largeCheck.detail)
+
+    // ⑩/⑪ Reduce Motion 双通道（计划 v4 红线6）：位移动画改指纯 opacity 关键帧（渐变保留）、
+    // transform 过渡改道颜色/阴影——不是一刀切杀光。系统通道用 CDP 仿真实测，应用内通道挂类实测。
+    const rmSample = `(() => {
+      const ballProp = getComputedStyle(document.querySelector('.ball-bouncy')).transitionProperty
+      const btn = [...document.querySelectorAll('button')].find((x) => x.textContent.includes('Toast 弹簧入场'))
+      btn.click()
+      return new Promise((resolve) => {
+        let name = 'absent'
+        const t0 = performance.now()
+        const tick = () => {
+          const t = document.querySelector('.toast-host .toast')
+          if (t) { name = getComputedStyle(t).animationName; return resolve({ ballProp, name }) }
+          if (performance.now() - t0 > 2500) return resolve({ ballProp, name })
+          requestAnimationFrame(tick)
+        }
+        requestAnimationFrame(tick)
+      })
+    })()`
+    await cdp.send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: 'reduce' }] })
+    const rmSys = await evalAsync(cdp, `(async () => ${rmSample})()`)
+    await cdp.send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: '' }] })
+    check('Reduce Motion 系统通道保留渐变', rmSys.name === 'fade-in' && !/transform/.test(rmSys.ballProp),
+      `仿真实测：Toast 入场 = ${rmSys.name}（pop-in→fade-in，渐变保留）· ball transitionProperty 无 transform`)
+    const rmApp = await evalAsync(cdp, `(async () => {
+      document.documentElement.classList.add('reduce-motion')
+      await new Promise((r) => setTimeout(r, 150))
+      return (${rmSample})
+    })()`)
+    await evalAsync(cdp, `document.documentElement.classList.remove('reduce-motion'); 'off'`)
+    check('Reduce Motion 应用内通道保留渐变', rmApp.name === 'fade-in' && !/transform/.test(rmApp.ballProp),
+      `挂类实测：Toast 入场 = ${rmApp.name} · ball transitionProperty 无 transform`)
   } finally {
     chrome.kill()
   }

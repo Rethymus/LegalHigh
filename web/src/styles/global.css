@@ -276,8 +276,7 @@ svg { display: block; flex: none; }
 ::-webkit-scrollbar-thumb:hover { background: rgba(128, 138, 158, 0.55); background-clip: content-box; border: 2.5px solid transparent; }
 ::-webkit-scrollbar-track { background: transparent; }
 
-@media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; } }
-.reduce-motion *, .reduce-motion *::before, .reduce-motion *::after { transition: none !important; animation: none !important; }
+/* Reduce Motion 精细化规则移至文件尾部（级联兜底，须位于按压对/浮层/stagger 基规则之后） */
 
 /* ---------- 3. App 外壳 ---------- */
 .app { display: flex; height: 100vh; padding: 12px; gap: 12px; }
@@ -1248,3 +1247,39 @@ del.diff-del { text-decoration: line-through; background: var(--danger-soft); bo
     box-shadow: var(--shadow-2); text-decoration: none;
   }
 }
+
+/* ==================================================================
+   Reduce Motion 精细化（计划 v4 红线6：只关位移/缩放/循环，保留透明度渐变）
+   旧实现一刀切 transition/animation:none，Toast/Dialog 的透明度渐变也被杀，
+   与红线 6 及 DesignSystem 页承诺不符。三层替代（须位于基规则之后）：
+   ① 循环/纯运动动画停止（shake、骨架 shimmer；环境极光另有专项规则）；
+   ② 位移/缩放入退场动画改指既有纯 opacity 关键帧（fade-in/out）——渐变保留、位移消失；
+   ③ transform 过渡改道颜色/阴影属性（位移瞬时化）+ 按压缩放/hover 浮起状态直达。
+   颜色 hover 渐变、遮罩淡入淡出（本就是 opacity）、滚动海拔（无位移）不受影响。
+   双通道：系统 @media 与应用内 .reduce-motion（html 类），两块规则集一致。
+   ================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .shake, .skl { animation: none !important; }
+  .toast, .dlg, .stagger > * { animation-name: fade-in !important; }
+  .toast.is-out, .dlg-mask.is-out, .dlg-mask.is-out .dlg { animation-name: fade-out !important; }
+  .hoverable, .ac-card, .subj-card, .ball-smooth, .ball-snappy, .ball-bouncy,
+  .seg-thumb, .sw::after, .flash-inner { transition-property: box-shadow, border-color, background-color !important; }
+  .btn:active, .chip:active, .tb-icon:active, .tb-pill:active, .sb-item:active, .tab:active,
+  .lrow:active, .doc-type:active, .res-act:active, .cit:active, .et-btn:active, .ckbox:active,
+  .ht:active, .seg-btn:active, .sw:active::after { transform: none !important; }
+  .sw.is-on:active::after { transform: translateX(18px) !important; }  /* 保留 knob 位置，仅去拉伸 */
+  .hoverable:hover, .ac-card:hover, .subj-card:hover { transform: none !important; }
+}
+.reduce-motion .shake, .reduce-motion .skl { animation: none !important; }
+.reduce-motion .toast, .reduce-motion .dlg, .reduce-motion .stagger > * { animation-name: fade-in !important; }
+.reduce-motion .toast.is-out, .reduce-motion .dlg-mask.is-out, .reduce-motion .dlg-mask.is-out .dlg { animation-name: fade-out !important; }
+.reduce-motion .hoverable, .reduce-motion .ac-card, .reduce-motion .subj-card,
+.reduce-motion .ball-smooth, .reduce-motion .ball-snappy, .reduce-motion .ball-bouncy,
+.reduce-motion .seg-thumb, .reduce-motion .sw::after, .reduce-motion .flash-inner { transition-property: box-shadow, border-color, background-color !important; }
+.reduce-motion .btn:active, .reduce-motion .chip:active, .reduce-motion .tb-icon:active,
+.reduce-motion .tb-pill:active, .reduce-motion .sb-item:active, .reduce-motion .tab:active,
+.reduce-motion .lrow:active, .reduce-motion .doc-type:active, .reduce-motion .res-act:active,
+.reduce-motion .cit:active, .reduce-motion .et-btn:active, .reduce-motion .ckbox:active,
+.reduce-motion .ht:active, .reduce-motion .seg-btn:active, .reduce-motion .sw:active::after { transform: none !important; }
+.reduce-motion .sw.is-on:active::after { transform: translateX(18px) !important; }
+.reduce-motion .hoverable:hover, .reduce-motion .ac-card:hover, .reduce-motion .subj-card:hover { transform: none !important; }
