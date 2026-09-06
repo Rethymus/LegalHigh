@@ -25,11 +25,19 @@ export default function DesignSystem() {
   const [seg, setSeg] = useState('snappy')
   const [travel, setTravel] = useState(false)   // 弹簧对比：位移开关
   const [shakeKey, setShakeKey] = useState(0)   // 换 key 重挂载以重放 shake
+  const [stagKey, setStagKey] = useState(1)     // 换 key 重挂载以重放级联（W5-2）
   const [dlgOpen, setDlgOpen] = useState(false)
   const toast = useToast()
 
   return (
     <div className="page">
+      {/* 折射边缘实验滤镜（W5-1）：仅 .m-refract 展台引用，产品面板不接入（结论见调研 §6） */}
+      <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true" focusable="false">
+        <filter id="lg-refract" x="-10%" y="-10%" width="120%" height="120%" colorInterpolationFilters="sRGB">
+          <feTurbulence type="turbulence" baseFrequency="0.012 0.02" numOctaves="2" seed="7" result="t" />
+          <feDisplacementMap in="SourceGraphic" in2="t" scale="6" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+      </svg>
       <PageHeader
         title="设计系统规范"
         sub="内部参考（Apple HIG 风格 Token 体系）。本页不属于用户产品界面。"
@@ -69,6 +77,7 @@ export default function DesignSystem() {
             ['Thick', 'm-thick', 'blur 20 · alpha 0.78', '工作台面板 / 正文容器'],
             ['Chrome', 'm-chrome', 'blur 30 · alpha 0.52', 'Sidebar / TopBar 悬浮铬层'],
             ['Float', 'm-float', 'blur 32 · alpha 0.70 + 大阴影', 'Toast / Popover / 浮层'],
+            ['Refract · 实验档', 'm-refract', 'url(#lg-refract)+blur 14 · α 0.50', '仅展台演示（旧引擎不可探测）'],
           ].map(([name, cls, param, use]) => (
             <div key={name} className="m-strip">
               <div className={'material ' + cls}>
@@ -225,6 +234,15 @@ export default function DesignSystem() {
             <div key={shakeKey} className="banner banner-danger shake">
               <Icon name="alert" size={14} />
               <span className="banner-tx">非法操作反馈：x(t)=A·e^(−λt)·sin(2πft)，A=8px · f=9Hz · λ=6.5 —— 首摆 ±6.7px，单调指数衰减归零。</span>
+            </div>
+            <div className="row mb-8 mt-8">
+              <button className="btn btn-secondary btn-sm" onClick={() => setStagKey((k) => k + 1)}>重放级联</button>
+              <span className="tiny">列表级联入场（W5-2）：20ms 步长 · smooth · 序号封顶 12</span>
+            </div>
+            <div key={stagKey} className="stagger" style={{ display: 'grid', gap: 5 }}>
+              {['《民法典》第496条 · 格式条款', '《消费者权益保护法》第26条 · 格式条款', '《劳动合同法》第82条 · 未签书面合同', '指导案例23号 · 孙银山案', '《电子商务法》第17条 · 虚假宣传', '《民事诉讼法》第35条 · 协议管辖'].map((t, i) => (
+                <div key={t} className="stag-demo" style={{ '--si': i } as React.CSSProperties}>{t}</div>
+              ))}
             </div>
             <div className="tiny mt-8">按压反馈对：任意按钮按住 80ms 缩至 0.97，松开以 --spring-quick（340ms 微 overshoot）弹回——两段独立曲线构成「对」。全部只动 transform/opacity。</div>
           </div>

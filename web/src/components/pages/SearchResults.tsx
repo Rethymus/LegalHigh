@@ -47,12 +47,12 @@ function FavButton({ favKey, item }: { favKey: string; item: Parameters<typeof t
   )
 }
 
-function LawResultCard({ r, q }: { r: ResolvedHit; q: string }) {
+function LawResultCard({ r, q, si }: { r: ResolvedHit; q: string; si?: number }) {
   const { hit, law } = r
   const title = lawDisplayTitle((law?.title ?? hit.law_title).replace(/^中华人民共和国/, ''), law?.status)
   const to = `/laws/${hit.law_id}?art=${hit.no}`
   return (
-    <article className="res-card">
+    <article className="res-card" style={si === undefined ? undefined : { '--si': si } as React.CSSProperties}>
       <div className="res-h">
         <div style={{ minWidth: 0 }}>
           <Link to={to} className="res-t">《{title}》{hit.label}</Link>
@@ -80,9 +80,9 @@ function LawResultCard({ r, q }: { r: ResolvedHit; q: string }) {
   )
 }
 
-function CaseResultCard({ c, q }: { c: CaseRecord; q: string }) {
+function CaseResultCard({ c, q, si }: { c: CaseRecord; q: string; si?: number }) {
   return (
-    <article className="res-card">
+    <article className="res-card" style={si === undefined ? undefined : { '--si': si } as React.CSSProperties}>
       <div className="res-h">
         <div style={{ minWidth: 0 }}>
           <Link to={`/cases/${c.id}`} className="res-t">{highlight(c.name, q)}</Link>
@@ -290,11 +290,12 @@ export default function SearchResults() {
                   </span>
                 </div>
               )}
-              <div className="mt-16">
-                {(tab === 'all' || tab === 'case') && caseHits.map((c) => <CaseResultCard key={c.id} c={c} q={q} />)}
-                {tab === 'all' && resolved.map((r) => <LawResultCard key={`${r.hit.law_id}-${r.hit.no}`} r={r} q={q} />)}
-                {tab === 'law' && lawHits.map((r) => <LawResultCard key={`${r.hit.law_id}-${r.hit.no}`} r={r} q={q} />)}
-                {tab === 'js' && judicialHits.map((r) => <LawResultCard key={`${r.hit.law_id}-${r.hit.no}`} r={r} q={q} />)}
+              {/* 列表级联入场（W5-2）：骨架屏→内容切换时 20ms 步长级联，序号封顶 12（.stagger 规则） */}
+              <div className="mt-16 stagger">
+                {(tab === 'all' || tab === 'case') && caseHits.map((c, i) => <CaseResultCard key={c.id} c={c} q={q} si={i} />)}
+                {tab === 'all' && resolved.map((r, i) => <LawResultCard key={`${r.hit.law_id}-${r.hit.no}`} r={r} q={q} si={i + Math.min(caseHits.length, 6)} />)}
+                {tab === 'law' && lawHits.map((r, i) => <LawResultCard key={`${r.hit.law_id}-${r.hit.no}`} r={r} q={q} si={i} />)}
+                {tab === 'js' && judicialHits.map((r, i) => <LawResultCard key={`${r.hit.law_id}-${r.hit.no}`} r={r} q={q} si={i} />)}
 
                 {tab === 'js' && q && judicialHits.length === 0 && (
                   <div className="card">

@@ -154,6 +154,63 @@ async function main() {
       return { sawOut, unloaded: false }
     })()`)
     check('Dialog 弹簧开合+退场卸载', !dlg.error && dlg.sawOut && dlg.unloaded, `退场态可见=${dlg.sawOut} · 卸载=${dlg.unloaded}`)
+
+    // ⑦ 列表级联入场（W5-2）：重放后 70ms 首条已渐显、末条仍在 delay（级联步长生效），终态全部归位
+    const stag = await evalAsync(cdp, `(async () => {
+      const raf = () => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)))
+      const btn = [...document.querySelectorAll('button')].find((b) => b.textContent.includes('重放级联'))
+      if (!btn) return { error: 'no 重放级联 btn' }
+      btn.click()
+      await raf(); await new Promise((r) => setTimeout(r, 70))
+      const items = [...document.querySelectorAll('.stag-demo')]
+      const early1 = +getComputedStyle(items[0]).opacity
+      const earlyLast = +getComputedStyle(items[items.length - 1]).opacity
+      await new Promise((r) => setTimeout(r, 1400))
+      const opacities = items.map((el) => +getComputedStyle(el).opacity)
+      const t = getComputedStyle(items[0]).transform
+      const finalTx = t === 'none' ? 0 : +new DOMMatrixReadOnly(t).m41.toFixed(2)
+      return { n: items.length, early1, earlyLast, minLate: Math.min(...opacities), finalTx }
+    })()`)
+    check('列表级联入场（20ms 步长）', !stag.error && stag.n === 6 && stag.early1 > 0 && stag.earlyLast === 0 && stag.minLate === 1 && stag.finalTx === 0,
+      `70ms 采样：首条 ${stag.early1} · 末条 ${stag.earlyLast}（delay 100ms 未开始）→ 终态 opacity ${stag.minLate}/tx ${stag.finalTx}`)
+
+    // ⑧ 滚动海拔 CSS 原生化（W5-4）：命名 scroll timeline 连续驱动 .tb 边框插值，且滚动回顶可逆
+    const sdrv = await evalAsync(cdp, `(async () => {
+      const raf = () => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)))
+      const tb = document.querySelector('.tb'); const content = document.querySelector('.content')
+      if (!tb || !content) return { error: 'no .tb/.content' }
+      const animName = getComputedStyle(tb).animationName
+      const before = getComputedStyle(tb).borderColor
+      content.scrollTop = 240
+      await raf(); await new Promise((r) => setTimeout(r, 120))
+      const scrolled = getComputedStyle(tb).borderColor
+      content.scrollTop = 0
+      await raf(); await new Promise((r) => setTimeout(r, 120))
+      const back = getComputedStyle(tb).borderColor
+      return { animName, before, scrolled, back }
+    })()`)
+    check('滚动海拔 scroll-driven 连续插值', !sdrv.error && sdrv.animName === 'tb-elevate' && sdrv.scrolled !== sdrv.before && sdrv.back === sdrv.before,
+      `animation=${sdrv.animName} · 边框 ${sdrv.before} →${sdrv.scrolled} →${sdrv.back}（可逆）`)
+
+    // ⑨ 大字模式 × 动效联测（W5-5）：zoom 1.15 下弹簧位移按比例放大、overshoot 特性不漂移
+    const fl = await evalAsync(cdp, `(async () => {
+      document.documentElement.classList.add('font-large')
+      await new Promise((r) => setTimeout(r, 350))
+      return 'on'
+    })()`)
+    let largeCheck = { ok: false, detail: '前置失败' }
+    if (fl === 'on') {
+      const bouncyL = await evalAsync(cdp, travelProbe('.ball-bouncy', '出发'))
+      const smoothL = await evalAsync(cdp, travelProbe('.ball-smooth', '出发'))
+      await evalAsync(cdp, `document.documentElement.classList.remove('font-large'); 'off'`)
+      const target = 220 * 1.15
+      largeCheck = {
+        ok: !bouncyL.error && !smoothL.error && bouncyL.max > target * 1.01 && Math.abs(bouncyL.final - target) < 2.5
+          && smoothL.max < target * 1.02 && smoothL.max > target * 0.9,
+        detail: `目标 ${target}px：bouncy max=${bouncyL.max}/final=${bouncyL.final}（仍过冲）；smooth max=${smoothL.max}（无过冲）`,
+      }
+    }
+    check('大字模式弹簧联测（zoom 1.15）', largeCheck.ok, largeCheck.detail)
   } finally {
     chrome.kill()
   }

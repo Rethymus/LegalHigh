@@ -37,6 +37,7 @@
   --t-bouncy: 600ms;   /* .bouncy(0.5, bounce .3)  浮层入场 */
   --t-quick: 340ms;    /* interactiveSpring 档     按压释放 / 开关 */
   --t-shake: 650ms;    /* 推石 shake（指数衰减 650ms 采样，见关键帧 shake） */
+  --dur-stagger: 20ms; /* 列表级联入场步长（W5-2）；序号封顶 12 → 尾延迟 ≤240ms */
 
   /* sidebar glass（§33 Glass 1） */
   --sb-bg: rgba(16, 28, 50, 0.72);
@@ -218,6 +219,18 @@ svg { display: block; flex: none; }
 @keyframes dlg-out { from { opacity: 1; transform: none; } to { opacity: 0; transform: scale(0.95) translateY(4px); } }
 @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
 @keyframes fade-out { from { opacity: 1; } to { opacity: 0; } }
+/* 列表级联入场（W5-2）：轻抬升 + 淡入，大面积表面用 smooth（红线5 禁 bounce）；
+   --si 由渲染方注入序号，min() 封顶防长列表等待；Reduce Motion 全局关闭后直接呈现终态 */
+@keyframes rise-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.stagger > * {
+  animation: rise-in var(--t-smooth) var(--spring-smooth) both;
+  animation-delay: calc(min(var(--si, 0), 12) * var(--dur-stagger));
+}
+/* Motion Lab 级联演示条目（静态样式，动画来自 .stagger 容器规则） */
+.stag-demo {
+  padding: 6px 11px; border-radius: var(--r-s); font-size: 12px; color: var(--tx-2);
+  background: rgba(var(--mat-tint), var(--mat-card-a)); border: 1px solid var(--mat-hairline);
+}
 @keyframes shake {
   0.0% { transform: translateX(0); }
   3.8% { transform: translateX(6.72px); }
@@ -347,6 +360,23 @@ svg { display: block; flex: none; }
   transition: box-shadow var(--dur) var(--ease), border-color var(--dur) var(--ease);
 }
 .tb.is-scrolled { border-color: var(--mat-edge); box-shadow: inset 0 1px 0 var(--mat-edge), var(--shadow-2); }
+/* 滚动海拔 · CSS 原生化渐进增强（W5-4）：支持引擎上滚动位置直接连续驱动海拔
+   （首 96px 行程内 hairline→edge、shadow-1→shadow-2 线性插值，来回滚动实时可逆），
+   动画填充优先级高于 .is-scrolled 类 → 哨兵规则自然退化为不支持引擎的回退。
+   timeline-scope 在 .main 提升 .content 的命名时间线供兄弟元素 .tb 引用。 */
+.content { scroll-timeline: --st-content block; }
+.main { timeline-scope: --st-content; }
+@supports (animation-timeline: --st-content) and (timeline-scope: --st-content) {
+  .tb {
+    animation: tb-elevate linear both;
+    animation-timeline: --st-content;
+    animation-range: 0px 96px;
+  }
+}
+@keyframes tb-elevate {
+  from { border-color: var(--mat-hairline); box-shadow: inset 0 1px 0 var(--mat-edge), var(--shadow-1); }
+  to { border-color: var(--mat-edge); box-shadow: inset 0 1px 0 var(--mat-edge), var(--shadow-2); }
+}
 .tb-crumb { display: flex; align-items: center; gap: 7px; font-size: 13.5px; color: var(--tx-2); min-width: 0; }
 .tb-crumb b { color: var(--tx); font-weight: 600; }
 .tb-crumb .sep { opacity: 0.45; }
@@ -1048,6 +1078,15 @@ del.diff-del { text-decoration: line-through; background: var(--danger-soft); bo
 .m-thick { --m-blur: 20px; --m-a: 0.78; }
 .m-chrome { --m-blur: 30px; --m-a: 0.52; }
 .m-float { --m-blur: 32px; --m-a: 0.7; box-shadow: var(--mat-inset), var(--shadow-3); }
+/* 折射边缘 · 实验档（W5-1 评估结论可视化）：feDisplacementMap 位移采样叠加在 blur 之上。
+   实证（2026-09-06，docs/qa-evidence/w5-refract-*.png）：Chrome 152 渲染有效且可与 blur() 组合；
+   但旧引擎「解析成功、渲染不生效」无法用 @supports 探测，组合值存在整条失效风险 →
+   仅展台演示，产品面板维持 inset 高光/阴影近似（Liquid Glass 边缘折射的稳定近似）。 */
+.m-refract {
+  --m-blur: 14px; --m-a: 0.5;
+  -webkit-backdrop-filter: url(#lg-refract) blur(var(--m-blur, 14px)) saturate(var(--mat-sat));
+  backdrop-filter: url(#lg-refract) blur(var(--m-blur, 14px)) saturate(var(--mat-sat));
+}
 
 /* 浮层材质：Toast / Dialog —— Liquid Glass regular 语义（模糊+叠色+成对内缘光+深阴影） */
 .toast { background: rgba(var(--mat-tint), 0.72); -webkit-backdrop-filter: blur(var(--blur-float)) saturate(var(--mat-sat)); backdrop-filter: blur(var(--blur-float)) saturate(var(--mat-sat)); border: 1px solid var(--mat-hairline); box-shadow: var(--mat-inset), var(--shadow-3); pointer-events: auto; }

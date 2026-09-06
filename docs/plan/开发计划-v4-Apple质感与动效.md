@@ -48,12 +48,13 @@
 - [x] run_qa.cmd 扩为 6 门（+动效行为探针）。
 - 验收：run_qa.cmd 六门全绿。
 
-### W5 长周期滚动项（后续轮次，不阻塞本轮）
-- [ ] Liquid Glass 「折射边缘」：SVG displacement 边缘（当前以 inset 高光/阴影近似；评估 filter: url() 成本后决定是否升级）。
-- [ ] 列表项入场 stagger（骨架屏→内容切换时 20ms 级联），需先在 Motion Lab 验证不干扰阅读。
-- [ ] 拖拽跟手（用户直接驱动）改 JS 驱动弹簧 + 速度继承（调研 §2.3 velocity preservation），涉及合同栏拖宽/看板卡片时立项。
-- [ ] 滚动驱动动画 CSS 原生化（animation-timeline）替代哨兵方案，待目标浏览器基线达 Chrome/Edge 115+ 且 Safari 26 确认后迁移。
-- [ ] 大字模式 × 动效联测（le-font-large 下弹簧距离是否需要放大）。
+### W5 长周期滚动项——第二十四轮（2026-09-06）全部落定
+- [x] Liquid Glass 「折射边缘」：**评估完成，定为实验档**。实证（无头 Chrome 152，开/关截图字节级对照，`docs/qa-evidence/w5-refract-*.png`）：`backdrop-filter: url(#svg)` 渲染有效且可与 blur() 组合；但旧引擎「解析成功渲染不生效」无法用 @supports 探测、组合值存在整条失效风险 → 产品面板维持 inset 近似，`.m-refract` 实验档（scale=6 轻折射）进 /design-system 材质标尺供目检。结论详情见调研 §3.5。
+- [x] 列表项入场 stagger：Motion Lab「重放级联」演示（6 条，法条语境）+ 检索结果页真实接入（46 卡实测，`--si` 序号注入）；Token `--dur-stagger: 20ms` + `rise-in` 关键帧（smooth 曲线，大面积不 bounce），`min(--si, 12)` 封顶尾延迟 ≤240ms；qa_motion 探针断言「70ms 首条渐显/末条仍在 delay → 终态归位」。
+- [x] 拖拽跟手（JS 弹簧+速度继承）：**条件未触发，不立项**——当前全站无拖拽交互（合同三栏无拖宽、无看板卡片），待出现真实拖拽需求时按调研 §2.3 立项。
+- [x] 滚动驱动动画 CSS 原生化：`scroll-timeline: --st-content` + `.main { timeline-scope }` 双轨落地——支持引擎上 TopBar 海拔由滚动位置连续插值（0–96px 行程，来回可逆），不支持回落 onScroll 哨兵；qa_motion 探针 ⑧ 断言 animationName/边框插值/回顶可逆。
+- [x] 大字模式 × 动效联测：qa_motion 探针 ⑨ 实测 zoom 1.15 下弹簧位移等比放大（目标 220→253px）、bouncy 过冲比例不漂移（max 264.6 = 1.046×目标）、smooth 仍无过冲——**结论：弹簧距离与字号解耦（px 固定 + zoom 等比），无需按大字模式单独调参**。
+- 验收：run_qa.cmd 六门全绿（pytest 151 / tsc+build / 数据纪律 / WCAG --strict 28 项 / 36 路由巡检 0 问题 / qa_motion 11 断言）。
 
 ## 2. 变更边界（防止「打磨」变「重写」）
 - 只动 `web/src/styles/global.css`、`web/src/components/ui.tsx`、`AppShell.tsx`、DesignSystem/Settings 两页与 QA 脚本；不改任何业务页面结构与数据链路。
