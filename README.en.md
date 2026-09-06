@@ -6,6 +6,28 @@ LegalHigh is a local-first prototype for traceable legal information and documen
 
 It is not a law firm, does not practise law, does not provide legal advice, and does not predict case outcomes. High-risk outputs must be independently reviewed outside the platform by an authorized and appropriately qualified person. The platform only records the local user's own review/finalize progress; it does not verify credentials and does not issue documents.
 
+## Screenshots
+
+Captured on 2026-09-06 from a locally running full stack (real API-driven UI; sample content is labeled as such):
+
+| Home (light) | Home (dark) |
+|---|---|
+| ![Home light](docs/readme/01-home-light.png) | ![Home dark](docs/readme/02-home-dark.png) |
+
+| Statute search | Statute detail |
+|---|---|
+| ![Statute search](docs/readme/03-search.png) | ![Statute detail](docs/readme/04-law-detail.png) |
+
+| Contract review | Settings · appearance (segmented control) |
+|---|---|
+| ![Contract review](docs/readme/05-contract-review.png) | ![Settings appearance](docs/readme/06-settings-appearance.png) |
+
+Motion system (CSS `linear()` curves derived from the SwiftUI spring model): three springs over the same distance, spring-in toast, exponentially-decaying shake, and a spring-loaded segmented control. The gallery is interactive on the internal design-system page, and the physics are asserted headlessly by `web/scripts/qa_motion.mjs` (bouncy overshoot measured 230px ≈ 229px theoretical, smooth with no overshoot, shake decaying to zero):
+
+![Motion gallery](docs/readme/motion-lab.gif)
+
+Materials are tiered by semantics — navigation chrome, content desk, cards, and overlays each get one set of blur, tint, inner-edge light, and hairline parameters (all tokens). The neutral scale `--gray-1..6` shares semantics across light/dark; focus rings, contrast, and motion durations are all gated in QA.
+
 ## What currently works
 
 | Capability | Honest boundary |

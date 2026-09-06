@@ -5,6 +5,10 @@
 **可追溯的法律信息检索、合同审查与文书辅助原型**<br>
 **A traceable legal-information, contract-review, and document-assistance prototype**
 
+![LegalHigh 首页](docs/readme/01-home-light.png)
+
+![动效展台](docs/readme/motion-lab.gif)
+
 [简体中文](README.zh-CN.md) · [English](README.en.md) · [安全政策](SECURITY.md) · [贡献指南](CONTRIBUTING.md)
 
 </div>
