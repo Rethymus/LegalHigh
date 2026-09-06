@@ -1,5 +1,5 @@
 // 通用 UI 原子组件：按钮/输入等直接使用 global.css 类；此处封装交互态组件
-import { createContext, useCallback, useContext, useRef, useState, type ReactNode } from 'react'
+import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode } from 'react'
 import { Icon, type IconName } from './icons'
 
 /* ---------- 时间显示：server 存 UTC ISO，展示一律转本地时区 ----------
@@ -14,25 +14,37 @@ export function fmtTime(iso: string | number | undefined | null, mode: 'dt' | 'd
   return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}`
 }
 
-/* ---------- Toast ---------- */
+/* ---------- Toast ----------
+   弹簧入场（pop-in · bouncy）+ 退场（pop-out）后再卸载：
+   到期先挂 .is-out 播退场动画，动画结束后才从状态里移除（避免闪断）。 */
 interface ToastMsg { id: number; text: string; tone?: 'ok' | 'err' }
 const ToastCtx = createContext<(text: string, tone?: 'ok' | 'err') => void>(() => {})
 export const useToast = () => useContext(ToastCtx)
 
+const TOAST_TTL = 2600
+const TOAST_EXIT = 200  // pop-out 时长（--dur-fast），与 CSS 保持一致
+
 export function ToastProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<ToastMsg[]>([])
+  const [exiting, setExiting] = useState<Set<number>>(new Set())
   const seq = useRef(0)
   const push = useCallback((text: string, tone?: 'ok' | 'err') => {
     const id = ++seq.current
-    setItems((xs) => [...xs, { id, text, tone }])
-    setTimeout(() => setItems((xs) => xs.filter((x) => x.id !== id)), 2600)
+    setItems((xs) => [...xs.slice(-3), { id, text, tone }])  // 堆叠上限 4 条，防刷屏
+    setTimeout(() => {
+      setExiting((s) => new Set(s).add(id))
+      setTimeout(() => {
+        setItems((xs) => xs.filter((x) => x.id !== id))
+        setExiting((s) => { const n = new Set(s); n.delete(id); return n })
+      }, TOAST_EXIT)
+    }, TOAST_TTL)
   }, [])
   return (
     <ToastCtx.Provider value={push}>
       {children}
       <div className="toast-host">
         {items.map((t) => (
-          <div key={t.id} className={'toast' + (t.tone ? ' t-' + t.tone : '')}>
+          <div key={t.id} className={'toast' + (t.tone ? ' t-' + t.tone : '') + (exiting.has(t.id) ? ' is-out' : '')}>
             <Icon name={t.tone === 'err' ? 'alert' : t.tone === 'ok' ? 'verify' : 'info'} size={15} />
             {t.text}
           </div>
@@ -42,18 +54,54 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   )
 }
 
-/* ---------- Dialog（声明式确认） ---------- */
+/* ---------- Dialog（声明式确认）----------
+   弹簧开合：open 翻转为 false 时先播退场动画（dlg-out/fade-out）再卸载，API 不变。 */
 export function Dialog({ open, title, children, actions }: {
   open: boolean; title: string; children?: ReactNode; actions?: ReactNode
 }) {
-  if (!open) return null
+  const [phase, setPhase] = useState<'hidden' | 'in' | 'out'>(open ? 'in' : 'hidden')
+  const exitTimer = useRef<number | undefined>(undefined)
+  useEffect(() => {
+    window.clearTimeout(exitTimer.current)
+    if (open) { setPhase('in'); return }
+    setPhase((p) => (p === 'in' ? 'out' : p))
+    exitTimer.current = window.setTimeout(() => setPhase('hidden'), 200)  // 退场时长 = --dur-fast
+    return () => window.clearTimeout(exitTimer.current)
+  }, [open])
+  if (phase === 'hidden') return null
   return (
-    <div className="dlg-mask" role="dialog" aria-modal="true">
+    <div className={'dlg-mask' + (phase === 'out' ? ' is-out' : '')} role="dialog" aria-modal="true">
       <div className="dlg">
         <div className="dlg-t">{title}</div>
         {children && <div className="dlg-b">{children}</div>}
         <div className="dlg-acts">{actions ?? <button className="btn btn-primary btn-sm" onClick={() => { /* closed by parent */ }}>知道了</button>}</div>
       </div>
+    </div>
+  )
+}
+
+/* ---------- 分段控件（竹简槽）----------
+   iOS Segmented Control 语义：凹槽轨道 + 滑块弹簧滑动（--spring-snappy）。
+   --seg-n / --seg-i 注入 CSS，滑块位移全部走 transform（合成器通道）。 */
+export function Segmented({ options, value, onChange, ariaLabel }: {
+  options: { key: string; label: string }[]
+  value: string
+  onChange: (k: string) => void
+  ariaLabel?: string
+}) {
+  const idx = Math.max(0, options.findIndex((o) => o.key === value))
+  return (
+    <div className="seg" role="tablist" aria-label={ariaLabel} style={{ '--seg-n': options.length, '--seg-i': idx } as React.CSSProperties}>
+      <span className="seg-thumb" aria-hidden />
+      {options.map((o) => (
+        <button
+          key={o.key} type="button" role="tab" aria-selected={o.key === value}
+          className={'seg-btn' + (o.key === value ? ' is-on' : '')}
+          onClick={() => onChange(o.key)}
+        >
+          {o.label}
+        </button>
+      ))}
     </div>
   )
 }

@@ -39,6 +39,9 @@ function loadResearchList(): LocalResearchItem[] {
   } catch { return [] }
 }
 
+/* 构建期常量：静态说明站（VITE_STATIC_PREVIEW=1）不部署后端，禁止发 /api 请求 */
+const STATIC_PREVIEW = import.meta.env.VITE_STATIC_PREVIEW === '1'
+
 export default function Dashboard() {
   const nav = useNavigate()
   const [q, setQ] = useState('')
@@ -53,7 +56,6 @@ export default function Dashboard() {
   const [reviewsLoading, setReviewsLoading] = useState(true)
   const [reviewsError, setReviewsError] = useState<string | null>(null)
   const [researchList] = useState<LocalResearchItem[]>(loadResearchList)
-  const STATIC_PREVIEW = import.meta.env.VITE_STATIC_PREVIEW === '1'
   useEffect(() => {
     // 静态说明站（GitHub Pages）不部署后端：不发任何 /api 请求（发了也只是 404，
     // 且与「所有读写 API 均未部署」的站点横幅矛盾——R21 发现首页曾照常请求）。

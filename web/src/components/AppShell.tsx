@@ -53,6 +53,8 @@ export default function AppShell() {
   // 窄屏（<768px）：侧栏转抽屉。
   const [narrow, setNarrow] = useState(() => window.matchMedia('(max-width: 767.98px)').matches)
   const [mobileOpen, setMobileOpen] = useState(false)
+  // TopBar 滚动海拔（HIG scroll edge effect）：内容滚过首行后边缘增强
+  const [scrolled, setScrolled] = useState(false)
   const corpusArts = corpus ? corpus.laws.reduce((s, l) => s + l.articles.length, 0) : 0
 
   const meta = ROUTE_META.find((m) => m.re.test(pathname)) ?? { crumb: ['首页'], tone: 'light' as const }
@@ -79,6 +81,8 @@ export default function AppShell() {
   }, [])
   // 路由变化即收起抽屉（顶栏/页内链接导航同样生效）
   useEffect(() => { setMobileOpen(false) }, [pathname])
+  // 路由切换回顶部：海拔复位
+  useEffect(() => { setScrolled(false) }, [pathname])
 
   // 本机浏览史（真实记录，供 /audit「浏览历史」Tab 渲染；不上传）
   useEffect(() => {
@@ -146,7 +150,7 @@ export default function AppShell() {
       </aside>
 
       <div className={'main ' + (tone === 'dark' ? 'tone-dark' : 'tone-light')}>
-        <header className="tb">
+        <header className={'tb' + (scrolled ? ' is-scrolled' : '')}>
           <button
             className="tb-icon"
             onClick={() => { if (narrow) { setMobileOpen((o) => !o) } else { setCollapsed((c) => !c) } }}
@@ -187,7 +191,10 @@ export default function AppShell() {
         </div>
       )}
 
-      <main className="content">
+      <main className="content" onScroll={(e) => {
+        const next = (e.target as HTMLElement).scrollTop > 4
+        setScrolled((s) => (s === next ? s : next))  // 阈值外不触发重渲染
+      }}>
           <div key={pathname + tone}>
             <Suspense fallback={<PageFallback />}>
               <Outlet />

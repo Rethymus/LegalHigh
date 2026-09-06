@@ -2,7 +2,7 @@
 // 不出现在用户导航；仅从 Settings → 内部链接进入。深色基调展示 Tokens / 组件 / 状态。
 import { useState } from 'react'
 import { Icon } from '../icons'
-import { PageHeader, Switch } from '../ui'
+import { Dialog, PageHeader, Segmented, Switch, useToast } from '../ui'
 import { AIBlock, CitationChip, ForeignDisclaimer, SourceBadge } from '../domain'
 
 const LIGHT = [
@@ -22,6 +22,11 @@ const TYPE = [
 
 export default function DesignSystem() {
   const [sw, setSw] = useState(true)
+  const [seg, setSeg] = useState('snappy')
+  const [travel, setTravel] = useState(false)   // 弹簧对比：位移开关
+  const [shakeKey, setShakeKey] = useState(0)   // 换 key 重挂载以重放 shake
+  const [dlgOpen, setDlgOpen] = useState(false)
+  const toast = useToast()
 
   return (
     <div className="page">
@@ -168,7 +173,7 @@ export default function DesignSystem() {
           <button className="btn btn-secondary">Hover（背景/描边变化）</button>
           <button className="btn btn-primary is-loading">Loading…</button>
           <button className="btn btn-primary" disabled>Disabled</button>
-          <button className="btn btn-ghost" style={{ boxShadow: '0 0 0 3px rgba(10,132,255,.55)' }}>Focus</button>
+          <button className="btn btn-ghost" style={{ boxShadow: 'var(--ring)' }}>Focus</button>
         </div>
         <div className="ds-row mb-12">
           <span className="chip">Filter</span><span className="chip is-on">Selected</span>
@@ -183,10 +188,58 @@ export default function DesignSystem() {
       </div>
 
       <div className="ds-block">
-        <h4>Motion / Focus</h4>
+        <h4>Motion Lab · 弹簧与按压（计划 v4 W1–W3；参数推导见调研 §2/§4）</h4>
+        <div className="cols cols-2">
+          <div>
+            <div className="tiny mb-12">
+              时阶：hover 160ms · 按压 80ms · 退场 120ms · 遮罩 240ms。
+              弹簧 = SwiftUI 官方模型（ω₀=2π/duration · ζ=1−bounce）采样为 CSS linear()；
+              时长配对：--t-smooth 740 / --t-snappy 560 / --t-bouncy 600 / --t-quick 340。
+            </div>
+            <div className="row mb-8">
+              <button className="btn btn-secondary btn-sm" onClick={() => setTravel((v) => !v)}>{travel ? '回位' : '出发'}</button>
+              <span className="tiny">同一距离，三种阻尼：smooth（无回弹）· snappy（+0.15）· bouncy（+0.3）</span>
+            </div>
+            <div style={{ position: 'relative', height: 108 }}>
+              {([['smooth', 0], ['snappy', 36], ['bouncy', 72]] as const).map(([k, top]) => (
+                <div key={k} className={'ball ball-' + k} style={{ top, transform: travel ? 'translateX(220px)' : 'none' }}>
+                  <code>{k}</code>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div>
+            <div className="row mb-8" style={{ flexWrap: 'wrap' }}>
+              <button className="btn btn-primary" onClick={() => toast('弹簧入场：bouncy（overshoot 峰值 1.046）', 'ok')}>Toast 弹簧入场</button>
+              <button className="btn btn-ghost" onClick={() => setDlgOpen(true)}>Dialog 弹簧开合</button>
+              <button className="btn btn-danger" onClick={() => setShakeKey((k) => k + 1)}>推石 shake（指数衰减）</button>
+            </div>
+            <div className="row mb-8" style={{ flexWrap: 'wrap' }}>
+              <Segmented ariaLabel="弹簧演示选择" value={seg} onChange={setSeg} options={[{ key: 'smooth', label: '平滑' }, { key: 'snappy', label: '利落' }, { key: 'bouncy', label: '弹性' }]} />
+              <span className="tiny">竹简槽：凹槽轨道 + 滑块 --spring-snappy</span>
+            </div>
+            <div className="row mb-8">
+              <Switch on={sw} onChange={setSw} />
+              <span className="tiny">开关 knob：--t-quick 弹簧 + 按压增宽</span>
+            </div>
+            <div key={shakeKey} className="banner banner-danger shake">
+              <Icon name="alert" size={14} />
+              <span className="banner-tx">非法操作反馈：x(t)=A·e^(−λt)·sin(2πft)，A=8px · f=9Hz · λ=6.5 —— 首摆 ±6.7px，单调指数衰减归零。</span>
+            </div>
+            <div className="tiny mt-8">按压反馈对：任意按钮按住 80ms 缩至 0.97，松开以 --spring-quick（340ms 微 overshoot）弹回——两段独立曲线构成「对」。全部只动 transform/opacity。</div>
+          </div>
+        </div>
+        <Dialog open={dlgOpen} title="弹簧开合演示" actions={<button className="btn btn-primary btn-sm" onClick={() => setDlgOpen(false)}>关闭</button>}>
+          遮罩 240ms 淡入，面板以 bouncy 弹簧缩放入场；关闭先播 120ms 退场再卸载（Dialog 状态机）。
+        </Dialog>
+      </div>
+
+      <div className="ds-block">
+        <h4>Motion / Focus（红线速查）</h4>
         <div className="tiny" style={{ lineHeight: 2 }}>
-          Duration 120–220ms · easing ease-out · 支持 Reduce Motion · Hover 仅背景/描边/阴影/≤1.01 缩放 ·
-          焦点 Ring 3px #0A84FF 外侧 · 图标 SF Symbols-like 统一描边（本页图标即组件库实物）。
+          位移类状态切换一律弹簧 Token · 只动 transform/opacity · Hover 仅背景/描边/阴影/≤1.01 缩放 ·
+          Reduce Motion（系统+应用内）只关位移/缩放/循环，保留透明度渐变 ·
+          焦点 Ring 统一 --ring / 输入 --ring-soft · 图标 SF Symbols-like 统一描边（本页图标即组件库实物）。
         </div>
       </div>
     </div>

@@ -2,7 +2,7 @@
 import { useEffect, useState, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { Icon, type IconName } from '../icons'
-import { PageHeader, Switch, useToast } from '../ui'
+import { PageHeader, Segmented, Switch, useToast } from '../ui'
 import {
   api, ApiError, clearAdminToken, clearAiProfile, loadAdminToken, loadAiProfile, loadIdentity,
   saveAdminToken, saveAiProfile, saveIdentity,
@@ -220,7 +220,7 @@ export default function Settings() {
           {sec === 'appearance' && (
             <>
               <div className="sec-h"><span className="sec-t">外观</span></div>
-              <Row icon="sun" t="整体明暗" d="跟随页面，或强制浅色/深色；即时保存到本机。" ctl={<select className="sel" style={{ width: 150 }} value={tone} onChange={(e) => setTone(e.target.value)}><option value="auto">跟随页面</option><option value="light">强制浅色</option><option value="dark">强制深色</option></select>} />
+              <Row icon="sun" t="整体明暗" d="跟随页面，或强制浅色/深色；即时保存到本机。" ctl={<Segmented ariaLabel="整体明暗" value={tone} onChange={setTone} options={[{ key: 'auto', label: '跟随页面' }, { key: 'light', label: '浅色' }, { key: 'dark', label: '深色' }]} />} />
               <Row icon="eye" t="大字模式" d="放大正文与控件，便于视力不佳者阅读。" ctl={<Switch on={fontLarge} onChange={setFontLarge} />} />
             </>
           )}

@@ -64,6 +64,35 @@ checks++
 if (identityHits.length) fail.push(`[身份与品牌] 发现旧品牌或虚构人物：${identityHits.join('、')}`)
 else console.log('✓ gate3 身份与品牌：无旧品牌或虚构人物')
 
+// ---- gate 4：动效与材质纪律（计划 v4 §3，2026-09-06）----
+// 1) transition/animation 不得出现 Token 外的裸时长（剔除 var(--…) 后仍含 ms/s 字面量 → 失败；
+//    恒定循环动画以行内注释「恒定循环」豁免）
+// 2) 散装焦点环 `0 0 0 3px rgba(…)` 只允许出现在 --ring 定义行
+// 3) backdrop-filter 的 blur() 实参必须来自 --blur-* Token
+const cssFile = resolve(root, 'web/src/styles/global.css')
+const cssLines = readFileSync(cssFile, 'utf-8').split('\n')
+const motionBad = [], ringBad = [], blurBad = []
+cssLines.forEach((line, i) => {
+  const at = `${cssFile}:${i + 1}`
+  const noVar = line.replace(/var\(--[^)]*\)/g, '')
+  if (/(transition|animation)\s*:/.test(noVar) && /\b\d+(\.\d+)?(ms|s)\b/.test(noVar) && !noVar.includes('恒定循环')) {
+    motionBad.push(`${at}: ${line.trim().slice(0, 90)}`)
+  }
+  if (/0 0 0 3px rgba\(/.test(line) && !line.includes('--ring')) {
+    ringBad.push(`${at}: ${line.trim().slice(0, 90)}`)
+  }
+  if (/backdrop-filter[^;]*blur\(\s*[\d.]/.test(line) && !line.trim().startsWith('@supports')) {
+    blurBad.push(`${at}: ${line.trim().slice(0, 90)}`)
+  }
+})
+checks++
+const gate4Fails = []
+if (motionBad.length) gate4Fails.push(`裸时长（应使用 --dur-*/--t-* Token，循环动画加「恒定循环」注释）：\n  ` + motionBad.join('\n  '))
+if (ringBad.length) gate4Fails.push(`散装焦点环（统一 var(--ring)/var(--ring-soft)）：\n  ` + ringBad.join('\n  '))
+if (blurBad.length) gate4Fails.push(`blur 未走 Token（统一 --blur-chrome/panel/card/float/desk/veil）：\n  ` + blurBad.join('\n  '))
+if (gate4Fails.length) fail.push(`[动效与材质纪律] ${gate4Fails.join('\n')}`)
+else console.log('✓ gate4 动效与材质纪律：时长/焦点环/blur 全部走 Token')
+
 if (fail.length) {
   console.error(`\nqa_gates：${fail.length}/${checks} 项失败`)
   for (const f of fail) console.error('\n' + f)
