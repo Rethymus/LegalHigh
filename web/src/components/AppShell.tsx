@@ -1,7 +1,7 @@
 // 应用外壳：深海军蓝玻璃侧栏 + Glass 导航条 + 按 Tone 着色的内容区
 // 侧栏 240px 可折叠至 72px；正文区域不使用整页 Glass（材质使用原则 §34）
 import { Suspense, useEffect, useState } from 'react'
-import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
+import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { Icon, type IconName } from './icons'
 import { BRAND, NAV_MAIN, NAV_SUB, useLaws } from '../data/model'
 import { SkeletonLines } from './ui'
@@ -53,6 +53,7 @@ export default function AppShell() {
   // 窄屏（<768px）：侧栏转抽屉。
   const [narrow, setNarrow] = useState(() => window.matchMedia('(max-width: 767.98px)').matches)
   const [mobileOpen, setMobileOpen] = useState(false)
+  const nav = useNavigate()
   // TopBar 滚动海拔（HIG scroll edge effect）：内容滚过首行后边缘增强
   const [scrolled, setScrolled] = useState(false)
   const corpusArts = corpus ? corpus.laws.reduce((s, l) => s + l.articles.length, 0) : 0
@@ -83,6 +84,22 @@ export default function AppShell() {
   useEffect(() => { setMobileOpen(false) }, [pathname])
   // 路由切换回顶部：海拔复位
   useEffect(() => { setScrolled(false) }, [pathname])
+
+  // 全局「/」快捷键：TopBar kbd 提示的真实实现（硬规则③ 假交互禁绝）。
+  // 输入态让路；跨页跳转用 location.state 让 SearchHome 挂载后自聚焦（shell 轮询聚焦时序脆弱），
+  // 已在本页则直接聚焦（页面已挂载，同步 focus 可靠）。
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== '/' || e.metaKey || e.ctrlKey || e.altKey || e.shiftKey) return
+      const t = e.target as HTMLElement | null
+      if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.tagName === 'SELECT' || t.isContentEditable)) return
+      e.preventDefault()
+      if (pathname !== '/search') nav('/search', { state: { leFocusSearch: true } })
+      else document.querySelector<HTMLInputElement>('.searchbar .inp')?.focus()
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [pathname, nav])
 
   // 本机浏览史（真实记录，供 /audit「浏览历史」Tab 渲染；不上传）
   useEffect(() => {

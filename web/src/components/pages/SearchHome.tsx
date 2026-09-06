@@ -1,7 +1,7 @@
 // FRAME 02 · Global Legal Search —— 专业检索工作台（规格 §7）
 // 默认空态：「输入法律问题开始检索」（§48）
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useEffect, useRef, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { Icon } from '../icons'
 import { EmptyState, PageHeader } from '../ui'
 import { HOT_SEARCHES, WARM_TIPS } from '../../data/model'
@@ -10,9 +10,20 @@ const SCOPES = ['全部', '法规', '司法解释', '案例']
 
 export default function SearchHome() {
   const nav = useNavigate()
+  const location = useLocation()
+  const inputRef = useRef<HTMLInputElement>(null)
   const [q, setQ] = useState('')
   const [scope, setScope] = useState('全部')
   const [showScope, setShowScope] = useState(false)
+
+  // TopBar「/」快捷键跨页跳转时由 AppShell 带 state 标记，挂载后自聚焦（一次性，用后即清）
+  useEffect(() => {
+    if ((location.state as { leFocusSearch?: boolean } | null)?.leFocusSearch) {
+      inputRef.current?.focus()
+      inputRef.current?.select()
+      window.history.replaceState({}, '')
+    }
+  }, [location.state])
 
   return (
     <div className="page">
@@ -27,7 +38,7 @@ export default function SearchHome() {
           onSubmit={(e) => { e.preventDefault(); if (q.trim()) nav(`/search/results?q=${encodeURIComponent(q.trim())}&scope=${encodeURIComponent(scope)}`) }}
         >
           <Icon name="search" size={18} className="muted" />
-          <input className="inp" style={{ fontSize: 15.5 }} placeholder="输入法律问题开始检索：条文关键词、案由、争议焦点……" value={q} onChange={(e) => setQ(e.target.value)} aria-label="检索词" />
+          <input ref={inputRef} className="inp" style={{ fontSize: 15.5 }} placeholder="输入法律问题开始检索：条文关键词、案由、争议焦点……" value={q} onChange={(e) => setQ(e.target.value)} aria-label="检索词" />
           <button className="btn btn-primary btn-lg">检索</button>
         </form>
 
