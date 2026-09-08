@@ -4,7 +4,7 @@ import { defineConfig } from 'vite'
 // https://vite.dev/config/
 // base 条件化：GitHub Pages 静态说明站（VITE_STATIC_PREVIEW=1）使用子路径，
 // 本地开发/桌面端构建用 /（根路径），避免资源路径偏移。
-// BrowserRouter 的 basename 由 main.tsx 从 import.meta.env.BASE_URL 读取，自动同步。
+// Pages 使用 HashRouter；本地 BrowserRouter 的 basename 从 BASE_URL 读取。
 export default defineConfig(() => ({
   base: process.env.VITE_STATIC_PREVIEW === '1' ? '/LegalHigh/' : '/',
   plugins: [react()],

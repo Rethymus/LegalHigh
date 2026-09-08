@@ -41,7 +41,7 @@ jobs:
           node scripts/qa_gates.mjs
           node scripts/qa_contrast.mjs --strict
           npx vite build --outDir dist-pages --emptyOutDir
-          # SPA 回退：GitHub Pages 对未知路径返回 404.html → React Router 接管路由
+          # HashRouter handles current links; keep the shell for legacy paths.
           cp dist-pages/index.html dist-pages/404.html
 
       - uses: actions/configure-pages@v5

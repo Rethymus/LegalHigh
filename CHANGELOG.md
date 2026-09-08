@@ -18,6 +18,7 @@ Source and static-site prerelease / 源码与静态站点预发布。
 - Draft transitions consistently use draft → reviewed → finalized with responsibility confirmation; the platform does not verify credentials or issue documents.
 - Corrected clause rendering, local-state validation, segmented-control movement and theme-switch remounts.
 - Desktop candidate packaging includes the professional-commentary and corpus-coverage registries.
+- Pages uses hash routes (`#/laws/...`) so shared links and refreshes request the real index document instead of a 404 fallback.
 
 ### Verification / 验证
 
