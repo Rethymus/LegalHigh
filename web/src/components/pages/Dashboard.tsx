@@ -1,21 +1,35 @@
 // FRAME 01 · Dashboard —— Dark / Hero Glass（规格 §6）
 // 不出现：Persona、Roadmap、Design System、优先级等内部设计内容（§52）
 import { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useOutletContext } from 'react-router-dom'
 import { Icon, type IconName } from '../icons'
 import { CORPUS_DYNAMICS, HOT_SEARCHES, WARM_TIPS, useLaws } from '../../data/model'
 import { EmptyState, SkeletonLines, fmtTime } from '../ui'
 import { CitationChip } from '../domain'
 import { api, type CaseRecord } from '../../lib/api'
+import type { AppOutletContext } from '../AppShell'
+import type { AudienceMode } from '../../lib/audience'
 
 // 能力卡副文案中的语料规模为实时派生（useLaws），禁止回退为硬编码数字（曾因 8 部 1,953 条
 // 语料扩张后文案未同步而失真——查漏补缺计划 P0-2，新增派生数据一律走此口径）。
-const ACTIONS: { title: string; lines: [string | null, string]; tone: string; icon: IconName; to: string }[] = [
+const UNIVERSAL_ACTIONS: { title: string; lines: [string | null, string]; tone: string; icon: IconName; to: string }[] = [
   { title: '法律检索', lines: [null, '条条文 · 支持逐条引用'], tone: 'ac-blue', icon: 'bigSearch', to: '/search' },
   { title: '案例检索', lines: ['逐件核实的指导案例与公开判例', '关键词检索 · 争议焦点定位'], tone: 'ac-green', icon: 'gavel', to: '/cases' },
-  { title: '合同审查', lines: ['风险条款检测与建议文本', '审查留痕 · 版本对比'], tone: 'ac-purple', icon: 'docShield', to: '/contracts' },
-  { title: '专业文书工具', lines: ['律师函、合同与诉讼文书模板', '程序校验 · 使用者复核定稿'], tone: 'ac-orange', icon: 'docpen', to: '/draft' },
 ]
+const AUDIENCE_ACTIONS: Record<AudienceMode, typeof UNIVERSAL_ACTIONS> = {
+  public: [
+    { title: '事实与证据梳理', lines: ['按起因、经过、结果整理本人陈述', '缺失事实提示 · 证据清单'], tone: 'ac-purple', icon: 'compass', to: '/needs' },
+    { title: '案件方向辅助', lines: ['由本人选择候选方向', '要件检查 · 不替代专业判断'], tone: 'ac-orange', icon: 'caseSearch', to: '/case-analysis' },
+  ],
+  student: [
+    { title: '学习中心', lines: ['按部门法进入本地法条语料', 'IRAC 练习 · 引用回链'], tone: 'ac-purple', icon: 'gradcap', to: '/learning' },
+    { title: '来源研究', lines: ['法条与案例证据并列核查', '来源等级 · 引用留痕'], tone: 'ac-orange', icon: 'sparkle', to: '/research' },
+  ],
+  professional: [
+    { title: '合同审查', lines: ['风险条款检测与建议文本', '审查留痕 · 版本对比'], tone: 'ac-purple', icon: 'docShield', to: '/contracts' },
+    { title: '专业文书工具', lines: ['法律文书草稿模板', '程序校验 · 使用者复核定稿'], tone: 'ac-orange', icon: 'docpen', to: '/draft' },
+  ],
+}
 
 interface ReviewSummary {
   id: string
@@ -44,6 +58,8 @@ const STATIC_PREVIEW = import.meta.env.VITE_STATIC_PREVIEW === '1'
 
 export default function Dashboard() {
   const nav = useNavigate()
+  const { audience } = useOutletContext<AppOutletContext>()
+  const actions = [...UNIVERSAL_ACTIONS, ...AUDIENCE_ACTIONS[audience]]
   const [q, setQ] = useState('')
   const { data: laws, error: lawsError } = useLaws()
   const lawCount = laws?.laws.length ?? 0
@@ -66,7 +82,7 @@ export default function Dashboard() {
     }
     let alive = true
     const casesRequest = api.listCases()
-    const reviewsRequest = api.listReviews(2)
+    const reviewsRequest = audience === 'professional' ? api.listReviews(2) : Promise.resolve({ reviews: [] as ReviewSummary[] })
     void Promise.allSettled([casesRequest, reviewsRequest]).then(([caseResult, reviewResult]) => {
       if (!alive) return
       if (caseResult.status === 'fulfilled') {
@@ -85,7 +101,7 @@ export default function Dashboard() {
       setReviewsLoading(false)
     })
     return () => { alive = false }
-  }, [])
+  }, [audience])
 
   return (
     <div className="dash">
@@ -93,11 +109,17 @@ export default function Dashboard() {
       <section className="dash-hero">
         <div className="dash-hero-inner">
           <div className="hero-badges">
-            <Link to="/research" className="hero-badge is-accent"><Icon name="sparkle" size={13} />研究工作台</Link>
-            <Link to="/learning" className="hero-badge"><Icon name="compass" size={13} />新手引导</Link>
+            {audience === 'public' && <Link to="/needs" className="hero-badge is-accent"><Icon name="compass" size={13} />事实准备指引</Link>}
+            {audience === 'student' && <Link to="/learning" className="hero-badge is-accent"><Icon name="gradcap" size={13} />法学学习路径</Link>}
+            {audience === 'professional' && <Link to="/workspace" className="hero-badge is-accent"><Icon name="briefcase" size={13} />专业工作台</Link>}
+            <Link to="/settings" className="hero-badge"><Icon name="user" size={13} />切换使用视图</Link>
           </div>
           <h1 className="hero-t">让法律更有温度，让正义触手可及</h1>
-          <p className="hero-s">整合可信法律知识：可溯源的法条检索、规则化的合同审查与受控 AI 辅助研究，全程证据留痕</p>
+          <p className="hero-s">{{
+            public: '从本人陈述出发梳理事实与证据，再回到可溯源的法条和已核实案例。',
+            student: '围绕法条、案例与来源证据开展学习和比较研究，每项引用均可回链核对。',
+            professional: '可溯源法律检索、规则化合同审查与文书草稿工作流，全程保留本机操作记录。',
+          }[audience]}</p>
           <form
             className="searchbar"
             onSubmit={(e) => { e.preventDefault(); if (q.trim()) nav(`/needs?q=${encodeURIComponent(q.trim())}`) }}
@@ -136,7 +158,7 @@ export default function Dashboard() {
 
         {/* 四大能力入口 */}
         <div className="ac-grid">
-          {ACTIONS.map((a) => (
+          {actions.map((a) => (
             <Link key={a.title} to={a.to} className={'ac-card ' + a.tone}>
               <span className="ac-ic"><Icon name={a.icon} size={19} /></span>
               <div className="ac-t">{a.title}</div>
@@ -191,7 +213,7 @@ export default function Dashboard() {
             </div>
           </section>
 
-          <section className="card">
+          {audience !== 'public' ? <section className="card">
             <div className="card-h"><b className="card-h-t">跨法域对比</b><span className="spacer" /><Link to="/comparative" className="tiny row" style={{ gap: 3 }}>进入 <Icon name="chevR" size={11} /></Link></div>
             <div className="card-b">
               <div className="vs-box">
@@ -211,7 +233,14 @@ export default function Dashboard() {
               <Link to="/comparative?topic=侵权" className="btn btn-ghost btn-sm mt-12">开始对比 <Icon name="arrowR" size={12} /></Link>
               <p className="tiny mt-12">域外资料仅作比较研究，不构成中国司法裁判依据。</p>
             </div>
-          </section>
+          </section> : <section className="card">
+            <div className="card-h"><b className="card-h-t">事实准备提醒</b><span className="spacer" /><Link to="/needs" className="tiny row" style={{ gap: 3 }}>开始梳理 <Icon name="chevR" size={11} /></Link></div>
+            <div className="card-b">
+              <div className="banner banner-info"><Icon name="info" size={15} /><span className="banner-tx">系统只整理你提供的事实，不会把未填写内容推断为已经发生。</span></div>
+              <p className="tiny mt-12" style={{ lineHeight: 1.7 }}>先准备合同、付款记录、沟通记录与时间线，再根据可核实材料检索相关法条和案例。</p>
+              <Link to="/needs" className="btn btn-secondary btn-sm mt-12">整理事实与证据 <Icon name="arrowR" size={12} /></Link>
+            </div>
+          </section>}
         </div>
 
         {/* 最近工作（克制的一行入口） */}
@@ -222,7 +251,7 @@ export default function Dashboard() {
             <Link to="/collections" className="tiny">我的收藏</Link>
           </div>
           <div className="tri-grid">
-            <div className="card card-pad" style={{ paddingBlock: 14 }}>
+            {audience === 'professional' && <div className="card card-pad" style={{ paddingBlock: 14 }}>
               <div className="tiny bold mb-8">最近合同</div>
               {reviewsLoading && <SkeletonLines n={2} />}
               {!reviewsLoading && reviews.map((r) => (
@@ -237,8 +266,8 @@ export default function Dashboard() {
               {!reviewsLoading && !STATIC_PREVIEW && reviewsError && <div className="tiny mb-8">审查服务不可用：{reviewsError}</div>}
               {!reviewsLoading && !reviewsError && reviews.length === 0 && <div className="tiny mb-8">尚无本机审查记录</div>}
               <Link to="/contracts/new" className="lrow"><Icon name="plus" size={14} className="muted" /><span className="lrow-t muted">开始合同审查</span></Link>
-            </div>
-            <div className="card card-pad" style={{ paddingBlock: 14 }}>
+            </div>}
+            {audience !== 'public' ? <div className="card card-pad" style={{ paddingBlock: 14 }}>
               <div className="tiny bold mb-8">最近研究</div>
               {(researchList.length ? researchList.slice(0, 2) : []).map((r) => (
                 <Link key={r.rid} to={`/research/${r.rid}`} className="lrow">
@@ -249,7 +278,12 @@ export default function Dashboard() {
               ))}
               {researchList.length === 0 && <div className="tiny mb-8">尚无研究记录（本机）</div>}
               <Link to="/research" className="lrow"><Icon name="plus" size={14} className="muted" /><span className="lrow-t muted">新建研究</span></Link>
-            </div>
+            </div> : <div className="card card-pad" style={{ paddingBlock: 14 }}>
+              <div className="tiny bold mb-8">公众准备入口</div>
+              <Link to="/needs" className="lrow"><Icon name="compass" size={15} className="muted" /><span className="lrow-t">继续整理本人事实与证据</span></Link>
+              <Link to="/collections" className="lrow"><Icon name="star" size={15} className="muted" /><span className="lrow-t">查看本机收藏的法条与案例</span></Link>
+              <div className="tiny mt-8">专业合同、文书和审核流程仅在专业律师视图中展示。</div>
+            </div>}
             <div className="card card-pad" style={{ paddingBlock: 14 }}>
               <div className="tiny bold mb-8">数据源状态</div>
               <Link to="/data-sources" className="lrow">

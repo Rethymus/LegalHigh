@@ -1,12 +1,13 @@
 // FRAME 04 · Law Detail —— 法条详情（规格 §9）
 // 证据快照文本不可被 AI 改写；已审核解读与项目阅读方法必须明确分层。
 import { useEffect, useMemo, useState } from 'react'
-import { Link, useParams, useSearchParams } from 'react-router-dom'
+import { Link, useOutletContext, useParams, useSearchParams } from 'react-router-dom'
 import { Icon } from '../icons'
 import { WARM_TIPS, findArticle, findLaw, lawChapters, lawDisplayTitle, lawEvidenceGrade, useLaws } from '../../data/model'
 import { EmptyState, PageHeader, SkeletonLines, Tabs, useCopy, useToast, ValidityBadge } from '../ui'
 import { AIWarning, CitationChip, OfficialArticle, SourceBadge } from '../domain'
-import { api, isFav as isFavKey, toggleFav, type ArticleExplain, type ArticleLink } from '../../lib/api'
+import { api, isFav as isFavKey, toggleFav, type ArticleExplain, type ArticleLink, type LawAnalysisContext } from '../../lib/api'
+import type { AppOutletContext } from '../AppShell'
 
 const TABS = [
   { key: 'rel-js', label: '关联司法解释' },
@@ -18,6 +19,7 @@ const TABS = [
 ]
 
 export default function LawDetail() {
+  const { audience } = useOutletContext<AppOutletContext>()
   const { lawId } = useParams()
   const [sp, setSp] = useSearchParams()
   const { data, error } = useLaws()
@@ -42,12 +44,20 @@ export default function LawDetail() {
   const articleNo = article?.no
   // 官方解读关联层（决策项15）：有映射时展示司法解释条文卡
   const [articleLinks, setArticleLinks] = useState<ArticleLink[]>([])
+  const [analysisContext, setAnalysisContext] = useState<LawAnalysisContext | null>(null)
+  const [analysisContextError, setAnalysisContextError] = useState(false)
   useEffect(() => {
     if (!lawId || articleNo === undefined) return
     let alive = true
+    setAnalysisContext(null)
+    setAnalysisContextError(false)
     api.articleLinks(lawId, articleNo).then(
       (d) => alive && setArticleLinks(d.links ?? []),
       () => alive && setArticleLinks([]),
+    )
+    api.lawAnalysisContext(lawId, articleNo).then(
+      (d) => alive && setAnalysisContext(d),
+      () => alive && setAnalysisContextError(true),
     )
     return () => { alive = false }
   }, [lawId, articleNo])
@@ -102,7 +112,7 @@ export default function LawDetail() {
               setFavState(now)
               toast(now ? '已收藏（仅存本机）' : '已取消收藏', 'ok')
             }}><Icon name="star" size={13} />{favState ? '已收藏' : '收藏'}</button>
-            <Link to="/research/r-format-terms" className="btn btn-primary btn-sm"><Icon name="sparkle" size={13} />加入研究</Link>
+            {audience !== 'public' && <Link to={`/research?q=${encodeURIComponent(`《${law.title}》${article.label}的适用条件、例外与待确认事实`)}`} className="btn btn-primary btn-sm"><Icon name="sparkle" size={13} />基于本条研究</Link>}
           </>
         }
       />
@@ -198,6 +208,51 @@ export default function LawDetail() {
 
         {/* 右：人工通俗解读（已审核才显示）+ AI 通用指引（永不与原文混排）——决策项4 双轨 */}
         <aside style={{ minWidth: 0 }}>
+          <section className="card mb-16" style={{ padding: 16 }} aria-labelledby="evidence-analysis-title">
+            <div className="row mb-8" style={{ gap: 8, alignItems: 'center' }}>
+              <span id="evidence-analysis-title" className="tiny bold">综合解读证据</span>
+              {analysisContext && <span className="bdg bdg-teal">{analysisContext.evidence_coverage.score}/100 证据覆盖</span>}
+            </div>
+            {analysisContextError && <div className="banner banner-warn"><Icon name="alert" size={14} /><span className="banner-tx">专业解读证据暂时无法加载。请仅依据左侧官方原文，并另行咨询专业人士。</span></div>}
+            {!analysisContext && !analysisContextError && <SkeletonLines n={3} />}
+            {analysisContext && (
+              <>
+                <div className="banner banner-info mb-12"><Icon name="info" size={14} /><span className="banner-tx">
+                  <b>这不是正确率。</b>{analysisContext.evidence_coverage.method}
+                </span></div>
+                <div className="tiny mb-12" style={{ lineHeight: 1.8 }}>
+                  <b>校准正确率：暂无。</b>{analysisContext.calibrated_accuracy.reason}
+                </div>
+                {analysisContext.professional_commentaries.length > 0 ? (
+                  <div style={{ display: 'grid', gap: 10 }}>
+                    {analysisContext.professional_commentaries.map((item) => (
+                      <article key={item.id} className="card" style={{ padding: 12 }}>
+                        <div className="row mb-8" style={{ gap: 6 }}>
+                          <span className="bdg bdg-gray">专业观点摘要</span>
+                          <span className="bdg bdg-teal">证据【{item.evidence_grade}】</span>
+                        </div>
+                        <div className="tiny bold mb-8">{item.title}</div>
+                        <p className="tiny" style={{ lineHeight: 1.85, margin: 0 }}>{item.summary}</p>
+                        <div className="tiny mt-8" style={{ color: 'var(--tx-3)' }}>
+                          {item.authors.map((a) => `${a.name}（${a.credential}）`).join('；')} · {item.published_at}
+                        </div>
+                        <div className="tiny mt-8" style={{ lineHeight: 1.7 }}><b>适用边界：</b>{item.scope_note}</div>
+                        <a className="tiny mt-8" style={{ display: 'inline-flex', color: 'var(--accent-text)' }} href={item.source_url} target="_blank" rel="noreferrer">
+                          打开来源全文与资质出处（{item.institution}；{item.accessed_at} 查阅）
+                        </a>
+                      </article>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="tiny">当前登记册没有与本条直接绑定的具名专业解读；系统不会用 AI 补写或冒充专家观点。</div>
+                )}
+                {analysisContext.evidence_coverage.missing.length > 0 && (
+                  <div className="tiny mt-12"><b>当前证据缺口：</b>{analysisContext.evidence_coverage.missing.join('；')}。</div>
+                )}
+                <div className="banner banner-warn mt-12"><Icon name="alert" size={14} /><span className="banner-tx">{analysisContext.disclaimer}</span></div>
+              </>
+            )}
+          </section>
           {explain && (
             <div className="card mb-16" style={{ padding: 16 }}>
               <div className="row mb-8" style={{ gap: 8 }}>
@@ -207,14 +262,14 @@ export default function LawDetail() {
               </div>
               <div style={{ fontSize: 13.5, lineHeight: 1.9 }}>{explain.text}</div>
               {/AI/.test(explain.author) && <AIWarning compact />}
-              <div className="tiny mt-8">编写：{explain.author} · 审核发布：{explain.reviewer}{explain.reviewer_role ? `（${explain.reviewer_role}）` : ''}{explain.date ? ` · ${explain.date}` : ''}</div>
+              <div className="tiny mt-8">编写：{explain.author} · 内容发布审核：{explain.reviewer}{explain.date ? ` · ${explain.date}` : ''}（审计署名，不代表执业资格核验）</div>
               {explain.source_note && <div className="tiny mt-8" style={{ color: 'var(--tx-3)' }}>{explain.source_note}</div>}
               <div className="tiny mt-8"><Icon name="info" size={12} /> 解读不替代法条原文，不构成法律意见。</div>
             </div>
           )}
           <section className="card" style={{ padding: 16 }}>
             <div className="tiny bold mb-8">通用阅读方法（项目整理，非逐条解读）</div>
-            <p className="tiny" style={{ lineHeight: 1.9 }}>本条位于「{article.chapter.split('>').slice(-1)[0]?.trim()}」。当前没有已审核的逐条通俗解读；具体含义请先以左侧证据快照文本为线索，并在正式使用前核对官方现行文本。</p>
+            <p className="tiny" style={{ lineHeight: 1.9 }}>本条位于「{article.chapter.split('>').slice(-1)[0]?.trim()}」。具体含义请先以左侧证据快照文本为线索，并在正式使用前核对官方现行文本；上方专业观点仅在登记册有可回溯来源时展示。</p>
             <ul className="tiny" style={{ lineHeight: 1.9 }}>
               <li>先区分行为规范：条文要求、禁止或允许什么。</li>
               <li>再核对适用条件、例外与法律后果，并结合具体事实和证据。</li>

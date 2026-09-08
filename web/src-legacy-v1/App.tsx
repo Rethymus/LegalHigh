@@ -10,7 +10,6 @@ import CaseAnalysis from "./pages/CaseAnalysis";
 import Review from "./pages/Review";
 import Drafting from "./pages/Drafting";
 import Compliance from "./pages/Compliance";
-import DesignSystem from "./pages/DesignSystem";
 import { ToastHost } from "./components/toast";
 
 function useTheme() {
@@ -49,7 +48,6 @@ const NAV = [
   { to: "/review", label: "合同审查", no: "05" },
   { to: "/drafting", label: "文书起草", no: "06" },
   { to: "/compliance", label: "合规中心", no: "07" },
-  { to: "/design", label: "设计系统", no: "08" },
 ];
 
 export default function App() {
@@ -110,7 +108,6 @@ export default function App() {
           <Route path="/review" element={<Review />} />
           <Route path="/drafting" element={<Drafting />} />
           <Route path="/compliance" element={<Compliance />} />
-          <Route path="/design" element={<DesignSystem />} />
         </Routes>
       </main>
 

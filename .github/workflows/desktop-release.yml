@@ -62,7 +62,8 @@ jobs:
           rm -rf release-data
           mkdir -p release-data
           cp data/ai_providers.json data/article_explains.json data/article_links.json \
-             data/cases.json data/scenarios.json release-data/
+             data/cases.json data/scenarios.json data/expert_commentaries.json \
+             data/corpus_coverage.json release-data/
           cp -r data/laws release-data/laws
           if find release-data -type f \( -name '*.db' -o -name '*.db-*' -o -name '*.sqlite*' \) | grep -q .; then
             echo 'Refusing to package a database file' >&2

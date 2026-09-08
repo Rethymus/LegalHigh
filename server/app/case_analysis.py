@@ -22,8 +22,10 @@ def _ref_key(ref: dict) -> tuple:
 
 
 def analyze_case(case_text: str, title: str | None = None,
-                 claim_id: str = "loan_repayment") -> dict:
+                 claim_id: str | None = None) -> dict:
     """组装案件分析；未知 claim_id 抛 ValueError（由端点转 422）。"""
+    if not claim_id:
+        raise ValueError("未选择请求权分析模型；不得默认套用借贷模型。")
     claim = legalmodel.analyze_claim(case_text, claim_id)  # 先校验 claim_id
     profile = profiling.build_profile(case_text)
     behavior = behavior_mod.analyze_behavior(case_text)

@@ -22,6 +22,7 @@ export default function DataSources() {
   const [cases, setCases] = useState<CaseRecord[] | null>(null)
   const [casesError, setCasesError] = useState<string | null>(null)
   const [compliance, setCompliance] = useState<Awaited<ReturnType<typeof api.compliance>> | null>(null)
+  const [coverage, setCoverage] = useState<Awaited<ReturnType<typeof api.corpusCoverage>> | null>(null)
 
   useEffect(() => {
     let alive = true
@@ -37,6 +38,12 @@ export default function DataSources() {
         setCasesError(reason instanceof Error ? reason.message : String(reason))
       },
     )
+    return () => { alive = false }
+  }, [])
+
+  useEffect(() => {
+    let alive = true
+    api.corpusCoverage().then((c) => alive && setCoverage(c), () => { /* 覆盖登记册不可用时不伪造替代数据 */ })
     return () => { alive = false }
   }, [])
 
@@ -71,6 +78,26 @@ export default function DataSources() {
         <div className="stat"><b>{data ? articleCount.toLocaleString() : '—'}</b><span>已加载条文</span></div>
         <div className="stat"><b>{cases ? cases.length : '—'}</b><span>逐件核实案例</span></div>
       </div>
+
+      {coverage && (
+        <section className="card mb-20">
+          <div className="card-h row-wrap">
+            <b className="card-h-t">覆盖边界与更新队列</b>
+            <span className="spacer" />
+            <a className="tiny" href={coverage.national_law_catalog.source_url} target="_blank" rel="noreferrer">全国人大现行有效法律目录</a>
+          </div>
+          <div className="card-b">
+            <div className="banner banner-warn mb-12"><Icon name="alert" size={15} /><span className="banner-tx">
+              全国人大目录截至 {coverage.national_law_catalog.as_of} 载明 {coverage.national_law_catalog.count} 件现行有效法律；本系统当前只有 {coverage.controlled_instrument_ids.length} 部受控规范文件。{coverage.national_law_catalog.comparison_warning}
+            </span></div>
+            <div className="tiny bold mb-8">已定位官方来源、尚未入库（不参与检索）</div>
+            <div className="chips mb-12">
+              {coverage.priority_backlog.map((item) => <span key={item.title} className="chip" title={item.reason}>{item.title.replace(/^中华人民共和国/, '')}</span>)}
+            </div>
+            <div className="tiny"><b>入库顺序：</b>{coverage.update_protocol.join(' → ')}</div>
+          </div>
+        </section>
+      )}
 
       <section className="card mb-20">
         <div className="card-h row-wrap">

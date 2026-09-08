@@ -43,19 +43,23 @@
   --sb-bg: rgba(16, 28, 50, 0.72);
   --sb-border: rgba(255, 255, 255, 0.12);
   --sb-hi: rgba(255, 255, 255, 0.08);
+  --sb-inset: inset 0 1px 0 var(--sb-hi), inset 0 -1px 0 rgba(0, 0, 0, 0.24);
+  --shadow-drawer: 12px 0 40px rgba(0, 0, 0, 0.45);
 
   /* Material Scale —— 全站唯一参数源（可验证）：模糊半径 / 饱和度 / 发丝线 / 边缘内高光 / 焦点环 */
   --blur-chrome: 30px;   /* Sidebar / TopBar */
   --blur-panel: 20px;    /* 工作台面板 */
   --blur-card: 14px;     /* 卡片层 */
+  --blur-thin: 10px;     /* Ultra-thin / 弱采样材质 */
   --blur-float: 32px;    /* Toast / 浮层 */
   --blur-desk: 24px;     /* 内容台面 */
   --blur-veil: 6px;      /* 遮罩弱化层（Dialog scrim） */
   --blur-veil-soft: 2px; /* 抽屉 scrim */
   --mat-sat: 150%;
+  --mat-sat-desk: 120%;
   --mat-hairline: rgba(20, 32, 60, 0.12);
   --mat-edge: rgba(255, 255, 255, 0.5);
-  --ring: 0 0 0 3px rgba(10, 132, 255, 0.55);
+  --ring: var(--ring-strong);
   --mat-inset: inset 0 1px 0 var(--mat-edge), inset 0 -1px 0 var(--mat-inset-b);  /* 玻璃厚度：顶内高光+底内阴影成对 */
   --shadow-3: 0 12px 40px rgba(0, 0, 0, 0.22);
 
@@ -100,10 +104,24 @@
   --mat-card-a: 0.78;                      /* 卡片层不透明度 */
   --mat-panel-a: 0.6;                      /* 工作台面板不透明度 */
   --mat-chrome-a: 0.52;                    /* 导航铬层不透明度 */
+  --mat-thin-a: 0.28;                      /* 超薄材质：最大化背景方位感 */
+  --mat-regular-a: 0.6;                    /* 常规材质 */
+  --mat-thick-a: 0.78;                     /* 厚材质：承载细字 */
+  --mat-float-a: 0.7;                      /* 浮层材质 */
+  --mat-refract-a: 0.5;                    /* 仅设计展台的折射实验档 */
+  --mat-solid-a: 0.95;                     /* 正文/高可读护栏 */
+  --mat-dialog-a: 0.88;                    /* 大面积浮层 */
+  --mat-control-a: 0.62;                   /* 输入控件静止态 */
+  --mat-control-focus-a: 0.86;             /* 输入控件聚焦态 */
+  --mat-track-a: 0.4;                      /* 凹槽轨道 */
+  --mat-thumb-a: 0.92;                     /* 槽内滑块 */
+  --mat-fallback-a: 0.97;                  /* 无 backdrop-filter 时的可读回退 */
   --mat-hairline: rgba(20, 32, 60, 0.1);
   --mat-edge: rgba(255, 255, 255, 0.65);   /* 顶部内高光 */
   --mat-inset-b: rgba(20, 32, 60, 0.05);   /* 底部内阴影（与 --mat-edge 成对=玻璃厚度） */
   --ring-soft: 0 0 0 3px rgba(10, 132, 255, 0.18);  /* 输入聚焦环 */
+  --ring-color: #0069d9;                            /* 浅色 UI 指示器 ≥3:1 */
+  --ring-strong: 0 0 0 3px var(--ring-color);
   color-scheme: light;
 }
 .tone-dark {
@@ -140,10 +158,24 @@
   --mat-card-a: 0.6;
   --mat-panel-a: 0.5;
   --mat-chrome-a: 0.44;
+  --mat-thin-a: 0.22;
+  --mat-regular-a: 0.5;
+  --mat-thick-a: 0.7;
+  --mat-float-a: 0.64;
+  --mat-refract-a: 0.44;
+  --mat-solid-a: 0.9;
+  --mat-dialog-a: 0.78;
+  --mat-control-a: 0.5;
+  --mat-control-focus-a: 0.72;
+  --mat-track-a: 0.32;
+  --mat-thumb-a: 0.8;
+  --mat-fallback-a: 0.97;
   --mat-hairline: rgba(255, 255, 255, 0.1);
   --mat-edge: rgba(255, 255, 255, 0.16);
   --mat-inset-b: rgba(0, 0, 0, 0.28);
   --ring-soft: 0 0 0 3px rgba(10, 132, 255, 0.3);
+  --ring-color: #0a84ff;
+  --ring-strong: 0 0 0 3px var(--ring-color);
   --shadow-3: 0 12px 40px rgba(0, 0, 0, 0.6);
   color-scheme: dark;
 }
@@ -226,39 +258,6 @@ svg { display: block; flex: none; }
   animation: rise-in var(--t-smooth) var(--spring-smooth) both;
   animation-delay: calc(min(var(--si, 0), 12) * var(--dur-stagger));
 }
-/* Motion Lab 级联演示条目（静态样式，动画来自 .stagger 容器规则） */
-.stag-demo {
-  padding: 6px 11px; border-radius: var(--r-s); font-size: 12px; color: var(--tx-2);
-  background: rgba(var(--mat-tint), var(--mat-card-a)); border: 1px solid var(--mat-hairline);
-}
-@keyframes shake {
-  0.0% { transform: translateX(0); }
-  3.8% { transform: translateX(6.72px); }
-  7.7% { transform: translateX(1.79px); }
-  11.5% { transform: translateX(-4.38px); }
-  15.4% { transform: translateX(-2.45px); }
-  19.2% { transform: translateX(2.51px); }
-  23.1% { transform: translateX(2.44px); }
-  26.9% { transform: translateX(-1.16px); }
-  30.8% { transform: translateX(-2.07px); }
-  34.6% { transform: translateX(0.29px); }
-  38.5% { transform: translateX(1.58px); }
-  42.3% { transform: translateX(0.21px); }
-  46.2% { transform: translateX(-1.08px); }
-  50.0% { transform: translateX(-0.44px); }
-  53.8% { transform: translateX(0.67px); }
-  57.7% { transform: translateX(0.49px); }
-  61.5% { transform: translateX(-0.35px); }
-  65.4% { transform: translateX(-0.45px); }
-  69.2% { transform: translateX(0.13px); }
-  73.1% { transform: translateX(0.36px); }
-  76.9% { transform: translateX(0); }
-  84.6% { transform: translateX(-0.09px); }
-  92.3% { transform: translateX(0.1px); }
-  100.0% { transform: translateX(0); }
-}
-.shake { animation: shake var(--t-shake) var(--ease) both; }
-
 /* ---- 按压反馈对（计划 v4 红线4）----
    按下：--dur-press 快速缩至 0.97（ease-out）；释放：--spring-quick 弹簧回位（微 overshoot）。
    两段各自独立的时长/曲线 = 「对」。只动 transform，不触发重排。
@@ -290,7 +289,7 @@ svg { display: block; flex: none; }
   backdrop-filter: blur(var(--blur-chrome)) saturate(var(--mat-sat));
   border: 1px solid var(--sb-border);
   border-radius: var(--r-p);
-  box-shadow: inset 0 1px 0 var(--sb-hi), var(--shadow-1);
+  box-shadow: var(--sb-inset), var(--shadow-1);
   color: #e8eefc;
   overflow: hidden;
   transition: width var(--dur) var(--ease), min-width var(--dur) var(--ease);
@@ -332,14 +331,46 @@ svg { display: block; flex: none; }
 .app.sb-collapsed .sb-brand { justify-content: center; padding: 18px 0 12px; }
 
 .sb-user { padding: 12px 14px 14px; border-top: 1px solid rgba(255, 255, 255, 0.1); }
-.sb-usercard { display: flex; gap: 10px; align-items: center; }
-.sb-uinfo { min-width: 0; }
-.sb-uname { font-size: 13px; font-weight: 600; color: #fff; white-space: nowrap; }
-.sb-urole { font-size: 11px; color: rgba(214, 226, 250, 0.6); }
-.sb-plan { margin-top: 10px; }
-.sb-plan-top { display: flex; justify-content: space-between; font-size: 11px; color: rgba(214, 226, 250, 0.72); margin-bottom: 5px; }
-.sb-bar { height: 5px; border-radius: 4px; background: rgba(255, 255, 255, 0.14); overflow: hidden; }
-.sb-bar i { display: block; height: 100%; border-radius: 4px; background: linear-gradient(90deg, #4da3ff, #0a84ff); }
+.sb-reserve { display: block; padding: 10px; border-radius: 12px; background: rgba(255, 255, 255, 0.055); border: 1px solid rgba(255, 255, 255, 0.1); }
+.sb-reserve:hover { background: rgba(255, 255, 255, 0.09); border-color: rgba(255, 255, 255, 0.18); }
+.sb-reserve-h { display: flex; align-items: center; justify-content: space-between; gap: 6px; color: rgba(236, 243, 255, 0.9); font-size: 10.5px; }
+.sb-reserve-h > span { display: inline-flex; align-items: center; gap: 5px; }
+.sb-reserve-h > span:last-child { color: #79baff; }
+.sb-reserve-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px 6px; margin-top: 9px; }
+.sb-reserve-grid > span { min-width: 0; }
+.sb-reserve-grid b { display: block; color: #fff; font: 650 15px/1.15 "SFMono-Regular", Consolas, monospace; }
+.sb-reserve-grid small { display: block; margin-top: 2px; color: rgba(214, 226, 250, 0.58); font-size: 9.5px; white-space: nowrap; }
+.sb-reserve-note { margin-top: 8px; padding-top: 7px; border-top: 1px solid rgba(255, 255, 255, 0.08); color: rgba(214, 226, 250, 0.55); font-size: 9.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* 首次受众选择：不采集姓名，不把本机视图伪装为账号或资格认证。 */
+.audience-onboarding { min-height: calc(100vh - 132px); display: grid; place-items: center; padding: 28px; }
+.audience-sheet { width: min(980px, 100%); padding: 34px; border-radius: 24px; text-align: center; background: rgba(var(--mat-tint), var(--mat-solid-a)); border: 1px solid var(--mat-hairline); box-shadow: var(--mat-inset), var(--shadow-3); }
+.audience-mark { width: 48px; height: 48px; margin: 0 auto 12px; display: grid; place-items: center; border-radius: 15px; color: #fff; background: linear-gradient(145deg, #218cff, #0064d8); box-shadow: 0 10px 28px rgba(0, 105, 217, 0.28); }
+.audience-sheet h1 { margin: 5px 0 8px; font-size: clamp(25px, 3vw, 36px); }
+.audience-lead { max-width: 660px; margin: 0 auto; color: var(--tx-2); line-height: 1.75; }
+.audience-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 25px; text-align: left; }
+.audience-card { min-height: 255px; display: flex; flex-direction: column; padding: 20px; border-radius: 18px; background: var(--surface-solid); border: 1px solid var(--div); color: var(--tx); box-shadow: var(--shadow-1); transition: border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease), transform var(--t-quick) var(--spring-quick); }
+.audience-card:hover { border-color: var(--accent-text); box-shadow: var(--shadow-2); }
+.audience-card:active { transform: scale(0.97); transition-duration: var(--dur-press); transition-timing-function: var(--ease); }
+.audience-card-t { font-size: 19px; font-weight: 750; }
+.audience-card-d { margin-top: 8px; min-height: 66px; color: var(--tx-2); font-size: 13px; line-height: 1.65; }
+.audience-card-list { display: grid; gap: 7px; margin-top: 14px; }
+.audience-card-list i { color: var(--tx-2); font-size: 12px; font-style: normal; }
+.audience-card-cta { display: inline-flex; align-items: center; gap: 5px; margin-top: auto; padding-top: 18px; color: var(--accent-text); font-size: 13px; font-weight: 700; }
+.audience-foot { margin: 18px auto 0; color: var(--tx-3); font-size: 11px; line-height: 1.6; }
+.access-notice { min-height: 70vh; display: grid; place-items: center; }
+.access-notice > .card { width: min(600px, 100%); text-align: center; }
+.access-notice h1 { margin: 14px 0 8px; }
+.access-notice p { color: var(--tx-2); line-height: 1.7; }
+.access-notice .row-wrap { justify-content: center; margin-top: 18px; }
+.access-ic { width: 46px; height: 46px; display: grid; place-items: center; margin: 0 auto; border-radius: 14px; color: var(--accent-text); background: var(--accent-soft); }
+@media (max-width: 767.98px) {
+  .audience-onboarding { min-height: calc(100vh - 108px); padding: 14px; }
+  .audience-sheet { padding: 24px 16px; border-radius: 20px; }
+  .audience-grid { grid-template-columns: 1fr; }
+  .audience-card { min-height: 0; }
+  .audience-card-d { min-height: 0; }
+}
 
 /* 主区：铬层悬浮于内容之上，正文从玻璃下滑过（macOS 工具栏式采样模糊） */
 .main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 12px; position: relative; }
@@ -354,11 +385,11 @@ svg { display: block; flex: none; }
   backdrop-filter: blur(var(--blur-chrome)) saturate(var(--mat-sat));
   border: 1px solid var(--mat-hairline);
   border-radius: var(--r-l);
-  box-shadow: inset 0 1px 0 var(--mat-edge), var(--shadow-1);
+  box-shadow: var(--mat-inset), var(--shadow-1);
   /* 滚动海拔（HIG scroll edge effect）：内容滚动后边缘增强，AppShell 哨兵挂 .is-scrolled */
   transition: box-shadow var(--dur) var(--ease), border-color var(--dur) var(--ease);
 }
-.tb.is-scrolled { border-color: var(--mat-edge); box-shadow: inset 0 1px 0 var(--mat-edge), var(--shadow-2); }
+.tb.is-scrolled { border-color: var(--mat-edge); box-shadow: var(--mat-inset), var(--shadow-2); }
 /* 滚动海拔 · CSS 原生化渐进增强（W5-4）：支持引擎上滚动位置直接连续驱动海拔
    （首 96px 行程内 hairline→edge、shadow-1→shadow-2 线性插值，来回滚动实时可逆），
    动画填充优先级高于 .is-scrolled 类 → 哨兵规则自然退化为不支持引擎的回退。
@@ -373,8 +404,8 @@ svg { display: block; flex: none; }
   }
 }
 @keyframes tb-elevate {
-  from { border-color: var(--mat-hairline); box-shadow: inset 0 1px 0 var(--mat-edge), var(--shadow-1); }
-  to { border-color: var(--mat-edge); box-shadow: inset 0 1px 0 var(--mat-edge), var(--shadow-2); }
+  from { border-color: var(--mat-hairline); box-shadow: var(--mat-inset), var(--shadow-1); }
+  to { border-color: var(--mat-edge); box-shadow: var(--mat-inset), var(--shadow-2); }
 }
 .tb-crumb { display: flex; align-items: center; gap: 7px; font-size: 13.5px; color: var(--tx-2); min-width: 0; }
 .tb-crumb b { color: var(--tx); font-weight: 600; }
@@ -404,8 +435,8 @@ svg { display: block; flex: none; }
   overscroll-behavior: contain;  /* 滚动收链：面板/台面滚到底不再漏给外层（MDN overscroll-behavior） */
   background: var(--desk);
   color: var(--tx);
-  -webkit-backdrop-filter: blur(var(--blur-desk)) saturate(120%);
-  backdrop-filter: blur(var(--blur-desk)) saturate(120%);
+  -webkit-backdrop-filter: blur(var(--blur-desk)) saturate(var(--mat-sat-desk));
+  backdrop-filter: blur(var(--blur-desk)) saturate(var(--mat-sat-desk));
   border-radius: var(--r-p);
   border: 1px solid var(--mat-hairline);
   box-shadow: inset 0 1px 0 var(--mat-edge), var(--shadow-1);
@@ -512,7 +543,7 @@ svg { display: block; flex: none; }
 .card-h .spacer { flex: 1; }
 .card-b { padding: 20px; }
 .hoverable { transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), border-color var(--dur) var(--ease), background-color var(--dur) var(--ease); }
-.hoverable:hover { transform: translateY(-2px); box-shadow: inset 0 1px 0 var(--mat-edge), var(--shadow-2); border-color: rgba(10, 132, 255, 0.3); }
+.hoverable:hover { box-shadow: inset 0 1px 0 var(--mat-edge), var(--shadow-2); border-color: rgba(10, 132, 255, 0.3); }
 
 /* Tabs */
 .tabs { display: flex; gap: 2px; border-bottom: 1px solid var(--div); overflow-x: auto; }
@@ -552,8 +583,8 @@ svg { display: block; flex: none; }
 .sw.is-on { background: var(--green); }
 .sw.is-on::after { transform: translateX(18px); transform-origin: right center; }
 /* iOS 式按压增宽：knob 沿运动方向轻微拉伸（只动 transform） */
-.sw:active::after { transform: scaleX(1.16); }
-.sw.is-on:active::after { transform: translateX(18px) scaleX(1.16); }
+.sw:active::after { transform: scaleX(1.16); transition: transform var(--dur-press) var(--ease); }
+.sw.is-on:active::after { transform: translateX(18px) scaleX(1.16); transition: transform var(--dur-press) var(--ease); }
 .sw[disabled] { opacity: 0.4; cursor: not-allowed; }
 
 .ckbox { width: 18px; height: 18px; min-width: 18px; border-radius: 5px; border: 1.5px solid var(--div); display: grid; place-items: center; color: transparent; background: var(--surface-solid); transition: all var(--dur) var(--ease); font-size: 11px; }
@@ -617,7 +648,7 @@ svg { display: block; flex: none; }
 
 /* 指标条：数字+标签的最小统计卡（数据源页等；2026-09-05 补齐缺失样式） */
 .stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
-.stat { background: var(--surface); border: 1px solid var(--mat-hairline); border-radius: var(--r-m); padding: 14px 16px; backdrop-filter: blur(var(--blur-card)) saturate(var(--mat-sat)); -webkit-backdrop-filter: blur(var(--blur-card)) saturate(var(--mat-sat)); }
+.stat { background: var(--surface); border: 1px solid var(--mat-hairline); border-radius: var(--r-m); padding: 14px 16px; }
 .stat b { display: block; font-size: 22px; line-height: 1.3; font-variant-numeric: tabular-nums; color: var(--tx); }
 .stat span { font-size: 12px; color: var(--tx-2); }
 @media (max-width: 720px) { .stats { grid-template-columns: 1fr; } }
@@ -635,7 +666,8 @@ svg { display: block; flex: none; }
 @media (max-width: 880px) {
   .cols-3, .cols-3w, .cols-2, .cols-2r, .cols-2l { grid-template-columns: 1fr; }
 }
-.panel { background: rgba(var(--mat-tint), var(--mat-panel-a)); -webkit-backdrop-filter: blur(var(--blur-panel)) saturate(var(--mat-sat)); backdrop-filter: blur(var(--blur-panel)) saturate(var(--mat-sat)); border: 1px solid var(--mat-hairline); border-radius: var(--r-l); box-shadow: inset 0 1px 0 var(--mat-edge), var(--shadow-1); display: flex; flex-direction: column; max-height: calc(100vh - 262px); min-height: 320px; }
+/* .panel 是工作台的结构分区而非重复卡片：允许 standard-material 采样模糊；内部卡片仍仅叠色。 */
+.panel { background: rgba(var(--mat-tint), var(--mat-panel-a)); -webkit-backdrop-filter: blur(var(--blur-panel)) saturate(var(--mat-sat)); backdrop-filter: blur(var(--blur-panel)) saturate(var(--mat-sat)); border: 1px solid var(--mat-hairline); border-radius: var(--r-l); box-shadow: var(--mat-inset), var(--shadow-1); display: flex; flex-direction: column; max-height: calc(100vh - 262px); min-height: 320px; }
 .panel-h { padding: 13px 16px; border-bottom: 1px solid var(--div-soft); font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
 .panel-h .spacer { flex: 1; }
 .panel-b { flex: 1; overflow-y: auto; padding: 14px 16px; }
@@ -793,7 +825,7 @@ del.diff-del { text-decoration: line-through; background: var(--danger-soft); bo
 @media (max-width: 1080px) { .ac-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 620px) { .ac-grid { grid-template-columns: 1fr; } }
 .ac-card { position: relative; overflow: hidden; border-radius: var(--r-l); padding: 18px 18px 16px; color: #fff; cursor: pointer; transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease); border: 1px solid rgba(255, 255, 255, 0.1); }
-.ac-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-2); }
+.ac-card:hover { box-shadow: var(--shadow-2); }
 .ac-blue { background: linear-gradient(140deg, #2b62d9, #1d3f9e); }
 .ac-green { background: linear-gradient(140deg, #1d8a5f, #12674a); }
 .ac-purple { background: linear-gradient(140deg, #6d3fc0, #472a8a); }
@@ -968,7 +1000,7 @@ del.diff-del { text-decoration: line-through; background: var(--danger-soft); bo
 .subj-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 13px; }
 @media (max-width: 1080px) { .subj-grid { grid-template-columns: repeat(2, 1fr); } }
 .subj-card { background: var(--surface-solid); border: 1px solid var(--div-soft); border-radius: var(--r-l); padding: 16px; cursor: pointer; transition: all var(--dur) var(--ease); }
-.subj-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-2); border-color: rgba(10, 132, 255, 0.3); }
+.subj-card:hover { box-shadow: var(--shadow-2); border-color: rgba(10, 132, 255, 0.3); }
 .subj-ic { width: 36px; height: 36px; border-radius: 11px; display: grid; place-items: center; margin-bottom: 10px; }
 .subj-t { font-size: 14px; font-weight: 700; }
 .subj-d { font-size: 11.5px; color: var(--tx-3); margin: 3px 0 10px; }
@@ -1023,25 +1055,6 @@ del.diff-del { text-decoration: line-through; background: var(--danger-soft); bo
 .audit-dot { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; }
 .mono { font-family: ui-monospace, "SF Mono", Consolas, "Courier New", monospace; font-size: 0.92em; }
 
-/* ---------- 19. Design System 页（内部，dark） ---------- */
-.ds-swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(128px, 1fr)); gap: 11px; }
-.ds-swatch { border-radius: var(--r-m); overflow: hidden; border: 1px solid var(--div); }
-.ds-swatch-c { height: 58px; }
-.ds-swatch-i { padding: 8px 11px; font-size: 11px; color: var(--tx-2); background: var(--surface); }
-.ds-swatch-i b { display: block; color: var(--tx); font-size: 11.5px; }
-.ds-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
-.ds-block { background: var(--surface); border: 1px solid var(--div); border-radius: var(--r-m); padding: 18px; margin-bottom: 13px; }
-.ds-block h4 { font-size: 13px; margin-bottom: 12px; color: var(--tx); }
-.ds-block .lbl { font-size: 11px; color: var(--tx-3); margin-top: 7px; }
-.ds-glass-demo { border-radius: var(--r-l); padding: 20px; border: 1px solid rgba(255, 255, 255, 0.12); background: linear-gradient(120deg, #2b62d9, #6d3fc0); position: relative; overflow: hidden; }
-.ds-glass-demo .pane { border-radius: 14px; padding: 14px 16px; color: #fff; font-size: 12px; border: 1px solid rgba(255, 255, 255, 0.2); }
-/* Motion Lab 弹簧对比球：同距三阻尼（位移只走 transform） */
-.ball { position: absolute; left: 0; width: 74px; height: 28px; border-radius: var(--r-pill); display: grid; place-items: center; font-size: 11px; background: rgba(var(--mat-tint), 0.9); border: 1px solid var(--mat-hairline); box-shadow: inset 0 1px 0 var(--mat-edge), var(--shadow-1); }
-.ball code { font-family: ui-monospace, "SF Mono", Consolas, monospace; opacity: 0.75; }
-.ball-smooth { transition: transform var(--t-smooth) var(--spring-smooth); }
-.ball-snappy { transition: transform var(--t-snappy) var(--spring-snappy); }
-.ball-bouncy { transition: transform var(--t-bouncy) var(--spring-bouncy); }
-
 /* 工具类 */
 .row { display: flex; align-items: center; gap: 9px; }
 .row-wrap { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
@@ -1053,49 +1066,15 @@ del.diff-del { text-decoration: line-through; background: var(--danger-soft); bo
 .bold { font-weight: 600; }
 .clamp2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 
-/* ============================================================
-   20. Material System v2 —— 可验证的材质层参数
-   Ultra-Thin / Regular / Thick / Chrome / Float 五档，参数全部来自 Token
-   ============================================================ */
-.m-strip { position: relative; border-radius: var(--r-l); overflow: hidden; min-height: 74px;
-  background:
-    radial-gradient(140px 90px at 18% 30%, rgba(64, 132, 255, 0.85), transparent 70%),
-    radial-gradient(120px 90px at 58% 70%, rgba(191, 90, 242, 0.8), transparent 70%),
-    radial-gradient(130px 90px at 88% 25%, rgba(48, 209, 88, 0.7), transparent 70%),
-    linear-gradient(120deg, #16233f, #0b0b0d);
-}
-.material { position: absolute; inset: 12px 14px; display: flex; align-items: center; gap: 8px; border-radius: var(--r-m); padding: 0 13px; font-size: 11.5px; font-weight: 600; color: var(--tx);
-  -webkit-backdrop-filter: blur(var(--m-blur, 14px)) saturate(var(--mat-sat));
-  backdrop-filter: blur(var(--m-blur, 14px)) saturate(var(--mat-sat));
-  background: rgba(var(--mat-tint), var(--m-a, 0.78));
-  border: 1px solid var(--mat-hairline);
-  box-shadow: inset 0 1px 0 var(--mat-edge), var(--shadow-1);
-}
-.material code { font-family: ui-monospace, "SF Mono", Consolas, monospace; font-weight: 500; opacity: 0.75; font-size: 10.5px; }
-.m-thin { --m-blur: 10px; --m-a: 0.28; }
-.m-regular { --m-blur: 14px; --m-a: 0.6; }
-.m-thick { --m-blur: 20px; --m-a: 0.78; }
-.m-chrome { --m-blur: 30px; --m-a: 0.52; }
-.m-float { --m-blur: 32px; --m-a: 0.7; box-shadow: var(--mat-inset), var(--shadow-3); }
-/* 折射边缘 · 实验档（W5-1 评估结论可视化）：feDisplacementMap 位移采样叠加在 blur 之上。
-   实证（2026-09-06，docs/qa-evidence/w5-refract-*.png）：Chrome 152 渲染有效且可与 blur() 组合；
-   但旧引擎「解析成功、渲染不生效」无法用 @supports 探测，组合值存在整条失效风险 →
-   仅展台演示，产品面板维持 inset 高光/阴影近似（Liquid Glass 边缘折射的稳定近似）。 */
-.m-refract {
-  --m-blur: 14px; --m-a: 0.5;
-  -webkit-backdrop-filter: url(#lg-refract) blur(var(--m-blur, 14px)) saturate(var(--mat-sat));
-  backdrop-filter: url(#lg-refract) blur(var(--m-blur, 14px)) saturate(var(--mat-sat));
-}
-
 /* 浮层材质：Toast / Dialog —— Liquid Glass regular 语义（模糊+叠色+成对内缘光+深阴影） */
-.toast { background: rgba(var(--mat-tint), 0.72); -webkit-backdrop-filter: blur(var(--blur-float)) saturate(var(--mat-sat)); backdrop-filter: blur(var(--blur-float)) saturate(var(--mat-sat)); border: 1px solid var(--mat-hairline); box-shadow: var(--mat-inset), var(--shadow-3); pointer-events: auto; }
-.dlg { background: rgba(var(--mat-tint), 0.88); -webkit-backdrop-filter: blur(var(--blur-float)) saturate(var(--mat-sat)); backdrop-filter: blur(var(--blur-float)) saturate(var(--mat-sat)); border: 1px solid var(--mat-hairline); box-shadow: var(--mat-inset), var(--shadow-3); }
+.toast { background: rgba(var(--mat-tint), var(--mat-float-a)); -webkit-backdrop-filter: blur(var(--blur-float)) saturate(var(--mat-sat)); backdrop-filter: blur(var(--blur-float)) saturate(var(--mat-sat)); border: 1px solid var(--mat-hairline); box-shadow: var(--mat-inset), var(--shadow-3); pointer-events: auto; }
+.dlg { background: rgba(var(--mat-tint), var(--mat-dialog-a)); -webkit-backdrop-filter: blur(var(--blur-float)) saturate(var(--mat-sat)); backdrop-filter: blur(var(--blur-float)) saturate(var(--mat-sat)); border: 1px solid var(--mat-hairline); box-shadow: var(--mat-inset), var(--shadow-3); }
 .dlg-b { color: var(--tx-2); }
 
 /* 输入填充：macOS 式 quaternary fill（轻叠色，不再用不透明块） */
-.inp, .sel, .ta { background: rgba(var(--mat-tint), 0.62); border: 1px solid var(--mat-hairline); }
-.inp:focus, .sel:focus, .ta:focus { background: rgba(var(--mat-tint), 0.86); border-color: var(--accent); box-shadow: var(--ring); }
-.searchbar { background: rgba(var(--mat-tint), 0.88); border: 1px solid var(--mat-hairline); -webkit-backdrop-filter: blur(var(--blur-card)) saturate(var(--mat-sat)); backdrop-filter: blur(var(--blur-card)) saturate(var(--mat-sat)); box-shadow: inset 0 1px 0 var(--mat-edge), var(--shadow-1); }
+.inp, .sel, .ta { background: rgba(var(--mat-tint), var(--mat-control-a)); border: 1px solid var(--mat-hairline); }
+.inp:focus, .sel:focus, .ta:focus { background: rgba(var(--mat-tint), var(--mat-control-focus-a)); border-color: var(--accent); box-shadow: var(--ring); }
+.searchbar { background: rgba(var(--mat-tint), var(--mat-dialog-a)); border: 1px solid var(--mat-hairline); -webkit-backdrop-filter: blur(var(--blur-card)) saturate(var(--mat-sat)); backdrop-filter: blur(var(--blur-card)) saturate(var(--mat-sat)); box-shadow: inset 0 1px 0 var(--mat-edge), var(--shadow-1); }
 .searchbar:focus-within { box-shadow: var(--ring), var(--shadow-1); }
 
 /* 焦点环统一 Token（§38：3px #0A84FF 外侧 Ring） */
@@ -1103,8 +1082,7 @@ del.diff-del { text-decoration: line-through; background: var(--danger-soft); bo
 .btn:focus-visible, .chip:focus-visible, .tab:focus-visible { box-shadow: var(--ring); }
 
 /* 可读性护栏（§34）：长文正文区接近不透明，不再叠加模糊 */
-.ot { background: rgba(var(--mat-tint), 0.95); }
-.case-doc { background: rgba(var(--mat-tint), 0.9); }
+.ot, .case-doc { background: rgba(var(--mat-tint), var(--mat-solid-a)); }
 
 /* 窗内卡片填充：与 .card 同一叠色（无模糊） */
 .res-card, .risk-card, .evc, .cit-card, .rs-sec, .subj-card, .cmp-col { background: rgba(var(--mat-tint), var(--mat-card-a)); }
@@ -1118,11 +1096,11 @@ del.diff-del { text-decoration: line-through; background: var(--danger-soft); bo
 
 /* ---- 分段控件（竹简槽）：凹槽轨道 + 弹簧滑块（计划 v4 W3）----
    轨道 = 内嵌凹槽（顶内阴影+底内高光成对，与浮层内缘光方向相反）；滑块 = Regular 材质，
-   位移走 --spring-snappy；--seg-n / --seg-i 由 Segmented 组件注入。 */
-.seg { position: relative; display: inline-flex; align-items: stretch; gap: 0; padding: 3px; border-radius: var(--r-pill); background: rgba(var(--mat-tint), 0.4); border: 1px solid var(--mat-hairline); box-shadow: inset 0 1px 3px var(--mat-inset-b), inset 0 -1px 0 var(--mat-edge); }
+   位移走 --spring-snappy；--seg-n / --seg-x 由 Segmented 组件注入。 */
+.seg { position: relative; display: inline-flex; align-items: stretch; gap: 0; padding: 3px; border-radius: var(--r-pill); background: rgba(var(--mat-tint), var(--mat-track-a)); border: 1px solid var(--mat-hairline); box-shadow: inset 0 1px 3px var(--mat-inset-b), inset 0 -1px 0 var(--mat-edge); }
 .seg-btn { position: relative; z-index: 1; border: none; background: none; height: 30px; padding: 0 16px; border-radius: var(--r-pill); font-size: 12.5px; font-weight: 500; color: var(--tx-2); white-space: nowrap; }
 .seg-btn.is-on { color: var(--tx); font-weight: 600; }
-.seg-thumb { position: absolute; top: 3px; bottom: 3px; left: 3px; z-index: 0; width: calc((100% - 6px) / var(--seg-n, 2)); border-radius: var(--r-pill); background: rgba(var(--mat-tint), 0.92); border: 1px solid var(--mat-hairline); box-shadow: inset 0 1px 0 var(--mat-edge), var(--shadow-1); transform: translateX(calc(var(--seg-i, 0) * 100%)); transition: transform var(--t-snappy) var(--spring-snappy); }
+.seg-thumb { position: absolute; top: 3px; bottom: 3px; left: 3px; z-index: 0; width: calc((100% - 6px) / var(--seg-n, 2)); border-radius: var(--r-pill); background: rgba(var(--mat-tint), var(--mat-thumb-a)); border: 1px solid var(--mat-hairline); box-shadow: inset 0 1px 0 var(--mat-edge), var(--shadow-1); transform: translateX(var(--seg-x, 0%)); transition: transform var(--t-snappy) var(--spring-snappy); }
 
 /* ---- 按压反馈对 · 释放段基规则（计划 v4 红线4）----
    必须位于各组件 transition 简写之后（级联兜底）；按下段见 §2 的 :active 规则：
@@ -1135,7 +1113,7 @@ del.diff-del { text-decoration: line-through; background: var(--danger-soft); bo
 /* 无 backdrop-filter 的环境：整体退化为近不透明，保证对比度 */
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   .sb { background: rgba(15, 24, 42, 0.97); }
-  .tb { background: rgba(var(--mat-tint), 0.97); }
+  .tb { background: rgba(var(--mat-tint), var(--mat-fallback-a)); }
   .card, .panel, .searchbar, .toast, .dlg { background: var(--surface-solid); }
   .content { background: var(--bg); }
 }
@@ -1171,7 +1149,7 @@ del.diff-del { text-decoration: line-through; background: var(--danger-soft); bo
     width: min(280px, calc(100vw - 48px)) !important; min-width: 0 !important;
     transform: translateX(calc(-100% - 16px));
     transition: transform var(--t-snappy) var(--spring-snappy);
-    box-shadow: inset 0 1px 0 var(--sb-hi), 0 12px 40px rgba(0, 0, 0, 0.45);
+    box-shadow: var(--sb-inset), var(--shadow-drawer);
   }
   .app.sb-mobile-open .sb { transform: none; }
   .sb-scrim {
@@ -1251,7 +1229,7 @@ del.diff-del { text-decoration: line-through; background: var(--danger-soft); bo
 /* ==================================================================
    Reduce Motion 精细化（计划 v4 红线6：只关位移/缩放/循环，保留透明度渐变）
    旧实现一刀切 transition/animation:none，Toast/Dialog 的透明度渐变也被杀，
-   与红线 6 及 DesignSystem 页承诺不符。三层替代（须位于基规则之后）：
+   三层替代（须位于基规则之后）：
    ① 循环/纯运动动画停止（shake、骨架 shimmer；环境极光另有专项规则）；
    ② 位移/缩放入退场动画改指既有纯 opacity 关键帧（fade-in/out）——渐变保留、位移消失；
    ③ transform 过渡改道颜色/阴影属性（位移瞬时化）+ 按压缩放/hover 浮起状态直达。

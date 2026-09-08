@@ -28,7 +28,7 @@ def test_memo_cards_resolvable_and_complete():
         assert cit["text"] == card["text"]
         for f in CARD_FIELDS:
             assert f in card, f"卡片缺字段：{f}"
-    assert memo["meta"]["method"] == "bm25-multiquery"
+    assert memo["meta"]["method"] in {"bm25-controlled-terms", "bm25-controlled-groups"}
     assert memo["meta"]["corpus_size"] == len(C.articles)
     assert memo["disclaimer"]
     # references 与 cards 一一对应，全部可溯源
@@ -46,6 +46,16 @@ def test_memo_no_duplicate_cards_and_sorted():
     assert len(memo["cards"]) <= 12
 
 
+def test_plain_language_consumer_query_prioritizes_consumer_sources():
+    """自然问句的套话不得压过实体主题；“网购假货”首批必须来自消费者/电商语料。"""
+    memo = research.build_research_memo("网购到假货可以核对哪些现行法条", top_k=8)
+    assert memo["cards"]
+    assert memo["cards"][0]["law_id"] in {"cl-2013", "crpl-imp-2024", "ecom-2018", "wlxf-2022"}
+    assert not any(c["law_id"] == "pcl-2023" for c in memo["cards"][:4])
+    assert len({c["law_id"] for c in memo["cards"][:4]}) >= 2, "不得被一次编章扩展垄断首批结果"
+    assert {"消费者", "经营者", "欺诈"} <= set(memo["issue_frame"]["keywords"])
+
+
 def test_memo_issue_frame_is_programmatic():
     memo = research.build_research_memo("民间借贷的利率上限是多少？")
     frame = memo["issue_frame"]
@@ -60,7 +70,7 @@ def test_memo_issue_frame_is_programmatic():
     hit_total = sum(f["hit_count"] for f in memo["framework"])
     assert hit_total == len(memo["cards"])
     for f in memo["framework"]:
-        assert f["chapters"]
+        assert isinstance(f["chapters"], list)
 
 
 def test_memo_gaps_on_irrelevant_question():
@@ -135,3 +145,56 @@ def test_chapter_expansion_tolerates_none(monkeypatch):
     monkeypatch.setattr(research, "get_corpus", lambda: FakeCorpus())
     memo = research.build_research_memo("网络购物七日无理由退货")
     assert memo["cards"]
+
+
+def test_consumer_question_is_consistent_across_public_retrieval_paths():
+    """同一公众问题在搜索、引用式问答、研究和事实计划中必须走同一受控主题编排。"""
+    from fastapi.testclient import TestClient
+    from app.main import app
+    from app.retrieval_terms import orchestrated_search
+
+    query = "网购到假货可以核对哪些现行法条"
+
+    def assert_consumer(cards, no_key="article_no"):
+        keys = {(card["law_id"], card[no_key]) for card in cards}
+        assert ("cl-2013", 55) in keys
+        assert any(key in keys for key in {
+            ("cl-2013", 24), ("cl-2013", 25), ("cl-2013", 44), ("ecom-2018", 38),
+        })
+        assert not any(card["law_id"] == "pcl-2023" for card in cards[:4])
+
+    hits, meta = orchestrated_search(C, query, top_k=8)
+    assert meta["method"] == "bm25-controlled-groups"
+    assert_consumer(hits, "no")
+
+    client = TestClient(app)
+    search = client.get("/api/search", params={"q": query, "top_k": 8}).json()
+    assert_consumer(search["hits"], "no")
+    assert search["retrieval_meta"]["matched_groups"] == [
+        "consumer-fraud", "consumer-return", "online-platform",
+    ]
+
+    answer = client.post("/api/qa/ask", json={"question": query, "top_k": 8}).json()
+    assert_consumer(answer["answer_cards"])
+
+    memo = client.post("/api/research/memo", json={"question": query, "top_k": 8}).json()
+    assert_consumer(memo["cards"])
+
+    plan = client.post("/api/needs/plan", json={
+        "summary": "我在网上商店买到假货，商家拒绝退货",
+        "trigger": "网购商品后发现是假货",
+        "timeline": ["收到商品后核对发现与宣传不符"],
+        "actual_outcome": "商家拒绝退款",
+        "parties": ["消费者", "网络商家"],
+        "evidence_owned": ["订单与聊天记录"],
+        "desired_outcome": "了解退货退款路径",
+    }).json()
+    assert_consumer(plan["articles"])
+
+
+def test_unbound_scenario_guidance_is_not_publicly_served():
+    from fastapi.testclient import TestClient
+    from app.main import app
+    client = TestClient(app)
+    assert client.get("/api/scenarios").status_code == 410
+    assert client.get("/api/scenarios/match", params={"text": "欠薪"}).status_code == 410

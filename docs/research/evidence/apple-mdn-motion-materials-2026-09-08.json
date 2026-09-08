@@ -1,0 +1,76 @@
+{
+  "captured_at": "2026-09-08T00:00:00+08:00",
+  "purpose": "LegalHigh Apple-style material and motion completion audit",
+  "discipline": "Curated verification record; URLs remain authoritative. Excerpts are intentionally short and are not represented as full raw snapshots.",
+  "sources": [
+    {
+      "publisher": "Apple Developer",
+      "title": "Human Interface Guidelines — Materials",
+      "url": "https://developer.apple.com/design/human-interface-guidelines/materials",
+      "official_data_url": "https://developer.apple.com/tutorials/data/design/human-interface-guidelines/materials.json",
+      "evidence_grade": "强",
+      "verified_facts": [
+        "Liquid Glass forms a functional layer for controls and navigation.",
+        "Apple says not to use Liquid Glass in the content layer.",
+        "Material selection should follow semantic meaning and recommended usage."
+      ]
+    },
+    {
+      "publisher": "Apple Developer",
+      "title": "SwiftUI Spring",
+      "url": "https://developer.apple.com/documentation/SwiftUI/Spring",
+      "evidence_grade": "强",
+      "verified_facts": [
+        "Spring(duration: 0.5, bounce: 0.3) maps to mass 1.0, stiffness 157.9 and damping 17.6.",
+        "dampingRatio is the drag fraction relative to critical damping."
+      ]
+    },
+    {
+      "publisher": "Apple Developer",
+      "title": "Animate with springs — WWDC23 Session 10158",
+      "url": "https://developer.apple.com/videos/play/wwdc2023/10158/",
+      "evidence_grade": "强",
+      "verified_facts": [
+        "Apple describes continuous position and velocity as goals for natural motion.",
+        "Spring retargeting preserves current velocity.",
+        "Apple recommends caution above roughly 0.4 bounce for UI elements."
+      ],
+      "correction": "The former 10161 link was incorrect; 10161 is an Inspectors in SwiftUI session."
+    },
+    {
+      "publisher": "MDN Web Docs",
+      "title": "overflow",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/overflow",
+      "evidence_grade": "强",
+      "verified_facts": [
+        "hidden overflow can still create a programmatically scrollable container.",
+        "clip overflow is not a scroll container and cannot be programmatically scrolled.",
+        "clip must not hide interactive content that keyboard users need to reach."
+      ]
+    },
+    {
+      "publisher": "MDN Web Docs",
+      "title": "overscroll-behavior",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/overscroll-behavior",
+      "evidence_grade": "强",
+      "verified_facts": [
+        "contain prevents scroll chaining to neighboring scrolling areas."
+      ]
+    },
+    {
+      "publisher": "MDN Web Docs",
+      "title": "linear(), scroll-driven animations, and backdrop-filter",
+      "urls": [
+        "https://developer.mozilla.org/en-US/docs/Web/CSS/easing-function/linear",
+        "https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_scroll-driven_animations",
+        "https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter"
+      ],
+      "evidence_grade": "强（语法）/中（跨浏览器渲染推断）",
+      "verified_facts": [
+        "linear() can approximate complex easing curves and represent values outside 0–1.",
+        "scroll-driven animations use a scroll-based rather than time-based timeline.",
+        "backdrop-filter accepts filter functions and URL filter references, subject to browser support."
+      ]
+    }
+  ]
+}

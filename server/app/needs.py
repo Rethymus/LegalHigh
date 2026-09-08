@@ -9,32 +9,47 @@ import re
 from . import cases as cases_mod
 from .corpus import get_corpus
 from .research import extract_keywords
+from .retrieval_terms import domain_terms, orchestrated_search
 
 
-# 领域词表增强（规则级，确定性）：生活语言 → 规范法律术语。词表可随语料扩充，均为通用法律概念而非虚构引用。
-TOPIC_TERMS: list[tuple[str, list[str]]] = [
-    (r"工资|欠薪|不发工资|劳动报酬|加班费", ["劳动报酬", "劳动合同", "工资支付"]),
-    (r"押金|租房|房东|承租|转租", ["租赁合同", "押金", "出租人"]),
-    (r"假货|退货|网购|欺诈|三无产品", ["欺诈", "经营者", "退货、更换、修理"]),
-    (r"违约金|违约|毁约", ["违约金", "违约责任"]),
-    (r"离婚|婚姻|抚养", ["离婚", "抚养"]),
-    (r"借款|借.{0,2}钱|借贷|欠钱", ["借款合同", "借贷"]),
-    (r"车祸|交通事故|撞", ["交通事故"]),
-    (r"格式条款|霸王条款", ["格式条款"]),
-    (r"竞业|竞业限制", ["竞业限制"]),
-    (r"歧视|区别对待|不公正对待", ["平等就业"]),
+# 只输出“候选问题方向”，不输出案由或请求权成立结论。每一项必须由用户事实中的
+# 可见文字触发，并把触发片段返回给用户复核。
+ISSUE_DIRECTIONS: list[tuple[str, str, str]] = [
+    ("labor-pay", "劳动报酬或劳动关系方向", r"工资|欠薪|劳动合同|加班费|用人单位|辞退|离职"),
+    ("housing-rental", "房屋租赁或押金返还方向", r"租房|房东|承租|出租|押金|房租"),
+    ("consumer", "消费者权益或网络交易方向", r"网购|商家|消费者|退货|退款|假货|平台|三无产品"),
+    ("contract", "合同履行或违约责任方向", r"合同|协议|违约|毁约|定金|约定"),
+    ("loan", "借款或款项返还方向", r"借款|借贷|借钱|欠钱|还款"),
+    ("traffic", "交通事故损害方向", r"车祸|交通事故|车辆|撞伤|交警"),
+    ("family", "婚姻家庭方向", r"离婚|婚姻|抚养|夫妻|子女"),
+    ("standard-terms", "格式条款效力方向", r"格式条款|霸王条款|免责条款"),
+    ("employment-equality", "就业平等或招聘条件方向", r"就业歧视|招聘歧视|区别对待|平等就业"),
 ]
 
 
-def domain_terms(text: str) -> list[str]:
-    """规则匹配：把生活语言映射为规范法律术语（确定性，无 AI 参与）。"""
-    out: list[str] = []
-    for pat, terms in TOPIC_TERMS:
-        if re.search(pat, text or "", re.I):
-            for t in terms:
-                if t not in out:
-                    out.append(t)
-    return out
+def issue_candidates(fact_parts: list[str]) -> list[dict]:
+    """从用户确认的事实中产生可解释候选；无命中时诚实返回 unknown。"""
+    candidates: list[dict] = []
+    for issue_id, label, pattern in ISSUE_DIRECTIONS:
+        basis = [part[:180] for part in fact_parts if re.search(pattern, part, re.I)]
+        if not basis:
+            continue
+        matches: list[str] = []
+        for part in basis:
+            matches.extend(m.group(0) for m in re.finditer(pattern, part, re.I))
+        candidates.append({
+            "id": issue_id,
+            "label": label,
+            "status": "candidate",
+            "matched_terms": list(dict.fromkeys(matches))[:8],
+            "fact_basis": basis[:4],
+            "note": "仅由用户填写事实中的关键词触发，不代表案件定性、案由或请求权成立。",
+        })
+    return candidates or [{
+        "id": "unknown", "label": "尚不能判断法律问题方向", "status": "unknown",
+        "matched_terms": [], "fact_basis": [],
+        "note": "当前事实没有命中受控分类词表；请补充起因、经过和当前结果，系统不会默认套用借贷或其他案件模型。",
+    }]
 
 
 # 度量/数词字符：分词噪声（如「三个月」切出的「三个」「个月」）不含实义检索价值，
@@ -102,19 +117,7 @@ def deterministic_parse(text: str) -> dict:
 def fetch_evidence(keywords: list[str], *, article_limit: int = 6, case_limit: int = 4) -> dict:
     """Stage B：确定性取证（无 AI）。多关键词合并去重，按「命中词数→相关度」排序抑制噪声。"""
     corpus = get_corpus()
-    merged: dict[tuple, dict] = {}
-    for kw in keywords[:8]:
-        for h in corpus.search(kw, top_k=4):
-            key = (h["law_id"], h["no"])
-            e = merged.get(key)
-            if e is None:
-                e = {**h, "_hits": 1}
-                merged[key] = e
-            else:
-                e["_hits"] += 1
-                if h["score"] > e["score"]:
-                    e.update({k: v for k, v in h.items() if k != "_hits"})
-    ranked = sorted(merged.values(), key=lambda h: (-h["_hits"], -h["score"]))[:article_limit]
+    ranked, retrieval = orchestrated_search(corpus, " ".join(keywords[:8]), top_k=article_limit)
 
     articles = []
     for h in ranked:
@@ -138,7 +141,7 @@ def fetch_evidence(keywords: list[str], *, article_limit: int = 6, case_limit: i
             seen_terms.add(c["id"])
             matched_cases.append(c)
     matched_cases = matched_cases[:case_limit]
-    return {"articles": articles, "cases": matched_cases}
+    return {"articles": articles, "cases": matched_cases, "retrieval_meta": retrieval}
 
 
 def parse_needs(text: str) -> dict:
@@ -169,6 +172,7 @@ def parse_needs(text: str) -> dict:
             for c in evidence["cases"]
         ],
         "articles_none": len(evidence["articles"]) == 0,
+        "retrieval_meta": evidence["retrieval_meta"],
         "corpus_size": len(corpus.articles),
         "disclaimer": "解析结果为确定性规则与本地证据检索线索，不构成法律意见；"
                       "真实法律求助请咨询执业律师，经济困难可申请法律援助或拨打 12348。",
@@ -196,11 +200,15 @@ def build_intake_plan(payload: dict) -> dict:
     evidence_owned = clean_list("evidence_owned")
     evidence_missing = clean_list("evidence_missing")
     questions = clean_list("questions", 20)
+    trigger = str(payload.get("trigger") or "").strip()[:2000]
+    actual_outcome = str(payload.get("actual_outcome") or "").strip()[:2000]
     desired_outcome = str(payload.get("desired_outcome") or "").strip()[:2000]
 
     missing_questions: list[str] = []
     if not timeline:
         missing_questions.append("关键事件分别在什么时候发生？请按先后顺序补充日期或大致时间。")
+    if not actual_outcome:
+        missing_questions.append("事情目前造成了什么实际结果、损失或影响？如果尚无结果，请写“暂无/待确认”。")
     if not parties:
         missing_questions.append("涉及哪些人或机构？请只写称谓/角色，避免输入身份证号等敏感信息。")
     if not evidence_owned:
@@ -208,22 +216,26 @@ def build_intake_plan(payload: dict) -> dict:
     if not desired_outcome:
         missing_questions.append("你希望解决什么问题，例如退款、支付工资、停止侵害或了解办理路径？")
 
-    combined = "\n".join([summary, *timeline, *parties, desired_outcome, *questions])
-    parsed = deterministic_parse(combined)
-    parsed["keywords_display"] = curate_display(parsed["keywords"], domain_terms(combined))
-    terms = domain_terms(combined)
-    parsed["issue_type"] = "、".join(terms[:3]) if terms else "尚待进一步分类"
+    # 法律依据检索只使用事实，不把用户期望或提问当成已经发生的事实。
+    fact_parts = [x for x in [summary, trigger, *timeline, actual_outcome, *parties] if x]
+    fact_text = "\n".join(fact_parts)
+    parsed = deterministic_parse(fact_text)
+    parsed["keywords_display"] = curate_display(parsed["keywords"], domain_terms(fact_text))
+    candidates = issue_candidates(fact_parts)
+    parsed["issue_type"] = candidates[0]["label"] if len(candidates) == 1 else f"{len(candidates)} 个候选方向"
     parsed["understood"] = "已按用户确认的信息形成事实记录，并在本地语料中检索可能相关的依据。"
 
     checklist = [{"item": item, "state": "已掌握", "source": "用户填写"} for item in evidence_owned]
     checklist += [{"item": item, "state": "待取得/待确认", "source": "用户填写"} for item in evidence_missing]
-    if re.search(r"合同|协议|租房|劳动|借款", combined) and not any("合同" in x for x in evidence_owned):
+    if re.search(r"合同|协议|租房|劳动|借款", fact_text) and not any("合同" in x for x in evidence_owned):
         checklist.append({"item": "合同、协议或能够证明约定内容的记录", "state": "建议核对", "source": "确定性规则提示"})
-    if re.search(r"付款|工资|押金|借款|欠钱|退款", combined) and not any(re.search(r"付款|转账|工资|收据", x) for x in evidence_owned):
+    if re.search(r"付款|工资|押金|借款|欠钱|退款", fact_text) and not any(re.search(r"付款|转账|工资|收据", x) for x in evidence_owned):
         checklist.append({"item": "付款、转账、工资或收据记录", "state": "建议核对", "source": "确定性规则提示"})
     if not any(re.search(r"聊天|短信|邮件|通知", x) for x in evidence_owned):
         checklist.append({"item": "与对方沟通的原始记录及其时间", "state": "建议核对", "source": "确定性规则提示"})
 
+    checklist = [{"id": f"material-{i + 1}", "verification": "user-reported" if x["source"] == "用户填写" else "rule-suggested", **x}
+                 for i, x in enumerate(checklist)]
     evidence = fetch_evidence(parsed["keywords"])
     corpus = get_corpus()
     next_steps = [
@@ -238,9 +250,21 @@ def build_intake_plan(payload: dict) -> dict:
     return {
         "input": summary,
         "intake": {
-            "summary": summary, "timeline": timeline, "parties": parties,
+            "summary": summary, "trigger": trigger, "timeline": timeline,
+            "actual_outcome": actual_outcome, "parties": parties,
             "desired_outcome": desired_outcome, "questions": questions,
             "missing_questions": missing_questions, "evidence_checklist": checklist,
+            "issue_candidates": candidates,
+            "field_status": {
+                "summary": "filled", "trigger": "filled" if trigger else "not_provided",
+                "timeline": "filled" if timeline else "not_provided",
+                "actual_outcome": "filled" if actual_outcome else "not_provided",
+                "parties": "filled" if parties else "not_provided",
+                "evidence_owned": "filled" if evidence_owned else "not_provided",
+                "evidence_missing": "filled" if evidence_missing else "not_provided",
+                "desired_outcome": "filled" if desired_outcome else "not_provided",
+                "questions": "filled" if questions else "not_provided",
+            },
             "next_steps": next_steps,
             "method": "user-confirmed-facts + deterministic-rules + local-BM25",
         },
@@ -258,6 +282,7 @@ def build_intake_plan(payload: dict) -> dict:
             for c in evidence["cases"]
         ],
         "articles_none": len(evidence["articles"]) == 0,
+        "retrieval_meta": evidence["retrieval_meta"],
         "corpus_size": len(corpus.articles),
         "disclaimer": "这是求助前的事实与证据准备记录，不是案件定性、法律意见或结果预测。"
                       "系统没有替你确认事实；正式行动前请核对官方来源并向法律援助机构或受委托的专业律师咨询。",

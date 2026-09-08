@@ -30,6 +30,19 @@ LETTER_FILL = {
     "legal_basis": [{"law_id": "civl-2020", "article_no": 586}],
     "demands": "于本函发出之日起七日内双倍返还定金", "deadline": "本函发出之日起七日内",
 }
+OPINION_FILL = {
+    "recipient": "某公司", "matter": "服务合同履行风险",
+    "background": "使用者提供的背景材料。",
+    "analysis_points": ["先核对合同文本", "再对照语料条文"],
+    "risk_notes": ["事实材料仍需补充"],
+    "legal_basis": [{"law_id": "civl-2020", "article_no": 577}],
+    "firm": "某记录主体",
+}
+PRESERVATION_FILL = {
+    "applicant": "某公司", "respondent": "某人", "case_info": "合同纠纷仲裁案",
+    "court": "某市某区人民法院", "property_desc": ["某银行账户", "某处房产"],
+    "reason": "存在需要由申请人核实的紧急情况。", "guarantee": "申请人提供自有财产担保",
+}
 
 
 def test_new_templates_registered():
@@ -75,6 +88,41 @@ def test_textarea_list_accepts_string_and_list():
         return [s["text"] for s in g["content"]["sections"] if s.get("type") == "numbered"]
     assert demands_of(g_list) == ["第一项催告要求", "第二项催告要求"]
     assert demands_of(g_list) == demands_of(g_str)
+
+
+def test_all_textarea_list_builders_accept_list_payloads_and_boundaries_are_explicit():
+    """三类曾直接 splitlines 的模板必须容忍列表输入，并避免无来源的固定期限/法律断言。"""
+    answer = generate("civil_answer", dict(ANSWER_FILL, claims_response=["逐项回应原告诉请"]))
+    opinion = generate("legal_opinion", OPINION_FILL)
+    preservation = generate("preservation_application", PRESERVATION_FILL)
+
+    answer_text = "\n".join(s.get("text", "") for s in answer["content"]["sections"])
+    opinion_text = "\n".join(s.get("text", "") for s in opinion["content"]["sections"])
+    preservation_text = "\n".join(s.get("text", "") for s in preservation["content"]["sections"])
+    assert "逐项回应原告诉请" in answer_text
+    assert "15日" not in answer["content"]["gate_note"]
+    assert "法律研究备忘录（工作草稿）" in opinion_text
+    assert "本所基于" not in opinion_text
+    assert "不构成法律意见" in opinion_text
+    assert "特依据《中华人民共和国民事诉讼法》有关规定" not in preservation_text
+    assert "受理法院" in preservation["content"]["gate_note"]
+
+
+def test_legal_research_memo_docx_finalized_keeps_tool_disclaimer(tmp_db):
+    """finalized 只表示使用者定稿，DOCX 仍须保留工具生成与未核验声明。"""
+    generated = generate("legal_opinion", OPINION_FILL)
+    did = storage.create_draft(
+        "legal_opinion", OPINION_FILL, generated["content"], generated["content"]["citations"], generated["snapshot"]
+    )
+    storage.transition_draft(did, "review", "本机使用者")
+    storage.transition_draft(did, "finalize", "本机使用者", responsibility_confirmed=True)
+    data = docxgen.generate_docx(storage.get_draft(did))
+    xml = zipfile.ZipFile(io.BytesIO(data)).read("word/document.xml").decode("utf-8")
+    assert "法律研究备忘录（工作草稿）" in xml
+    assert "工具生成" in xml
+    assert "使用者已确认定稿" in xml
+    assert "未经平台核验身份" in xml
+    assert "不构成法律意见" in xml
 
 
 def test_new_templates_docx_export(tmp_db):

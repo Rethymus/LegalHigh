@@ -4,6 +4,7 @@
 import re
 
 from .corpus import get_corpus
+from .retrieval_terms import orchestrated_search
 
 DISCLAIMER = (
     "本系统为法律信息检索工具，输出内容为法条原文与程序性信息，不构成法律意见，"
@@ -73,7 +74,7 @@ def check_premise(question: str):
 def ask(question: str, top_k: int = 6):
     corpus = get_corpus()
     premise = check_premise(question)
-    hits = corpus.search(question, top_k=top_k)
+    hits, retrieval = orchestrated_search(corpus, question, top_k=top_k)
     cards = [
         {
             "law_id": h["law_id"],
@@ -102,5 +103,5 @@ def ask(question: str, top_k: int = 6):
             "本系统不会在无依据时生成内容——请更换表述或补充关键词。"
         ) if not cards else None,
         "disclaimer": DISCLAIMER,
-        "retrieval_meta": {"method": "bm25-char-bigram", "top_k": top_k, "corpus_size": len(corpus.articles)},
+        "retrieval_meta": {**retrieval, "top_k": top_k, "corpus_size": len(corpus.articles)},
     }

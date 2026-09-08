@@ -67,6 +67,7 @@ def test_loan_claim_elements_supported_with_real_spans():
         el = by_id[eid]
         assert el["status"] == "supported", f"{eid} 应有文本支持"
         assert el["evidence_spans"], f"{eid} 应有命中片段"
+        assert len({sp["excerpt"] for sp in el["evidence_spans"]}) == len(el["evidence_spans"])
         for sp in el["evidence_spans"]:
             assert sp["excerpt"] in LOAN_CASE, "excerpt 必须是原文子串"
             assert LOAN_CASE.find(sp["excerpt"]) == max(0, sp["start"] - 40)
@@ -163,7 +164,7 @@ def test_analyze_case_composition_and_dedup():
     assert len(statute_keys) == len(set(statute_keys)), "statute 引用合并去重"
     assert any(r["kind"] == "text_span" for r in a["references"])
     # 默认 claim_id 与免责声明合并（含行为模块固定附言）
-    a2 = case_analysis.analyze_case(LOAN_CASE)
+    a2 = case_analysis.analyze_case(LOAN_CASE, claim_id="loan_repayment")
     assert a2["claim"]["claim"]["id"] == "loan_repayment"
     assert behavior.FIXED_DISCLAIMER in a2["disclaimers"]
     try:
@@ -175,7 +176,7 @@ def test_analyze_case_composition_and_dedup():
 
 
 def test_case_docx_report():
-    a = case_analysis.analyze_case(LOAN_CASE, title="借贷纠纷样例")
+    a = case_analysis.analyze_case(LOAN_CASE, title="借贷纠纷样例", claim_id="loan_repayment")
     data = case_report.generate_case_docx(a)
     assert len(data) > 5000
     assert data[:2] == b"PK", "DOCX 应为 zip 包（PK 魔数）"
@@ -187,7 +188,7 @@ def test_case_docx_report():
         assert elem in joined
     assert "分析草稿 · 非法律意见 · 不作心理诊断" in joined  # 顶部红字横幅
     # 无实体文本也应诚实生成（空值如实呈现，不推测）
-    data2 = case_report.generate_case_docx(case_analysis.analyze_case(PLAIN_CASE))
+    data2 = case_report.generate_case_docx(case_analysis.analyze_case(PLAIN_CASE, claim_id="loan_repayment"))
     assert len(data2) > 5000 and data2[:2] == b"PK"
 
 
@@ -221,8 +222,13 @@ def test_endpoints_validation_and_docx():
     r3 = client.post("/api/case/analyze", json={"case_text": LOAN_CASE, "claim_id": "nope"})
     assert r3.status_code == 422
 
+    # 案件类型必须由使用者从候选方向中明确选择，绝不能静默套用借贷模型。
+    no_claim = client.post("/api/case/analyze", json={"case_text": LOAN_CASE})
+    assert no_claim.status_code == 422
+    assert "不会默认" in no_claim.json()["detail"]
+
     # report → DOCX 附件
-    r4 = client.post("/api/case/report", json={"case_text": LOAN_CASE})
+    r4 = client.post("/api/case/report", json={"case_text": LOAN_CASE, "claim_id": "loan_repayment"})
     assert r4.status_code == 200
     assert r4.content[:2] == b"PK" and len(r4.content) > 5000
     assert "case_analysis_" in r4.headers["content-disposition"]

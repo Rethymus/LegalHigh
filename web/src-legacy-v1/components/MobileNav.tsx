@@ -21,7 +21,6 @@ const TABS = [
 const MORE_LINKS = [
   { to: "/", glyph: "首", label: "首页" },
   { to: "/compliance", glyph: "合", label: "合规中心" },
-  { to: "/design", glyph: "设", label: "设计系统" },
 ] as const;
 
 const TITLES: Record<string, string> = {
@@ -32,7 +31,6 @@ const TITLES: Record<string, string> = {
   "/review": "合同审查",
   "/drafting": "文书起草",
   "/compliance": "合规中心",
-  "/design": "设计系统",
 };
 
 export function MobileNav({

@@ -1,20 +1,18 @@
-// 动效行为探针（计划 v4 W4，2026-09-06）：不是截图，而是「物理断言」。
-// 在无头 Chrome 里实测：弹簧曲线真的产生/不产生 overshoot、Toast 真的退场卸载、
-// shake 真的振荡衰减归零、分段滑块真的弹簧位移、Dialog 真的先退场再卸载。
+// 产品动效行为探针：只验证真实产品页面和公共组件，不依赖或暴露设计规范页面。
 // 用法：node scripts/qa_motion.mjs [--base http://localhost:5173] [--strict]
-// 前置：vite 已启动（页面为 /design-system，无需后端）；--strict 任一断言失败退出码 1。
 import { spawn } from 'node:child_process'
-import { dirname, resolve } from 'node:path'
+import { createHash } from 'node:crypto'
+import { mkdtempSync, rmSync } from 'node:fs'
 import { createServer } from 'node:net'
-import { fileURLToPath } from 'node:url'
+import { tmpdir } from 'node:os'
+import { join } from 'node:path'
 
-const __dirname = dirname(fileURLToPath(import.meta.url))
 const args = process.argv.slice(2)
-const arg = (k, d) => { const i = args.indexOf(`--${k}`); return i >= 0 ? args[i + 1] : d }
+const arg = (key, fallback) => { const i = args.indexOf(`--${key}`); return i >= 0 ? args[i + 1] : fallback }
 const BASE = arg('base', 'http://localhost:5173')
 const STRICT = args.includes('--strict')
 const CHROME = arg('chrome', 'C:/Program Files/Google/Chrome/Application/chrome.exe')
-const OUT = resolve(__dirname, '../../docs/qa-evidence')
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
 const allocateLoopbackPort = () => new Promise((resolvePort, reject) => {
   const server = createServer()
@@ -28,226 +26,185 @@ const allocateLoopbackPort = () => new Promise((resolvePort, reject) => {
 })
 
 class Cdp {
-  constructor(ws) { this.ws = ws; this.id = 0; this.pending = new Map()
-    ws.addEventListener('message', (ev) => {
-      const m = JSON.parse(ev.data)
-      if (m.id && this.pending.has(m.id)) { const { resolve: res, reject } = this.pending.get(m.id); this.pending.delete(m.id)
-        if (m.error) reject(new Error(m.error.message)); else res(m.result) }
-    }) }
-  send(method, params = {}) { const id = ++this.id
-    return new Promise((res, rej) => { this.pending.set(id, { resolve: res, reject: rej })
-      this.ws.send(JSON.stringify({ id, method, params })) }) }
+  constructor(ws) {
+    this.ws = ws; this.id = 0; this.pending = new Map(); this.handlers = []
+    ws.addEventListener('message', (event) => {
+      const message = JSON.parse(event.data)
+      if (message.id && this.pending.has(message.id)) {
+        const { resolve, reject } = this.pending.get(message.id); this.pending.delete(message.id)
+        if (message.error) reject(new Error(message.error.message)); else resolve(message.result)
+      } else if (message.method) this.handlers.forEach((handler) => handler(message))
+    })
+  }
+  send(method, params = {}) {
+    const id = ++this.id
+    return new Promise((resolve, reject) => {
+      this.pending.set(id, { resolve, reject })
+      this.ws.send(JSON.stringify({ id, method, params }))
+    })
+  }
+  on(handler) { this.handlers.push(handler) }
 }
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
 
 async function evalAsync(cdp, expression) {
-  const r = await cdp.send('Runtime.evaluate', { expression, awaitPromise: true, returnByValue: true })
-  if (r.exceptionDetails) throw new Error('页面异常: ' + (r.exceptionDetails.exception?.description || r.exceptionDetails.text).slice(0, 300))
-  return r.result?.value
+  const result = await cdp.send('Runtime.evaluate', { expression, awaitPromise: true, returnByValue: true })
+  if (result.exceptionDetails) throw new Error('页面异常: ' + (result.exceptionDetails.exception?.description || result.exceptionDetails.text).slice(0, 300))
+  return result.result?.value
 }
 
-// 页内采样器：先预点击归位并等弹簧静定（按钮文案在 出发/回位 间切换，点击后统一回到 0 起点），
-// 再点击触发 0→220 方向位移，按 8ms 步长记录相对起点的位移，返回 {min,max,final}
-const travelProbe = (ballSel, btnText, ms = 900) => `(async () => {
-  const sleep = (m) => new Promise((r) => setTimeout(r, m))
-  const el = document.querySelector('${ballSel}')
-  if (!el) return { error: 'no ' + '${ballSel}' }
-  const btn = [...document.querySelectorAll('button')].find((b) => /出发|回位/.test(b.textContent))
-  if (!btn) return { error: 'no btn ${btnText}' }
-  let guard = 0
-  while (!btn.textContent.includes('出发') && guard++ < 4) { btn.click(); await sleep(1000) }  // 归位到 0 起点
-  const x = () => el.getBoundingClientRect().left
-  const start = x()
-  btn.click()
-  let max = -1e9, min = 1e9
-  const t0 = performance.now()
-  while (performance.now() - t0 < ${ms}) {
-    const v = x() - start
-    if (v > max) max = v
-    if (v < min) min = v
-    await sleep(8)
-  }
-  await sleep(50)
-  return { min: +min.toFixed(2), max: +max.toFixed(2), final: +(x() - start).toFixed(2) }
-})()`
-
 const results = []
-const check = (name, ok, detail) => { results.push({ name, ok, detail }); console.log((ok ? '✓ ' : '✗ ') + name + ' — ' + detail) }
+const check = (name, ok, detail) => {
+  results.push({ name, ok, detail })
+  console.log(`${ok ? '✓' : '✗'} ${name} — ${detail}`)
+}
+
+async function waitFor(cdp, expression, attempts = 40) {
+  for (let i = 0; i < attempts; i++) {
+    const value = await evalAsync(cdp, expression).catch(() => false)
+    if (value) return value
+    await sleep(250)
+  }
+  return false
+}
 
 async function main() {
-  const PORT = await allocateLoopbackPort()
+  const port = await allocateLoopbackPort()
+  const chromeProfile = mkdtempSync(join(tmpdir(), 'legalhigh-motion-chrome-'))
   const chrome = spawn(CHROME, [
-    '--headless=new', `--remote-debugging-port=${PORT}`, '--no-first-run', '--no-default-browser-check',
-    '--user-data-dir=' + resolve(OUT, '.chrome-profile'), '--disable-gpu', 'about:blank',
+    '--headless=new', `--remote-debugging-port=${port}`, '--no-first-run', '--no-default-browser-check',
+    '--user-data-dir=' + chromeProfile, 'about:blank',
   ], { stdio: 'ignore' })
   try {
-    const getJson = async (path, method = 'GET') => (await fetch(`http://127.0.0.1:${PORT}${path}`, { method })).json()
+    const getJson = async (path, method = 'GET') => (await fetch(`http://127.0.0.1:${port}${path}`, { method })).json()
     let targets
-    for (let i = 0; i < 30; i++) { await sleep(500); try { targets = await getJson('/json'); if (targets.length) break } catch { /* retry */ } }
+    for (let i = 0; i < 30; i++) { await sleep(300); try { targets = await getJson('/json'); if (targets.length) break } catch { /* retry */ } }
     if (!targets) throw new Error('Chrome 未启动')
-    const t = await getJson(`/json/new?${encodeURIComponent('about:blank')}`, 'PUT')
-    const ws = new globalThis.WebSocket(t.webSocketDebuggerUrl)
-    await new Promise((res, rej) => { ws.addEventListener('open', res); ws.addEventListener('error', rej) })
+    const target = await getJson(`/json/new?${encodeURIComponent('about:blank')}`, 'PUT')
+    const ws = new globalThis.WebSocket(target.webSocketDebuggerUrl)
+    await new Promise((resolve, reject) => { ws.addEventListener('open', resolve); ws.addEventListener('error', reject) })
     const cdp = new Cdp(ws)
+    const runtimeErrors = []
+    cdp.on((message) => {
+      if (message.method === 'Runtime.consoleAPICalled' && message.params.type === 'error')
+        runtimeErrors.push(message.params.args.map((item) => item.value ?? item.description ?? '').join(' ').slice(0, 500))
+      if (message.method === 'Runtime.exceptionThrown')
+        runtimeErrors.push((message.params.exceptionDetails.exception?.description || message.params.exceptionDetails.text || '').slice(0, 500))
+    })
     await cdp.send('Page.enable'); await cdp.send('Runtime.enable')
     await cdp.send('Emulation.setDeviceMetricsOverride', { width: 1440, height: 900, deviceScaleFactor: 1, mobile: false })
+    await cdp.send('Page.addScriptToEvaluateOnNewDocument', {
+      source: `localStorage.setItem('lh:audience:v3', JSON.stringify({mode:'professional'}))`,
+    })
+
+    // 已删除的设计规范路径必须进入产品兜底，不得以任何受众模式重新出现。
     await cdp.send('Page.navigate', { url: BASE + '/design-system' })
-    for (let i = 0; i < 40; i++) { await sleep(500); const r = await evalAsync(cdp, `document.readyState === 'complete' && (document.querySelector('.ball-bouncy') ? 'ok' : '')`).catch(() => ''); if (r === 'ok') break }
+    const removed = await waitFor(cdp, `document.readyState === 'complete' && !document.querySelector('[class*="ds-"]') && !/Motion Lab|设计系统规范|材质标尺/.test(document.body.innerText) && (location.pathname === '/' || /未在.+视图中开放/.test(document.body.innerText))`)
+    check('设计规范路由已移除', Boolean(removed), `最终路径=${await evalAsync(cdp, 'location.pathname')}`)
 
-    // ① 曲线来源：支持 linear() 时应命中 linear(，否则按设计回落 cubic-bezier 近似
-    const curve = await evalAsync(cdp, `getComputedStyle(document.querySelector('.ball-bouncy')).transitionTimingFunction`)
-    check('曲线 Token 生效', /linear\(|cubic-bezier\(/.test(curve), `bouncy 球 timing = ${String(curve).slice(0, 48)}…（linear() 支持时为 linear(）`)
+    await cdp.send('Page.navigate', { url: BASE + '/settings' })
+    const ready = await waitFor(cdp, `document.readyState === 'complete' && !!document.querySelector('.st-layout')`)
+    if (!ready) throw new Error('设置页未就绪')
 
-    // ② bouncy 必须 overshoot（>220px 目标），smooth 必须不过冲——弹簧物理在跑的直接证据
-    const bouncy = await evalAsync(cdp, travelProbe('.ball-bouncy', '出发'))
-    check('bouncy 过冲', !bouncy.error && bouncy.max > 222, `max=${bouncy.max}px / 目标 220px（峰值≈229px，bounce 0.3）`)
-    const smooth = await evalAsync(cdp, travelProbe('.ball-smooth', '出发'))
-    check('smooth 无过冲', !smooth.error && smooth.max <= 221.5 && smooth.max > 200, `max=${smooth.max}px（临界阻尼，单调逼近）`)
+    // 真实 TopBar 材质必须从主题 Token 取模糊与透明度。
+    const material = await evalAsync(cdp, `(() => {
+      const main=document.querySelector('.main'); const bar=document.querySelector('.tb')
+      const read=()=>{ const m=getComputedStyle(main), b=getComputedStyle(bar); return {a:m.getPropertyValue('--mat-chrome-a').trim(), blur:m.getPropertyValue('--blur-chrome').trim(), filter:b.backdropFilter||b.webkitBackdropFilter} }
+      main.classList.remove('tone-light'); main.classList.add('tone-dark'); const dark=read()
+      main.classList.remove('tone-dark'); main.classList.add('tone-light'); const light=read()
+      return {dark,light}
+    })()`)
+    check('产品 Chrome 材质浅深同源', material.dark.a !== material.light.a && material.dark.blur === material.light.blur
+      && /blur\(/.test(material.dark.filter) && /blur\(/.test(material.light.filter),
+    `blur=${material.dark.blur} · alpha dark ${material.dark.a}/light ${material.light.a}`)
 
-    // ③ Toast：入场存在 + 到期先挂 .is-out 播退场，再从 DOM 卸载
-    await evalAsync(cdp, `(() => { const b = [...document.querySelectorAll('button')].find((x) => x.textContent.includes('Toast 弹簧入场')); b.click(); return 'ok' })()`)
-    const toastSeen = await evalAsync(cdp, `(async () => { const sleep=(m)=>new Promise(r=>setTimeout(r,m)); for (let i=0;i<20;i++){ if (document.querySelector('.toast-host .toast')) return getComputedStyle(document.querySelector('.toast-host .toast')).animationName; await sleep(50) } return 'absent' })()`)
+    // 像素证据：固定条纹背景下开关 backdrop-filter，截图必须改变。
+    const clip = await evalAsync(cdp, `(() => {
+      const host=document.createElement('div'); host.id='lh-blur-probe'; host.style.cssText='position:fixed;left:20px;top:20px;width:240px;height:80px;z-index:2147483647;background:repeating-linear-gradient(90deg,#000 0 3px,#fff 3px 6px)'
+      const pane=document.createElement('div'); pane.style.cssText='position:absolute;inset:0;background:rgba(255,255,255,.16);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)'; host.appendChild(pane); document.body.appendChild(host)
+      const r=pane.getBoundingClientRect(); return {x:r.x,y:r.y,width:r.width,height:r.height,scale:1}
+    })()`)
+    const blurOn = await cdp.send('Page.captureScreenshot', { format: 'png', clip })
+    await evalAsync(cdp, `document.querySelector('#lh-blur-probe>div').style.backdropFilter='none'; document.querySelector('#lh-blur-probe>div').style.webkitBackdropFilter='none'; 'off'`)
+    await sleep(80)
+    const blurOff = await cdp.send('Page.captureScreenshot', { format: 'png', clip })
+    await evalAsync(cdp, `document.querySelector('#lh-blur-probe').remove(); 'removed'`)
+    const onHash = createHash('sha256').update(blurOn.data, 'base64').digest('hex').slice(0, 12)
+    const offHash = createHash('sha256').update(blurOff.data, 'base64').digest('hex').slice(0, 12)
+    check('backdrop-filter 像素实证', onHash !== offHash, `${onHash} != ${offHash}`)
+
+    // 真实键盘事件触发 :focus-visible，而不是程序化 focus。
+    await evalAsync(cdp, `document.activeElement instanceof HTMLElement && document.activeElement.blur(); 'ready'`)
+    await cdp.send('Input.dispatchKeyEvent', { type: 'keyDown', key: 'Tab', code: 'Tab', windowsVirtualKeyCode: 9 })
+    await cdp.send('Input.dispatchKeyEvent', { type: 'keyUp', key: 'Tab', code: 'Tab', windowsVirtualKeyCode: 9 })
+    const focus = await evalAsync(cdp, `(() => { const e=document.activeElement, s=getComputedStyle(e); return {visible:e.matches(':focus-visible'), shadow:s.boxShadow, tag:e.tagName} })()`)
+    check('键盘焦点环真实可见', focus.visible && focus.shadow !== 'none', `${focus.tag} · ${focus.shadow}`)
+
+    // 使用视图 select 是真实业务入口，用它触发真实 Toast 生命周期。
+    await evalAsync(cdp, `(() => {
+      document.documentElement.classList.add('tone-dark'); document.documentElement.classList.remove('tone-light')
+      window.__toastTrace=[]; const host=document.querySelector('.toast-host')
+      new MutationObserver(()=>{ const t=host.querySelector('.toast'); if(t)window.__toastTrace.push({cls:t.className,anim:getComputedStyle(t).animationName}) }).observe(host,{subtree:true,childList:true,attributes:true,attributeFilter:['class']})
+      const s=[...document.querySelectorAll('select')].find(x=>[...x.options].some(o=>o.value==='student'))
+      Object.getOwnPropertyDescriptor(HTMLSelectElement.prototype,'value').set.call(s,'student'); s.dispatchEvent(new Event('change',{bubbles:true})); return 'changed'
+    })()`)
+    const toastIn = await waitFor(cdp, `(() => { const t=document.querySelector('.toast-host .toast'); if(!t)return false; const s=getComputedStyle(t); return {anim:s.animationName,bg:s.backgroundColor,root:document.documentElement.classList.contains('tone-dark')} })()`)
     let toastGone = false
-    for (let i = 0; i < 16; i++) { await sleep(200); const gone = await evalAsync(cdp, `document.querySelector('.toast-host .toast') ? 'here' : 'gone'`); if (gone === 'gone') { toastGone = true; break } }
-    check('Toast 弹簧入场', toastSeen === 'pop-in', `入场 animation = ${toastSeen}`)
-    check('Toast 退场卸载', toastGone, 'TTL 后先播 pop-out 再从 DOM 移除')
+    for (let i = 0; i < 20; i++) { await sleep(200); if (await evalAsync(cdp, `!document.querySelector('.toast-host .toast')`)) { toastGone = true; break } }
+    const toastTrace = await evalAsync(cdp, `window.__toastTrace||[]`)
+    const sawOut = toastTrace.some((entry) => entry.cls.includes('is-out') && entry.anim === 'pop-out')
+    check('Toast 入场、深色继承与退场卸载', Boolean(toastIn) && toastIn.anim === 'pop-in' && toastIn.root && sawOut && toastGone,
+      `in=${toastIn?.anim ?? 'missing'} · dark=${toastIn?.root ?? false} · pop-out=${sawOut} · removed=${toastGone}`)
 
-    // ④ shake：先正向冲击、再负向回摆、终态归零（指数衰减的三段证据）
-    await evalAsync(cdp, `(() => { const b = [...document.querySelectorAll('button')].find((x) => x.textContent.includes('推石 shake')); b.click(); return 'ok' })()`)
-    const shake = await evalAsync(cdp, `(async () => {
-      const sleep=(m)=>new Promise(r=>setTimeout(r,m)); await sleep(30)
-      const el = document.querySelector('.shake'); if (!el) return { error: 'no .shake' }
-      const x = () => { const t = getComputedStyle(el).transform; return t === 'none' ? 0 : new DOMMatrixReadOnly(t).m41 }
-      let max = -1e9, min = 1e9; const t0 = performance.now()
-      while (performance.now() - t0 < 750) { const v = x(); if (v > max) max = v; if (v < min) min = v; await sleep(8) }
-      await sleep(60)
-      return { max: +max.toFixed(2), min: +min.toFixed(2), final: +x().toFixed(2) }
-    })()`)
-    check('shake 指数衰减', !shake.error && shake.max > 2 && shake.min < -1 && Math.abs(shake.final) < 0.6,
-      `峰值 +${shake.max}px / 回摆 ${shake.min}px / 终态 ${shake.final}px（9Hz 衰减正弦）`)
+    // 切到外观区，验证真实 Segmented 与 Switch。
+    await cdp.send('Page.navigate', { url: BASE + '/settings' })
+    await waitFor(cdp, `document.readyState === 'complete' && !!document.querySelector('.st-layout')`)
+    await evalAsync(cdp, `([...document.querySelectorAll('.st-nav button')].find(b=>b.textContent.includes('外观'))).click(); 'appearance'`)
+    const appearanceReady = await waitFor(cdp, `!!document.querySelector('.seg-thumb') && !!document.querySelector('.sw')`)
+    if (!appearanceReady) throw new Error('设置页外观分区未就绪')
+    const segmented = await evalAsync(cdp, `(async()=>{ const sleep=m=>new Promise(r=>setTimeout(r,m)); const thumb=document.querySelector('.seg-thumb'); const target=[...document.querySelectorAll('.seg-btn')].find(b=>b.textContent.includes('深色') && b.getAttribute('aria-selected')!=='true') || [...document.querySelectorAll('.seg-btn')].find(b=>b.getAttribute('aria-selected')!=='true'); const x=()=>new DOMMatrixReadOnly(getComputedStyle(thumb).transform).m41; const before=x(); target.click(); await sleep(70); const mid=x(); await sleep(650); const after=x(); return {before,mid,after,timing:getComputedStyle(thumb).transitionTimingFunction,selected:target.getAttribute('aria-selected')} })()`)
+    check('竹简槽弹簧位移', segmented.after > segmented.before && segmented.mid !== segmented.after && /linear\(|cubic-bezier\(/.test(segmented.timing),
+      `before=${segmented.before.toFixed(1)} mid=${segmented.mid.toFixed(1)} after=${segmented.after.toFixed(1)} selected=${segmented.selected}`)
 
-    // ⑤ 分段控件（竹简槽）：点「弹性」后滑块位移到位且挂 is-on
-    const seg = await evalAsync(cdp, `(async () => {
-      const sleep=(m)=>new Promise(r=>setTimeout(r,m))
-      const btns = [...document.querySelectorAll('.seg-btn')]
-      const target = btns.find((b) => b.textContent.includes('弹性'))
-      if (!target) return { error: 'no seg-btn 弹性' }
-      const thumb = document.querySelector('.seg-thumb')
-      const x = () => { const t = getComputedStyle(thumb).transform; return t === 'none' ? 0 : new DOMMatrixReadOnly(t).m41 }
-      const before = x(); target.click(); await sleep(80); const mid = x(); await sleep(700); const after = x()
-      return { before: +before.toFixed(1), mid: +mid.toFixed(1), after: +after.toFixed(1), on: target.classList.contains('is-on') }
-    })()`)
-    check('竹简槽滑块弹簧位移', !seg.error && seg.on && seg.after > seg.before && seg.mid !== seg.after,
-      `before=${seg.before} mid=${seg.mid} after=${seg.after}（中途采样≠终值=动画确实在进行）`)
+    const switchPoint = await evalAsync(cdp, `(() => { const e=document.querySelector('.sw'),r=e.getBoundingClientRect(); return {x:r.x+r.width/2,y:r.y+r.height/2} })()`)
+    await cdp.send('Input.dispatchMouseEvent', { type: 'mousePressed', x: switchPoint.x, y: switchPoint.y, button: 'left', clickCount: 1 })
+    await sleep(35)
+    const pressed = await evalAsync(cdp, `(() => { const s=getComputedStyle(document.querySelector('.sw'),'::after'); return {d:s.transitionDuration,t:s.transitionTimingFunction} })()`)
+    await cdp.send('Input.dispatchMouseEvent', { type: 'mouseReleased', x: switchPoint.x, y: switchPoint.y, button: 'left', clickCount: 1 })
+    await sleep(35)
+    const released = await evalAsync(cdp, `(() => { const s=getComputedStyle(document.querySelector('.sw'),'::after'); return {d:s.transitionDuration,t:s.transitionTimingFunction} })()`)
+    check('Switch 按压/释放双曲线', pressed.d === '0.08s' && released.d === '0.34s' && pressed.t !== released.t,
+      `press ${pressed.d} · release ${released.d}`)
 
-    // ⑥ Dialog：打开存在 → 关闭先出现 .is-out 退场 → 随后卸载
-    const dlg = await evalAsync(cdp, `(async () => {
-      const sleep=(m)=>new Promise(r=>setTimeout(r,m))
-      const open = [...document.querySelectorAll('button')].find((b) => b.textContent.includes('Dialog 弹簧开合'))
-      open.click(); await sleep(400)
-      if (!document.querySelector('.dlg-mask')) return { error: 'no dialog after open' }
-      const close = [...document.querySelectorAll('.dlg-acts button')].find((b) => b.textContent.includes('关闭'))
-      close.click()
-      let sawOut = false
-      for (let i = 0; i < 12; i++) { if (document.querySelector('.dlg-mask.is-out')) { sawOut = true; break } await sleep(25) }
-      for (let i = 0; i < 14; i++) { await sleep(60); if (!document.querySelector('.dlg-mask')) return { sawOut, unloaded: true } }
-      return { sawOut, unloaded: false }
-    })()`)
-    check('Dialog 弹簧开合+退场卸载', !dlg.error && dlg.sawOut && dlg.unloaded, `退场态可见=${dlg.sawOut} · 卸载=${dlg.unloaded}`)
+    // 级联规则用测试期注入的普通列表验证；无任何测试 UI 进入产品路由。
+    const stagger = await evalAsync(cdp, `(async()=>{ const host=document.createElement('div'); host.className='stagger'; for(let i=0;i<6;i++){const e=document.createElement('span');e.style.setProperty('--si',i);e.textContent='x';host.appendChild(e)} document.body.appendChild(host); await new Promise(r=>setTimeout(r,70)); const a=[...host.children].map(e=>+getComputedStyle(e).opacity); await new Promise(r=>setTimeout(r,1200)); const done=[...host.children].every(e=>+getComputedStyle(e).opacity===1); host.remove(); return {a,done} })()`)
+    check('列表级联规则', stagger.a[0] > stagger.a[5] && stagger.done, `70ms=${stagger.a.map(x=>x.toFixed(2)).join('/')}`)
 
-    // ⑦ 列表级联入场（W5-2）：重放后 70ms 首条已渐显、末条仍在 delay（级联步长生效），终态全部归位
-    const stag = await evalAsync(cdp, `(async () => {
-      const raf = () => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)))
-      const btn = [...document.querySelectorAll('button')].find((b) => b.textContent.includes('重放级联'))
-      if (!btn) return { error: 'no 重放级联 btn' }
-      btn.click()
-      await raf(); await new Promise((r) => setTimeout(r, 70))
-      const items = [...document.querySelectorAll('.stag-demo')]
-      const early1 = +getComputedStyle(items[0]).opacity
-      const earlyLast = +getComputedStyle(items[items.length - 1]).opacity
-      await new Promise((r) => setTimeout(r, 1400))
-      const opacities = items.map((el) => +getComputedStyle(el).opacity)
-      const t = getComputedStyle(items[0]).transform
-      const finalTx = t === 'none' ? 0 : +new DOMMatrixReadOnly(t).m41.toFixed(2)
-      return { n: items.length, early1, earlyLast, minLate: Math.min(...opacities), finalTx }
-    })()`)
-    check('列表级联入场（20ms 步长）', !stag.error && stag.n === 6 && stag.early1 > 0 && stag.earlyLast === 0 && stag.minLate === 1 && stag.finalTx === 0,
-      `70ms 采样：首条 ${stag.early1} · 末条 ${stag.earlyLast}（delay 100ms 未开始）→ 终态 opacity ${stag.minLate}/tx ${stag.finalTx}`)
+    // TopBar 滚动海拔必须有严格中间值且可逆。
+    await cdp.send('Page.navigate', { url: BASE + '/data-sources' })
+    const scrollReady = await waitFor(cdp, `document.readyState === 'complete' && !!document.querySelector('.tb') && document.querySelector('.content').scrollHeight > document.querySelector('.content').clientHeight + 100`)
+    if (!scrollReady) throw new Error('数据源长页面未就绪，无法验证滚动海拔')
+    const scroll = await evalAsync(cdp, `(async()=>{ const sleep=m=>new Promise(r=>setTimeout(r,m)); const c=document.querySelector('.content'),b=document.querySelector('.tb'); const alpha=()=>{const p=getComputedStyle(b).borderColor.match(/[0-9.]+/g)?.map(Number)||[];return p.length===4?p[3]:1}; c.scrollTop=0;await sleep(120);const a0=alpha();c.scrollTop=48;await sleep(120);const am=alpha();c.scrollTop=96;await sleep(120);const a1=alpha();c.scrollTop=0;await sleep(120);const back=alpha();return {a0,am,a1,back} })()`)
+    check('滚动海拔连续插值', scroll.a0 < scroll.am && scroll.am < scroll.a1 && scroll.back === scroll.a0,
+      `${scroll.a0} -> ${scroll.am} -> ${scroll.a1} -> ${scroll.back}`)
 
-    // ⑧ 滚动海拔 CSS 原生化（W5-4）：命名 scroll timeline 连续驱动 .tb 边框插值，且滚动回顶可逆
-    const sdrv = await evalAsync(cdp, `(async () => {
-      const raf = () => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)))
-      const tb = document.querySelector('.tb'); const content = document.querySelector('.content')
-      if (!tb || !content) return { error: 'no .tb/.content' }
-      const animName = getComputedStyle(tb).animationName
-      const before = getComputedStyle(tb).borderColor
-      content.scrollTop = 240
-      await raf(); await new Promise((r) => setTimeout(r, 120))
-      const scrolled = getComputedStyle(tb).borderColor
-      content.scrollTop = 0
-      await raf(); await new Promise((r) => setTimeout(r, 120))
-      const back = getComputedStyle(tb).borderColor
-      return { animName, before, scrolled, back }
-    })()`)
-    check('滚动海拔 scroll-driven 连续插值', !sdrv.error && sdrv.animName === 'tb-elevate' && sdrv.scrolled !== sdrv.before && sdrv.back === sdrv.before,
-      `animation=${sdrv.animName} · 边框 ${sdrv.before} →${sdrv.scrolled} →${sdrv.back}（可逆）`)
-
-    // ⑨ 大字模式 × 动效联测（W5-5）：zoom 1.15 下弹簧位移按比例放大、overshoot 特性不漂移
-    const fl = await evalAsync(cdp, `(async () => {
-      document.documentElement.classList.add('font-large')
-      await new Promise((r) => setTimeout(r, 350))
-      return 'on'
-    })()`)
-    let largeCheck = { ok: false, detail: '前置失败' }
-    if (fl === 'on') {
-      const bouncyL = await evalAsync(cdp, travelProbe('.ball-bouncy', '出发'))
-      const smoothL = await evalAsync(cdp, travelProbe('.ball-smooth', '出发'))
-      await evalAsync(cdp, `document.documentElement.classList.remove('font-large'); 'off'`)
-      const target = 220 * 1.15
-      largeCheck = {
-        ok: !bouncyL.error && !smoothL.error && bouncyL.max > target * 1.01 && Math.abs(bouncyL.final - target) < 2.5
-          && smoothL.max < target * 1.02 && smoothL.max > target * 0.9,
-        detail: `目标 ${target}px：bouncy max=${bouncyL.max}/final=${bouncyL.final}（仍过冲）；smooth max=${smoothL.max}（无过冲）`,
-      }
-    }
-    check('大字模式弹簧联测（zoom 1.15）', largeCheck.ok, largeCheck.detail)
-
-    // ⑩/⑪ Reduce Motion 双通道（计划 v4 红线6）：位移动画改指纯 opacity 关键帧（渐变保留）、
-    // transform 过渡改道颜色/阴影——不是一刀切杀光。系统通道用 CDP 仿真实测，应用内通道挂类实测。
-    const rmSample = `(() => {
-      const ballProp = getComputedStyle(document.querySelector('.ball-bouncy')).transitionProperty
-      const btn = [...document.querySelectorAll('button')].find((x) => x.textContent.includes('Toast 弹簧入场'))
-      btn.click()
-      return new Promise((resolve) => {
-        let name = 'absent'
-        const t0 = performance.now()
-        const tick = () => {
-          const t = document.querySelector('.toast-host .toast')
-          if (t) { name = getComputedStyle(t).animationName; return resolve({ ballProp, name }) }
-          if (performance.now() - t0 > 2500) return resolve({ ballProp, name })
-          requestAnimationFrame(tick)
-        }
-        requestAnimationFrame(tick)
-      })
-    })()`
+    // Reduce Motion 系统通道：位移过渡必须移除。
     await cdp.send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: 'reduce' }] })
-    const rmSys = await evalAsync(cdp, `(async () => ${rmSample})()`)
+    await cdp.send('Page.navigate', { url: BASE + '/settings' })
+    await waitFor(cdp, `document.readyState === 'complete' && !!document.querySelector('.st-layout')`)
+    await evalAsync(cdp, `([...document.querySelectorAll('.st-nav button')].find(b=>b.textContent.includes('外观'))).click(); 'appearance'`)
+    await waitFor(cdp, `!!document.querySelector('.seg-thumb') && !!document.querySelector('.sw')`)
+    const reduced = await evalAsync(cdp, `(() => ({seg:getComputedStyle(document.querySelector('.seg-thumb')).transitionProperty, sw:getComputedStyle(document.querySelector('.sw'),'::after').transitionProperty}))()`)
     await cdp.send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: '' }] })
-    check('Reduce Motion 系统通道保留渐变', rmSys.name === 'fade-in' && !/transform/.test(rmSys.ballProp),
-      `仿真实测：Toast 入场 = ${rmSys.name}（pop-in→fade-in，渐变保留）· ball transitionProperty 无 transform`)
-    const rmApp = await evalAsync(cdp, `(async () => {
-      document.documentElement.classList.add('reduce-motion')
-      await new Promise((r) => setTimeout(r, 150))
-      return (${rmSample})
-    })()`)
-    await evalAsync(cdp, `document.documentElement.classList.remove('reduce-motion'); 'off'`)
-    check('Reduce Motion 应用内通道保留渐变', rmApp.name === 'fade-in' && !/transform/.test(rmApp.ballProp),
-      `挂类实测：Toast 入场 = ${rmApp.name} · ball transitionProperty 无 transform`)
+    check('Reduce Motion 移除位移过渡', !/transform/.test(reduced.seg) && !/transform/.test(reduced.sw), `seg=${reduced.seg} · switch=${reduced.sw}`)
+
+    check('运行时控制台无错误', runtimeErrors.length === 0, runtimeErrors.length ? runtimeErrors.join(' | ') : '0 console/page exception')
   } finally {
     chrome.kill()
+    await sleep(250)
+    try { rmSync(chromeProfile, { recursive: true, force: true }) } catch { /* 交给系统临时目录回收 */ }
   }
 
-  const failed = results.filter((r) => !r.ok)
+  const failed = results.filter((result) => !result.ok)
   if (STRICT && failed.length) {
     console.error(`\nqa_motion：${failed.length}/${results.length} 项断言失败`)
     process.exit(1)
@@ -255,4 +212,4 @@ async function main() {
   console.log(`\nqa_motion：${results.length - failed.length}/${results.length} 项断言通过${STRICT ? '（strict）' : ''}`)
 }
 
-main().catch((e) => { console.error('qa_motion 运行失败：', e.message); process.exit(1) })
+main().catch((error) => { console.error('qa_motion 运行失败：', error.message); process.exit(1) })

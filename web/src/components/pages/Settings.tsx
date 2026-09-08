@@ -4,14 +4,20 @@ import { Link } from 'react-router-dom'
 import { Icon, type IconName } from '../icons'
 import { PageHeader, Segmented, Switch, useToast } from '../ui'
 import {
-  api, ApiError, clearAdminToken, clearAiProfile, loadAdminToken, loadAiProfile, loadIdentity,
-  saveAdminToken, saveAiProfile, saveIdentity,
-  type AiProfile, type WorkIdentity,
+  api, ApiError, clearAdminToken, clearAiProfile, loadAdminToken, loadAiProfile,
+  saveAdminToken, saveAiProfile,
+  type AiProfile,
 } from '../../lib/api'
 import { useLaws } from '../../data/model'
+import {
+  AUDIENCE_OPTIONS,
+  loadAudiencePreference,
+  saveAudiencePreference,
+  type AudienceMode,
+} from '../../lib/audience'
 
 const SECTIONS: { key: string; label: string; icon: IconName }[] = [
-  { key: 'identity', label: '本机身份', icon: 'user' },
+  { key: 'identity', label: '使用视图', icon: 'user' },
   { key: 'ai', label: 'AI 模型', icon: 'sparkle' },
   { key: 'privacy', label: '隐私与纠错', icon: 'lock' },
   { key: 'data', label: '数据源', icon: 'database' },
@@ -50,14 +56,15 @@ export default function Settings() {
   const [tone, setTone] = useState(() => localStorage.getItem('le-tone-override') ?? 'auto')
   const [motion, setMotion] = useState(() => localStorage.getItem('le-reduce-motion') === '1')
   const [fontLarge, setFontLarge] = useState(() => localStorage.getItem('le-font-large') === '1')
-  const [identity, setIdentity] = useState<WorkIdentity>(() => loadIdentity())
+  const [audience, setAudience] = useState<AudienceMode>(() => loadAudiencePreference()?.mode ?? 'public')
+  const visibleSections = SECTIONS.filter((item) => item.key !== 'ai' || audience !== 'public')
   const [serviceToken, setServiceToken] = useState(() => loadAdminToken())
   const [serverSession, setServerSession] = useState<{ principal: string; assurance: string } | null>(null)
   const [sessionError, setSessionError] = useState<string | null>(null)
-  useEffect(() => { saveIdentity(identity) }, [identity])
   useEffect(() => {
+    if (audience !== 'professional') { setServerSession(null); setSessionError(null); return }
     api.session().then((s) => { setServerSession(s); setSessionError(null) }, (e) => setSessionError(e instanceof ApiError ? e.message : String(e)))
-  }, [])
+  }, [audience])
   useEffect(() => { localStorage.setItem('le-tone-override', tone); window.dispatchEvent(new CustomEvent('le-tone-changed')) }, [tone])
   useEffect(() => { localStorage.setItem('le-reduce-motion', motion ? '1' : '0'); document.documentElement.classList.toggle('reduce-motion', motion) }, [motion])
   useEffect(() => { localStorage.setItem('le-font-large', fontLarge ? '1' : '0'); document.documentElement.classList.toggle('font-large', fontLarge) }, [fontLarge])
@@ -72,13 +79,14 @@ export default function Settings() {
   const [aiKey, setAiKey] = useState('')
   const [busyAi, setBusyAi] = useState(false)
   useEffect(() => {
+    if (audience === 'public') { setAiCatalog([]); setCatalogError(null); return }
     let alive = true
     api.aiProviders().then(
       (d) => { if (alive) setAiCatalog(d.providers) },
       (e) => { if (alive) setCatalogError(e instanceof ApiError ? e.message : String(e)) },
     )
     return () => { alive = false }
-  }, [])
+  }, [audience])
   const selectedProvider = aiCatalog.find((p) => p.id === aiProv)
   const currentProfile = (): AiProfile & { api_key?: string } => ({
     provider_id: aiProv,
@@ -102,12 +110,12 @@ export default function Settings() {
 
   return (
     <div className="page">
-      <PageHeader title="设置" sub="使用视图和署名只保存在本机，不构成账号或资格认证；远程模型会改变数据是否离开本机的边界。" />
+      <PageHeader title="设置" sub="使用视图只保存在本机，不构成账号或资格认证；远程模型会改变数据是否离开本机的边界。" />
 
       <div className="st-layout">
         <nav className="st-nav">
           <div className="card" style={{ padding: 8 }}>
-            {SECTIONS.map((s) => (
+            {visibleSections.map((s) => (
               <button key={s.key} className={'lrow' + (sec === s.key ? ' is-on' : '')} style={{ width: '100%', textAlign: 'left' }} onClick={() => setSec(s.key)}>
                 <Icon name={s.icon} size={14} /><span className="lrow-t">{s.label}</span>
               </button>
@@ -118,26 +126,31 @@ export default function Settings() {
         <div className="card card-pad">
           {sec === 'identity' && (
             <>
-              <div className="sec-h"><span className="sec-t">敏感接口会话</span></div>
-              <div className="banner banner-info mb-12"><Icon name="info" size={15} /><span className="banner-tx">桌面端由 Electron 主进程注入随机令牌，开发模式可由 Vite 代理注入；两者都不向页面暴露令牌。只有直接在普通浏览器打开后端静态页面时，才需要在下方输入与服务端 LH_ADMIN_TOKEN 一致的令牌，且仅保存在当前标签页。</span></div>
-              <Row icon="key" t="本机服务令牌" d={serverSession ? `本机审计署名已连接：${serverSession.principal}；不代表身份或执业资格核验` : `会话未建立${sessionError ? `：${sessionError}` : ''}`}
-                ctl={<div className="row">
-                  <input className="inp" type="password" style={{ width: 220 }} value={serviceToken} placeholder="至少 32 字符；仅当前标签页" onChange={(e) => setServiceToken(e.target.value)} />
-                  <button className="btn btn-secondary btn-sm" onClick={async () => {
-                    saveAdminToken(serviceToken)
-                    try { const s = await api.session(); setServerSession(s); setSessionError(null); toast(`已连接服务端主体：${s.principal}`, 'ok') }
-                    catch (e) { setServerSession(null); setSessionError(e instanceof ApiError ? e.message : String(e)); toast(e instanceof Error ? e.message : String(e), 'err') }
-                  }}>验证</button>
-                  {serviceToken && <button className="btn btn-ghost btn-sm" onClick={() => { clearAdminToken(); setServiceToken(''); setServerSession(null); setSessionError('会话令牌已清除') }}>清除</button>}
-                </div>} />
               <div className="sec-h"><span className="sec-t">本机使用视图</span></div>
               <div className="banner banner-warn mb-12"><Icon name="alert" size={15} /><span className="banner-tx">视图仅调整入口和文案组织。专业工具视图不是律师入驻，也不表示系统核验了任何人的执业资格。</span></div>
-              <Row icon="user" t="姓名" d="批注等普通留痕动作可预填此姓名；请填写真实姓名。"
-                ctl={<input className="inp" style={{ width: 200 }} value={identity.name} placeholder="真实姓名" onChange={(e) => setIdentity({ ...identity, name: e.target.value })} />} />
-              <Row icon="briefcase" t="使用视图" d="公众用于求助准备，学生用于学习，专业视图提供合同和文书工具；三者都不构成身份认证。"
-                ctl={<select className="sel" style={{ width: 180 }} value={identity.mode} onChange={(e) => setIdentity({ ...identity, mode: e.target.value as WorkIdentity['mode'] })}>
-                  <option value="public">公众求助准备</option><option value="student">法学学习</option><option value="professional">专业工具</option>
+              <Row icon="briefcase" t="内容与工具视图" d="法规条文和案例检索始终可用；公众侧重事实准备，学生侧重学习研究，专业视图另开放合同与文书流程。"
+                ctl={<select className="sel" style={{ width: 180 }} value={audience} onChange={(e) => {
+                  const mode = e.target.value as AudienceMode
+                  setAudience(mode)
+                  saveAudiencePreference({ mode })
+                  toast(`已切换为${AUDIENCE_OPTIONS.find((item) => item.mode === mode)?.title ?? '所选'}视图`, 'ok')
+                }}>
+                  {AUDIENCE_OPTIONS.map((option) => <option key={option.mode} value={option.mode}>{option.title}</option>)}
                 </select>} />
+              {audience === 'professional' && <>
+                <div className="sec-h mt-20"><span className="sec-t">专业流程本机会话</span></div>
+                <div className="banner banner-info mb-12"><Icon name="info" size={15} /><span className="banner-tx">桌面端由 Electron 主进程注入随机令牌，开发模式可由 Vite 代理注入；两者都不向页面暴露令牌。只有直接在普通浏览器打开后端静态页面时，才需要在下方输入与服务端 LH_ADMIN_TOKEN 一致的令牌，且仅保存在当前标签页。</span></div>
+                <Row icon="key" t="本机服务令牌" d={serverSession ? `本机审计署名已连接：${serverSession.principal}；不代表身份或执业资格核验` : `会话未建立${sessionError ? `：${sessionError}` : ''}`}
+                  ctl={<div className="row">
+                    <input className="inp" type="password" style={{ width: 220 }} value={serviceToken} placeholder="至少 32 字符；仅当前标签页" onChange={(e) => setServiceToken(e.target.value)} />
+                    <button className="btn btn-secondary btn-sm" onClick={async () => {
+                      saveAdminToken(serviceToken)
+                      try { const s = await api.session(); setServerSession(s); setSessionError(null); toast(`已连接服务端主体：${s.principal}`, 'ok') }
+                      catch (e) { setServerSession(null); setSessionError(e instanceof ApiError ? e.message : String(e)); toast(e instanceof Error ? e.message : String(e), 'err') }
+                    }}>验证</button>
+                    {serviceToken && <button className="btn btn-ghost btn-sm" onClick={() => { clearAdminToken(); setServiceToken(''); setServerSession(null); setSessionError('会话令牌已清除') }}>清除</button>}
+                  </div>} />
+              </>}
             </>
           )}
 
@@ -188,7 +201,7 @@ export default function Settings() {
               <Row icon="database" t="实际存储" d="合同审查、文书草稿、投诉和审计写入本机 SQLite；收藏、外观与研究索引写入浏览器存储。系统目前不承诺自动脱敏。" ctl={<span className="bdg bdg-gray">本机存储</span>} />
               <Row icon="download" t="导出服务端数据" d="导出当前本机数据库中的审查、草稿、投诉、批注和审计 JSON；不包含第三方模型可能保留的数据。"
                 ctl={<button className="btn btn-secondary btn-sm" onClick={() => api.privacyExport().catch((e) => toast(e instanceof Error ? e.message : '导出失败', 'err'))}>导出</button>} />
-              <Row icon="reject" t="逐条删除" d="审查、草稿和投诉可在工作台逐条删除；删除动作保留审计记录。" ctl={<Link to="/workspace" className="btn btn-danger btn-sm">前往工作台</Link>} />
+              {audience === 'professional' && <Row icon="reject" t="逐条删除" d="审查、草稿和投诉可在工作台逐条删除；删除动作保留审计记录。" ctl={<Link to="/workspace" className="btn btn-danger btn-sm">前往工作台</Link>} />}
               <div className="mt-16" style={{ borderTop: '1px solid var(--div-soft)', paddingTop: 14 }}>
                 <div className="tiny bold mb-8">投诉与纠错通道</div>
                 <div className="form-grid">
@@ -228,7 +241,7 @@ export default function Settings() {
           {sec === 'accessibility' && (
             <>
               <div className="sec-h"><span className="sec-t">可访问性</span></div>
-              <Row icon="eye" t="减少动效" d="关闭界面过渡与脉冲动画，并继续遵循系统 prefers-reduced-motion。" ctl={<Switch on={motion} onChange={setMotion} />} />
+              <Row icon="eye" t="减少动效" d="停用位移、缩放和循环动画，保留必要的淡入淡出，并继续遵循系统 prefers-reduced-motion。" ctl={<Switch on={motion} onChange={setMotion} />} />
               <Row icon="target" t="键盘焦点环" d="始终启用，不能关闭。" ctl={<span className="bdg bdg-green">已启用</span>} />
             </>
           )}

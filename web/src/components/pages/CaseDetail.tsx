@@ -2,12 +2,13 @@
 // 案例数据来自 server /api/cases/{id}；仅收录带直接来源链接的可核验真实案件。
 // 页面展示项目结构化摘要，不把摘要伪装为法院原文；域外判例全程免责横幅。
 import { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useOutletContext, useParams } from 'react-router-dom'
 import { Icon } from '../icons'
 import { useToast } from '../ui'
 import { EmptyState, SkeletonLines, Tabs } from '../ui'
 import { CitationCard, CitationChip, ForeignDisclaimer, SourceBadge } from '../domain'
 import { api, ApiError, isFav, toggleFav, type CaseRecord } from '../../lib/api'
+import type { AppOutletContext } from '../AppShell'
 
 const TABS = ['基本信息', '案件事实', '法律争议', '裁判理由', '判决结果', '相关案例']
 
@@ -20,6 +21,7 @@ const TIER: Record<string, { label: string; cls: string; note: string }> = {
 }
 
 export default function CaseDetail() {
+  const { audience } = useOutletContext<AppOutletContext>()
   const { caseId } = useParams()
   const [c, setC] = useState<CaseRecord | null>(null)
   const [error, setError] = useState<string | null>(null)
@@ -101,7 +103,7 @@ export default function CaseDetail() {
         </div>
         <div className="row" style={{ flexDirection: 'column', alignItems: 'stretch', gap: 8, minWidth: 150 }}>
           <button className="btn btn-secondary btn-sm" onClick={fav}><Icon name="star" size={13} />{faved ? '已收藏' : '加入收藏'}</button>
-          <Link to="/research/r-format-terms" className="btn btn-ghost btn-sm"><Icon name="sparkle" size={13} />加入研究</Link>
+          {audience !== 'public' && <Link to={`/research?q=${encodeURIComponent(`${c.name}所涉争议焦点与相关现行法条`)}`} className="btn btn-ghost btn-sm"><Icon name="sparkle" size={13} />基于本案研究</Link>}
           <a className="btn btn-ghost btn-sm" href={c.source_url} target="_blank" rel="noreferrer" title={`${c.source_title}（核验于 ${c.source_accessed_at}）`}><Icon name="external" size={13} />核验原始来源</a>
         </div>
       </div>

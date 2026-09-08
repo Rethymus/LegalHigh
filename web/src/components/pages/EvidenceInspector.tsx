@@ -89,7 +89,7 @@ export default function EvidenceInspector() {
       {busy && <div className="card card-pad"><SkeletonLines n={6} tall /></div>}
       {error && <div className="banner banner-danger mb-12"><Icon name="alert" size={15} /><span className="banner-tx">{error}</span></div>}
       {!busy && !question && (
-        <div className="card"><EmptyState icon="search" title="未找到对应研究" desc="请从研究工作台发起研究后进入证据链核查。" action={<Link to="/research" className="btn btn-secondary">返回 AI 研究</Link>} /></div>
+        <div className="card"><EmptyState icon="search" title="未找到对应研究" desc="请从研究工作台发起研究后进入证据链核查。" action={<Link to="/research" className="btn btn-secondary">返回来源研究</Link>} /></div>
       )}
 
       {memo && (

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""DOCX 排版渲染（python-docx，MIT）：让「生成即可交付」落地。
+"""DOCX 排版渲染（python-docx，MIT）：让结构化草稿导出落地。
 
 排版取实务惯例参数：A4、公文式页边距（上3.7/下3.5/左2.8/右2.6 cm）、正文仿宋四号
 （14pt）、行距固定 28pt、首行缩进两字符、标题黑体居中；引用条文随文附版本与施行日期。
@@ -79,17 +79,19 @@ def generate_docx(draft: dict) -> bytes:
     sec.top_margin, sec.bottom_margin = Cm(3.7), Cm(3.5)
     sec.left_margin, sec.right_margin = Cm(2.8), Cm(2.6)
 
-    # 合规横幅：状态机仅代表本机使用者工作进度。
-    if template_id == "lawyer_letter" and status != "finalized":
-        _banner(doc, "工具草稿 · LegalHigh 不核验执业资格、不代表律所签发；非律师不得以律师名义使用")
-    elif template_id != "lawyer_letter" and status == "draft":
-        _banner(doc, "草稿 · 供内部审阅，未经人工核验定稿", color=RGBColor(0x8A, 0x6D, 0x00))
-    if status == "reviewed":
+    # 合规横幅：状态机仅代表本机使用者工作进度，finalized 也不能被理解为平台签发。
+    if status == "finalized":
+        final_note = "工具生成 · 使用者已确认定稿并自行承担使用责任；未经平台核验身份、授权、事实或法律判断，不代表平台、任何律所或律师出具"
+        if template_id == "lawyer_letter":
+            final_note += "；非律师不得以律师或律所名义使用"
+        _banner(doc, final_note, color=RGBColor(0x1F, 0x7A, 0x33))
+    elif template_id == "lawyer_letter":
+        _banner(doc, "工具草稿 · LegalHigh 不核验执业资格、不代表律所或律师出具；非律师不得以律师名义使用")
+    elif status == "reviewed":
         _banner(doc, f"本机使用者已记录内容复核（{draft.get('reviewed_at', '')[:10]}）；平台未核验身份或内容",
                 color=RGBColor(0x1F, 0x7A, 0x33))
-    elif status == "finalized":
-        _banner(doc, "使用者已确认定稿并自行承担使用责任；LegalHigh 未核验身份、事实或法律判断",
-                color=RGBColor(0x1F, 0x7A, 0x33))
+    else:
+        _banner(doc, "草稿 · 供内部审阅，未经人工核验定稿", color=RGBColor(0x8A, 0x6D, 0x00))
 
     for s in sections:
         t = s["type"]
@@ -116,8 +118,8 @@ def generate_docx(draft: dict) -> bytes:
         else:  # para / para_noindent
             _para(doc, s["text"], indent=(t == "para"))
 
-    # 定稿版仍保留来源与责任边界，但不再显示草稿说明。
-    if gate_note and status != "finalized":
+    # 所有状态都保留模板自身的使用边界；定稿横幅只记录进度，不构成平台核验或签发。
+    if gate_note:
         _para(doc, "【说明】" + gate_note, indent=False, size=Pt(10), east="宋体",
               color=RGBColor(0x63, 0x63, 0x66), line=Pt(18), before=10)
 

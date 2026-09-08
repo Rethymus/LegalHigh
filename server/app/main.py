@@ -29,11 +29,12 @@ from app import (  # noqa: E402
     cases as cases_mod,
     compare as compare_mod,
     article_links as links_mod,
-    scenarios as scenarios_mod,
     drafting,
     docx_return,
     docxgen,
     explains as explains_mod,
+    commentaries as commentaries_mod,
+    coverage as coverage_mod,
     needs,
     qa,
     research,
@@ -130,6 +131,36 @@ def health():
     return result
 
 
+@app.get("/api/inventory")
+def public_inventory():
+    """公开、只读的数据储备口径。
+
+    所有数量均在请求时从当前受控语料和已核实数据源派生；不读取用户审查、草稿
+    或审计数据，也不使用前端常量充数。侧栏和数据状态页可据此显示同一真值。
+    """
+    corpus = get_corpus()
+    verified_cases = cases_mod.search_cases("", verified_only=True)
+    approved_explains = sum(
+        1
+        for entry in explains_mod.load_explains()
+        if entry.get("status") == "approved" and entry.get("reviewer")
+    )
+    return {
+        "laws": len(corpus.laws),
+        "articles": len(corpus.articles),
+        "verified_cases": len(verified_cases),
+        "approved_explains": approved_explains,
+        "fetched_at": corpus.manifest.get("fetch_date"),
+        "basis": "current-controlled-corpus",
+    }
+
+
+@app.get("/api/corpus/coverage")
+def corpus_coverage():
+    """公开当前覆盖边界、官方目录基线与未接入更新队列。"""
+    return coverage_mod.get_coverage()
+
+
 @app.get("/api/session")
 def authenticated_session(admin: AdminPrincipal = Depends(require_admin)):
     """返回本机审计署名；不表示账号身份、律师资格或组织关系已经核验。"""
@@ -159,16 +190,14 @@ def article_links(law_id: str, no: int):
 
 @app.get("/api/scenarios")
 def list_scenarios():
-    """场景化法律路径：高频场景的端到端指引（步骤+法条+时效+风险）。"""
-    return {"scenarios": scenarios_mod.load_scenarios()}
+    """旧场景指引未做到逐项来源绑定，禁止作为公众法律路径继续返回。"""
+    raise HTTPException(410, "旧场景指引已停用；请使用 /api/needs/plan 生成可回溯的事实与证据准备记录")
 
 
 @app.get("/api/scenarios/match")
 def match_scenario(text: str = ""):
-    """按关键词匹配场景路径。"""
-    if len(text.strip()) < 2:
-        raise HTTPException(422, "请输入场景关键词")
-    return {"matches": scenarios_mod.match_scenarios(text.strip())}
+    """旧场景匹配未做到逐项来源绑定，禁止作为公众法律路径继续返回。"""
+    raise HTTPException(410, "旧场景匹配已停用；请使用 /api/needs/plan")
 
 
 @app.get("/api/laws/{law_id}/explains")
@@ -180,10 +209,18 @@ def law_explains(law_id: str):
     return {"law_id": law_id, "explains": explains_mod.approved_for(law_id)}
 
 
+@app.get("/api/laws/{law_id}/articles/{no}/analysis-context")
+def law_analysis_context(law_id: str, no: int):
+    """原文、官方解释与具名专业观点的证据包；覆盖分不等于正确率。"""
+    try:
+        return commentaries_mod.analysis_context(law_id, no)
+    except KeyError:
+        raise HTTPException(404, "law article not found")
+
+
 class ExplainReviewBody(BaseModel):
     model_config = ConfigDict(extra="forbid")
     action: str  # approve / reopen
-    license_no: str | None = None  # 可选公示证号（10-20 位数字，格式由 explains 模块校验）
 
 
 @app.get("/api/explains/queue")
@@ -196,13 +233,13 @@ def explains_queue(admin: AdminPrincipal = Depends(require_admin)):
 def review_explain(law_id: str, no: int, body: ExplainReviewBody, admin: AdminPrincipal = Depends(require_admin)):
     """解读审核（决策项4 双轨的人工一环）。审核人=服务端主体，不接受客户端自报；动作写入 append-only 审计。"""
     try:
-        e = explains_mod.set_review(law_id, no, body.action, admin.name, body.license_no)
+        e = explains_mod.set_review(law_id, no, body.action, admin.name)
     except KeyError as ex:
         raise HTTPException(404, str(ex))
     except ValueError as ex:
         raise HTTPException(422, str(ex))
     storage.audit(admin.name, "explain", f"{law_id}#{no}",
-                  f"explain_{body.action}", {"status": e["status"], "license_no": e.get("reviewer_license_no")})
+                  f"explain_{body.action}", {"status": e["status"]})
     return {"law_id": law_id, "no": no, "status": e["status"], "reviewer": e.get("reviewer")}
 
 
@@ -217,7 +254,8 @@ def search_articles(q: str, top_k: int = 20, law_id: str | None = None):
     if not query:
         raise HTTPException(422, "检索词不能为空")
     corpus = get_corpus()
-    hits = corpus.search(query, top_k=min(max(top_k, 1), 60), law_id=law_id)
+    requested_laws = [law_id] if law_id else None
+    hits, retrieval = research.orchestrated_search(corpus, query, top_k=min(max(top_k, 1), 60), law_ids=requested_laws)
     return {
         "query": query,
         "total": len(hits),
@@ -229,7 +267,7 @@ def search_articles(q: str, top_k: int = 20, law_id: str | None = None):
             }
             for h in hits
         ],
-        "retrieval_meta": {"method": "bm25-char-bigram", "corpus_size": len(corpus.articles)},
+        "retrieval_meta": {**retrieval, "corpus_size": len(corpus.articles)},
     }
 
 
@@ -279,7 +317,7 @@ def research_report_docx(body: ResearchBody):
 class CaseBody(BaseModel):
     title: str | None = Field(default=None, max_length=256)
     case_text: str = Field(min_length=1, max_length=200_000)
-    claim_id: str = Field(default="loan_repayment", max_length=64)
+    claim_id: str | None = Field(default=None, max_length=64)
 
 
 @app.post("/api/case/analyze")
@@ -287,6 +325,8 @@ def case_analyze(body: CaseBody):
     """案件分析（完全无状态：不写库、不落盘，case_text 仅在内存中做正则扫描）。"""
     if len(body.case_text.strip()) < 30:
         raise HTTPException(422, "案件文本过短（至少 30 字）")
+    if not body.claim_id:
+        raise HTTPException(422, "必须由使用者从候选方向中明确选择分析模型；系统不会默认套用借贷请求权。")
     try:
         return case_analysis.analyze_case(body.case_text, body.title, body.claim_id)
     except ValueError as e:
@@ -693,7 +733,9 @@ class NeedsBody(BaseModel):
 class IntakePlanBody(BaseModel):
     model_config = ConfigDict(extra="forbid")
     summary: str = Field(min_length=1, max_length=5_000)
+    trigger: str = Field(default="", max_length=2_000)
     timeline: list[str] = Field(default_factory=list, max_length=50)
+    actual_outcome: str = Field(default="", max_length=2_000)
     parties: list[str] = Field(default_factory=list, max_length=50)
     evidence_owned: list[str] = Field(default_factory=list, max_length=50)
     evidence_missing: list[str] = Field(default_factory=list, max_length=50)

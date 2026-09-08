@@ -1,5 +1,5 @@
 // 通用 UI 原子组件：按钮/输入等直接使用 global.css 类；此处封装交互态组件
-import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode } from 'react'
+import { createContext, useCallback, useContext, useEffect, useRef, useState, type AnimationEvent, type ReactNode } from 'react'
 import { Icon, type IconName } from './icons'
 
 /* ---------- 时间显示：server 存 UTC ISO，展示一律转本地时区 ----------
@@ -22,29 +22,33 @@ const ToastCtx = createContext<(text: string, tone?: 'ok' | 'err') => void>(() =
 export const useToast = () => useContext(ToastCtx)
 
 const TOAST_TTL = 2600
-const TOAST_EXIT = 200  // pop-out 时长（--dur-fast），与 CSS 保持一致
 
 export function ToastProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<ToastMsg[]>([])
   const [exiting, setExiting] = useState<Set<number>>(new Set())
   const seq = useRef(0)
+  const timers = useRef<Set<number>>(new Set())
+  useEffect(() => () => { timers.current.forEach(window.clearTimeout); timers.current.clear() }, [])
   const push = useCallback((text: string, tone?: 'ok' | 'err') => {
     const id = ++seq.current
     setItems((xs) => [...xs.slice(-3), { id, text, tone }])  // 堆叠上限 4 条，防刷屏
-    setTimeout(() => {
+    const timer = window.setTimeout(() => {
+      timers.current.delete(timer)
       setExiting((s) => new Set(s).add(id))
-      setTimeout(() => {
-        setItems((xs) => xs.filter((x) => x.id !== id))
-        setExiting((s) => { const n = new Set(s); n.delete(id); return n })
-      }, TOAST_EXIT)
     }, TOAST_TTL)
+    timers.current.add(timer)
+  }, [])
+  const finishExit = useCallback((id: number, event: AnimationEvent<HTMLDivElement>) => {
+    if (event.currentTarget !== event.target || event.animationName !== 'pop-out') return
+    setItems((xs) => xs.filter((x) => x.id !== id))
+    setExiting((s) => { const next = new Set(s); next.delete(id); return next })
   }, [])
   return (
     <ToastCtx.Provider value={push}>
       {children}
       <div className="toast-host">
         {items.map((t) => (
-          <div key={t.id} className={'toast' + (t.tone ? ' t-' + t.tone : '') + (exiting.has(t.id) ? ' is-out' : '')}>
+          <div key={t.id} onAnimationEnd={(event) => finishExit(t.id, event)} className={'toast' + (t.tone ? ' t-' + t.tone : '') + (exiting.has(t.id) ? ' is-out' : '')}>
             <Icon name={t.tone === 'err' ? 'alert' : t.tone === 'ok' ? 'verify' : 'info'} size={15} />
             {t.text}
           </div>
@@ -60,17 +64,20 @@ export function Dialog({ open, title, children, actions }: {
   open: boolean; title: string; children?: ReactNode; actions?: ReactNode
 }) {
   const [phase, setPhase] = useState<'hidden' | 'in' | 'out'>(open ? 'in' : 'hidden')
-  const exitTimer = useRef<number | undefined>(undefined)
   useEffect(() => {
-    window.clearTimeout(exitTimer.current)
     if (open) { setPhase('in'); return }
     setPhase((p) => (p === 'in' ? 'out' : p))
-    exitTimer.current = window.setTimeout(() => setPhase('hidden'), 200)  // 退场时长 = --dur-fast
-    return () => window.clearTimeout(exitTimer.current)
   }, [open])
   if (phase === 'hidden') return null
   return (
-    <div className={'dlg-mask' + (phase === 'out' ? ' is-out' : '')} role="dialog" aria-modal="true">
+    <div
+      className={'dlg-mask' + (phase === 'out' ? ' is-out' : '')}
+      role="dialog"
+      aria-modal="true"
+      onAnimationEnd={(event) => {
+        if (phase === 'out' && event.currentTarget === event.target && event.animationName === 'fade-out') setPhase('hidden')
+      }}
+    >
       <div className="dlg">
         <div className="dlg-t">{title}</div>
         {children && <div className="dlg-b">{children}</div>}
@@ -82,7 +89,7 @@ export function Dialog({ open, title, children, actions }: {
 
 /* ---------- 分段控件（竹简槽）----------
    iOS Segmented Control 语义：凹槽轨道 + 滑块弹簧滑动（--spring-snappy）。
-   --seg-n / --seg-i 注入 CSS，滑块位移全部走 transform（合成器通道）。 */
+   --seg-n / --seg-x 注入 CSS，滑块位移全部走 transform（合成器通道）。 */
 export function Segmented({ options, value, onChange, ariaLabel }: {
   options: { key: string; label: string }[]
   value: string
@@ -91,7 +98,7 @@ export function Segmented({ options, value, onChange, ariaLabel }: {
 }) {
   const idx = Math.max(0, options.findIndex((o) => o.key === value))
   return (
-    <div className="seg" role="tablist" aria-label={ariaLabel} style={{ '--seg-n': options.length, '--seg-i': idx } as React.CSSProperties}>
+    <div className="seg" role="tablist" aria-label={ariaLabel} style={{ '--seg-n': options.length, '--seg-x': `${idx * 100}%` } as React.CSSProperties}>
       <span className="seg-thumb" aria-hidden />
       {options.map((o) => (
         <button

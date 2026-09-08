@@ -116,7 +116,15 @@ export interface ReviewResult {
   findings: Finding[]
   summary: { high: number; medium: number; low: number; by_category: Record<ReviewCategory, number> }
   disclaimer: string
-  engine_meta: { checkpoint_count: number; clause_count: number }
+  /** 某个规则异常时后端会显式标记不完整；「未检出」不能被当作完整审查。 */
+  analysis_incomplete?: boolean
+  engine_meta: {
+    checkpoint_count: number
+    clause_count: number
+    analysis_complete?: boolean
+    analysis_incomplete?: boolean
+    errors?: { checkpoint_id: string; error: string }[]
+  }
 }
 
 export interface Annotation {
@@ -187,7 +195,16 @@ export type FieldsPayload = Record<string, string | string[] | { law_id: string;
 
 /* ---------- API ---------- */
 export const api = {
-  health: () => req<{ status: string }>('/health'),
+  health: () => req<{ status: string; laws: number; articles: number }>('/health'),
+  inventory: () => req<{
+    laws: number
+    articles: number
+    verified_cases: number
+    approved_explains: number
+    fetched_at: string | null
+    basis: 'current-controlled-corpus'
+  }>('/inventory'),
+  corpusCoverage: () => req<CorpusCoverage>('/corpus/coverage'),
 
   // 合同审查
   analyzeContractText: (contractText: string, title?: string) =>
@@ -283,11 +300,15 @@ export const api = {
   lawExplains: (lawId: string) =>
     req<{ law_id: string; explains: Record<string, ArticleExplain> }>(`/laws/${encodeURIComponent(lawId)}/explains`),
 
+  // 原文 + 官方解释 + 具名专业观点；证据覆盖分明确不等于正确率
+  lawAnalysisContext: (lawId: string, no: number) =>
+    req<LawAnalysisContext>(`/laws/${encodeURIComponent(lawId)}/articles/${no}/analysis-context`),
+
   // 解读审核队列（敏感端点：需本机管理令牌；未配置时服务端 503 明示关闭）
   explainsQueue: () => req<{ queue: { law_id: string; no: number; text: string; author: string; date?: string; source_note?: string }[] }>('/explains/queue'),
-  /** 审核动作：审核人=服务端配置主体（不可自报），证号可选公示；动作写入审计 */
-  reviewExplain: (lawId: string, no: number, action: 'approve' | 'reopen', licenseNo?: string) =>
-    req<{ status: string }>(`/explains/${encodeURIComponent(lawId)}/${no}`, { method: 'PATCH', body: JSON.stringify({ action, license_no: licenseNo || undefined }) }),
+  /** 内容发布审核：审核署名=服务端配置主体（不可自报、不代表资格核验）；动作写入审计 */
+  reviewExplain: (lawId: string, no: number, action: 'approve' | 'reopen') =>
+    req<{ status: string }>(`/explains/${encodeURIComponent(lawId)}/${no}`, { method: 'PATCH', body: JSON.stringify({ action }) }),
 
   // 主检索（server BM25，与问答/研究同一引擎；多词/口语化查询可命中）
   search: (q: string, topK = 20, lawId?: string) =>
@@ -301,7 +322,7 @@ export const api = {
   listDrafts: () => req<{ drafts: { id: string; created_at: string; template_id: string; status: string }[] }>('/drafts'),
   draftValidation: (did: string) => req<DraftValidation>(`/drafts/${did}/validation`),
 
-  // AI 研究（server BM25 多查询检索备忘录；无 LLM 自由生成）
+  // 来源研究（server BM25 多查询检索备忘录；无 LLM 自由生成）
   researchMemo: (question: string, lawIds?: string[], topK = 12) =>
     req<ResearchMemo>('/research/memo', {
       method: 'POST',
@@ -333,10 +354,15 @@ export const api = {
     req<{ providers: { id: string; name: string; base_url: string; default_model: string; models_hint: string[]; docs: string; local: boolean; env_key: string | null; env_key_set: boolean }[] }>('/ai/providers'),
   aiTest: (p: { provider_id: string; model: string; api_key?: string; base_url_override?: string }) =>
     req<{ ok: boolean; sample?: string; error?: string }>('/ai/test', { method: 'POST', body: JSON.stringify(p) }),
-  aiChat: (p: { provider_id: string; model: string; messages: { role: string; content: string }[]; api_key?: string; base_url_override?: string; allowed_refs?: { law_title: string; article_no: number }[]; temperature?: number }) =>
+  aiChat: (p: { provider_id: string; model: string; messages: { role: string; content: string }[]; api_key?: string; base_url_override?: string; allowed_refs?: { law_id?: string; law_title?: string; article_no: number }[]; temperature?: number }) =>
     req<{
       provider_id: string; provider_name: string; model: string; text: string
-      gates: { redline: { pass: boolean; hits: string[] }; citations: { pass: boolean; violations: string[]; note?: string } }
+      gates: {
+        redline: { pass: boolean; hits: string[] }
+        citations: { pass: boolean; violations: string[]; note?: string }
+        claim_support: { pass: boolean; verification_scope: string; violations: string[]; checks: { sentence: number; clause: number; lexical_overlap: number; has_citation: boolean; advisory: boolean; categorical_case_outcome: boolean; pass: boolean }[] }
+      }
+      evidence_context: { law_id: string; article_no: number; professional_sources: number; official_interpretations: number; evidence_coverage: LawAnalysisContext['evidence_coverage']; calibrated_accuracy: LawAnalysisContext['calibrated_accuracy'] }[]
       blocked: boolean; output_withheld: boolean; usage: Record<string, number>; disclaimer: string
     }>('/ai/chat', { method: 'POST', body: JSON.stringify(p) }),
 
@@ -345,6 +371,12 @@ export const api = {
     req<NeedsParseResult>('/needs/parse', { method: 'POST', body: JSON.stringify({ text }) }),
   needsPlan: (payload: IntakePlanPayload) =>
     req<NeedsParseResult>('/needs/plan', { method: 'POST', body: JSON.stringify(payload) }),
+
+  // 案件要件练习：无状态、必须由使用者明确选择请求权模型，不自动定性
+  caseAnalyze: (caseText: string, claimId: ClaimId, title?: string) =>
+    req<CaseAnalysisResult>('/case/analyze', {
+      method: 'POST', body: JSON.stringify({ case_text: caseText, claim_id: claimId, title }),
+    }),
 
   // 审查记录列表（轻量含风险摘要）
   listReviews: (limit = 50) =>
@@ -368,6 +400,10 @@ export interface ArticleLink {
   note: string
   ref_title: string
   ref_status: string
+  ref_effective_date: string
+  ref_promulgation_instrument: string
+  ref_source_url: string
+  ref_source_kind: string
 }
 
 /* ---------- 法条人工通俗解读（双轨：AI 草稿 → 人工审核 → approved 对外） ---------- */
@@ -375,10 +411,51 @@ export interface ArticleExplain {
   text: string
   author: string
   reviewer: string
-  reviewer_license_no?: string
-  reviewer_role?: string
   date?: string
   source_note?: string
+}
+
+export interface ProfessionalCommentary {
+  id: string
+  title: string
+  source_kind: string
+  authors: { name: string; credential: string; credential_source_url: string }[]
+  institution: string
+  published_at: string
+  accessed_at: string
+  source_url: string
+  evidence_grade: '强' | '中' | '弱'
+  rights: 'link-and-original-summary'
+  summary: string
+  scope_note: string
+}
+
+export interface LawAnalysisContext {
+  law_id: string
+  article_no: number
+  citation: Citation & { text: string; article_label: string }
+  official_interpretations: ArticleLink[]
+  professional_commentaries: ProfessionalCommentary[]
+  evidence_coverage: {
+    score: number; max_score: 100; label: string; not_accuracy: true
+    components: { name: string; points: number; present: boolean }[]
+    missing: string[]; method: string
+  }
+  calibrated_accuracy: { status: 'unavailable' | 'available'; value: number | null; reason: string }
+  limitations: string[]
+  disclaimer: string
+}
+
+export interface CorpusCoverage {
+  schema_version: 1
+  updated_at: string
+  national_law_catalog: {
+    count: number; as_of: string; title: string; source_url: string
+    accessed_at: string; evidence_grade: '强'; comparison_warning: string
+  }
+  controlled_instrument_ids: string[]
+  priority_backlog: { title: string; reason: string; status: 'official-source-identified-not-imported'; source_url: string }[]
+  update_protocol: string[]
 }
 
 /* ---------- 主检索（server BM25 结果；排序唯一来源） ---------- */
@@ -480,12 +557,16 @@ export interface NeedsParseResult {
   disclaimer: string
   intake?: {
     summary: string
+    trigger: string
     timeline: string[]
+    actual_outcome: string
     parties: string[]
     desired_outcome: string
     questions: string[]
     missing_questions: string[]
-    evidence_checklist: { item: string; state: string; source: string }[]
+    evidence_checklist: { id: string; item: string; state: string; source: string; verification: 'user-reported' | 'rule-suggested' }[]
+    issue_candidates: { id: string; label: string; status: 'candidate' | 'unknown'; matched_terms: string[]; fact_basis: string[]; note: string }[]
+    field_status: Record<string, 'filled' | 'not_provided'>
     next_steps: string[]
     method: string
   }
@@ -493,7 +574,9 @@ export interface NeedsParseResult {
 
 export interface IntakePlanPayload {
   summary: string
+  trigger: string
   timeline: string[]
+  actual_outcome: string
   parties: string[]
   evidence_owned: string[]
   evidence_missing: string[]
@@ -501,34 +584,18 @@ export interface IntakePlanPayload {
   questions: string[]
 }
 
-/* 本机使用视图：只决定信息组织，不是账号、身份或执业资格。 */
-export interface WorkIdentity { name: string; mode: 'public' | 'student' | 'professional' }
-const IDENTITY_KEY = 'lh:identity:v2'
-const LEGACY_IDENTITY_KEY = 'lh:identity'
-const PREVIOUS_IDENTITY_KEY = 'lh:identity:v1'
-const IDENTITY_MODES = new Set(['public', 'student', 'professional'])
-export function loadIdentity(): WorkIdentity {
-  try {
-    const raw = localStorage.getItem(IDENTITY_KEY) ?? localStorage.getItem(PREVIOUS_IDENTITY_KEY) ?? localStorage.getItem(LEGACY_IDENTITY_KEY)
-    if (!raw) return { name: '', mode: 'public' }
-    const parsed: unknown = JSON.parse(raw)
-    if (!parsed || typeof parsed !== 'object') return { name: '', mode: 'public' }
-    const x = parsed as Record<string, unknown>
-    const legacyMode = x.role === '执业律师' || x.role === '法务' ? 'professional' : 'public'
-    const value = {
-      name: typeof x.name === 'string' ? x.name.slice(0, 120) : '',
-      mode: (typeof x.mode === 'string' && IDENTITY_MODES.has(x.mode) ? x.mode : legacyMode) as WorkIdentity['mode'],
-    }
-    if (localStorage.getItem(IDENTITY_KEY) === null) localStorage.setItem(IDENTITY_KEY, JSON.stringify(value))
-    localStorage.removeItem(PREVIOUS_IDENTITY_KEY)
-    localStorage.removeItem(LEGACY_IDENTITY_KEY)
-    return value
-  } catch { return { name: '', mode: 'public' } }
-}
-export function saveIdentity(v: WorkIdentity) {
-  const safe = { name: String(v.name ?? '').slice(0, 120), mode: IDENTITY_MODES.has(v.mode) ? v.mode : 'public' }
-  localStorage.setItem(IDENTITY_KEY, JSON.stringify(safe))
-  window.dispatchEvent(new CustomEvent('le-identity-changed'))
+export type ClaimId = 'loan_repayment' | 'breach_damage' | 'consumer_fraud' | 'wage_claim'
+export interface CaseAnalysisResult {
+  title: string
+  claim_id: ClaimId
+  claim: {
+    claim: { id: ClaimId; name: string }
+    elements: { id: string; title: string; status: 'supported' | 'unverified'; evidence_spans: { excerpt: string; start: number }[]; citations: Citation[] }[]
+    summary: { supported: number; unverified: number; overall: string }
+    disclaimer: string
+  }
+  references: Citation[]
+  disclaimers: string[]
 }
 
 /* ---------- AI 模型档案（只持久化非秘密配置；密钥永不写浏览器存储） ---------- */

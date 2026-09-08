@@ -1,9 +1,9 @@
 // FRAME 07 · AI Legal Research —— 研究工作台（真实引擎驱动）
-// server: POST /api/research/memo（BM25 三组查询检索，引用不变量逐条 citation_of 校验；无 LLM 自由生成）
+// server: POST /api/research/memo（BM25 受控术语/多查询检索，引用不变量逐条 citation_of 校验；无 LLM 自由生成）
 //   → 命中条文画布 / 诚实缺口 / DOCX 研究报告。证据速览每条 = 真实语料来源（含时效与相关度）。
 // 分析笔记与结论文稿为用户人工输入（本地暂存），与检索证据严格分区。
-import { useCallback, useEffect, useMemo, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { Link, useParams, useSearchParams } from 'react-router-dom'
 import { Icon } from '../icons'
 import { lawEvidenceGrade, useLaws } from '../../data/model'
 import { EmptyState, PageHeader, SkeletonLines, Tabs, useToast } from '../ui'
@@ -13,7 +13,7 @@ import { api, ApiError, loadAiProfile, type ResearchMemo } from '../../lib/api'
 const CENTER_TABS = [
   { key: 'canvas', label: '研究画布' },
   { key: 'rules', label: '法律框架' },
-  { key: 'draft', label: '结论文稿' },
+  { key: 'draft', label: '研究记录' },
 ]
 
 const LS_LIST = 'lh:research:list'
@@ -38,6 +38,7 @@ export function useNotes(rid: string) {
 
 export default function Research() {
   const { rid } = useParams()
+  const [searchParams] = useSearchParams()
   const toast = useToast()
   const { data: laws } = useLaws()
   const lawCount = laws?.laws.length ?? 0
@@ -48,6 +49,8 @@ export default function Research() {
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [tab, setTab] = useState('canvas')
+  const seededQuery = searchParams.get('q')?.trim() ?? ''
+  const seededRef = useRef('')
 
   const activeRid = rid && rid !== 'new' ? rid : null
   const active = useMemo(() => list.find((r) => r.rid === activeRid) ?? null, [list, activeRid])
@@ -75,13 +78,21 @@ export default function Research() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeRid])
 
+  // 法条、案例或事实梳理页可把当前真实问题带入；同一 URL 只自动检索一次。
+  useEffect(() => {
+    if (activeRid || !seededQuery || seededRef.current === seededQuery) return
+    seededRef.current = seededQuery
+    setQuestion(seededQuery)
+    void run(seededQuery)
+  }, [activeRid, run, seededQuery])
+
   return (
     <div className="page" style={{ maxWidth: 'none' }}>
       <PageHeader
         title={memo ? memo.question : '法律研究'}
         sub={memo
           ? `检索方法：${memo.meta.method} · 语料 ${memo.meta.corpus_size.toLocaleString()} 条 · 命中 ${memo.cards.length} 条依据（引用逐条经 citation 校验，无自由生成）`
-          : '输入研究问题，引擎对本地语料做多查询检索并给出可溯源依据；分析结论由研究者本人撰写。'}
+          : '输入研究问题，引擎对本地语料做多查询检索并给出可溯源依据；系统不替使用者形成案件结论。'}
         actions={
           <>
             {memo && <button className="btn btn-ghost btn-sm" disabled={busy}
@@ -253,7 +264,16 @@ function ConclusionDraft({ rid, question, cards, references }: {
 }) {
   const [draft, setDraft] = useNotes(`draft:${rid}`)
   const [notes, setNotes] = useNotes(`notes:${rid}`)
-  const [aiDraft, setAiDraft] = useState<{ text: string; gates: { redline: { pass: boolean; hits: string[] }; citations: { pass: boolean; violations: string[] } }; blocked: boolean; model: string } | null>(null)
+  const [aiDraft, setAiDraft] = useState<{
+    text: string
+    gates: {
+      redline: { pass: boolean; hits: string[] }
+      citations: { pass: boolean; violations: string[] }
+      claim_support: { pass: boolean; verification_scope: string; violations: string[] }
+    }
+    evidence: { professional_sources: number; official_interpretations: number; evidence_coverage: { score: number }; calibrated_accuracy: { value: number | null; reason: string } }[]
+    blocked: boolean; model: string
+  } | null>(null)
   const [aiBusy, setAiBusy] = useState(false)
   const [aiErr, setAiErr] = useState<string | null>(null)
   const [aiKey, setAiKey] = useState('')
@@ -269,13 +289,13 @@ function ConclusionDraft({ rid, question, cards, references }: {
       const r = await api.aiChat({
         provider_id: profile.provider_id, model: profile.model,
         api_key: aiKey.trim() || undefined, base_url_override: profile.base_url_override,
-        allowed_refs: references.map((r) => ({ law_title: r.law_title, article_no: r.article_no })),
+        allowed_refs: references.map((r) => ({ law_id: r.law_id, law_title: r.law_title, article_no: r.article_no })),
         messages: [
-          { role: 'system', content: '你是法律研究助理。规则：①只基于提供的条文依据起草研究结论，禁止编造任何法条、案例、数据；②每个法律论断必须写出可核验的《法律全名》第X条，可同时标注依据编号[1]；③禁止使用胜诉率、包赢、必胜、稳赢、法院必然裁判等确定性承诺；④结尾列“仍需人工核验事项”。' },
-          { role: 'user', content: `研究问题：${question}\n\n可用条文依据（仅限这些）：\n${ctx}\n\n请起草一段研究结论（250 字内）。` },
+          { role: 'system', content: '你是来源约束的语言整理工具。规则：①只能整理使用者的问题和所提供的条文原文，不得补充任何事实、案例、数字、期限、责任认定、案件类型或裁判预测；②每个法律性表述必须写出可核验的《法律全名》第X条，并可标注依据编号[1]；③不得使用胜诉率、包赢、必胜、稳赢、法院必然裁判等确定性承诺；④明确区分“使用者陈述”“条文原文能够支持的内容”和“仍需确认的信息”；⑤资料不足时只列缺口，不作结论。' },
+          { role: 'user', content: `研究问题：${question}\n\n可用条文依据（仅限这些）：\n${ctx}\n\n请在 250 字内做来源约束的语言整理，不要形成案件结论。` },
         ],
       })
-      setAiDraft({ text: r.text, gates: r.gates, blocked: r.blocked, model: `${r.provider_name}/${r.model}` })
+      setAiDraft({ text: r.text, gates: r.gates, evidence: r.evidence_context, blocked: r.blocked, model: `${r.provider_name}/${r.model}` })
     } catch (e) {
       setAiErr(e instanceof ApiError ? e.message : String(e))
     } finally { setAiBusy(false); setAiKey('') }
@@ -288,8 +308,8 @@ function ConclusionDraft({ rid, question, cards, references }: {
         <textarea className="ta" style={{ minHeight: 100 }} placeholder="把命中条文涵摄到案件事实：逐条记录适用条件与例外……" value={notes} onChange={(e) => setNotes(e.target.value)} />
       </div>
       <div className="rs-sec">
-        <div className="rs-sec-h"><Icon name="quote" size={14} />结论文稿（研究者撰写）</div>
-        <textarea className="ta" style={{ minHeight: 120 }} placeholder={`基于上方 ${cards.length} 条可溯源依据，撰写你的研究结论。可选 AI 草稿会独立显示，不会自动写入此人工稿；引用请标注条文号。`} value={draft} onChange={(e) => setDraft(e.target.value)} />
+        <div className="rs-sec-h"><Icon name="quote" size={14} />研究记录（使用者撰写）</div>
+        <textarea className="ta" style={{ minHeight: 120 }} placeholder={`基于上方 ${cards.length} 条可溯源依据，记录条文能够支持的内容与仍待确认的问题。可选 AI 整理稿会独立显示，不会自动写入此记录；引用请标注条文号。`} value={draft} onChange={(e) => setDraft(e.target.value)} />
         {profile && (
           <div className="card mt-8" style={{ padding: 10 }}>
             <label className="fld"><span className="fld-l">单次 API Key（可留空使用服务端环境变量）</span><input className="inp" type="password" autoComplete="off" value={aiKey} onChange={(e) => setAiKey(e.target.value)} placeholder="仅保存在本组件内存，请求结束后清空" /></label>
@@ -301,9 +321,9 @@ function ConclusionDraft({ rid, question, cards, references }: {
         )}
         <div className="row mt-8">
           <button className="btn btn-secondary btn-sm" disabled={aiBusy || !profile || references.length === 0 || !sendAuthorized} onClick={genAiDraft}>
-            <Icon name="sparkle" size={12} />{aiBusy ? '生成中…' : 'AI 结论草稿（可选 · 需自备模型）'}
+            <Icon name="sparkle" size={12} />{aiBusy ? '整理中…' : 'AI 来源整理稿（可选 · 需自备模型）'}
           </button>
-          <span className="tiny">生成将过三道 gate：红线词拦截 / 引用绑定校验 / 审计留痕。</span>
+          <span className="tiny">生成须经过：红线拦截 / 引用集合核验 / 逐句词面证据门 / 审计留痕。</span>
         </div>
         {aiErr && <div className="banner banner-warn mt-8" style={{ padding: '8px 12px' }}><Icon name="alert" size={14} /><span className="banner-tx">{aiErr}</span></div>}
         {aiDraft && (
@@ -311,7 +331,7 @@ function ConclusionDraft({ rid, question, cards, references }: {
             <div className="ai-block">
               <div className="ai-block-h">
                 <span className="ai-tag"><Icon name="sparkle" size={11} strokeWidth={2} />AI</span>
-                <b style={{ fontSize: 12.5 }}>AI Draft · 结论草稿（{aiDraft.model}）</b>
+                <b style={{ fontSize: 12.5 }}>AI Draft · 来源整理稿（{aiDraft.model}）</b>
                 <span className="spacer" />
                 {aiDraft.blocked
                   ? <span className="bdg bdg-red">已拦截：不合规表述</span>
@@ -330,7 +350,18 @@ function ConclusionDraft({ rid, question, cards, references }: {
                   <span className="banner-tx">越界引用：{aiDraft.gates.citations.violations.join('、')}——不在检索依据集合内，请人工删除或补充来源。</span>
                 </div>
               )}
-              <div className="ai-note"><Icon name="info" size={12} />AI 草稿仅供参考，须由研究者修改确认并经人工核验后方可进入对外产出。</div>
+              {!aiDraft.gates.claim_support.pass && (
+                <div className="banner banner-warn mt-8">
+                  <Icon name="alert" size={14} />
+                  <span className="banner-tx">逐句证据门未通过：{aiDraft.gates.claim_support.violations.join('、')}。这是词面支持检查，不是语义正确性证明；全文已扣留。</span>
+                </div>
+              )}
+              {aiDraft.evidence.length > 0 && (
+                <div className="tiny mt-8">
+                  证据包：{aiDraft.evidence.reduce((n, x) => n + x.professional_sources, 0)} 份具名专业来源，{aiDraft.evidence.reduce((n, x) => n + x.official_interpretations, 0)} 条直接司法解释；校准正确率暂无（没有独立专家金标）。
+                </div>
+              )}
+              <div className="ai-note"><Icon name="info" size={12} />AI 仅整理已列来源，不构成案件类型、责任或结果判断；使用者须逐条回看原文并在平台外获得独立专业复核。</div>
             </div>
           </div>
         )}

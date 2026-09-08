@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """文书交付前校验（Pre-delivery Validation）：程序化检查，非自由判断。
 
-规格（FRAMES 13）：存在问题时状态为 Need Review；全部通过且使用者确认定稿才为 Ready。
+规格（FRAMES 13）：存在问题时状态为 Need Review；全部通过且使用者确认定稿才标为程序检查通过。
 检查口径全部可程序化复现：
 - 事实完整性：必填字段非空；正文不含未填占位（[待填写] / 连续下划线 / ____）；主体名称出现在正文中
 - 法律引用：每条引用均可在本地语料解析且为现行有效版本（引用不变量双保险）
@@ -100,7 +100,7 @@ def validate_draft(draft: dict) -> dict:
         "ready": core_ok and status == "finalized" and responsibility_confirmed,
         "need_review": not core_ok,
         "checks": checks,
-        "disclaimer": "Ready 仅表示程序化要素检查通过且使用者确认定稿；平台不核验执业资格、不签发文书，也不保证事实或法律判断正确。",
+        "disclaimer": "程序检查通过仅表示要素检查通过且使用者确认定稿；平台不核验执业资格、不签发文书，也不保证事实或法律判断正确。",
     }
 
 

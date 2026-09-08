@@ -9,7 +9,7 @@
 ## 0. 设计红线（从调研固化，改 UI 前先读）
 
 1. **材质按语义选档，不按颜色选**（HIG 原文）：铬层=Chrome、工作台面板=Panel、卡片=Card、浮层=Float、正文阅读区=Solid 护栏；页面不得私设 blur/alpha 值。
-2. **Liquid Glass 只进功能层**：TopBar/侧栏/浮层可用强采样模糊；内容层（卡片/面板）一律半透明叠色、不开 backdrop-filter（v6 纪律，HIG "Don't use Liquid Glass in the content layer" 背书）。
+2. **Liquid Glass 只进功能层**：TopBar/侧栏/浮层可用强采样模糊与实验折射；内容层不得使用 Liquid Glass。重复卡片和正文护栏只用半透明叠色；承担空间分区的少数主工作台 `.panel` 可使用一层 standard-material 采样模糊，但内部卡片禁止继续叠加 backdrop-filter。
 3. **动效只动 transform/opacity**；位移类状态切换一律用弹簧 Token；hover 反馈 ≤160ms 且只动背景/描边/阴影。
 4. **按压反馈对**：按下 ≈80ms 缩小，释放弹簧回位——两段独立曲线。
 5. **bounce 分寸**：只有「从无到有」的浮层入场用 bouncy；用户直接驱动的连续交互（拖拽/滑块跟随）不用 bounce；大面积表面用 smooth。
@@ -55,6 +55,20 @@
 - [x] 滚动驱动动画 CSS 原生化：`scroll-timeline: --st-content` + `.main { timeline-scope }` 双轨落地——支持引擎上 TopBar 海拔由滚动位置连续插值（0–96px 行程，来回可逆），不支持回落 onScroll 哨兵；qa_motion 探针 ⑧ 断言 animationName/边框插值/回顶可逆。
 - [x] 大字模式 × 动效联测：qa_motion 探针 ⑨ 实测 zoom 1.15 下弹簧位移等比放大（目标 220→253px）、bouncy 过冲比例不漂移（max 264.6 = 1.046×目标）、smooth 仍无过冲——**结论：弹簧距离与字号解耦（px 固定 + zoom 等比），无需按大字模式单独调参**。
 - 验收：run_qa.cmd 六门全绿（pytest 151 / tsc+build / 数据纪律 / WCAG --strict 28 项 / 36 路由巡检 0 问题 / qa_motion 11 断言）。
+
+### W6 完成性复核与参数漂移清偿——2026-09-08
+- [x] 对 Apple HIG Materials、SwiftUI Spring/Animation、MDN overflow/overscroll/linear()/scroll-driven/backdrop-filter 重新访问核验，不以旧调研结论代替当前一手证据；复核记录见调研 §7。
+- [x] 清除材质展台第二套裸参数：`m-thin/regular/thick/chrome/float/refract` 的模糊与透明度全部引用 `--blur-*`、`--mat-*-a`，并为浅/深主题分别给出语义透明度；展台说明改显示 Token 名，避免文案数值漂移。
+- [x] `qa_gates` 增加“材质档禁止复制裸 `--m-blur/--m-a`”门，后续改动若绕开单一参数源直接失败。
+- [x] Toast/Dialog 退场卸载从固定 200ms 等待改为真实 `animationend`；组件生命周期不再与 CSS `--dur-fast` 漂移，Toast 计时器在 Provider 卸载时统一清理。
+- [x] `qa_motion` 14→20 项：新增 Chrome 材质 computed filter/浅深 alpha、固定条纹背景的 backdrop-filter 开关像素 SHA 差异、`url(#lg-refract)+blur` 对纯 blur 的折射像素 SHA 差异、CDP 真实 Tab 焦点环、深色 Toast 主题继承、Switch 80ms 按下/340ms 弹簧释放；Toast 明确观察 `is-out + pop-out` 后卸载，滚动海拔采样 0/48/96px 严格中间值。探针不再用程序化 `.focus()` 冒充键盘 `:focus-visible`。
+- [x] 新增浅色 `/design-system` 与深色 Toast 全页证据；全路由巡检 50→52，0 console/page/network 问题。
+- [x] 修复根主题未覆盖 ToastHost：当前 tone 同步到 `html`，深色 Toast computed background=`rgba(44,46,52,0.64)`；Dialog 与 Toast 共享语义材质。
+- [x] 强焦点环改为 `--ring-strong`/`--ring-color` 不透明语义 Token；对比度门 28→32 组，浅色基底/卡片分别 4.79/5.22，深色分别 5.39/4.66，全部超过 UI 3:1。
+- [x] Chrome 接入成对内缘光 `--mat-inset`，Sidebar 使用 `--sb-inset`，移动抽屉阴影收敛到 `--shadow-drawer`；小型 `.stat` 移除内容层模糊，主工作台 `.panel` 明确定义为单层 standard material，内部卡片不叠加模糊。
+- [x] Switch 与首次受众卡补齐按压反馈对；移除 audience/hoverable/ac-card/subj-card 的 hover 位移，并用 gate 禁止 `:hover translate*` 回归。
+- [x] 修正 WWDC23 “Animate with springs” 误链（10161→10158），新增 `docs/research/evidence/apple-mdn-motion-materials-2026-09-08.json` 证据索引。
+- [x] 隔离后端流程复核：pytest 162；无外部模型密钥的确定性全链 25/25；发布前真值核验十项 ALL PASS；106 组检索金标 hit@5=0.9717、MRR=0.7969；默认数据库与解读源未写入。
 
 ## 2. 变更边界（防止「打磨」变「重写」）
 - 只动 `web/src/styles/global.css`、`web/src/components/ui.tsx`、`AppShell.tsx`、DesignSystem/Settings 两页与 QA 脚本；不改任何业务页面结构与数据链路。

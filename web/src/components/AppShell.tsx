@@ -3,9 +3,27 @@
 import { Suspense, useEffect, useState } from 'react'
 import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { Icon, type IconName } from './icons'
-import { BRAND, NAV_MAIN, NAV_SUB, useLaws } from '../data/model'
+import { BRAND, NAV_MAIN, NAV_SUB } from '../data/model'
 import { SkeletonLines } from './ui'
-import { loadIdentity, type WorkIdentity } from '../lib/api'
+import { api } from '../lib/api'
+import {
+  AUDIENCE_OPTIONS,
+  audienceLabel,
+  canAudienceAccess,
+  loadAudiencePreference,
+  saveAudiencePreference,
+  type AudienceMode,
+} from '../lib/audience'
+
+export interface AppOutletContext { audience: AudienceMode }
+
+interface Inventory {
+  laws: number
+  articles: number
+  verified_cases: number
+  approved_explains: number
+  fetched_at: string | null
+}
 
 /* 路由 → 面包屑 + 明暗基调 */
 const ROUTE_META: { re: RegExp; crumb: string[]; tone: 'light' | 'dark' }[] = [
@@ -17,8 +35,8 @@ const ROUTE_META: { re: RegExp; crumb: string[]; tone: 'light' | 'dark' }[] = [
   { re: /^\/laws/, crumb: ['法规条文'], tone: 'light' },
   { re: /^\/cases\/[^/]+$/, crumb: ['案例检索', '案件详情'], tone: 'dark' },
   { re: /^\/cases/, crumb: ['案例检索'], tone: 'light' },
-  { re: /^\/research\/[^/]+\/evidence$/, crumb: ['AI 研究', '证据链核查'], tone: 'light' },
-  { re: /^\/research/, crumb: ['AI 研究', '研究工作台'], tone: 'light' },
+  { re: /^\/research\/[^/]+\/evidence$/, crumb: ['来源研究', '证据链核查'], tone: 'light' },
+  { re: /^\/research/, crumb: ['来源研究', '研究工作台'], tone: 'light' },
   { re: /^\/contracts\/[^/]+$/, crumb: ['合同审查', '审查工作台'], tone: 'light' },
   { re: /^\/contracts/, crumb: ['合同审查', '合同库'], tone: 'light' },
   { re: /^\/compare/, crumb: ['合同审查', '版本对比'], tone: 'light' },
@@ -32,7 +50,6 @@ const ROUTE_META: { re: RegExp; crumb: string[]; tone: 'light' | 'dark' }[] = [
   { re: /^\/data-sources/, crumb: ['数据洞察', '数据源状态'], tone: 'light' },
   { re: /^\/audit/, crumb: ['历史记录', '操作审计'], tone: 'light' },
   { re: /^\/settings/, crumb: ['设置'], tone: 'light' },
-  { re: /^\/design-system/, crumb: ['内部', '设计系统'], tone: 'dark' },
 ]
 
 type ToneOverride = 'auto' | 'light' | 'dark'
@@ -48,18 +65,29 @@ export default function AppShell() {
   const [collapsed, setCollapsed] = useState(() => localStorage.getItem('le-sb-collapsed') === '1')
   const [override, setOverride] = useState<ToneOverride>(readOverride)
   const { pathname } = useLocation()
-  const { data: corpus } = useLaws()
-  const [identity, setIdentity] = useState<WorkIdentity>(() => loadIdentity())
+  const [audience, setAudience] = useState<AudienceMode | null>(() => loadAudiencePreference()?.mode ?? null)
+  const [inventory, setInventory] = useState<Inventory | null>(null)
+  const [inventoryError, setInventoryError] = useState(false)
   // 窄屏（<768px）：侧栏转抽屉。
   const [narrow, setNarrow] = useState(() => window.matchMedia('(max-width: 767.98px)').matches)
   const [mobileOpen, setMobileOpen] = useState(false)
   const nav = useNavigate()
   // TopBar 滚动海拔（HIG scroll edge effect）：内容滚过首行后边缘增强
   const [scrolled, setScrolled] = useState(false)
-  const corpusArts = corpus ? corpus.laws.reduce((s, l) => s + l.articles.length, 0) : 0
+  const inventoryUnavailable = inventoryError || import.meta.env.VITE_STATIC_PREVIEW === '1'
+  const visibleMain = NAV_MAIN.filter((item) => !item.audiences || (audience !== null && item.audiences.includes(audience)))
+  const visibleSub = NAV_SUB.filter((item) => !item.audiences || (audience !== null && item.audiences.includes(audience)))
+  const mayOpenRoute = audience !== null && canAudienceAccess(pathname, audience)
 
   const meta = ROUTE_META.find((m) => m.re.test(pathname)) ?? { crumb: ['首页'], tone: 'light' as const }
   const tone = override === 'auto' ? meta.tone : override
+
+  // ToastHost 位于路由外层；把当前语义主题同步到根节点，确保 Portal/全局浮层继承同一套材质 Token。
+  // .main 仍保留局部 tone 类，便于静态页面和嵌入场景独立退化。
+  useEffect(() => {
+    document.documentElement.classList.toggle('tone-dark', tone === 'dark')
+    document.documentElement.classList.toggle('tone-light', tone === 'light')
+  }, [tone])
 
   useEffect(() => {
     localStorage.setItem('le-sb-collapsed', collapsed ? '1' : '0')
@@ -68,17 +96,26 @@ export default function AppShell() {
     document.documentElement.classList.toggle('reduce-motion', readReduceMotion())
     document.documentElement.classList.toggle('font-large', localStorage.getItem('le-font-large') === '1')
     const syncTone = () => setOverride(readOverride())
-    const syncIdentity = () => setIdentity(loadIdentity())
+    const syncAudience = () => setAudience(loadAudiencePreference()?.mode ?? null)
     window.addEventListener('le-tone-changed', syncTone)
-    window.addEventListener('le-identity-changed', syncIdentity)
+    window.addEventListener('le-audience-changed', syncAudience)
     const mq = window.matchMedia('(max-width: 767.98px)')
     const onMq = (e: MediaQueryListEvent) => { setNarrow(e.matches); if (!e.matches) setMobileOpen(false) }
     mq.addEventListener('change', onMq)
     return () => {
       window.removeEventListener('le-tone-changed', syncTone)
-      window.removeEventListener('le-identity-changed', syncIdentity)
+      window.removeEventListener('le-audience-changed', syncAudience)
       mq.removeEventListener('change', onMq)
     }
+  }, [])
+  useEffect(() => {
+    if (import.meta.env.VITE_STATIC_PREVIEW === '1') return
+    let alive = true
+    api.inventory().then(
+      (value) => { if (alive) { setInventory(value); setInventoryError(false) } },
+      () => { if (alive) setInventoryError(true) },
+    )
+    return () => { alive = false }
   }, [])
   // 路由变化即收起抽屉（顶栏/页内链接导航同样生效）
   useEffect(() => { setMobileOpen(false) }, [pathname])
@@ -143,26 +180,23 @@ export default function AppShell() {
           </div>
         </Link>
         <nav className="sb-nav">
-          {NAV_MAIN.map(renderItem)}
+          {visibleMain.map(renderItem)}
           <div className="sb-gap" role="separator" />
-          {NAV_SUB.map(renderItem)}
+          {visibleSub.map(renderItem)}
         </nav>
         <div className="sb-user">
-          <Link to="/settings" className="sb-usercard" title="账号设置">
-            <span className="avatar av-sb">{identity.name.trim().slice(0, 1) || '?'}</span>
-            <div className="sb-uinfo">
-              <div className="sb-uname">{identity.name.trim() || '未署名'}</div>
-              <div className="sb-urole">{{ public: '公众求助准备', student: '法学学习', professional: '专业工具' }[identity.mode]} · 本机视图</div>
+          <Link to="/settings" className="sb-reserve" title="查看数据储备并切换使用视图">
+            <div className="sb-reserve-h"><span><Icon name="database" size={13} />数据储备</span><span>{audience ? `${audienceLabel(audience)}视图` : '选择视图'}</span></div>
+            <div className="sb-reserve-grid">
+              <span><b>{inventory ? inventory.laws.toLocaleString() : inventoryUnavailable ? '—' : '…'}</b><small>部法规</small></span>
+              <span><b>{inventory ? inventory.articles.toLocaleString() : inventoryUnavailable ? '—' : '…'}</b><small>条条文</small></span>
+              <span><b>{inventory ? inventory.verified_cases.toLocaleString() : inventoryUnavailable ? '—' : '…'}</b><small>件核实案例</small></span>
+              <span><b>{inventory ? inventory.approved_explains.toLocaleString() : inventoryUnavailable ? '—' : '…'}</b><small>条审核解读</small></span>
+            </div>
+            <div className="sb-reserve-note">
+              {import.meta.env.VITE_STATIC_PREVIEW === '1' ? '静态说明站不提供实时储备' : inventoryError ? '实时储备读取失败，请检查本机服务' : inventory?.fetched_at ? `证据快照 ${inventory.fetched_at}` : '正在核对实时储备'}
             </div>
           </Link>
-          <div className="sb-plan">
-            <div className="sb-plan-top"><span>证据语料入库</span><span>{corpus ? `${corpus.laws.length} 部` : '…'}</span></div>
-            <div className="sb-bar"><i style={{ width: corpus ? '100%' : '0%' }} /></div>
-            <div className="sb-plan-top" style={{ marginTop: 5 }}>
-              <span>{corpusArts ? `${corpusArts.toLocaleString()} 条条文` : ''}</span>
-              <span>{corpus?.fetchDate ? `证据抓取 ${corpus.fetchDate}` : '正在读取证据日期'}</span>
-            </div>
-          </div>
         </div>
       </aside>
 
@@ -189,12 +223,12 @@ export default function AppShell() {
             <Icon name={tone === 'dark' ? 'sun' : 'moon'} size={15} />
           </button>
           <Link to="/search" className="tb-pill"><Icon name="search" size={13} />全局检索<span className="kbd">/</span></Link>
-          <Link to="/research" className="tb-pill is-accent"><Icon name="sparkle" size={13} />研究工作台</Link>
-          <Link to="/audit" className="tb-icon" title="操作与浏览记录"><Icon name="history" size={15} /></Link>
-          <Link to="/settings" className="tb-icon" title="账号与设置"><Icon name="user" size={15} /></Link>
+          {audience !== null && audience !== 'public' && <Link to="/research" className="tb-pill is-accent"><Icon name="sparkle" size={13} />研究工作台</Link>}
+          {audience === 'professional' && <Link to="/audit" className="tb-icon" title="操作与浏览记录"><Icon name="history" size={15} /></Link>}
+          <Link to="/settings" className="tb-icon" title="视图与设置"><Icon name="user" size={15} /></Link>
         </header>
 
-        {narrow && (
+        {narrow && audience !== null && (
           <Link to="/settings?feedback=mobile" className="mobile-feedback" title="反馈移动端体验问题">
             <Icon name="send" size={14} />
         </Link>
@@ -212,13 +246,59 @@ export default function AppShell() {
         const next = (e.target as HTMLElement).scrollTop > 4
         setScrolled((s) => (s === next ? s : next))  // 阈值外不触发重渲染
       }}>
-          <div key={pathname + tone}>
-            <Suspense fallback={<PageFallback />}>
-              <Outlet />
-            </Suspense>
+          <div key={pathname}>
+            {audience === null ? (
+              <AudienceChooser onChoose={(mode) => { saveAudiencePreference({ mode }); setAudience(mode) }} />
+            ) : mayOpenRoute ? (
+              <Suspense fallback={<PageFallback />}>
+                <Outlet context={{ audience } satisfies AppOutletContext} />
+              </Suspense>
+            ) : (
+              <AudienceAccessNotice pathLabel={meta.crumb.at(-1) ?? '此功能'} audience={audience} />
+            )}
           </div>
         </main>
       </div>
+    </div>
+  )
+}
+
+function AudienceChooser({ onChoose }: { onChoose: (mode: AudienceMode) => void }) {
+  return (
+    <div className="audience-onboarding">
+      <section className="audience-sheet" aria-labelledby="audience-title">
+        <div className="audience-mark"><Icon name="scale" size={22} /></div>
+        <div className="tiny">首次使用 · 仅保存在本机</div>
+        <h1 id="audience-title">选择适合你的使用视图</h1>
+        <p className="audience-lead">法规条文和案例检索始终开放；其他入口会按用途精简。之后可随时在设置中切换。</p>
+        <div className="audience-grid">
+          {AUDIENCE_OPTIONS.map((option) => (
+            <button key={option.mode} className="audience-card" onClick={() => onChoose(option.mode)}>
+              <span className="audience-card-t">{option.title}</span>
+              <span className="audience-card-d">{option.description}</span>
+              <span className="audience-card-list">{option.highlights.map((item) => <i key={item}>✓ {item}</i>)}</span>
+              <span className="audience-card-cta">选择并进入 <Icon name="arrowR" size={12} /></span>
+            </button>
+          ))}
+        </div>
+        <p className="audience-foot">选择“专业律师”只开启专业工作界面，不构成账号认证、执业资格核验或平台律师服务。</p>
+      </section>
+    </div>
+  )
+}
+
+function AudienceAccessNotice({ pathLabel, audience }: { pathLabel: string; audience: AudienceMode }) {
+  return (
+    <div className="page access-notice">
+      <section className="card card-pad">
+        <span className="access-ic"><Icon name="lock" size={22} /></span>
+        <h1>{pathLabel}未在{audienceLabel(audience)}视图中开放</h1>
+        <p>这不是权限或资格认证。为了避免向所有人堆叠不相关的专业流程，当前视图已收起该入口。</p>
+        <div className="row-wrap">
+          <Link className="btn btn-primary" to="/settings">切换使用视图</Link>
+          <Link className="btn btn-secondary" to="/search">继续法律检索</Link>
+        </div>
+      </section>
     </div>
   )
 }

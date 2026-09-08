@@ -1,6 +1,6 @@
 {
-  "built_at": "2026-09-05T20:10:19.779693",
-  "fetch_date": "2026-08-29",
+  "built_at": "2026-09-08T11:41:06.334850",
+  "fetch_date": "2026-09-08",
   "laws": [
     {
       "law_id": "civl-2020",
@@ -239,6 +239,98 @@
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "00bd290a9d14e7354b7131d30255daae26ce7ff73588483cbeb2030f56878277",
       "output_sha256": "89ef49818a0b410a8a7f93315b07ddd3f45ff649c39f7f532f5c2679f1ee5973"
+    },
+    {
+      "law_id": "pipl-2021",
+      "title": "中华人民共和国个人信息保护法",
+      "status": "现行有效",
+      "effective_date": "2021-11-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国个人信息保护法",
+        "url": "https://www.npc.gov.cn/WZWSREL25wYy9jMi9jMzA4MzQvMjAyMTA4L3QyMDIxMDgyMF8zMTMwODguaHRtbD9yZWY9aW1i",
+        "accessed_at": "2026-09-08",
+        "grade": "强",
+        "source_kind": "official-legislature-publication",
+        "version": "现行有效"
+      },
+      "promulgation_instrument": "中华人民共和国主席令第九十一号",
+      "article_count": 74,
+      "expected_count": 74,
+      "missing_numbers": [],
+      "source_url": "https://www.npc.gov.cn/WZWSREL25wYy9jMi9jMzA4MzQvMjAyMTA4L3QyMDIxMDgyMF8zMTMwODguaHRtbD9yZWY9aW1i",
+      "snapshot": "docs/research/evidence/npc_个人信息保护法2021.html",
+      "fetched_at": "2026-09-08",
+      "snapshot_sha256": "23eeb747cb57b852929e30906c51b5816095dc43977868543a4bce5b3540b429",
+      "output_sha256": "6b06e3a408e7abaf1ddcf2610db80717b56730eb4fbb52d1fa14b3e7ded8531a"
+    },
+    {
+      "law_id": "legal-aid-2021",
+      "title": "中华人民共和国法律援助法",
+      "status": "现行有效",
+      "effective_date": "2022-01-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国法律援助法",
+        "url": "https://www.npc.gov.cn/npc/c2/c30834/202108/t20210820_313079.html",
+        "accessed_at": "2026-09-08",
+        "grade": "强",
+        "source_kind": "official-legislature-publication",
+        "version": "现行有效"
+      },
+      "promulgation_instrument": "中华人民共和国主席令第九十三号",
+      "article_count": 71,
+      "expected_count": 71,
+      "missing_numbers": [],
+      "source_url": "https://www.npc.gov.cn/npc/c2/c30834/202108/t20210820_313079.html",
+      "snapshot": "docs/research/evidence/npc_法律援助法2021.html",
+      "fetched_at": "2026-09-08",
+      "snapshot_sha256": "972cf1394cb958cd14db64a8ce96348c4478fd730f9ff0b5b2f92a310b081910",
+      "output_sha256": "c63d7a043a2e4a501b58e5cdb8171c05f50cf8d80fcfb2cc8711e5afe0a4da8f"
+    },
+    {
+      "law_id": "admin-review-2023",
+      "title": "中华人民共和国行政复议法",
+      "status": "现行有效（2023修订）",
+      "effective_date": "2024-01-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国行政复议法",
+        "url": "https://www.npc.gov.cn/npc/c2/c30834/202309/t20230901_431409.html",
+        "accessed_at": "2026-09-08",
+        "grade": "强",
+        "source_kind": "official-legislature-publication",
+        "version": "现行有效（2023修订）"
+      },
+      "promulgation_instrument": "中华人民共和国主席令第九号",
+      "article_count": 90,
+      "expected_count": 90,
+      "missing_numbers": [],
+      "source_url": "https://www.npc.gov.cn/npc/c2/c30834/202309/t20230901_431409.html",
+      "snapshot": "docs/research/evidence/npc_行政复议法2023.html",
+      "fetched_at": "2026-09-08",
+      "snapshot_sha256": "a86e57e7aa2b1568ad6445008ed226d953bdf1993647486db70b1a0b544a03c6",
+      "output_sha256": "326d980ba61b0f69895912299450be8db741e3b0a6952f42acd352073df178e9"
+    },
+    {
+      "law_id": "admin-litigation-2017",
+      "title": "中华人民共和国行政诉讼法",
+      "status": "现行有效（2017修正）",
+      "effective_date": "2017-07-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国行政诉讼法",
+        "url": "https://www.npc.gov.cn/zgrdw/npc/xinwen/2017-06/29/content_2024894.htm",
+        "accessed_at": "2026-09-08",
+        "grade": "强",
+        "source_kind": "official-legislature-publication",
+        "version": "现行有效（2017修正）"
+      },
+      "promulgation_instrument": "中华人民共和国主席令第七十一号",
+      "article_count": 103,
+      "expected_count": 103,
+      "missing_numbers": [],
+      "source_url": "https://www.npc.gov.cn/zgrdw/npc/xinwen/2017-06/29/content_2024894.htm",
+      "snapshot": "docs/research/evidence/npc_行政诉讼法2017.html",
+      "fetched_at": "2026-09-08",
+      "snapshot_sha256": "bc0ab2282880cbed44b0e36f71f63dc15282b60709c15434c4b885731758ac96",
+      "output_sha256": "1e5e811624bddc0cde11d3030630b4a547d04c05a7f2b9396a199b4f56b61d05"
     }
   ]
 }

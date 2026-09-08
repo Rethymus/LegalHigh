@@ -1,4 +1,4 @@
-// 路由表：22+ 独立页面 Frame，共享 AppShell / 设计 Tokens / 组件
+// 产品路由表：共享 AppShell / 设计 Tokens / 组件；不暴露内部设计规范或测试展台。
 // 懒加载：每个页面独立 chunk；语料 laws.json 运行时按需拉取
 import { lazy } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
@@ -6,6 +6,7 @@ import AppShell, { PageFallback } from './components/AppShell'
 
 const Dashboard = lazy(() => import('./components/pages/Dashboard'))
 const NeedsParse = lazy(() => import('./components/pages/NeedsParse'))
+const CaseAnalysis = lazy(() => import('./components/pages/CaseAnalysis'))
 const SearchHome = lazy(() => import('./components/pages/SearchHome'))
 const SearchResults = lazy(() => import('./components/pages/SearchResults'))
 const LawsBrowse = lazy(() => import('./components/pages/LawsBrowse'))
@@ -27,7 +28,6 @@ const Collections = lazy(() => import('./components/pages/Collections'))
 const DataSources = lazy(() => import('./components/pages/DataSources'))
 const AuditHistory = lazy(() => import('./components/pages/AuditHistory'))
 const Settings = lazy(() => import('./components/pages/Settings'))
-const DesignSystem = lazy(() => import('./components/pages/DesignSystem'))
 
 export default function App() {
   return (
@@ -37,6 +37,7 @@ export default function App() {
         <Route path="/" element={<Dashboard />} />
         {/* 需求解析（抽象描述 → 可溯源法条+案例） */}
         <Route path="/needs" element={<NeedsParse />} />
+        <Route path="/case-analysis" element={<CaseAnalysis />} />
         {/* 02/03 Global Legal Search & Results */}
         <Route path="/search" element={<SearchHome />} />
         <Route path="/search/results" element={<SearchResults />} />
@@ -67,8 +68,6 @@ export default function App() {
         <Route path="/data-sources" element={<DataSources />} />
         <Route path="/audit" element={<AuditHistory />} />
         <Route path="/settings" element={<Settings />} />
-        {/* 22 Design System（内部，不在导航） */}
-        <Route path="/design-system" element={<DesignSystem />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
     </Routes>

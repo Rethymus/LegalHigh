@@ -1,6 +1,6 @@
 {
   "name": "legalhigh-desktop",
-  "version": "1.0.0",
+  "version": "1.1.0-rc.1",
   "description": "LegalHigh 桌面端：FastAPI 本机 sidecar + Web 前端；数据默认本机处理，只有用户明确配置并授权远程模型时才向该端点发送输入",
   "main": "main.js",
   "author": "LegalHigh",

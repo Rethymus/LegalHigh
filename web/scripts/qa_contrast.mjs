@@ -67,6 +67,8 @@ const MATRIX = [
   ['warn', 'bg', '警示色作文本', 'text'],
   ['danger', 'bg', '危险色作文本', 'text'],
   ['accent', 'bg', 'accent 作图标/图形（UI 3:1）', 'large-ui'],
+  ['ring-color', 'bg', '强焦点环 / 基底（UI 3:1）', 'large-ui'],
+  ['ring-color', 'surface-solid', '强焦点环 / 卡片（UI 3:1）', 'large-ui'],
   ['accent', 'surface-solid', '主按钮白字 / accent 底（对照）', 'large-ui'],
 ]
 const WHITE = [255, 255, 255]
@@ -97,4 +99,4 @@ for (const r of report)
 const fails = report.filter((r) => !r.pass)
 console.log(`\n共 ${report.length} 组合，${fails.length} 项未达标（其中正文级 ${textFail} 项）`)
 console.log('策略（D7，2026-08-30 落地）：文本一律用 --accent-text（浅色 #0069d9）；--accent 仅用于填充/描边/图标（3:1 口径）；--tx-3/--ok 已深化到达标值。')
-if (STRICT && textFail > 0) { console.error('STRICT：正文级 AA 失败'); process.exit(1) }
+if (STRICT && fails.length > 0) { console.error('STRICT：正文或 UI 对比度失败'); process.exit(1) }

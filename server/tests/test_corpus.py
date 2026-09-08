@@ -18,6 +18,10 @@ EXPECTED = {
     "pcl-2023": 306,
     "crpl-imp-2024": 53,
     "genai-2023": 24,
+    "pipl-2021": 74,
+    "legal-aid-2021": 71,
+    "admin-review-2023": 90,
+    "admin-litigation-2017": 103,
 }
 
 
@@ -27,8 +31,8 @@ def make_corpus():
 
 def test_corpus_shape():
     c = make_corpus()
-    assert len(c.laws) == 10
-    assert len(c.articles) == 2042
+    assert len(c.laws) == 14
+    assert len(c.articles) == 2380
     for law_id, n in EXPECTED.items():
         got = sum(1 for a in c.articles if a["law_id"] == law_id)
         assert got == n, f"{law_id}: {got} != {n}"
@@ -96,3 +100,9 @@ def test_manifest_snapshot_and_output_hashes_match():
         assert hashlib.sha256(law_path.read_bytes()).hexdigest() == item["output_sha256"]
         law = json.loads(law_path.read_text(encoding="utf-8"))
         assert law["source"]["sha256"] == item["snapshot_sha256"]
+        assert law["source"]["fetched_at"] == item["fetched_at"]
+        evidence = law.get("effective_date_evidence") or {}
+        # 日期依据可能在快照抓取后再次人工复核；两者语义不同，均须如实保留，
+        # 但不能武断要求 accessed_at 早于 fetched_at。
+        assert evidence.get("accessed_at")
+    assert manifest["fetch_date"] == max(item["fetched_at"] for item in manifest["laws"])

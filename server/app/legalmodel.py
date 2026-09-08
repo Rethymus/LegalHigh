@@ -147,7 +147,19 @@ def analyze_claim(case_text: str, claim_id: str) -> dict:
     supported = 0
     for el in tpl["elements"]:
         hits = _probe_hits(el["probes"], text)
-        spans = [_slice_span(text, s, e) for s, e in hits[:_SPAN_LIMIT]]
+        spans = []
+        seen_excerpts: set[str] = set()
+        for start, end in hits:
+            span = _slice_span(text, start, end)
+            if span["excerpt"] in seen_excerpts or any(
+                span["excerpt"] in prior["excerpt"] or prior["excerpt"] in span["excerpt"]
+                for prior in spans
+            ):
+                continue
+            spans.append(span)
+            seen_excerpts.add(span["excerpt"])
+            if len(spans) >= _SPAN_LIMIT:
+                break
         status = "supported" if hits else "unverified"
         supported += int(status == "supported")
         citations = []

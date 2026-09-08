@@ -31,7 +31,7 @@ class TestAPIBoundarySecurity:
         res = corpus.search(malicious, top_k=5)
         assert isinstance(res, list)  # 不崩溃
         # 语料表未被删除
-        assert len(corpus.laws) == 10
+        assert len(corpus.laws) == 14
 
     def test_xss_in_scenario_keywords(self):
         """XSS 脚本在场景匹配中不执行（纯文本匹配，无 HTML 渲染）。"""
@@ -116,9 +116,9 @@ class TestDataIntegrity:
         assert st.get_draft(did)["status"] == "finalized"
 
     def test_corpus_snapshot_integrity(self):
-        """语料完整性：10 部法律全部存在、条号连续、文本非空。"""
-        assert len(corpus.laws) == 10
-        assert len(corpus.articles) == 2042
+        """语料完整性：14 部受控规范文件全部存在、条号连续、文本非空。"""
+        assert len(corpus.laws) == 14
+        assert len(corpus.articles) == 2380
         for law_id in corpus.laws:
             arts = corpus.laws[law_id]["articles"]
             nos = [a["no"] for a in arts]

@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "updated": "2026-08-30",
-  "note": "法条通俗解读库（决策项4·双轨）：AI 起草的解读一律 status=draft，须经法律专业人员人工审核后把 status 改为 approved 并填写 reviewer 才会经 API 对外展示（server/app/explains.py 仅返回 approved）。审核流程：①对照「官方原文」（server/data/laws/ 证据快照）逐句核对释义；②确认无夸大、无承诺性表述、无遗漏例外情形；③填写 reviewer 真实姓名与日期。条目引用的 (law_id, no) 必须存在于语料，加载器启动期校验。",
+  "note": "法条通俗解读库（决策项4·双轨）：AI 起草的解读一律 status=draft，须由内容负责人逐条对照证据快照审核，改为 approved 并填写 reviewer 后才会经 API 对外展示（server/app/explains.py 仅返回 approved）。审核流程：①对照「官方原文」（server/data/laws/ 证据快照）逐句核对释义；②确认无夸大、无承诺性表述、无遗漏例外情形；③记录真实审核署名与日期。该署名是内容发布审计记录，不代表律师资格核验。条目引用的 (law_id, no) 必须存在于语料，加载器启动期校验。",
   "explains": [
     {
       "law_id": "cl-2013",
@@ -11,9 +11,7 @@
       "author": "AI 起草（GLM）",
       "reviewer": "qa-operator",
       "date": "2026-08-30",
-      "source_note": "依据《消费者权益保护法》第25条官方原文（证据快照语料）撰写，未引入原文之外的法律依据",
-      "reviewer_license_no": null,
-      "reviewer_role": "运营方"
+      "source_note": "依据《消费者权益保护法》第25条官方原文（证据快照语料）撰写，未引入原文之外的法律依据"
     },
     {
       "law_id": "lcl-2012",
@@ -23,9 +21,7 @@
       "author": "AI 起草（GLM）",
       "reviewer": "qa-operator",
       "date": "2026-08-30",
-      "source_note": "依据《劳动合同法》第19条官方原文（证据快照语料）撰写",
-      "reviewer_license_no": null,
-      "reviewer_role": "运营方"
+      "source_note": "依据《劳动合同法》第19条官方原文（证据快照语料）撰写"
     },
     {
       "law_id": "civl-2020",
@@ -35,9 +31,7 @@
       "author": "AI 起草（GLM）",
       "reviewer": "qa-operator",
       "date": "2026-08-30",
-      "source_note": "依据《民法典》第188条官方原文（证据快照语料）撰写；「时效届满不等于债权消灭」表述以原文「义务人同意履行的，不得以诉讼时效期间届满为由抗辩」为准",
-      "reviewer_license_no": null,
-      "reviewer_role": "运营方"
+      "source_note": "依据《民法典》第188条官方原文（证据快照语料）撰写；「时效届满不等于债权消灭」表述以原文「义务人同意履行的，不得以诉讼时效期间届满为由抗辩」为准"
     },
     {
       "law_id": "civl-2020",
@@ -47,9 +41,7 @@
       "author": "AI 起草（GLM）",
       "reviewer": "qa-operator",
       "date": "2026-08-30",
-      "source_note": "依据《民法典》第497条官方原文（证据快照语料）撰写；第498条仅为理解性指引并已注明条号",
-      "reviewer_license_no": null,
-      "reviewer_role": "运营方"
+      "source_note": "依据《民法典》第497条官方原文（证据快照语料）撰写；第498条仅为理解性指引并已注明条号"
     },
     {
       "law_id": "lcl-2012",
@@ -59,9 +51,7 @@
       "author": "AI 起草（GLM）",
       "reviewer": "qa-operator",
       "date": "2026-08-30",
-      "source_note": "依据《劳动合同法》第9条官方原文（证据快照语料）撰写；「向劳动行政部门投诉」对应第84条法律责任，审核时请一并核对",
-      "reviewer_license_no": null,
-      "reviewer_role": "运营方"
+      "source_note": "依据《劳动合同法》第9条官方原文（证据快照语料）撰写；「向劳动行政部门投诉」对应第84条法律责任，审核时请一并核对"
     },
     {
       "law_id": "cl-2013",
@@ -71,9 +61,7 @@
       "author": "AI 起草（GLM）",
       "reviewer": "qa-operator",
       "date": "2026-08-30",
-      "source_note": "依据《中华人民共和国消费者权益保护法》第24条官方原文（证据快照语料）撰写",
-      "reviewer_license_no": null,
-      "reviewer_role": "运营方"
+      "source_note": "依据《中华人民共和国消费者权益保护法》第24条官方原文（证据快照语料）撰写"
     },
     {
       "law_id": "lcl-2012",
@@ -83,9 +71,7 @@
       "author": "AI 起草（GLM）",
       "reviewer": null,
       "date": "2026-08-30",
-      "source_note": "依据《中华人民共和国劳动合同法》第82条官方原文（证据快照语料）撰写",
-      "reviewer_license_no": null,
-      "reviewer_role": null
+      "source_note": "依据《中华人民共和国劳动合同法》第82条官方原文（证据快照语料）撰写"
     },
     {
       "law_id": "civl-2020",

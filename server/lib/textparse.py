@@ -90,7 +90,8 @@ def clean_html_to_text(html: str) -> str:
 
 def _is_marker_position(text: str, idx: int) -> bool:
     prev_ch = text[idx - 1] if idx > 0 else "\n"
-    return prev_ch in "\n　 \t*'\"（(、。>"
+    # 人大网旧页面常用 NBSP 缩进条文；它与普通/全角空格同为合法行首空白。
+    return prev_ch in "\n　 \t*'\"（(、。>\u00a0"
 
 
 def _heading_line_start(text: str, idx: int) -> bool:

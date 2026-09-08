@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-09-08",
+  "collection_policy": {
+    "scope": "仅登记能够回溯到官方机关、高校法学院或正式出版物页面的具名解读；不把搜索摘要、匿名自媒体或模型生成文字当作专家意见。",
+    "copyright": "未取得全文转载授权时，仅保存项目自行撰写的摘要、必要元数据与原页面链接，不保存或再发布全文。",
+    "accuracy": "没有独立专家标注评测集时，不展示正确率、置信概率或类似数字；证据覆盖分只描述已收集证据层级，不代表观点正确。"
+  },
+  "commentaries": [
+    {
+      "id": "pipl-13-cufe-roundtable-2021",
+      "law_id": "pipl-2021",
+      "article_nos": [13],
+      "source_kind": "academic_roundtable",
+      "title": "《个人信息保护法》实施疑难问题圆桌对话",
+      "authors": [
+        {"name": "程啸", "credential": "清华大学法学院教授", "credential_source_url": "https://law.cufe.edu.cn/info/1026/44040.htm"},
+        {"name": "姚佳", "credential": "中国社会科学院法学研究所教授", "credential_source_url": "https://law.cufe.edu.cn/info/1026/44040.htm"},
+        {"name": "刘权", "credential": "中央财经大学法学院副教授", "credential_source_url": "https://law.cufe.edu.cn/info/1026/44040.htm"}
+      ],
+      "institution": "中央财经大学法学院",
+      "published_at": "2021-11-08",
+      "accessed_at": "2026-09-08",
+      "source_url": "https://law.cufe.edu.cn/info/1026/44040.htm",
+      "evidence_grade": "强",
+      "rights": "link-and-original-summary",
+      "summary": "围绕第13条个人信息处理的合法性基础，三位学者分别讨论了同意与其他合法性基础的关系，以及“合理”“必需”等不确定概念需要结合基本原则、比例原则和具体场景作体系解释。该讨论存在不同理解，不能脱离处理目的、主体关系与具体事实直接套用。",
+      "scope_note": "学术讨论记录，不是立法解释、司法解释或个案法律意见。"
+    },
+    {
+      "id": "pipl-13-27-zhao-2024",
+      "law_id": "pipl-2021",
+      "article_nos": [13, 27],
+      "source_kind": "academic_article",
+      "title": "已公开个人信息合理使用的解释方式与司法认定——以自动化决策应用场景为例",
+      "authors": [
+        {"name": "赵精武", "credential": "论文作者；页面未列职称，文章载于《中国应用法学》2024年第3期", "credential_source_url": "https://fxy.buaa.edu.cn/info/1143/8669.htm"}
+      ],
+      "institution": "北京航空航天大学法学院网站",
+      "published_at": "2024-05-30",
+      "accessed_at": "2026-09-08",
+      "source_url": "https://fxy.buaa.edu.cn/info/1143/8669.htm",
+      "evidence_grade": "中",
+      "rights": "link-and-original-summary",
+      "summary": "文章讨论第13条与第27条对已公开个人信息处理的共同约束，主张“合理范围”不能仅凭信息已经公开而推定，应结合合法、正当、诚信、必要等原则，以及处理目的、方式、明确拒绝和是否对个人权益有重大影响等因素判断。",
+      "scope_note": "学术文章摘要；来源页未列作者职称，系统不据姓名推断资格。"
+    },
+    {
+      "id": "admin-review-63-64-yu-2024",
+      "law_id": "admin-review-2023",
+      "article_nos": [63, 64],
+      "source_kind": "academic_commentary",
+      "title": "以变更决定为核心的复议决定体系更能彰显复议功能",
+      "authors": [
+        {"name": "余凌云", "credential": "清华大学法学院教授、博士生导师", "credential_source_url": "https://www.moj.gov.cn/pub/sfbgw/fzgz/fzgzxzzf/fzgzfygz/202401/t20240105_492936.html"}
+      ],
+      "institution": "司法部网站（来源：法治日报）",
+      "published_at": "2024-01-05",
+      "accessed_at": "2026-09-08",
+      "source_url": "https://www.moj.gov.cn/pub/sfbgw/fzgz/fzgzxzzf/fzgzfygz/202401/t20240105_492936.html",
+      "evidence_grade": "强",
+      "rights": "link-and-original-summary",
+      "summary": "文章从行政复议与行政诉讼的功能差异解释第63条变更决定和第64条撤销决定：复议机关的审查可覆盖合法性与适当性，符合条件时可直接变更；撤销并责令重作仍需结合事实查明、程序补正和职权边界判断。",
+      "scope_note": "专家学理解释，不代替行政复议机关或法院对具体案件作出的判断。"
+    },
+    {
+      "id": "admin-review-11-63-cao-2024",
+      "law_id": "admin-review-2023",
+      "article_nos": [11, 63],
+      "source_kind": "official-expert-commentary",
+      "title": "司法部贯彻实施新修订行政复议法典型案例专家点评",
+      "authors": [
+        {"name": "曹鎏", "credential": "中国政法大学法治政府研究院副院长、教授，国家监察与反腐败研究中心主任", "credential_source_url": "https://www.moj.gov.cn/pub/sfbgwapp/bnywapp/202406/t20240612_500276.html"}
+      ],
+      "institution": "中华人民共和国司法部",
+      "published_at": "2024-06-12",
+      "accessed_at": "2026-09-08",
+      "source_url": "https://www.moj.gov.cn/pub/sfbgwapp/bnywapp/202406/t20240612_500276.html",
+      "evidence_grade": "强",
+      "rights": "link-and-original-summary",
+      "summary": "司法部发布的典型案例及专家点评说明，新法扩展行政复议范围并强化合法性与适当性双重审查；对行政协议等事项是否属于受案范围，以及变更决定能否适用，仍需结合行政行为类型、争议事实、证据和法定条件逐项判断。",
+      "scope_note": "官方发布的典型案例专家点评具有较强参考价值，但不是对其他案件当然适用的裁判规则。"
+    }
+  ]
+}

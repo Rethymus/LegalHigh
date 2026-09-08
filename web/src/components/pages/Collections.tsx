@@ -1,10 +1,11 @@
 // FRAME 18 · Collections —— 我的收藏（真实数据：本机收藏夹 + server 研究记录）
 // 收藏来自各页星标（CaseDetail/LawDetail 真实写入 localStorage）；研究来自本机研究列表。
 import { useMemo, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useOutletContext } from 'react-router-dom'
 import { Icon } from '../icons'
 import { EmptyState, PageHeader } from '../ui'
 import { loadFavs, loadFavsState, removeFav, type FavItem } from '../../lib/api'
+import type { AppOutletContext } from '../AppShell'
 
 const FOLDERS = ['全部', '法条', '案例', '研究']
 interface ResearchRef { rid: string; question: string; ts: string }
@@ -26,17 +27,19 @@ function loadResearchList(): { items: ResearchRef[]; warning: string | null } {
 }
 
 export default function Collections() {
+  const { audience } = useOutletContext<AppOutletContext>()
   const [initial] = useState(() => ({ favs: loadFavsState(), research: loadResearchList() }))
   const [favs, setFavs] = useState<FavItem[]>(initial.favs.items)
   const [researchList] = useState<ResearchRef[]>(initial.research.items)
   const [storageWarning] = useState<string | null>(initial.favs.warning ?? initial.research.warning)
   const [folder, setFolder] = useState('全部')
   const [q, setQ] = useState('')
+  const folders = audience === 'public' ? FOLDERS.filter((item) => item !== '研究') : FOLDERS
 
   const all = useMemo(() => [
     ...favs.map((f) => ({ key: f.key, type: f.type, title: f.title, meta: f.meta, to: f.to, removable: true })),
-    ...researchList.map((r) => ({ key: r.rid, type: '研究', title: r.question, meta: `本机研究记录 · ${r.ts.slice(0, 10)}`, to: `/research/${r.rid}`, removable: false })),
-  ], [favs, researchList])
+    ...(audience === 'public' ? [] : researchList).map((r) => ({ key: r.rid, type: '研究', title: r.question, meta: `本机研究记录 · ${r.ts.slice(0, 10)}`, to: `/research/${r.rid}`, removable: false })),
+  ], [audience, favs, researchList])
   const items = useMemo(() => all.filter((it) => {
     if (folder !== '全部' && it.type !== folder) return false
     if (q && !(it.title + it.meta).toLowerCase().includes(q.toLowerCase())) return false
@@ -47,11 +50,11 @@ export default function Collections() {
     <div className="page" style={{ maxWidth: 'none' }}>
       <PageHeader
         title="我的收藏"
-        sub="各页点击星标即可收藏（法条/案例/研究），收藏与浏览记录仅保存在本机浏览器。"
+        sub={audience === 'public' ? '各页点击星标即可收藏法条与案例，收藏与浏览记录仅保存在本机浏览器。' : '各页点击星标即可收藏法条、案例与研究，收藏与浏览记录仅保存在本机浏览器。'}
         actions={
           <>
             <button className="btn btn-ghost btn-sm" onClick={() => {
-              const blob = new Blob([JSON.stringify({ favs, research: researchList }, null, 2)], { type: 'application/json' })
+              const blob = new Blob([JSON.stringify({ favs, research: audience === 'public' ? [] : researchList }, null, 2)], { type: 'application/json' })
               const a = document.createElement('a')
               a.href = URL.createObjectURL(blob)
               a.download = 'legalhigh_favs.json'
@@ -67,7 +70,7 @@ export default function Collections() {
         <aside className="panel" style={{ maxHeight: 'calc(100vh - 300px)' }}>
           <div className="panel-h"><Icon name="folder" size={14} />文件夹</div>
           <div className="panel-b">
-            {FOLDERS.map((fd) => (
+            {folders.map((fd) => (
               <button key={fd} className={'lrow' + (folder === fd ? ' is-on' : '')} style={{ width: '100%', textAlign: 'left' }} onClick={() => setFolder(fd)}>
                 <Icon name="folder" size={13} className="muted" />
                 <span className="lrow-t">{fd}</span>

@@ -2,7 +2,7 @@
 """从 docs/research/evidence/ 快照构建结构化法条语料 → server/data/laws/。
 
 数据纪律（对应 AGENTS.md 硬约束 1「不编造」）：
-- 唯一输入是本地证据快照（维基文库 parse API JSON / 页面 HTML、gov.cn 页面 HTML），
+- 唯一输入是本地证据快照（维基文库转录、gov.cn 与 npc.gov.cn 官方页面），
   每条语料的 source 字段记录 URL、pageid/revid、抓取日期与快照文件名，可复核。
 - 条文切分采用「顺序递增校验」：第 N+1 条必须紧跟第 N 条，正文交叉引用的条号不会误切。
 - 元数据（公布字号、生效日期等）只从快照文本提取；提取不到就留空，不臆造。
@@ -28,6 +28,7 @@ EVIDENCE_DIR = (REPO_ROOT / "docs" / "research" / "evidence").resolve()
 OUT_DIR = REPO_ROOT / "server" / "data" / "laws"
 
 FETCH_DATE = "2026-08-29"
+EXPANSION_FETCH_DATE = "2026-09-08"
 WS_BASE = "https://zh.wikisource.org/wiki/"
 SAFE_FILE = re.compile(r"^[\w\u4e00-\u9fff()（）.-]+\.(json|html)$")
 VERSION_META_FILE = "official_version_effective_dates_2026-09-01.json"
@@ -43,6 +44,10 @@ LAW_FILES = {
     "genai_html": "生成式AI办法_govcn.html",
     "htjs_json": "ws_合同编通则解释2023.json",
     "wlxf_json": "ws_网络消费纠纷规定2022.json",
+    "pipl_npc_html": "npc_个人信息保护法2021.html",
+    "legal_aid_npc_html": "npc_法律援助法2021.html",
+    "admin_review_npc_html": "npc_行政复议法2023.html",
+    "admin_litigation_npc_html": "npc_行政诉讼法2017.html",
 }
 
 
@@ -203,6 +208,38 @@ def build_govcn_law(key, law_id, title, meta):
     }
 
 
+def build_npc_law(key, law_id, title, meta):
+    """从中国人大网官方页面快照构建现行文本。
+
+    2026-09-08 捕获时本机与 npc.gov.cn 的 HTTPS 握手失败，故原始快照经同域 HTTP
+    只读取得，并与 HTTPS 页面搜索索引、首末条及官方条数交叉核对。对外始终给出 HTTPS
+    canonical URL；该传输限制写入 source.note，不伪装为端到端 TLS 快照。
+    """
+    html = read_evidence_text(key)
+    articles, expected = split_articles(clean_html_to_text(html))
+    meta = dict(meta)
+    url = meta.pop("_url")
+    return {
+        "law_id": law_id,
+        "title": title,
+        **meta,
+        "effective_date_evidence": date_evidence(
+            meta, title=title, url=url, accessed_at=EXPANSION_FETCH_DATE,
+            grade="强", source_kind="official-legislature-publication",
+        ),
+        "source": {
+            "kind": "official-legislature-publication",
+            "url": url,
+            "snapshot": "docs/research/evidence/" + LAW_FILES[key],
+            "fetched_at": EXPANSION_FETCH_DATE,
+            "sha256": snapshot_sha256(key),
+            "note": "中国人大网官方页面；本地捕获因 HTTPS 握手失败使用同域 HTTP 传输，已与 HTTPS 索引及条数交叉核验",
+        },
+        "authority_pointer": "国家法律法规数据库 https://flk.npc.gov.cn",
+        "articles": articles,
+    }
+
+
 # 预期条数（用于构建一致性提示；以仓库证据快照切分结果与 gov.cn 已保存页面核验）：
 # 民法典 1260 / 消保法(2013修正) 63 / 劳动合同法 98 / 律师法 60 / 电商法 89 / 消保条例 53 / 生成式AI办法 24
 # 民诉法(2023修正) 306：以快照切分+顺序递增校验为准（末条"试行废止"表述疑为维基文库页面残留，
@@ -216,6 +253,10 @@ EXPECTED_COUNTS = {
     "pcl-2023": 306,
     "crpl-imp-2024": 53,
     "genai-2023": 24,
+    "pipl-2021": 74,
+    "legal-aid-2021": 71,
+    "admin-review-2023": 90,
+    "admin-litigation-2017": 103,
 }
 
 
@@ -304,6 +345,46 @@ def main():
                 "_url": "https://www.gov.cn/zhengce/zhengceku/202307/content_6891752.htm",
             },
         ),
+        build_npc_law(
+            "pipl_npc_html", "pipl-2021", "中华人民共和国个人信息保护法",
+            {
+                "status": "现行有效",
+                "promulgation": {"date": "2021-08-20", "organ": "全国人民代表大会常务委员会"},
+                "promulgation_instrument": "中华人民共和国主席令第九十一号",
+                "effective_date": "2021-11-01",
+                "_url": "https://www.npc.gov.cn/WZWSREL25wYy9jMi9jMzA4MzQvMjAyMTA4L3QyMDIxMDgyMF8zMTMwODguaHRtbD9yZWY9aW1i",
+            },
+        ),
+        build_npc_law(
+            "legal_aid_npc_html", "legal-aid-2021", "中华人民共和国法律援助法",
+            {
+                "status": "现行有效",
+                "promulgation": {"date": "2021-08-20", "organ": "全国人民代表大会常务委员会"},
+                "promulgation_instrument": "中华人民共和国主席令第九十三号",
+                "effective_date": "2022-01-01",
+                "_url": "https://www.npc.gov.cn/npc/c2/c30834/202108/t20210820_313079.html",
+            },
+        ),
+        build_npc_law(
+            "admin_review_npc_html", "admin-review-2023", "中华人民共和国行政复议法",
+            {
+                "status": "现行有效（2023修订）",
+                "promulgation": {"date": "2023-09-01", "organ": "全国人民代表大会常务委员会"},
+                "promulgation_instrument": "中华人民共和国主席令第九号",
+                "effective_date": "2024-01-01",
+                "_url": "https://www.npc.gov.cn/npc/c2/c30834/202309/t20230901_431409.html",
+            },
+        ),
+        build_npc_law(
+            "admin_litigation_npc_html", "admin-litigation-2017", "中华人民共和国行政诉讼法",
+            {
+                "status": "现行有效（2017修正）",
+                "promulgation": {"date": "2017-06-27", "organ": "全国人民代表大会常务委员会"},
+                "promulgation_instrument": "中华人民共和国主席令第七十一号",
+                "effective_date": "2017-07-01",
+                "_url": "https://www.npc.gov.cn/zgrdw/npc/xinwen/2017-06/29/content_2024894.htm",
+            },
+        ),
     ]
 
     manifest = []
@@ -325,7 +406,7 @@ def main():
             "promulgation_instrument": law.get("promulgation_instrument"),
             "article_count": got, "expected_count": expect, "missing_numbers": gaps[:10],
             "source_url": law["source"]["url"], "snapshot": law["source"]["snapshot"],
-            "fetched_at": FETCH_DATE, "snapshot_sha256": law["source"]["sha256"],
+            "fetched_at": law["source"]["fetched_at"], "snapshot_sha256": law["source"]["sha256"],
             "output_sha256": output_sha256,
         })
         print(f"[{law['law_id']}] {law['title']}: {got} 条 {flag} | 缺号: {gaps[:10]}")
@@ -333,8 +414,9 @@ def main():
             a0 = law["articles"][0]
             print(f"    首条 {a0['label']}: {a0['text'][:50]}...")
     manifest_path = (OUT_DIR / "manifest.json").resolve()
+    latest_snapshot_date = max(item["fetched_at"] for item in manifest)
     manifest_path.write_text(
-        json.dumps({"built_at": datetime.datetime.now().isoformat(), "fetch_date": FETCH_DATE, "laws": manifest}, ensure_ascii=False, indent=2),
+        json.dumps({"built_at": datetime.datetime.now().isoformat(), "fetch_date": latest_snapshot_date, "laws": manifest}, ensure_ascii=False, indent=2),
         encoding="utf-8",
         newline="\n",
     )

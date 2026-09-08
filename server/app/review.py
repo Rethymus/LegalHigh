@@ -7,13 +7,54 @@
 - 审查点范式对齐 CUAD（NeurIPS 2021，41 类条款标注）：AI 意见绑定到条款原文最小片段。
 """
 import re
+import unicodedata
 
 from lib.textparse import cn_to_int
 from .corpus import get_corpus
 
 CLAUSE_HEAD_RE = re.compile(r"^第([零〇一二三四五六七八九十百千]+)条")
 AMOUNT_RE = re.compile(r"(\d+(?:\.\d+)?)\s*%")
-PCT_CAP_RE = re.compile(r"(不得超过|不超过|最高不超过|以.{0,6}为限)\s*(\d+(?:\.\d+)?)\s*%")
+_CN_PERCENT_DIGITS = "零〇一二三四五六七八九十百千两点"
+_PERCENT_VALUE = rf"(?:[0-9０-９]+(?:[.．][0-9０-９]+)?\s*[％%]|百分之[{_CN_PERCENT_DIGITS}]+)"
+PERCENT_RE = re.compile(_PERCENT_VALUE)
+# 兼容「不得超过 20%」与更常见的「以合同总价的百分之二十为限」两种写法。
+PCT_CAP_RE = re.compile(
+    rf"(?:不得超过|不超过|最高不超过)\s*{_PERCENT_VALUE}|"
+    rf"以[^。；！？\n]{{0,40}}?{_PERCENT_VALUE}\s*为限|"
+    rf"以[^。；！？\n]{{0,40}}?为限\s*{_PERCENT_VALUE}"
+)
+
+_CN_DIGITS = {"零": 0, "〇": 0, "一": 1, "二": 2, "三": 3, "四": 4,
+              "五": 5, "六": 6, "七": 7, "八": 8, "九": 9}
+
+
+def _cn_number_to_float(raw: str) -> float | None:
+    """解析百分比中的中文数字；不识别的写法返回 None 而不是猜测。"""
+    value = raw.replace("两", "二")
+    if "点" in value:
+        whole, fraction = value.split("点", 1)
+        if not fraction or any(ch not in _CN_DIGITS for ch in fraction):
+            return None
+        whole_value = cn_to_int(whole or "零")
+        if whole_value < 0:
+            return None
+        frac_value = "".join(str(_CN_DIGITS[ch]) for ch in fraction)
+        return float(whole_value) + int(frac_value) / (10 ** len(frac_value))
+    number = cn_to_int(value)
+    return float(number) if number >= 0 else None
+
+
+def _parse_percentage(raw: str) -> float | None:
+    normalized = unicodedata.normalize("NFKC", raw)
+    normalized = re.sub(r"\s+", "", normalized)
+    if normalized.startswith("百分之"):
+        return _cn_number_to_float(normalized[3:])
+    if normalized.endswith("%"):
+        try:
+            return float(normalized[:-1])
+        except ValueError:
+            return None
+    return None
 
 
 def segment_clauses(text: str):
@@ -62,7 +103,8 @@ def segment_clauses(text: str):
 
 
 def _numbers_in(text: str):
-    return [float(x) for x in AMOUNT_RE.findall(text)]
+    return [value for m in PERCENT_RE.finditer(text)
+            if (value := _parse_percentage(m.group(0))) is not None]
 
 
 def _has_cap(text: str):
@@ -112,7 +154,7 @@ def build_checkpoints():
          "detail": "条款约定了较高比例的违约金/滞纳金/逾期利息。依《民法典》第585条，约定的违约金过分高于造成的损失的，人民法院或仲裁机构可以根据当事人请求予以适当减少；过高的比例条款在诉讼中存在被酌减风险。",
          "match": _l1_match,
          "citation": ("civl-2020", 585),
-         "suggestion": "建议将比例调整至与可预见损失相匹配的水平（如日万分之三至万分之五区间），或设置总额上限条款。"},
+         "suggestion": "建议将比例调整至与可预见损失相匹配的水平，或设置总额上限条款。"},
         {"id": "L2", "category": "liability", "risk": "high",
          "title": "单方免责/概不负责条款",
          "detail": "条款存在免除或减轻己方责任的表述。依《民法典》第506条，造成对方人身损害的免责条款、因故意或重大过失造成对方财产损失的免责条款无效；第497条下格式条款不合理免责亦无效。",
@@ -159,8 +201,8 @@ def build_checkpoints():
          "suggestion": "增加「调整需提前30日书面通知并经对方书面同意，对方不同意的可解除且不担责」的安排。"},
         {"id": "F3", "category": "fee", "risk": "high",
          "title": "定金比例超过法定上限",
-         "detail": "定金比例达到或超过主合同标的额的20%上限。依《民法典》第586条，定金不得超过主合同标的额的百分之二十，超过部分不产生定金的效力。",
-         "match": lambda t: re.search(r"定金", t) and _pct_near(t, "定金") >= 20,
+         "detail": "定金比例超过主合同标的额的20%上限。依《民法典》第586条，定金不得超过主合同标的额的百分之二十，超过部分不产生定金的效力。",
+         "match": lambda t: bool(re.search(r"定金", t)) and _pct_near(t, "定金") > 20,
          "citation": ("civl-2020", 586),
          "suggestion": "将定金比例降至20%以内；超出部分可改为预付款并约定返还规则。"},
         {"id": "F4", "category": "fee", "risk": "medium",
@@ -231,13 +273,9 @@ def analyze_contract(text: str, title: str | None = None):
     corpus = get_corpus()
     clauses = segment_clauses(text)
     findings = []
-    checked_texts = [c["text"] for c in clauses]
+    rule_errors = []
     whole = text
     for cp in get_checkpoints():
-        if cp["id"] == "L6":  # 全文级检查
-            targets = [whole]
-        else:
-            targets = checked_texts
         fired = False
         for c in clauses:
             target = whole if cp["id"] == "L6" else c["text"]
@@ -245,8 +283,11 @@ def analyze_contract(text: str, title: str | None = None):
                 break
             try:
                 hit = cp["match"](target)
-            except Exception:  # noqa: BLE001
-                hit = False
+            except Exception as exc:  # noqa: BLE001
+                # 规则异常不能伪装成「未检出」；跳过该规则并将结果标为不完整。
+                rule_errors.append({"checkpoint_id": cp.get("id", "unknown"),
+                                    "error": type(exc).__name__})
+                break
             if not hit:
                 continue
             fired = True
@@ -277,11 +318,19 @@ def analyze_contract(text: str, title: str | None = None):
             for cat in ["fee", "account", "liability"]
         },
     }
+    analysis_incomplete = bool(rule_errors)
     return {
         "title": title or "未命名合同",
         "clauses": [{"id": c["id"], "label": c["label"], "heading": c["heading"], "text": c["text"]} for c in clauses],
         "findings": findings,
         "summary": summary,
         "disclaimer": "审查输出为「风险提示与修改建议」，不构成法律意见；采纳前请由执业律师复核确认。",
-        "engine_meta": {"checkpoint_count": len(get_checkpoints()), "clause_count": len(clauses)},
+        "analysis_incomplete": analysis_incomplete,
+        "engine_meta": {
+            "checkpoint_count": len(get_checkpoints()),
+            "clause_count": len(clauses),
+            "analysis_complete": not analysis_incomplete,
+            "analysis_incomplete": analysis_incomplete,
+            "errors": rule_errors,
+        },
     }

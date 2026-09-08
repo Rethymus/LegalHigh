@@ -3,6 +3,7 @@
 // 真实案件由 server 提供并标注来源与可信等级；生产状态不得由前端静态伪造。
 import { useEffect, useState } from 'react'
 import type { IconName } from '../components/icons'
+import type { AudienceMode } from '../lib/audience'
 
 /* ================= 法条语料（运行时加载，构建自 server/data/laws） ================= */
 export interface LawArticle { no: number; label: string; chapter: string; text: string }
@@ -88,23 +89,24 @@ export const WARM_TIPS = {
   },
 }
 
-export interface NavEntry { to: string; icon: IconName; label: string }
+export interface NavEntry { to: string; icon: IconName; label: string; audiences?: AudienceMode[] }
 export const NAV_MAIN: NavEntry[] = [
   { to: '/', icon: 'home', label: '首页' },
+  { to: '/needs', icon: 'compass', label: '事实与证据梳理' },
   { to: '/search', icon: 'lawSearch', label: '法律检索' },
-  { to: '/research', icon: 'sparkle', label: 'AI 研究' },
+  { to: '/research', icon: 'sparkle', label: '来源研究', audiences: ['student', 'professional'] },
   { to: '/cases', icon: 'caseSearch', label: '案例检索' },
   { to: '/laws', icon: 'article', label: '法规条文' },
-  { to: '/contracts', icon: 'shield', label: '合同审查' },
-  { to: '/draft', icon: 'docpen', label: '文书工具' },
-  { to: '/workspace', icon: 'briefcase', label: '专业工作台' },
-  { to: '/learning', icon: 'gradcap', label: '学习中心' },
-  { to: '/comparative', icon: 'globe', label: '跨法域对比' },
+  { to: '/contracts', icon: 'shield', label: '合同审查', audiences: ['professional'] },
+  { to: '/draft', icon: 'docpen', label: '文书工具', audiences: ['professional'] },
+  { to: '/workspace', icon: 'briefcase', label: '专业工作台', audiences: ['professional'] },
+  { to: '/learning', icon: 'gradcap', label: '学习中心', audiences: ['student'] },
+  { to: '/comparative', icon: 'globe', label: '跨法域对比', audiences: ['student', 'professional'] },
   { to: '/data-sources', icon: 'database', label: '数据洞察' },
 ]
 export const NAV_SUB: NavEntry[] = [
   { to: '/collections', icon: 'star', label: '我的收藏' },
-  { to: '/audit', icon: 'history', label: '历史记录' },
+  { to: '/audit', icon: 'history', label: '历史记录', audiences: ['professional'] },
 ]
 
 /* ================= 案例库已迁移至 server（/api/cases，server/data/cases.json） =================
@@ -112,8 +114,8 @@ export const NAV_SUB: NavEntry[] = [
 export type SourceKind = 'law' | 'case' | 'academic' | 'foreign' | 'ai'
 export type Grade = '强' | '中' | '弱'
 
-/* ================= AI 研究工作台已迁移至 server（/api/research/memo，BM25 多查询检索） =================
-   证据与引用由 server citation_of 收口；分析笔记/结论文稿为研究者本机撰写（localStorage）。 */
+/* ================= 来源研究工作台已迁移至 server（/api/research/memo，BM25 多查询检索） =================
+   证据与引用由 server citation_of 收口；分析笔记/研究记录为研究者本机撰写（localStorage）。 */
 export const PIPELINE_STEPS = ['理解问题', '检索法条', '检索案例', '验证来源', '分析冲突', '生成回答', 'Citation Check']
 
 /* ================= 学习中心 ================= */

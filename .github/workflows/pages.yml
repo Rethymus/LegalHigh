@@ -3,6 +3,8 @@ name: pages
 # GitHub Pages 静态说明站：只发布前端壳与法规证据快照。
 # 不复制 server 检索逻辑，不拦截 /api，也不把浏览器内结果冒充正式服务。
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
 
 permissions:

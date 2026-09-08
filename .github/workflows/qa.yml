@@ -11,6 +11,8 @@ on:
 jobs:
   qa:
     runs-on: ubuntu-latest
+    env:
+      LH_DB_PATH: ':memory:'
     steps:
       - uses: actions/checkout@v4
 
@@ -40,6 +42,7 @@ jobs:
           cd web
           npm ci
           npm run build
+          npm run lint
 
       - name: Gate 3 data-discipline grep
         run: |

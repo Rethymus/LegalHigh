@@ -3,6 +3,8 @@
 import sys
 from pathlib import Path
 
+import pytest
+
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from app import review  # noqa: E402
@@ -96,6 +98,36 @@ def test_f3_fires_when_deposit_itself_exceeds():
 定金为合同总额的 30%。"""
     r = review.analyze_contract(text, "定金超标")
     assert "F3" in [f["checkpoint_id"] for f in r["findings"]]
+
+
+def test_chinese_percentages_parse_and_f3_is_strictly_over_20():
+    """中文百分比不能漏检；《民法典》第586条的 20% 是上限而非超限值。"""
+    assert "L1" in [f["checkpoint_id"] for f in review.analyze_contract(
+        "第一条 任何一方违约的，按合同总价的百分之三十支付违约金。"
+    )["findings"]]
+    assert "F3" not in [f["checkpoint_id"] for f in review.analyze_contract(
+        "第一条 定金为合同总价的百分之二十。"
+    )["findings"]]
+    assert "F3" in [f["checkpoint_id"] for f in review.analyze_contract(
+        "第一条 定金为合同总价的百分之二十一。"
+    )["findings"]]
+
+
+def test_rule_matcher_exception_marks_result_incomplete(monkeypatch):
+    """规则异常必须可见，不能静默伪装成「未检出风险」。"""
+    checkpoints = review.get_checkpoints()
+    broken = dict(checkpoints[0])
+
+    def raise_rule(_text):
+        raise RuntimeError("synthetic rule failure")
+
+    broken["match"] = raise_rule
+    monkeypatch.setattr(review, "get_checkpoints", lambda: [broken, *checkpoints[1:]])
+    result = review.analyze_contract("第一条 服务内容：提供服务。", "规则异常")
+    assert result["analysis_incomplete"] is True
+    assert result["engine_meta"]["analysis_complete"] is False
+    assert result["engine_meta"]["analysis_incomplete"] is True
+    assert result["engine_meta"]["errors"] == [{"checkpoint_id": broken["id"], "error": "RuntimeError"}]
 
 
 def test_first_unnumbered_line_not_duplicated():

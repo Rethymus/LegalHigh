@@ -5,9 +5,10 @@
 // 纪律：默认巡检只读。只有同时传入 --write-e2e --isolated-db 才执行创建式 E2E；
 //       调用方必须把后端指向唯一临时 LH_DB_PATH，脚本不签发、不批注终态。
 import { spawn } from 'node:child_process'
-import { mkdirSync, writeFileSync } from 'node:fs'
+import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs'
 import { createServer } from 'node:net'
-import { dirname, resolve } from 'node:path'
+import { tmpdir } from 'node:os'
+import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
@@ -46,12 +47,22 @@ const needsIdentity = pageHeader('事实与证据梳理')
 const lawDetailIdentity = pageHeader('《民法典》第二十五条')
 const contractIdentity = pageHeader('新合同审查')
 const ROUTES = [
+  { name: '00-first-use-audience', path: '/', audience: 'none', fullPage: true, identity: { selector: '#audience-title', text: '选择适合你的使用视图' } },
+  { name: '00b-first-use-select-public', path: '/', audience: 'none', fullPage: true, identity: dashboardIdentity, afterText: '事实与证据梳理', steps: [
+    { t: 'eval', expr: `(() => { const b=[...document.querySelectorAll('.audience-card')].find(x=>x.textContent.includes('普通民众')); if(!b)return 'no-public-choice'; b.click(); return 'selected-public' })()` },
+    { t: 'wait', ms: 500 },
+    { t: 'eval', expr: `localStorage.getItem('lh:audience:v3')?.includes('public') ? 'preference-persisted' : 'failed-preference-persistence'` },
+  ] },
+  { name: '00c-corrupt-audience-recovers', path: '/', audience: 'corrupt', identity: { selector: '#audience-title', text: '选择适合你的使用视图' } },
+  { name: '00d-first-use-audience-narrow', path: '/', audience: 'none', viewport: { width: 390, height: 844 }, fullPage: true, identity: { selector: '#audience-title', text: '选择适合你的使用视图' } },
   { name: '01-dashboard', path: '/', fullPage: true, identity: dashboardIdentity },
   { name: '02-dashboard-dark', path: '/', dark: true, identity: dashboardIdentity },
   { name: '03-needs', path: '/needs', fullPage: true, identity: needsIdentity },
-  { name: '04-needs-run', path: '/needs', fullPage: true, identity: needsIdentity, afterText: '可能相关的官方法律依据', steps: [
-    // 五步向导：填核心事件 → 连续下一步 → 形成求助准备单并检索
+  { name: '04-needs-run', path: '/needs', audience: 'public', fullPage: true, identity: needsIdentity, afterText: '可能涉及的问题方向', steps: [
+    // 六步向导：填核心事件 → 连续下一步 → 形成求助准备单并检索
     { t: 'eval', expr: `(() => { const ta = document.querySelector('textarea.ta'); if (!ta) return 'no-textarea'; const set = Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype,'value').set; set.call(ta, '老板拖欠我三个月工资还不给离职证明'); ta.dispatchEvent(new Event('input', {bubbles:true})); return 'ok' })()` },
+    { t: 'eval', expr: `(() => { const btn = [...document.querySelectorAll('button')].find(b => b.textContent.includes('下一步')); if (!btn) return 'no-btn'; btn.click(); return 'clicked' })()` },
+    { t: 'wait', ms: 250 },
     { t: 'eval', expr: `(() => { const btn = [...document.querySelectorAll('button')].find(b => b.textContent.includes('下一步')); if (!btn) return 'no-btn'; btn.click(); return 'clicked' })()` },
     { t: 'wait', ms: 250 },
     { t: 'eval', expr: `(() => { const btn = [...document.querySelectorAll('button')].find(b => b.textContent.includes('下一步')); if (!btn) return 'no-btn'; btn.click(); return 'clicked' })()` },
@@ -62,18 +73,31 @@ const ROUTES = [
     { t: 'wait', ms: 250 },
     { t: 'eval', expr: `(() => { const btn = [...document.querySelectorAll('button')].find(b => b.textContent.includes('形成求助准备单并检索')); if (!btn) return 'no-btn'; btn.click(); return 'clicked' })()` },
     { t: 'wait', ms: 2500 },
+    { t: 'eval', expr: `(document.body.innerText||'').includes('证据约束研究') ? 'failed-public-research-link' : 'public-needs-ok'` },
+  ] },
+  { name: '04b-case-analysis-run', path: '/case-analysis', fullPage: true, identity: pageHeader('请求权要件检查'), afterText: '消费欺诈·惩罚性赔偿请求权', steps: [
+    { t: 'eval', expr: `(() => {
+      const select = document.querySelector('select.sel'); const ta = document.querySelector('textarea.ta');
+      if (!select || !ta) return 'no-fields';
+      Object.getOwnPropertyDescriptor(HTMLSelectElement.prototype, 'value').set.call(select, 'consumer_fraud');
+      select.dispatchEvent(new Event('change', {bubbles:true}));
+      Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype, 'value').set.call(ta, '我在网络商店购买商品，收到后发现宣传与实物不符，商家拒绝退货退款；我保存了订单、付款记录和双方聊天记录，具体损失金额仍待核对。');
+      ta.dispatchEvent(new Event('input', {bubbles:true})); return 'ok';
+    })()` },
+    { t: 'wait', ms: 200 },
+    { t: 'eval', expr: `(() => { const b=[...document.querySelectorAll('button')].find(x=>x.textContent.includes('运行要件检查')); if(!b || b.disabled) return 'no-enabled-run'; b.click(); return 'clicked' })()` },
+    { t: 'wait', ms: 2500 },
   ] },
   { name: '05-search-home', path: '/search', identity: pageHeader('法律检索') },
   { name: '06-search-results', path: '/search/results?q=' + encodeURIComponent('试用期 一年'), fullPage: true, identity: searchResultsIdentity },
   { name: '07-law-detail', path: '/laws/civl-2020?art=25', fullPage: true, identity: lawDetailIdentity },
+  { name: '07b-law-detail-professional-evidence', path: '/laws/pipl-2021?art=13', fullPage: true, identity: pageHeader('《个人信息保护法》第十三条'), afterText: '校准正确率：暂无' },
   { name: '08-laws-browse', path: '/laws', identity: pageHeader('法规条文') },
   { name: '09-case-search', path: '/cases', fullPage: true, identity: pageHeader('案例检索') },
   { name: '10-case-detail-cn', path: '/cases/guidance-24', fullPage: true, identity: { selector: '.case-t', text: '荣宝英诉王阳' } },
   { name: '11-case-detail-foreign', path: '/cases/brown-v-board', fullPage: true, identity: { selector: '.case-t', text: '布朗诉教育委员会案' } },
   { name: '12-research', path: '/research', fullPage: true, identity: pageHeader('法律研究') },
-  { name: '13-research-run', path: '/research', fullPage: true, identity: { selector: '.ph-t' }, afterText: 'Research Question', steps: [
-    { t: 'eval', expr: `(() => { const inp = document.querySelector('.searchbar input, input.inp, textarea'); if (!inp) return 'no-input'; const set = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set ?? Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype,'value').set; set.call(inp, '网购到假货可以要求什么赔偿'); inp.dispatchEvent(new Event('input', {bubbles:true})); return 'ok' })()` },
-    { t: 'eval', expr: `(() => { const btn = [...document.querySelectorAll('button')].find(b => /开始研究|生成|研究/.test(b.textContent)); if (!btn) return 'no-btn'; btn.click(); return 'clicked:' + btn.textContent.trim().slice(0,12) })()` },
+  { name: '13-research-run', path: '/research?q=' + encodeURIComponent('网购到假货可以核对哪些现行法条'), fullPage: true, identity: { selector: '.ph-t' }, afterText: 'Research Question', steps: [
     { t: 'wait', ms: 3000 },
   ] },
   { name: '14-contracts', path: '/contracts', identity: pageHeader('合同审查') },
@@ -101,13 +125,12 @@ const ROUTES = [
   { name: '18-draft', path: '/draft', fullPage: true, identity: { selector: '.ph-t' } },
   { name: '19-draft-validation', path: '/draft/validation', fullPage: true, identity: pageHeader('交付前校验') },
   { name: '20-comparative', path: '/comparative', fullPage: true, identity: pageHeader('跨法域对比') },
-  { name: '21-learning', path: '/learning', fullPage: true, identity: pageHeader('学习中心') },
+  { name: '21-learning', path: '/learning', audience: 'student', fullPage: true, identity: pageHeader('学习中心') },
   { name: '22-workspace', path: '/workspace', fullPage: true, identity: pageHeader('专业工具工作台') },
   { name: '23-collections', path: '/collections', identity: pageHeader('我的收藏') },
   { name: '24-data-sources', path: '/data-sources', fullPage: true, identity: pageHeader('当前数据与证据来源') },
   { name: '25-audit', path: '/audit', fullPage: true, identity: pageHeader('历史记录与操作审计') },
   { name: '26-settings', path: '/settings', fullPage: true, identity: pageHeader('设置') },
-  { name: '27-design-system', path: '/design-system', fullPage: true, identity: pageHeader('设计系统规范') },
   { name: '28-narrow-needs', path: '/needs', viewport: { width: 390, height: 844 }, fullPage: true, identity: needsIdentity },
   { name: '29-narrow-dashboard', path: '/', viewport: { width: 390, height: 844 }, identity: dashboardIdentity },
   { name: '30-narrow-nav-open', path: '/', viewport: { width: 390, height: 844 }, identity: dashboardIdentity, afterSelector: '.app.sb-mobile-open .sb', steps: [
@@ -122,6 +145,30 @@ const ROUTES = [
   { name: '35-dark-law-detail', path: '/laws/civl-2020?art=25', dark: true, fullPage: true, identity: lawDetailIdentity },
   { name: '36-dark-contract-review', path: '/contracts/new', dark: true, fullPage: true, identity: contractIdentity },
   { name: '37-dark-audit', path: '/audit', dark: true, fullPage: true, identity: pageHeader('历史记录与操作审计') },
+  { name: '38-public-dashboard', path: '/', audience: 'public', fullPage: true, identity: dashboardIdentity, afterText: '事实与证据梳理', steps: [
+    { t: 'eval', expr: `(() => { const n=document.querySelector('.sb-nav')?.innerText||''; return n.includes('法律检索')&&n.includes('案例检索')&&!n.includes('合同审查')&&!n.includes('文书工具')&&!n.includes('专业工作台') ? 'public-nav-ok' : 'failed-public-nav' })()` },
+  ] },
+  { name: '39-public-draft-guard', path: '/draft', audience: 'public', identity: { selector: '.access-notice h1', text: '未在普通民众视图中开放' } },
+  { name: '40-student-dashboard', path: '/', audience: 'student', fullPage: true, identity: dashboardIdentity, afterText: '学习中心', steps: [
+    { t: 'eval', expr: `(() => { const n=document.querySelector('.sb-nav')?.innerText||''; return n.includes('学习中心')&&n.includes('法律检索')&&n.includes('案例检索')&&!n.includes('合同审查')&&!n.includes('文书工具') ? 'student-nav-ok' : 'failed-student-nav' })()` },
+  ] },
+  { name: '40b-public-settings', path: '/settings', audience: 'public', fullPage: true, identity: pageHeader('设置'), afterText: '内容与工具视图', forbidPaths: ['/api/ai/providers', '/api/session'], steps: [
+    { t: 'eval', expr: `(() => { const sections=document.querySelector('.st-nav')?.innerText||''; const body=document.body.innerText||''; return !sections.includes('AI 模型')&&!body.includes('本机服务令牌')&&!body.includes('前往工作台') ? 'public-settings-ok' : 'failed-public-settings' })()` },
+  ] },
+  { name: '40c-public-law-detail', path: '/laws/civl-2020?art=25', audience: 'public', identity: lawDetailIdentity, steps: [
+    { t: 'eval', expr: `(document.body.innerText||'').includes('基于本条研究') ? 'failed-public-law-research-link' : 'public-law-ok'` },
+  ] },
+  { name: '40d-public-case-detail', path: '/cases/guidance-24', audience: 'public', identity: { selector: '.case-t', text: '荣宝英诉王阳' }, steps: [
+    { t: 'eval', expr: `(document.body.innerText||'').includes('基于本案研究') ? 'failed-public-case-research-link' : 'public-case-ok'` },
+  ] },
+  { name: '40e-public-collections', path: '/collections', audience: 'public', setupSource: `localStorage.setItem('lh:research:list', JSON.stringify([{rid:'r-local-check',question:'不应在公众视图显示的本机研究',ts:'2026-09-08T00:00:00Z'}]));`, identity: pageHeader('我的收藏'), steps: [
+    { t: 'eval', expr: `(() => { const body=document.body.innerText||''; return !body.includes('不应在公众视图显示的本机研究')&&![...document.querySelectorAll('.lrow-t')].some(x=>x.textContent==='研究') ? 'public-collections-ok' : 'failed-public-collections' })()` },
+  ] },
+  { name: '41-settings-switch-professional', path: '/settings', audience: 'public', identity: pageHeader('设置'), steps: [
+    { t: 'eval', expr: `(() => { const s=[...document.querySelectorAll('select')].find(x=>[...x.options].some(o=>o.value==='professional')); if(!s)return 'no-audience-select'; Object.getOwnPropertyDescriptor(HTMLSelectElement.prototype,'value').set.call(s,'professional'); s.dispatchEvent(new Event('change',{bubbles:true})); return 'changed-professional' })()` },
+    { t: 'wait', ms: 400 },
+    { t: 'eval', expr: `(() => { const n=document.querySelector('.sb-nav')?.innerText||''; return n.includes('合同审查')&&n.includes('文书工具')&&n.includes('专业工作台') ? 'switch-nav-ok' : 'failed-switch-nav' })()` },
+  ] },
 ]
 
 // ---- CDP 最小客户端 ----
@@ -148,10 +195,11 @@ async function getJson(path, method = 'GET') {
 
 async function main() {
   mkdirSync(OUT, { recursive: true })
+  const chromeProfile = mkdtempSync(join(tmpdir(), 'legalhigh-qa-chrome-'))
   if (PORT === 0) PORT = await allocateLoopbackPort()
   const chrome = spawn(CHROME, [
     '--headless=new', `--remote-debugging-port=${PORT}`, '--no-first-run', '--no-default-browser-check',
-    '--user-data-dir=' + resolve(OUT, '.chrome-profile'), '--disable-gpu', 'about:blank',
+    '--user-data-dir=' + chromeProfile, '--disable-gpu', 'about:blank',
   ], { stdio: 'ignore' })
   try {
     let targets
@@ -188,6 +236,7 @@ async function main() {
       await new Promise((res, rej) => { ws.addEventListener('open', res); ws.addEventListener('error', rej) })
       const cdp = new Cdp(ws)
       const logs = []
+      const responseUrls = []
       cdp.on((m) => {
         if (m.method === 'Runtime.consoleAPICalled' && ['error', 'warning'].includes(m.params.type))
           logs.push({ kind: m.params.type, text: m.params.args.map((a) => a.value ?? a.description ?? '').join(' ').slice(0, 500) })
@@ -195,8 +244,10 @@ async function main() {
           logs.push({ kind: 'pageError', text: (m.params.exceptionDetails.exception?.description || m.params.exceptionDetails.text || '').slice(0, 500) })
         if (m.method === 'Log.entryAdded' && ['error', 'warning'].includes(m.params.entry.level))
           logs.push({ kind: m.params.entry.level === 'error' ? 'logError' : 'logWarn', text: `${m.params.entry.source}: ${m.params.entry.text}`.slice(0, 500) })
-        if (m.method === 'Network.responseReceived' && m.params.response.status >= 400)
-          logs.push({ kind: 'http', text: `${m.params.response.status} ${m.params.response.url}` })
+        if (m.method === 'Network.responseReceived') {
+          responseUrls.push(m.params.response.url)
+          if (m.params.response.status >= 400) logs.push({ kind: 'http', text: `${m.params.response.status} ${m.params.response.url}` })
+        }
         if (m.method === 'Network.loadingFailed' && !m.params.canceled)
           logs.push({ kind: 'netFail', text: `${m.params.errorText} ${m.params.type}` })
       })
@@ -207,7 +258,11 @@ async function main() {
       // 本机管理令牌从环境变量读取（与已启动的后端同一值），注入 sessionStorage；
       // 未设置时敏感端点按设计返回 503，巡检会如实记录（这是诚实行为，不是工具缺陷）。
       await cdp.send('Page.addScriptToEvaluateOnNewDocument', {
-        source: `try { localStorage.setItem('le-tone-override', '${route.dark ? 'dark' : 'auto'}');${
+        source: `try { localStorage.setItem('le-tone-override', '${route.dark ? 'dark' : 'auto'}'); ${route.audience === 'none'
+          ? `localStorage.removeItem('lh:audience:v3');`
+          : route.audience === 'corrupt'
+            ? `localStorage.setItem('lh:audience:v3', '{bad-json');`
+            : `localStorage.setItem('lh:audience:v3', JSON.stringify({mode:${JSON.stringify(route.audience ?? 'professional')}}));`}${route.setupSource ?? ''}${
           process.env.LH_ADMIN_TOKEN ? ` sessionStorage.setItem('lh:admin-token:v1', ${JSON.stringify(process.env.LH_ADMIN_TOKEN)});` : ''
         } } catch {}`,
       })
@@ -279,6 +334,9 @@ async function main() {
       if (!state.identityFound) entry.pageErrors.push(`page identity selector missing: ${route.identity?.selector}`)
       if (route.identity?.text && !String(state.identityText).includes(route.identity.text))
         entry.pageErrors.push(`page identity mismatch: expected "${route.identity.text}", got "${state.identityText}"`)
+      for (const path of route.forbidPaths ?? []) {
+        if (responseUrls.some((url) => url.includes(path))) entry.pageErrors.push(`forbidden request observed: ${path}`)
+      }
       if (!state.afterSelectorFound) entry.pageErrors.push(`post-interaction selector missing: ${route.afterSelector}`)
       if (!state.afterTextFound) entry.pageErrors.push(`post-interaction text missing: ${route.afterText}`)
 
@@ -301,6 +359,8 @@ async function main() {
     console.log(`\n完成：${report.length} 路由，${bad.length} 个路由存在问题（详见 ${resolve(OUT, 'report.json')}）`)
   } finally {
     chrome.kill()
+    await sleep(300)
+    try { rmSync(chromeProfile, { recursive: true, force: true }) } catch { /* Chrome 仍在释放文件句柄时由系统临时目录回收 */ }
   }
 }
 

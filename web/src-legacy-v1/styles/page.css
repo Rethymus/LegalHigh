@@ -207,9 +207,6 @@ html[data-sizeclass="narrow"] .home-chain-panel { padding: var(--sp-5) var(--sp-
 .metric-card b { font-size: 28px; display: block; letter-spacing: -0.5px; }
 .metric-card span { font-size: 12px; color: var(--label-secondary); }
 
-/* —— 设计系统页 —— */
-.ds-section { margin-bottom: var(--sp-8); }
-
 /* —— 全局页脚（贴底材质面板，与 .page 同宽对齐） —— */
 .footer {
   width: 100%;
@@ -218,21 +215,6 @@ html[data-sizeclass="narrow"] .home-chain-panel { padding: var(--sp-5) var(--sp-
   padding: var(--sp-5) var(--sp-6);
   border-radius: var(--r-l) var(--r-l) 0 0;
 }
-
-.swatch-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: var(--sp-3); }
-.swatch { border-radius: var(--r-m); overflow: hidden; border: 0.5px solid var(--hairline); }
-.swatch .sw { height: 56px; }
-.swatch .swl { padding: 8px 10px; font-size: 11px; background: var(--n0); }
-[data-theme="dark"] .swatch .swl { background: var(--n100); }
-.swatch .swl code { color: var(--label-tertiary); }
-.material-samples { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--sp-4); }
-.material-sample { padding: var(--sp-5); min-height: 120px; display: flex; flex-direction: column; justify-content: flex-end; gap: 4px; }
-.material-sample b { font-size: 14px; }
-.material-sample span { font-size: 12px; color: var(--label-secondary); }
-.type-specimen { padding: var(--sp-5); }
-.type-row { display: flex; align-items: baseline; gap: var(--sp-5); padding: 6px 0; border-bottom: 0.5px dashed var(--hairline); }
-.type-row:last-child { border-bottom: none; }
-.type-row code { font-size: 11px; color: var(--label-tertiary); min-width: 190px; }
 
 /* ============================================================
    v2「纸与玻璃」基座组件（规格 §五；组件类，页面改造由各页接入）

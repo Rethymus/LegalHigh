@@ -1,6 +1,6 @@
 // FRAME 13 · Document Validation —— 交付前校验（规格 §20，真实 API 驱动）
 // server GET /api/drafts/{did}/validation：程序化检查（必填要素/占位符/主体一致/日期一致/引用有效且可溯源/结构/定稿确认）
-// 存在问题 → Need Review；全部通过且使用者确认定稿 → Ready
+// 存在问题 → Need Review；全部通过且使用者确认定稿 → 程序检查通过
 import { useEffect, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { Icon } from '../icons'
@@ -8,7 +8,8 @@ import { EmptyState, PageHeader, SkeletonLines, useToast, fmtTime } from '../ui'
 import { api, ApiError, type DraftValidation } from '../../lib/api'
 
 const TEMPLATE_NAMES: Record<string, string> = {
-  lawyer_letter: '律师函', contract: '合同', civil_complaint: '民事起诉状',
+  lawyer_letter: '律师函', contract: '合同', civil_complaint: '民事起诉状', civil_answer: '民事答辩状',
+  power_of_attorney: '授权委托书', legal_opinion: '法律研究备忘录', preservation_application: '财产保全申请书',
 }
 
 export default function DraftValidation() {
@@ -41,7 +42,7 @@ export default function DraftValidation() {
       <PageHeader
         back={<Link to="/draft" className="tiny row" style={{ gap: 4 }}><Icon name="arrowL" size={13} />返回文书起草</Link>}
         title="交付前校验 · Pre-delivery Validation"
-        sub="生成文书后检查要素完整性、法律引用、格式规范与使用者定稿确认。Ready 不代表平台核验身份、事实或法律判断。"
+        sub="生成文书后检查要素完整性、法律引用、格式规范与使用者定稿确认。程序检查通过不代表平台核验身份、事实或法律判断。"
       />
 
       {/* 草稿选择 */}
@@ -75,7 +76,7 @@ export default function DraftValidation() {
         <>
           <div className="row-wrap mb-16">
             {v.ready
-              ? <span className="bdg bdg-green" style={{ height: 30, fontSize: 13 }}><Icon name="verify" size={13} />Ready · 可对外交付</span>
+              ? <span className="bdg bdg-green" style={{ height: 30, fontSize: 13 }}><Icon name="verify" size={13} />程序检查通过 · 使用者已定稿</span>
               : <span className="bdg bdg-red" style={{ height: 30, fontSize: 13 }}><Icon name="alert" size={13} />Need Review</span>}
             <span className="bdg bdg-gray">{TEMPLATE_NAMES[v.template_id] ?? v.template_id}</span>
             <span className="tiny mono">{v.draft_id}</span>

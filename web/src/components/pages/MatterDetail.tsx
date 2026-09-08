@@ -30,7 +30,7 @@ export default function MatterDetail() {
   return (
     <div className="page" style={{ maxWidth: 920 }}>
       <PageHeader
-        back={<Link to="/workspace" className="tiny row" style={{ gap: 4 }}><Icon name="arrowL" size={13} />律师工作台</Link>}
+        back={<Link to="/workspace" className="tiny row" style={{ gap: 4 }}><Icon name="arrowL" size={13} />专业工具工作台</Link>}
         title={review ? review.title : draft ? `文书草稿 · ${mid}` : '记录详情'}
         sub={review || draft ? '服务端真实记录' : '根据记录 ID 读取合同审查或文书草稿。'}
       />

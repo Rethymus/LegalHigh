@@ -13,9 +13,9 @@ from .corpus import get_corpus
 TEMPLATE_VERSION = "1.0"
 
 LETTER_FIELDS = [
-    {"key": "firm", "label": "发函律所", "type": "text", "required": True, "placeholder": "如：北京某某律师事务所"},
-    {"key": "lawyer", "label": "承办律师姓名", "type": "text", "required": True, "placeholder": "执业律师姓名"},
-    {"key": "license_no", "label": "律师执业证号", "type": "text", "required": True, "placeholder": "如：1110120XX12345678"},
+    {"key": "firm", "label": "发函律所（由实际有权人员自行填写）", "type": "text", "required": True, "placeholder": "由实际有权人员填写真实名称；平台不核验"},
+    {"key": "lawyer", "label": "承办律师姓名（由实际有权人员自行填写）", "type": "text", "required": True, "placeholder": "由实际有权人员填写真实姓名"},
+    {"key": "license_no", "label": "律师执业证号（由实际有权人员自行填写）", "type": "text", "required": True, "placeholder": "由实际有权人员填写真实证号；平台不核验"},
     {"key": "client", "label": "委托人（发函方）", "type": "text", "required": True},
     {"key": "recipient", "label": "收函对象", "type": "text", "required": True, "placeholder": "公司全称或个人姓名"},
     {"key": "subject", "label": "函件事由", "type": "text", "required": True, "placeholder": "如：催告支付拖欠货款"},
@@ -72,9 +72,9 @@ ANSWER_FIELDS = [
 POA_FIELDS = [
     {"key": "principal", "label": "委托人（姓名/名称）", "type": "text", "required": True},
     {"key": "principal_info", "label": "委托人信息（住址或统一社会信用代码）", "type": "text", "required": False},
-    {"key": "agent", "label": "受托人（律师姓名）", "type": "text", "required": True},
-    {"key": "firm", "label": "律师事务所", "type": "text", "required": True},
-    {"key": "license_no", "label": "律师执业证号", "type": "text", "required": True},
+    {"key": "agent", "label": "受托人（实际有权人员自行填写）", "type": "text", "required": True},
+    {"key": "firm", "label": "律师事务所（实际有权人员自行填写）", "type": "text", "required": True},
+    {"key": "license_no", "label": "律师执业证号（实际有权人员自行填写）", "type": "text", "required": True},
     {"key": "authority_scope", "label": "委托权限（可多选）", "type": "multi_select", "required": True,
      "options": ["一般授权（代为出庭、陈述、答辩）", "代为承认、放弃、变更诉讼请求", "代为和解、调解", "代收法律文书", "代为提起上诉"]},
     {"key": "term", "label": "委托期限", "type": "text", "required": True, "placeholder": "如：自委托之日起至本案审结止"},
@@ -87,7 +87,7 @@ OPINION_FIELDS = [
     {"key": "analysis_points", "label": "分析意见（每行一条）", "type": "textarea_list", "required": True},
     {"key": "risk_notes", "label": "风险提示（每行一条）", "type": "textarea_list", "required": False},
     {"key": "legal_basis", "label": "法律依据（选择库内条文）", "type": "citation_picker", "required": True},
-    {"key": "firm", "label": "出具机构", "type": "text", "required": True},
+    {"key": "firm", "label": "记录主体（使用者自行填写）", "type": "text", "required": True},
 ]
 
 PRESERVATION_FIELDS = [
@@ -105,7 +105,7 @@ TEMPLATES = {
     "lawyer_letter": {
         "template_id": "lawyer_letter",
         "name": "律师函（催告函）",
-        "description": "供专业律师准备的催告函模板。系统不核验执业资格、不代表律所签发；非律师不得以律师名义使用，专业使用者须在线下自行核对并承担责任。",
+        "description": "供实际有权人员自行准备的催告函草稿。字段须由实际有权人员填写；平台不核验执业资格、不代表律所或律师签发，非律师不得以律师名义使用。",
         "gate": {"review_label": "完成内容复核", "finalize_label": "使用者确认定稿"},
         "fields": LETTER_FIELDS,
     },
@@ -118,15 +118,15 @@ TEMPLATES = {
     },
     "legal_opinion": {
         "template_id": "legal_opinion",
-        "name": "法律意见书（专业工作草稿）",
-        "description": "结构化法律意见书模板：背景/分析/风险/依据四段式，明示意见基于委托人提供的事实、不构成诉讼结果承诺。",
+        "name": "法律研究备忘录（工作草稿）",
+        "description": "结构化法律研究备忘录草稿：按背景/分析/风险/依据组织材料；不构成法律意见，平台不核验身份、资格或内容。",
         "gate": {"review_label": "完成内容复核", "finalize_label": "使用者确认定稿"},
         "fields": OPINION_FIELDS,
     },
     "preservation_application": {
         "template_id": "preservation_application",
         "name": "财产保全申请书",
-        "description": "诉讼财产保全申请书模板：财产逐项列明、担保安排选项化，提示保全错误赔偿责任（民诉法相关规定）。",
+        "description": "财产保全申请书模板：财产逐项列明、担保安排选项化；申请条件、担保与责任后果须以受理法院和适用法律为准。",
         "gate": {"review_label": "完成内容复核", "finalize_label": "使用者确认定稿"},
         "fields": PRESERVATION_FIELDS,
     },
@@ -292,8 +292,8 @@ def build_civil_complaint(f: dict):
 
 
 def build_civil_answer(f: dict):
-    points = [x.strip() for x in (f.get("answer_points") or "").splitlines() if x.strip()]
-    responses = [x.strip() for x in (f.get("claims_response") or "").splitlines() if x.strip()]
+    points = _lines(f.get("answer_points"))
+    responses = _lines(f.get("claims_response"))
     citations = parse_citations(f.get("legal_basis"))
     sections = [
         {"type": "title", "text": "民事答辩状"},
@@ -320,7 +320,7 @@ def build_civil_answer(f: dict):
         {"type": "closing", "text": f"此致\n{f.get('court', '')}"},
         {"type": "signature", "lines": [f"答辩人：{f.get('defendant', '')}", date.today().strftime("%Y年%m月%d日")]},
     ]
-    gate_note = "本答辩状为要素式模板生成的草稿（程序指引属性）：不构成法律意见；提交法院前请经人工核验，并逐项核对答辩期限（15日）与证据清单。"
+    gate_note = "本答辩状为要素式模板生成的草稿（程序指引属性）：不构成法律意见；提交法院前请由实际使用者独立复核，并逐项核对适用的答辩期限、送达方式与证据清单。"
     return {"sections": sections, "citations": citations, "gate_note": gate_note}
 
 
@@ -346,14 +346,14 @@ def build_power_of_attorney(f: dict):
 
 
 def build_legal_opinion(f: dict):
-    points = [x.strip() for x in (f.get("analysis_points") or "").splitlines() if x.strip()]
-    risks = [x.strip() for x in (f.get("risk_notes") or "").splitlines() if x.strip()]
+    points = _lines(f.get("analysis_points"))
+    risks = _lines(f.get("risk_notes"))
     citations = parse_citations(f.get("legal_basis"))
     sections = [
-        {"type": "title", "text": "法律意见书"},
+        {"type": "title", "text": "法律研究备忘录（工作草稿）"},
         {"type": "para_noindent", "text": f"致：{f.get('recipient', '')}"},
         {"type": "heading", "text": "一、咨询事项"},
-        {"type": "para", "text": f"就{f.get('recipient', '')}提出的「{f.get('matter', '')}」事宜，本所基于你提供的事实与现行有效的法律规定，出具如下意见。"},
+        {"type": "para", "text": f"就{f.get('recipient', '')}提出的「{f.get('matter', '')}」事宜，以下内容仅根据使用者提供的事实与所选语料整理为研究草稿；不代表 LegalHigh、任何律所或律师出具法律意见。"},
         {"type": "heading", "text": "二、背景与已知事实"},
         {"type": "para", "text": f.get("background", "")},
         {"type": "heading", "text": "三、分析意见"},
@@ -369,22 +369,22 @@ def build_legal_opinion(f: dict):
         for i, r in enumerate(risks, 1):
             sections.append({"type": "numbered", "n": i, "text": r})
     sections += [
-        {"type": "para", "text": "本意见仅基于委托人提供的书面材料与出具日的现行法律规定作出；委托人应保证所提供事实的真实性。本意见不构成对诉讼或仲裁结果的任何承诺。"},
-        {"type": "signature", "lines": [f"{f.get('firm', '')}", date.today().strftime("%Y年%m月%d日")]},
+        {"type": "para", "text": "本研究备忘录仅基于使用者提供的书面材料与所选语料整理；使用者应自行核对事实、授权、法条版本与适用范围。本研究备忘录不构成法律意见，不构成对诉讼或仲裁结果的任何承诺。"},
+        {"type": "signature", "lines": [f"记录主体（使用者填写）：{f.get('firm', '')}", date.today().strftime("%Y年%m月%d日")]},
     ]
-    gate_note = "本法律意见书为专业工作草稿：意见质量取决于输入事实与引用的完整、真实；平台不核验资格或内容，使用者须在线下独立复核并承担责任。"
+    gate_note = "本法律研究备忘录为工具生成的工作草稿：不构成法律意见，不代表平台、律所或律师出具；平台不核验使用者身份、执业资格或内容，实际有权人员须自行填写并在线下独立复核、承担责任。"
     return {"sections": sections, "citations": citations, "gate_note": gate_note}
 
 
 def build_preservation_application(f: dict):
-    props = [x.strip() for x in (f.get("property_desc") or "").splitlines() if x.strip()]
+    props = _lines(f.get("property_desc"))
     sections = [
         {"type": "title", "text": "财产保全申请书"},
         {"type": "party", "lines": [
             f"申请人：{f.get('applicant', '')}",
             f"被申请人：{f.get('respondent', '')}",
         ]},
-        {"type": "para", "text": f"申请人因{f.get('case_info', '')}一案，为防止被申请人在判决生效前转移、隐匿财产，致使判决难以执行，特依据《中华人民共和国民事诉讼法》有关规定，申请对被申请人的下列财产采取保全措施："},
+        {"type": "para", "text": f"申请人陈述：因{f.get('case_info', '')}一案，为避免被申请人转移、隐匿财产，现就下列财产提出保全请求；适用条件、担保方式与责任后果请以受理法院要求和适用法律为准："},
         {"type": "heading", "text": "请求保全的财产"},
     ]
     for i, pr in enumerate(props, 1):
@@ -394,7 +394,7 @@ def build_preservation_application(f: dict):
         {"type": "para", "text": f.get("reason", "")},
         {"type": "heading", "text": "担保安排"},
         {"type": "para", "text": f.get("guarantee", "")},
-        {"type": "para", "text": "如因本次保全申请错误给被申请人造成损失，申请人愿意依法承担赔偿责任。"},
+        {"type": "para", "text": "关于申请错误可能产生的责任、担保范围及其他程序要求，请以受理法院的正式告知和适用法律为准；本模板不作判断。"},
         {"type": "closing", "text": f"此致\n{f.get('court', '')}"},
         {"type": "signature", "lines": [f"申请人：{f.get('applicant', '')}", date.today().strftime("%Y年%m月%d日")]},
     ]

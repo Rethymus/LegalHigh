@@ -142,10 +142,12 @@ ok &= c5
 
 # --- A7 池 ---
 st, d = call("GET", "/api/drafts/templates")
-c6 = "citation_pool" not in d and len(d["citation_laws"]) == 10
+_, inventory = call("GET", "/api/inventory")
+citation_law_count = len(d["citation_laws"])
+c6 = "citation_pool" not in d and citation_law_count == inventory["laws"]
 st2, d2 = call("GET", "/api/drafts/citation-pool/cl-2013")
 c6 = c6 and st2 == 200 and len(d2["articles"]) == 63
-print(f"[A7] templates 轻量 + 单法池 63 条 ->", "PASS" if c6 else "FAIL")
+print(f"[A7] templates 轻量 + {citation_law_count} 部引用目录 + 单法池 63 条 ->", "PASS" if c6 else "FAIL")
 ok &= c6
 
 # --- 解读库审核门 ---
@@ -161,14 +163,14 @@ c8 = st == 200 and len(d["cases"]) >= 1 and all("保险" in (c["name"] + c["caus
 print(f"[C7] /api/cases?q=保险 → {len(d['cases'])} 件全含关键词 ->", "PASS" if c8 else "FAIL")
 ok &= c8
 
-# --- 场景路径（第十六轮新增） ---
+# --- 旧场景路径已停用：其中的步骤/期限没有做到逐项来源绑定 ---
 st, d = call("GET", "/api/scenarios")
-c9 = st == 200 and len(d.get("scenarios", [])) >= 5
-print(f"[scenarios] {len(d.get('scenarios', []))} 个场景 ->", "PASS" if c9 else "FAIL")
+c9 = st == 410 and "已停用" in str(d.get("detail", ""))
+print("[scenarios] 无证据旧指引已拒绝公开 ->", "PASS" if c9 else "FAIL")
 ok &= c9
 st, d = call("GET", "/api/scenarios/match?" + urlencode({"text": "拖欠工资"}))
-c10 = st == 200 and len(d.get("matches", [])) >= 1
-print(f"[scenarios/match] 匹配 → {len(d.get('matches', []))} 个 ->", "PASS" if c10 else "FAIL")
+c10 = st == 410 and "已停用" in str(d.get("detail", ""))
+print("[scenarios/match] 无证据旧匹配已拒绝公开 ->", "PASS" if c10 else "FAIL")
 ok &= c10
 
 print("\n终验结果：", "ALL PASS" if ok else "HAS FAILURES")

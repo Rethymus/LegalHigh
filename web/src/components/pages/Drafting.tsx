@@ -17,7 +17,7 @@ const TEMPLATE_ICONS: Record<string, IconName> = {
 // 分类面板：以 server 模板清单为唯一来源（M7-T2 收官后 7 类全真实，无规划灰态）
 const CATEGORY_NAMES: Record<string, string> = {
   lawyer_letter: '律师函', civil_complaint: '起诉状', civil_answer: '答辩状',
-  contract: '合同', power_of_attorney: '授权委托书', legal_opinion: '法律意见书',
+  contract: '合同', power_of_attorney: '授权委托书', legal_opinion: '法律研究备忘录',
   preservation_application: '财产保全',
 }
 

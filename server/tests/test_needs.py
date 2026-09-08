@@ -57,6 +57,7 @@ def test_intake_plan_keeps_user_facts_and_reports_gaps(tmp_db):
     out = needs.build_intake_plan({
         "summary": "公司拖欠两个月工资",
         "timeline": ["2026年6月开始未发工资", "2026年8月向公司询问未获答复"],
+        "actual_outcome": "两个月工资仍未到账",
         "parties": ["劳动者（本人）", "用人单位"],
         "evidence_owned": ["劳动合同", "与人事的聊天记录"],
         "evidence_missing": ["工资表"],
@@ -66,6 +67,8 @@ def test_intake_plan_keeps_user_facts_and_reports_gaps(tmp_db):
     assert out["intake"]["timeline"][0] == "2026年6月开始未发工资"
     assert out["intake"]["method"].startswith("user-confirmed-facts")
     assert out["intake"]["missing_questions"] == []
+    assert out["intake"]["issue_candidates"][0]["id"] == "labor-pay"
+    assert out["intake"]["issue_candidates"][0]["fact_basis"]
     assert any(x["item"] == "工资表" and x["state"] == "待取得/待确认" for x in out["intake"]["evidence_checklist"])
     assert out["articles"]
 
@@ -74,5 +77,16 @@ def test_intake_plan_never_invents_missing_facts(tmp_db):
     out = needs.build_intake_plan({"summary": "房东不退押金"})
     assert out["intake"]["timeline"] == []
     assert out["intake"]["parties"] == []
-    assert len(out["intake"]["missing_questions"]) >= 3
+    assert len(out["intake"]["missing_questions"]) >= 4
     assert all(x["source"] != "AI" for x in out["intake"]["evidence_checklist"])
+    assert all(x["id"].startswith("material-") for x in out["intake"]["evidence_checklist"])
+
+
+def test_intake_unknown_never_defaults_to_loan_model(tmp_db):
+    out = needs.build_intake_plan({
+        "summary": "我收到一封内容看不懂的通知",
+        "actual_outcome": "目前没有采取行动",
+        "questions": ["这是不是借贷纠纷"],
+    })
+    assert out["intake"]["issue_candidates"][0]["id"] == "unknown"
+    assert "借款合同" not in out["parse"]["keywords"]

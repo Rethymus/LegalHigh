@@ -64,14 +64,32 @@ checks++
 if (identityHits.length) fail.push(`[身份与品牌] 发现旧品牌或虚构人物：${identityHits.join('、')}`)
 else console.log('✓ gate3 身份与品牌：无旧品牌或虚构人物')
 
-// ---- gate 4：动效与材质纪律（计划 v4 §3，2026-09-06）----
+// ---- gate 4：受众分层与匿名残留不得回归 ----
+const audienceSource = readFileSync(resolve(root, 'web/src/lib/audience.ts'), 'utf-8')
+const shellSource = readFileSync(resolve(root, 'web/src/components/AppShell.tsx'), 'utf-8')
+const navSource = readFileSync(resolve(root, 'web/src/data/model.ts'), 'utf-8')
+const audienceFailures = []
+if (/未署名/.test(productSource)) audienceFailures.push('产品源码仍显示“未署名”')
+if (!/return null/.test(audienceSource) || !/lh:audience:v3/.test(audienceSource)) audienceFailures.push('首次使用没有明确的未选择状态')
+for (const route of ['contracts', 'draft', 'workspace', 'audit']) {
+  if (!new RegExp(`/${route}[^\\n]+audiences: \\['professional'\\]`).test(navSource)) audienceFailures.push(`${route} 未限定专业视图导航`)
+}
+if (!/canAudienceAccess\(pathname, audience\)/.test(shellSource)) audienceFailures.push('直达路由未接受众访问判定')
+if (/design-system|DesignSystem|设计系统规范|Motion Lab/.test(productSource)) audienceFailures.push('产品源码仍暴露设计规范页面或展台')
+if (!/return false\s*\n?}/.test(audienceSource)) audienceFailures.push('未知路由没有默认拒绝')
+if (/useLaws|inventory\?\?[^\n]*corpus|corpus\?\?[^\n]*inventory/.test(shellSource)) audienceFailures.push('数据储备仍可能以静态语料冒充实时库存')
+checks++
+if (audienceFailures.length) fail.push(`[受众分层] ${audienceFailures.join('；')}`)
+else console.log('✓ gate4 受众分层：首次自选、专业入口与直达路由均受控')
+
+// ---- gate 5：动效与材质纪律（计划 v4 §3，2026-09-06）----
 // 1) transition/animation 不得出现 Token 外的裸时长（剔除 var(--…) 后仍含 ms/s 字面量 → 失败；
 //    恒定循环动画以行内注释「恒定循环」豁免）
 // 2) 散装焦点环 `0 0 0 3px rgba(…)` 只允许出现在 --ring 定义行
 // 3) backdrop-filter 的 blur() 实参必须来自 --blur-* Token
 const cssFile = resolve(root, 'web/src/styles/global.css')
 const cssLines = readFileSync(cssFile, 'utf-8').split('\n')
-const motionBad = [], ringBad = [], blurBad = []
+const motionBad = [], ringBad = [], blurBad = [], materialLiteralBad = [], materialAlphaBad = [], saturationBad = [], hoverMotionBad = []
 cssLines.forEach((line, i) => {
   const at = `${cssFile}:${i + 1}`
   const noVar = line.replace(/var\(--[^)]*\)/g, '')
@@ -84,14 +102,26 @@ cssLines.forEach((line, i) => {
   if (/backdrop-filter[^;]*blur\(\s*[\d.]/.test(line) && !line.trim().startsWith('@supports')) {
     blurBad.push(`${at}: ${line.trim().slice(0, 90)}`)
   }
+  if (/\.m-(thin|regular|thick|chrome|float|refract)\b/.test(line) && /--m-(blur|a):\s*[\d.]/.test(line)) {
+    materialLiteralBad.push(`${at}: ${line.trim().slice(0, 110)}`)
+  }
+  if (/rgba\(var\(--mat-tint\),\s*[\d.]/.test(line)) {
+    materialAlphaBad.push(`${at}: ${line.trim().slice(0, 110)}`)
+  }
+  if (/saturate\(\s*[\d.]/.test(line)) saturationBad.push(`${at}: ${line.trim().slice(0, 110)}`)
+  if (/:hover/.test(line) && /transform:\s*translate/.test(line)) hoverMotionBad.push(`${at}: ${line.trim().slice(0, 110)}`)
 })
 checks++
 const gate4Fails = []
 if (motionBad.length) gate4Fails.push(`裸时长（应使用 --dur-*/--t-* Token，循环动画加「恒定循环」注释）：\n  ` + motionBad.join('\n  '))
 if (ringBad.length) gate4Fails.push(`散装焦点环（统一 var(--ring)/var(--ring-soft)）：\n  ` + ringBad.join('\n  '))
 if (blurBad.length) gate4Fails.push(`blur 未走 Token（统一 --blur-chrome/panel/card/float/desk/veil）：\n  ` + blurBad.join('\n  '))
+if (materialLiteralBad.length) gate4Fails.push(`材质档复制裸参数（--m-blur/--m-a 必须引用全局 Token）：\n  ` + materialLiteralBad.join('\n  '))
+if (materialAlphaBad.length) gate4Fails.push(`组件材质透明度未走 Token（rgba(var(--mat-tint), …) 必须引用 --mat-*-a）：\n  ` + materialAlphaBad.join('\n  '))
+if (saturationBad.length) gate4Fails.push(`材质饱和度未走 Token：\n  ` + saturationBad.join('\n  '))
+if (hoverMotionBad.length) gate4Fails.push(`hover 使用位移（红线：悬停只改背景/描边/阴影）：\n  ` + hoverMotionBad.join('\n  '))
 if (gate4Fails.length) fail.push(`[动效与材质纪律] ${gate4Fails.join('\n')}`)
-else console.log('✓ gate4 动效与材质纪律：时长/焦点环/blur 全部走 Token')
+else console.log('✓ gate5 动效与材质纪律：时长/焦点环/blur 全部走 Token')
 
 if (fail.length) {
   console.error(`\nqa_gates：${fail.length}/${checks} 项失败`)

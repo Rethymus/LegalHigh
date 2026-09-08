@@ -8,12 +8,14 @@ KeyError——这是期望的保护行为）。检索弱时只输出 gaps 提示
 """
 from .corpus import get_corpus, tokenize
 from .qa import DISCLAIMER
+from .retrieval_terms import domain_terms, orchestrated_search
 
 # 停用词表（确定性常量）：语气助词 / 疑问泛指词 / 与「法律依据」同义的泛称词。
 # 「依据/法律/规定」在关键词里保留亦无害，此处按保守口径滤除，保证可测试。
 STOPWORDS = {
     "的", "了", "吗", "呢", "吧", "啊", "请", "问", "什么", "怎么", "如何",
     "是", "有", "没有", "我", "他", "她", "它", "的什么", "依据", "法律", "规定",
+    "可以", "哪些", "现行", "法条", "核对", "请问", "相关",
 }
 
 # 单字停用词：任何包含这些字的词项（中文二元组）都不进入关键词。
@@ -58,8 +60,8 @@ def _run_query(corpus, query: str, top_k: int, law_ids):
 
 
 def build_research_memo(question: str, law_ids: list[str] | None = None, top_k: int = 12) -> dict:
-    """三组查询（原句 / 去停用词关键词 / 首次 top 命中条文编章标题扩展）→
-    按 (law_id, no) 合并去重（分数取 max）→ 排序取 top_k → 逐条 citation_of 校验。"""
+    """受控生活语言命中时使用规范术语检索；否则以原句、关键词与首条命中章节
+    执行多查询。随后按 (law_id, no) 合并去重、排序，并逐条 citation_of 校验。"""
     corpus = get_corpus()
     question = (question or "").strip()
     top_k = max(1, int(top_k))
@@ -74,9 +76,15 @@ def build_research_memo(question: str, law_ids: list[str] | None = None, top_k: 
     else:
         law_ids = None
 
-    keywords = extract_keywords(question)
-    queries = [question]
-    if keywords:
+    domains = domain_terms(question)
+    raw_keywords = extract_keywords(question)
+    keywords = domains + [token for token in raw_keywords if token not in domains and not any(token in term for term in domains)]
+    keywords = keywords[:KEYWORD_LIMIT]
+    # 命中受控生活语言映射时，用规范术语作为主查询，避免“可以/哪些/现行法条”等问句
+    # 套话凭高词频把无关条文推到前面。原问题仍原样保留在 issue_frame，绝不改写事实。
+    primary_query = " ".join(keywords) if domains else question
+    queries = [primary_query]
+    if not domains and keywords and primary_query != " ".join(keywords):
         queries.append(" ".join(keywords))
 
     merged: dict[tuple, dict] = {}  # (law_id, no) -> 得分最高的命中
@@ -87,7 +95,8 @@ def build_research_memo(question: str, law_ids: list[str] | None = None, top_k: 
             if key not in merged or h["score"] > merged[key]["score"]:
                 merged[key] = h
 
-    first_hits = _run_query(corpus, queries[0], top_k, law_ids)
+    controlled_hits, retrieval = orchestrated_search(corpus, question, top_k=top_k, law_ids=law_ids)
+    first_hits = controlled_hits if domains else _run_query(corpus, queries[0], top_k, law_ids)
     merge(first_hits)
     if len(queries) > 1:
         merge(_run_query(corpus, queries[1], top_k, law_ids))
@@ -95,7 +104,9 @@ def build_research_memo(question: str, law_ids: list[str] | None = None, top_k: 
     # 第三组查询：用首次 top 命中条文的 chapter 标题扩展原问题重查一次
     # （chapter 在语料 schema 中可为 None——防御性兜底，扩空串等价于不扩展）
     seed_pool = first_hits or (sorted(merged.values(), key=lambda h: -h["score"]) if merged else [])
-    if seed_pool:
+    # 受控领域词已经完成语义扩展时，不再用首条的编章标题二次扩展；否则较长的标题
+    # 查询会产生不可与原查询直接比较的更大 BM25 原始分，并把同一章节整批挤到前列。
+    if seed_pool and not domains:
         expanded = question + " " + (seed_pool[0]["chapter"] or "").replace(">", " ")
         queries.append(expanded)
         merge(_run_query(corpus, expanded, top_k, law_ids))
@@ -165,6 +176,12 @@ def build_research_memo(question: str, law_ids: list[str] | None = None, top_k: 
             f"本次检索仅命中 {len(cards)} 条依据，依据较少，"
             "建议补充关键词或扩大检索范围后再行研究。"
         )
+    if domains and retrieval.get("unmatched_groups"):
+        gaps.append(
+            "以下受控主题组未在当前检索范围中找到直接依据："
+            + "、".join(retrieval["unmatched_groups"])
+            + "。系统不会用其他主题的偶然词法命中替代。"
+        )
 
     return {
         "question": question,
@@ -179,8 +196,10 @@ def build_research_memo(question: str, law_ids: list[str] | None = None, top_k: 
         "references": references,
         "disclaimer": DISCLAIMER,
         "meta": {
-            "method": "bm25-multiquery",
-            "queries": queries,
+            "method": (retrieval["method"] if retrieval.get("groups") else "bm25-controlled-terms") if domains else "bm25-multiquery",
+            "queries": [group["query"] for group in retrieval.get("groups", [])] if domains else queries,
+            "matched_groups": retrieval.get("matched_groups", []),
+            "unmatched_groups": retrieval.get("unmatched_groups", []),
             "corpus_size": len(corpus.articles),
         },
     }

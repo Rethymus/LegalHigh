@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-09-08",
+  "national_law_catalog": {
+    "count": 310,
+    "as_of": "2026-03-16",
+    "title": "现行有效法律目录（310件）",
+    "source_url": "https://www.npc.gov.cn/c2/c30834/202603/P020260316580245162685.pdf",
+    "accessed_at": "2026-09-08",
+    "evidence_grade": "强",
+    "comparison_warning": "目录统计的是现行有效法律；LegalHigh 当前受控语料还包含司法解释和部门规章，因此不得把14直接除以310当作法律体系覆盖率。"
+  },
+  "controlled_instrument_ids": [
+    "civl-2020", "cl-2013", "lcl-2012", "ll-2017", "ecom-2018", "pcl-2023",
+    "htjs-2023", "wlxf-2022", "crpl-imp-2024", "genai-2023", "pipl-2021",
+    "legal-aid-2021", "admin-review-2023", "admin-litigation-2017"
+  ],
+  "priority_backlog": [
+    {"title": "中华人民共和国宪法", "reason": "国家根本法与公民基本权利基础", "status": "official-source-identified-not-imported", "source_url": "https://flk.npc.gov.cn/"},
+    {"title": "中华人民共和国刑法", "reason": "刑事责任与罪刑法定的基础规范", "status": "official-source-identified-not-imported", "source_url": "https://flk.npc.gov.cn/"},
+    {"title": "中华人民共和国刑事诉讼法", "reason": "刑事程序、辩护与强制措施基础", "status": "official-source-identified-not-imported", "source_url": "https://www.npc.gov.cn/c2/c12435/201905/t20190521_276591.html"},
+    {"title": "中华人民共和国行政处罚法", "reason": "常见行政执法争议基础", "status": "official-source-identified-not-imported", "source_url": "https://flk.npc.gov.cn/"},
+    {"title": "中华人民共和国国家赔偿法", "reason": "国家赔偿请求与程序基础", "status": "official-source-identified-not-imported", "source_url": "https://flk.npc.gov.cn/"},
+    {"title": "中华人民共和国劳动争议调解仲裁法", "reason": "劳动争议处理程序基础", "status": "official-source-identified-not-imported", "source_url": "https://flk.npc.gov.cn/"},
+    {"title": "中华人民共和国未成年人保护法", "reason": "未成年人权益保护高频需求", "status": "official-source-identified-not-imported", "source_url": "https://flk.npc.gov.cn/"},
+    {"title": "中华人民共和国妇女权益保障法", "reason": "平等就业、人身与婚姻家庭权益", "status": "official-source-identified-not-imported", "source_url": "https://flk.npc.gov.cn/"},
+    {"title": "中华人民共和国网络安全法", "reason": "网络运行与信息安全基础", "status": "official-source-identified-not-imported", "source_url": "https://flk.npc.gov.cn/"},
+    {"title": "中华人民共和国数据安全法", "reason": "数据处理与安全治理基础", "status": "official-source-identified-not-imported", "source_url": "https://flk.npc.gov.cn/"}
+  ],
+  "update_protocol": [
+    "先定位官方现行文本与公布/施行依据，不以搜索摘要入库",
+    "保存证据快照并记录来源、查阅日期与SHA-256",
+    "解析后核对条数、缺号、版本状态和生效日期",
+    "运行语料自检、检索金标与前后端逐字一致性检查后才对外"
+  ]
+}

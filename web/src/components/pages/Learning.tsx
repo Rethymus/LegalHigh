@@ -21,6 +21,7 @@ export default function Learning() {
   const civilCode = findLaw(laws, 'civl-2020')
   const article496 = findArticle(civilCode, 496)
   const article497 = findArticle(civilCode, 497)
+  const claimArticles = [577, 157, 985, 1165].map((no) => findArticle(civilCode, no)).filter(Boolean)
 
   return (
     <div className="page">
@@ -89,10 +90,7 @@ export default function Learning() {
           <div className="row mb-12"><Icon name="tree" size={15} className="muted" /><b>请求权基础导航</b></div>
           <div style={{ fontSize: 12.5, lineHeight: 2 }}>
             <div>谁得向谁？<b>请求返还货款</b></div>
-            <div className="muted">└ 合同请求权 ·《民法典》第577条（违约责任）</div>
-            <div className="muted">└ 类合同 · 第157条（无效后果）</div>
-            <div className="muted">└ 不当得利 · 第985条</div>
-            <div className="muted">└ 侵权 · 第1165条</div>
+            {claimArticles.map((article) => <div key={article!.no}><Link to={`/laws/civl-2020?art=${article!.no}`} className="muted">└ 《{civilCode?.title}》{article!.label} · 打开现行条文与来源</Link></div>)}
           </div>
           <div className="tiny mt-12">练习示意：请求权基础的竞合与顺位必须结合真实事实、抗辩和时效逐项核验。交互式检查器尚未实现。</div>
         </div>

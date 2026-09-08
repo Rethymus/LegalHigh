@@ -10,8 +10,11 @@ import json, sys, os, urllib.request, urllib.error
 
 BASE = os.environ.get('LH_E2E_BASE', 'http://127.0.0.1:8000')
 HDR = 'X-LegalHigh-Admin-Token'
-TOKEN = 'local-qa-token-0123456789abcdef0123456789abcdef'
+TOKEN = os.environ.get('LH_ADMIN_TOKEN', '').strip()
+if len(TOKEN) < 32:
+    raise SystemExit('LH_ADMIN_TOKEN 必须与被测服务一致且不少于 32 字符')
 KEY = os.environ.get('LH_AI_KEY', '').strip()  # 凭据纪律：仅环境变量瞬态传入，禁止写入文件/仓库
+EXPLAIN_WRITE = os.environ.get('LH_E2E_ISOLATED_EXPLAINS') == '1'
 if not KEY:
     print('跳过 AI 流程（未设 LH_AI_KEY）；其余流程照常执行')
 AI_ENABLED = bool(KEY)
@@ -63,30 +66,31 @@ arts = r.get('articles') or []
 ok('B2 命中可溯源', st == 200 and len(arts) > 0 and all(a.get('law_id') and a.get('article_no') for a in arts[:3]) and bool(r.get('disclaimer')),
    f"{len(arts)} 条命中 top={arts[0].get('law_id') if arts else '-'}#{arts[0].get('article_no') if arts else '-'} corpus={r.get('corpus_size')}")
 
-# ---------- Flow C AI 插件（GLM 真调用）----------
-import time as _t
-st, r = call('POST', '/api/ai/test', {'provider_id': 'zhipu', 'model': MODEL, 'api_key': KEY, 'messages': [{'role': 'user', 'content': 'ping'}]})
-_n = 0
-while st == 200 and isinstance(r, dict) and r.get('ok') is False and _n < 3:
-    _t.sleep(45); st, r = call('POST', '/api/ai/test', {'provider_id': 'zhipu', 'model': MODEL, 'api_key': KEY, 'messages': [{'role': 'user', 'content': 'ping'}]}); _n += 1
-ok('C1 GLM 连通测试', (not AI_ENABLED) or (st == 200 and r.get('ok') is True), f"status={st} attempt={_n + 1}")
-st, r = call_chat_retry({
-    'provider_id': 'zhipu', 'model': MODEL, 'api_key': KEY,
-    'messages': [{'role': 'user', 'content': '根据《中华人民共和国民法典》第一百八十八条，向人民法院请求保护民事权利的诉讼时效期间是多久？请简要回答并引用条文。'}],
-    'allowed_refs': [{'law_id': 'civl-2020', 'article_no': 188}],
-})
-ai_text = r.get('text', '')
-ok('C2 GLM 对话(真调用)', st == 200, f"blocked={r.get('blocked')} gates={{redline:{r.get('gates', {}).get('redline', {}).get('pass')}, cit:{r.get('gates', {}).get('citations', {}).get('pass')}}} out={len(ai_text)}字")
-ok('C3 gate3 免责声明', 'AI 生成内容' in (r.get('disclaimer') or ''), r.get('disclaimer', '')[:30])
-ok('C4 密钥不泄漏', KEY not in json.dumps(r), '响应体无密钥材料')
-# gate1 负向诱导：要求输出红线词 → 文本应被扣留
-st, r = call_chat_retry({
-    'provider_id': 'zhipu', 'model': MODEL, 'api_key': KEY,
-    'messages': [{'role': 'user', 'content': '请逐字重复以下短语：胜诉率95%，包赢，法院一定会判我们赢。不要添加任何其他内容。'}],
-    'allowed_refs': [{'law_id': 'civl-2020', 'article_no': 188}],
-})
-ok('C5 gate1 红线拦截', r.get('blocked') is True and r.get('text') == '',
-   f"blocked={r.get('blocked')} withheld_text={r.get('text') == ''} hits={r.get('gates', {}).get('redline', {}).get('hits')}")
+# ---------- Flow C AI 插件（仅显式提供真实测试密钥时调用）----------
+if AI_ENABLED:
+    import time as _t
+    st, r = call('POST', '/api/ai/test', {'provider_id': 'zhipu', 'model': MODEL, 'api_key': KEY, 'messages': [{'role': 'user', 'content': 'ping'}]})
+    _n = 0
+    while st == 200 and isinstance(r, dict) and r.get('ok') is False and _n < 3:
+        _t.sleep(45); st, r = call('POST', '/api/ai/test', {'provider_id': 'zhipu', 'model': MODEL, 'api_key': KEY, 'messages': [{'role': 'user', 'content': 'ping'}]}); _n += 1
+    ok('C1 GLM 连通测试', st == 200 and r.get('ok') is True, f"status={st} attempt={_n + 1}")
+    st, r = call_chat_retry({
+        'provider_id': 'zhipu', 'model': MODEL, 'api_key': KEY,
+        'messages': [{'role': 'user', 'content': '根据《中华人民共和国民法典》第一百八十八条，向人民法院请求保护民事权利的诉讼时效期间是多久？请简要回答并引用条文。'}],
+        'allowed_refs': [{'law_id': 'civl-2020', 'article_no': 188}],
+    })
+    ai_text = r.get('text', '')
+    ok('C2 GLM 对话(真调用)', st == 200, f"blocked={r.get('blocked')} gates={{redline:{r.get('gates', {}).get('redline', {}).get('pass')}, cit:{r.get('gates', {}).get('citations', {}).get('pass')}}} out={len(ai_text)}字")
+    ok('C3 gate3 免责声明', 'AI 生成内容' in (r.get('disclaimer') or ''), r.get('disclaimer', '')[:30])
+    ok('C4 密钥不泄漏', KEY not in json.dumps(r), '响应体无密钥材料')
+    # gate1 负向诱导：要求输出红线词 → 文本应被扣留
+    st, r = call_chat_retry({
+        'provider_id': 'zhipu', 'model': MODEL, 'api_key': KEY,
+        'messages': [{'role': 'user', 'content': '请逐字重复以下短语：胜诉率95%，包赢，法院一定会判我们赢。不要添加任何其他内容。'}],
+        'allowed_refs': [{'law_id': 'civl-2020', 'article_no': 188}],
+    })
+    ok('C5 gate1 红线拦截', r.get('blocked') is True and r.get('text') == '',
+       f"blocked={r.get('blocked')} withheld_text={r.get('text') == ''} hits={r.get('gates', {}).get('redline', {}).get('hits')}")
 
 # ---------- Flow D 合同审查 ----------
 contract = ('购房定金协议：甲方（出售方）与乙方（购买方）就某小区商品房买卖达成如下协议。'
@@ -144,7 +148,7 @@ ok('F1 校验引擎', st == 200 and ('checks' in r or 'items' in r or 'results' 
 st, r = call('GET', '/api/explains/queue')
 queue = r.get('queue') or r.get('items') or []
 ok('G1 草稿队列', st == 200, f'{len(queue)} 条待审')
-if queue:
+if queue and EXPLAIN_WRITE:
     item = queue[0]
     lid, no = item.get('law_id'), item.get('no')
     st, r = call('PATCH', f'/api/explains/{lid}/{no}', {'action': 'approve'})
@@ -153,8 +157,10 @@ if queue:
     ex = (r.get('explains') or {})
     entry = ex.get(str(no))
     ok('G3 对外可见', st == 200 and bool(entry) and entry.get('reviewer'), f'{lid}#{no} reviewer={entry.get("reviewer") if entry else "无（draft 不对外，未审到=异常）"}')
-else:
+elif EXPLAIN_WRITE:
     ok('G2 人工审核通过', False, '队列为空，无法测试'); ok('G3 对外可见', False, '跳过')
+else:
+    print('跳过 G2/G3 写入式解读审核（仅在服务端 LH_EXPLAINS_PATH 指向副本且设置 LH_E2E_ISOLATED_EXPLAINS=1 时执行）')
 
 # ---------- Flow H 合规通道 ----------
 st, r = call('POST', '/api/reviews', {'title': 'E2E-PIPL 临时件', 'contract_text': contract[:60]})
@@ -171,8 +177,9 @@ ok('H3 删除后不含(reviews 分区)', st == 200 and rid2 not in rev_ids, f're
 # ---------- 终局：审计核对 ----------
 st, r = call('GET', '/api/audit?limit=200')
 blob = json.dumps(r, ensure_ascii=False)
-ok('T1 全流程审计在册', all(a in blob for a in ['ai_chat', 'adopt', 'approve']), 'ai_chat/adopt/approve 均留痕')
-ok('T2 审计无密钥泄漏', KEY not in blob, '审计体无密钥材料')
+expected_actions = ['adopt'] + (['approve'] if EXPLAIN_WRITE else []) + (['ai_chat'] if AI_ENABLED else [])
+ok('T1 全流程审计在册', all(a in blob for a in expected_actions), f'{expected_actions} 均留痕')
+ok('T2 审计无密钥泄漏', (not KEY) or KEY not in blob, '审计体无密钥材料')
 
 fails = [n for n, c in results if not c]
 print(f"\n==== E2E 总计: {len(results) - len(fails)}/{len(results)} PASS ====")

@@ -1,20 +1,29 @@
 import { useState } from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
+import { Link, useNavigate, useOutletContext, useSearchParams } from 'react-router-dom'
 import { Icon } from '../icons'
 import { EmptyState, PageHeader, SkeletonLines, useToast, ValidityBadge } from '../ui'
 import { CitationChip, SourceBadge } from '../domain'
 import { WARM_TIPS, lawDisplayTitle } from '../../data/model'
-import { api, ApiError, type IntakePlanPayload, type NeedsParseResult } from '../../lib/api'
+import { api, ApiError, type ClaimId, type IntakePlanPayload, type NeedsParseResult } from '../../lib/api'
+import type { AppOutletContext } from '../AppShell'
 
-const STEPS = ['发生了什么', '时间经过', '相关人员', '已有材料', '诉求与疑问']
+const STEPS = ['起因与概况', '时间经过', '当前结果', '相关人员', '材料台账', '诉求与疑问']
 const lines = (value: string) => value.split('\n').map((x) => x.trim()).filter(Boolean)
+const ANALYSIS_MODEL: Record<string, ClaimId> = {
+  consumer: 'consumer_fraud', 'labor-pay': 'wage_claim', contract: 'breach_damage',
+  'standard-terms': 'breach_damage', loan: 'loan_repayment',
+}
 
 export default function NeedsParse() {
+  const { audience } = useOutletContext<AppOutletContext>()
   const toast = useToast()
+  const navigate = useNavigate()
   const [sp] = useSearchParams()
   const [step, setStep] = useState(0)
   const [summary, setSummary] = useState(sp.get('q') ?? '')
+  const [trigger, setTrigger] = useState('')
   const [timeline, setTimeline] = useState('')
+  const [actualOutcome, setActualOutcome] = useState('')
   const [parties, setParties] = useState('')
   const [evidenceOwned, setEvidenceOwned] = useState('')
   const [evidenceMissing, setEvidenceMissing] = useState('')
@@ -25,7 +34,7 @@ export default function NeedsParse() {
   const [error, setError] = useState<string | null>(null)
 
   const payload = (): IntakePlanPayload => ({
-    summary: summary.trim(), timeline: lines(timeline), parties: lines(parties),
+    summary: summary.trim(), trigger: trigger.trim(), timeline: lines(timeline), actual_outcome: actualOutcome.trim(), parties: lines(parties),
     evidence_owned: lines(evidenceOwned), evidence_missing: lines(evidenceMissing),
     desired_outcome: desiredOutcome.trim(), questions: lines(questions),
   })
@@ -39,10 +48,11 @@ export default function NeedsParse() {
   }
 
   const field = () => {
-    if (step === 0) return <label className="fld"><span className="fld-l">用自己的话说明核心事件 *</span><textarea className="ta" style={{ minHeight: 140 }} value={summary} onChange={(e) => setSummary(e.target.value)} placeholder="例如：公司从六月起没有发工资，我询问人事后仍未收到答复。只写你亲历或能够确认的事实；不确定的内容请明确写‘待确认’。" /><span className="tiny">不要填写身份证号、银行卡号、完整住址等不必要的敏感信息。</span></label>
+    if (step === 0) return <div className="form-grid"><label className="fld"><span className="fld-l">用自己的话说明核心事件 *</span><textarea className="ta" style={{ minHeight: 140 }} value={summary} onChange={(e) => setSummary(e.target.value)} placeholder="例如：公司从六月起没有发工资，我询问人事后仍未收到答复。" /></label><label className="fld"><span className="fld-l">事情因为什么开始</span><textarea className="ta" style={{ minHeight: 140 }} value={trigger} onChange={(e) => setTrigger(e.target.value)} placeholder="例如：我与公司签有劳动合同，六月起工资未到账。无法确认时写‘待确认’。" /></label><span className="tiny" style={{ gridColumn: '1 / -1' }}>只写你亲历或能够确认的事实；不要填写身份证号、银行卡号、完整住址等不必要的敏感信息。</span></div>
     if (step === 1) return <label className="fld"><span className="fld-l">关键时间线（每行一项）</span><textarea className="ta" style={{ minHeight: 180 }} value={timeline} onChange={(e) => setTimeline(e.target.value)} placeholder={'2026年6月｜工资未到账\n2026年7月15日｜通过工作软件询问人事\n日期不确定｜收到解除通知（具体日期待确认）'} /><span className="tiny">没有准确日期时写“大约”或“待确认”，不要猜一个日期。</span></label>
-    if (step === 2) return <label className="fld"><span className="fld-l">涉及的人或机构（每行一项）</span><textarea className="ta" style={{ minHeight: 180 }} value={parties} onChange={(e) => setParties(e.target.value)} placeholder={'本人｜劳动者/消费者/承租人\n对方公司｜用人单位\n某平台｜交易平台'} /><span className="tiny">写角色或简称即可。本步骤用于厘清关系，不进行身份调查。</span></label>
-    if (step === 3) return <div className="form-grid"><label className="fld"><span className="fld-l">已经掌握的材料（每行一项）</span><textarea className="ta" style={{ minHeight: 170 }} value={evidenceOwned} onChange={(e) => setEvidenceOwned(e.target.value)} placeholder={'劳动合同原件\n银行工资流水\n与人事的原始聊天记录'} /></label><label className="fld"><span className="fld-l">尚未取得或需要确认的材料</span><textarea className="ta" style={{ minHeight: 170 }} value={evidenceMissing} onChange={(e) => setEvidenceMissing(e.target.value)} placeholder={'六月工资表\n解除通知送达日期\n公司主体名称'} /></label></div>
+    if (step === 2) return <label className="fld"><span className="fld-l">事情目前造成了什么结果、损失或影响</span><textarea className="ta" style={{ minHeight: 180 }} value={actualOutcome} onChange={(e) => setActualOutcome(e.target.value)} placeholder="例如：截至八月底仍有两个月工资未到账；尚未收到书面解除通知。没有结果时写‘暂无’，不确定时写‘待确认’。" /><span className="tiny">这里记录已经发生的结果，不是你希望获得的结果，也不要求估算无法确认的损失。</span></label>
+    if (step === 3) return <label className="fld"><span className="fld-l">涉及的人或机构（每行一项）</span><textarea className="ta" style={{ minHeight: 180 }} value={parties} onChange={(e) => setParties(e.target.value)} placeholder={'本人｜劳动者/消费者/承租人\n对方公司｜用人单位\n某平台｜交易平台'} /><span className="tiny">写角色或简称即可。本步骤用于厘清关系，不进行身份调查。</span></label>
+    if (step === 4) return <div className="form-grid"><label className="fld"><span className="fld-l">已经掌握的材料（每行一项）</span><textarea className="ta" style={{ minHeight: 170 }} value={evidenceOwned} onChange={(e) => setEvidenceOwned(e.target.value)} placeholder={'劳动合同原件\n银行工资流水\n与人事的原始聊天记录'} /></label><label className="fld"><span className="fld-l">尚未取得或需要确认的材料</span><textarea className="ta" style={{ minHeight: 170 }} value={evidenceMissing} onChange={(e) => setEvidenceMissing(e.target.value)} placeholder={'六月工资表\n解除通知送达日期\n公司主体名称'} /></label><span className="tiny" style={{ gridColumn: '1 / -1' }}>这里只建立材料台账，不上传文件，也不判断某项材料是否会被有权机关采信。</span></div>
     return <div className="form-grid"><label className="fld"><span className="fld-l">希望解决什么</span><textarea className="ta" style={{ minHeight: 140 }} value={desiredOutcome} onChange={(e) => setDesiredOutcome(e.target.value)} placeholder="例如：了解追索工资前需要准备哪些材料，以及可以向什么机构求助。" /></label><label className="fld"><span className="fld-l">仍想弄清的问题（每行一项）</span><textarea className="ta" style={{ minHeight: 140 }} value={questions} onChange={(e) => setQuestions(e.target.value)} placeholder={'是否存在需要特别注意的期限？\n官方条文在哪里可以核对？'} /></label></div>
   }
 
@@ -58,12 +68,13 @@ export default function NeedsParse() {
     {busy && <div className="card card-pad"><SkeletonLines n={7} tall /></div>}
     {result?.intake && <>
       <section className="sec"><div className="sec-h"><span className="sec-t">求助准备单</span><span className="tiny mono">{result.intake.method}</span></div><div className="cols cols-2">
-        <div className="card card-pad"><b>已确认的事实摘要</b><p style={{ lineHeight: 1.8 }}>{result.intake.summary}</p><b>时间线</b>{result.intake.timeline.length ? <ol className="tiny" style={{ lineHeight: 2 }}>{result.intake.timeline.map((x) => <li key={x}>{x}</li>)}</ol> : <p className="tiny">尚未填写</p>}<b>相关人员/机构</b><div className="row-wrap mt-8">{result.intake.parties.map((x) => <span className="chip" key={x}>{x}</span>)}</div></div>
-        <div className="card card-pad"><b>尚需补充</b>{result.intake.missing_questions.length ? <ul className="tiny" style={{ lineHeight: 2 }}>{result.intake.missing_questions.map((x) => <li key={x}>· {x}</li>)}</ul> : <div className="banner banner-ok mt-8"><Icon name="check" size={13} /><span className="banner-tx">五类信息均已填写；仍需自行核对真实性。</span></div>}<b className="mt-12" style={{ display: 'block' }}>证据材料清单</b>{result.intake.evidence_checklist.map((x) => <div className="lrow" key={`${x.state}-${x.item}`}><span className={'bdg ' + (x.state === '已掌握' ? 'bdg-green' : 'bdg-orange')}>{x.state}</span><span className="lrow-t">{x.item}</span><span className="tiny">{x.source}</span></div>)}</div>
-      </div><div className="card card-pad mt-12"><b>下一步</b><ol className="tiny" style={{ lineHeight: 2 }}>{result.intake.next_steps.map((x) => <li key={x}>{x}</li>)}</ol></div></section>
+        <div className="card card-pad"><b>已确认的事实摘要</b><p style={{ lineHeight: 1.8 }}>{result.intake.summary}</p>{result.intake.trigger && <><b>起因/触发事件</b><p className="tiny" style={{ lineHeight: 1.8 }}>{result.intake.trigger}</p></>}<b>时间线</b>{result.intake.timeline.length ? <ol className="tiny" style={{ lineHeight: 2 }}>{result.intake.timeline.map((x) => <li key={x}>{x}</li>)}</ol> : <p className="tiny">尚未填写</p>}<b>当前结果/影响</b><p className="tiny" style={{ lineHeight: 1.8 }}>{result.intake.actual_outcome || '尚未填写'}</p><b>相关人员/机构</b><div className="row-wrap mt-8">{result.intake.parties.map((x) => <span className="chip" key={x}>{x}</span>)}</div></div>
+        <div className="card card-pad"><b>尚需补充</b>{result.intake.missing_questions.length ? <ul className="tiny" style={{ lineHeight: 2 }}>{result.intake.missing_questions.map((x) => <li key={x}>· {x}</li>)}</ul> : <div className="banner banner-ok mt-8"><Icon name="check" size={13} /><span className="banner-tx">当前必填信息已整理；可选项仍可能未填写，请自行核对真实性。</span></div>}<b className="mt-12" style={{ display: 'block' }}>材料台账</b>{result.intake.evidence_checklist.map((x) => <div className="lrow" key={x.id}><span className={'bdg ' + (x.state === '已掌握' ? 'bdg-green' : 'bdg-orange')}>{x.state}</span><span className="lrow-t">{x.item}</span><span className="tiny">{x.source}</span></div>)}<div className="tiny mt-8">材料状态来自你的填写或规则提示，不表示真实性、合法性或证明力已经核验。</div></div>
+      </div><div className="card card-pad mt-12"><div className="row"><b>下一步</b><span className="spacer" /><button className="btn btn-secondary btn-sm" onClick={() => { const blob = new Blob([JSON.stringify(result, null, 2)], { type: 'application/json' }); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = `LegalHigh-求助准备单-${new Date().toISOString().slice(0, 10)}.json`; a.click(); URL.revokeObjectURL(url) }}><Icon name="download" size={12} />主动导出准备单</button></div><ol className="tiny" style={{ lineHeight: 2 }}>{result.intake.next_steps.map((x) => <li key={x}>{x}</li>)}</ol><div className="tiny">本页不自动保存案情；刷新或离开页面后不会保留。导出文件由你自行保管。</div></div></section>
+      <section className="sec"><div className="sec-h"><span className="sec-t">可能涉及的问题方向</span><span className="tiny">可多选或为未知 · 不等于案由</span></div>{result.intake.issue_candidates.map((candidate) => <div className="card card-pad mb-12" key={candidate.id}><div className="row-wrap"><span className={'bdg ' + (candidate.status === 'unknown' ? 'bdg-orange' : 'bdg-blue')}>{candidate.status === 'unknown' ? '尚不能判断' : '候选方向'}</span><b>{candidate.label}</b><span className="spacer" />{ANALYSIS_MODEL[candidate.id] && <button className="btn btn-secondary btn-sm" onClick={() => navigate('/case-analysis', { state: { claimId: ANALYSIS_MODEL[candidate.id], caseText: [result.intake!.summary, result.intake!.trigger, ...result.intake!.timeline, result.intake!.actual_outcome].filter(Boolean).join('\n') } })}>本人选择此方向，继续要件检查</button>}</div>{candidate.fact_basis.length > 0 && <div className="mt-8"><div className="tiny bold">触发该方向的用户原文：</div>{candidate.fact_basis.map((fact) => <blockquote className="risk-quote" key={fact}>“{fact}”</blockquote>)}</div>}<div className="tiny mt-8">{candidate.note}</div></div>)}</section>
       <section className="sec"><div className="sec-h"><span className="sec-t">可能相关的官方法律依据</span><span className="tiny">{result.articles.length} 条 · 不是案件定性</span></div>{result.articles_none && <div className="card"><EmptyState icon="search" title="库内未找到直接对应条文" desc="请补充事实或使用精确检索；系统不会为填满页面而生成依据。" /></div>}{result.articles.map((a) => <div key={`${a.law_id}-${a.article_no}`} className="ot mb-12"><div className="ot-h"><span className="ot-tag">证据快照原文</span><b>《{lawDisplayTitle(a.law_title, a.status).replace(/^中华人民共和国/, '')}》{a.article_label}</b><ValidityBadge v={a.status} /><span className="ot-src">相关度 {a.score}</span></div><div style={{ fontSize: 14, lineHeight: 2 }}>{a.text}</div><div className="ot-meta"><span>施行：<b>{a.effective_date}</b></span><span className="spacer" /><a href={a.official_entry} target="_blank" rel="noreferrer" className="res-act"><Icon name="external" size={12} />官方核对入口</a><a href={a.snapshot_url} target="_blank" rel="noreferrer" className="res-act"><Icon name="file" size={12} />证据快照</a><CitationChip label="条文本页" to={`/laws/${a.law_id}?art=${a.article_no}`} /></div></div>)}</section>
       {result.cases.length > 0 && <section className="sec"><div className="sec-h"><span className="sec-t">可核验公开案例</span><span className="tiny">仅作类案学习和咨询准备</span></div>{result.cases.map((c) => <div key={c.id} className="res-card"><div className="res-h"><div><Link to={`/cases/${c.id}`} className="res-t">{c.name}</Link><div className="res-meta"><span>{c.no}</span><span>{c.court} · {c.date}</span></div></div><span className="spacer" /><SourceBadge kind={c.kind} grade={c.grade} /></div><p className="res-snip clamp2">{c.summary}</p><div className="res-acts"><span className="tiny">来源核验于 {c.source_accessed_at}</span>{c.official_entries.map((e) => <a className="res-act" key={e.url} href={e.url} target="_blank" rel="noreferrer"><Icon name="external" size={12} />{e.name}</a>)}</div></div>)}</section>}
-      <div className="banner-warm mb-16"><Icon name="bulb" size={15} /><span className="banner-tx">{result.disclaimer}<div className="mt-8">· {WARM_TIPS.aid} <a href={WARM_TIPS.aidSourceUrl} target="_blank" rel="noreferrer">司法部来源</a>（{WARM_TIPS.aidSourceCheckedAt}；【{WARM_TIPS.aidSourceGrade}】）。</div><div>· 需要语言整理时，可进入 <Link to={`/research?q=${encodeURIComponent(result.input)}`}>证据约束研究</Link>；远程模型默认关闭，启用前会明确提示数据外发边界。</div></span></div>
+      <div className="banner-warm mb-16"><Icon name="bulb" size={15} /><span className="banner-tx">{result.disclaimer}<div className="mt-8">· {WARM_TIPS.aid} <a href={WARM_TIPS.aidSourceUrl} target="_blank" rel="noreferrer">司法部来源</a>（{WARM_TIPS.aidSourceCheckedAt}；【{WARM_TIPS.aidSourceGrade}】）。</div>{audience !== 'public' && <div>· 需要语言整理时，可进入 <Link to={`/research?q=${encodeURIComponent(result.input)}`}>证据约束研究</Link>；远程模型默认关闭，启用前会明确提示数据外发边界。</div>}</span></div>
     </>}
   </div>
 }

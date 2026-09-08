@@ -42,10 +42,8 @@ def test_explain_texts_stay_within_source():
 def test_review_workflow_approve_and_reopen(tmp_path, monkeypatch):
     """审核工作流回归（在 tmp 副本上操作，绝不污染真实解读库）：
     approve 须填审核人→对外可见；reopen→重新隐藏。"""
-    import json as _json
     import shutil as _shutil
     import pytest
-    from app import storage as st
     tmp_file = tmp_path / "article_explains.json"
     _shutil.copy(explains.DATA_PATH, tmp_file)
     monkeypatch.setattr(explains, "DATA_PATH", tmp_file)
@@ -57,7 +55,7 @@ def test_review_workflow_approve_and_reopen(tmp_path, monkeypatch):
         law_id, no = target["law_id"], int(target["no"])
         with pytest.raises(ValueError):
             explains.set_review(law_id, no, "approve", "  ")
-        # 决策10（2026-08-31）：审核人须为执业律师并记录执业证号（律师法§2/§13+办法§9）
+        # 审核署名来自服务端主体，但只代表内容发布责任，不代表律师资格核验。
         explains.set_review(law_id, no, "approve", "测试审核人")
         assert no in explains.approved_for(law_id)
         explains.set_review(law_id, no, "reopen", "测试审核人")
@@ -66,17 +64,21 @@ def test_review_workflow_approve_and_reopen(tmp_path, monkeypatch):
         explains.load_explains.cache_clear()
 
 
-def test_reviewer_license_recorded_and_public():
-    """决策10：approved 解读对外公示审核人执业证号（依法可核、担责到人）。"""
-    import json as _json
-    from app import storage as st
-    queue = explains.review_queue()
-    assert queue
-    target = queue[0]
-    explains.set_review(target["law_id"], int(target["no"]), "approve", "测试审核人", "11101202600000002")
-    pub = explains.approved_for(target["law_id"])[int(target["no"])]
-    assert pub["reviewer"] == "测试审核人"  # 任何指定审核人均可
-    # reopen 后证号一并清除
-    explains.set_review(target["law_id"], int(target["no"]), "reopen", "x")
-    again = explains.approved_for(target["law_id"])
-    assert int(target["no"]) not in again
+def test_reviewer_is_audit_label_not_credential(tmp_path, monkeypatch):
+    """内容审核只公开服务端审计署名，不采集或暗示律师执业资格。"""
+    import shutil as _shutil
+
+    tmp_file = tmp_path / "article_explains.json"
+    _shutil.copy(explains.DATA_PATH, tmp_file)
+    monkeypatch.setattr(explains, "DATA_PATH", tmp_file)
+    explains.load_explains.cache_clear()
+    try:
+        target = explains.review_queue()[0]
+        law_id, no = target["law_id"], int(target["no"])
+        explains.set_review(law_id, no, "approve", "本机内容负责人")
+        pub = explains.approved_for(law_id)[no]
+        assert pub["reviewer"] == "本机内容负责人"
+        assert "reviewer_license_no" not in pub
+        assert "reviewer_role" not in pub
+    finally:
+        explains.load_explains.cache_clear()

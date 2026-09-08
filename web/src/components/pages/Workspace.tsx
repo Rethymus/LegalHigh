@@ -79,7 +79,7 @@ export default function Workspace() {
                 <span className="lrow-t">{r.question}</span>
                 <span className="tiny">{r.ts.slice(5, 10)}</span>
               </Link>
-            )) : <EmptyState icon="search" title="暂无研究" desc="从首页搜索或 AI 研究发起。" action={<Link to="/research" className="btn btn-secondary btn-sm">去研究</Link>} />}
+            )) : <EmptyState icon="search" title="暂无研究" desc="从首页或来源研究页发起。" action={<Link to="/research" className="btn btn-secondary btn-sm">去研究</Link>} />}
           </div>
           <div className="panel-f tiny">研究列表仅保存在本机浏览器。</div>
         </aside>
@@ -143,23 +143,23 @@ export default function Workspace() {
                   <div key={`${e.law_id}-${e.no}`} className="lrow" style={{ border: '1px solid var(--div-soft)', marginBottom: 10, cursor: 'default', alignItems: 'flex-start' }}>
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <div className="row mb-8" style={{ gap: 6 }}>
-                        <span className="bdg bdg-orange">AI 起草 · 待审核</span>
+                        <span className="bdg bdg-orange">AI 起草 · 待内容审核</span>
                         <Link to={`/laws/${e.law_id}?art=${e.no}`} className="tiny" style={{ color: 'var(--accent-text)' }}>《{e.law_id}》第{e.no}条</Link>
                       </div>
                       <div className="tiny" style={{ lineHeight: 1.8 }}>{e.text}</div>
                       <div className="tiny mt-8" style={{ color: 'var(--tx-3)' }}>起草：{e.author}{e.date ? ` · ${e.date}` : ''}{e.source_note ? ` · ${e.source_note}` : ''}</div>
                       <div className="row mt-8" style={{ gap: 6 }}>
-                        <button className="btn btn-primary btn-sm" title="审核通过=当前本机主体对内容负责（生成式AI办法§9），审核人写入审计不可自报"
+                        <button className="btn btn-primary btn-sm" title="内容审核通过=当前本机主体对发布负责；署名写入审计且不可由请求正文自报，不表示律师资格核验"
                           onClick={() =>
                           api.reviewExplain(e.law_id, e.no, 'approve').then(
-                            () => { toast(`已审核通过：${e.law_id}#${e.no}（审核人=本机主体）`, 'ok'); loadExplains() },
+                            () => { toast(`已完成内容审核：${e.law_id}#${e.no}（署名=本机主体）`, 'ok'); loadExplains() },
                             (er) => toast(er instanceof ApiError ? er.message : String(er), 'err'),
-                          )}><Icon name="verify" size={12} />审核通过</button>
+                          )}><Icon name="verify" size={12} />通过内容审核</button>
                         <Link to={`/laws/${e.law_id}?art=${e.no}`} className="btn btn-ghost btn-sm">对照原文</Link>
                       </div>
                     </div>
                   </div>
-                )) : <EmptyState icon="verify" title="解读队列已清空" desc="全部 AI 起草解读均已审核。" />
+                )) : <EmptyState icon="verify" title="解读队列已清空" desc="全部 AI 起草解读均已完成内容发布审核。" />
             )}
           </div>
         </section>
@@ -198,5 +198,5 @@ export default function Workspace() {
 }
 
 function TEMPLATE_NAME(id: string): string {
-  return ({ lawyer_letter: '律师函', contract: '合同', civil_complaint: '民事起诉状', civil_answer: '民事答辩状', power_of_attorney: '授权委托书', legal_opinion: '法律意见书', preservation_application: '财产保全申请书' } as Record<string, string>)[id] ?? id
+  return ({ lawyer_letter: '律师函', contract: '合同', civil_complaint: '民事起诉状', civil_answer: '民事答辩状', power_of_attorney: '授权委托书', legal_opinion: '法律研究备忘录', preservation_application: '财产保全申请书' } as Record<string, string>)[id] ?? id
 }

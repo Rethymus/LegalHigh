@@ -102,6 +102,8 @@ def test_docx_generation_watermark_states(tmp_db):
     assert len(data_final) > 5000
     final_xml = _zip.ZipFile(_io.BytesIO(data_final)).read("word/document.xml").decode("utf-8")
     assert "已确认定稿" in final_xml and "工具草稿" not in final_xml
+    assert "工具生成" in final_xml and "未经平台核验身份" in final_xml
+    assert "不代表平台、任何律所或律师出具" in final_xml and "非律师不得以律师或律所名义使用" in final_xml
     assert data_final != data_draft
 
 

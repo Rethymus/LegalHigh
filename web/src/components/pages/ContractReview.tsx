@@ -145,6 +145,12 @@ export default function ContractReview() {
         </div>
       )}
 
+      {review?.result.analysis_incomplete && (
+        <div className="banner banner-danger mb-12"><Icon name="alert" size={15} />
+          <span className="banner-tx">审查引擎未完整执行。未显示的审查点不能视为无风险，请修正规则或输入后重新审查。</span>
+        </div>
+      )}
+
       {!rid && !error && (
         <div className="cols cols-2">
           <div className="card card-pad">
@@ -300,7 +306,9 @@ export default function ContractReview() {
                 )
               })}
               {shownFindings.length === 0 && (
-                <EmptyState icon="verify" title="当前范围未检出风险" desc="切换条款或刷新审查。审查引擎不虚构风险：未命中审查点即不出条。" />
+                review.result.analysis_incomplete
+                  ? <EmptyState icon="alert" title="审查未完成" desc="至少一个审查点执行失败；当前结果不能作为无风险结论。修正后请重新发起审查。" />
+                  : <EmptyState icon="verify" title="当前范围未检出风险" desc="切换条款或刷新审查。审查引擎不虚构风险：未命中审查点即不出条。" />
               )}
             </div>
           </aside>
