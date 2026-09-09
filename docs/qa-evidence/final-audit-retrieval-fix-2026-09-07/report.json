@@ -1,0 +1,12 @@
+[
+  {
+    "name": "13-research-run",
+    "path": "/research?q=%E7%BD%91%E8%B4%AD%E5%88%B0%E5%81%87%E8%B4%A7%E5%8F%AF%E4%BB%A5%E6%A0%B8%E5%AF%B9%E5%93%AA%E4%BA%9B%E7%8E%B0%E8%A1%8C%E6%B3%95%E6%9D%A1",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "finalUrl": "http://127.0.0.1:4187/research?q=%E7%BD%91%E8%B4%AD%E5%88%B0%E5%81%87%E8%B4%A7%E5%8F%AF%E4%BB%A5%E6%A0%B8%E5%AF%B9%E5%93%AA%E4%BA%9B%E7%8E%B0%E8%A1%8C%E6%B3%95%E6%9D%A1",
+    "title": "LegalHigh · 法律智能知识库"
+  }
+]

@@ -1,0 +1,14 @@
+[
+  {
+    "name": "04b-case-analysis-run",
+    "path": "/case-analysis",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "step1": "ok",
+    "step2": "clicked",
+    "finalUrl": "http://127.0.0.1:4194/case-analysis",
+    "title": "LegalHigh · 法律智能知识库"
+  }
+]
