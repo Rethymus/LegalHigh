@@ -1,101 +1,166 @@
+<div align="center">
+<a name="readme-top"></a>
+
 # LegalHigh (English)
 
-[简体中文](README.zh-CN.md) · [Project index](README.md) · [Security](SECURITY.md) · [Contributing](CONTRIBUTING.md)
+**A local-first legal-information and document-assistance prototype: evidence snapshots → deterministic retrieval → citation binding → human review → audit trail**
 
-[Browse statutes online](https://rethymus.github.io/LegalHigh/) · [v1.1.0-rc.1 prerelease](https://github.com/Rethymus/LegalHigh/releases/tag/v1.1.0-rc.1) · [Changelog](CHANGELOG.md)
+**English** · [简体中文](README.zh-CN.md) · [Project home](README.md) · [Security policy](SECURITY.md) · [Contributing](CONTRIBUTING.md) · [Changelog](CHANGELOG.md) · [v1.1.0-rc.1 prerelease](https://github.com/Rethymus/LegalHigh/releases/tag/v1.1.0-rc.1) · [Static statute browsing](https://rethymus.github.io/LegalHigh/)
 
-## Installation and release choice
+</div>
 
-GitHub Pages provides static statute browsing and product information. Full retrieval, fact preparation, contract review, drafts, professional commentary and optional AI require the local Python backend described below. The release includes source and a static-site ZIP with SHA-256 checksums. The static ZIP is not a desktop installer. v1.1.0-rc.1 is a prerelease; signed installation checks across all three desktop platforms remain incomplete. Old v1.0.0 installers lack subsequent fixes.
+## Contents
 
-Before upgrading, back up local SQLite, preserve provider configuration and stop the old service. Install dependencies from the new lockfiles and restart. Legacy verified/issued drafts migrate to reviewed/finalized, which record local user progress only. To roll back, restore the pre-upgrade database backup instead of opening a migrated database with the old application.
+<div align="center">
 
-LegalHigh is a local-first prototype for traceable legal information and document assistance. It combines evidence snapshots, verified case records, deterministic retrieval, contract rules, document templates, human-review gates, and audit records in one inspectable workflow.
+[Installation & editions](#installation--editions) · [Who it serves](#who-it-serves-how-to-use-it) · [Interface gallery](#interface-gallery) · [Core workflows](#core-workflows) · [Actual capabilities](#actual-capabilities) · [What cannot be claimed](#what-cannot-be-claimed) · [Data & evidence discipline](#data-and-evidence-discipline) · [Local development](#local-development) · [Quality gates](#quality-gates) · [Architecture & security boundary](#architecture--security-boundary) · [References](#open-source-projects-and-papers) · [Contributing, disclaimer & license](#contributing-disclaimer--license)
 
-It is not a law firm, does not practise law, does not provide legal advice, and does not predict case outcomes. High-risk outputs must be independently reviewed outside the platform by an authorized and appropriately qualified person. The platform only records the local user's own review/finalize progress; it does not verify credentials and does not issue documents.
+</div>
 
-## Who it serves and how
+> [!IMPORTANT]
+> LegalHigh is not a law firm. It does not practise law, does not provide legal advice, and does not predict case outcomes. Any high-risk output must be independently reviewed outside the platform by someone authorised and qualified; the platform only records the local user's own review and finalisation progress and never verifies credentials or issues documents.
 
-The full application requires an explicit local view choice on first use; it no longer silently assigns a default audience and does not collect a name. Users can switch later under Settings → Usage View. Statute and case search are always available. Research, learning, and comparative-law entry points are shown where relevant. Contract review, document drafts, the professional workspace, and operational audit are shown only in the Professional Lawyer view, and direct URLs are gated as well. “Professional Lawyer” is a presentation choice—not account, licence, or organization verification.
+## Installation & editions
 
-- Members of the public: use the six-step Fact & Evidence Preparation flow to record the trigger, chronology, actual outcome, parties, available materials, desired outcome, and open questions. Retrieval uses only reported facts. Candidate issue directions quote their factual basis, remain explicitly provisional, and never silently default to a claim model. The result is ephemeral unless the user exports the JSON and can then be taken to legal-aid staff or independent counsel.
-- Law students: study source-linked provisions, verified case records, citation chains, and explicit retrieval gaps while keeping comparative foreign judgments separate from Chinese legal authority.
-- Professional users: run local contract rules over fee, account, and liability terms, preserve annotation/audit history, and create practical drafts of lawyer letters, contracts, and litigation documents. Firm, lawyer, and licence fields are supplied by the user; LegalHigh neither verifies them nor issues the document.
+For plain statute reading, use [GitHub Pages](https://rethymus.github.io/LegalHigh/) — a static site with browsing and product information only. The full retrieval, fact preparation, contract review, drafting, professional commentary and optional AI features require running the Python backend locally as described in [Local development](#local-development). Releases ship source plus a static-site ZIP with SHA-256 checksums; the static ZIP is not a desktop installer. v1.1.0-rc.1 is a prerelease; three-platform signed-installer verification is incomplete. The old v1.0.0 does not contain subsequent fixes.
 
-LegalHigh does not provide lawyer onboarding, referrals, assignment, online consultation, credential verification, or platform issuance. It is a legal-literacy and fact-preparation tool before independent professional assistance, plus an inspectable research, review, and drafting aid.
+Before upgrading, back up the local SQLite database, save model configuration and stop the old service; reinstall dependencies from the new lock files, then restart. Legacy verified/issued drafts migrate to reviewed/finalized, which records only the local user's progress, not platform issuance. To roll back, use the pre-upgrade database backup and never let the old build read a migrated database directly.
 
-## Screenshots
+## Who it serves, how to use it
 
-Captured on 2026-09-08 using an isolated local backend. These are full-stack screenshots; GitHub Pages provides only the static subset.
+On first launch the full application requires an explicit local view choice; no default audience is assigned silently and no name is collected. You can switch later in Settings → usage view. Statute and case search are available in all three views. Source research, study and comparative-law tools appear by purpose; contract review, document drafting, the professional workspace and the audit log appear only in the Professional Lawyer view — direct URL entry is blocked by the view gate. "Professional Lawyer" is a UI-purpose choice, not an account, credential or organisational verification.
 
-| Home (light) | Home (dark) |
+- **General public**: record the cause, timeline, current outcome, people involved, materials, claims and questions in the six-step fact-and-evidence preparation flow. The system retrieves traceable sources solely from your own statements and returns fact-backed provisional issue directions plus missing-material checklists; it does not classify the case automatically and never defaults to a single claim model. Results live on the page only and can be exported as JSON to bring to legal aid or a lawyer.
+- **Law students**: practise fact-to-norm analysis with real-source statutes, verified cases, citation chains and documented retrieval gaps; foreign cases are always presented as a separate layer from PRC legal grounds.
+- **Professional users**: run local rule checks on fees, accounts and liability clauses with annotation state and audit records, and generate lawyer-letter, contract and litigation drafts from fixed templates. Firm, lawyer and licence fields are filled in by the user; the platform neither verifies them nor substitutes for a qualified person's review or issuance.
+
+The project does not build lawyer onboarding, referrals, online consultation or platform issuance. It is a legal-literacy and fact-preparation tool before professional legal aid, and an inspectable research/review/drafting assistant for professionals and students.
+
+## Interface gallery
+
+<div align="center">
+
+Captured 2026-09-09 against a real backend with an isolated throwaway database.
+
+</div>
+
+<p align="center"><b>Home (light)</b> · <b>Home (dark)</b></p>
+<p align="center"><img src="docs/readme/hero-light.png" alt="Home light" width="48.8%"> <img src="docs/readme/hero-dark.png" alt="Home dark" width="48.8%"></p>
+
+<div align="center">
+
+<sup>▲ Home · Professional Lawyer view (light / dark)</sup>
+
+</div>
+
+<p align="center"><b>Fact & evidence preparation</b> · <b>Statute search</b> · <b>Law detail (evidence fields)</b></p>
+<p align="center"><img src="docs/readme/needs.png" alt="Needs" width="32.5%"> <img src="docs/readme/search-results.png" alt="Search" width="32.5%"> <img src="docs/readme/law-evidence.png" alt="Law detail" width="32.5%"></p>
+<p align="center"><b>Case search (source + grade)</b> · <b>Contract review</b> · <b>Professional workspace</b></p>
+<p align="center"><img src="docs/readme/case-detail.png" alt="Case detail" width="32.5%"> <img src="docs/readme/contract-review.png" alt="Contract review" width="32.5%"> <img src="docs/readme/workspace.png" alt="Workspace" width="32.5%"></p>
+
+<details>
+<summary><kbd>Expand all screenshots</kbd> (12 more · 3 dark · 3 at 390×844)</summary>
+
+<p align="center"><b>Claim-element check</b> · <b>Statute browse</b> · <b>Foreign precedent (layered)</b></p>
+<p align="center"><img src="docs/readme/case-analysis.png" alt="Case analysis" width="32.5%"> <img src="docs/readme/laws-browse.png" alt="Laws browse" width="32.5%"> <img src="docs/readme/case-foreign.png" alt="Foreign case" width="32.5%"></p>
+<p align="center"><b>Legal research</b> · <b>Comparative law</b> · <b>Learning centre (student view)</b></p>
+<p align="center"><img src="docs/readme/research.png" alt="Research" width="32.5%"> <img src="docs/readme/comparative.png" alt="Comparative" width="32.5%"> <img src="docs/readme/learning.png" alt="Learning" width="32.5%"></p>
+<p align="center"><b>Document drafting</b> · <b>Contract library</b> · <b>Data & evidence sources</b></p>
+<p align="center"><img src="docs/readme/draft.png" alt="Draft" width="32.5%"> <img src="docs/readme/contracts.png" alt="Contracts" width="32.5%"> <img src="docs/readme/data-sources.png" alt="Data sources" width="32.5%"></p>
+<p align="center"><b>Operation audit</b> · <b>Settings</b> · <b>Collections</b></p>
+<p align="center"><img src="docs/readme/audit.png" alt="Audit" width="32.5%"> <img src="docs/readme/settings.png" alt="Settings" width="32.5%"> <img src="docs/readme/collections.png" alt="Collections" width="32.5%"></p>
+<p align="center"><b>Search results (dark)</b> · <b>Law detail (dark)</b> · <b>Workspace (dark)</b></p>
+<p align="center"><img src="docs/readme/dark-search-results.png" alt="Dark search" width="32.5%"> <img src="docs/readme/dark-law-detail.png" alt="Dark law" width="32.5%"> <img src="docs/readme/dark-workspace.png" alt="Dark workspace" width="32.5%"></p>
+<p align="center"><b>Narrow · home</b> · <b>Narrow · search</b> · <b>Narrow · law detail</b></p>
+<p align="center"><img src="docs/readme/narrow-dashboard.png" alt="Narrow home" width="26%"> <img src="docs/readme/narrow-search-results.png" alt="Narrow search" width="26%"> <img src="docs/readme/narrow-law-detail.png" alt="Narrow law" width="26%"></p>
+
+</details>
+
+Motion serves real product interactions only: toasts, dialogs, segmented controls, switches, lists and scroll navigation are covered by headless-browser behaviour probes; reduced motion, keyboard focus, contrast and motion duration are QA-gated. No internal design-spec or component-showcase page is exposed to end users.
+
+## Core workflows
+
+<div align="center">
+
+The demo GIFs below were recorded 2026-09-09 against the real frontend and backend (isolated throwaway database); each ends on an actual result state.
+
+</div>
+
+<div align="center">
+
+**① Statute search → citation cards** (all views): BM25 retrieval across the 14-law controlled corpus; every hit carries source, validity and evidence grade. Summaries show programmatic statistics only — no generative model.
+
+</div>
+
+<div align="center">
+
+![Search workflow](docs/readme/gif-search.gif)
+
+</div>
+
+<p align="center"><b>② Fact & evidence preparation (public)</b> · <b>③ Claim-element check</b></p>
+<p align="center"><img src="docs/readme/gif-needs.gif" alt="Needs" width="48.8%"> <img src="docs/readme/gif-case-analysis.gif" alt="Case analysis" width="48.8%"></p>
+<p align="center"><sub>Left: The six-step wizard retrieves traceable sources from the user's own statements and returns provisional issue directions plus missing materials; unknowns are labelled unknown — no automatic case classification;Right: A stateless check that runs only after the user explicitly picks a direction: each element links back to the original text snippet and the current statute; it only reports "lead found / not found in text".</sub></p>
+
+<p align="center"><b>④ Contract rule review (professional view)</b> · <b>Appearance & motion</b></p>
+<p align="center"><img src="docs/readme/gif-contract.gif" alt="Contract" width="48.8%"> <img src="docs/readme/gif-theme.gif" alt="Theme" width="48.8%"></p>
+<p align="center"><sub>Left: Local rule scan over fee, account and liability clauses: 16 checkpoints → Risk Inspector annotation state machine → DOCX redline export;Right: The UI follows system light/dark and reduced-motion settings; spring motion, contrast and focus rings are all QA-gated.</sub></p>
+
+The AI plugin is off by default: requests reach a controlled remote endpoint only after explicit user configuration and authorisation, and every output passes red-line, citation-binding and audit gates; generation is withheld when the citation gate fails.
+
+## Actual capabilities
+
+| Capability | Current boundary |
 |---|---|
-| ![Home light](docs/qa-evidence/goal-2026-09-08-auth/01-dashboard.png) | ![Home dark](docs/qa-evidence/goal-2026-09-08-auth/02-dashboard-dark.png) |
+| Fact & evidence preparation | Six steps record cause, timeline, outcome, people, materials and claims; every provisional direction must quote the user's own words it rests on, and unknowns are labelled unknown. Claims/questions are excluded from fact retrieval so leading content cannot pollute hits. Results are not auto-persisted; the user can export them. |
+| Claim-element check | Runs only after the user explicitly selects a direction; no default loan model. Results distinguish only "lead found / not found in text", with original snippets linked to current statutes; no case-cause determination, right-establishment or outcome prediction. |
+| Statute browse & BM25 search | Built from in-repo evidence snapshots; the current build is 14 laws, 2,380 articles, adding NPC official snapshots of the Personal Information Protection Law, Legal Aid Law, Administrative Reconsideration Law and Administrative Litigation Law. Pages expose source, snapshot date, file hash and effective/version-date evidence. The NPC catalogue as of 2026-03-16 lists 310 laws in force — the two counts use different scopes; this project is neither a complete PRC law database nor a historical-version archive. |
+| Citation-bound Q&A | Deterministic retrieval returns statute-text cards; false premises are corrected only by tested rules. No hits must surface as an explicit gap. |
+| Case search | Shows only records with a direct source, verification date and evidence grade. Foreign precedents serve comparative study only and are not PRC adjudication grounds. |
+| Live inventory | The sidebar footer derives counts live from the controlled corpus, verified cases and approved commentary via the public read-only `/api/inventory`; it never reads reviews, drafts, complaints or audit records and shows no fabricated identities. |
+| Contract review | Local rule scan over user-submitted text producing a review record, annotation state and a DOCX redline; the result is not a lawyer's review. The repository no longer ships fictional client contracts. |
+| Document drafting | Drafts are generated from user input and fixed templates and pass deterministic validation. Review/finalisation progress is recorded by the local user with an explicit responsibility confirmation; the server rejects client-asserted identities. |
+| AI plugin | Off by default. Requests go to a controlled remote endpoint only after explicit configuration and authorisation; custom public endpoints additionally require server-side host allow-listing. The server injects statute text, direct judicial interpretations and registered named professional-opinion summaries first, and demotes client-asserted system prompts; output is withheld if the citation gate fails. Without an independent expert gold set, accuracy shows "n/a" and only an evidence-coverage score explicitly labelled "not accuracy" is displayed. |
+| Privacy & audit | SQLite local storage; sensitive export, deletion and state transitions require a server-authenticated principal. There is no multi-user account system yet, so shared public deployment is not appropriate. |
 
-| Statute search | Statute detail |
-|---|---|
-| ![Statute search](docs/qa-evidence/goal-2026-09-08-auth/06-search-results.png) | ![Professional commentary](docs/qa-evidence/goal-2026-09-08-expert/07b-law-detail-professional-evidence.png) |
+## What cannot be claimed
 
-| Contract review | Settings · appearance (segmented control) |
-|---|---|
-| ![Contract review](docs/qa-evidence/goal-2026-09-08-auth/33-narrow-contract-review.png) | ![Settings](docs/qa-evidence/goal-2026-09-08-auth/26-settings.png) |
+- There is no evidence that this project completed generative-AI service filing, algorithm filing, app-launch registration or legal-practice licensing.
+- The GitHub Pages workflow builds the static statute-browsing site only and is manual-trigger only; backend contract, drafting, audit, AI and privacy endpoints never run on the static site.
+- The desktop workflow only produces `unsigned-desktop-candidate-*` artefacts for manual inspection and never publishes a Release; local verification does not equal signed-installers-published verification on three operating systems.
+- The local corpus is not a mirror of the national legal database; public snapshots must be re-verified against the listed sources before formal citation.
+- Automated tests, retrieval evaluation and security checks prove only the assertions they cover — not that the system "never errs".
 
-Motion exists only on real product interactions: toast, dialog, segmented-control, switch, list, and scroll-navigation behavior is probed in a headless browser. Reduced motion, keyboard focus, contrast, and timing are QA gates. No internal design-specification or component-gallery page is exposed to end users.
+## Data & evidence discipline
 
-## What currently works
+1. Raw evidence lives in `docs/research/evidence/`; `server/build_corpus.py` is the only path that produces `server/data/laws/`.
+2. The build records source URL, fetch/verification date, evidence grade, source-file SHA-256, build-file SHA-256, and evidence objects for version/effective dates.
+3. `server/scripts/corpus_selfcheck.py` validates structure, article numbers, hashes and date evidence. A passing machine self-check does not replace manual comparison with official texts.
+4. Case digests are the project's structured paraphrase, not full judgment texts; pages always link the original source.
+5. Data without explicit permission must not be copied into the product. A previously bundled LawRefBook copy (no upstream licence, unused at runtime) has been removed.
+6. Professional commentary registers only named authors, verifiable credentials, source links, access dates, original project-written summaries and scope limits; full texts are not copied without reprint permission. Academic views and judicial interpretations are layered separately and never impersonate each other.
 
-| Capability | Honest boundary |
-|---|---|
-| Fact and evidence preparation | Six steps capture trigger, chronology, outcome, parties, materials, and questions. Candidate directions expose the exact user-reported basis and remain “unknown” when unsupported. Desired outcomes and questions do not contaminate fact retrieval. Results are not auto-saved and may be exported by the user. |
-| Claim-element check | Runs only after the user explicitly selects a candidate claim model; there is no default loan model. It reports only whether a clue appears in the supplied text, links each element to the original excerpt and current provision, and makes no cause-of-action, entitlement, or outcome determination. |
-| Statute browsing and BM25 search | Built from repository evidence snapshots. The current build contains 14 instruments and 2,380 provisions, adding official NPC snapshots of the Personal Information Protection Law, Legal Aid Law, Administrative Reconsideration Law, and Administrative Litigation Law. The NPC's 16 March 2026 catalogue lists 310 currently effective laws; its scope differs from this mixed controlled corpus. LegalHigh is neither a complete Chinese-law database nor a historical-version service. |
-| Citation-style Q&A | Deterministic retrieval returns source-text cards. A tested rule set can flag a small number of false premises. Missing evidence is reported as a gap. |
-| Case search | Only records with a direct source, verification date, and evidence grade are exposed. Foreign judgments are comparative material, never Chinese adjudicative authority. |
-| Live inventory | The sidebar footer calls the public read-only `/api/inventory` endpoint. Counts are derived from the current controlled corpus, verified cases, and approved explanations; user reviews, drafts, complaints, and audit records are neither read nor exposed, and no fictional user identity is displayed. |
-| Contract review | Local rules scan text supplied by the user and create review records, annotation states, and a DOCX revision file. The result is not a lawyer's opinion. No fictional client contracts are shipped. |
-| Document drafting | User input and fixed templates create a draft and validation report. `reviewed` and `finalized` record only the local user's own progress and explicit responsibility confirmation. They are not credential verification or platform issuance. |
-| Optional AI provider | Disabled by default. Requests leave the device only after explicit configuration and authorization. A custom public endpoint must match a server-side host allowlist. The server first injects provision text, directly linked judicial interpretations, and registered summaries of named professional commentary; client-supplied system messages cannot override those evidence rules. Generated text is withheld when citation gates fail. Calibrated accuracy remains “unavailable” until an independent lawyer-labelled evaluation set exists; the separately labelled evidence-coverage score is explicitly not accuracy. |
-| Privacy and audit | SQLite is local by default. Sensitive export, deletion, review/finalize transitions, and content-publication review require a server-authenticated local principal. The project has no multi-user tenant model and is unsuitable for shared public hosting. |
+## Local development
 
-## Claims this repository does not make
-
-- It has not demonstrated completion of any production filing, algorithm registration, generative-AI registration, legal-services licence, or signed production release.
-- The Pages workflow runs on main-branch pushes or manual dispatch and builds a static statute-browsing frontend only. Contract, drafting, audit, AI, and privacy APIs do not run on the static site.
-- The desktop workflow creates artifacts named `unsigned-desktop-candidate-*` and does not publish a Release. This local audit is not proof that signed installers for all three operating systems have been published and tested.
-- Repository snapshots are not an official national legal database. Verify the linked authoritative publication before formal reliance.
-- Passing tests and audits proves only the covered assertions; it cannot establish that the system never fails.
-
-## Evidence discipline
-
-Raw evidence lives under `docs/research/evidence/`. `server/build_corpus.py` is the only supported path into `server/data/laws/`. The build records source URLs, dates, evidence grades, source and output SHA-256 hashes, and effective/version-date evidence. `server/scripts/corpus_selfcheck.py` checks structure, numbering, hashes, and date evidence. Machine checks do not replace comparison with the authoritative text.
-
-Case facts and summaries are project-authored structured restatements, not full judgments. Every case page links to its source. Data without clear reuse permission must not be copied into the product; an unused LawRefBook-derived corpus was removed because its upstream repository did not provide a licence.
-
-Professional commentary stores only named authors, verifiable credentials, source URLs, access dates, project-authored summaries, and scope limits. Full text is not copied without permission. Academic opinion and binding or official interpretation remain visibly separate.
-
-## Development
-
-Requirements: Python 3.12, Node.js 22, and npm.
+Requirements: Python 3.12, Node.js 22 (Vite 8 compatibility baseline) and npm.
 
 ```bash
+# Backend
 cd server
 python3.12 -m venv .venv
-.venv/bin/python -m pip install --require-hashes -r requirements-dev.lock
+.venv/bin/python -m pip install --require-hashes -r requirements-dev.lock   # Windows: .venv\Scripts\python.exe
 .venv/bin/python build_corpus.py
 .venv/bin/python -m uvicorn app.main:app --host 127.0.0.1 --port 8000
-```
 
-On Windows, replace `.venv/bin/python` with `.venv\Scripts\python.exe`.
-
-```bash
+# Frontend (Vite proxies /api to 127.0.0.1:8000)
 cd web
 npm ci
 npm run dev
 ```
 
-Do not bind the development API to a public interface. Sensitive endpoints require an `LH_ADMIN_TOKEN` of at least 32 characters in the `X-LegalHigh-Admin-Token` header. The audit label comes from server-side `LH_ADMIN_PRINCIPAL`, never the request body; it identifies a local operation only and is not proof of identity, organization, or professional qualification.
+Do not bind dev servers to public addresses. Sensitive endpoints require an `LH_ADMIN_TOKEN` of at least 32 characters sent as the `X-LegalHigh-Admin-Token` header; without configuration they fail closed with 503. Audit attribution comes from the server-side `LH_ADMIN_PRINCIPAL` and cannot be self-asserted in request bodies; it identifies local operation records only — not verified identity, organisation or licence.
 
-For the desktop shell:
+Desktop shell:
 
 ```bash
 cd desktop
@@ -103,44 +168,71 @@ npm ci
 npm run check
 ```
 
-The Electron main process allocates a random loopback port, token, and instance proof. The sandboxed renderer never receives the admin token, and SQLite is stored in the operating-system user-data directory rather than installation resources. A full installer build additionally requires the platform-specific PyInstaller sidecar.
+The desktop shell launches a PyInstaller sidecar with a random loopback port, a random admin token and instance proof; the renderer never receives the admin token. SQLite lives in the OS user-data directory, never inside install resources. Full packaging also needs the platform backend sidecar, so a plain source checkout cannot claim completed installer builds.
 
-## Verification
-
-Use a unique `LH_DB_PATH` for integration runs. `server/scripts/final_verify.py` creates and cleans its own temporary SQLite database by default; it refuses to write to a running service unless loopback and explicit write authorization are both supplied.
+To regenerate README screenshots and GIFs (the only sanctioned media pipeline — never hand-compose imagery that misrepresents product state):
 
 ```bash
-cd server
-.venv/bin/python -m pytest tests -q
-.venv/bin/python scripts/corpus_selfcheck.py
-.venv/bin/python scripts/final_verify.py
-
-cd ../web
-npm run build
-node scripts/qa_gates.mjs
-node scripts/qa_contrast.mjs --strict
+# with the backend running against a unique throwaway LH_DB_PATH:
+cd web && node scripts/readme_media.mjs   # outputs docs/readme/*.png and *.gif
 ```
 
-Python runtime, development, and desktop-build lock files include exact versions and download hashes. Web and Electron dependencies use committed npm lockfiles and CI uses `npm ci`.
+## Quality gates
 
-## Security boundary
+Recommended on an isolated database:
 
-- The API restricts browser origins and emits security headers.
-- Custom AI endpoints require HTTPS, a public address, and a server-side exact-host allowlist; private, loopback, link-local, and metadata targets are blocked. The fixed local development endpoint cannot receive a user key.
-- DOCX returns are bounded by upload size, ZIP structure, and decompressed size and return a 4xx response for malformed input.
-- Local favourites, browse history, and research marks are schema-checked before use.
-- Current authentication is a single-machine administrator boundary, not a production identity, tenant, or ownership model. Public deployment requires a new authentication/authorization, CSRF, secret-management, and data-isolation design.
+```powershell
+$env:LH_DB_PATH = Join-Path $env:TEMP "legalhigh-qa-$([guid]::NewGuid()).db"
+server\run_tests.cmd -q
+server\.venv\Scripts\python.exe server\scripts\final_verify.py
+cd web
+npm run build
+node scripts\qa_gates.mjs
+node scripts\qa_contrast.mjs --strict
+```
 
-## Prior art and research references
+`final_verify.py` creates and cleans up its own temporary SQLite and never touches `server/data/app.db`. Visual sweeps are read-only by default; creating test records requires both `--write-e2e --isolated-db`.
 
-On 2026-09-08, we also checked [CourtListener](https://github.com/freelawproject/courtlistener) for repository organization, contribution and rights documentation, and [docassemble](https://github.com/jhpyle/docassemble) for its guided-interview scope and documentation entry points. This release adopts explicit edition links, a changelog, upgrade guidance and precise asset descriptions. Evidence grade: strong (official project repositories). No endorsement, code or data transfer is implied.
+Lock files split into runtime `requirements.lock`, acceptance `requirements-dev.lock` and desktop `requirements-desktop.lock`, all with versions and download hashes. Web and desktop use the committed `package-lock.json`; CI uses `npm ci`.
 
-The project consulted [LegalBench-RAG](https://github.com/ZeroEntropy-AI/legalbenchrag) for retrieval-only deterministic evaluation, [LegalBench](https://hazyresearch.stanford.edu/legalbench/tasks/) and [LawBench](https://github.com/open-compass/LawBench) for task matrices and abstention-aware evaluation, [DISC-LawLLM](https://github.com/FudanDISC/DISC-LawLLM) for verifiable-retrieval boundaries, and [CUAD](https://github.com/TheAtticusProject/cuad) for expert-labelled contract-review task categories. No code, model, contract corpus, or dataset from those projects is imported here. Dataset licences remain task-specific and must not be treated as one uniform permission. These primary project sources were checked on 2026-09-07 and are graded strong evidence for their own project descriptions.
+## Architecture & security boundary
 
-See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for licensing boundaries.
+```text
+evidence snapshots ──build/hash check──> statute corpus ──controlled topics/BM25──> citation cards
+user text ──deterministic rules──> review/draft ──user review + responsibility──> final artefact (independent review outside the platform)
+optional remote model ──red-line/citation/audit gates──> clearly-labelled AI draft
+```
 
-## Disclaimer and licence status
+- The backend allows only explicitly listed local frontend origins and sets security headers and static-path boundaries.
+- Custom AI URLs reject plain HTTP, hosts outside the public allow-list, private/loopback/link-local/metadata addresses; the fixed local dev endpoint may not carry user keys.
+- DOCX return-uploads are bounded in size, ZIP structure and decompression volume; malformed files return 4xx.
+- Favourites, browse history and research marks stay in `localStorage` with type/field validation on read; corrupt data degrades to empty collections.
+- The current authentication is a single-machine admin boundary, not a tenant/user/resource-ownership model. Public deployment requires redesigning identity, sessions, authorisation, CSRF, key custody and data isolation first.
 
-LegalHigh is for legal-information research and software validation. Outputs may be incomplete, outdated, or wrong. Verify the latest authoritative publication and obtain qualified professional advice for a real matter.
+## Open-source projects and papers
 
-This repository currently has no open-source licence. No permission to copy, modify, distribute, or use the code commercially is granted by publication alone. Legal texts, judgments, dependencies, and third-party materials remain subject to their respective sources and terms.
+These references inform method, documentation structure and evaluation design; no data or code was copied. On 2026-09-08 we additionally reviewed [CourtListener](https://github.com/freelawproject/courtlistener) (project structure, contribution and rights notes) and [docassemble](https://github.com/jhpyle/docassemble) (guided-interview positioning, documentation entry). README presentation patterns (image-led hero, collapsible galleries, GitHub Alerts) follow the public README conventions of LobeChat, Langfuse, Dub, NextChat and LawBench (checked 2026-09-09). Evidence grade: strong (official repositories); not an endorsement.
+
+| Reference | What we took | Licence/use judgement (verified 2026-09-07) |
+|---|---|---|
+| [LegalBench-RAG](https://github.com/ZeroEntropy-AI/legalbenchrag) / [paper](https://arxiv.org/abs/2408.10343) | Evaluating retrieval separately from generation; deterministic gold sets | Method only, no data imported. Grade: strong (author repo/paper). |
+| [LegalBench](https://hazyresearch.stanford.edu/legalbench/tasks/) | Organising tasks by legal-reasoning skill; open evaluation boundaries | Per-task licences vary; judge per task. Grade: strong (project site). |
+| [LawBench](https://github.com/open-compass/LawBench) | Bilingual README navigation; knowledge/comprehension/application matrix; abstention rate as a first-class metric | Downstream data still needs per-item licence checks; we reference evaluation/docs organisation only. Grade: strong (repo). |
+| [DISC-LawLLM](https://github.com/FudanDISC/DISC-LawLLM) | Retrieval augmentation for Chinese legal systems; the "cannot replace a lawyer" boundary | Apache licence; no models or data imported. Grade: strong (repo). |
+| [CUAD](https://github.com/TheAtticusProject/cuad) | Expert-annotated clause taxonomy informing our fee/account/liability rule categories and gold sets | Task design only; no contract data, models or code copied. Grade: strong (author repo). |
+
+A missing licence means all rights reserved by default; public availability is not permission to copy. Third-party dependencies and this repository's licence status are in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+
+## Contributing, disclaimer & license
+
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) before submitting. Report security issues privately per [SECURITY.md](SECURITY.md); do not put personal information, contracts, case materials, keys or exploit details in public issues.
+
+LegalHigh is for legal-information retrieval, research and software-engineering validation only. Any output may be incomplete, outdated or wrong; verify against the latest authoritative publications and consult a qualified professional on specific matters.
+
+This repository currently ships no open-source licence, so no right to copy, modify, distribute or commercially use the code is granted. Rights to legal texts, judgments and third-party materials remain with their sources.
+
+<div align="center">
+
+[« Back to top](#readme-top)
+
+</div>
