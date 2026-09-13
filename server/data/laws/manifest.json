@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-14T00:20:02.202169",
+  "built_at": "2026-09-14T00:31:51.351617",
   "fetch_date": "2026-09-08",
   "laws": [
     {
@@ -239,6 +239,29 @@
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "00bd290a9d14e7354b7131d30255daae26ce7ff73588483cbeb2030f56878277",
       "output_sha256": "89ef49818a0b410a8a7f93315b07ddd3f45ff649c39f7f532f5c2679f1ee5973"
+    },
+    {
+      "law_id": "cpl-2018",
+      "title": "中华人民共和国刑事诉讼法",
+      "status": "现行有效（2018修正）",
+      "effective_date": "2018-10-26",
+      "effective_date_evidence": {
+        "title": "中华人民共和国刑事诉讼法",
+        "url": "https://www.szns.gov.cn/xxgk/bmxxgk/nsgafj/xxgk_99908/zcfg_99917/zcfgjgfxwj_99918/content/post_11403805.html",
+        "accessed_at": "2026-08-29",
+        "grade": "强",
+        "source_kind": "official-gazette-republication",
+        "version": "现行有效（2018修正）"
+      },
+      "promulgation_instrument": "中华人民共和国主席令第十号",
+      "article_count": 308,
+      "expected_count": 308,
+      "missing_numbers": [],
+      "source_url": "https://www.szns.gov.cn/xxgk/bmxxgk/nsgafj/xxgk_99908/zcfg_99917/zcfgjgfxwj_99918/content/post_11403805.html",
+      "snapshot": "docs/research/evidence/gov_刑事诉讼法2018.html",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "697b4d68ce2d8b08acf13d62f19d3443599a8c5857685d9967e747d08a49452e",
+      "output_sha256": "b8b34cbb398f37b379bf897d59673652012d13aea39448f54faafc958b720179"
     },
     {
       "law_id": "lcar-2007",

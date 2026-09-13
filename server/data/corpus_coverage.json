@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-09-13",
+  "updated_at": "2026-09-14",
   "national_law_catalog": {
     "count": 310,
     "as_of": "2026-03-16",
@@ -31,7 +31,8 @@
     "penal-2021",
     "csl-2025",
     "dsl-2021",
-    "lcar-2007"
+    "lcar-2007",
+    "cpl-2018"
   ],
   "priority_backlog": [
     {
@@ -45,12 +46,6 @@
       "reason": "刑事责任与罪刑法定的基础规范",
       "status": "official-source-identified-not-imported",
       "source_url": "https://flk.npc.gov.cn/"
-    },
-    {
-      "title": "中华人民共和国刑事诉讼法",
-      "reason": "刑事程序、辩护与强制措施基础",
-      "status": "official-source-identified-not-imported",
-      "source_url": "https://www.npc.gov.cn/c2/c12435/201905/t20190521_276591.html"
     },
     {
       "title": "中华人民共和国国家赔偿法",

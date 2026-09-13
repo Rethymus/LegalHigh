@@ -1,0 +1,27 @@
+{
+  "law_id": "cpl-2018",
+  "title": "中华人民共和国刑事诉讼法",
+  "schema_version": 1,
+  "note": "S2-T1 第八部批量扩张法律（2026-09-14）：2018 第三次修正版全文自深圳南山区政府转载页入库（utf-8 单页，等级【强】）。1979 通过、1996/2012/2018 三次修正；历史版本全文待官方快照采集后按同一 schema 登记，未采集前不预填。",
+  "versions": [
+    {
+      "version_id": "2018-amendment",
+      "label": "2018 第三次修正",
+      "status": "现行有效（2018修正）",
+      "promulgation_date": "2018-10-26",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "promulgation_instrument": "中华人民共和国主席令第十号",
+      "effective_date": "2018-10-26",
+      "article_count": 308,
+      "current": true,
+      "evidence": {
+        "kind": "official-gazette-republication",
+        "grade": "强",
+        "url": "https://www.szns.gov.cn/xxgk/bmxxgk/nsgafj/xxgk_99908/zcfg_99917/zcfgjgfxwj_99918/content/post_11403805.html",
+        "accessed_at": "2026-09-14",
+        "snapshot": "docs/research/evidence/gov_刑事诉讼法2018.html"
+      }
+    }
+  ],
+  "pending_note": "1979 原版与 1996/2012 修正版全文未采集；未采集前不展示、不预填任何事实。"
+}

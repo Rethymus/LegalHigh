@@ -1536,6 +1536,61 @@
         }
       ],
       "note": "2026-09-13 增（S2-T1）：劳动报酬争议时效特殊规定（第27条第四款）；与 gold-lcar-arbitration-limit 同条双问法。"
+    },
+    {
+      "id": "gold-cple-lenient-plea",
+      "question": "犯罪嫌疑人认罪认罚可以从宽处理吗",
+      "expect": [
+        {
+          "law_id": "cpl-2018",
+          "no": 15
+        }
+      ],
+      "note": "2026-09-14 增（S2-T1 cpl-2018 入库金标）：认罪认罚从宽第15条。"
+    },
+    {
+      "id": "gold-cple-illegal-evidence",
+      "question": "刑讯逼供取得的口供能不能作为证据使用",
+      "expect": [
+        {
+          "law_id": "cpl-2018",
+          "no": 52
+        }
+      ],
+      "note": "2026-09-14 增（S2-T1）：严禁刑讯逼供与非法证据第52条；首拟后复验，未命中则查非法证据排除专条（56）改挂。"
+    },
+    {
+      "id": "gold-cple-arrest-notify",
+      "question": "逮捕之后多少小时内要通知家属",
+      "expect": [
+        {
+          "law_id": "cpl-2018",
+          "no": 93
+        }
+      ],
+      "note": "2026-09-14 增（S2-T1）：逮捕程序与二十四小时通知家属第93条。"
+    },
+    {
+      "id": "gold-cple-no-uplift",
+      "question": "被告人上诉以后二审法院能不能加重他的刑罚",
+      "expect": [
+        {
+          "law_id": "cpl-2018",
+          "no": 237
+        }
+      ],
+      "note": "2026-09-14 增（S2-T1）：上诉不加刑第237条。"
+    },
+    {
+      "id": "gold-cple-speed-trial",
+      "question": "被告人认罪认罚的案件检察院多久要作出起诉决定",
+      "expect": [
+        {
+          "law_id": "cpl-2018",
+          "no": 172
+        }
+      ],
+      "note": "2026-09-14 增（S2-T1）：审查起诉期限与速裁十日第172条。"
     }
   ]
 }

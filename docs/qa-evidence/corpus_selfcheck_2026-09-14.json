@@ -91,6 +91,15 @@
       "no_effective_date": false,
       "effective_date_evidence_valid": true
     },
+    "cpl-2018": {
+      "manifest_count": 308,
+      "actual_count": 308,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
     "lcar-2007": {
       "manifest_count": 54,
       "actual_count": 54,
@@ -194,6 +203,7 @@
   "pending": [],
   "problems": [],
   "version_registries": {
+    "cpl-2018": 1,
     "csl-2025": 1,
     "dsl-2021": 1,
     "lcar-2007": 1,
