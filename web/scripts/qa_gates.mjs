@@ -130,7 +130,10 @@ else console.log('✓ gate5 动效与材质纪律：时长/焦点环/blur 全部
 // 基线：入口 86KB gz / 全 JS ~138KB gz / CSS 13KB gz / laws.json 948KB。
 const distDir = resolve(root, 'web/dist')
 if (!existsSync(distDir)) {
-  fail.push('[性能预算] web/dist 不存在：先 npm run build 再跑本门')
+  // pages 工作流在 vite build 之前跑本门（纪律门先行），此时无 dist 可预算——
+  // 跳过并在 qa 工作流（Gate 2 build 之后必跑）强制执行；本地也建议 build 后跑全门。
+  checks++
+  console.log('SKIP gate6 性能预算：web/dist 不存在（预算在含 build 的 qa 工作流强制执行）')
 } else {
   const jsFiles = [], cssFiles = []
   for (const name of readdirSync(resolve(distDir, 'assets'))) {
