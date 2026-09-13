@@ -2,8 +2,25 @@
   "law_id": "con-2018",
   "title": "中华人民共和国宪法",
   "schema_version": 1,
-  "note": "S2-T1 第十部批量扩张法律（2026-09-14）：2018 修正后现行文本自维基文库渲染页入库（wikisource-transcription，等级【中】；快照含全国人大常委会公报 2018 年特刊 PDF 扫描 transclusion，第 40-42 条等处含零宽字符——textparse 清洗层已修）。沿革：1982-12-04 通过，1988/1993/1999/2004/2018 五次修正（快照头部自载）；修正案单独成文未采集，未采集前不预填。",
+  "note": "S2-T1 第十部批量扩张法律（2026-09-14）：2018 修正后现行文本自维基文库渲染页入库（等级【中】；快照含公报 PDF 扫描 transclusion）。沿革：1982-12-04 通过，1988/1993/1999/2004/2018 五次修正（快照头部自载）；修正案单独成文未采集。2004 修正版历史全文（138 条）已于 2026-09-14 自同一渠道采集存证并登记。",
   "versions": [
+    {
+      "version_id": "2004-amendment",
+      "label": "2004 修正",
+      "status": "已取代（2018 修正前文本，仅作历史对照）",
+      "promulgation_date": "2004-03-14",
+      "promulgation_organ": "全国人民代表大会",
+      "effective_date": "1982-12-04",
+      "article_count": 138,
+      "current": false,
+      "evidence": {
+        "kind": "wikisource-transcription",
+        "grade": "中",
+        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%AE%AA%E6%B3%95_(2004%E5%B9%B4)",
+        "accessed_at": "2026-09-14",
+        "snapshot": "docs/research/evidence/ws_宪法2004.html"
+      }
+    },
     {
       "version_id": "2018-amendment",
       "label": "2018 修正",
@@ -22,5 +39,5 @@
       }
     }
   ],
-  "pending_note": "1982 原版与 1988/1993/1999/2004 各修正版全文未采集；宪法修正案（2018）单独文本未采集。未采集前不展示、不预填。"
+  "pending_note": "1982 现行母本页（含 2018 修正后文本）、2004 修正版已采集；1978/1975/1954 历史宪法与各修正案单独文本未采集，不预填。"
 }
