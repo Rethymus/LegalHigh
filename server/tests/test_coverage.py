@@ -13,7 +13,9 @@ def test_coverage_registry_matches_actual_corpus_and_is_honest_backlog():
     assert set(data["controlled_instrument_ids"]) == set(get_corpus().laws)
     assert data["national_law_catalog"]["count"] == 310
     assert "不得" in data["national_law_catalog"]["comparison_warning"]
-    assert data["priority_backlog"]
+    # 2026-09-14 S2-T1 收官：优先登记册 backlog 已诚实清零——空列表是合法状态；
+    # 非空时每项必须是「已定位官方来源、尚未入库」，不得把已入库法冒充待办。
+    assert isinstance(data["priority_backlog"], list)
     assert all(x["status"] == "official-source-identified-not-imported" for x in data["priority_backlog"])
 
 

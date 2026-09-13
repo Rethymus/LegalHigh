@@ -34,16 +34,10 @@
     "lcar-2007",
     "cpl-2018",
     "scl-2012",
-    "con-2018"
+    "con-2018",
+    "cl-2023"
   ],
-  "priority_backlog": [
-    {
-      "title": "中华人民共和国刑法",
-      "reason": "刑事责任与罪刑法定的基础规范",
-      "status": "official-source-identified-not-imported",
-      "source_url": "https://flk.npc.gov.cn/"
-    }
-  ],
+  "priority_backlog": [],
   "update_protocol": [
     "先定位官方现行文本与公布/施行依据，不以搜索摘要入库",
     "保存证据快照并记录来源、查阅日期与SHA-256",

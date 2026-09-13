@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-14T01:24:48.132675",
+  "built_at": "2026-09-14T01:39:27.460907",
   "fetch_date": "2026-09-08",
   "laws": [
     {
@@ -262,6 +262,29 @@
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "356a90762d381cca558ac7ec3df198dd04dd185198c75fb34c993c84a367c74b",
       "output_sha256": "2039ce2f1066b3343757516845bdd94ad08777f843e012e1f05606f2f0783847"
+    },
+    {
+      "law_id": "cl-2023",
+      "title": "中华人民共和国刑法",
+      "status": "现行有效（2023修正）",
+      "effective_date": "1997-10-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国刑法",
+        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E5%88%91%E6%B3%95_(2023%E5%B9%B4)",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "wikisource-transcription",
+        "version": "现行有效（2023修正）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 452,
+      "expected_count": 452,
+      "missing_numbers": [],
+      "source_url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E5%88%91%E6%B3%95_(2023%E5%B9%B4)",
+      "snapshot": "docs/research/evidence/ws_刑法2023.html",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "6880bf5092f6fcde0a40968bc2cb2ef43376c8ca096c0db11b44f0f20b962f0c",
+      "output_sha256": "79fa196bc0df7cfb307c5b6f39f8f563aeba247fcd31da5c88534d79ea80549f"
     },
     {
       "law_id": "con-2018",
