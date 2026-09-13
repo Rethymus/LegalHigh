@@ -5,6 +5,40 @@
   "note": "S2-T1 首部批量扩张法律（2026-09-13）：2025 修订版全文自人民网受权发布转载页入库；历史版本（1990 公布及 2006/2012 历次修订）待官方快照采集后按同一 schema 登记，未采集前不预填任何日期。",
   "versions": [
     {
+      "version_id": "2005-enacted",
+      "label": "2005 通过",
+      "status": "已取代（2005 原版，仅作历史对照）",
+      "promulgation_date": "2005-08-28",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2006-03-01",
+      "article_count": 119,
+      "current": false,
+      "evidence": {
+        "kind": "wikisource-transcription",
+        "grade": "中",
+        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E6%B2%BB%E5%AE%89%E7%AE%A1%E7%90%86%E5%A4%84%E7%BD%9A%E6%B3%95_(2005%E5%B9%B4)",
+        "accessed_at": "2026-09-14",
+        "snapshot": "docs/research/evidence/ws_治安管理处罚法2005.html"
+      }
+    },
+    {
+      "version_id": "2012-amendment",
+      "label": "2012 修正",
+      "status": "已取代（2012 修正版，仅作历史对照）",
+      "promulgation_date": "2012-10-26",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2006-03-01",
+      "article_count": 119,
+      "current": false,
+      "evidence": {
+        "kind": "wikisource-transcription",
+        "grade": "中",
+        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E6%B2%BB%E5%AE%89%E7%AE%A1%E7%90%86%E5%A4%84%E7%BD%9A%E6%B3%95_(2012%E5%B9%B4)",
+        "accessed_at": "2026-09-14",
+        "snapshot": "docs/research/evidence/ws_治安管理处罚法2012.html"
+      }
+    },
+    {
       "version_id": "2025-revision",
       "label": "2025 修订",
       "status": "现行有效（2025修订）",
@@ -23,5 +57,5 @@
       }
     }
   ],
-  "pending_note": "1990 年公布原版与 2006/2012 修订版全文未采集；未采集前不展示、不预填任何事实。"
+  "pending_note": "1990 条例（本法前身）与 2005/2012 两版快照中均未出现主席令号，promulgation_instrument 如实省略；2025 修正决定全文（人民网）已入 amendments。"
 }
