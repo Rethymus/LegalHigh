@@ -22,6 +22,23 @@
       }
     },
     {
+      "version_id": "2006-revision",
+      "label": "2006 第一次修订",
+      "status": "已取代（2006 修订版，仅作历史对照）",
+      "promulgation_date": "2006-12-29",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2007-06-01",
+      "article_count": 72,
+      "current": false,
+      "evidence": {
+        "kind": "wikisource-transcription",
+        "grade": "中",
+        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E6%9C%AA%E6%88%90%E5%B9%B4%E4%BA%BA%E4%BF%9D%E6%8A%A4%E6%B3%95_(2006%E5%B9%B4)",
+        "accessed_at": "2026-09-14",
+        "snapshot": "docs/research/evidence/ws_未成年人保护法2006.html"
+      }
+    },
+    {
       "version_id": "2012-amendment",
       "label": "2012 修正",
       "status": "已取代（2012 修正版，仅作历史对照）",
@@ -74,5 +91,5 @@
       }
     }
   ],
-  "pending_note": "1991 原版（56 条）、2012 修正版（72 条）、2020 修订版链接已定位、2024 修正版现行在库——时间线接近完整；施行日期均以快照附则/头部自载为准。"
+  "pending_note": "未保法时间线补全：1991 原版（56 条）→ 2006 修订（72 条）→ 2012 修正（72 条）→ 2020 修订（132 条）→ 2024 修正（132 条，现行）；施行日 1992-01-01 / 2007-06-01 / 2021-06-01 / 公布施行，全部附则自证。"
 }
