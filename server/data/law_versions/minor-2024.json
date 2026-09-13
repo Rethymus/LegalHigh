@@ -5,6 +5,40 @@
   "note": "S2-T1 第二部批量扩张法律（2026-09-14）：2024 修正版全文自政府官网转载页入库（official-gazette-republication，等级【强】）；2020 第二次修订版全文已于 2026-09-14 自新华网受权发布页采集存证并登记为历史版本（等级【强】）。",
   "versions": [
     {
+      "version_id": "1991-enacted",
+      "label": "1991 通过",
+      "status": "已取代（1991 原版，仅作历史对照）",
+      "promulgation_date": "1991-09-04",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "1992-01-01",
+      "article_count": 56,
+      "current": false,
+      "evidence": {
+        "kind": "wikisource-transcription",
+        "grade": "中",
+        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E6%9C%AA%E6%88%90%E5%B9%B4%E4%BA%BA%E4%BF%9D%E6%8A%A4%E6%B3%95_(1991%E5%B9%B4)",
+        "accessed_at": "2026-09-14",
+        "snapshot": "docs/research/evidence/ws_未成年人保护法1991.html"
+      }
+    },
+    {
+      "version_id": "2012-amendment",
+      "label": "2012 修正",
+      "status": "已取代（2012 修正版，仅作历史对照）",
+      "promulgation_date": "2012-10-26",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2007-06-01",
+      "article_count": 72,
+      "current": false,
+      "evidence": {
+        "kind": "wikisource-transcription",
+        "grade": "中",
+        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E6%9C%AA%E6%88%90%E5%B9%B4%E4%BA%BA%E4%BF%9D%E6%8A%A4%E6%B3%95_(2012%E5%B9%B4)",
+        "accessed_at": "2026-09-14",
+        "snapshot": "docs/research/evidence/ws_未成年人保护法2012.html"
+      }
+    },
+    {
       "version_id": "2020-revision",
       "label": "2020 第二次修订",
       "status": "已取代（2024 修正前文本，仅作历史对照）",
@@ -40,5 +74,5 @@
       }
     }
   ],
-  "pending_note": "2020 修订版（132 条）与 2024 修正版（132 条）全文均已采集；1991 原版与 2012 修正版未采集，不预填。"
+  "pending_note": "1991 原版（56 条）、2012 修正版（72 条）、2020 修订版链接已定位、2024 修正版现行在库——时间线接近完整；施行日期均以快照附则/头部自载为准。"
 }
