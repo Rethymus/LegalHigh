@@ -74,6 +74,7 @@ export function canAudienceAccess(pathname: string, mode: AudienceMode): boolean
   if (/^\/(needs|case-analysis)(\/|$)/.test(pathname)) return true
   if (/^\/guide(\/|$)/.test(pathname)) return true  // 使用指南：三视图开放（粉饰清单①）
   if (/^\/terms(\/|$)/.test(pathname)) return true  // 术语卡：三视图开放（粉饰清单②）
+  if (/^\/quality(\/|$)/.test(pathname)) return true  // 质量透明度：三视图开放（粉饰清单③）
   if (/^\/research(\/|$)/.test(pathname)) return mode !== 'public'
   if (/^\/(learning)(\/|$)/.test(pathname)) return mode === 'student'
   if (/^\/comparative(\/|$)/.test(pathname)) return mode !== 'public'

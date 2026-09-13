@@ -58,5 +58,10 @@
     "route": "terms",
     "smallTargets": [],
     "obscuredFocus": []
+  },
+  {
+    "route": "quality",
+    "smallTargets": [],
+    "obscuredFocus": []
   }
 ]

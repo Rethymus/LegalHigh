@@ -164,6 +164,9 @@ const ROUTES = [
   { name: '40e-public-collections', path: '/collections', audience: 'public', setupSource: `localStorage.setItem('lh:research:list', JSON.stringify([{rid:'r-local-check',question:'不应在公众视图显示的本机研究',ts:'2026-09-08T00:00:00Z'}]));`, identity: pageHeader('我的收藏'), steps: [
     { t: 'eval', expr: `(() => { const body=document.body.innerText||''; return !body.includes('不应在公众视图显示的本机研究')&&![...document.querySelectorAll('.lrow-t')].some(x=>x.textContent==='研究') ? 'public-collections-ok' : 'failed-public-collections' })()` },
   ] },
+  { name: '44-quality', path: '/quality', fullPage: true, identity: pageHeader('质量透明度'), afterText: '不是法律正确率', steps: [
+    { t: 'eval', expr: `(() => { const stats=[...document.querySelectorAll('.stat')]; return stats.length >= 4 ? 'quality-stats-ok' : 'quality-stats-short:'+stats.length })()` },
+  ] },
   { name: '43-terms', path: '/terms', fullPage: true, identity: pageHeader('术语卡'), afterText: '不是法律意见', steps: [
     { t: 'eval', expr: `(() => { const links=[...document.querySelectorAll('a')].filter(x=>x.getAttribute('href')?.includes('/laws/')); return links.length >= 16 ? 'term-refs-ok' : 'term-refs-short:'+links.length })()` },
   ] },
