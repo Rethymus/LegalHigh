@@ -113,21 +113,21 @@ def main() -> int:
         if nos != sorted(nos):
             problems.append(f"{lid}: 条号非升序")
         if len(set(nos)) != len(nos):
-            lr["duplicate_no"] = len(nos) - len(set(nos))
-            problems.append(f"{lid}: 条号重复 {lr['duplicate_no']} 处")
+            # 子条号感知（2026-09-14）：唯一性按 (no, sub) 对判定——同号子条号是独立条文
+            pairs = [(a["no"], a.get("sub") or "") for a in arts]
+            lr["duplicate_no"] = len(pairs) - len(set(pairs))
+            if lr["duplicate_no"]:
+                problems.append(f"{lid}: 条号重复 {lr['duplicate_no']} 处")
         # 顺序连续性：正文条号标签应从第一条（通常第一条）逐条递进（条文有分编/章不影响条号）
         breaks = []
-        prev = 0
+        prev_no, prev_sub = 0, 0  # 子条号感知：17→17之一→18 为合法递进（2026-09-14 S2-T1 子条号支持）
         for a in arts:
-            mm = re.search(r"第([" + CN_NUM + r"]+)条", a["label"])
-            if not mm:
-                breaks.append(f"label 无法解析: {a['label']}")
-                continue
-            from lib.textparse import cn_to_int
-            n = cn_to_int(mm.group(1))
-            if n != prev + 1:
-                breaks.append(f"{prev}→{n}")
-            prev = n
+            from lib.textparse import ART_SUB_IDX
+            n = a["no"]
+            s = ART_SUB_IDX.get(a.get("sub") or "", 0)
+            if (n, s) != (prev_no, prev_sub + 1) and (n, s) != (prev_no + 1, 0):
+                breaks.append(f"{prev_no}→{n}")
+            prev_no, prev_sub = n, s
         if breaks:
             lr["sequential"] = False
             problems.append(f"{lid}: 条号断点 {breaks[:5]}{'...' if len(breaks) > 5 else ''}")

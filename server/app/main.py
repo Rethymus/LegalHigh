@@ -790,8 +790,8 @@ def evals():
     prec_sum = 0.0
     for g in gold["cases"]:
         res = corpus.search(g["question"], top_k=5)
-        got = [(r["law_id"], r["no"]) for r in res]
-        expected = [(e["law_id"], e["no"]) for e in g["expect"]]
+        got = [(r["law_id"], r["no"], r.get("sub") or "") for r in res]
+        expected = [(e["law_id"], e["no"], e.get("sub", "")) for e in g["expect"]]
         rank = None
         for i, key in enumerate(got, 1):
             if key in expected:
@@ -804,7 +804,7 @@ def evals():
         items.append({
             "id": g["id"], "question": g["question"],
             "expect": [{"law_id": e["law_id"], "no": e["no"]} for e in g["expect"]],
-            "got": [{"law_id": k[0], "no": k[1]} for k in got],
+            "got": [{"law_id": k[0], "no": k[1], "sub": k[2] or None} for k in got],
             "hit": hit, "rank": rank,
         })
     n = len(gold["cases"])

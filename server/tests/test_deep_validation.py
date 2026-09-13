@@ -123,7 +123,9 @@ class TestDataIntegrity:
             arts = corpus.laws[law_id]["articles"]
             nos = [a["no"] for a in arts]
             assert nos == sorted(nos), f"{law_id} 条号非升序"
-            assert len(set(nos)) == len(nos), f"{law_id} 条号重复"
+            # 子条号（之一/之二…）与基条同号——唯一性按 (no, sub) 对判定（2026-09-14）
+            pairs = [(a["no"], a.get("sub") or "") for a in arts]
+            assert len(set(pairs)) == len(pairs), f"{law_id} 条号重复"
 
 
 # ===== C. 内容准确性测试 =====

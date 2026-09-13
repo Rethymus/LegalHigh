@@ -50,6 +50,7 @@ class LawCorpus:
                     "source_url": law["source"]["url"],
                     "source_kind": law["source"]["kind"],
                     "no": a["no"],
+                    "sub": a.get("sub"),
                     "label": a["label"],
                     "chapter": a["chapter"],
                     "text": a["text"],
@@ -77,7 +78,7 @@ class LawCorpus:
                 continue
             if score <= 0:
                 break
-            key = (a["law_id"], a["no"])
+            key = (a["law_id"], a["no"], a.get("sub", ""))  # 子条号（之一/之二）是独立条文，不得被基条去重
             if key in seen:
                 continue
             seen.add(key)

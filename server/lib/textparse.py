@@ -6,7 +6,9 @@ import re
 CN_DIGIT = {"零": 0, "〇": 0, "一": 1, "二": 2, "三": 3, "四": 4, "五": 5,
             "六": 6, "七": 7, "八": 8, "九": 9}
 CN_UNIT = {"十": 10, "百": 100, "千": 1000}
-ART_RE = re.compile(r"第([零〇一二三四五六七八九十百千]+)条")
+ART_RE = re.compile(r"第([零〇一二三四五六七八九十百千]+)条(之[一二三四五六七八九十])?")
+ART_SUB_IDX = {"之一": 1, "之二": 2, "之三": 3, "之四": 4, "之五": 5,
+               "之六": 6, "之七": 7, "之八": 8, "之九": 9, "之十": 10}
 HEAD_BIAN_RE = re.compile(r"第[一二三四五六七八九十]+编[^\n，,。;；]{0,24}")
 HEAD_ZHANG_RE = re.compile(r"第[一二三四五六七八九十]+章[^\n，,。;；]{0,24}")
 
@@ -140,8 +142,10 @@ def _collect_headings(text: str):
 def split_articles(text: str):
     """顺序递增校验切条。返回 (articles, expected_next_no)。
 
-    只有当条号恰为「上一条+1」时才接受为新条文，交叉引用（如「依照本法第五百条」）
-    会因乱序被忽略。上下文 chapter 取该条之前最近的标题行。
+    接受规则（状态机）：初始允许 (1, base)；接受 (n, s) 后允许 (n, s+1) 与 (n+1, base)
+    ——即「子条号（之一/之二…）跟随其基条，基条递增后子条号重新从 base 开始」。
+    交叉引用（如「依照本法第五百条」）因不在允许集内被忽略。上下文 chapter 取该条
+    之前最近的标题行。子条号条目携带 sub 字段（"之一"…），基条不携带。
     """
     candidates = []
     for m in ART_RE.finditer(text):
@@ -150,18 +154,23 @@ def split_articles(text: str):
         n = cn_to_int(m.group(1))
         if n <= 0 or n > 3000:
             continue
-        candidates.append((m.start(), m.end(), n, m.group(0)))
+        sub = m.group(2) or ""
+        s = ART_SUB_IDX.get(sub, 0)
+        candidates.append((m.start(), m.end(), n, s, m.group(0)))
 
     accepted = []
-    expected = 1
-    for start, end, n, label in candidates:
-        if n == expected:
-            accepted.append((start, end, n, label))
-            expected += 1
+    cur_no, cur_sub = 0, 0
+    allowed = {(1, 0)}
+    for start, end, n, s, label in candidates:
+        if (n, s) in allowed:
+            accepted.append((start, end, n, s, label))
+            cur_no, cur_sub = n, s
+            allowed = {(n, s + 1), (n + 1, 0)}
+    expected = cur_no + 1
 
     headings = _collect_headings(text)
     articles = []
-    for idx, (start, end, n, label) in enumerate(accepted):
+    for idx, (start, end, n, s, label) in enumerate(accepted):
         seg_start = end
         seg_end = accepted[idx + 1][0] if idx + 1 < len(accepted) else len(text)
         seg = text[seg_start:seg_end].strip()
@@ -184,7 +193,10 @@ def split_articles(text: str):
             else:
                 cur_zhang = h_title
         chapter = " > ".join(x for x in [cur_bian, cur_zhang] if x) or None
-        articles.append({"no": n, "label": label, "chapter": chapter, "text": seg})
+        entry = {"no": n, "label": label, "chapter": chapter, "text": seg}
+        if s:
+            entry["sub"] = next(k for k, v in ART_SUB_IDX.items() if v == s)
+        articles.append(entry)
     return articles, expected
 
 
