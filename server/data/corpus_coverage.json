@@ -27,7 +27,8 @@
     "admin-litigation-2017",
     "psm-2025",
     "minor-2024",
-    "women-2022"
+    "women-2022",
+    "penal-2021"
   ],
   "priority_backlog": [
     {
@@ -47,12 +48,6 @@
       "reason": "刑事程序、辩护与强制措施基础",
       "status": "official-source-identified-not-imported",
       "source_url": "https://www.npc.gov.cn/c2/c12435/201905/t20190521_276591.html"
-    },
-    {
-      "title": "中华人民共和国行政处罚法",
-      "reason": "常见行政执法争议基础",
-      "status": "official-source-identified-not-imported",
-      "source_url": "https://flk.npc.gov.cn/"
     },
     {
       "title": "中华人民共和国国家赔偿法",

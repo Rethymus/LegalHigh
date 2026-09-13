@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-13T23:35:33.001138",
+  "built_at": "2026-09-13T23:46:23.014491",
   "fetch_date": "2026-09-08",
   "laws": [
     {
@@ -239,6 +239,29 @@
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "00bd290a9d14e7354b7131d30255daae26ce7ff73588483cbeb2030f56878277",
       "output_sha256": "89ef49818a0b410a8a7f93315b07ddd3f45ff649c39f7f532f5c2679f1ee5973"
+    },
+    {
+      "law_id": "penal-2021",
+      "title": "中华人民共和国行政处罚法",
+      "status": "现行有效（2021修订）",
+      "effective_date": "2021-07-15",
+      "effective_date_evidence": {
+        "title": "中华人民共和国行政处罚法",
+        "url": "https://politics.people.com.cn/n1/2021/0209/c1001-32026746.html",
+        "accessed_at": "2026-08-29",
+        "grade": "强",
+        "source_kind": "official-gazette-republication",
+        "version": "现行有效（2021修订）"
+      },
+      "promulgation_instrument": "中华人民共和国主席令第七十号",
+      "article_count": 86,
+      "expected_count": 86,
+      "missing_numbers": [],
+      "source_url": "https://politics.people.com.cn/n1/2021/0209/c1001-32026746.html",
+      "snapshot": "docs/research/evidence/people_行政处罚法2021.html",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "502c01f2d29a6bbae34b7167698acf0bbd9bfb105eedf425625cde2d9ee3741b",
+      "output_sha256": "dd4f43a274b2a8be962b905d51600882d4260c3c71976acf34c24f08be3ab791"
     },
     {
       "law_id": "women-2022",

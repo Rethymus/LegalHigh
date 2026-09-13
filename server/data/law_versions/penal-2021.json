@@ -1,0 +1,27 @@
+{
+  "law_id": "penal-2021",
+  "title": "中华人民共和国行政处罚法",
+  "schema_version": 1,
+  "note": "S2-T1 第四部批量扩张法律（2026-09-13）：2021 修订版全文自人民网受权发布转载页入库（GB18030 编码，gbk 回退路径）；历史版本（1996 通过/2009、2017 修正）待官方快照采集后按同一 schema 登记，未采集前不预填。",
+  "versions": [
+    {
+      "version_id": "2021-revision",
+      "label": "2021 修订",
+      "status": "现行有效（2021修订）",
+      "promulgation_date": "2021-01-22",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "promulgation_instrument": "中华人民共和国主席令第七十号",
+      "effective_date": "2021-07-15",
+      "article_count": 86,
+      "current": true,
+      "evidence": {
+        "kind": "official-gazette-republication",
+        "grade": "强",
+        "url": "https://politics.people.com.cn/n1/2021/0209/c1001-32026746.html",
+        "accessed_at": "2026-09-13",
+        "snapshot": "docs/research/evidence/people_行政处罚法2021.html"
+      }
+    }
+  ],
+  "pending_note": "1996 年通过原版与 2009/2017 修正版全文未采集；未采集前不展示、不预填任何事实。"
+}

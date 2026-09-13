@@ -51,6 +51,7 @@ LAW_FILES = {
     "psm_people_html": "people_治安管理处罚法2025.html",
     "minor_gov_html": "gov_未成年人保护法2024.html",
     "women_people_html": "people_妇女权益保障法2022.html",
+    "penal_people_html": "people_行政处罚法2021.html",
 }
 
 
@@ -260,6 +261,7 @@ EXPECTED_COUNTS = {
     "psm-2025": 144,
     "minor-2024": 132,
     "women-2022": 86,
+    "penal-2021": 86,
     "crpl-imp-2024": 53,
     "genai-2023": 24,
     "pipl-2021": 74,
@@ -352,6 +354,16 @@ def main():
                 "promulgation_instrument": "国家互联网信息办公室等七部门令第15号",
                 "effective_date": "2023-08-15",
                 "_url": "https://www.gov.cn/zhengce/zhengceku/202307/content_6891752.htm",
+            },
+        ),
+        build_govcn_law(
+            "penal_people_html", "penal-2021", "中华人民共和国行政处罚法",
+            {
+                "status": "现行有效（2021修订）",
+                "promulgation": {"date": "2021-01-22", "organ": "全国人民代表大会常务委员会"},
+                "promulgation_instrument": "中华人民共和国主席令第七十号",
+                "effective_date": "2021-07-15",
+                "_url": "https://politics.people.com.cn/n1/2021/0209/c1001-32026746.html",
             },
         ),
         build_govcn_law(
