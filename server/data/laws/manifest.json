@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-14T00:08:28.695581",
+  "built_at": "2026-09-14T00:20:02.202169",
   "fetch_date": "2026-09-08",
   "laws": [
     {
@@ -239,6 +239,29 @@
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "00bd290a9d14e7354b7131d30255daae26ce7ff73588483cbeb2030f56878277",
       "output_sha256": "89ef49818a0b410a8a7f93315b07ddd3f45ff649c39f7f532f5c2679f1ee5973"
+    },
+    {
+      "law_id": "lcar-2007",
+      "title": "中华人民共和国劳动争议调解仲裁法",
+      "status": "现行有效",
+      "effective_date": "2008-05-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国劳动争议调解仲裁法",
+        "url": "https://www.gjxfj.gov.cn/gjxfj/xxgk/fgwj/flfg/webinfo/2016/03/1460585589964384.htm",
+        "accessed_at": "2026-08-29",
+        "grade": "强",
+        "source_kind": "official-gazette-republication",
+        "version": "现行有效"
+      },
+      "promulgation_instrument": "中华人民共和国主席令第八十号",
+      "article_count": 54,
+      "expected_count": 54,
+      "missing_numbers": [],
+      "source_url": "https://www.gjxfj.gov.cn/gjxfj/xxgk/fgwj/flfg/webinfo/2016/03/1460585589964384.htm",
+      "snapshot": "docs/research/evidence/gjxfj_劳动争议调解仲裁法2007.html",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "cebba3b9e3f80e0774dc71226b188a5ac7045764f72d7945fbc9131d6a09c2df",
+      "output_sha256": "84e28b79ac35496374ef27f9732c54b231854f478de10a528628d831e91215e5"
     },
     {
       "law_id": "dsl-2021",

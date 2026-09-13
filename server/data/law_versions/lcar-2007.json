@@ -1,0 +1,27 @@
+{
+  "law_id": "lcar-2007",
+  "title": "中华人民共和国劳动争议调解仲裁法",
+  "schema_version": 1,
+  "note": "S2-T1 第七部批量扩张法律（2026-09-13）：全文自国家信访局官网法律法规库入库（utf-8，等级【强】）。2007-12-29 通过、2008-05-01 施行，至今未经修改，注册表单版本。",
+  "versions": [
+    {
+      "version_id": "2007-enacted",
+      "label": "2007 通过",
+      "status": "现行有效",
+      "promulgation_date": "2007-12-29",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "promulgation_instrument": "中华人民共和国主席令第八十号",
+      "effective_date": "2008-05-01",
+      "article_count": 54,
+      "current": true,
+      "evidence": {
+        "kind": "official-gazette-republication",
+        "grade": "强",
+        "url": "https://www.gjxfj.gov.cn/gjxfj/xxgk/fgwj/flfg/webinfo/2016/03/1460585589964384.htm",
+        "accessed_at": "2026-09-13",
+        "snapshot": "docs/research/evidence/gjxfj_劳动争议调解仲裁法2007.html"
+      }
+    }
+  ],
+  "pending_note": "本法施行后暂无修改记录；后续修正待官方快照采集后按同一 schema 追加。"
+}

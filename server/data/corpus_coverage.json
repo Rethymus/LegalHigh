@@ -30,7 +30,8 @@
     "women-2022",
     "penal-2021",
     "csl-2025",
-    "dsl-2021"
+    "dsl-2021",
+    "lcar-2007"
   ],
   "priority_backlog": [
     {
@@ -54,12 +55,6 @@
     {
       "title": "中华人民共和国国家赔偿法",
       "reason": "国家赔偿请求与程序基础",
-      "status": "official-source-identified-not-imported",
-      "source_url": "https://flk.npc.gov.cn/"
-    },
-    {
-      "title": "中华人民共和国劳动争议调解仲裁法",
-      "reason": "劳动争议处理程序基础",
       "status": "official-source-identified-not-imported",
       "source_url": "https://flk.npc.gov.cn/"
     }

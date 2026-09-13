@@ -54,6 +54,7 @@ LAW_FILES = {
     "penal_people_html": "people_行政处罚法2021.html",
     "csl_cac_html": "cac_网络安全法2025.html",
     "dsl_cac_html": "cac_数据安全法2021.html",
+    "lcar_gjxfj_html": "gjxfj_劳动争议调解仲裁法2007.html",
 }
 
 
@@ -266,6 +267,7 @@ EXPECTED_COUNTS = {
     "penal-2021": 86,
     "csl-2025": 81,
     "dsl-2021": 55,
+    "lcar-2007": 54,
     "crpl-imp-2024": 53,
     "genai-2023": 24,
     "pipl-2021": 74,
@@ -358,6 +360,16 @@ def main():
                 "promulgation_instrument": "国家互联网信息办公室等七部门令第15号",
                 "effective_date": "2023-08-15",
                 "_url": "https://www.gov.cn/zhengce/zhengceku/202307/content_6891752.htm",
+            },
+        ),
+        build_govcn_law(
+            "lcar_gjxfj_html", "lcar-2007", "中华人民共和国劳动争议调解仲裁法",
+            {
+                "status": "现行有效",
+                "promulgation": {"date": "2007-12-29", "organ": "全国人民代表大会常务委员会"},
+                "promulgation_instrument": "中华人民共和国主席令第八十号",
+                "effective_date": "2008-05-01",
+                "_url": "https://www.gjxfj.gov.cn/gjxfj/xxgk/fgwj/flfg/webinfo/2016/03/1460585589964384.htm",
             },
         ),
         build_govcn_law(

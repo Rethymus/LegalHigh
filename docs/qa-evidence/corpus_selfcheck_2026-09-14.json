@@ -91,6 +91,15 @@
       "no_effective_date": false,
       "effective_date_evidence_valid": true
     },
+    "lcar-2007": {
+      "manifest_count": 54,
+      "actual_count": 54,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
     "dsl-2021": {
       "manifest_count": 55,
       "actual_count": 55,
@@ -187,6 +196,7 @@
   "version_registries": {
     "csl-2025": 1,
     "dsl-2021": 1,
+    "lcar-2007": 1,
     "minor-2024": 1,
     "pcl-2023": 1,
     "penal-2021": 1,
