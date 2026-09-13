@@ -2,8 +2,25 @@
   "law_id": "minor-2024",
   "title": "中华人民共和国未成年人保护法",
   "schema_version": 1,
-  "note": "S2-T1 第二部批量扩张法律（2026-09-13）：2024 修正版全文自政府官网转载页入库（official-gazette-republication，等级【强】）；历史版本待官方快照采集后按同一 schema 登记，未采集前不预填任何日期。",
+  "note": "S2-T1 第二部批量扩张法律（2026-09-14）：2024 修正版全文自政府官网转载页入库（official-gazette-republication，等级【强】）；2020 第二次修订版全文已于 2026-09-14 自新华网受权发布页采集存证并登记为历史版本（等级【强】）。",
   "versions": [
+    {
+      "version_id": "2020-revision",
+      "label": "2020 第二次修订",
+      "status": "已取代（2024 修正前文本，仅作历史对照）",
+      "promulgation_date": "2020-10-17",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2021-06-01",
+      "article_count": 132,
+      "current": false,
+      "evidence": {
+        "kind": "official-gazette-republication",
+        "grade": "强",
+        "url": "https://www.xinhuanet.com/politics/2020-10/18/c_1126624505.htm",
+        "accessed_at": "2026-09-14",
+        "snapshot": "docs/research/evidence/xinhuanet_未成年人保护法2020.html"
+      }
+    },
     {
       "version_id": "2024-amendment",
       "label": "2024 修正",
@@ -23,5 +40,5 @@
       }
     }
   ],
-  "pending_note": "1991 通过原版、2006 修订版、2012 修正版全文未采集；2020 修订版受权发布页已定位（https://www.xinhuanet.com/politics/2020-10/18/c_1126624505.htm）待按 build_corpus 管线采集。未采集前不展示、不预填任何事实。"
+  "pending_note": "2020 修订版（132 条）与 2024 修正版（132 条）全文均已采集；1991 原版与 2012 修正版未采集，不预填。"
 }
