@@ -285,7 +285,7 @@ export const api = {
       answer_cards: {
         law_id: string; law_title: string; law_status: string; effective_date: string
         promulgation_instrument: string; article_no: number; article_label: string
-        chapter: string; text: string; source_url: string; source_kind: string; score: number
+        chapter: string; text: string; source_url: string; source_kind: string; score: number; sub?: string
       }[]
       no_answer: boolean
     }>('/qa/ask', { method: 'POST', body: JSON.stringify({ question, top_k: topK }) }),
@@ -470,7 +470,7 @@ export interface CorpusCoverage {
 
 /* ---------- 主检索（server BM25 结果；排序唯一来源） ---------- */
 export interface SearchHit {
-  law_id: string; law_title: string; no: number; label: string
+  law_id: string; law_title: string; no: number; sub?: string; label: string
   chapter: string; text: string; score: number
 }
 export interface SearchResult {

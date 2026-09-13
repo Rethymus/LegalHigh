@@ -50,7 +50,7 @@ function FavButton({ favKey, item }: { favKey: string; item: Parameters<typeof t
 function LawResultCard({ r, q, si }: { r: ResolvedHit; q: string; si?: number }) {
   const { hit, law } = r
   const title = lawDisplayTitle((law?.title ?? hit.law_title).replace(/^中华人民共和国/, ''), law?.status)
-  const to = `/laws/${hit.law_id}?art=${hit.no}`
+  const to = `/laws/${hit.law_id}?art=${hit.no}${hit.sub ?? ''}`
   return (
     <article className="res-card" style={si === undefined ? undefined : { '--si': si } as React.CSSProperties}>
       <div className="res-h">

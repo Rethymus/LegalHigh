@@ -25,7 +25,7 @@ for entry in manifest["laws"]:
             "sourceUrl": (d.get("source") or {}).get("url", ""),
             "authority": d.get("authority_pointer", ""),
             "articles": [
-                {"no": a["no"], "label": a["label"], "chapter": a.get("chapter", ""), "text": a["text"]}
+                {"no": a["no"], "sub": a.get("sub"), "label": a["label"], "chapter": a.get("chapter", ""), "text": a["text"]}
                 for a in d["articles"]
             ],
         }

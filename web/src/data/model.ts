@@ -6,7 +6,7 @@ import type { IconName } from '../components/icons'
 import type { AudienceMode } from '../lib/audience'
 
 /* ================= 法条语料（运行时加载，构建自 server/data/laws） ================= */
-export interface LawArticle { no: number; label: string; chapter: string; text: string }
+export interface LawArticle { no: number; sub?: string; label: string; chapter: string; text: string }
 export interface Law {
   id: string; title: string; status: string; organ: string
   promulgationDate: string; instrument: string; effectiveDate: string
@@ -47,8 +47,21 @@ export function useLaws(): { data: LawsFile | null; error: string | null } {
 export function findLaw(laws: LawsFile | null, id: string | undefined): Law | undefined {
   return laws?.laws.find((l) => l.id === id)
 }
-export function findArticle(law: Law | undefined, no: number): LawArticle | undefined {
-  return law?.articles.find((a) => a.no === no)
+export function findArticle(law: Law | undefined, no: number, sub?: string): LawArticle | undefined {
+  // 子条号（之一/之二…）与基条同 no——按 (no, sub) 精确匹配；sub 缺省取基条
+  return law?.articles.find((a) => a.no === no && (a.sub ?? '') === (sub ?? ''))
+}
+
+/** 解析 ?art= 参数（如 "287" 或 "287之一"）→ {no, sub}；非法返回 undefined。 */
+export function parseArtParam(raw: string | null): { no: number; sub?: string } | undefined {
+  const m = /^(\d+)(之[一二三四五六七八九十]+)?$/.exec((raw ?? '').trim())
+  if (!m) return undefined
+  return { no: Number(m[1]), sub: m[2] }
+}
+
+/** 子条号 URL 片段：基条为 "287"，子条号为 "287之一"。 */
+export function artParam(no: number, sub?: string): string {
+  return `${no}${sub ?? ''}`
 }
 export function lawChapters(law: Law): string[] {
   const seen: string[] = []

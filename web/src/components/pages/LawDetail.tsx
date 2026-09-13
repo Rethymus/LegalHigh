@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useOutletContext, useParams, useSearchParams } from 'react-router-dom'
 import { Icon } from '../icons'
-import { WARM_TIPS, findArticle, findLaw, lawChapters, lawDisplayTitle, lawEvidenceGrade, useLaws } from '../../data/model'
+import { WARM_TIPS, artParam, findArticle, findLaw, lawChapters, lawDisplayTitle, lawEvidenceGrade, parseArtParam, useLaws } from '../../data/model'
 import { EmptyState, PageHeader, SkeletonLines, Tabs, useCopy, useToast, ValidityBadge } from '../ui'
 import { AIWarning, CitationChip, OfficialArticle, SourceBadge } from '../domain'
 import { api, isFav as isFavKey, toggleFav, type ArticleExplain, type ArticleLink, type LawAnalysisContext } from '../../lib/api'
@@ -39,8 +39,9 @@ export default function LawDetail() {
     )
     return () => { alive = false }
   }, [lawId])
-  const no = Number(sp.get('art') ?? '496')
-  const article = law ? findArticle(law, no) : undefined
+  const art = parseArtParam(sp.get('art')) ?? { no: 496 }
+  const no = art.no
+  const article = law ? findArticle(law, art.no, art.sub) : undefined
   const articleNo = article?.no
   // 官方解读关联层（决策项15）：有映射时展示司法解释条文卡
   const [articleLinks, setArticleLinks] = useState<ArticleLink[]>([])
@@ -109,7 +110,7 @@ export default function LawDetail() {
             <button className="btn btn-ghost btn-sm" onClick={() => copy(`${law.title} ${article.label}：${article.text}`, '已复制法条原文')}><Icon name="copy" size={13} />复制原文</button>
             <button className="btn btn-ghost btn-sm" onClick={() => copy(`《${law.title.replace(/^中华人民共和国/, '')}》${article.label}（${law.status}，${law.effectiveDate} 施行）来源：${law.sourceUrl}`, '已复制规范引用（含官方来源）')}><Icon name="quote" size={13} />复制规范引用</button>
             <button className="btn btn-secondary btn-sm" onClick={() => {
-              const now = toggleFav({ key: `law:${lawId}#${no}`, type: '法条', title: `《${law.title.replace(/^中华人民共和国/, '')}》${article.label}`, meta: `${law.status} · ${law.effectiveDate} 施行`, to: `/laws/${lawId}?art=${no}` })
+              const now = toggleFav({ key: `law:${lawId}#${artParam(no, art.sub)}`, type: '法条', title: `《${law.title.replace(/^中华人民共和国/, '')}》${article.label}`, meta: `${law.status} · ${law.effectiveDate} 施行`, to: `/laws/${lawId}?art=${artParam(no, art.sub)}` })
               setFavState(now)
               toast(now ? '已收藏（仅存本机）' : '已取消收藏', 'ok')
             }}><Icon name="star" size={13} />{favState ? '已收藏' : '收藏'}</button>
@@ -128,7 +129,7 @@ export default function LawDetail() {
             <div className="tiny bold mb-8">同章条文（{sibling.length}）</div>
             <div className="chips">
               {sibling.map((a) => (
-                <button key={a.no} className={'chip' + (a.no === no ? ' is-on' : '')} onClick={() => setSp({ art: String(a.no) })}>
+                <button key={artParam(a.no, a.sub)} className={'chip' + (a.no === no && (a.sub ?? '') === (art.sub ?? '') ? ' is-on' : '')} onClick={() => setSp({ art: artParam(a.no, a.sub) })}>
                   {a.label}
                 </button>
               ))}
@@ -188,7 +189,7 @@ export default function LawDetail() {
               {tab === 'related' && (
                 <div className="chips">
                   {sibling.slice(0, 8).map((a) => (
-                    <button key={a.no} className="chip" onClick={() => setSp({ art: String(a.no) })}>{a.label}</button>
+                    <button key={artParam(a.no, a.sub)} className="chip" onClick={() => setSp({ art: artParam(a.no, a.sub) })}>{a.label}</button>
                   ))}
                 </div>
               )}
