@@ -5,6 +5,24 @@
   "note": "S2-T1 第三部批量扩张法律（2026-09-13）：2022 修订版全文自人民网受权发布转载页入库（GB18030 编码页，read_evidence_text 的 gbk 回退路径覆盖）；历史版本（1992 通过/2005、2018 修正）待官方快照采集后按同一 schema 登记，未采集前不预填。",
   "versions": [
     {
+      "version_id": "1992-enacted",
+      "label": "1992 通过",
+      "status": "已取代（1992 原版，仅作历史对照）",
+      "promulgation_date": "1992-04-03",
+      "promulgation_organ": "全国人民代表大会",
+      "promulgation_instrument": "中华人民共和国主席令第五号",
+      "effective_date": "1992-10-01",
+      "article_count": 54,
+      "current": false,
+      "evidence": {
+        "kind": "wikisource-transcription",
+        "grade": "中",
+        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E5%A9%A6%E5%A5%B3%E6%AC%8A%E7%9B%8A%E4%BF%9D%E9%9A%9C%E6%B3%95_(1992%E5%B9%B4)",
+        "accessed_at": "2026-09-14",
+        "snapshot": "docs/research/evidence/ws_妇女权益保障法1992.html"
+      }
+    },
+    {
       "version_id": "2018-amendment",
       "label": "2018 修正",
       "status": "已取代（2022 修订前文本，仅作历史对照）",
@@ -57,5 +75,5 @@
       }
     }
   ],
-  "pending_note": "1992 原版未采集；2005/2018 修正版已采集（施行日均沿用原版附则 1992-10-01，快照附则自证）。"
+  "pending_note": "妇女法时间线补全：1992 原版（54 条，主席令第五号，1992-10-01 施行）→ 2005 修正（61 条）→ 2018 修正（61 条）→ 2022 修订（86 条，现行）——四版施行日衔接全部附则自证。"
 }
