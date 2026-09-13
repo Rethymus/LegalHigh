@@ -1261,6 +1261,61 @@
         }
       ],
       "note": "2026-09-13 增（S2-T1）：强制报告相关（第11条以快照实际条号为准，写入前已核对；复验未命中则改挂精确条文）。"
+    },
+    {
+      "id": "gold-women-harass-complaint",
+      "question": "被上司言语骚扰可以向哪些机关投诉报案",
+      "expect": [
+        {
+          "law_id": "women-2022",
+          "no": 23
+        }
+      ],
+      "note": "2026-09-13 增（S2-T1 women-2022 入库金标）：性骚扰禁止与救济渠道第23条。"
+    },
+    {
+      "id": "gold-women-employer-duty",
+      "question": "公司应该采取什么措施预防和制止职场性骚扰",
+      "expect": [
+        {
+          "law_id": "women-2022",
+          "no": 25
+        }
+      ],
+      "note": "2026-09-13 增（S2-T1）：用人单位防治性骚扰义务清单第25条。"
+    },
+    {
+      "id": "gold-women-stalker-order",
+      "question": "分手后被前男友一直纠缠骚扰可以申请人身安全保护令吗",
+      "expect": [
+        {
+          "law_id": "women-2022",
+          "no": 29
+        }
+      ],
+      "note": "2026-09-13 增（S2-T1）：恋爱终止后纠缠骚扰与保护令第29条。"
+    },
+    {
+      "id": "gold-women-hiring-bias",
+      "question": "招聘写明只要男性还要问婚育情况合法吗",
+      "expect": [
+        {
+          "law_id": "women-2022",
+          "no": 43
+        }
+      ],
+      "note": "2026-09-13 增（S2-T1）：招聘不得实施的行为清单第43条。"
+    },
+    {
+      "id": "gold-women-villager-rights",
+      "question": "离婚后村里以户无男性为由不分征地补偿款怎么办",
+      "expect": [
+        {
+          "law_id": "women-2022",
+          "no": 56
+        }
+      ],
+      "note": "2026-09-13 增（S2-T1）：村规民约不得侵害妇女农村集体权益第56条。"
     }
   ]
 }

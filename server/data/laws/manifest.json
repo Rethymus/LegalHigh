@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-13T23:21:42.598575",
+  "built_at": "2026-09-13T23:35:33.001138",
   "fetch_date": "2026-09-08",
   "laws": [
     {
@@ -239,6 +239,29 @@
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "00bd290a9d14e7354b7131d30255daae26ce7ff73588483cbeb2030f56878277",
       "output_sha256": "89ef49818a0b410a8a7f93315b07ddd3f45ff649c39f7f532f5c2679f1ee5973"
+    },
+    {
+      "law_id": "women-2022",
+      "title": "中华人民共和国妇女权益保障法",
+      "status": "现行有效（2022修订）",
+      "effective_date": "2023-01-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国妇女权益保障法",
+        "url": "https://politics.people.com.cn/n1/2022/1030/c1001-32554934.html",
+        "accessed_at": "2026-08-29",
+        "grade": "强",
+        "source_kind": "official-gazette-republication",
+        "version": "现行有效（2022修订）"
+      },
+      "promulgation_instrument": "中华人民共和国主席令第一二二号",
+      "article_count": 86,
+      "expected_count": 86,
+      "missing_numbers": [],
+      "source_url": "https://politics.people.com.cn/n1/2022/1030/c1001-32554934.html",
+      "snapshot": "docs/research/evidence/people_妇女权益保障法2022.html",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "348acad7861bdb38811be35ae49d2d25b880a9edc7159f50a75a895eac74325e",
+      "output_sha256": "4787d5a17f3f8365352777bff3d7dc2fb8946ee9bacfcdb32a7b0d6f85da8bc3"
     },
     {
       "law_id": "minor-2024",

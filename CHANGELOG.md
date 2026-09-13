@@ -4,7 +4,7 @@
 
 ### Added / 新增
 
-- Corpus expansion (S2-T1): Public Security Administration Punishments Law (2025 revision, 144 articles) and Minor Protection Law (2024 amendment, 132 articles) from official republication snapshots, grade 【强】; gold set extended by 11 cases (5 lexical-gap rewordings recorded); version registries for both. Controlled corpus: 16 instruments / 2,656 provisions (2026-09-13).
+- Corpus expansion (S2-T1): Public Security Administration Punishments Law (2025 revision, 144 articles), Minor Protection Law (2024 amendment, 132 articles) and Women's Rights Protection Law (2022 revision, 86 articles) from official republication snapshots, grade 【强】; gold set extended by 16 cases (5 lexical-gap rewordings recorded); version registries for all three. Controlled corpus: 17 instruments / 2,742 provisions (2026-09-13).
 - Deterministic evaluation metrics (S2-T2): abstention-correct rate (5 out-of-corpus probes) and citation entity completeness (four required fields), both live in `/api/evals`; law-version registry API `GET /api/laws/{id}/versions` (S2-T4 PoC) with corpus-selfcheck integration.
 - Accessibility probe `qa_a11y.mjs` (WCAG 2.2 AA subset: 24px target size, focus not obscured) wired as QA gate 7; performance budget gate in `qa_gates` (gate 6); corpus freshness SOP; CHANGELOG link checker.
 - In-app usage guide `/guide` (three views) reusing the README media pool.

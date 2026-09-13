@@ -1,0 +1,27 @@
+{
+  "law_id": "women-2022",
+  "title": "中华人民共和国妇女权益保障法",
+  "schema_version": 1,
+  "note": "S2-T1 第三部批量扩张法律（2026-09-13）：2022 修订版全文自人民网受权发布转载页入库（GB18030 编码页，read_evidence_text 的 gbk 回退路径覆盖）；历史版本（1992 通过/2005、2018 修正）待官方快照采集后按同一 schema 登记，未采集前不预填。",
+  "versions": [
+    {
+      "version_id": "2022-revision",
+      "label": "2022 修订",
+      "status": "现行有效（2022修订）",
+      "promulgation_date": "2022-10-30",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "promulgation_instrument": "中华人民共和国主席令第一二二号",
+      "effective_date": "2023-01-01",
+      "article_count": 86,
+      "current": true,
+      "evidence": {
+        "kind": "official-gazette-republication",
+        "grade": "强",
+        "url": "https://politics.people.com.cn/n1/2022/1030/c1001-32554934.html",
+        "accessed_at": "2026-09-13",
+        "snapshot": "docs/research/evidence/people_妇女权益保障法2022.html"
+      }
+    }
+  ],
+  "pending_note": "1992 年通过原版与 2005/2018 修正版全文未采集；未采集前不展示、不预填任何事实。"
+}
