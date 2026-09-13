@@ -35,6 +35,7 @@ from app import (  # noqa: E402
     docxgen,
     explains as explains_mod,
     commentaries as commentaries_mod,
+    law_versions as law_versions_mod,
     coverage as coverage_mod,
     needs,
     qa,

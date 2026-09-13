@@ -141,9 +141,22 @@ def main() -> int:
 
     report["problems"] = problems
     out = ROOT.parent / "docs" / "qa-evidence" / f"corpus_selfcheck_{date.today().isoformat()}.json"
+    # 版本注册表校验（S2-T4）：有注册表的法律必须过 schema + 与语料对齐；无注册表不算问题（PoC 渐进）。
+    version_registries = {}
+    versions_dir = ROOT / "data" / "law_versions"
+    if versions_dir.is_dir():
+        from app import law_versions  # noqa: E402
+        for reg_file in sorted(versions_dir.glob("*.json")):
+            lid = reg_file.stem
+            try:
+                version_registries[lid] = law_versions.describe(lid)
+            except (ValueError, FileNotFoundError) as e:
+                problems.append(f"版本注册表 {lid}: {e}")
+    report["version_registries"] = {lid: len(d["versions"]) for lid, d in version_registries.items()}
+
     out.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
     total = sum(r["actual_count"] for r in report["laws"].values())
-    print(f"语料自检：{len(report['laws'])} 部 {total} 条，结构/哈希问题 {len(problems)} 项，待核 {len(pending)} 项")
+    print(f"语料自检：{len(report['laws'])} 部 {total} 条，结构/哈希问题 {len(problems)} 项，待核 {len(pending)} 项，版本注册表 {len(version_registries)} 份")
     for p in problems:
         print("  -", p)
     for p in pending:

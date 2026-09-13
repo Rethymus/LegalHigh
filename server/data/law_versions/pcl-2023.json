@@ -1,0 +1,28 @@
+{
+  "law_id": "pcl-2023",
+  "title": "中华人民共和国民事诉讼法",
+  "schema_version": 1,
+  "note": "S2-T4 历史版本库 PoC（2026-09-13）：只登记有仓库内证据的版本；无证据的历史修正版本一律不入表、不标日期（不编造）。current 版本字段必须与 server/data/laws/ 语料元数据一致（corpus_selfcheck 钉住）。",
+  "versions": [
+    {
+      "version_id": "2023-revision",
+      "label": "2023 修正",
+      "status": "现行有效（2023修正）",
+      "promulgation_date": "2023-09-01",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "promulgation_instrument": "中华人民共和国主席令第十一号",
+      "effective_date": "2024-01-01",
+      "article_count": 306,
+      "article_count_note": "含上游转录残留疑点第306条（见 docs/qa-evidence/flk-pcl-2023-末条复核-2026-09-13.md）；flk 人工定案后随构建规则更新",
+      "current": true,
+      "evidence": {
+        "kind": "wikisource-transcription",
+        "grade": "中",
+        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E6%B0%91%E4%BA%8B%E8%AF%89%E8%AE%BC%E6%B3%95_(2023%E5%B9%B4)",
+        "accessed_at": "2026-08-29",
+        "snapshot": "docs/research/evidence/ws_民事诉讼法2023.json"
+      }
+    }
+  ],
+  "pending_note": "历史修正版本（1991 公布及历次修正决定）待官方快照按 build_corpus 管线采集后以同一 schema 登记；未采集前本表不展示、不预填任何日期或条数。"
+}
