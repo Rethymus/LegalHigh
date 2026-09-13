@@ -107,6 +107,7 @@ export default function LawDetail() {
             <ValidityBadge v={law.status} />
             <SourceBadge kind="law" grade={lawEvidenceGrade(law.sourceUrl)} />
             <button className="btn btn-ghost btn-sm" onClick={() => copy(`${law.title} ${article.label}：${article.text}`, '已复制法条原文')}><Icon name="copy" size={13} />复制原文</button>
+            <button className="btn btn-ghost btn-sm" onClick={() => copy(`《${law.title.replace(/^中华人民共和国/, '')}》${article.label}（${law.status}，${law.effectiveDate} 施行）来源：${law.sourceUrl}`, '已复制规范引用（含官方来源）')}><Icon name="quote" size={13} />复制规范引用</button>
             <button className="btn btn-secondary btn-sm" onClick={() => {
               const now = toggleFav({ key: `law:${lawId}#${no}`, type: '法条', title: `《${law.title.replace(/^中华人民共和国/, '')}》${article.label}`, meta: `${law.status} · ${law.effectiveDate} 施行`, to: `/laws/${lawId}?art=${no}` })
               setFavState(now)

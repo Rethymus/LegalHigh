@@ -205,6 +205,16 @@ export const api = {
     basis: 'current-controlled-corpus'
   }>('/inventory'),
   corpusCoverage: () => req<CorpusCoverage>('/corpus/coverage'),
+  evals: () => req<{
+    case_count: number
+    hit_at_5: number
+    mrr: number
+    precision_at_5: number
+    abstention_probes: number
+    abstention_correct_rate: number
+    citation_entity_total: number
+    citation_entity_completeness: number
+  }>('/evals'),
 
   // 合同审查
   analyzeContractText: (contractText: string, title?: string) =>

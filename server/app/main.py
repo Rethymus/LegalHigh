@@ -13,6 +13,7 @@ from dataclasses import dataclass
 from datetime import date
 from pathlib import Path
 
+from functools import lru_cache as cache
 from fastapi import Depends, FastAPI, File, Header, HTTPException, Request, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import Response
@@ -767,12 +768,15 @@ def needs_parse(body: NeedsBody):
 
 
 @app.get("/api/evals")
+@cache
 def evals():
     """检索评测（实时计算，结果可复现）：金标集 server/tests/gold/gold_retrieval.json。
 
     指标口径：条文级。hit@5 = 金标条文出现在 top-5 的比例；MRR 为金标条文排名倒数的
     平均；precision@5 = 检索出的条文中金标条文占比。LegalBench-RAG（arXiv:2408.10343）
     采用字符级 span 口径，本原型以「条」为最小检索单元，故为条文级近似口径。
+    结果随服务进程缓存（lru_cache）：语料单例在进程内不变，确定性指标复算一次即可复用；
+    进程重启即重新复算，「实时」指任何使用者看到的数字都与当前进程语料一致，而非逐请求重算。
     """
     import json as _json
 

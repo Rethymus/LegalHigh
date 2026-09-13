@@ -4,7 +4,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useOutletContext, useParams } from 'react-router-dom'
 import { Icon } from '../icons'
-import { useToast } from '../ui'
+import { useCopy, useToast } from '../ui'
 import { EmptyState, SkeletonLines, Tabs } from '../ui'
 import { CitationCard, CitationChip, ForeignDisclaimer, SourceBadge } from '../domain'
 import { api, ApiError, isFav, toggleFav, type CaseRecord } from '../../lib/api'
@@ -28,6 +28,7 @@ export default function CaseDetail() {
   const [loading, setLoading] = useState(true)
   const [tab, setTab] = useState('基本信息')
   const toast = useToast()
+  const copy = useCopy()
   const [faved, setFaved] = useState(() => (caseId ? isFav(`case:${caseId}`) : false))
   const fav = () => {
     if (!caseId) return
@@ -105,6 +106,7 @@ export default function CaseDetail() {
           <button className="btn btn-secondary btn-sm" onClick={fav}><Icon name="star" size={13} />{faved ? '已收藏' : '加入收藏'}</button>
           {audience !== 'public' && <Link to={`/research?q=${encodeURIComponent(`${c.name}所涉争议焦点与相关现行法条`)}`} className="btn btn-ghost btn-sm"><Icon name="sparkle" size={13} />基于本案研究</Link>}
           <a className="btn btn-ghost btn-sm" href={c.source_url} target="_blank" rel="noreferrer" title={`${c.source_title}（核验于 ${c.source_accessed_at}）`}><Icon name="external" size={13} />核验原始来源</a>
+          <button className="btn btn-ghost btn-sm" onClick={() => copy(`${c.name}（核验于 ${c.source_accessed_at}，证据等级【${c.grade}】）来源：${c.source_url}`, '已复制规范引用（含官方来源）')}><Icon name="quote" size={13} />复制规范引用</button>
         </div>
       </div>
 

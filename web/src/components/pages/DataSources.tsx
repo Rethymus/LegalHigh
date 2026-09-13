@@ -23,6 +23,8 @@ export default function DataSources() {
   const [casesError, setCasesError] = useState<string | null>(null)
   const [compliance, setCompliance] = useState<Awaited<ReturnType<typeof api.compliance>> | null>(null)
   const [coverage, setCoverage] = useState<Awaited<ReturnType<typeof api.corpusCoverage>> | null>(null)
+  const [evals, setEvals] = useState<Awaited<ReturnType<typeof api.evals>> | null>(null)
+  const [evalsState, setEvalsState] = useState<'loading' | 'done'>('loading')
 
   useEffect(() => {
     let alive = true
@@ -44,6 +46,7 @@ export default function DataSources() {
   useEffect(() => {
     let alive = true
     api.corpusCoverage().then((c) => alive && setCoverage(c), () => { /* 覆盖登记册不可用时不伪造替代数据 */ })
+    api.evals().then((e) => { if (alive) { setEvals(e); setEvalsState('done') } }, () => { if (alive) setEvalsState('done') /* 评测不可用时不伪造替代数据 */ })
     return () => { alive = false }
   }, [])
 
@@ -78,6 +81,28 @@ export default function DataSources() {
         <div className="stat"><b>{data ? articleCount.toLocaleString() : '—'}</b><span>已加载条文</span></div>
         <div className="stat"><b>{cases ? cases.length : '—'}</b><span>逐件核实案例</span></div>
       </div>
+
+      {evalsState === 'loading' && (
+        <section className="card mb-20"><div className="card-b tiny muted">检索质量评测复算中…（金标 106 组逐题检索，首次约 3 秒）</div></section>
+      )}
+      {evals && (
+        <section className="card mb-20">
+          <div className="card-h row-wrap">
+            <b className="card-h-t">检索质量评测（随服务启动自动复算，确定性可复现）</b>
+            <span className="spacer" />
+            <span className="tiny">金标 {evals.case_count} 组 · 条文级口径 · 决策 14 只公示数字</span>
+          </div>
+          <div className="card-b">
+            <div className="stats mb-12">
+              <div className="stat"><b>{(evals.hit_at_5 * 100).toFixed(1)}%</b><span>hit@5</span></div>
+              <div className="stat"><b>{evals.mrr.toFixed(2)}</b><span>MRR</span></div>
+              <div className="stat"><b>{(evals.abstention_correct_rate * 100).toFixed(0)}%</b><span>拒答正确率（{evals.abstention_probes} 探针）</span></div>
+              <div className="stat"><b>{(evals.citation_entity_completeness * 100).toFixed(1)}%</b><span>引用卡四要素完整率</span></div>
+            </div>
+            <div className="tiny">以上是检索工程指标，<b>不是法律正确率</b>；没有独立法律专家金标评测集时，校准正确率显示为「暂无」（引用不变量与人工核验 gate 另见页面各处标注）。</div>
+          </div>
+        </section>
+      )}
 
       {coverage && (
         <section className="card mb-20">

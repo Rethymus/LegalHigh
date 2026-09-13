@@ -126,7 +126,7 @@ cd web && npm ci && npm run dev
 | 后端测试 / Backend tests | 182 项 pytest（引用绑定、状态机、PIPL 级联、fail-closed 等） |
 | 浏览器巡检 / Route sweeps | 无头 Chrome 逐路由截图 + console/网络零错误门（记录于 2026-09-08） |
 | 对比度 / Contrast | WCAG AA 正文 4.5:1 + UI 指示器 3:1（strict 模式） |
-| 动效探针 / Motion probes | 弹簧位移、Toast/Dialog 卸载、Reduce Motion 双通道等 20 项行为断言 |
+| 动效探针 / Motion probes | 弹簧位移、Toast/Dialog 卸载、Reduce Motion 双通道等 11 项行为断言（2026-09-13 实测 11/11） |
 | 发布前核验 / Final verify | `server/scripts/final_verify.py` 对运行中实例做十项 API 真值断言 |
 
 自动化测试只能证明被覆盖的断言，不能证明系统「绝不出错」；检索评测（金标 106 组，hit@5 0.97）衡量的是语料命中率，不是法律正确率。
