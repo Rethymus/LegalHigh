@@ -230,8 +230,8 @@
   "pending": [],
   "problems": [],
   "version_registries": {
-    "cl-2023": 2,
-    "con-2018": 2,
+    "cl-2023": 3,
+    "con-2018": 3,
     "cpl-2018": 1,
     "csl-2025": 2,
     "dsl-2021": 1,
