@@ -91,6 +91,15 @@
       "no_effective_date": false,
       "effective_date_evidence_valid": true
     },
+    "csl-2025": {
+      "manifest_count": 81,
+      "actual_count": 81,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
     "penal-2021": {
       "manifest_count": 86,
       "actual_count": 86,
@@ -167,6 +176,7 @@
   "pending": [],
   "problems": [],
   "version_registries": {
+    "csl-2025": 1,
     "minor-2024": 1,
     "pcl-2023": 1,
     "penal-2021": 1,

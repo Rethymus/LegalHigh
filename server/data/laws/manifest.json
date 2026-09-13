@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-13T23:46:23.014491",
+  "built_at": "2026-09-13T23:57:23.821022",
   "fetch_date": "2026-09-08",
   "laws": [
     {
@@ -239,6 +239,29 @@
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "00bd290a9d14e7354b7131d30255daae26ce7ff73588483cbeb2030f56878277",
       "output_sha256": "89ef49818a0b410a8a7f93315b07ddd3f45ff649c39f7f532f5c2679f1ee5973"
+    },
+    {
+      "law_id": "csl-2025",
+      "title": "中华人民共和国网络安全法",
+      "status": "现行有效（2025修正）",
+      "effective_date": "2026-01-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国网络安全法",
+        "url": "https://www.cac.gov.cn/2025-12/29/c_1768735112911946.htm",
+        "accessed_at": "2026-08-29",
+        "grade": "强",
+        "source_kind": "official-gazette-republication",
+        "version": "现行有效（2025修正）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 81,
+      "expected_count": 81,
+      "missing_numbers": [],
+      "source_url": "https://www.cac.gov.cn/2025-12/29/c_1768735112911946.htm",
+      "snapshot": "docs/research/evidence/cac_网络安全法2025.html",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "996925d52a92735a0f9ef4506b7254086ae9ef591a9ea36a6e091788d04fcdc9",
+      "output_sha256": "cf12280f1782cd92f93e5db32d123dfeea13c5a392ade86e3edb152993358e59"
     },
     {
       "law_id": "penal-2021",

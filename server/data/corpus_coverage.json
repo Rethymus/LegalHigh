@@ -28,7 +28,8 @@
     "psm-2025",
     "minor-2024",
     "women-2022",
-    "penal-2021"
+    "penal-2021",
+    "csl-2025"
   ],
   "priority_backlog": [
     {
@@ -58,12 +59,6 @@
     {
       "title": "中华人民共和国劳动争议调解仲裁法",
       "reason": "劳动争议处理程序基础",
-      "status": "official-source-identified-not-imported",
-      "source_url": "https://flk.npc.gov.cn/"
-    },
-    {
-      "title": "中华人民共和国网络安全法",
-      "reason": "网络运行与信息安全基础",
       "status": "official-source-identified-not-imported",
       "source_url": "https://flk.npc.gov.cn/"
     },

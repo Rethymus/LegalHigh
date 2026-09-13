@@ -52,6 +52,7 @@ LAW_FILES = {
     "minor_gov_html": "gov_未成年人保护法2024.html",
     "women_people_html": "people_妇女权益保障法2022.html",
     "penal_people_html": "people_行政处罚法2021.html",
+    "csl_cac_html": "cac_网络安全法2025.html",
 }
 
 
@@ -262,6 +263,7 @@ EXPECTED_COUNTS = {
     "minor-2024": 132,
     "women-2022": 86,
     "penal-2021": 86,
+    "csl-2025": 81,
     "crpl-imp-2024": 53,
     "genai-2023": 24,
     "pipl-2021": 74,
@@ -354,6 +356,15 @@ def main():
                 "promulgation_instrument": "国家互联网信息办公室等七部门令第15号",
                 "effective_date": "2023-08-15",
                 "_url": "https://www.gov.cn/zhengce/zhengceku/202307/content_6891752.htm",
+            },
+        ),
+        build_govcn_law(
+            "csl_cac_html", "csl-2025", "中华人民共和国网络安全法",
+            {
+                "status": "现行有效（2025修正）",
+                "promulgation": {"date": "2025-10-28", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "2026-01-01",
+                "_url": "https://www.cac.gov.cn/2025-12/29/c_1768735112911946.htm",
             },
         ),
         build_govcn_law(

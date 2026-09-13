@@ -1,0 +1,26 @@
+{
+  "law_id": "csl-2025",
+  "title": "中华人民共和国网络安全法",
+  "schema_version": 1,
+  "note": "S2-T1 第五部批量扩张法律（2026-09-13）：2025 修正后全文自国家网信办官网重新公布页入库（utf-8，等级【强】）；2016 原版受权发布页已定位（http://npc.people.com.cn/n1/2016/1124/c14576-28892612.html）待采集。快照未载修正决定主席令号，故本注册表不填 promulgation_instrument（不编造）。",
+  "versions": [
+    {
+      "version_id": "2025-amendment",
+      "label": "2025 修正",
+      "status": "现行有效（2025修正）",
+      "promulgation_date": "2025-10-28",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2026-01-01",
+      "article_count": 81,
+      "current": true,
+      "evidence": {
+        "kind": "official-gazette-republication",
+        "grade": "强",
+        "url": "https://www.cac.gov.cn/2025-12/29/c_1768735112911946.htm",
+        "accessed_at": "2026-09-13",
+        "snapshot": "docs/research/evidence/cac_网络安全法2025.html"
+      }
+    }
+  ],
+  "pending_note": "2016 原版（79 条）与本次修正决定全文未采集；未采集前不展示、不预填任何事实。"
+}
