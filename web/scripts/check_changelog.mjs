@@ -2,7 +2,7 @@
 // 用法：node scripts/check_changelog.mjs（可入 pre-commit / run_qa；失败退出码 1）
 // 口径：①首个 `## v…` 段必须带 ISO 日期；②段内 markdown 链接/图片的仓库相对路径必须存在。
 import { existsSync, readFileSync } from 'node:fs'
-import { dirname, join, resolve } from 'node:path'
+import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..')

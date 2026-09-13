@@ -11,6 +11,10 @@ cd "$(git rev-parse --show-toplevel)" || exit 1
 (cd web && npm run build >/dev/null 2>&1) || {
   echo "[pre-commit] FAILED: tsc/vite build"; exit 1; }
 
+# lint 与 CI Gate 2 对齐（oxlint --deny-warnings）：本地漏跑曾致云端 CI 红（2026-09-13）
+(cd web && npm run lint >/dev/null 2>&1) || {
+  echo "[pre-commit] FAILED: oxlint（与 CI Gate 2 对齐）"; exit 1; }
+
 (cd web && node scripts/qa_gates.mjs) || {
   echo "[pre-commit] FAILED: data-discipline gate"; exit 1; }
 
