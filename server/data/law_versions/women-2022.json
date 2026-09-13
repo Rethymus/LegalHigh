@@ -5,6 +5,40 @@
   "note": "S2-T1 第三部批量扩张法律（2026-09-13）：2022 修订版全文自人民网受权发布转载页入库（GB18030 编码页，read_evidence_text 的 gbk 回退路径覆盖）；历史版本（1992 通过/2005、2018 修正）待官方快照采集后按同一 schema 登记，未采集前不预填。",
   "versions": [
     {
+      "version_id": "2018-amendment",
+      "label": "2018 修正",
+      "status": "已取代（2022 修订前文本，仅作历史对照）",
+      "promulgation_date": "2018-10-26",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "1992-10-01",
+      "article_count": 61,
+      "current": false,
+      "evidence": {
+        "kind": "wikisource-transcription",
+        "grade": "中",
+        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E5%A9%A6%E5%A5%B3%E6%AC%8A%E7%9B%8A%E4%BF%9D%E9%9A%9C%E6%B3%95_(2018%E5%B9%B4)",
+        "accessed_at": "2026-09-14",
+        "snapshot": "docs/research/evidence/ws_妇女权益保障法2018.html"
+      }
+    },
+    {
+      "version_id": "2005-amendment",
+      "label": "2005 修正",
+      "status": "已取代（2022 修订前文本，仅作历史对照）",
+      "promulgation_date": "2005-08-28",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "1992-10-01",
+      "article_count": 61,
+      "current": false,
+      "evidence": {
+        "kind": "wikisource-transcription",
+        "grade": "中",
+        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E5%A9%A6%E5%A5%B3%E6%AC%8A%E7%9B%8A%E4%BF%9D%E9%9A%9C%E6%B3%95_(2005%E5%B9%B4)",
+        "accessed_at": "2026-09-14",
+        "snapshot": "docs/research/evidence/ws_妇女权益保障法2005.html"
+      }
+    },
+    {
       "version_id": "2022-revision",
       "label": "2022 修订",
       "status": "现行有效（2022修订）",
@@ -23,5 +57,5 @@
       }
     }
   ],
-  "pending_note": "1992 年通过原版与 2005/2018 修正版全文未采集；未采集前不展示、不预填任何事实。"
+  "pending_note": "1992 原版未采集；2005/2018 修正版已采集（施行日均沿用原版附则 1992-10-01，快照附则自证）。"
 }

@@ -5,6 +5,57 @@
   "note": "S2-T1 第四部批量扩张法律（2026-09-13）：2021 修订版全文自人民网受权发布转载页入库（GB18030 编码，gbk 回退路径）；历史版本（1996 通过/2009、2017 修正）待官方快照采集后按同一 schema 登记，未采集前不预填。",
   "versions": [
     {
+      "version_id": "2017-amendment",
+      "label": "2017 修正",
+      "status": "已取代（仅作历史对照）",
+      "promulgation_date": "2017-09-01",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "1996-10-01",
+      "article_count": 64,
+      "current": false,
+      "evidence": {
+        "kind": "wikisource-transcription",
+        "grade": "中",
+        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E8%A1%8C%E6%94%BF%E8%99%95%E7%BD%B0%E6%B3%95_(2017%E5%B9%B4)",
+        "accessed_at": "2026-09-14",
+        "snapshot": "docs/research/evidence/ws_行政处罚法2017.html"
+      }
+    },
+    {
+      "version_id": "2009-amendment",
+      "label": "2009 修正",
+      "status": "已取代（仅作历史对照）",
+      "promulgation_date": "2009-08-27",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "1996-10-01",
+      "article_count": 64,
+      "current": false,
+      "evidence": {
+        "kind": "wikisource-transcription",
+        "grade": "中",
+        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E8%A1%8C%E6%94%BF%E8%99%95%E7%BD%B0%E6%B3%95_(2009%E5%B9%B4)",
+        "accessed_at": "2026-09-14",
+        "snapshot": "docs/research/evidence/ws_行政处罚法2009.html"
+      }
+    },
+    {
+      "version_id": "1996-enacted",
+      "label": "1996 通过",
+      "status": "已取代（仅作历史对照）",
+      "promulgation_date": "1996-03-17",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "1996-10-01",
+      "article_count": 64,
+      "current": false,
+      "evidence": {
+        "kind": "wikisource-transcription",
+        "grade": "中",
+        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E8%A1%8C%E6%94%BF%E8%99%95%E7%BD%B0%E6%B3%95_(1996%E5%B9%B4)",
+        "accessed_at": "2026-09-14",
+        "snapshot": "docs/research/evidence/ws_行政处罚法1996.html"
+      }
+    },
+    {
       "version_id": "2021-revision",
       "label": "2021 修订",
       "status": "现行有效（2021修订）",
@@ -23,5 +74,5 @@
       }
     }
   ],
-  "pending_note": "1996 年通过原版与 2009/2017 修正版全文未采集；未采集前不展示、不预填任何事实。"
+  "pending_note": "1996/2009/2017/2021 四版全文均已采集（wikisource 渠道，等级【中】），时间线完整；更早历史文本不存在（1996 为该法首次立法）。"
 }
