@@ -48,5 +48,10 @@
     "route": "settings",
     "smallTargets": [],
     "obscuredFocus": []
+  },
+  {
+    "route": "guide",
+    "smallTargets": [],
+    "obscuredFocus": []
   }
 ]

@@ -103,6 +103,7 @@ export const NAV_MAIN: NavEntry[] = [
   { to: '/learning', icon: 'gradcap', label: '学习中心', audiences: ['student'] },
   { to: '/comparative', icon: 'globe', label: '跨法域对比', audiences: ['student', 'professional'] },
   { to: '/data-sources', icon: 'database', label: '数据洞察' },
+  { to: '/guide', icon: 'book', label: '使用指南' },
 ]
 export const NAV_SUB: NavEntry[] = [
   { to: '/collections', icon: 'star', label: '我的收藏' },

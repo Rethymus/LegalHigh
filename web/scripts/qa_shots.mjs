@@ -164,6 +164,9 @@ const ROUTES = [
   { name: '40e-public-collections', path: '/collections', audience: 'public', setupSource: `localStorage.setItem('lh:research:list', JSON.stringify([{rid:'r-local-check',question:'不应在公众视图显示的本机研究',ts:'2026-09-08T00:00:00Z'}]));`, identity: pageHeader('我的收藏'), steps: [
     { t: 'eval', expr: `(() => { const body=document.body.innerText||''; return !body.includes('不应在公众视图显示的本机研究')&&![...document.querySelectorAll('.lrow-t')].some(x=>x.textContent==='研究') ? 'public-collections-ok' : 'failed-public-collections' })()` },
   ] },
+  { name: '42-guide', path: '/guide', fullPage: true, identity: pageHeader('使用指南'), afterText: '它不是律师事务所', steps: [
+    { t: 'eval', expr: `(() => { const imgs=[...document.images].filter(i=>i.src.includes('/guide/')); return imgs.length >= 6 ? 'guide-media-ok' : 'guide-media-missing:'+imgs.length })()` },
+  ] },
   { name: '41-settings-switch-professional', path: '/settings', audience: 'public', identity: pageHeader('设置'), steps: [
     { t: 'eval', expr: `(() => { const s=[...document.querySelectorAll('select')].find(x=>[...x.options].some(o=>o.value==='professional')); if(!s)return 'no-audience-select'; Object.getOwnPropertyDescriptor(HTMLSelectElement.prototype,'value').set.call(s,'professional'); s.dispatchEvent(new Event('change',{bubbles:true})); return 'changed-professional' })()` },
     { t: 'wait', ms: 400 },
