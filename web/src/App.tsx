@@ -22,6 +22,7 @@ const Drafting = lazy(() => import('./components/pages/Drafting'))
 const DraftValidation = lazy(() => import('./components/pages/DraftValidation'))
 const ComparativeLaw = lazy(() => import('./components/pages/ComparativeLaw'))
 const Guide = lazy(() => import('./components/pages/Guide'))
+const Terms = lazy(() => import('./components/pages/Terms'))
 const Learning = lazy(() => import('./components/pages/Learning'))
 const Workspace = lazy(() => import('./components/pages/Workspace'))
 const MatterDetail = lazy(() => import('./components/pages/MatterDetail'))
@@ -62,6 +63,7 @@ export default function App() {
         {/* 14–17 */}
         <Route path="/comparative" element={<ComparativeLaw />} />
         <Route path="/guide" element={<Guide />} />
+        <Route path="/terms" element={<Terms />} />
         <Route path="/learning" element={<Learning />} />
         <Route path="/workspace" element={<Workspace />} />
         <Route path="/workspace/matters/:mid" element={<MatterDetail />} />

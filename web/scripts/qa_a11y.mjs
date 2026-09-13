@@ -31,6 +31,7 @@ const ROUTES = [
   { name: 'workspace', path: '/workspace', identity: { selector: '.ph-t', text: '专业工具工作台' } },
   { name: 'settings', path: '/settings', identity: { selector: '.ph-t', text: '设置' } },
   { name: 'guide', path: '/guide', identity: { selector: '.ph-t', text: '使用指南' } },
+  { name: 'terms', path: '/terms', identity: { selector: '.ph-t', text: '术语卡' } },
 ]
 
 const allocateLoopbackPort = () => new Promise((resolvePort, reject) => {

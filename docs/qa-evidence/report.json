@@ -499,6 +499,17 @@
     "title": "LegalHigh · 法律智能知识库"
   },
   {
+    "name": "43-terms",
+    "path": "/terms",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "step1": "term-refs-ok",
+    "finalUrl": "http://localhost:5173/terms",
+    "title": "LegalHigh · 法律智能知识库"
+  },
+  {
     "name": "42-guide",
     "path": "/guide",
     "consoleErrors": [],
