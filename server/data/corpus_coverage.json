@@ -33,15 +33,10 @@
     "dsl-2021",
     "lcar-2007",
     "cpl-2018",
-    "scl-2012"
+    "scl-2012",
+    "con-2018"
   ],
   "priority_backlog": [
-    {
-      "title": "中华人民共和国宪法",
-      "reason": "国家根本法与公民基本权利基础",
-      "status": "official-source-identified-not-imported",
-      "source_url": "https://flk.npc.gov.cn/"
-    },
     {
       "title": "中华人民共和国刑法",
       "reason": "刑事责任与罪刑法定的基础规范",

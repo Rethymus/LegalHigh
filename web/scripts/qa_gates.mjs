@@ -148,13 +148,13 @@ if (!existsSync(distDir)) {
   const allCssGz = cssFiles.reduce((s, f) => s + gz(f.buf), 0)
   const lawsPath = resolve(distDir, 'data/laws.json')
   const lawsBytes = existsSync(lawsPath) ? statSync(lawsPath).size : 0
-  const BUDGET = { entryJsGz: 120 * 1024, allJsGz: 200 * 1024, allCssGz: 25 * 1024, lawsJson: 1.5 * 1024 * 1024 }
+  const BUDGET = { entryJsGz: 120 * 1024, allJsGz: 200 * 1024, allCssGz: 25 * 1024, lawsJson: 3.5 * 1024 * 1024 }  // 2026-09-14 修订 1.5→3.5MB：S2-T1 批量扩张（23 部 1.43MB 已近上限；宪法 143 条+刑法 452 条体量更大）按计划 v5 S2-T5 预算修订制度执行，非静默放宽
   const over = []
   if (entryGz > BUDGET.entryJsGz) over.push(`入口 JS gzip ${(entryGz / 1024).toFixed(0)}KB > 预算 120KB`)
   if (allJsGz > BUDGET.allJsGz) over.push(`全部 JS gzip ${(allJsGz / 1024).toFixed(0)}KB > 预算 200KB`)
   if (allCssGz > BUDGET.allCssGz) over.push(`全部 CSS gzip ${(allCssGz / 1024).toFixed(0)}KB > 预算 25KB`)
   if (!lawsBytes) over.push('dist/data/laws.json 缺失（语料导出链路断裂）')
-  else if (lawsBytes > BUDGET.lawsJson) over.push(`laws.json ${(lawsBytes / 1048576).toFixed(2)}MB > 预算 1.5MB`)
+  else if (lawsBytes > BUDGET.lawsJson) over.push(`laws.json ${(lawsBytes / 1048576).toFixed(2)}MB > 预算 3.5MB`)
   checks++
   if (over.length) fail.push(`[性能预算] ${over.join('；')}`)
   else console.log(`OK gate6 性能预算：入口 JS ${(entryGz / 1024).toFixed(0)}KB gz / 全 JS ${(allJsGz / 1024).toFixed(0)}KB gz / CSS ${(allCssGz / 1024).toFixed(0)}KB gz / laws.json ${(lawsBytes / 1024).toFixed(0)}KB`)

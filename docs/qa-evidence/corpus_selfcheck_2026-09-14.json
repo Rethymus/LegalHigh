@@ -100,6 +100,15 @@
       "no_effective_date": false,
       "effective_date_evidence_valid": true
     },
+    "con-2018": {
+      "manifest_count": 143,
+      "actual_count": 143,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
     "cpl-2018": {
       "manifest_count": 308,
       "actual_count": 308,
@@ -212,6 +221,7 @@
   "pending": [],
   "problems": [],
   "version_registries": {
+    "con-2018": 1,
     "cpl-2018": 1,
     "csl-2025": 1,
     "dsl-2021": 1,

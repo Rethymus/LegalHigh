@@ -83,6 +83,9 @@ def clean_html_to_text(html: str) -> str:
     html = re.sub(r"<br\s*/?>", "\n", html, flags=re.I)
     html = re.sub(r"<[^>]+>", "", html)
     text = html_mod.unescape(html)
+    # 零宽字符（Wikisource PDF 扫描 transclusion 渲染产物）会让条号不再处于「行首」，
+    # split_articles 的行首判定失效——在清洗层统一剥离（与 NBSP 缩进同为合法行首空白处理）。
+    text = re.sub(r"[\u200b\u200c\u200d\ufeff]", "", text)
     text = re.sub(r"[ \t]{2,}", " ", text)
     text = re.sub(r"\n{3,}", "\n\n", text)
     return text

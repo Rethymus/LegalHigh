@@ -1,0 +1,26 @@
+{
+  "law_id": "con-2018",
+  "title": "中华人民共和国宪法",
+  "schema_version": 1,
+  "note": "S2-T1 第十部批量扩张法律（2026-09-14）：2018 修正后现行文本自维基文库渲染页入库（wikisource-transcription，等级【中】；快照含全国人大常委会公报 2018 年特刊 PDF 扫描 transclusion，第 40-42 条等处含零宽字符——textparse 清洗层已修）。沿革：1982-12-04 通过，1988/1993/1999/2004/2018 五次修正（快照头部自载）；修正案单独成文未采集，未采集前不预填。",
+  "versions": [
+    {
+      "version_id": "2018-amendment",
+      "label": "2018 修正",
+      "status": "现行有效（2018修正）",
+      "promulgation_date": "2018-03-11",
+      "promulgation_organ": "全国人民代表大会",
+      "effective_date": "2018-03-11",
+      "article_count": 143,
+      "current": true,
+      "evidence": {
+        "kind": "wikisource-transcription",
+        "grade": "中",
+        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%AE%AA%E6%B3%95_(2018%E5%B9%B4)",
+        "accessed_at": "2026-09-14",
+        "snapshot": "docs/research/evidence/ws_宪法2018.html"
+      }
+    }
+  ],
+  "pending_note": "1982 原版与 1988/1993/1999/2004 各修正版全文未采集；宪法修正案（2018）单独文本未采集。未采集前不展示、不预填。"
+}

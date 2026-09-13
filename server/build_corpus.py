@@ -57,6 +57,7 @@ LAW_FILES = {
     "lcar_gjxfj_html": "gjxfj_劳动争议调解仲裁法2007.html",
     "cpl_gov_html": "gov_刑事诉讼法2018.html",
     "scl_ws_json": "ws_国家赔偿法2012.json",
+    "minor_ws_html": "ws_宪法2018.html",
 }
 
 
@@ -272,6 +273,7 @@ EXPECTED_COUNTS = {
     "lcar-2007": 54,
     "cpl-2018": 308,
     "scl-2012": 42,
+    "con-2018": 143,
     "crpl-imp-2024": 53,
     "genai-2023": 24,
     "pipl-2021": 74,
@@ -374,6 +376,15 @@ def main():
                 "effective_date": "1995-01-01",
             },
             "%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E5%9C%8B%E5%AE%B6%E8%B3%A0%E5%84%9F%E6%B3%95_(2012%E5%B9%B4)",
+        ),
+        build_wikisource_html_law(
+            "minor_ws_html", "con-2018", "中华人民共和国宪法",
+            {
+                "status": "现行有效（2018修正）",
+                "promulgation": {"date": "2018-03-11", "organ": "全国人民代表大会"},
+                "effective_date": "2018-03-11",
+            },
+            "%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%AE%AA%E6%B3%95_(2018%E5%B9%B4)",
         ),
         build_govcn_law(
             "cpl_gov_html", "cpl-2018", "中华人民共和国刑事诉讼法",

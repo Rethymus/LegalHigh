@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-14T01:02:14.653777",
+  "built_at": "2026-09-14T01:24:48.132675",
   "fetch_date": "2026-09-08",
   "laws": [
     {
@@ -23,7 +23,7 @@
       "snapshot": "docs/research/evidence/ws_中华人民共和国民法典.html",
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "b94ab740ff2da5d2050fabedf86b81d0329da6bc925747484604c79ce8144df0",
-      "output_sha256": "328949c4df2148ca2fce0049e4e0e08f6848f32c3a497f366d76ddf032a8a27d"
+      "output_sha256": "d4ae7fff4197633ddbba5f6a20ead8b0ad6d5fb62599373b5ad3ab83842e6d1e"
     },
     {
       "law_id": "cl-2013",
@@ -262,6 +262,29 @@
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "356a90762d381cca558ac7ec3df198dd04dd185198c75fb34c993c84a367c74b",
       "output_sha256": "2039ce2f1066b3343757516845bdd94ad08777f843e012e1f05606f2f0783847"
+    },
+    {
+      "law_id": "con-2018",
+      "title": "中华人民共和国宪法",
+      "status": "现行有效（2018修正）",
+      "effective_date": "2018-03-11",
+      "effective_date_evidence": {
+        "title": "中华人民共和国宪法",
+        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%AE%AA%E6%B3%95_(2018%E5%B9%B4)",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "wikisource-transcription",
+        "version": "现行有效（2018修正）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 143,
+      "expected_count": 143,
+      "missing_numbers": [],
+      "source_url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%AE%AA%E6%B3%95_(2018%E5%B9%B4)",
+      "snapshot": "docs/research/evidence/ws_宪法2018.html",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "327c5c2e73477a5b3112f74afdd69d94b2f079fba9feea38acbab2cd5c6d79a1",
+      "output_sha256": "e341be9d29a703bee22672460640d79085586c9302cdc455c810d3b4590cbb21"
     },
     {
       "law_id": "cpl-2018",
