@@ -49,6 +49,7 @@ LAW_FILES = {
     "admin_review_npc_html": "npc_行政复议法2023.html",
     "admin_litigation_npc_html": "npc_行政诉讼法2017.html",
     "psm_people_html": "people_治安管理处罚法2025.html",
+    "minor_gov_html": "gov_未成年人保护法2024.html",
 }
 
 
@@ -256,6 +257,7 @@ EXPECTED_COUNTS = {
     "ecom-2018": 89,
     "pcl-2023": 306,
     "psm-2025": 144,
+    "minor-2024": 132,
     "crpl-imp-2024": 53,
     "genai-2023": 24,
     "pipl-2021": 74,
@@ -348,6 +350,16 @@ def main():
                 "promulgation_instrument": "国家互联网信息办公室等七部门令第15号",
                 "effective_date": "2023-08-15",
                 "_url": "https://www.gov.cn/zhengce/zhengceku/202307/content_6891752.htm",
+            },
+        ),
+        build_govcn_law(
+            "minor_gov_html", "minor-2024", "中华人民共和国未成年人保护法",
+            {
+                "status": "现行有效（2024修正）",
+                "promulgation": {"date": "2024-04-26", "organ": "全国人民代表大会常务委员会"},
+                "promulgation_instrument": "中华人民共和国主席令第二十四号",
+                "effective_date": "2024-04-26",
+                "_url": "https://www.yantian.gov.cn/YTQSF/gkmlpt/content/12/12011/post_12011375.html",
             },
         ),
         build_govcn_law(

@@ -25,7 +25,8 @@
     "legal-aid-2021",
     "admin-review-2023",
     "admin-litigation-2017",
-    "psm-2025"
+    "psm-2025",
+    "minor-2024"
   ],
   "priority_backlog": [
     {
@@ -61,12 +62,6 @@
     {
       "title": "中华人民共和国劳动争议调解仲裁法",
       "reason": "劳动争议处理程序基础",
-      "status": "official-source-identified-not-imported",
-      "source_url": "https://flk.npc.gov.cn/"
-    },
-    {
-      "title": "中华人民共和国未成年人保护法",
-      "reason": "未成年人权益保护高频需求",
       "status": "official-source-identified-not-imported",
       "source_url": "https://flk.npc.gov.cn/"
     },

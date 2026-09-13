@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-13T22:59:08.144113",
+  "built_at": "2026-09-13T23:21:42.598575",
   "fetch_date": "2026-09-08",
   "laws": [
     {
@@ -239,6 +239,29 @@
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "00bd290a9d14e7354b7131d30255daae26ce7ff73588483cbeb2030f56878277",
       "output_sha256": "89ef49818a0b410a8a7f93315b07ddd3f45ff649c39f7f532f5c2679f1ee5973"
+    },
+    {
+      "law_id": "minor-2024",
+      "title": "中华人民共和国未成年人保护法",
+      "status": "现行有效（2024修正）",
+      "effective_date": "2024-04-26",
+      "effective_date_evidence": {
+        "title": "中华人民共和国未成年人保护法",
+        "url": "https://www.yantian.gov.cn/YTQSF/gkmlpt/content/12/12011/post_12011375.html",
+        "accessed_at": "2026-08-29",
+        "grade": "强",
+        "source_kind": "official-gazette-republication",
+        "version": "现行有效（2024修正）"
+      },
+      "promulgation_instrument": "中华人民共和国主席令第二十四号",
+      "article_count": 132,
+      "expected_count": 132,
+      "missing_numbers": [],
+      "source_url": "https://www.yantian.gov.cn/YTQSF/gkmlpt/content/12/12011/post_12011375.html",
+      "snapshot": "docs/research/evidence/gov_未成年人保护法2024.html",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "b55ea0109183e23f2a80c09341daff130983c46fd06d27e5f41fa4e758808531",
+      "output_sha256": "233b47457a814f278cb66c680a9114afa0bd858ba4f57380bbf600a7a97c06a1"
     },
     {
       "law_id": "psm-2025",

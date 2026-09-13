@@ -1,0 +1,27 @@
+{
+  "law_id": "minor-2024",
+  "title": "中华人民共和国未成年人保护法",
+  "schema_version": 1,
+  "note": "S2-T1 第二部批量扩张法律（2026-09-13）：2024 修正版全文自政府官网转载页入库（official-gazette-republication，等级【强】）；历史版本待官方快照采集后按同一 schema 登记，未采集前不预填任何日期。",
+  "versions": [
+    {
+      "version_id": "2024-amendment",
+      "label": "2024 修正",
+      "status": "现行有效（2024修正）",
+      "promulgation_date": "2024-04-26",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "promulgation_instrument": "中华人民共和国主席令第二十四号",
+      "effective_date": "2024-04-26",
+      "article_count": 132,
+      "current": true,
+      "evidence": {
+        "kind": "official-gazette-republication",
+        "grade": "强",
+        "url": "https://www.yantian.gov.cn/YTQSF/gkmlpt/content/12/12011/post_12011375.html",
+        "accessed_at": "2026-09-13",
+        "snapshot": "docs/research/evidence/gov_未成年人保护法2024.html"
+      }
+    }
+  ],
+  "pending_note": "1991 通过原版、2006 修订版、2012 修正版全文未采集；2020 修订版受权发布页已定位（https://www.xinhuanet.com/politics/2020-10/18/c_1126624505.htm）待按 build_corpus 管线采集。未采集前不展示、不预填任何事实。"
+}
