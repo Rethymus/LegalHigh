@@ -56,6 +56,7 @@ LAW_FILES = {
     "dsl_cac_html": "cac_数据安全法2021.html",
     "lcar_gjxfj_html": "gjxfj_劳动争议调解仲裁法2007.html",
     "cpl_gov_html": "gov_刑事诉讼法2018.html",
+    "scl_ws_json": "ws_国家赔偿法2012.json",
 }
 
 
@@ -270,6 +271,7 @@ EXPECTED_COUNTS = {
     "dsl-2021": 55,
     "lcar-2007": 54,
     "cpl-2018": 308,
+    "scl-2012": 42,
     "crpl-imp-2024": 53,
     "genai-2023": 24,
     "pipl-2021": 74,
@@ -363,6 +365,15 @@ def main():
                 "effective_date": "2023-08-15",
                 "_url": "https://www.gov.cn/zhengce/zhengceku/202307/content_6891752.htm",
             },
+        ),
+        build_wikisource_law(
+            "scl_ws_json", "scl-2012", "中华人民共和国国家赔偿法",
+            {
+                "status": "现行有效（2012第二次修正）",
+                "promulgation": {"date": "2012-10-26", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "1995-01-01",
+            },
+            "%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E5%9C%8B%E5%AE%B6%E8%B3%A0%E5%84%9F%E6%B3%95_(2012%E5%B9%B4)",
         ),
         build_govcn_law(
             "cpl_gov_html", "cpl-2018", "中华人民共和国刑事诉讼法",

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-14T00:31:51.351617",
+  "built_at": "2026-09-14T01:02:14.653777",
   "fetch_date": "2026-09-08",
   "laws": [
     {
@@ -239,6 +239,29 @@
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "00bd290a9d14e7354b7131d30255daae26ce7ff73588483cbeb2030f56878277",
       "output_sha256": "89ef49818a0b410a8a7f93315b07ddd3f45ff649c39f7f532f5c2679f1ee5973"
+    },
+    {
+      "law_id": "scl-2012",
+      "title": "中华人民共和国国家赔偿法",
+      "status": "现行有效（2012第二次修正）",
+      "effective_date": "1995-01-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国国家赔偿法",
+        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E5%9C%8B%E5%AE%B6%E8%B3%A0%E5%84%9F%E6%B3%95_(2012%E5%B9%B4)",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "wikisource-transcription",
+        "version": "现行有效（2012第二次修正）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 42,
+      "expected_count": 42,
+      "missing_numbers": [],
+      "source_url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E5%9C%8B%E5%AE%B6%E8%B3%A0%E5%84%9F%E6%B3%95_(2012%E5%B9%B4)",
+      "snapshot": "docs/research/evidence/ws_国家赔偿法2012.json",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "356a90762d381cca558ac7ec3df198dd04dd185198c75fb34c993c84a367c74b",
+      "output_sha256": "2039ce2f1066b3343757516845bdd94ad08777f843e012e1f05606f2f0783847"
     },
     {
       "law_id": "cpl-2018",

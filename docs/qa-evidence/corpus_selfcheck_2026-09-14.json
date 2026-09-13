@@ -91,6 +91,15 @@
       "no_effective_date": false,
       "effective_date_evidence_valid": true
     },
+    "scl-2012": {
+      "manifest_count": 42,
+      "actual_count": 42,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
     "cpl-2018": {
       "manifest_count": 308,
       "actual_count": 308,
@@ -211,6 +220,7 @@
     "pcl-2023": 1,
     "penal-2021": 1,
     "psm-2025": 1,
+    "scl-2012": 1,
     "women-2022": 1
   }
 }

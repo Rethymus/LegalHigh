@@ -1,0 +1,26 @@
+{
+  "law_id": "scl-2012",
+  "title": "中华人民共和国国家赔偿法",
+  "schema_version": 1,
+  "note": "S2-T1 第九部批量扩张法律（2026-09-14）：2012 第二次修正后全文自维基文库转录页入库（pcl-2023 同款 wikisource-transcription 渠道，等级【中】）。快照序言自载「1994-05-12 通过 → 2010-04-29 第一次修正 → 2012-10-26 第二次修正」，现行文本附则第 42 条自载施行日 1995-01-01；修正决定主席令号与生效方式快照未载，promulgation_instrument 如实省略，待 flk/官方数据库核对。",
+  "versions": [
+    {
+      "version_id": "2012-amendment",
+      "label": "2012 第二次修正",
+      "status": "现行有效（2012第二次修正）",
+      "promulgation_date": "2012-10-26",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "1995-01-01",
+      "article_count": 42,
+      "current": true,
+      "evidence": {
+        "kind": "wikisource-transcription",
+        "grade": "中",
+        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E5%9C%8B%E5%AE%B6%E8%B3%A0%E5%84%9F%E6%B3%95_(2012%E5%B9%B4)",
+        "accessed_at": "2026-09-14",
+        "snapshot": "docs/research/evidence/ws_国家赔偿法2012.json"
+      }
+    }
+  ],
+  "pending_note": "1994 原版与 2010 修正版全文未采集；修正决定主席令号未在快照中出现，待 flk 人工核对后补登记。未采集/未核对前不预填。"
+}
