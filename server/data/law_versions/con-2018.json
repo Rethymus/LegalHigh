@@ -5,6 +5,23 @@
   "note": "S2-T1 第十部批量扩张法律（2026-09-14）：2018 修正后现行文本自维基文库渲染页入库（等级【中】；快照含公报 PDF 扫描 transclusion）。沿革：1982-12-04 通过，1988/1993/1999/2004/2018 五次修正（快照头部自载）；修正案单独成文未采集。2004 修正版历史全文（138 条）已于 2026-09-14 自同一渠道采集存证并登记。",
   "versions": [
     {
+      "version_id": "1975-enacted",
+      "label": "1975 通过",
+      "status": "已取代（1975 版本，仅作历史对照）",
+      "promulgation_date": "1975-01-17",
+      "promulgation_organ": "全国人民代表大会",
+      "effective_date": "1975-01-17",
+      "article_count": 30,
+      "current": false,
+      "evidence": {
+        "kind": "wikisource-transcription",
+        "grade": "中",
+        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%AE%AA%E6%B3%95_(1975%E5%B9%B4)",
+        "accessed_at": "2026-09-14",
+        "snapshot": "docs/research/evidence/ws_宪法1975.html"
+      }
+    },
+    {
       "version_id": "1978-enacted",
       "label": "1978 通过",
       "status": "已取代（1982 现行母本前文本，仅作历史对照）",
@@ -73,7 +90,7 @@
       }
     }
   ],
-  "pending_note": "1978 版已采集；1975/1954 历史宪法与各修正案单独文本（修正案五部已入 amendments）未采集的仅剩 1975/1954，不预填。",
+  "pending_note": "1954 版经实测为纯扫描件无文本层（零宽/条文文本 0 处），本渠道不可采集，待有文本层来源；1975/1978/1982/2004/2018 五版本已采集。各修正案单独文本已入 amendments。",
   "amendments": [
     {
       "no": "1988",
