@@ -31,8 +31,8 @@ def make_corpus():
 
 def test_corpus_shape():
     c = make_corpus()
-    assert len(c.laws) == 14
-    assert len(c.articles) == 2380
+    assert len(c.laws) == len(c.manifest["laws"])
+    assert len(c.articles) == sum(m["article_count"] for m in c.manifest["laws"])
     for law_id, n in EXPECTED.items():
         got = sum(1 for a in c.articles if a["law_id"] == law_id)
         assert got == n, f"{law_id}: {got} != {n}"

@@ -48,6 +48,7 @@ LAW_FILES = {
     "legal_aid_npc_html": "npc_法律援助法2021.html",
     "admin_review_npc_html": "npc_行政复议法2023.html",
     "admin_litigation_npc_html": "npc_行政诉讼法2017.html",
+    "psm_people_html": "people_治安管理处罚法2025.html",
 }
 
 
@@ -254,6 +255,7 @@ EXPECTED_COUNTS = {
     "ll-2017": 60,
     "ecom-2018": 89,
     "pcl-2023": 306,
+    "psm-2025": 144,
     "crpl-imp-2024": 53,
     "genai-2023": 24,
     "pipl-2021": 74,
@@ -346,6 +348,16 @@ def main():
                 "promulgation_instrument": "国家互联网信息办公室等七部门令第15号",
                 "effective_date": "2023-08-15",
                 "_url": "https://www.gov.cn/zhengce/zhengceku/202307/content_6891752.htm",
+            },
+        ),
+        build_govcn_law(
+            "psm_people_html", "psm-2025", "中华人民共和国治安管理处罚法",
+            {
+                "status": "现行有效（2025修订）",
+                "promulgation": {"date": "2025-06-27", "organ": "全国人民代表大会常务委员会"},
+                "promulgation_instrument": "中华人民共和国主席令第四十九号",
+                "effective_date": "2026-01-01",
+                "_url": "https://politics.people.com.cn/n1/2025/0627/c1001-40510468.html",
             },
         ),
         build_npc_law(

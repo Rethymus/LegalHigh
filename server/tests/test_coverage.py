@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import json
+from pathlib import Path
 from fastapi.testclient import TestClient
 
 from app.coverage import get_coverage
@@ -19,5 +21,5 @@ def test_coverage_endpoint_is_public_and_does_not_claim_backlog_loaded():
     response = TestClient(app).get("/api/corpus/coverage")
     assert response.status_code == 200
     body = response.json()
-    assert len(body["controlled_instrument_ids"]) == 14
+    assert len(body["controlled_instrument_ids"]) == len(json.loads(Path(__file__).resolve().parent.parent.joinpath("data/corpus_coverage.json").read_text(encoding="utf-8"))["controlled_instrument_ids"])
     assert not (set(x["title"] for x in body["priority_backlog"]) & set(body["controlled_instrument_ids"]))

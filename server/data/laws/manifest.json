@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-08T11:41:06.334850",
+  "built_at": "2026-09-13T22:59:08.144113",
   "fetch_date": "2026-09-08",
   "laws": [
     {
@@ -239,6 +239,29 @@
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "00bd290a9d14e7354b7131d30255daae26ce7ff73588483cbeb2030f56878277",
       "output_sha256": "89ef49818a0b410a8a7f93315b07ddd3f45ff649c39f7f532f5c2679f1ee5973"
+    },
+    {
+      "law_id": "psm-2025",
+      "title": "中华人民共和国治安管理处罚法",
+      "status": "现行有效（2025修订）",
+      "effective_date": "2026-01-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国治安管理处罚法",
+        "url": "https://politics.people.com.cn/n1/2025/0627/c1001-40510468.html",
+        "accessed_at": "2026-08-29",
+        "grade": "强",
+        "source_kind": "official-gazette-republication",
+        "version": "现行有效（2025修订）"
+      },
+      "promulgation_instrument": "中华人民共和国主席令第四十九号",
+      "article_count": 144,
+      "expected_count": 144,
+      "missing_numbers": [],
+      "source_url": "https://politics.people.com.cn/n1/2025/0627/c1001-40510468.html",
+      "snapshot": "docs/research/evidence/people_治安管理处罚法2025.html",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "7c5209dc1314c45263964f5ae8f721d70aedca7e3581e9902f24e538ca23ed01",
+      "output_sha256": "7aac68bd4e221a7753691c897af60b68f149481357e1776f56ef60913a82ad7a"
     },
     {
       "law_id": "pipl-2021",

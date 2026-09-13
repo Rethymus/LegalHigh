@@ -1,0 +1,27 @@
+{
+  "law_id": "psm-2025",
+  "title": "中华人民共和国治安管理处罚法",
+  "schema_version": 1,
+  "note": "S2-T1 首部批量扩张法律（2026-09-13）：2025 修订版全文自人民网受权发布转载页入库；历史版本（1990 公布及 2006/2012 历次修订）待官方快照采集后按同一 schema 登记，未采集前不预填任何日期。",
+  "versions": [
+    {
+      "version_id": "2025-revision",
+      "label": "2025 修订",
+      "status": "现行有效（2025修订）",
+      "promulgation_date": "2025-06-27",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "promulgation_instrument": "中华人民共和国主席令第四十九号",
+      "effective_date": "2026-01-01",
+      "article_count": 144,
+      "current": true,
+      "evidence": {
+        "kind": "official-gazette-republication",
+        "grade": "强",
+        "url": "https://politics.people.com.cn/n1/2025/0627/c1001-40510468.html",
+        "accessed_at": "2026-09-13",
+        "snapshot": "docs/research/evidence/people_治安管理处罚法2025.html"
+      }
+    }
+  ],
+  "pending_note": "1990 年公布原版与 2006/2012 修订版全文未采集；未采集前不展示、不预填任何事实。"
+}

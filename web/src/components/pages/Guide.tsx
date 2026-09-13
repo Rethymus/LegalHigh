@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { PageHeader } from '../ui'
 import { Icon } from '../icons'
 import { audienceLabel, loadAudiencePreference } from '../../lib/audience'
+import { useLaws } from '../../data/model'
 
 /* 使用指南（粉饰清单①，v5-S2 2026-09-13）：纯静态内容页，三类视图开放。
    文案与 README/备案口径一致：不是律师、不提供法律意见、高风险产出平台外独立复核。
@@ -12,7 +13,7 @@ const WORKFLOWS = [
   {
     img: '/guide/gif-search.gif',
     title: '① 法条检索 → 引用卡片',
-    desc: '跨 14 部受控语料的确定性检索，每条结果带来源、时效与证据等级；摘要只显示程序统计，不调用生成模型。',
+    desc: 'cross-corpus-deterministic',  // 实时派生语料规模，渲染时替换（派生数字禁硬编码）
     to: '/search',
     linkLabel: '进入法律检索',
   },
@@ -42,6 +43,7 @@ const WORKFLOWS = [
 
 export default function Guide() {
   const copy = useCopy()
+  const lawCount = useLaws().data?.laws.length ?? 0
   const mode = loadAudiencePreference()?.mode
 
   return (
@@ -77,7 +79,7 @@ export default function Guide() {
             )}
           </div>
           <div style={{ padding: '0 16px 16px' }}>
-            <div className="tiny mb-8" style={{ maxWidth: 880 }}>{w.desc}</div>
+            <div className="tiny mb-8" style={{ maxWidth: 880 }}>{w.desc === 'cross-corpus-deterministic' ? `跨全部受控语料（当前 ${lawCount} 部，数据洞察页实时派生）的确定性检索，每条结果带来源、时效与证据等级；摘要只显示程序统计，不调用生成模型。` : w.desc}</div>
             <img src={w.img} alt={w.title} loading="lazy" style={{ width: '100%', maxWidth: 880, borderRadius: 'var(--r-c, 10px)', border: '1px solid var(--mat-hairline)' }} />
           </div>
         </section>
