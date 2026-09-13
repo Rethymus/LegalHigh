@@ -1,0 +1,26 @@
+{
+  "law_id": "dsl-2021",
+  "title": "中华人民共和国数据安全法",
+  "schema_version": 1,
+  "note": "S2-T1 第六部批量扩张法律（2026-09-13）：全文自国家网信办官网受权发布页入库（utf-8，等级【强】）。本法暂无修正记录（2021-06-10 通过、2021-09-01 施行），注册表单一版本。",
+  "versions": [
+    {
+      "version_id": "2021-enacted",
+      "label": "2021 通过",
+      "status": "现行有效",
+      "promulgation_date": "2021-06-10",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2021-09-01",
+      "article_count": 55,
+      "current": true,
+      "evidence": {
+        "kind": "official-gazette-republication",
+        "grade": "强",
+        "url": "https://www.cac.gov.cn/2021-06/11/c_1624994566919140.htm",
+        "accessed_at": "2026-09-13",
+        "snapshot": "docs/research/evidence/cac_数据安全法2021.html"
+      }
+    }
+  ],
+  "pending_note": "本法通过后暂无修正记录；后续修正待官方快照采集后按同一 schema 追加。"
+}

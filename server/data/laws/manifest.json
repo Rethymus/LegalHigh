@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-13T23:57:23.821022",
+  "built_at": "2026-09-14T00:08:28.695581",
   "fetch_date": "2026-09-08",
   "laws": [
     {
@@ -239,6 +239,29 @@
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "00bd290a9d14e7354b7131d30255daae26ce7ff73588483cbeb2030f56878277",
       "output_sha256": "89ef49818a0b410a8a7f93315b07ddd3f45ff649c39f7f532f5c2679f1ee5973"
+    },
+    {
+      "law_id": "dsl-2021",
+      "title": "中华人民共和国数据安全法",
+      "status": "现行有效",
+      "effective_date": "2021-09-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国数据安全法",
+        "url": "https://www.cac.gov.cn/2021-06/11/c_1624994566919140.htm",
+        "accessed_at": "2026-08-29",
+        "grade": "强",
+        "source_kind": "official-gazette-republication",
+        "version": "现行有效"
+      },
+      "promulgation_instrument": null,
+      "article_count": 55,
+      "expected_count": 55,
+      "missing_numbers": [],
+      "source_url": "https://www.cac.gov.cn/2021-06/11/c_1624994566919140.htm",
+      "snapshot": "docs/research/evidence/cac_数据安全法2021.html",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "8eb14247c4b7fae5f499e5a5bcb5b7d58ad91c9585d819c42d5a3b5bab133f4b",
+      "output_sha256": "98105a62aa594b27b43feede892d648a9d899b1d4052d7ea6edf3cf2611174a7"
     },
     {
       "law_id": "csl-2025",
