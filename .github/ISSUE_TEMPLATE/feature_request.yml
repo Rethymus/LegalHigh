@@ -1,0 +1,28 @@
+name: 功能建议 / Feature request
+description: 提出能力或文档改进建议
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        本项目按「宁缺毋假」原则设计：每条对外输出必须可溯源，假交互、虚构数据不会被接受。
+        建议请说明真实使用场景，而不是直接给实现方案。
+  - type: textarea
+    id: scenario
+    attributes:
+      title: 使用场景 / Scenario
+      description: 你想完成什么？当前哪一步受限？
+    validations:
+      required: true
+  - type: textarea
+    id: boundary
+    attributes:
+      title: 边界自查 / Boundary check
+      description: 该功能是否涉及法律结论生成、个人信息、自动爬取或以律师名义执业？这些方向不会被纳入。
+  - type: checkboxes
+    id: attest
+    attributes:
+      label: 确认 / Attestation
+      options:
+        - label: 我已阅读 README 的能力边界与合规声明
+          required: true

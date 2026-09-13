@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 安全漏洞（请勿公开披露）
+    url: https://github.com/Rethymus/LegalHigh/security/advisories/new
+    about: 请按 SECURITY.md 走私密披露渠道，不要在公开 Issue 放漏洞细节、密钥或案件材料。
+  - name: 使用问题 / 法律咨询
+    url: https://github.com/Rethymus/LegalHigh/blob/main/README.md
+    about: 本仓库不提供法律咨询；法律问题请咨询当地法律援助（全国热线 12348）或执业律师。

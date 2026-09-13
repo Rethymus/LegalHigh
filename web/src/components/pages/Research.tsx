@@ -273,12 +273,21 @@ function ConclusionDraft({ rid, question, cards, references }: {
     }
     evidence: { professional_sources: number; official_interpretations: number; evidence_coverage: { score: number }; calibrated_accuracy: { value: number | null; reason: string } }[]
     blocked: boolean; model: string
+    privacy_notice?: { possible_personal_info: number; kinds: string[]; notice: string }
   } | null>(null)
   const [aiBusy, setAiBusy] = useState(false)
   const [aiErr, setAiErr] = useState<string | null>(null)
   const [aiKey, setAiKey] = useState('')
   const [sendAuthorized, setSendAuthorized] = useState(false)
   const profile = loadAiProfile()
+  const outboundPrivacy = (() => {
+    const text = [question, ...references.map((r) => r.text)].join('\n')
+    const kinds: string[] = []
+    if (/(?<!\d)1[3-9]\d{9}(?!\d)/.test(text)) kinds.push('手机号')
+    if (/(?<!\d)[1-9]\d{5}(?:19|20)\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])\d{3}[\dXx](?!\d)/.test(text)) kinds.push('身份证件号')
+    if (/(?<![A-Za-z0-9])[EeGg]\d{8}(?![A-Za-z0-9])/.test(text)) kinds.push('护照号')
+    return kinds
+  })()
 
   const genAiDraft = async () => {
     if (!profile) { setAiErr('未配置模型插件：请到 设置 → AI 配置模型档案（自备密钥）。'); return }
@@ -295,7 +304,7 @@ function ConclusionDraft({ rid, question, cards, references }: {
           { role: 'user', content: `研究问题：${question}\n\n可用条文依据（仅限这些）：\n${ctx}\n\n请在 250 字内做来源约束的语言整理，不要形成案件结论。` },
         ],
       })
-      setAiDraft({ text: r.text, gates: r.gates, evidence: r.evidence_context, blocked: r.blocked, model: `${r.provider_name}/${r.model}` })
+      setAiDraft({ text: r.text, gates: r.gates, evidence: r.evidence_context, blocked: r.blocked, model: `${r.provider_name}/${r.model}`, privacy_notice: (r as { privacy_notice?: { possible_personal_info: number; kinds: string[]; notice: string } }).privacy_notice })
     } catch (e) {
       setAiErr(e instanceof ApiError ? e.message : String(e))
     } finally { setAiBusy(false); setAiKey('') }
@@ -313,6 +322,12 @@ function ConclusionDraft({ rid, question, cards, references }: {
         {profile && (
           <div className="card mt-8" style={{ padding: 10 }}>
             <label className="fld"><span className="fld-l">单次 API Key（可留空使用服务端环境变量）</span><input className="inp" type="password" autoComplete="off" value={aiKey} onChange={(e) => setAiKey(e.target.value)} placeholder="仅保存在本组件内存，请求结束后清空" /></label>
+            {outboundPrivacy.length > 0 && (
+              <div className="banner banner-warn mt-8" style={{ padding: '8px 12px' }}>
+                <Icon name="alert" size={13} />
+                <span className="banner-tx">出域提醒：研究问题或条文引用中疑似含{'「' + outboundPrivacy.join('、') + '」'}。点选生成会把内容发送到你配置的远程模型端点，建议先删除或替换为占位符；是否发送由你决定。</span>
+              </div>
+            )}
             <label className="row tiny mt-8" style={{ alignItems: 'flex-start', gap: 8 }}>
               <input type="checkbox" checked={sendAuthorized} onChange={(e) => setSendAuthorized(e.target.checked)} />
               <span>我确认有权把本页研究问题与所列法条发送到已选择的模型端点，并已了解远程端点的保留、训练、跨境与删除规则不由 LegalHigh 控制。</span>
@@ -326,6 +341,11 @@ function ConclusionDraft({ rid, question, cards, references }: {
           <span className="tiny">生成须经过：红线拦截 / 引用集合核验 / 逐句词面证据门 / 审计留痕。</span>
         </div>
         {aiErr && <div className="banner banner-warn mt-8" style={{ padding: '8px 12px' }}><Icon name="alert" size={14} /><span className="banner-tx">{aiErr}</span></div>}
+        {aiDraft?.privacy_notice && aiDraft.privacy_notice.possible_personal_info > 0 && (
+          <div className="banner banner-warn mt-8" style={{ padding: '8px 12px' }}><Icon name="alert" size={14} />
+            <span className="banner-tx">服务端出域扫描：{aiDraft.privacy_notice.notice}</span>
+          </div>
+        )}
         {aiDraft && (
           <div className="mt-12">
             <div className="ai-block">

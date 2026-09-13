@@ -704,6 +704,8 @@ def ai_test(body: AiChatBody, admin: AdminPrincipal = Depends(require_admin)):
             api_key=body.api_key, base_url_override=body.base_url_override)
     except ValueError as e:
         raise HTTPException(422, str(e))
+    except ai_governor.QuotaExceeded as e:
+        raise HTTPException(429, str(e))
     except PermissionError as e:
         raise HTTPException(409, str(e))
 
@@ -717,6 +719,8 @@ def ai_chat(body: AiChatBody, admin: AdminPrincipal = Depends(require_admin)):
             allowed_refs=body.allowed_refs, temperature=body.temperature, actor=admin.name)
     except ValueError as e:
         raise HTTPException(422, str(e))
+    except ai_governor.QuotaExceeded as e:
+        raise HTTPException(429, str(e))
     except PermissionError as e:
         raise HTTPException(409, str(e))
     except RuntimeError as e:

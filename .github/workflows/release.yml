@@ -1,0 +1,71 @@
+# Release 工作流（S1-T2）：tag 推送触发，产物一律进「草稿 Release」，
+# 由维护者按 docs/compliance/发布检查清单-RC转正式.md 人工审核后发布——
+# 不自动 publish（转正三条件中的「零回归窗口」判断是人 gate，不交给 CI）。
+# 桌面安装器不在本工作流范围（签名未决，决策 16）；本工作流只产出
+# 源码 ZIP / 静态站点 ZIP / SHA-256 / SBOM 四类附件。
+name: release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+
+      - name: Install server deps（含 SBOM 脚本运行所需）
+        run: |
+          cd server
+          python -m venv .venv
+          .venv/bin/pip install --require-hashes -r requirements-dev.lock
+
+      - name: 静态站点构建（Pages 同口径，含数据纪律与对比度门）
+        env:
+          VITE_STATIC_PREVIEW: '1'
+        working-directory: web
+        run: |
+          npm ci
+          npx tsc -b
+          node scripts/qa_gates.mjs
+          node scripts/qa_contrast.mjs --strict
+          npx vite build --outDir dist-pages --emptyOutDir
+          cp dist-pages/index.html dist-pages/404.html
+
+      - name: SBOM（server 锁文件 + web/desktop npm 树）
+        run: |
+          cd server
+          .venv/bin/python scripts/make_sbom.py --out ../artifacts
+
+      - name: 打包与校验和
+        run: |
+          TAG="${GITHUB_REF#refs/tags/}"
+          mkdir -p artifacts
+          git archive --format=zip --prefix="LegalHigh-${TAG}/" -o "artifacts/LegalHigh-source-${TAG}.zip" "$TAG"
+          (cd web && zip -qr ../artifacts/LegalHigh-static-site-"${TAG}".zip dist-pages)
+          cd artifacts
+          sha256sum *.zip *.cdx.json > "LegalHigh-SHA256SUMS-${TAG}.txt"
+
+      - name: 创建草稿 Release 并附产物
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="${GITHUB_REF#refs/tags/}"
+          gh release create "$TAG" --draft --verify-tag --generate-notes \
+            --title "$TAG" \
+            artifacts/*
+          echo "草稿 Release 已创建：请人工核对 docs/compliance/发布检查清单-RC转正式.md 后发布。"

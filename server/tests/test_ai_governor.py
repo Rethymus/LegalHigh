@@ -334,3 +334,82 @@ def test_custom_endpoint_with_base_url_runs_gates(tmp_db, monkeypatch):
         api_key="ut-stub", base_url_override="https://gw.example/v1",
         allowed_refs=[{"law_title": "中华人民共和国民法典", "article_no": 585}], actor="tester")
     assert out["blocked"] is False and out["gates"]["citations"]["pass"] is True
+
+
+# ---------- OWASP LLM10：每主体每日配额（内存计数；超限 QuotaExceeded → 429） ----------
+
+@pytest.fixture()
+def _clean_quota():
+    ai_governor._quota_state.clear()
+    yield
+    ai_governor._quota_state.clear()
+
+
+def test_quota_blocks_after_limit(monkeypatch, _clean_quota):
+    monkeypatch.setenv(ai_governor.QUOTA_ENV, "2")
+    assert ai_governor.check_quota("qa-actor")["used"] == 1
+    assert ai_governor.check_quota("qa-actor")["used"] == 2
+    with pytest.raises(ai_governor.QuotaExceeded):
+        ai_governor.check_quota("qa-actor")
+
+
+def test_quota_zero_means_unlimited(monkeypatch, _clean_quota):
+    monkeypatch.setenv(ai_governor.QUOTA_ENV, "0")
+    for _ in range(5):
+        assert ai_governor.check_quota("qa-actor")["limit"] == 0
+
+
+def test_quota_invalid_env_falls_back_to_default(monkeypatch, _clean_quota):
+    monkeypatch.setenv(ai_governor.QUOTA_ENV, "not-a-number")
+    assert ai_governor.quota_status("qa-actor")["limit"] == ai_governor._DEFAULT_DAILY_QUOTA
+
+
+def test_quota_is_subclass_of_permission_error():
+    # 端点侧 QuotaExceeded 必须先于 PermissionError 捕获（429 vs 409）。
+    assert issubclass(ai_governor.QuotaExceeded, PermissionError)
+
+
+# ---------- OWASP LLM02：出域个人信息扫描（只报数量与类型，绝不回显命中值） ----------
+
+def test_privacy_scan_detects_phone_and_id_and_never_echoes():
+    phone = "139" + "12345678"
+    ident = "11010119900307891X"
+    text = f"我叫张三，手机 {phone}，身份证 {ident}，想咨询。"
+    out = ai_governor.scan_outbound_privacy(text)
+    assert out["possible_personal_info"] >= 2
+    assert "手机号" in out["kinds"] and "身份证件号" in out["kinds"]
+    assert out["notice"]
+    # 绝不回显：响应中不得出现具体号码（否则扫描器本身成了泄露面）
+    assert phone not in out["notice"] and ident not in out["notice"]
+
+
+def test_privacy_scan_clean_text_has_no_hits():
+    out = ai_governor.scan_outbound_privacy("试用期最长不得超过六个月，依据劳动合同法。")
+    assert out["possible_personal_info"] == 0 and out["kinds"] == [] and out["notice"] == ""
+
+
+def test_privacy_scan_respects_digit_boundaries():
+    # 12 位数字不是手机号（边界断言防误报）
+    assert ai_governor.scan_outbound_privacy("单号 139123456789")["possible_personal_info"] == 0
+
+
+def test_chat_response_carries_quota_and_privacy_fields(monkeypatch):
+    """chat 返回体包含 quota/privacy_notice（OWASP LLM02/LLM10 的对外可观测面）。"""
+    class FakeResp:
+        def __init__(self, content):
+            self.choices = [type("C", (), {"message": type("M", (), {"content": content})()})()]
+            self.usage = None
+    class FakeClient:
+        def __init__(self, resp): self.chat = type("C", (), {"completions": type("K", (), {"create": lambda self, **kw: resp})()})()
+    msg = "依据《民法典》第五百八十五条，约定的违约金过分高于造成的损失的，可以请求适当减少。"
+    monkeypatch.setattr(ai_governor, "_client", lambda *a, **k: FakeClient(FakeResp(msg)))
+    ai_governor._quota_state.clear()
+    try:
+        out = ai_governor.chat(
+            "deepseek", "any-model", [{"role": "user", "content": "咨询违约金，手机13912345678"}],
+            api_key="ut-stub",
+            allowed_refs=[{"law_title": "中华人民共和国民法典", "article_no": 585}], actor="quota-observer")
+    finally:
+        ai_governor._quota_state.clear()
+    assert out["quota"]["used"] >= 1
+    assert out["privacy_notice"]["possible_personal_info"] >= 1

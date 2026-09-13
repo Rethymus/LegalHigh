@@ -21,6 +21,7 @@ import ipaddress
 import os
 import re
 import socket
+from datetime import date
 from urllib.parse import urlsplit
 from pathlib import Path
 
@@ -42,6 +43,81 @@ REDLINE_RE = re.compile(
 
 # gate2 引用提取：《法名》第X条
 CITE_RE = re.compile(r"《([^》]{2,30})》\s*第([一二三四五六七八九十百千零〇\d]+)条")
+
+
+class QuotaExceeded(PermissionError):
+    """每主体每日调用配额用尽（OWASP LLM10 无界消费缓解；端点映射 429）。"""
+
+
+# OWASP LLM02 敏感信息泄露缓解：发送远程模型前检测明显个人信息（手机号/
+# 身份证号/护照号形）。只返回数量与类型，绝不回显命中值——回显等于把敏感
+# 数据写进响应与日志。确定性词面规则，不是身份识别证明；阻断与否由使用者决定。
+_PHONE_RE = re.compile(r"(?<!\d)1[3-9]\d{9}(?!\d)")
+_ID_CARD_RE = re.compile(
+    r"(?<!\d)[1-9]\d{5}(?:19|20)\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])\d{3}[\dXx](?!\d)"
+)
+_PASSPORT_RE = re.compile(r"(?<![A-Za-z0-9])[EeGg]\d{8}(?![A-Za-z0-9])")
+
+
+def scan_outbound_privacy(text: str) -> dict:
+    payload = text or ""
+    kinds = []
+    if _PHONE_RE.search(payload):
+        kinds.append("手机号")
+    if _ID_CARD_RE.search(payload):
+        kinds.append("身份证件号")
+    if _PASSPORT_RE.search(payload):
+        kinds.append("护照号")
+    hits = len(_PHONE_RE.findall(payload)) + len(_ID_CARD_RE.findall(payload)) + len(_PASSPORT_RE.findall(payload))
+    return {
+        "possible_personal_info": hits,
+        "kinds": kinds,
+        "notice": (
+            "输入中检测到疑似" + "、".join(kinds) + "等个人信息。发送到远程模型会把内容传出本机；"
+            "建议先删除或替换为占位符后再生成。"
+            if hits else ""
+        ),
+    }
+
+
+# OWASP LLM10：每主体每日调用配额。内存计数，重启清零；只为失控成本兜底，
+# 不是计费系统。LH_AI_DAILY_LIMIT=0 表示不限；默认 200。
+QUOTA_ENV = "LH_AI_DAILY_LIMIT"
+_DEFAULT_DAILY_QUOTA = 200
+_quota_state: dict[str, tuple[str, int]] = {}
+
+
+def _quota_limit() -> int:
+    raw = (os.environ.get(QUOTA_ENV) or "").strip()
+    try:
+        return int(raw) if raw else _DEFAULT_DAILY_QUOTA
+    except ValueError:
+        return _DEFAULT_DAILY_QUOTA
+
+
+def quota_status(actor: str) -> dict:
+    limit = _quota_limit()
+    today = date.today().isoformat()
+    day, used = _quota_state.get(actor or "anonymous", (today, 0))
+    if day != today:
+        used = 0
+    return {"limit": limit, "used": used, "remaining": max(0, limit - used) if limit > 0 else None}
+
+
+def check_quota(actor: str) -> dict:
+    limit = _quota_limit()
+    if limit <= 0:
+        return {"limit": 0, "used": 0, "remaining": None}
+    today = date.today().isoformat()
+    day, used = _quota_state.get(actor or "anonymous", (today, 0))
+    if day != today:
+        day, used = today, 0
+    if used >= limit:
+        raise QuotaExceeded(
+            f"本机 AI 调用已达今日配额（{limit} 次）。如确需调整，请由部署方设置环境变量 {QUOTA_ENV}。"
+        )
+    _quota_state[actor or "anonymous"] = (day, used + 1)
+    return {"limit": limit, "used": used + 1, "remaining": max(0, limit - used - 1)}
 
 
 def load_catalog() -> list[dict]:
@@ -462,6 +538,8 @@ def chat(provider_id: str, model: str, messages: list[dict], *, api_key: str | N
         if citation is None:
             raise ValueError(f"AI 引用无法由服务端核验：{error}")
         canonical_refs.append(citation)
+    quota = check_quota(actor)
+    privacy = scan_outbound_privacy(" ".join(str(m.get("content") or "") for m in messages))
     server_context, evidence_contexts = commentaries.prompt_context(canonical_refs)
     governed_messages = [{"role": "system", "content": server_context}]
     for message in messages:
@@ -507,6 +585,8 @@ def chat(provider_id: str, model: str, messages: list[dict], *, api_key: str | N
         "gates": gates,
         "blocked": blocked,
         "usage": usage,
+        "quota": quota,
+        "privacy_notice": privacy,
         "evidence_context": [{
             "law_id": ctx["law_id"], "article_no": ctx["article_no"],
             "professional_sources": len(ctx["professional_commentaries"]),
@@ -532,6 +612,7 @@ def test_connection(provider_id: str, model: str, *, api_key: str | None = None,
     key = _resolve_key(provider, api_key)
     if not key:
         raise PermissionError(f"未配置密钥（环境变量 {provider.get('env_key')} 或请求提供）。")
+    check_quota(actor)
     client = _client(provider, endpoint, key)
     try:
         resp = client.chat.completions.create(

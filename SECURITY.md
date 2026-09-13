@@ -4,6 +4,8 @@
 
 请不要在公开 Issue 中披露未修复漏洞、利用代码、真实合同、案件材料、个人信息、API 密钥或管理令牌。请通过 GitHub 仓库所有者提供的私密安全报告渠道联系维护者；如果仓库尚未启用该渠道，请只提交不含漏洞细节的联络请求，等待维护者提供私密方式。
 
+响应时限（尽力承诺，非服务等级协议）：3 个工作日内确认收到；7 个工作日内给出初步评估（接受/拒绝/需更多信息）；修复或缓解发布后致谢（可匿名）。当前为预发布原型，尚无已发布安装包的补丁通道——修复以 main 分支提交与后续 Release 形式发布。
+
 报告应尽量包含：受影响版本或提交、前置条件、最小复现步骤、实际与预期结果、影响判断，以及不含真实个人数据的证据。请勿访问不属于你的数据、扩大权限、执行拒绝服务、持久化、外传材料或测试第三方系统。
 
 Do not disclose an unpatched vulnerability, exploit, real legal document, personal data, API key, or admin token in a public issue. Use the repository owner's private security-reporting channel. If none is enabled, open a detail-free contact request and wait for a private channel.
