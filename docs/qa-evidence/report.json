@@ -1,5 +1,47 @@
 [
   {
+    "name": "00-first-use-audience",
+    "path": "/",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "finalUrl": "http://localhost:5173/",
+    "title": "LegalHigh · 法律智能知识库"
+  },
+  {
+    "name": "00b-first-use-select-public",
+    "path": "/",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "step1": "selected-public",
+    "step2": "preference-persisted",
+    "finalUrl": "http://localhost:5173/",
+    "title": "LegalHigh · 法律智能知识库"
+  },
+  {
+    "name": "00c-corrupt-audience-recovers",
+    "path": "/",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "finalUrl": "http://localhost:5173/",
+    "title": "LegalHigh · 法律智能知识库"
+  },
+  {
+    "name": "00d-first-use-audience-narrow",
+    "path": "/",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "finalUrl": "http://localhost:5173/",
+    "title": "LegalHigh · 法律智能知识库"
+  },
+  {
     "name": "01-dashboard",
     "path": "/",
     "consoleErrors": [],
@@ -42,7 +84,21 @@
     "step4": "clicked",
     "step5": "clicked",
     "step6": "clicked",
+    "step7": "clicked",
+    "step8": "public-needs-ok",
     "finalUrl": "http://localhost:5173/needs",
+    "title": "LegalHigh · 法律智能知识库"
+  },
+  {
+    "name": "04b-case-analysis-run",
+    "path": "/case-analysis",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "step1": "ok",
+    "step2": "clicked",
+    "finalUrl": "http://localhost:5173/case-analysis",
     "title": "LegalHigh · 法律智能知识库"
   },
   {
@@ -73,6 +129,16 @@
     "pageErrors": [],
     "failedRequests": [],
     "finalUrl": "http://localhost:5173/laws/civl-2020?art=25",
+    "title": "LegalHigh · 法律智能知识库"
+  },
+  {
+    "name": "07b-law-detail-professional-evidence",
+    "path": "/laws/pipl-2021?art=13",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "finalUrl": "http://localhost:5173/laws/pipl-2021?art=13",
     "title": "LegalHigh · 法律智能知识库"
   },
   {
@@ -127,14 +193,12 @@
   },
   {
     "name": "13-research-run",
-    "path": "/research",
+    "path": "/research?q=%E7%BD%91%E8%B4%AD%E5%88%B0%E5%81%87%E8%B4%A7%E5%8F%AF%E4%BB%A5%E6%A0%B8%E5%AF%B9%E5%93%AA%E4%BA%9B%E7%8E%B0%E8%A1%8C%E6%B3%95%E6%9D%A1",
     "consoleErrors": [],
     "consoleWarnings": [],
     "pageErrors": [],
     "failedRequests": [],
-    "step1": "ok",
-    "step2": "clicked:开始研究",
-    "finalUrl": "http://localhost:5173/research",
+    "finalUrl": "http://localhost:5173/research?q=%E7%BD%91%E8%B4%AD%E5%88%B0%E5%81%87%E8%B4%A7%E5%8F%AF%E4%BB%A5%E6%A0%B8%E5%AF%B9%E5%93%AA%E4%BA%9B%E7%8E%B0%E8%A1%8C%E6%B3%95%E6%9D%A1",
     "title": "LegalHigh · 法律智能知识库"
   },
   {
@@ -258,16 +322,6 @@
     "title": "LegalHigh · 法律智能知识库"
   },
   {
-    "name": "27-design-system",
-    "path": "/design-system",
-    "consoleErrors": [],
-    "consoleWarnings": [],
-    "pageErrors": [],
-    "failedRequests": [],
-    "finalUrl": "http://localhost:5173/design-system",
-    "title": "LegalHigh · 法律智能知识库"
-  },
-  {
     "name": "28-narrow-needs",
     "path": "/needs",
     "consoleErrors": [],
@@ -366,6 +420,94 @@
     "pageErrors": [],
     "failedRequests": [],
     "finalUrl": "http://localhost:5173/audit",
+    "title": "LegalHigh · 法律智能知识库"
+  },
+  {
+    "name": "38-public-dashboard",
+    "path": "/",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "step1": "public-nav-ok",
+    "finalUrl": "http://localhost:5173/",
+    "title": "LegalHigh · 法律智能知识库"
+  },
+  {
+    "name": "39-public-draft-guard",
+    "path": "/draft",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "finalUrl": "http://localhost:5173/draft",
+    "title": "LegalHigh · 法律智能知识库"
+  },
+  {
+    "name": "40-student-dashboard",
+    "path": "/",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "step1": "student-nav-ok",
+    "finalUrl": "http://localhost:5173/",
+    "title": "LegalHigh · 法律智能知识库"
+  },
+  {
+    "name": "40b-public-settings",
+    "path": "/settings",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "step1": "public-settings-ok",
+    "finalUrl": "http://localhost:5173/settings",
+    "title": "LegalHigh · 法律智能知识库"
+  },
+  {
+    "name": "40c-public-law-detail",
+    "path": "/laws/civl-2020?art=25",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "step1": "public-law-ok",
+    "finalUrl": "http://localhost:5173/laws/civl-2020?art=25",
+    "title": "LegalHigh · 法律智能知识库"
+  },
+  {
+    "name": "40d-public-case-detail",
+    "path": "/cases/guidance-24",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "step1": "public-case-ok",
+    "finalUrl": "http://localhost:5173/cases/guidance-24",
+    "title": "LegalHigh · 法律智能知识库"
+  },
+  {
+    "name": "40e-public-collections",
+    "path": "/collections",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "step1": "public-collections-ok",
+    "finalUrl": "http://localhost:5173/collections",
+    "title": "LegalHigh · 法律智能知识库"
+  },
+  {
+    "name": "41-settings-switch-professional",
+    "path": "/settings",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "step1": "changed-professional",
+    "step2": "switch-nav-ok",
+    "finalUrl": "http://localhost:5173/settings",
     "title": "LegalHigh · 法律智能知识库"
   }
 ]

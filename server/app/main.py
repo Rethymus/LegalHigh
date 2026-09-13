@@ -803,10 +803,42 @@ def evals():
             "hit": hit, "rank": rank,
         })
     n = len(gold["cases"])
+
+    # 评测 2.0（S2-T2，全部确定性、随金标实时复算）：
+    # ① 拒答正确率——固定乱码探针集必须全部低于拒答阈值（与 qa.ask 同一 6.0 分界），
+    #    即「语料外问题不得输出法条卡片」；②引用实体完整率——金标检索命中引用卡
+    #    必须携带 status/effective_date/source_url/label 四要素（引用不变量）。
+    adversarial_probes = [
+        "zzqq vvveoo xkcdq",
+        "锟斤拷烫烫烫",
+        "qwop askdjh 12345!!",
+        "zxcvbnm qqq wwww",
+        "alkdjf oiwere sldkjj",
+    ]
+    abstain_correct = 0
+    for probe in adversarial_probes:
+        res = corpus.search(probe, top_k=5)
+        if all(float(h.get("score", 0)) < 6.0 for h in res):
+            abstain_correct += 1
+
+    entity_total = entity_ok = 0
+    entity_fields = ("law_status", "effective_date", "source_url", "label")
+    for g in gold["cases"]:
+        for r in corpus.search(g["question"], top_k=5):
+            entity_total += 1
+            if all(r.get(f) for f in entity_fields):
+                entity_ok += 1
+
     return {
         "metric_note": "条文级口径（以条为检索单元）；金标集由人工依据语料标注，评测实时可复现。",
         "case_count": n,
         "hit_at_5": round(hits / n, 4),
+        "abstention_probes": len(adversarial_probes),
+        "abstention_correct_rate": round(abstain_correct / len(adversarial_probes), 4),
+        "abstention_note": "语料外乱码探针全部低于拒答阈值（score<6.0）的比例；1.0=语料外问题一律不输出",
+        "citation_entity_total": entity_total,
+        "citation_entity_completeness": round(entity_ok / entity_total, 4) if entity_total else 1.0,
+        "citation_entity_note": "金标命中引用卡的 law_status/effective_date/source_url/label 四要素完整率（引用不变量）",
         "mrr": round(rr_sum / n, 4),
         "precision_at_5": round(prec_sum / n, 4),
         "cases": items,

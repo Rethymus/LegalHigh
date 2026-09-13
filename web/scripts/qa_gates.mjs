@@ -5,6 +5,7 @@
 // 3) 旧品牌与静态人物身份不得回流产品源码。
 // 用法：node scripts/qa_gates.mjs（任何一项失败退出码 1，供 run_qa.cmd / CI 使用）
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs'
+import { gzipSync } from 'node:zlib'
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -122,6 +123,39 @@ if (saturationBad.length) gate4Fails.push(`材质饱和度未走 Token：\n  ` +
 if (hoverMotionBad.length) gate4Fails.push(`hover 使用位移（红线：悬停只改背景/描边/阴影）：\n  ` + hoverMotionBad.join('\n  '))
 if (gate4Fails.length) fail.push(`[动效与材质纪律] ${gate4Fails.join('\n')}`)
 else console.log('✓ gate5 动效与材质纪律：时长/焦点环/blur 全部走 Token')
+
+// ---- gate 6：性能预算（计划 v5 S2-T6，2026-09-13 标定）----
+// 首屏 JS（index-*.js gzip）与全部 JS/CSS gzip、语料 laws.json 体积设硬预算；
+// 超预算 = 构建产物失控，必须先讨论（语料有意的批量扩张走预算修订，而不是放宽静默）。
+// 基线：入口 86KB gz / 全 JS ~138KB gz / CSS 13KB gz / laws.json 948KB。
+const distDir = resolve(root, 'web/dist')
+if (!existsSync(distDir)) {
+  fail.push('[性能预算] web/dist 不存在：先 npm run build 再跑本门')
+} else {
+  const jsFiles = [], cssFiles = []
+  for (const name of readdirSync(resolve(distDir, 'assets'))) {
+    const f = resolve(distDir, 'assets', name)
+    if (name.endsWith('.js')) jsFiles.push({ name, buf: readFileSync(f) })
+    if (name.endsWith('.css')) cssFiles.push({ name, buf: readFileSync(f) })
+  }
+  const gz = (b) => gzipSync(b).length
+  const entryJs = jsFiles.filter((f) => f.name.startsWith('index-'))
+  const entryGz = entryJs.reduce((s, f) => s + gz(f.buf), 0)
+  const allJsGz = jsFiles.reduce((s, f) => s + gz(f.buf), 0)
+  const allCssGz = cssFiles.reduce((s, f) => s + gz(f.buf), 0)
+  const lawsPath = resolve(distDir, 'data/laws.json')
+  const lawsBytes = existsSync(lawsPath) ? statSync(lawsPath).size : 0
+  const BUDGET = { entryJsGz: 120 * 1024, allJsGz: 200 * 1024, allCssGz: 25 * 1024, lawsJson: 1.5 * 1024 * 1024 }
+  const over = []
+  if (entryGz > BUDGET.entryJsGz) over.push(`入口 JS gzip ${(entryGz / 1024).toFixed(0)}KB > 预算 120KB`)
+  if (allJsGz > BUDGET.allJsGz) over.push(`全部 JS gzip ${(allJsGz / 1024).toFixed(0)}KB > 预算 200KB`)
+  if (allCssGz > BUDGET.allCssGz) over.push(`全部 CSS gzip ${(allCssGz / 1024).toFixed(0)}KB > 预算 25KB`)
+  if (!lawsBytes) over.push('dist/data/laws.json 缺失（语料导出链路断裂）')
+  else if (lawsBytes > BUDGET.lawsJson) over.push(`laws.json ${(lawsBytes / 1048576).toFixed(2)}MB > 预算 1.5MB`)
+  checks++
+  if (over.length) fail.push(`[性能预算] ${over.join('；')}`)
+  else console.log(`OK gate6 性能预算：入口 JS ${(entryGz / 1024).toFixed(0)}KB gz / 全 JS ${(allJsGz / 1024).toFixed(0)}KB gz / CSS ${(allCssGz / 1024).toFixed(0)}KB gz / laws.json ${(lawsBytes / 1024).toFixed(0)}KB`)
+}
 
 if (fail.length) {
   console.error(`\nqa_gates：${fail.length}/${checks} 项失败`)

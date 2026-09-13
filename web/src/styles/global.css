@@ -433,6 +433,8 @@ svg { display: block; flex: none; }
 .content {
   flex: 1; min-height: 0; overflow-y: auto; overflow-x: hidden;
   overscroll-behavior: contain;  /* 滚动收链：面板/台面滚到底不再漏给外层（MDN overscroll-behavior） */
+  scroll-padding-top: 132px;  /* WCAG 2.4.11（S2-T3）：滚动口顶部被 -66px 负 margin 拉入铬层之下（tb.bottom≈66），
+     scrollIntoView 落点需补「下潜区 66 + 期望间隙 66」=132px，焦点元素才真正停在悬浮层下方 */
   background: var(--desk);
   color: var(--tx);
   -webkit-backdrop-filter: blur(var(--blur-desk)) saturate(var(--mat-sat-desk));
@@ -1063,6 +1065,10 @@ del.diff-del { text-decoration: line-through; background: var(--danger-soft); bo
 .mb-8 { margin-bottom: 8px; } .mb-12 { margin-bottom: 12px; } .mb-16 { margin-bottom: 16px; } .mb-20 { margin-bottom: 20px; }
 .muted { color: var(--tx-2); font-size: 12.5px; }
 .tiny { font-size: 11.5px; color: var(--tx-2); }  /* 2.64→5.07:1（D7）；tx-3 留给装饰性图形 */
+/* WCAG 2.5.8（S2-T3）：独立小链接的目标命中区 ≥24px（正文行内 span.tiny 不受影响） */
+a.tiny, a.mini-t, a.res-t { display: inline-block; min-inline-size: 24px; padding-block: 3.5px; }
+a.hero-hot { padding-block: 3px; }  /* WCAG 2.5.8：hero 次链接目标 ≥24px */
+a.mini-t { padding-block: 2.5px; }
 .bold { font-weight: 600; }
 .clamp2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 

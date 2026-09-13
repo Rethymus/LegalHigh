@@ -1,0 +1,52 @@
+[
+  {
+    "route": "dashboard",
+    "smallTargets": [],
+    "obscuredFocus": []
+  },
+  {
+    "route": "search-home",
+    "smallTargets": [],
+    "obscuredFocus": []
+  },
+  {
+    "route": "search-results",
+    "smallTargets": [],
+    "obscuredFocus": []
+  },
+  {
+    "route": "law-detail",
+    "smallTargets": [],
+    "obscuredFocus": []
+  },
+  {
+    "route": "needs",
+    "smallTargets": [],
+    "obscuredFocus": []
+  },
+  {
+    "route": "case-analysis",
+    "smallTargets": [],
+    "obscuredFocus": []
+  },
+  {
+    "route": "contract-review",
+    "smallTargets": [],
+    "obscuredFocus": []
+  },
+  {
+    "route": "learning",
+    "smallTargets": [],
+    "obscuredFocus": []
+  },
+  {
+    "route": "workspace",
+    "smallTargets": [],
+    "obscuredFocus": []
+  },
+  {
+    "route": "settings",
+    "smallTargets": [],
+    "obscuredFocus": []
+  }
+]

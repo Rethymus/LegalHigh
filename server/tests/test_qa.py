@@ -90,3 +90,19 @@ def test_premise_rules_expanded():
     c = LawCorpus()
     for rule in qa.PREMISE_RULES:
         assert c.get_article(rule["law_id"], rule["article_no"]), rule["id"]
+
+
+def test_evals20_deterministic_metrics():
+    """评测 2.0（S2-T2）：拒答正确率与引用实体完整率必须恒为 1.0——
+
+    任何向语料外问题输出法条卡、或引用卡缺 status/effective_date/source_url/label
+    四要素的回归，都在 CI 第一门直接失败。指标经 /api/evals 实时复算（决策 14 口径）。
+    """
+    from app.main import evals
+    data = evals()
+    assert data["abstention_probes"] >= 5
+    assert data["abstention_correct_rate"] == 1.0, (
+        f"语料外探针出现输出：rate={data['abstention_correct_rate']}")
+    assert data["citation_entity_total"] > 0
+    assert data["citation_entity_completeness"] == 1.0, (
+        f"引用卡四要素出现缺失：{data['citation_entity_completeness']}")
