@@ -132,6 +132,19 @@ export default function Quality() {
       </section>
 
       <section className="card mb-20">
+        <div className="card-h row-wrap"><b className="card-h-t">版本注册表（历史版本采集）</b><span className="spacer" /><span className="tiny">2026-09-14 记录</span></div>
+        <div className="card-b">
+          <div className="stats mb-12">
+            <div className="stat"><b>16</b><span>版本注册表</span></div>
+            <div className="stat"><b>52</b><span>已登记版本</span></div>
+            <div className="stat"><b>13</b><span>多版本时间线</span></div>
+            <div className="stat"><b>18</b><span>修正案 / 决定</span></div>
+          </div>
+          <div className="tiny">版本注册表只登记有仓库证据的版本（快照自证）；历史版本全文存证于 <code>docs/research/evidence/</code> 但不进入现行检索语料。完整 API：<code>GET /api/laws/{'{law_id}'}/versions</code>。</div>
+        </div>
+      </section>
+
+      <section className="card mb-20">
         <div className="card-h row-wrap"><b className="card-h-t">历史运行记录（不可变 · 带日期）</b></div>
         <div className="card-b">
           <div className="tiny" style={{ lineHeight: 2 }}>
