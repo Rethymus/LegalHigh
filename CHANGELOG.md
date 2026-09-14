@@ -8,12 +8,15 @@
 - Deterministic evaluation metrics (S2-T2): abstention-correct rate (5 out-of-corpus probes) and citation entity completeness (four required fields), both live in `/api/evals`; law-version registry API `GET /api/laws/{id}/versions` (S2-T4 PoC) with corpus-selfcheck integration.
 - Accessibility probe `qa_a11y.mjs` (WCAG 2.2 AA subset: 24px target size, focus not obscured) wired as QA gate 7; performance budget gate in `qa_gates` (gate 6); corpus freshness SOP; CHANGELOG link checker.
 - In-app usage guide `/guide` (three views) reusing the README media pool.
+- Corpus expansion continuation (S2-T1): Anti-Domestic Violence Law (2015, 38 articles), Social Insurance Law (2018 amendment, 98 articles) and Food Safety Law (2021 amendment, 154 articles) via Wikisource transcription — controlled corpus now 28 instruments / 4,306 entries (2026-09-14); priority backlog remains empty. Version registries extended to full coverage (28/28 instruments), including multi-version timelines for the Constitution (5 versions + 5 amendments), Criminal Law (4 versions + 12 amendments), Civil Procedure Law (6 versions), Minor Protection Law (5 versions), Women's Rights Law (4 versions) and Attorney Law (5 versions); historical texts are registry-recorded only and do not enter the current retrieval corpus.
+- Public-facing content: 63 glossary cards on `/terms` (each bound to a program-verified corpus article with deep links, covering every citizen-facing instrument in the corpus); quality transparency page `/quality` publishing live retrieval metrics, dated historical runs and registry statistics; search results carry source-grade badges and provenance links; THUOCL legal-lexicon BM25 A/B experiment recorded as a negative result (bigram tokenization retained).
 
 ### Fixed / 修复
 
 - OWASP LLM Top-10 (2025) gaps: prompt-injection probe suite in `llm_eval`, outbound personal-information scanning (counts only, never echoes values), per-actor daily call quota (`LH_AI_DAILY_LIMIT`, 429).
 - Local pre-commit now runs oxlint (aligned with CI Gate 2); performance-budget gate skips cleanly when no dist exists (Pages workflow).
 - Motion-probe assertion count corrected to the real 11 (a previously logged "20" never landed in git history); README quality table updated.
+- Law detail version-tab placeholder copy updated to match the fully-covered version-registry state (single-version laws now honestly read "no collected historical versions" instead of "registry pending").
 
 ## v1.1.0-rc.1 — 2026-09-08
 
