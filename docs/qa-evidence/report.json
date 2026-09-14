@@ -555,6 +555,17 @@
     "title": "LegalHigh · 法律智能知识库"
   },
   {
+    "name": "46-process",
+    "path": "/process",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "step1": "process-refs-ok",
+    "finalUrl": "http://localhost:5173/process",
+    "title": "LegalHigh · 法律智能知识库"
+  },
+  {
     "name": "43-terms",
     "path": "/terms",
     "consoleErrors": [],

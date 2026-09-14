@@ -63,5 +63,10 @@
     "route": "quality",
     "smallTargets": [],
     "obscuredFocus": []
+  },
+  {
+    "route": "process",
+    "smallTargets": [],
+    "obscuredFocus": []
   }
 ]

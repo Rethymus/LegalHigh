@@ -181,6 +181,9 @@ const ROUTES = [
   { name: '44-quality', path: '/quality', fullPage: true, identity: pageHeader('质量透明度'), afterText: '不是法律正确率', steps: [
     { t: 'eval', expr: `(() => { const stats=[...document.querySelectorAll('.stat')]; return stats.length >= 4 ? 'quality-stats-ok' : 'quality-stats-short:'+stats.length })()` },
   ] },
+  { name: '46-process', path: '/process', fullPage: true, identity: { selector: '.ph-t', text: '流程图解' }, afterText: '简化示意', steps: [
+    { t: 'eval', expr: `(() => { const links=[...document.querySelectorAll('a[href*="/laws/"]')]; return links.length >= 14 ? 'process-refs-ok' : 'process-refs-short:'+links.length })()` },
+  ] },
   { name: '43-terms', path: '/terms', fullPage: true, identity: pageHeader('术语卡'), afterText: '不是法律意见', steps: [
     { t: 'eval', expr: `(() => { const links=[...document.querySelectorAll('a')].filter(x=>x.getAttribute('href')?.includes('/laws/')); return links.length >= 50 ? 'term-refs-ok' : 'term-refs-short:'+links.length })()` },
   ] },

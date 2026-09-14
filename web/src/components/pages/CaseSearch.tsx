@@ -1,11 +1,20 @@
 // FRAME 05 · Case Search —— 案例专业检索（规格 §10）
 // 案例数据来自 server /api/cases，只展示逐件核实并能回到原始来源的记录。
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Icon } from '../icons'
 import { EmptyState, PageHeader, SkeletonLines, Tabs } from '../ui'
 import { CitationChip, SourceBadge } from '../domain'
 import { api, ApiError, type CaseRecord } from '../../lib/api'
+
+/* 谱系导航（v6 S4-T4）：按案由关键词派生的法域分组，全部由已加载案例实时计算，
+   不硬编码件数与分组。外国判例（jurisdiction 非「中国」）单列为比较研究对象。 */
+const DOMAIN_RULES: { key: string; label: string; match: (c: CaseRecord) => boolean }[] = [
+  { key: 'labor', label: '劳动 · 就业', match: (c) => /劳动合同|劳动争议|竞业限制|平等就业|年终奖|解除劳动合同/.test(c.cause + c.name) },
+  { key: 'criminal', label: '刑事', match: (c) => /盗窃|诈骗|故意伤害|正当防卫|罪/.test(c.cause + c.name) },
+  { key: 'admin', label: '行政', match: (c) => /行政/.test(c.cause + c.name) },
+  { key: 'civil', label: '民事 · 合同 · 侵权', match: () => true },
+]
 
 const TAB_DEFS = [
   { key: 'all', label: '全部来源' },
@@ -76,6 +85,18 @@ export default function CaseSearch() {
 
   const hits = cases
 
+  // 谱系分组（派生）：外国判例单列，其余按案由规则顺次归类（民事为兜底组）
+  const lineage = useMemo(() => {
+    const foreign = cases.filter((c) => c.jurisdiction !== '中国')
+    const domestic = cases.filter((c) => c.jurisdiction === '中国')
+    const groups = DOMAIN_RULES.map((rule) => ({
+      key: rule.key,
+      label: rule.label,
+      items: domestic.filter((c) => rule.match(c)),
+    })).filter((g) => g.items.length > 0)
+    return { foreign, groups }
+  }, [cases])
+
   return (
     <div className="page">
       <PageHeader
@@ -94,6 +115,38 @@ export default function CaseSearch() {
         </form>
         <div className="tiny">示例：指导案例24号、机动车交通事故、格式条款、最高人民法院。多词按服务端案例关键词规则匹配。</div>
       </div>
+
+      {!loading && cases.length > 0 && (
+        <div className="card mt-16" style={{ padding: '12px 16px' }}>
+          <div className="tiny bold mb-8">案例谱系 · {cases.length} 件一览（按案由派生分组）</div>
+          <div style={{ display: 'grid', gap: 8 }}>
+            {lineage.groups.map((g) => (
+              <div key={g.key} className="row" style={{ gap: 8, alignItems: 'flex-start' }}>
+                <span className="bdg bdg-teal" style={{ flexShrink: 0 }}>{g.label} · {g.items.length} 件</span>
+                <div className="row-wrap" style={{ gap: 6, minWidth: 0 }}>
+                  {g.items.map((c) => (
+                    <Link key={c.id} to={`/cases/${c.id}`} className="bdg bdg-gray" style={{ textDecoration: 'none' }}>
+                      {c.no} · {c.name.length > 22 ? `${c.name.slice(0, 21)}…` : c.name}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            ))}
+            {lineage.foreign.length > 0 && (
+              <div className="row" style={{ gap: 8, alignItems: 'flex-start' }}>
+                <span className="bdg bdg-gray" style={{ flexShrink: 0 }}>域外比较研究 · {lineage.foreign.length} 件</span>
+                <div className="row-wrap" style={{ gap: 6, minWidth: 0 }}>
+                  {lineage.foreign.map((c) => (
+                    <Link key={c.id} to={`/cases/${c.id}`} className="bdg bdg-gray" style={{ textDecoration: 'none' }}>
+                      {c.name.length > 22 ? `${c.name.slice(0, 21)}…` : c.name}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
       <div className="card mt-16">
         <div style={{ padding: '0 16px' }}>
