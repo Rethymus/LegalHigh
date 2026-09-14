@@ -694,6 +694,9 @@ export interface CaseRecord {
   holding: string
   statutes: CaseStatute[]
   research_refs?: CaseStatute[]
+  court_level?: string
+  procedure_type?: string
+  doc_type?: string
   kind: SourceKind
   grade: '强' | '中' | '弱'
   source_title: string

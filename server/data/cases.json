@@ -27,7 +27,10 @@
    "source_accessed_at": "2026-09-01",
    "source_note": "美国联邦最高法院判决原文（U.S. Reports 第347卷第483页）；域外资料，不构成中国司法裁判依据。",
    "verified": true,
-   "sample": false
+   "sample": false,
+   "court_level": "最高法院",
+   "procedure_type": "一审终审",
+   "doc_type": "判决书"
   },
   {
    "id": "donoghue-v-stevenson",
@@ -61,7 +64,10 @@
    "source_accessed_at": "2026-09-01",
    "source_note": "英国上议院判决文本；BAILII 页面载明其发布许可由英格兰及威尔士法律报告委员会授予。域外资料，不构成中国司法裁判依据。",
    "verified": true,
-   "sample": false
+   "sample": false,
+   "court_level": "上议院",
+   "procedure_type": "一审终审",
+   "doc_type": "判决书"
   },
   {
    "id": "guidance-01",
@@ -94,7 +100,10 @@
    "source_accessed_at": "2026-09-01",
    "source_note": "最高人民法院 2011 年发布的第一批指导案例（指导案例1号）；本条目裁判要点与事实为摘要，以最高人民法院官方发布文本为准；发布时依据《合同法》居间合同规则，现已由《民法典》第965条承继",
    "verified": true,
-   "sample": false
+   "sample": false,
+   "court_level": "中级人民法院",
+   "procedure_type": "一审",
+   "doc_type": "判决书"
   },
   {
    "id": "guidance-23",
@@ -121,7 +130,10 @@
    "source_accessed_at": "2026-09-01",
    "source_note": "最高人民法院发布的指导案例（第23号），以最高法官网发布文本核对。其裁判依据为《食品安全法》（2009）第96条第2款——该法未在本地语料，待接入核验，此处不虚构引用。",
    "verified": true,
-   "sample": false
+   "sample": false,
+   "court_level": "基层人民法院",
+   "procedure_type": "一审",
+   "doc_type": "判决书"
   },
   {
    "id": "guidance-24",
@@ -154,7 +166,10 @@
    "source_accessed_at": "2026-09-01",
    "source_note": "最高人民法院发布的指导案例（第24号），以最高法官网发布文本核对。其裁判依据为当时施行的《侵权责任法》相关条款——该法未在本地语料，待接入核验；《民法典》第1165条仅为研究性参照，非本案裁判依据。",
    "verified": true,
-   "sample": false
+   "sample": false,
+   "court_level": "基层人民法院",
+   "procedure_type": "一审",
+   "doc_type": "判决书"
   },
   {
    "id": "miranda-v-arizona",
@@ -182,7 +197,10 @@
    "source_accessed_at": "2026-09-01",
    "source_note": "美国联邦最高法院判决原文（U.S. Reports 第384卷第436页）；域外资料，不构成中国司法裁判依据。",
    "verified": true,
-   "sample": false
+   "sample": false,
+   "court_level": "最高法院",
+   "procedure_type": "一审终审",
+   "doc_type": "判决书"
   }
  ]
 }
