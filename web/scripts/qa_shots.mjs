@@ -93,7 +93,9 @@ const ROUTES = [
   { name: '07-law-detail', path: '/laws/civl-2020?art=25', fullPage: true, identity: lawDetailIdentity },
   { name: '07b-law-detail-professional-evidence', path: '/laws/pipl-2021?art=13', fullPage: true, identity: pageHeader('《个人信息保护法》第十三条'), afterText: '校准正确率：暂无' },
   { name: '08-laws-browse', path: '/laws', identity: pageHeader('法规条文') },
-  { name: '09-case-search', path: '/cases', fullPage: true, identity: pageHeader('案例检索') },
+  { name: '09-case-search', path: '/cases', fullPage: true, identity: pageHeader('案例检索'), steps: [
+    { t: 'eval', expr: `(() => { const links=[...document.querySelectorAll('a[href*="/cases/guidance-"]')]; const uniq=new Set(links.map(x=>x.getAttribute('href'))); return uniq.size >= 8 ? 'case-refs-ok' : 'case-refs-short:'+uniq.size })()` },
+  ] },
   { name: '10-case-detail-cn', path: '/cases/guidance-24', fullPage: true, identity: { selector: '.case-t', text: '荣宝英诉王阳' } },
   { name: '10b-case-detail-defense', path: '/cases/guidance-93', fullPage: true, identity: { selector: '.case-t', text: '于欢故意伤害案' } },
   { name: '10c-case-detail-labor', path: '/cases/guidance-18', fullPage: true, identity: { selector: '.case-t', text: '中兴通讯（杭州）' } },

@@ -158,6 +158,7 @@
     "consoleWarnings": [],
     "pageErrors": [],
     "failedRequests": [],
+    "step1": "case-refs-ok",
     "finalUrl": "http://localhost:5173/cases",
     "title": "LegalHigh · 法律智能知识库"
   },
