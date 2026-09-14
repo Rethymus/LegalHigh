@@ -5,6 +5,23 @@
   "note": "S2-T4 历史版本库 PoC（2026-09-13）：只登记有仓库内证据的版本；无证据的历史修正版本一律不入表、不标日期（不编造）。current 版本字段必须与 server/data/laws/ 语料元数据一致（corpus_selfcheck 钉住）。",
   "versions": [
     {
+      "version_id": "2021-amendment",
+      "label": "2021 第四次修正",
+      "status": "已取代（2023 修正前文本，仅作历史对照）",
+      "promulgation_date": "2021-12-24",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2022-01-01",
+      "article_count": 291,
+      "current": false,
+      "evidence": {
+        "kind": "wikisource-transcription",
+        "grade": "中",
+        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E6%B0%91%E4%BA%8B%E8%A8%B4%E8%A8%9F%E6%B3%95_(2021%E5%B9%B4)",
+        "accessed_at": "2026-09-14",
+        "snapshot": "docs/research/evidence/ws_民事诉讼法2021.html"
+      }
+    },
+    {
       "version_id": "2023-revision",
       "label": "2023 修正",
       "status": "现行有效（2023修正）",
@@ -24,5 +41,5 @@
       }
     }
   ],
-  "pending_note": "历史修正版本（1991 公布及历次修正决定）待官方快照按 build_corpus 管线采集后以同一 schema 登记；未采集前本表不展示、不预填任何日期或条数。"
+  "pending_note": "2021 修正版（291 条）与 2023 现行版均已采集；1991 原版与 2007/2012/2017 修正版待同渠道采集，不预填。"
 }

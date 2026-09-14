@@ -10,9 +10,14 @@ from app import law_versions  # noqa: E402
 def test_pcl_registry_contract():
     d = law_versions.describe("pcl-2023")
     assert d["law_id"] == "pcl-2023"
-    assert len(d["versions"]) == 1
-    v = d["versions"][0]
-    assert v["version_id"] == "2023-revision" and v["current"] is True
+    # 2026-09-14 S2-T1 后：pcl 时间线含 2021 历史版 + 2023 现行版（恰好一个 current 的
+    # 注册表校验由 load_registry 保证）；此处按版本 id 断言而不是写死数量。
+    vids = {v["version_id"] for v in d["versions"]}
+    assert {"2021-amendment", "2023-revision"} <= vids
+    currents = [v for v in d["versions"] if v["current"]]
+    assert len(currents) == 1
+    v = currents[0]
+    assert v["version_id"] == "2023-revision"
     assert v["effective_date"] == "2024-01-01"
     for f in ("kind", "grade", "url", "accessed_at", "snapshot"):
         assert v["evidence"][f], f"证据字段 {f} 缺失"
