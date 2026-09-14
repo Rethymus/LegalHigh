@@ -1,0 +1,26 @@
+{
+  "law_id": "social-ins-2018",
+  "title": "中华人民共和国社会保险法",
+  "schema_version": 1,
+  "note": "历史版本长尾（2026-09-14）：现行版事实取自语料元数据（快照背书）。",
+  "versions": [
+    {
+      "version_id": "2018-amendment",
+      "label": "2018 修正",
+      "status": "现行有效（2018修正）",
+      "promulgation_date": "2018-12-29",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2011-07-01",
+      "article_count": 98,
+      "current": true,
+      "evidence": {
+        "kind": "wikisource-transcription",
+        "grade": "中",
+        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E7%A4%BE%E6%9C%83%E4%BF%9D%E9%9A%AA%E6%B3%95",
+        "accessed_at": "2026-09-14",
+        "snapshot": "docs/research/evidence/ws_社会保险法.html"
+      }
+    }
+  ],
+  "pending_note": "2010 原版全文未采集；2018 修正决定主席令号快照未载，省略。"
+}

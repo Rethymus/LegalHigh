@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-14T01:59:10.722650",
+  "built_at": "2026-09-14T18:55:51.419329",
   "fetch_date": "2026-09-08",
   "laws": [
     {
@@ -285,6 +285,75 @@
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "6880bf5092f6fcde0a40968bc2cb2ef43376c8ca096c0db11b44f0f20b962f0c",
       "output_sha256": "e5597cb1169b142e8f4e1ca07da8590a62e3cadf03dd70b159ff48393e424f01"
+    },
+    {
+      "law_id": "dv-2015",
+      "title": "中华人民共和国反家庭暴力法",
+      "status": "现行有效",
+      "effective_date": "2016-03-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国反家庭暴力法",
+        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E5%8F%8D%E5%AE%B6%E5%BA%AD%E6%9A%B4%E5%8A%9B%E6%B3%95",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "wikisource-transcription",
+        "version": "现行有效"
+      },
+      "promulgation_instrument": null,
+      "article_count": 38,
+      "expected_count": 38,
+      "missing_numbers": [],
+      "source_url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E5%8F%8D%E5%AE%B6%E5%BA%AD%E6%9A%B4%E5%8A%9B%E6%B3%95",
+      "snapshot": "docs/research/evidence/ws_反家庭暴力法.html",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "468b666ddd1f4b8f7bdf54194b6159c9903bbc46db0f1a1d91f948dbc3afe9d5",
+      "output_sha256": "a352f4e885cb865b4a5c66c31de6e68483d15551786b9c0c26854374a1eb6a5f"
+    },
+    {
+      "law_id": "social-ins-2018",
+      "title": "中华人民共和国社会保险法",
+      "status": "现行有效（2018修正）",
+      "effective_date": "2011-07-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国社会保险法",
+        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E7%A4%BE%E6%9C%83%E4%BF%9D%E9%9A%AA%E6%B3%95",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "wikisource-transcription",
+        "version": "现行有效（2018修正）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 98,
+      "expected_count": 98,
+      "missing_numbers": [],
+      "source_url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E7%A4%BE%E6%9C%83%E4%BF%9D%E9%9A%AA%E6%B3%95",
+      "snapshot": "docs/research/evidence/ws_社会保险法.html",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "d85bb6635b87ff5e5da8e7ebb9515d95fea0f9104ff1e50f9c4563c263ddb52c",
+      "output_sha256": "42e7c1286aa7a46e3b61010e86e67b9b93c1e783b952362d01bc09d6f1135a01"
+    },
+    {
+      "law_id": "food-safety-2021",
+      "title": "中华人民共和国食品安全法",
+      "status": "现行有效（2021修正）",
+      "effective_date": "2015-10-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国食品安全法",
+        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E9%A3%9F%E5%93%81%E5%AE%89%E5%85%A8%E6%B3%95_(2021%E5%B9%B4)",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "wikisource-transcription",
+        "version": "现行有效（2021修正）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 154,
+      "expected_count": 154,
+      "missing_numbers": [],
+      "source_url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E9%A3%9F%E5%93%81%E5%AE%89%E5%85%A8%E6%B3%95_(2021%E5%B9%B4)",
+      "snapshot": "docs/research/evidence/ws_食品安全法.html",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "e83ff64a6943d5031bccad1fa234666dc95328d0b8887dcf0fe4fd0adff8f8bb",
+      "output_sha256": "b0fa8226845439e708bed15e2fcd2f99467372c29f2d8bfc0e5e789f33797a35"
     },
     {
       "law_id": "con-2018",

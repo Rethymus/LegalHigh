@@ -1,0 +1,26 @@
+{
+  "law_id": "dv-2015",
+  "title": "中华人民共和国反家庭暴力法",
+  "schema_version": 1,
+  "note": "历史版本长尾（2026-09-14）：现行版事实取自语料元数据（快照背书）。",
+  "versions": [
+    {
+      "version_id": "2015-enacted",
+      "label": "2015 通过",
+      "status": "现行有效",
+      "promulgation_date": "2015-12-27",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2016-03-01",
+      "article_count": 38,
+      "current": true,
+      "evidence": {
+        "kind": "wikisource-transcription",
+        "grade": "中",
+        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E5%8F%8D%E5%AE%B6%E5%BA%AD%E6%9A%B4%E5%8A%9B%E6%B3%95",
+        "accessed_at": "2026-09-14",
+        "snapshot": "docs/research/evidence/ws_反家庭暴力法.html"
+      }
+    }
+  ],
+  "pending_note": "本法通过后暂无修正记录。"
+}

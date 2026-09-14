@@ -58,6 +58,9 @@ LAW_FILES = {
     "cpl_gov_html": "gov_刑事诉讼法2018.html",
     "scl_ws_json": "ws_国家赔偿法2012.json",
     "minor_ws_html": "ws_宪法2018.html",
+    "dv_ws_html": "ws_反家庭暴力法.html",
+    "social_ins_ws_html": "ws_社会保险法.html",
+    "food_safety_ws_html": "ws_食品安全法.html",
     "cl_ws_html": "ws_刑法2023.html",
 }
 
@@ -276,6 +279,9 @@ EXPECTED_COUNTS = {
     "scl-2012": 42,
     "con-2018": 143,
     "cl-2023": 505,  # 452 基条 + 53 子条号条目（之一/之二…自 2026-09-14 起独立成条）
+    "dv-2015": 38,
+    "social-ins-2018": 98,
+    "food-safety-2021": 154,
     "crpl-imp-2024": 53,
     "genai-2023": 24,
     "pipl-2021": 74,
@@ -387,6 +393,33 @@ def main():
                 "effective_date": "1997-10-01",
             },
             "%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E5%88%91%E6%B3%95_(2023%E5%B9%B4)",
+        ),
+        build_wikisource_html_law(
+            "dv_ws_html", "dv-2015", "中华人民共和国反家庭暴力法",
+            {
+                "status": "现行有效",
+                "promulgation": {"date": "2015-12-27", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "2016-03-01",
+            },
+            "%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E5%8F%8D%E5%AE%B6%E5%BA%AD%E6%9A%B4%E5%8A%9B%E6%B3%95",
+        ),
+        build_wikisource_html_law(
+            "social_ins_ws_html", "social-ins-2018", "中华人民共和国社会保险法",
+            {
+                "status": "现行有效（2018修正）",
+                "promulgation": {"date": "2018-12-29", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "2011-07-01",
+            },
+            "%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E7%A4%BE%E6%9C%83%E4%BF%9D%E9%9A%AA%E6%B3%95",
+        ),
+        build_wikisource_html_law(
+            "food_safety_ws_html", "food-safety-2021", "中华人民共和国食品安全法",
+            {
+                "status": "现行有效（2021修正）",
+                "promulgation": {"date": "2021-04-29", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "2015-10-01",
+            },
+            "%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E9%A3%9F%E5%93%81%E5%AE%89%E5%85%A8%E6%B3%95_(2021%E5%B9%B4)",
         ),
         build_wikisource_html_law(
             "minor_ws_html", "con-2018", "中华人民共和国宪法",

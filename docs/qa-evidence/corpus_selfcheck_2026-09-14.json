@@ -109,6 +109,33 @@
       "no_effective_date": false,
       "effective_date_evidence_valid": true
     },
+    "dv-2015": {
+      "manifest_count": 38,
+      "actual_count": 38,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "social-ins-2018": {
+      "manifest_count": 98,
+      "actual_count": 98,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "food-safety-2021": {
+      "manifest_count": 154,
+      "actual_count": 154,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
     "con-2018": {
       "manifest_count": 143,
       "actual_count": 143,

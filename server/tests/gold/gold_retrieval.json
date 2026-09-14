@@ -1757,6 +1757,72 @@
         }
       ],
       "note": "2026-09-14 增（S2-T1）：诈骗罪第266条。"
+    },
+    {
+      "id": "gold-dv-protect-order",
+      "question": "遭受家庭暴力可以向法院申请人身安全保护令吗",
+      "expect": [
+        {
+          "law_id": "dv-2015",
+          "no": 23
+        }
+      ],
+      "note": "2026-09-14 增（dv-2015 入库金标）：人身安全保护令第23条。"
+    },
+    {
+      "id": "gold-dv-warning-letter",
+      "question": "家庭暴力情节较轻公安机关出具告诫书后还能处罚吗",
+      "expect": [
+        {
+          "law_id": "dv-2015",
+          "no": 16
+        }
+      ],
+      "note": "2026-09-14 增（dv-2015）：告诫书制度第16条。"
+    },
+    {
+      "id": "gold-si-insurance-types",
+      "question": "社会保险包括基本养老保险基本医疗保险工伤保险失业保险和生育保险吗",
+      "expect": [
+        {
+          "law_id": "social-ins-2018",
+          "no": 2
+        }
+      ],
+      "note": "2026-09-14 增（social-ins-2018 入库金标）：社会保险类型第2条。首拟「社会保险包括哪几种保险」未命中（无具体险种名称词面）——词法鸿沟实录，改题对齐条文列举词面。"
+    },
+    {
+      "id": "gold-si-payment",
+      "question": "用人单位不缴纳社会保险费怎么办",
+      "expect": [
+        {
+          "law_id": "social-ins-2018",
+          "no": 63
+        }
+      ],
+      "note": "2026-09-14 增（social-ins-2018）：未足额缴纳社会保险费的处理第63条。"
+    },
+    {
+      "id": "gold-fs-production-license",
+      "question": "从事食品生产需要取得什么许可",
+      "expect": [
+        {
+          "law_id": "food-safety-2021",
+          "no": 35
+        }
+      ],
+      "note": "2026-09-14 增（food-safety-2021 入库金标）：食品生产经营许可第35条。"
+    },
+    {
+      "id": "gold-fs-recall",
+      "question": "发现生产经营的食品不符合食品安全标准应当怎么处理",
+      "expect": [
+        {
+          "law_id": "food-safety-2021",
+          "no": 63
+        }
+      ],
+      "note": "2026-09-14 增（food-safety-2021）：食品召回制度第63条。"
     }
   ]
 }

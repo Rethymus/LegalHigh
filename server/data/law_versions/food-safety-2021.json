@@ -1,0 +1,26 @@
+{
+  "law_id": "food-safety-2021",
+  "title": "中华人民共和国食品安全法",
+  "schema_version": 1,
+  "note": "历史版本长尾（2026-09-14）：现行版事实取自语料元数据（快照背书）。",
+  "versions": [
+    {
+      "version_id": "2021-amendment",
+      "label": "2021 修正",
+      "status": "现行有效（2021修正）",
+      "promulgation_date": "2021-04-29",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2015-10-01",
+      "article_count": 154,
+      "current": true,
+      "evidence": {
+        "kind": "wikisource-transcription",
+        "grade": "中",
+        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E9%A3%9F%E5%93%81%E5%AE%89%E5%85%A8%E6%B3%95_(2021%E5%B9%B4)",
+        "accessed_at": "2026-09-14",
+        "snapshot": "docs/research/evidence/ws_食品安全法.html"
+      }
+    }
+  ],
+  "pending_note": "2009 通过原版与 2015 修订版全文未采集；2018/2021 修正决定主席令号快照未载，省略。"
+}
