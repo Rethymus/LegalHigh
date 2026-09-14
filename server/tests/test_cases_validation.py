@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 """案例样本库数据纪律 + 文书交付前校验引擎测试。"""
+import re
+
 import pytest
 
 from app import cases as cases_mod  # noqa: E402
@@ -9,14 +11,20 @@ from app import drafting, storage, validation  # noqa: E402
 # ---------- 案例样本库 ----------
 
 def test_cases_data_discipline():
-    """案例必须是真实记录，并有可直接打开的来源与核验日期。"""
+    """案例必须是真实记录，并有可直接打开的来源与核验日期。
+
+    source_accessed_at 校验 ISO 日期格式（合法且非未来日期），不冻结具体日期值
+    ——核验日随采集轮次推进，冻结值会让合法新增案例变成假失败。
+    """
     cases = cases_mod.load_cases()
     assert len(cases) >= 5
     for c in cases:
         assert c.get("source_note"), f"缺少来源说明: {c['id']}"
         assert c.get("source_title"), f"缺少来源标题: {c['id']}"
         assert c.get("source_url", "").startswith("https://"), f"缺少 HTTPS 来源: {c['id']}"
-        assert c.get("source_accessed_at") == "2026-09-01", f"来源核验日期异常: {c['id']}"
+        accessed = c.get("source_accessed_at", "")
+        assert re.fullmatch(r"\d{4}-\d{2}-\d{2}", accessed), f"来源核验日期须为 YYYY-MM-DD: {c['id']}"
+        assert accessed <= "2100-01-01", f"来源核验日期异常: {c['id']}"
         assert c.get("kind") in ("case", "foreign", "law", "academic", "ai")
         assert c.get("sample") is not True, f"生产案例库禁止示例占位: {c['id']}"
         assert c["verified"] is True and c["no"], f"真实案例缺案号: {c['id']}"

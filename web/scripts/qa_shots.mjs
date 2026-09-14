@@ -95,6 +95,8 @@ const ROUTES = [
   { name: '08-laws-browse', path: '/laws', identity: pageHeader('法规条文') },
   { name: '09-case-search', path: '/cases', fullPage: true, identity: pageHeader('案例检索') },
   { name: '10-case-detail-cn', path: '/cases/guidance-24', fullPage: true, identity: { selector: '.case-t', text: '荣宝英诉王阳' } },
+  { name: '10b-case-detail-defense', path: '/cases/guidance-93', fullPage: true, identity: { selector: '.case-t', text: '于欢故意伤害案' } },
+  { name: '10c-case-detail-labor', path: '/cases/guidance-18', fullPage: true, identity: { selector: '.case-t', text: '中兴通讯（杭州）' } },
   { name: '11-case-detail-foreign', path: '/cases/brown-v-board', fullPage: true, identity: { selector: '.case-t', text: '布朗诉教育委员会案' } },
   { name: '12-research', path: '/research', fullPage: true, identity: pageHeader('法律研究') },
   { name: '13-research-run', path: '/research?q=' + encodeURIComponent('网购到假货可以核对哪些现行法条'), fullPage: true, identity: { selector: '.ph-t' }, afterText: 'Research Question', steps: [
@@ -169,11 +171,16 @@ const ROUTES = [
     { t: 'wait', ms: 400 },
     { t: 'eval', expr: `(() => { const b=document.body.innerText||''; return b.includes('版本注册表') && b.includes('2021 第四次修正') && b.includes('现行有效') ? 'versions-ok' : 'versions-missing' })()` },
   ] },
+  { name: '45b-law-versions-single', path: '/laws/pipl-2021?art=26', identity: pageHeader('《个人信息保护法》第二十六条'), steps: [
+    { t: 'eval', expr: `(() => { const btn=[...document.querySelectorAll('button')].find(x=>x.textContent.includes('版本对比')); if(!btn) return 'no-version-tab'; btn.click(); return 'clicked' })()` },
+    { t: 'wait', ms: 400 },
+    { t: 'eval', expr: `(() => { const b=document.body.innerText||''; return b.includes('暂无已采集历史版本') && !b.includes('待历史版本库建立') ? 'single-version-ok' : 'single-version-stale' })()` },
+  ] },
   { name: '44-quality', path: '/quality', fullPage: true, identity: pageHeader('质量透明度'), afterText: '不是法律正确率', steps: [
     { t: 'eval', expr: `(() => { const stats=[...document.querySelectorAll('.stat')]; return stats.length >= 4 ? 'quality-stats-ok' : 'quality-stats-short:'+stats.length })()` },
   ] },
   { name: '43-terms', path: '/terms', fullPage: true, identity: pageHeader('术语卡'), afterText: '不是法律意见', steps: [
-    { t: 'eval', expr: `(() => { const links=[...document.querySelectorAll('a')].filter(x=>x.getAttribute('href')?.includes('/laws/')); return links.length >= 16 ? 'term-refs-ok' : 'term-refs-short:'+links.length })()` },
+    { t: 'eval', expr: `(() => { const links=[...document.querySelectorAll('a')].filter(x=>x.getAttribute('href')?.includes('/laws/')); return links.length >= 50 ? 'term-refs-ok' : 'term-refs-short:'+links.length })()` },
   ] },
   { name: '42-guide', path: '/guide', fullPage: true, identity: pageHeader('使用指南'), afterText: '它不是律师事务所', steps: [
     { t: 'eval', expr: `(() => { const imgs=[...document.images].filter(i=>i.src.includes('/guide/')); return imgs.length >= 6 ? 'guide-media-ok' : 'guide-media-missing:'+imgs.length })()` },

@@ -172,6 +172,26 @@
     "title": "LegalHigh · 法律智能知识库"
   },
   {
+    "name": "10b-case-detail-defense",
+    "path": "/cases/guidance-93",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "finalUrl": "http://localhost:5173/cases/guidance-93",
+    "title": "LegalHigh · 法律智能知识库"
+  },
+  {
+    "name": "10c-case-detail-labor",
+    "path": "/cases/guidance-18",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "finalUrl": "http://localhost:5173/cases/guidance-18",
+    "title": "LegalHigh · 法律智能知识库"
+  },
+  {
     "name": "11-case-detail-foreign",
     "path": "/cases/brown-v-board",
     "consoleErrors": [],
@@ -508,6 +528,18 @@
     "step1": "clicked",
     "step2": "versions-missing",
     "finalUrl": "http://localhost:5173/laws/cl-2023?art=287%E4%B9%8B%E4%B8%80",
+    "title": "LegalHigh · 法律智能知识库"
+  },
+  {
+    "name": "45b-law-versions-single",
+    "path": "/laws/pipl-2021?art=26",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "step1": "clicked",
+    "step2": "single-version-ok",
+    "finalUrl": "http://localhost:5173/laws/pipl-2021?art=26",
     "title": "LegalHigh · 法律智能知识库"
   },
   {
