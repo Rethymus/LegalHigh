@@ -26,13 +26,13 @@ interface CoverageData {
 }
 
 const GATES: [string, string][] = [
-  ['1 后端 pytest', '207 项测试（引用绑定、状态机、PIPL 级联、fail-closed、金标评测、子条号切分等）'],
+  ['1 后端 pytest', '全量后端测试（引用绑定、状态机、PIPL 级联、fail-closed、金标评测、子条号切分等；当前规模见 README 质量表带日期记录）'],
   ['2 构建 + lint', 'tsc 类型检查 + vite 生产构建 + oxlint（--deny-warnings，与 CI Gate 2 对齐）'],
   ['3 数据纪律门', '派生数字禁硬编码 / 真值边界 / 身份品牌 / 受众分层 / 动效材质 Token 纪律'],
   ['4 性能预算门', '入口 JS ≤120KB gzip · 全 JS ≤200KB · CSS ≤25KB · laws.json ≤3.5MB（2026-09-14 修订）'],
   ['5 WCAG 对比度', '正文 4.5:1 + UI 指示器 3:1（--strict，32 组合）'],
   ['6 动效行为探针', '弹簧位移 / Toast 退场 / Reduce Motion 双通道 / 滚动海拔插值等 11 项断言'],
-  ['7 可访问性探针', 'WCAG 2.2 AA 子集：交互目标 ≥24×24px、键盘焦点不被遮挡（52 路由逐页实测）'],
+  ['7 可访问性探针', 'WCAG 2.2 AA 子集：交互目标 ≥24×24px、键盘焦点不被遮挡（13 路由抽样实测）'],
 ]
 
 const HISTORY: [string, string][] = [
