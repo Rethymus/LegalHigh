@@ -481,6 +481,8 @@ export interface CorpusCoverage {
 export interface SearchHit {
   law_id: string; law_title: string; no: number; sub?: string; label: string
   chapter: string; text: string; score: number
+  law_status: string; effective_date: string
+  source_url: string; source_kind: string
 }
 export interface SearchResult {
   query: string

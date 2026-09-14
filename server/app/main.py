@@ -286,6 +286,8 @@ def search_articles(q: str, top_k: int = 20, law_id: str | None = None):
             {
                 "law_id": h["law_id"], "law_title": h["law_title"], "no": h["no"],
                 "sub": h.get("sub"), "label": h["label"], "chapter": h["chapter"], "text": h["text"],
+                "law_status": h.get("law_status", ""), "effective_date": h.get("effective_date", ""),
+                "source_url": h.get("source_url", ""), "source_kind": h.get("source_kind", ""),
                 "score": h["score"],
             }
             for h in hits

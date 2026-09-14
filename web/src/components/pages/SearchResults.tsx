@@ -76,7 +76,13 @@ function LawResultCard({ r, q, si }: { r: ResolvedHit; q: string; si?: number })
         <Link className="res-act" to={to}><Icon name="external" size={12} />查看证据快照</Link>
         <FavButton favKey={`law:${hit.law_id}:${hit.no}`} item={{ key: `law:${hit.law_id}:${hit.no}`, type: '法条', title: `《${title}》${hit.label}`, meta: hit.text.slice(0, 40) + '…', to }} />
       </div>
-    </article>
+    {r.law && (
+      <div className="tiny mt-8" style={{ color: 'var(--tx-3)', display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
+        <span className="bdg bdg-gray">证据【{lawEvidenceGrade(r.law.sourceUrl)}】</span>
+        <a className="tiny" href={r.law.sourceUrl} target="_blank" rel="noreferrer" style={{ color: 'var(--accent-text)' }}>来源原文 →</a>
+      </div>
+    )}
+  </article>
   )
 }
 
