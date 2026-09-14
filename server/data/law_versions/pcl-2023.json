@@ -5,6 +5,78 @@
   "note": "S2-T4 历史版本库 PoC（2026-09-13）：只登记有仓库内证据的版本；无证据的历史修正版本一律不入表、不标日期（不编造）。current 版本字段必须与 server/data/laws/ 语料元数据一致（corpus_selfcheck 钉住）。",
   "versions": [
     {
+      "version_id": "2017-amendment",
+      "label": "2017 第三次修正",
+      "status": "已取代（仅作历史对照）",
+      "promulgation_date": "2017-06-27",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "promulgation_instrument": "",
+      "effective_date": "2017-06-27",
+      "article_count": 284,
+      "current": false,
+      "evidence": {
+        "kind": "wikisource-transcription",
+        "grade": "中",
+        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E6%B0%91%E4%BA%8B%E8%A8%B4%E8%A8%9F%E6%B3%95_(2017%E5%B9%B4)",
+        "accessed_at": "2026-09-14",
+        "snapshot": "docs/research/evidence/ws_民事诉讼法2017.html"
+      }
+    },
+    {
+      "version_id": "2012-amendment",
+      "label": "2012 第二次修正",
+      "status": "已取代（仅作历史对照）",
+      "promulgation_date": "2012-08-31",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "promulgation_instrument": "",
+      "effective_date": "2012-08-31",
+      "article_count": 284,
+      "current": false,
+      "evidence": {
+        "kind": "wikisource-transcription",
+        "grade": "中",
+        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E6%B0%91%E4%BA%8B%E8%A8%B4%E8%A8%9F%E6%B3%95_(2012%E5%B9%B4)",
+        "accessed_at": "2026-09-14",
+        "snapshot": "docs/research/evidence/ws_民事诉讼法2012.html"
+      }
+    },
+    {
+      "version_id": "2007-amendment",
+      "label": "2007 第一次修正",
+      "status": "已取代（仅作历史对照）",
+      "promulgation_date": "2007-10-28",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "promulgation_instrument": "",
+      "effective_date": "2007-10-28",
+      "article_count": 268,
+      "current": false,
+      "evidence": {
+        "kind": "wikisource-transcription",
+        "grade": "中",
+        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E6%B0%91%E4%BA%8B%E8%A8%B4%E8%A8%9F%E6%B3%95_(2007%E5%B9%B4)",
+        "accessed_at": "2026-09-14",
+        "snapshot": "docs/research/evidence/ws_民事诉讼法2007.html"
+      }
+    },
+    {
+      "version_id": "1991-enacted",
+      "label": "1991 通过",
+      "status": "已取代（仅作历史对照）",
+      "promulgation_date": "1991-04-09",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "promulgation_instrument": "中华人民共和国主席令第四十四号",
+      "effective_date": "1991-04-09",
+      "article_count": 270,
+      "current": false,
+      "evidence": {
+        "kind": "wikisource-transcription",
+        "grade": "中",
+        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E6%B0%91%E4%BA%8B%E8%A8%B4%E8%A8%9F%E6%B3%95_(1991%E5%B9%B4)",
+        "accessed_at": "2026-09-14",
+        "snapshot": "docs/research/evidence/ws_民事诉讼法1991.html"
+      }
+    },
+    {
       "version_id": "2021-amendment",
       "label": "2021 第四次修正",
       "status": "已取代（2023 修正前文本，仅作历史对照）",
@@ -41,5 +113,5 @@
       }
     }
   ],
-  "pending_note": "2021 修正版（291 条）与 2023 现行版均已采集；1991 原版与 2007/2012/2017 修正版待同渠道采集，不预填。"
+  "pending_note": "**附则模式观察（R67 重要证据）**：1991/2007/2012/2017 四个历史版末条附则均为「本法自公布之日起施行，《试行》同时废止」——与 2023 版第 306 条同款。该附则可能是民诉法家族跨版本保留的原附则（修正不改附则），亦可能是 Wikisource 系统性转录沿用；两种假说 flk 官方文本比对可定案。此前「306 条残留」定案结论下调为「残留/保留附则两说并存，待 flk 定案」，不臆删口径不变。1991 原版与 2007/2012/2017 修正版已是全部现存 editions（本法 2023 前共六版）。"
 }
