@@ -811,6 +811,8 @@ def evals():
     hits = 0
     rr_sum = 0.0
     prec_sum = 0.0
+    rank1 = 0
+    gap_items = []  # 词法鸿沟子集（S5-T2）：note 带鸿沟/改题实录的金标，量化「口语问法」的真实代价
     for g in gold["cases"]:
         res = corpus.search(g["question"], top_k=5)
         got = [(r["law_id"], r["no"], r.get("sub") or "") for r in res]
@@ -822,6 +824,7 @@ def evals():
                 break
         hit = rank is not None
         hits += int(hit)
+        rank1 += int(rank == 1)
         rr_sum += (1.0 / rank) if rank else 0.0
         prec_sum += (sum(1 for k in got if k in expected) / max(len(got), 1))
         items.append({
@@ -830,7 +833,15 @@ def evals():
             "got": [{"law_id": k[0], "no": k[1], "sub": k[2] or None} for k in got],
             "hit": hit, "rank": rank,
         })
+        note = str(g.get("note", ""))
+        if ("鸿沟" in note or "改题" in note) and rank is not None:
+            gap_items.append(rank)
+        elif ("鸿沟" in note or "改题" in note) and rank is None:
+            gap_items.append(None)
     n = len(gold["cases"])
+    gap_total = len(gap_items)
+    gap_hits = sum(1 for r in gap_items if r is not None)
+    gap_rank1 = sum(1 for r in gap_items if r == 1)
 
     # 评测 2.0（S2-T2，全部确定性、随金标实时复算）：
     # ① 拒答正确率——固定乱码探针集必须全部低于拒答阈值（与 qa.ask 同一 6.0 分界），
@@ -869,6 +880,12 @@ def evals():
         "citation_entity_note": "金标命中引用卡的 law_status/effective_date/source_url/label 四要素完整率（引用不变量）",
         "mrr": round(rr_sum / n, 4),
         "precision_at_5": round(prec_sum / n, 4),
+        "rank1_rate": round(rank1 / n, 4),
+        "rank1_note": "金标条文排在第 1 位的比例（比 hit@5 更严格的口径）",
+        "gap_subset_count": gap_total,
+        "gap_subset_hit_at_5": round(gap_hits / gap_total, 4) if gap_total else None,
+        "gap_subset_rank1": round(gap_rank1 / gap_total, 4) if gap_total else None,
+        "gap_subset_note": "词法鸿沟子集：金标 note 带「鸿沟/改题」实录的口语问法题（如「别人打我我还手」vs「制止不法侵害」），量化词法鸿沟的真实代价；None=子集为空",
         "cases": items,
     }
 

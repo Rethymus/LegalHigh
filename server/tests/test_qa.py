@@ -106,3 +106,22 @@ def test_evals20_deterministic_metrics():
     assert data["citation_entity_total"] > 0
     assert data["citation_entity_completeness"] == 1.0, (
         f"引用卡四要素出现缺失：{data['citation_entity_completeness']}")
+
+
+def test_evals30_strict_and_gap_metrics():
+    """评测 3.0（S5-T1/T2）：严格口径与鸿沟子集指标的形状与单调关系——
+
+    rank-1 是 hit@5 的子集（更严），precision@5 ∈ (0,1]；鸿沟子集由 note 实录派生，
+    其 hit@5 不得超过全量（口语问法是更难的子集——若反超说明子集选取失真）。
+    """
+    from app.main import evals
+    data = evals()
+    assert data["case_count"] >= 100
+    assert 0 < data["rank1_rate"] <= data["hit_at_5"] <= 1.0
+    assert 0 < data["precision_at_5"] <= 1.0
+    assert data["gap_subset_count"] >= 5, "词法鸿沟实录子集不应为空（数据资产流失）"
+    assert data["gap_subset_hit_at_5"] is not None
+    assert 0 < data["gap_subset_hit_at_5"] <= 1.0
+    assert 0 <= data["gap_subset_rank1"] <= 1.0
+    assert data["gap_subset_hit_at_5"] <= data["hit_at_5"], (
+        f"鸿沟子集反超全量：{data['gap_subset_hit_at_5']} > {data['hit_at_5']}——子集选取失真需复核")

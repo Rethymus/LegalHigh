@@ -17,6 +17,11 @@ interface EvalsData {
   abstention_correct_rate: number
   abstention_probes: number
   citation_entity_completeness: number
+  rank1_rate?: number
+  precision_at_5?: number
+  gap_subset_count?: number
+  gap_subset_hit_at_5?: number | null
+  gap_subset_rank1?: number | null
 }
 
 interface CoverageData {
@@ -84,19 +89,27 @@ export default function Quality() {
         <div className="card-h row-wrap"><b className="card-h-t">检索评测（确定性金标 · 实时复算）</b></div>
         <div className="card-b">
           {evalsState === 'loading' && (
-            <div className="tiny muted">检索评测复算中…（金标 162 组逐题检索，首次约 3 秒）</div>
-          )}
-          {evalsState === 'loading' && (
-            <div className="tiny muted">检索评测复算中…（金标 162 组逐题检索，首次约 3 秒）</div>
+            <div className="tiny muted">检索评测复算中…（金标全集逐题检索，首次约 3 秒）</div>
           )}
           {evals && (
             <>
               <div className="stats mb-12">
                 <div className="stat"><b>{(evals.hit_at_5 * 100).toFixed(1)}%</b><span>hit@5（{evals.case_count} 组金标）</span></div>
+                <div className="stat"><b>{evals.rank1_rate != null ? `${(evals.rank1_rate * 100).toFixed(1)}%` : '—'}</b><span>rank-1 命中率（更严口径）</span></div>
                 <div className="stat"><b>{evals.mrr.toFixed(2)}</b><span>MRR</span></div>
                 <div className="stat"><b>{(evals.abstention_correct_rate * 100).toFixed(0)}%</b><span>拒答正确率（{evals.abstention_probes} 探针）</span></div>
                 <div className="stat"><b>{(evals.citation_entity_completeness * 100).toFixed(1)}%</b><span>引用卡四要素完整率</span></div>
               </div>
+              {evals.gap_subset_count != null && evals.gap_subset_count > 0 && (
+                <div className="banner banner-info mb-12"><IconIcon name="info" size={14} />
+                  <span className="banner-tx">
+                    词法鸿沟子集（{evals.gap_subset_count} 组口语问法实录，如「别人打我我还手」vs 条文「制止不法侵害」）：
+                    hit@5 <b>{evals.gap_subset_hit_at_5 != null ? `${(evals.gap_subset_hit_at_5 * 100).toFixed(1)}%` : '—'}</b>
+                    {evals.gap_subset_rank1 != null && <> · rank-1 <b>{(evals.gap_subset_rank1 * 100).toFixed(1)}%</b></>}
+                    ——低于全量的差距就是口语问法的真实代价，是语义检索再评估的数据依据。
+                  </span>
+                </div>
+              )}
               <div className="tiny">拒答正确率：语料外乱码探针不得输出法条卡片；引用卡四要素：状态 / 施行日期 / 来源 URL / 条号标签。指标全部随服务进程确定性复算，可复核。</div>
             </>
           )}
