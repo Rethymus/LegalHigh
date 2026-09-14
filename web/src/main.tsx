@@ -22,3 +22,13 @@ createRoot(document.getElementById('root')!).render(
     </Router>
   </StrictMode>,
 )
+
+// 只读离线壳（v6 S4-T1）：仅生产构建注册 service worker——本地 dev（localhost）
+// 注册会把未哈希的 dev 资产写进缓存，干扰热更新，故显式跳过。
+if (import.meta.env.PROD && 'serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').catch(() => {
+      /* SW 不可用不影响在线功能：离线能力是增强而非依赖 */
+    })
+  })
+}
