@@ -194,7 +194,7 @@ export default function LawDetail() {
               )}
               {tab === 'revision' && (
                 <div className="banner banner-info"><Icon name="info" size={15} />
-                  <span className="banner-tx">当前展示<b>现行有效版本</b>（施行 {law.effectiveDate}）。flk 一期未提供历史版本，法条历史版本库需自建（路线图 M5+）；本页不作历史版本推断。</span>
+                  <span className="banner-tx">当前展示<b>现行有效版本</b>（施行 {law.effectiveDate}）。该法的版本沿革证据登记在「版本对比」Tab（版本注册表，快照自证）；本页不作注册表之外的历史版本推断。</span>
                 </div>
               )}
               {tab === 'related' && (
@@ -235,10 +235,10 @@ export default function LawDetail() {
                       <div className="row mb-12">
                         <select className="sel" style={{ width: 220 }} disabled><option>当前有效版本（{law.effectiveDate} 施行）</option></select>
                         <Icon name="compare" size={14} className="muted" />
-                        <select className="sel" style={{ width: 220 }} disabled><option>历史版本（待历史版本库建立）</option></select>
+                        <select className="sel" style={{ width: 220 }} disabled>{versions ? <option>暂无已采集历史版本</option> : <option>版本信息加载中…</option>}</select>
                         <button className="btn btn-primary btn-sm" disabled>对比</button>
                       </div>
-                      <div className="banner banner-warn"><Icon name="alert" size={15} /><span className="banner-tx">引用不变量：法条引用必须附版本/生效/效力字段。历史版本库未建立前，本页禁用版本对比以避免误引。</span></div>
+                      <div className="banner banner-info"><Icon name="info" size={15} /><span className="banner-tx">{versions ? '该法版本注册表仅登记现行有效版本，尚无已采集的历史版本全文（历史版本按证据快照管线滚动采集入册）。' : '版本注册表信息暂不可用。'}引用不变量：法条引用必须附版本/生效/效力字段；本页禁用跨版本对比以避免误引。</span></div>
                     </>
                   )}
                 </div>
