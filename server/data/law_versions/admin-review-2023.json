@@ -23,6 +23,40 @@
       }
     },
     {
+      "version_id": "2009-amendment",
+      "label": "2009 修正",
+      "status": "已取代（2023 修订前文本，仅作历史对照）",
+      "promulgation_date": "2009-08-27",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "1999-10-01",
+      "article_count": 43,
+      "current": false,
+      "evidence": {
+        "kind": "wikisource-transcription",
+        "grade": "中",
+        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E8%A1%8C%E6%94%BF%E5%A4%8D%E8%AE%AE%E6%B3%95_(2009%E5%B9%B4)",
+        "accessed_at": "2026-09-14",
+        "snapshot": "docs/research/evidence/ws_行政复议法2009.html"
+      }
+    },
+    {
+      "version_id": "2017-amendment",
+      "label": "2017 修正",
+      "status": "已取代（2023 修订前文本，仅作历史对照）",
+      "promulgation_date": "2017-09-01",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "1999-10-01",
+      "article_count": 43,
+      "current": false,
+      "evidence": {
+        "kind": "wikisource-transcription",
+        "grade": "中",
+        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E8%A1%8C%E6%94%BF%E5%A4%8D%E8%AE%AE%E6%B3%95_(2017%E5%B9%B4)",
+        "accessed_at": "2026-09-14",
+        "snapshot": "docs/research/evidence/ws_行政复议法2017.html"
+      }
+    },
+    {
       "version_id": "2023-revision",
       "label": "2023 修订",
       "status": "现行有效（2023修订）",
@@ -41,5 +75,5 @@
       }
     }
   ],
-  "pending_note": "2009/2017 修正版全文未采集，不预填。"
+  "pending_note": "行政复议法时间线：1999 原版（43 条）→ 2009 修正（43 条）→ 2017 修正（43 条）→ 2023 修订（90 条，现行）；施行日 1999-10-01 跨修正延续，全部附则自证。"
 }
