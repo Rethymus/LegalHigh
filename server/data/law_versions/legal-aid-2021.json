@@ -1,0 +1,27 @@
+{
+  "law_id": "legal-aid-2021",
+  "title": "中华人民共和国法律援助法",
+  "schema_version": 1,
+  "note": "单版本注册表（2026-09-14 创建）：本法入仓后暂无修正记录；历史版全文待采集，不预填。",
+  "versions": [
+    {
+      "version_id": "current",
+      "label": "现行有效",
+      "status": "现行有效",
+      "promulgation_date": "2021-08-20",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2022-01-01",
+      "article_count": 71,
+      "current": true,
+      "evidence": {
+        "kind": "official-legislature-publication",
+        "grade": "中",
+        "url": "https://www.npc.gov.cn/npc/c2/c30834/202108/t20210820_313079.html",
+        "accessed_at": "2026-09-08",
+        "snapshot": "docs/research/evidence/npc_法律援助法2021.html"
+      },
+      "promulgation_instrument": "中华人民共和国主席令第九十三号"
+    }
+  ],
+  "pending_note": "本法通过后暂无修正记录；后续修正待官方快照采集后按同一 schema 追加。"
+}

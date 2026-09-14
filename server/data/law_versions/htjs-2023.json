@@ -1,0 +1,27 @@
+{
+  "law_id": "htjs-2023",
+  "title": "最高人民法院关于适用《中华人民共和国民法典》合同编通则若干问题的解释",
+  "schema_version": 1,
+  "note": "单版本注册表（2026-09-14 创建）：本法入仓后暂无修正记录；历史版全文待采集，不预填。",
+  "versions": [
+    {
+      "version_id": "current",
+      "label": "现行有效",
+      "status": "现行有效",
+      "promulgation_date": "2023-12-04",
+      "promulgation_organ": "最高人民法院",
+      "effective_date": "2023-12-05",
+      "article_count": 69,
+      "current": true,
+      "evidence": {
+        "kind": "wikisource-transcription",
+        "grade": "中",
+        "url": "https://zh.wikisource.org/wiki/%E6%9C%80%E9%AB%98%E4%BA%BA%E6%B0%91%E6%B3%95%E9%99%A2%E5%85%B3%E4%BA%8E%E9%80%82%E7%94%A8%E3%80%8A%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E6%B0%91%E6%B3%95%E5%85%B8%E3%80%8B%E5%90%88%E5%90%8C%E7%BC%96%E9%80%9A%E5%88%99%E8%8B%A5%E5%B9%B2%E9%97%AE%E9%A2%98%E7%9A%84%E8%A7%A3%E9%87%8A",
+        "accessed_at": "2026-08-29",
+        "snapshot": "docs/research/evidence/ws_合同编通则解释2023.json"
+      },
+      "promulgation_instrument": "法释〔2023〕13号"
+    }
+  ],
+  "pending_note": "本法通过后暂无修正记录；后续修正待官方快照采集后按同一 schema 追加。"
+}

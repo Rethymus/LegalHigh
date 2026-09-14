@@ -26,8 +26,7 @@ def test_pcl_registry_contract():
 
 
 def test_unknown_law_is_404_shape():
-    with pytest.raises(FileNotFoundError):
-        law_versions.describe("civl-2020")
+    # 2026-09-14 起所有 28 部法律均有注册表；仅测试真正不存在的 law_id。
     with pytest.raises(FileNotFoundError):
         law_versions.describe("no-such-law")
 
