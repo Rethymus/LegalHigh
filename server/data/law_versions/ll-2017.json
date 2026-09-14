@@ -22,6 +22,23 @@
       }
     },
     {
+      "version_id": "2001-amendment",
+      "label": "2001 修正",
+      "status": "已取代（2001 修正版，仅作历史对照）",
+      "promulgation_date": "2001-12-29",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "1997-01-01",
+      "article_count": 53,
+      "current": false,
+      "evidence": {
+        "kind": "wikisource-transcription",
+        "grade": "中",
+        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E5%BE%8B%E5%B8%AB%E6%B3%95_(2001%E5%B9%B4)",
+        "accessed_at": "2026-09-14",
+        "snapshot": "docs/research/evidence/ws_律师法2001.html"
+      }
+    },
+    {
       "version_id": "2007-revision",
       "label": "2007 修订",
       "status": "已取代（2017 修正前文本，仅作历史对照）",
@@ -36,6 +53,23 @@
         "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E5%BE%8B%E5%B8%AB%E6%B3%95_(2007%E5%B9%B4)",
         "accessed_at": "2026-09-14",
         "snapshot": "docs/research/evidence/ws_律师法2007.html"
+      }
+    },
+    {
+      "version_id": "2012-amendment",
+      "label": "2012 修正",
+      "status": "已取代（2017 修正前文本，仅作历史对照）",
+      "promulgation_date": "2012-09-28",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2008-06-01",
+      "article_count": 60,
+      "current": false,
+      "evidence": {
+        "kind": "wikisource-transcription",
+        "grade": "中",
+        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E5%BE%8B%E5%B8%AB%E6%B3%95_(2012%E5%B9%B4)",
+        "accessed_at": "2026-09-14",
+        "snapshot": "docs/research/evidence/ws_律师法2012.html"
       }
     },
     {
@@ -56,5 +90,5 @@
       }
     }
   ],
-  "pending_note": "律师法时间线：1996 原版（53 条，1997-01-01 施行）→ 2007 修订（60 条）→ 2017 修正（60 条，现行）；2001/2012 修正版全文未采集。"
+  "pending_note": "律师法时间线：1996 原版（53 条）→ 2001 修正（53 条）→ 2007 修订（60 条）→ 2012 修正（60 条）→ 2017 修正（60 条，现行）——施行日衔接全部附则自证；主席令号各版快照未载，省略。"
 }
