@@ -211,6 +211,27 @@ def law_explains(law_id: str):
     return {"law_id": law_id, "explains": explains_mod.approved_for(law_id)}
 
 
+@app.get("/api/laws/{law_id}/versions")
+def law_versions(law_id: str):
+    """版本注册表（S2-T4）：只登记有仓库证据的版本。未建注册表返回 200 空列表（历史口径 2026-09-14：17 部单版本
+    法律的正常态，404 会给每页控制台留错误日志；schema 问题 500 fail-closed 不变；
+    law_id 不在语料中仍 404。"""
+    if law_id not in get_corpus().laws:
+        raise HTTPException(404, "law not found")
+    try:
+        return law_versions_mod.describe(law_id)
+    except FileNotFoundError:
+        return {
+            "law_id": law_id,
+            "versions": [],
+            "amendments": [],
+            "pending_note": "未建版本注册表",
+            "scope_note": "版本注册表只登记已入证据库的版本。",
+        }
+    except ValueError as e:
+        raise HTTPException(500, str(e))
+
+
 @app.get("/api/laws/{law_id}/articles/{no}/analysis-context")
 def law_analysis_context(law_id: str, no: int):
     """原文、官方解释与具名专业观点的证据包；覆盖分不等于正确率。"""

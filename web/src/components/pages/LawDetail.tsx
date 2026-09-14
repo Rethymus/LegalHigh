@@ -39,6 +39,17 @@ export default function LawDetail() {
     )
     return () => { alive = false }
   }, [lawId])
+  // 版本沿革（S2-T4 前端展示后续项）：仅多版本登记的法律显示；404/单版本隐藏
+  const [versions, setVersions] = useState<Awaited<ReturnType<typeof api.lawVersions>> | null>(null)
+  useEffect(() => {
+    if (!lawId) return
+    let alive = true
+    api.lawVersions(lawId).then(
+      (d) => alive && setVersions(d),
+      () => { /* 未建版本注册表（404）不影响法条阅读 */ },
+    )
+    return () => { alive = false }
+  }, [lawId])
   const art = parseArtParam(sp.get('art')) ?? { no: 496 }
   const no = art.no
   const article = law ? findArticle(law, art.no, art.sub) : undefined
@@ -195,13 +206,41 @@ export default function LawDetail() {
               )}
               {tab === 'version' && (
                 <div>
-                  <div className="row mb-12">
-                    <select className="sel" style={{ width: 220 }} disabled><option>当前有效版本（{law.effectiveDate} 施行）</option></select>
-                    <Icon name="compare" size={14} className="muted" />
-                    <select className="sel" style={{ width: 220 }} disabled><option>历史版本（待历史版本库建立）</option></select>
-                    <button className="btn btn-primary btn-sm" disabled>对比</button>
-                  </div>
-                  <div className="banner banner-warn"><Icon name="alert" size={15} /><span className="banner-tx">引用不变量：法条引用必须附版本/生效/效力字段。历史版本库未建立前，本页禁用版本对比以避免误引。</span></div>
+                  {versions && versions.versions.length > 1 ? (
+                    <>
+                      <div className="tiny mb-12">以下为版本注册表（server/data/law_versions，快照自证）登记的版本时间线；历史版本全文尚未进入检索语料，本页禁用跨版本对比以避免误引。</div>
+                      <div className="list-divided mb-12">
+                        {[...versions.versions].reverse().map((v) => (
+                          <div key={v.version_id} className="list-row" style={{ alignItems: 'flex-start' }}>
+                            <div style={{ minWidth: 0 }}>
+                              <div className="bold" style={{ fontSize: 13 }}>
+                                {v.label}
+                                {v.current && <span className="bdg bdg-green" style={{ marginLeft: 8 }}>现行有效</span>}
+                                {!v.current && <span className="bdg bdg-gray" style={{ marginLeft: 8 }}>历史版本</span>}
+                              </div>
+                              <div className="tiny mt-8">
+                                {v.promulgation_date} {v.promulgation_organ || ''}通过/修正
+                                {v.promulgation_instrument ? ` · ${v.promulgation_instrument}` : ''}
+                                {' · '}{v.effective_date} 施行
+                                {v.article_count != null && ` · ${v.article_count} 条`}
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                      {versions.pending_note && <div className="tiny muted">{versions.pending_note}</div>}
+                    </>
+                  ) : (
+                    <>
+                      <div className="row mb-12">
+                        <select className="sel" style={{ width: 220 }} disabled><option>当前有效版本（{law.effectiveDate} 施行）</option></select>
+                        <Icon name="compare" size={14} className="muted" />
+                        <select className="sel" style={{ width: 220 }} disabled><option>历史版本（待历史版本库建立）</option></select>
+                        <button className="btn btn-primary btn-sm" disabled>对比</button>
+                      </div>
+                      <div className="banner banner-warn"><Icon name="alert" size={15} /><span className="banner-tx">引用不变量：法条引用必须附版本/生效/效力字段。历史版本库未建立前，本页禁用版本对比以避免误引。</span></div>
+                    </>
+                  )}
                 </div>
               )}
             </div>

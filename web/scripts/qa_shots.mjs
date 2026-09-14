@@ -164,6 +164,11 @@ const ROUTES = [
   { name: '40e-public-collections', path: '/collections', audience: 'public', setupSource: `localStorage.setItem('lh:research:list', JSON.stringify([{rid:'r-local-check',question:'不应在公众视图显示的本机研究',ts:'2026-09-08T00:00:00Z'}]));`, identity: pageHeader('我的收藏'), steps: [
     { t: 'eval', expr: `(() => { const body=document.body.innerText||''; return !body.includes('不应在公众视图显示的本机研究')&&![...document.querySelectorAll('.lrow-t')].some(x=>x.textContent==='研究') ? 'public-collections-ok' : 'failed-public-collections' })()` },
   ] },
+  { name: '45-law-versions', path: '/laws/cl-2023?art=287之一', identity: pageHeader('《刑法（2023修正）》第二百八十七条之一'), steps: [
+    { t: 'eval', expr: `(() => { const btn=[...document.querySelectorAll('button')].find(x=>x.textContent.includes('版本对比')); if(!btn) return 'no-version-tab'; btn.click(); return 'clicked' })()` },
+    { t: 'wait', ms: 400 },
+    { t: 'eval', expr: `(() => { const b=document.body.innerText||''; return b.includes('版本注册表') && b.includes('2021 第四次修正') && b.includes('现行有效') ? 'versions-ok' : 'versions-missing' })()` },
+  ] },
   { name: '44-quality', path: '/quality', fullPage: true, identity: pageHeader('质量透明度'), afterText: '不是法律正确率', steps: [
     { t: 'eval', expr: `(() => { const stats=[...document.querySelectorAll('.stat')]; return stats.length >= 4 ? 'quality-stats-ok' : 'quality-stats-short:'+stats.length })()` },
   ] },

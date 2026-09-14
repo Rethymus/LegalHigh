@@ -310,6 +310,15 @@ export const api = {
   lawExplains: (lawId: string) =>
     req<{ law_id: string; explains: Record<string, ArticleExplain> }>(`/laws/${encodeURIComponent(lawId)}/explains`),
 
+  // 版本注册表（S2-T4）：仅多版本登记的法律有数据；未建表返回 404（调用方容错隐藏）
+  lawVersions: (lawId: string) =>
+    req<{
+      law_id: string; title: string
+      versions: { version_id: string; label: string; status: string; promulgation_date: string; promulgation_organ?: string; promulgation_instrument?: string; effective_date: string; article_count: number | null; article_count_note?: string; current: boolean }[]
+      amendments?: { no: string; title: string; passed_date: string; effective: string }[]
+      pending_note: string
+    }>(`/laws/${encodeURIComponent(lawId)}/versions`),
+
   // 原文 + 官方解释 + 具名专业观点；证据覆盖分明确不等于正确率
   lawAnalysisContext: (lawId: string, no: number) =>
     req<LawAnalysisContext>(`/laws/${encodeURIComponent(lawId)}/articles/${no}/analysis-context`),
