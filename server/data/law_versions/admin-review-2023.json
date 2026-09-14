@@ -1,0 +1,45 @@
+{
+  "law_id": "admin-review-2023",
+  "title": "中华人民共和国行政复议法",
+  "schema_version": 1,
+  "note": "S2-T1/历史版本长尾（2026-09-14）：现行版事实取自语料元数据（快照背书）；历史版自维基文库同渠道采集存证，等级【中】。",
+  "versions": [
+    {
+      "version_id": "1999-enacted",
+      "label": "1999 通过",
+      "status": "已取代（2023 修订前文本，仅作历史对照）",
+      "promulgation_date": "1999-04-29",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "promulgation_instrument": "中华人民共和国主席令第十六号",
+      "effective_date": "1999-10-01",
+      "article_count": 43,
+      "current": false,
+      "evidence": {
+        "kind": "wikisource-transcription",
+        "grade": "中",
+        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E8%A1%8C%E6%94%BF%E5%A4%8D%E8%AE%AE%E6%B3%95_(1999%E5%B9%B4)",
+        "accessed_at": "2026-09-14",
+        "snapshot": "docs/research/evidence/ws_行政复议法1999.html"
+      }
+    },
+    {
+      "version_id": "2023-revision",
+      "label": "2023 修订",
+      "status": "现行有效（2023修订）",
+      "promulgation_date": "2023-09-01",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "promulgation_instrument": "中华人民共和国主席令第九号",
+      "effective_date": "2024-01-01",
+      "article_count": 90,
+      "current": true,
+      "evidence": {
+        "kind": "wikisource-transcription",
+        "grade": "中",
+        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E8%A1%8C%E6%94%BF%E5%A4%8D%E8%AE%AE%E6%B3%95_(2023%E5%B9%B4)",
+        "accessed_at": "2026-09-14",
+        "snapshot": "docs/research/evidence/npc_行政复议法2023.html"
+      }
+    }
+  ],
+  "pending_note": "2009/2017 修正版全文未采集，不预填。"
+}

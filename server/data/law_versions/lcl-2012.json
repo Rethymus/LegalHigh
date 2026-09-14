@@ -1,0 +1,44 @@
+{
+  "law_id": "lcl-2012",
+  "title": "中华人民共和国劳动合同法",
+  "schema_version": 1,
+  "note": "S2-T1/历史版本长尾（2026-09-14）：现行版事实取自语料元数据（快照背书）；历史版自维基文库同渠道采集存证，等级【中】。",
+  "versions": [
+    {
+      "version_id": "2007-enacted",
+      "label": "2007 通过",
+      "status": "已取代（2012 修正前文本，仅作历史对照）",
+      "promulgation_date": "2007-06-29",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "promulgation_instrument": "中华人民共和国主席令第六十五号",
+      "effective_date": "2008-01-01",
+      "article_count": 98,
+      "current": false,
+      "evidence": {
+        "kind": "wikisource-transcription",
+        "grade": "中",
+        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E5%8B%9E%E5%8B%95%E5%90%88%E5%90%8C%E6%B3%95_(2007%E5%B9%B4)",
+        "accessed_at": "2026-09-14",
+        "snapshot": "docs/research/evidence/ws_劳动合同法2007.html"
+      }
+    },
+    {
+      "version_id": "2012-amendment",
+      "label": "2012 修正",
+      "status": "现行有效（2012修正）",
+      "promulgation_date": "2012-12-28",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2013-07-01",
+      "article_count": 98,
+      "current": true,
+      "evidence": {
+        "kind": "wikisource-transcription",
+        "grade": "中",
+        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E5%8B%9E%E5%8B%95%E5%90%88%E5%90%8C%E6%B3%95_(2012%E5%B9%B4)",
+        "accessed_at": "2026-09-14",
+        "snapshot": "docs/research/evidence/gjxfj_劳动争议调解仲裁法2007.html"
+      }
+    }
+  ],
+  "pending_note": "2012 修正决定主席令号快照未载（语料元数据 promulgation_instrument 为 null），待 flk 核对。"
+}
