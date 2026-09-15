@@ -207,7 +207,12 @@ cd web
 npm run build
 node scripts\qa_gates.mjs
 node scripts\qa_contrast.mjs --strict
+node scripts\qa_motion.mjs
+node scripts\qa_a11y.mjs --strict
+node scripts\qa_offline.mjs
 ```
+
+后三支为行为探针（headless Chrome）：动效物理、WCAG 2.2 AA 子集、PWA 真断网验收（离线探针需先 `npm run build`）。
 
 `final_verify.py` 默认自行建立临时 SQLite 并清理，不会接触 `server/data/app.db`。视觉巡检默认只读；只有同时传入 `--write-e2e --isolated-db` 才允许创建测试记录。
 

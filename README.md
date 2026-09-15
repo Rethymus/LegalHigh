@@ -115,7 +115,7 @@ cd web && npm ci && npm run dev
 | [源码预发布 / Source prerelease](https://github.com/Rethymus/LegalHigh/releases/tag/v1.1.0-rc.1) | 本机运行完整工作流；包含源码、静态站点 ZIP 和 SHA-256。 / Run the full workflow locally; source, static-site ZIP and SHA-256 checksums. |
 | 桌面候选包 / Desktop candidates | 三平台安装、签名与升级验收尚未完成，本次不附桌面安装器。 / Install, signature and upgrade verification are incomplete; no installers in this release. |
 
-本次版本为 **v1.1.0-rc.1（预发布）**，已记录的本地验收为 182 项后端测试、48 路由浏览器巡检及 1 项专业解读页定向巡检；以链接中的具体断言和日期为准，不代表法律正确率。旧 v1.0.0 安装包不包含此后修复。
+本次版本为 **v1.1.0-rc.1（预发布）**，已记录的本地验收为 182 项后端测试、48 路由浏览器巡检及 1 项专业解读页定向巡检；以链接中的具体断言和日期为准，不代表法律正确率。（该口径为 rc.1 发布时点；主干此后持续演进，当前实测数字见下方质量表。）旧 v1.0.0 安装包不包含此后修复。
 
 核心公开链路是六步「事实与证据梳理」：使用者自己记录起因、经过、结果、人员、材料和问题，系统仅据此检索可回溯来源并给出有事实依据的候选方向；未知就明确标未知，不自动判案。首次使用必须在普通民众、法学学生和专业律师三种本机视图中自行选择（不采集姓名、不是资格认证）；法条与案例检索对三类视图始终开放，合同、文书与专业工作台仅在专业律师视图出现。
 
@@ -123,13 +123,15 @@ cd web && npm ci && npm run dev
 
 | 门禁 / Gate | 内容 / What it checks |
 |---|---|
-| 后端测试 / Backend tests | 182 项 pytest（引用绑定、状态机、PIPL 级联、fail-closed 等） |
-| 浏览器巡检 / Route sweeps | 无头 Chrome 逐路由截图 + console/网络零错误门（记录于 2026-09-08） |
+| 后端测试 / Backend tests | 210 项 pytest（引用绑定、状态机、PIPL 级联、fail-closed、评测单调性等；2026-09-15 实测） |
+| 浏览器巡检 / Route sweeps | 无头 Chrome 逐路由截图 + console/网络零错误门（58 路由，2026-09-15 实测 0 问题） |
 | 对比度 / Contrast | WCAG AA 正文 4.5:1 + UI 指示器 3:1（strict 模式） |
-| 动效探针 / Motion probes | 弹簧位移、Toast/Dialog 卸载、Reduce Motion 双通道等 11 项行为断言（2026-09-13 实测 11/11） |
+| 动效探针 / Motion probes | 弹簧位移、Toast/Dialog 卸载、Reduce Motion 双通道等 11 项行为断言（2026-09-15 实测 11/11） |
+| 可访问性探针 / A11y probes | WCAG 2.2 AA 子集（24px 目标尺寸 / 焦点不被遮挡；14 路由，2026-09-15 实测 0 违规） |
+| 离线探针 / Offline probes | PWA service worker 真断网验收：离线导航/法条/术语可读、恢复在线（7 断言，2026-09-15 实测 7/7） |
 | 发布前核验 / Final verify | `server/scripts/final_verify.py` 对运行中实例做十项 API 真值断言 |
 
-应用内 [质量透明度页](/quality) 只读公示实时派生指标与带日期历史记录。自动化测试只能证明被覆盖的断言，不能证明系统「绝不出错」；检索评测（金标 106 组，hit@5 0.97）衡量的是语料命中率，不是法律正确率。
+应用内 [质量透明度页](/quality) 只读公示实时派生指标与带日期历史记录。自动化测试只能证明被覆盖的断言，不能证明系统「绝不出错」；检索评测（金标 168 组，hit@5 95.8%、rank-1 68.5%；2026-09-15 实测）衡量的是语料命中率，不是法律正确率。
 
 ## 🗂 目录结构 · Repository layout
 

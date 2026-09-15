@@ -191,7 +191,12 @@ cd web
 npm run build
 node scripts\qa_gates.mjs
 node scripts\qa_contrast.mjs --strict
+node scripts\qa_motion.mjs
+node scripts\qa_a11y.mjs --strict
+node scripts\qa_offline.mjs
 ```
+
+The last three are behavior probes (headless Chrome): motion physics, WCAG 2.2 AA subset, and a real-offline PWA acceptance (the offline probe requires `npm run build` first).
 
 `final_verify.py` creates and cleans up its own temporary SQLite and never touches `server/data/app.db`. Visual sweeps are read-only by default; creating test records requires both `--write-e2e --isolated-db`.
 
