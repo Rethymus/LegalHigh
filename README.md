@@ -133,6 +133,16 @@ cd web && npm ci && npm run dev
 
 应用内 [质量透明度页](/quality) 只读公示实时派生指标与带日期历史记录。自动化测试只能证明被覆盖的断言，不能证明系统「绝不出错」；检索评测（金标 168 组，hit@5 95.8%、rank-1 68.5%；2026-09-15 实测）衡量的是语料命中率，不是法律正确率。
 
+## 🔌 MCP Server · AI 助手接入
+
+LegalHigh 的引用绑定法条检索可作为 **Model Context Protocol 服务器**接入任一 MCP 客户端（Claude、Cursor 等）——零第三方依赖（纯标准库 stdio 传输）：
+
+```bash
+python server/mcp_server.py
+```
+
+三工具：`search_articles`（BM25 全文检索法条原文）、`get_article`（按 ID+条号取原文与元数据）、`list_laws`（语料清单）。**只暴露检索，无任何生成型工具**；输出永远为法条原文+元数据+官方来源 URL，并声明「不构成法律意见」。详见 [v7 路线图](docs/plan/开发计划-v7-生态就绪路线图-2026-09.md) S2。
+
 ## 🗂 目录结构 · Repository layout
 
 ```text
