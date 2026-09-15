@@ -1,0 +1,13 @@
+{
+  "fetchedAt": "2026-09-15",
+  "source": "https://flk.npc.gov.cn（flfgDetails 官方接口，只读）",
+  "bbbs": "2c909fdd678bf17901678bf5a483004b",
+  "title": "中华人民共和国宪法（2018年修正文本）",
+  "gbrq": "2018-03-11",
+  "sxrq": "2018-03-11",
+  "zdjgName": "全国人民代表大会",
+  "totalArticles": 143,
+  "first": "第一条",
+  "last": "第一百四十三条",
+  "note": "官方结构树条号序列第一→第一百四十三条连续无缺，与语料 con-2018 一致（浏览器转录目验）。"
+}
