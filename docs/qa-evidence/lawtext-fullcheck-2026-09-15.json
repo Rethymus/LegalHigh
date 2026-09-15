@@ -1,36 +1,26 @@
 {
  "checkedAt": "2026-09-15",
- "channel": "lawtext/laws（flk 官方 DOCX 转录，CJK 粒度）",
+ "channel": "lawtext/laws（flk DOCX 转录，CJK 粒度，终值）",
  "results": [
   {
    "law_id": "admin-litigation-2017",
-   "title": "中华人民共和国行政诉讼法",
    "matched": true,
-   "bbbs": "2c909fdd678bf17901678bf858550a0f",
    "articles": 103,
    "seq_ok": true,
-   "text_diff": 1,
-   "diff_keys": [
-    "103"
-   ]
+   "text_diff": 0,
+   "diff_keys": []
   },
   {
    "law_id": "admin-review-2023",
-   "title": "中华人民共和国行政复议法",
    "matched": true,
-   "bbbs": "ff8081818a21e6c3018a508d491a0c98",
    "articles": 90,
    "seq_ok": true,
-   "text_diff": 1,
-   "diff_keys": [
-    "90"
-   ]
+   "text_diff": 0,
+   "diff_keys": []
   },
   {
    "law_id": "civl-2020",
-   "title": "中华人民共和国民法典",
    "matched": true,
-   "bbbs": "ff808081729d1efe01729d50b5c500bf",
    "articles": 1260,
    "seq_ok": true,
    "text_diff": 0,
@@ -38,9 +28,7 @@
   },
   {
    "law_id": "cl-2013",
-   "title": "中华人民共和国消费者权益保护法",
    "matched": true,
-   "bbbs": "2c909fdd678bf17901678bf7670606ef",
    "articles": 63,
    "seq_ok": true,
    "text_diff": 0,
@@ -58,9 +46,7 @@
   },
   {
    "law_id": "cpl-2018",
-   "title": "中华人民共和国刑事诉讼法",
    "matched": true,
-   "bbbs": "ff8080816f135f46016f1d1b81b01351",
    "articles": 308,
    "seq_ok": true,
    "text_diff": 308,
@@ -70,7 +56,9 @@
     "3",
     "4",
     "5",
-    "6"
+    "6",
+    "7",
+    "8"
    ]
   },
   {
@@ -80,33 +68,23 @@
   },
   {
    "law_id": "csl-2025",
-   "title": "中华人民共和国网络安全法",
    "matched": true,
-   "bbbs": "021e7d7684474107b8f3febbb1c4f8b5",
    "articles": 81,
    "seq_ok": true,
-   "text_diff": 1,
-   "diff_keys": [
-    "81"
-   ]
+   "text_diff": 0,
+   "diff_keys": []
   },
   {
    "law_id": "dsl-2021",
-   "title": "中华人民共和国数据安全法",
    "matched": true,
-   "bbbs": "ff80818179f5e0800179f885c7e70392",
    "articles": 55,
    "seq_ok": true,
-   "text_diff": 1,
-   "diff_keys": [
-    "55"
-   ]
+   "text_diff": 0,
+   "diff_keys": []
   },
   {
    "law_id": "dv-2015",
-   "title": "中华人民共和国反家庭暴力法",
    "matched": true,
-   "bbbs": "2c909fdd678bf17901678bf7f9d60889",
    "articles": 38,
    "seq_ok": true,
    "text_diff": 0,
@@ -114,9 +92,7 @@
   },
   {
    "law_id": "ecom-2018",
-   "title": "中华人民共和国电子商务法",
    "matched": true,
-   "bbbs": "2c909fdd678bf17901678bf8af050b81",
    "articles": 89,
    "seq_ok": true,
    "text_diff": 2,
@@ -127,9 +103,7 @@
   },
   {
    "law_id": "food-safety-2021",
-   "title": "中华人民共和国食品安全法",
    "matched": true,
-   "bbbs": "ff8081817ab22e0c017abd8d85a205f1",
    "articles": 154,
    "seq_ok": true,
    "text_diff": 2,
@@ -145,9 +119,7 @@
   },
   {
    "law_id": "htjs-2023",
-   "title": "最高人民法院关于适用《中华人民共和国民法典》合同编通则若干问题的解释",
    "matched": true,
-   "bbbs": "ff8081818c24e05b018c814e6de45ab5",
    "articles": 69,
    "seq_ok": true,
    "text_diff": 7,
@@ -157,26 +129,21 @@
     "25",
     "32",
     "46",
-    "51"
+    "51",
+    "58"
    ]
   },
   {
    "law_id": "lcar-2007",
-   "title": "中华人民共和国劳动争议调解仲裁法",
    "matched": true,
-   "bbbs": "2c909fdd678bf17901678bf64f28039d",
    "articles": 54,
    "seq_ok": true,
-   "text_diff": 1,
-   "diff_keys": [
-    "54"
-   ]
+   "text_diff": 0,
+   "diff_keys": []
   },
   {
    "law_id": "lcl-2012",
-   "title": "中华人民共和国劳动合同法",
    "matched": true,
-   "bbbs": "2c909fdd678bf17901678bf74d7106b3",
    "articles": 98,
    "seq_ok": true,
    "text_diff": 0,
@@ -184,21 +151,15 @@
   },
   {
    "law_id": "legal-aid-2021",
-   "title": "中华人民共和国法律援助法",
    "matched": true,
-   "bbbs": "ff8081817b6472a3017b6577820f0061",
    "articles": 71,
    "seq_ok": true,
-   "text_diff": 1,
-   "diff_keys": [
-    "71"
-   ]
+   "text_diff": 0,
+   "diff_keys": []
   },
   {
    "law_id": "ll-2017",
-   "title": "中华人民共和国律师法",
    "matched": true,
-   "bbbs": "2c909fdd678bf17901678bf867e80a55",
    "articles": 60,
    "seq_ok": true,
    "text_diff": 0,
@@ -206,21 +167,15 @@
   },
   {
    "law_id": "minor-2024",
-   "title": "中华人民共和国未成年人保护法",
    "matched": true,
-   "bbbs": "ff8081818f197cf001905e567af635a0",
    "articles": 132,
    "seq_ok": true,
-   "text_diff": 1,
-   "diff_keys": [
-    "132"
-   ]
+   "text_diff": 0,
+   "diff_keys": []
   },
   {
    "law_id": "pcl-2023",
-   "title": "中华人民共和国民事诉讼法",
    "matched": true,
-   "bbbs": "ff8081818a21dc13018b425303b7086d",
    "articles": 306,
    "seq_ok": true,
    "text_diff": 0,
@@ -228,33 +183,23 @@
   },
   {
    "law_id": "penal-2021",
-   "title": "中华人民共和国行政处罚法",
    "matched": true,
-   "bbbs": "ff8080817703add20177373df6a43e33",
    "articles": 86,
    "seq_ok": true,
-   "text_diff": 1,
-   "diff_keys": [
-    "86"
-   ]
+   "text_diff": 0,
+   "diff_keys": []
   },
   {
    "law_id": "pipl-2021",
-   "title": "中华人民共和国个人信息保护法",
    "matched": true,
-   "bbbs": "ff8081817b6472a3017b656cc2040044",
    "articles": 74,
    "seq_ok": true,
-   "text_diff": 1,
-   "diff_keys": [
-    "74"
-   ]
+   "text_diff": 0,
+   "diff_keys": []
   },
   {
    "law_id": "psm-2025",
-   "title": "中华人民共和国治安管理处罚法",
    "matched": true,
-   "bbbs": "ff80818197af9ccc0197b159c38a0408",
    "articles": 144,
    "seq_ok": true,
    "text_diff": 0,
@@ -262,9 +207,7 @@
   },
   {
    "law_id": "scl-2012",
-   "title": "中华人民共和国国家赔偿法",
    "matched": true,
-   "bbbs": "2c909fdd678bf17901678bf74c26069f",
    "articles": 42,
    "seq_ok": true,
    "text_diff": 0,
@@ -272,9 +215,7 @@
   },
   {
    "law_id": "social-ins-2018",
-   "title": "中华人民共和国社会保险法",
    "matched": true,
-   "bbbs": "ff8080816f135f46016f210989b9179a",
    "articles": 98,
    "seq_ok": true,
    "text_diff": 0,
@@ -282,9 +223,7 @@
   },
   {
    "law_id": "wlxf-2022",
-   "title": "最高人民法院关于审理网络消费纠纷案件适用法律若干问题的规定（一）",
    "matched": true,
-   "bbbs": "ff80818181cdd7a70181d65a7e48303f",
    "articles": 20,
    "seq_ok": true,
    "text_diff": 0,
@@ -292,9 +231,7 @@
   },
   {
    "law_id": "women-2022",
-   "title": "中华人民共和国妇女权益保障法",
    "matched": true,
-   "bbbs": "ff808181841257210184281512de0eec",
    "articles": 86,
    "seq_ok": true,
    "text_diff": 0,

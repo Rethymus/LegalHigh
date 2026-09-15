@@ -139,7 +139,11 @@ def _collect_headings(text: str):
     return headings
 
 
-_SOURCE_FURNITURE = ("本作品来自", "人民智云", "查论编", "责编：", "责编", "公开征求意见")
+_SOURCE_FURNITURE = (
+    "本作品来自", "人民智云", "查论编", "责编：", "责编", "编辑：", "公开征求意见",
+    # R108 补充：政府网/信访局/网信办页脚变体（lawtext 全量比对暴露）
+    "版权所有", "责任编辑", "关闭中央网络安全和信息化委员会办公室", "主办单位", "新华社电", "转载来源", "转载时间", "转载链接", "著作权法第五条", "本作品不适用于该法", "本作品是由", "Public domain", "网站备案号", "公安备案号", "网站标识码", "扫一扫在手机打开当前页",
+)
 
 
 def strip_source_furniture(text: str) -> str:
@@ -151,10 +155,15 @@ def strip_source_furniture(text: str) -> str:
     """
     cut = len(text)
     for marker in _SOURCE_FURNITURE:
-        i = text.find(marker)
-        if i >= 0:
-            cut = min(cut, i)
+        # 页脚字符间可能被快照排版插入空白/换行（如「责 编」）——按字符弹性空白匹配
+        pat = re.compile(r"\s*".join(re.escape(ch) for ch in marker))
+        m = pat.search(text)
+        if m:
+            cut = min(cut, m.start())
     text = text[:cut].rstrip()
+    text = re.sub(r"<!--[\s\S]*$", "", text).rstrip()  # HTML 注释残尾
+    text = re.sub(r"-->\s*$", "", text).rstrip()
+    text = re.sub(r"[\n\t\s]*（\s*$", "", text).rstrip()  # 孤立开括号残片
     tail = re.search(r"。([^。]{1,30})$", text)
     if tail and re.match(r"^\s*第[一二三四五六七八九十]+[节章编]", tail.group(1)):
         text = text[: tail.start() + 1]

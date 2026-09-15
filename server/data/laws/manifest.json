@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-15T19:57:22.665915",
+  "built_at": "2026-09-15T20:25:40.879901",
   "fetch_date": "2026-09-08",
   "laws": [
     {
@@ -215,7 +215,7 @@
       "snapshot": "docs/research/evidence/消保法实施条例_govcn.html",
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "d80073087b9792f844381290613dcd56a8d2efc8155bafde0996f6e56d1b9d8f",
-      "output_sha256": "af4a6d034e1b73446290d01b002f2e71e180316e7b1e69c844a926904841740f"
+      "output_sha256": "a90427f31b0007ac0d2ade9415558c641351fcc5ba5f5720405716f639e84922"
     },
     {
       "law_id": "genai-2023",
@@ -238,7 +238,7 @@
       "snapshot": "docs/research/evidence/生成式AI办法_govcn.html",
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "00bd290a9d14e7354b7131d30255daae26ce7ff73588483cbeb2030f56878277",
-      "output_sha256": "89ef49818a0b410a8a7f93315b07ddd3f45ff649c39f7f532f5c2679f1ee5973"
+      "output_sha256": "cca3811881e389eb2fa803991b8c1e34505f7b110af1703179fd4a67b84904d5"
     },
     {
       "law_id": "scl-2012",
@@ -284,7 +284,7 @@
       "snapshot": "docs/research/evidence/ws_刑法2023.html",
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "6880bf5092f6fcde0a40968bc2cb2ef43376c8ca096c0db11b44f0f20b962f0c",
-      "output_sha256": "a0fcf62a5e3df082f3891bab28cc9cfd57c9ae3b49cf23a477b2082a044e77bd"
+      "output_sha256": "8f30203f800ac627fd78342817eb11f1c445fbcb4dd71a061ad48f442a97add1"
     },
     {
       "law_id": "dv-2015",
@@ -376,7 +376,7 @@
       "snapshot": "docs/research/evidence/ws_宪法2018.html",
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "327c5c2e73477a5b3112f74afdd69d94b2f079fba9feea38acbab2cd5c6d79a1",
-      "output_sha256": "e341be9d29a703bee22672460640d79085586c9302cdc455c810d3b4590cbb21"
+      "output_sha256": "eae094c8342c5d5128de7e14ae9822fd8cadf28ab836d46d4ac402ee083c46cd"
     },
     {
       "law_id": "cpl-2018",
@@ -399,7 +399,7 @@
       "snapshot": "docs/research/evidence/gov_刑事诉讼法2018.html",
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "697b4d68ce2d8b08acf13d62f19d3443599a8c5857685d9967e747d08a49452e",
-      "output_sha256": "b3b47261a42bb80643c164118f965b200bb6e45ca2432f7cc1ce8c9cf00a5551"
+      "output_sha256": "4b4e7d332818cfc8861390d069b82ace409831723381a20aabf2c803dff445f0"
     },
     {
       "law_id": "lcar-2007",
@@ -422,7 +422,7 @@
       "snapshot": "docs/research/evidence/gjxfj_劳动争议调解仲裁法2007.html",
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "cebba3b9e3f80e0774dc71226b188a5ac7045764f72d7945fbc9131d6a09c2df",
-      "output_sha256": "1cba01f7919f7d1beac99c805ca3e5c6ba0ad21035321927487bedfe8a8c9947"
+      "output_sha256": "96b290fb9547cf2426f282c5d5b5a2dd5570864ee7b647f2439c57605f7a14ce"
     },
     {
       "law_id": "dsl-2021",
@@ -445,7 +445,7 @@
       "snapshot": "docs/research/evidence/cac_数据安全法2021.html",
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "8eb14247c4b7fae5f499e5a5bcb5b7d58ad91c9585d819c42d5a3b5bab133f4b",
-      "output_sha256": "98105a62aa594b27b43feede892d648a9d899b1d4052d7ea6edf3cf2611174a7"
+      "output_sha256": "73be1ccaa6a565ba6da0341e487d9ec79e448769ce8932acf0bd9cf8dca0ec12"
     },
     {
       "law_id": "csl-2025",
@@ -468,7 +468,7 @@
       "snapshot": "docs/research/evidence/cac_网络安全法2025.html",
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "996925d52a92735a0f9ef4506b7254086ae9ef591a9ea36a6e091788d04fcdc9",
-      "output_sha256": "0340182a024963f3fe9fc5b19f58b2e94247e539d51487534c606d465315dc71"
+      "output_sha256": "62738e02d5cd86037149e0c2b319658f67d56e73083201cd884a3f079dc93856"
     },
     {
       "law_id": "penal-2021",
@@ -491,7 +491,7 @@
       "snapshot": "docs/research/evidence/people_行政处罚法2021.html",
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "502c01f2d29a6bbae34b7167698acf0bbd9bfb105eedf425625cde2d9ee3741b",
-      "output_sha256": "efb52aac8773d940db43b603822245ef9eb5511e0eb54813d48d2d4f5643c329"
+      "output_sha256": "3e5a7c1f765f0d9604ae1f47a93391b0a02bb4e23777feb2be0fa8644ff43ce4"
     },
     {
       "law_id": "women-2022",
@@ -537,7 +537,7 @@
       "snapshot": "docs/research/evidence/gov_未成年人保护法2024.html",
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "b55ea0109183e23f2a80c09341daff130983c46fd06d27e5f41fa4e758808531",
-      "output_sha256": "233b47457a814f278cb66c680a9114afa0bd858ba4f57380bbf600a7a97c06a1"
+      "output_sha256": "dccb46257857c7b70b8b3d1d7e611fb0e02b6e5e4804d00d7950c62f31be0798"
     },
     {
       "law_id": "psm-2025",
@@ -583,7 +583,7 @@
       "snapshot": "docs/research/evidence/npc_个人信息保护法2021.html",
       "fetched_at": "2026-09-08",
       "snapshot_sha256": "23eeb747cb57b852929e30906c51b5816095dc43977868543a4bce5b3540b429",
-      "output_sha256": "c26fa5836e2702bcff7962441fb021e18e1a892e5e255a5271cd039103ffb809"
+      "output_sha256": "b5f165f13cb69f0d286a595b831c862f46fe9d2258e663812a3a138e71c031a4"
     },
     {
       "law_id": "legal-aid-2021",
@@ -606,7 +606,7 @@
       "snapshot": "docs/research/evidence/npc_法律援助法2021.html",
       "fetched_at": "2026-09-08",
       "snapshot_sha256": "972cf1394cb958cd14db64a8ce96348c4478fd730f9ff0b5b2f92a310b081910",
-      "output_sha256": "c63d7a043a2e4a501b58e5cdb8171c05f50cf8d80fcfb2cc8711e5afe0a4da8f"
+      "output_sha256": "d387fcd8bb7fc5ad9f71555bae30cfe395f01421ba8d36f176bf7d4eb883ecf6"
     },
     {
       "law_id": "admin-review-2023",
@@ -629,7 +629,7 @@
       "snapshot": "docs/research/evidence/npc_行政复议法2023.html",
       "fetched_at": "2026-09-08",
       "snapshot_sha256": "a86e57e7aa2b1568ad6445008ed226d953bdf1993647486db70b1a0b544a03c6",
-      "output_sha256": "83031838148d68e6839b1ca7093b02bfd6f36161b367250c8bcb1327444e2ec2"
+      "output_sha256": "596be24858856e933cebddff20be17b5359e117aabff4224614fcab99505f832"
     },
     {
       "law_id": "admin-litigation-2017",
@@ -652,7 +652,7 @@
       "snapshot": "docs/research/evidence/npc_行政诉讼法2017.html",
       "fetched_at": "2026-09-08",
       "snapshot_sha256": "bc0ab2282880cbed44b0e36f71f63dc15282b60709c15434c4b885731758ac96",
-      "output_sha256": "81e7d8ab98e4b2aa619ecdc01449668d7b0a5c4e0853913e68aed338b2227984"
+      "output_sha256": "8b8ce20d0197eff95516c68116fa3783e4189a468d4fcd88a31a7aaf74e56028"
     }
   ]
 }
