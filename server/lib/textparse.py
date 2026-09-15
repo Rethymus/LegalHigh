@@ -170,6 +170,24 @@ def strip_source_furniture(text: str) -> str:
     return text.rstrip()
 
 
+_ENUM_END = "、，"
+
+
+def _prev_char_in_enumeration(text: str, start: int) -> bool:
+    """候选条号行之前的上一非空字符是否为顿号/逗号。
+
+    +1 跳转守则（R109）：行首出现的「第N条」若紧接顿号/逗号（如第二款内
+    「…除前款和本法第一百二十三条、第一百二十五条规定的情形外…」被排版
+    换行至行首），为枚举中列的交叉引用，不得据此切条。
+    """
+    i = start - 1
+    while i >= 0 and text[i] in "\t\n\r \u3000\u00a0":
+        i -= 1
+    if i < 0:
+        return False
+    return text[i] in _ENUM_END
+
+
 def split_articles(text: str):
     """顺序递增校验切条。返回 (articles, expected_next_no)。
 
@@ -194,6 +212,8 @@ def split_articles(text: str):
     allowed = {(1, 0)}
     for start, end, n, s, label in candidates:
         if (n, s) in allowed:
+            if (n, s) == (cur_no + 1, 0) and cur_no > 0 and _prev_char_in_enumeration(text, start):
+                continue  # +1 跳转守则：前行非句末收尾，判为正文内交叉引用
             accepted.append((start, end, n, s, label))
             cur_no, cur_sub = n, s
             allowed = {(n, s + 1), (n + 1, 0)}

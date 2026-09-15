@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-15T20:25:40.879901",
+  "built_at": "2026-09-15T20:54:29.899629",
   "fetch_date": "2026-09-08",
   "laws": [
     {
@@ -353,7 +353,7 @@
       "snapshot": "docs/research/evidence/ws_食品安全法.html",
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "e83ff64a6943d5031bccad1fa234666dc95328d0b8887dcf0fe4fd0adff8f8bb",
-      "output_sha256": "832163256a799fee1eee9c855133d0d2add449982eb43e80d8353381b33bf36c"
+      "output_sha256": "4054a7cf56b68178606b095b5bbd709841dc15e3078152917ee66f50e6f0e195"
     },
     {
       "law_id": "con-2018",

@@ -106,3 +106,35 @@ def test_manifest_snapshot_and_output_hashes_match():
         # 但不能武断要求 accessed_at 早于 fetched_at。
         assert evidence.get("accessed_at")
     assert manifest["fetch_date"] == max(item["fetched_at"] for item in manifest["laws"])
+
+
+def test_split_articles_plus1_crossref_guard():
+    """切分器 +1 跳转守则（R109）：第二款内行首的 +1 交叉引用不得误切。
+
+    真实案例：食品安全法第 124 条第二款「…除前款和本法第一百二十三条、
+    第一百二十五条规定的情形外…」被排版换行后，「第一百二十五条」处于行首
+    且构成 (n+1, base) 合法跳转——守则要求前行以句末标点收尾，顿号处拒绝。
+    """
+    from lib.textparse import split_articles
+
+    # 反例：第二款内的行首「第三条」交叉引用（前行以顿号收尾）被守则拒绝
+    bad = (
+        "第一条 为了规范处罚活动，制定本规定。\n"
+        "第二条 违反本规定，有下列情形之一的，给予处罚：\n"
+        "（一）情节严重的；\n"
+        "（二）除前款和本法第一条、\n"
+        "第三条规定的情形外，给予二千元以下罚款。"
+    )
+    arts, _ = split_articles(bad)
+    nos = [a["no"] for a in arts]
+    assert nos == [1, 2], nos  # 行首 +1 引用被守则拒绝
+    assert "第三条规定的情形外" in arts[1]["text"]
+
+    # 正例：真实新条（前行以句号收尾）不受守则影响
+    good = (
+        "第一条 为了规范处罚活动，制定本规定。\n"
+        "第二条 违反本规定的，给予二千元以下罚款。\n"
+        "第三条 明知从事前款违法行为的，仍为其提供生产经营场所的，责令改正。"
+    )
+    arts2, _ = split_articles(good)
+    assert [a["no"] for a in arts2] == [1, 2, 3]  # 真实新条不受守则影响
