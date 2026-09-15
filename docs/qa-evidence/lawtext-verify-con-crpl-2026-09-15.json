@@ -1,0 +1,22 @@
+[
+ {
+  "law_id": "con-2018",
+  "ours": 143,
+  "lawtext_entries": 143,
+  "seq_ok": true,
+  "text_mismatch": [
+   "143"
+  ],
+  "missing_in_lawtext": []
+ },
+ {
+  "law_id": "crpl-imp-2024",
+  "ours": 53,
+  "lawtext_entries": 53,
+  "seq_ok": true,
+  "text_mismatch": [
+   "53"
+  ],
+  "missing_in_lawtext": []
+ }
+]

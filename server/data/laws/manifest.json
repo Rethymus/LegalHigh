@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-15T21:11:55.102188",
+  "built_at": "2026-09-15T22:24:18.363941",
   "fetch_date": "2026-09-08",
   "laws": [
     {
@@ -215,7 +215,7 @@
       "snapshot": "docs/research/evidence/消保法实施条例_govcn.html",
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "d80073087b9792f844381290613dcd56a8d2efc8155bafde0996f6e56d1b9d8f",
-      "output_sha256": "a90427f31b0007ac0d2ade9415558c641351fcc5ba5f5720405716f639e84922"
+      "output_sha256": "5ee4009e4c1c5b840155255e06b144413e01a308667cf56e94531c67662a0456"
     },
     {
       "law_id": "genai-2023",
@@ -376,7 +376,7 @@
       "snapshot": "docs/research/evidence/ws_宪法2018.html",
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "327c5c2e73477a5b3112f74afdd69d94b2f079fba9feea38acbab2cd5c6d79a1",
-      "output_sha256": "eae094c8342c5d5128de7e14ae9822fd8cadf28ab836d46d4ac402ee083c46cd"
+      "output_sha256": "5ae65dbfc314cdb8280acf5780d79e83ca1b26b054961415a81071c6900600d1"
     },
     {
       "law_id": "cpl-2018",
