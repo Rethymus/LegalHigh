@@ -7,7 +7,10 @@ import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..')
-const today = new Date().toISOString().slice(0, 10)
+// 确定性构建：日期一律从语料 manifest 派生（壁钟日期会让每次构建产生 diff 噪声，违背可复现哲学）
+const manifestPath0 = resolve(root, 'server/data/laws/manifest.json')
+const manifest0 = JSON.parse(readFileSync(manifestPath0, 'utf-8'))
+const buildDate = String(manifest0.built_at || manifest0.fetch_date || '').slice(0, 10)
 
 const terms = JSON.parse(readFileSync(resolve(root, 'web/src/data/terms.json'), 'utf-8'))
 const manifestPath = resolve(root, 'server/data/laws/manifest.json')
@@ -16,7 +19,8 @@ if (existsSync(manifestPath)) {
   const m = JSON.parse(readFileSync(manifestPath, 'utf-8'))
   const laws = m.laws ?? []
   const articles = laws.reduce((s, l) => s + (l.article_count ?? 0), 0)
-  corpusLine = `受控语料 ${laws.length} 部 / ${articles} 条文条目（${today}，构建期从语料 manifest 派生），每部均带官方来源快照与版本注册表`
+  const fetchDate = String(m.fetch_date || buildDate)
+  corpusLine = `受控语料 ${laws.length} 部 / ${articles} 条文条目（语料抓取 ${fetchDate}，构建期从语料 manifest 派生），每部均带官方来源快照与版本注册表`
 }
 const casesPath = resolve(root, 'server/data/cases.json')
 let caseLine = '案例库规模见案例检索页'
@@ -32,7 +36,7 @@ const disclaimer = 'LegalHigh 是普法用途的法律知识库原型：内容�
 const index = `# LegalHigh · 法律智能知识库
 
 > ${disclaimer}
-> 本文件按 llms.txt v2 规范生成（构建日期 ${today}），供 AI 助手正确引用本项目口径；外部引用请以官方来源为准。
+> 本文件按 llms.txt v2 规范生成（构建日期 ${buildDate}），供 AI 助手正确引用本项目口径；外部引用请以官方来源为准。
 
 ## 项目定位
 
@@ -57,7 +61,7 @@ const index = `# LegalHigh · 法律智能知识库
 const full = `# LegalHigh · 法律智能知识库（全文版）
 
 > ${disclaimer}
-> 生成日期 ${today}。本文件为 llms.txt 的全文版：术语卡逐条列出（含语料条文引用）。
+> 生成日期 ${buildDate}。本文件为 llms.txt 的全文版：术语卡逐条列出（含语料条文引用）。
 
 ## 项目口径
 
