@@ -68,6 +68,12 @@ export function audienceLabel(mode: AudienceMode): string {
   return AUDIENCE_OPTIONS.find((item) => item.mode === mode)?.title ?? '未选择'
 }
 
+/** 是否为已登记路由（与 canAudienceAccess 同源）：用于区分「已登记但当前视图收口」
+ * 与「路径不存在」两种未命中情形——后者应展示 404 而非误导性的「未开放」。 */
+export function isKnownRoute(pathname: string): boolean {
+  return /\/(search|laws|cases|collections|data-sources|settings|needs|case-analysis|guide|terms|quality|process|research|learning|comparative|contracts|compare|draft|workspace|audit)(\/|$)/.test(pathname) || pathname === '/'
+}
+
 /** 路由防线与导航共用的访问规则；法规和案例相关路由始终对三类受众开放。 */
 export function canAudienceAccess(pathname: string, mode: AudienceMode): boolean {
   if (/^\/(search|laws|cases|collections|data-sources|settings)(\/|$)/.test(pathname) || pathname === '/') return true

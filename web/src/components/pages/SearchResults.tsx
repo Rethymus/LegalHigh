@@ -10,6 +10,13 @@ import { EmptyState, SkeletonLines, Tabs, ValidityBadge } from '../ui'
 import { api, ApiError, toggleFav, isFav, type CaseRecord, type SearchHit } from '../../lib/api'
 import { CitationChip, SourceBadge } from '../domain'
 
+// 同义写法词表（v6 粉饰③）：只收录金标词法鸿沟实录过的写法对——
+// 「两年」vs 条文「二年」（gold-penal-limitation，2026-09-13 实录）。
+// 纯前端提示层，不参与检索；检索单一引擎硬规则不变。
+const SYNONYM_HINTS: [string, string][] = [
+  ['两年', '二年'],
+]
+
 interface QaResult {
   question: string
   premise_check: { rule_id: string; warning: string; citation: { law_id: string; law_title: string; article_no: number; article_label: string } } | null
@@ -190,6 +197,12 @@ export default function SearchResults() {
     js: judicialHits.length,
   }
   const loading = !error && ((!!q && !srv && !srvError) || !laws)
+  // 同义写法提示（粉饰③）：查询含实录过的异写法时给出对应写法的检索入口
+  const synonymPair = useMemo(() => {
+    if (!q) return null
+    for (const pair of SYNONYM_HINTS) if (q.includes(pair[0])) return pair
+    return null
+  }, [q])
   // 命中法律的分布（程序统计，非 AI 生成）
   const hitDist = useMemo(() => {
     const m = new Map<string, number>()
@@ -216,6 +229,17 @@ export default function SearchResults() {
         </form>
         <Link className="btn btn-ghost" to="/search"><Icon name="sliders" size={14} />检索说明</Link>
       </div>
+
+      {synonymPair && (
+        <div className="banner banner-info mb-16"><Icon name="info" size={14} />
+          <span className="banner-tx">
+            同义写法提示：法律条文多写作「{synonymPair[1]}」。查看
+            <Link to={`/search/results?q=${encodeURIComponent(q.split(synonymPair[0]).join(synonymPair[1]))}`} style={{ margin: '0 4px', fontWeight: 700 }}>
+              以「{synonymPair[1]}」检索的结果 →
+            </Link>
+          </span>
+        </div>
+      )}
 
       <Tabs
         tabs={TAB_DEFS.map((t) => ({ ...t, count: counts[t.key as keyof typeof counts] }))}

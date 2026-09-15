@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { PageHeader } from '../ui'
 import { Icon as IconIcon } from '../icons'
 import { useLaws } from '../../data/model'
-import { api } from '../../lib/api'
+import { api, type CaseRecord } from '../../lib/api'
 
 /* 质量透明度页（粉饰清单③，v5-S2 2026-09-14）：只读公示质量数字。
    数字分两类（决策 14 口径）：①实时派生——来自 /api/inventory、/api/evals、/api/corpus/coverage，
@@ -51,15 +51,25 @@ export default function Quality() {
   const [evals, setEvals] = useState<EvalsData | null>(null)
   const [evalsState, setEvalsState] = useState<'loading' | 'done'>('loading')
   const [coverage, setCoverage] = useState<CoverageData | null>(null)
+  const [cases, setCases] = useState<CaseRecord[] | null>(null)
 
   useEffect(() => {
     let alive = true
     api.evals().then((e) => { if (alive) { setEvals(e); setEvalsState('done') } }, () => { if (alive) setEvalsState('done') /* 评测不可用不伪造 */ })
     api.corpusCoverage().then((c) => alive && setCoverage(c as CoverageData), () => { /* 覆盖登记册不可用不伪造 */ })
+    api.listCases('').then((d) => alive && setCases(d.cases.filter((c) => c.verified && !c.sample)), () => alive && setCases(null))
     return () => { alive = false }
   }, [])
 
   const articleCount = laws.data?.laws.reduce((n, l) => n + l.articles.length, 0) ?? 0
+  // 案例库构成（粉饰②）：全部由已加载案例实时派生，不硬编码件数
+  const caseStats = useMemo(() => {
+    if (!cases) return null
+    const guiding = cases.filter((c) => c.level === '指导性案例').length
+    const foreign = cases.filter((c) => c.level === '外国判例').length
+    const accessed = cases.map((c) => c.source_accessed_at).filter(Boolean).sort()
+    return { total: cases.length, guiding, foreign, latest: accessed.at(-1) ?? null }
+  }, [cases])
 
   return (
     <div className="page">
@@ -82,6 +92,22 @@ export default function Quality() {
             <div className="stat"><b>{articleCount ? articleCount.toLocaleString() : '—'}</b><span>条文条目</span></div>
             <div className="stat"><b>{laws.data ? (laws.data.fetchDate || '—') : '—'}</b><span>证据抓取日期</span></div>
           </div>
+        </div>
+      </section>
+
+      <section className="card mb-20">
+        <div className="card-h row-wrap"><b className="card-h-t">案例库构成（实时派生）</b><span className="spacer" /><Link className="tiny" style={{ color: 'var(--accent-text)' }} to="/cases">案例检索 →</Link></div>
+        <div className="card-b">
+          {caseStats ? (
+            <div className="stats">
+              <div className="stat"><b>{caseStats.total}</b><span>案例总数</span></div>
+              <div className="stat"><b>{caseStats.guiding}</b><span>最高人民法院指导案例</span></div>
+              <div className="stat"><b>{caseStats.foreign}</b><span>域外判例（比较研究）</span></div>
+              <div className="stat"><b>{caseStats.latest ?? '—'}</b><span>最近来源核验日期</span></div>
+            </div>
+          ) : (
+            <div className="tiny muted">案例库暂时不可用（本页不伪造替代数据）。</div>
+          )}
         </div>
       </section>
 

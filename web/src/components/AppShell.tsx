@@ -10,6 +10,7 @@ import {
   AUDIENCE_OPTIONS,
   audienceLabel,
   canAudienceAccess,
+  isKnownRoute,
   loadAudiencePreference,
   saveAudiencePreference,
   type AudienceMode,
@@ -253,8 +254,10 @@ export default function AppShell() {
               <Suspense fallback={<PageFallback />}>
                 <Outlet context={{ audience } satisfies AppOutletContext} />
               </Suspense>
-            ) : (
+            ) : isKnownRoute(pathname) ? (
               <AudienceAccessNotice pathLabel={meta.crumb.at(-1) ?? '此功能'} audience={audience} />
+            ) : (
+              <NotFoundNotice pathLabel={pathname} />
             )}
           </div>
         </main>
@@ -282,6 +285,26 @@ function AudienceChooser({ onChoose }: { onChoose: (mode: AudienceMode) => void 
           ))}
         </div>
         <p className="audience-foot">选择“专业律师”只开启专业工作界面，不构成账号认证、执业资格核验或平台律师服务。</p>
+      </section>
+    </div>
+  )
+}
+
+function NotFoundNotice({ pathLabel }: { pathLabel: string }) {
+  return (
+    <div className="page access-notice">
+      <section className="card card-pad">
+        <span className="access-ic"><Icon name="search" size={22} /></span>
+        <h1>页面不存在（404）</h1>
+        <p>路径 <b>{pathLabel}</b> 不在本站的已登记页面中——链接可能已过期或输入有误。法条、案例与流程图解始终开放，可直接检索。</p>
+        <div className="row-wrap">
+          <Link className="btn btn-primary" to="/search">法条检索</Link>
+          <Link className="btn btn-secondary" to="/guide">使用指南</Link>
+          <Link className="btn btn-secondary" to="/process">流程图解</Link>
+        </div>
+        <div className="banner banner-warm mt-12"><Icon name="bulb" size={15} />
+          <span className="banner-tx">需要法律帮助？可拨打 12348 公共法律服务热线；本站内容仅作普法参考，不是法律意见。</span>
+        </div>
       </section>
     </div>
   )

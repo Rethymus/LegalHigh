@@ -184,6 +184,9 @@ const ROUTES = [
   { name: '46-process', path: '/process', fullPage: true, identity: { selector: '.ph-t', text: '流程图解' }, afterText: '简化示意', steps: [
     { t: 'eval', expr: `(() => { const links=[...document.querySelectorAll('a[href*="/laws/"]')]; return links.length >= 14 ? 'process-refs-ok' : 'process-refs-short:'+links.length })()` },
   ] },
+  { name: '47-not-found', path: '/nonexistent-page-xyz', identity: { selector: '.access-notice', text: '页面不存在' }, steps: [
+    { t: 'eval', expr: `(() => { const b=document.body.innerText||''; return b.includes('12348') && b.includes('法条检索') ? 'notfound-ok' : 'notfound-missing-guide' })()` },
+  ] },
   { name: '43-terms', path: '/terms', fullPage: true, identity: pageHeader('术语卡'), afterText: '不是法律意见', steps: [
     { t: 'eval', expr: `(() => { const links=[...document.querySelectorAll('a')].filter(x=>x.getAttribute('href')?.includes('/laws/')); return links.length >= 50 ? 'term-refs-ok' : 'term-refs-short:'+links.length })()` },
   ] },

@@ -98,7 +98,7 @@ async function main() {
 
     // 已删除的设计规范路径必须进入产品兜底，不得以任何受众模式重新出现。
     await cdp.send('Page.navigate', { url: BASE + '/design-system' })
-    const removed = await waitFor(cdp, `document.readyState === 'complete' && !document.querySelector('[class*="ds-"]') && !/Motion Lab|设计系统规范|材质标尺/.test(document.body.innerText) && (location.pathname === '/' || /未在.+视图中开放/.test(document.body.innerText))`)
+    const removed = await waitFor(cdp, `document.readyState === 'complete' && !document.querySelector('[class*="ds-"]') && !/Motion Lab|设计系统规范|材质标尺/.test(document.body.innerText) && (location.pathname === '/' || /未在.+视图中开放|页面不存在/.test(document.body.innerText))`)
     check('设计规范路由已移除', Boolean(removed), `最终路径=${await evalAsync(cdp, 'location.pathname')}`)
 
     await cdp.send('Page.navigate', { url: BASE + '/settings' })

@@ -566,6 +566,17 @@
     "title": "LegalHigh · 法律智能知识库"
   },
   {
+    "name": "47-not-found",
+    "path": "/nonexistent-page-xyz",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "step1": "notfound-ok",
+    "finalUrl": "http://localhost:5173/nonexistent-page-xyz",
+    "title": "LegalHigh · 法律智能知识库"
+  },
+  {
     "name": "43-terms",
     "path": "/terms",
     "consoleErrors": [],
