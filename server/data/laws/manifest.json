@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-15T20:54:29.899629",
+  "built_at": "2026-09-15T21:11:55.102188",
   "fetch_date": "2026-09-08",
   "laws": [
     {
@@ -123,7 +123,7 @@
       "snapshot": "docs/research/evidence/ws_电子商务法.json",
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "699753a0a04a20687d02c2a920db9e68bc7cb985d7c15cb5d933b4b60cd9408d",
-      "output_sha256": "b18ab66fa4cff368f11f2bff6b72431a26ac54276edc759f6f522dc175b9961d"
+      "output_sha256": "c05af3b634965cfebafbc6b5773d4ac1a13d40273445d4b32d1bacb66d371767"
     },
     {
       "law_id": "pcl-2023",

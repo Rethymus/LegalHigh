@@ -1,6 +1,6 @@
 {
  "checkedAt": "2026-09-15",
- "channel": "lawtext/laws（flk DOCX 转录，CJK 粒度，+1 守则修复后终值）",
+ "channel": "lawtext/laws（flk DOCX 转录，CJK 粒度，误伤标记移除后终值）",
  "results": [
   {
    "law_id": "admin-litigation-2017",
@@ -93,11 +93,8 @@
    "matched": true,
    "articles": 89,
    "seq_ok": true,
-   "text_diff": 2,
-   "diff_keys": [
-    "34",
-    "81"
-   ]
+   "text_diff": 0,
+   "diff_keys": []
   },
   {
    "law_id": "food-safety-2021",
