@@ -139,6 +139,28 @@ def _collect_headings(text: str):
     return headings
 
 
+_SOURCE_FURNITURE = ("本作品来自", "人民智云", "查论编", "责编：", "责编", "公开征求意见")
+
+
+def strip_source_furniture(text: str) -> str:
+    """剥离快照页尾被切条器吸收进末条的「页面家具」。
+
+    Wikisource 版权模板/导航与人民网责编页脚会出现在证据快照页尾，
+    末条文本常带此类尾巴（lawtext 全量交叉核验 2026-09-15 发现）——
+    从首个家具标记起截断；另剥离末个句号后的「第X节/章/编…」标题渗漏残片。
+    """
+    cut = len(text)
+    for marker in _SOURCE_FURNITURE:
+        i = text.find(marker)
+        if i >= 0:
+            cut = min(cut, i)
+    text = text[:cut].rstrip()
+    tail = re.search(r"。([^。]{1,30})$", text)
+    if tail and re.match(r"^\s*第[一二三四五六七八九十]+[节章编]", tail.group(1)):
+        text = text[: tail.start() + 1]
+    return text.rstrip()
+
+
 def split_articles(text: str):
     """顺序递增校验切条。返回 (articles, expected_next_no)。
 
@@ -196,6 +218,7 @@ def split_articles(text: str):
         entry = {"no": n, "label": label, "chapter": chapter, "text": seg}
         if s:
             entry["sub"] = next(k for k, v in ART_SUB_IDX.items() if v == s)
+        entry["text"] = strip_source_furniture(entry["text"])
         articles.append(entry)
     return articles, expected
 

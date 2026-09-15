@@ -26,6 +26,7 @@
 - Motion-probe assertion count corrected to the real 11 (a previously logged "20" never landed in git history); README quality table updated.
 - Glossary card count corrected to the real 60 (earlier round notes drifted to "63"); ledger numbers must come from measured output, not session memory.
 - Quality page loading state de-duplicated and its stale hardcoded gold-count removed (now neutral wording; the live count renders with the metrics).
+- Corpus tail decontamination (via lawtext/laws full-corpus cross-verification): 8 instruments carried source-page furniture (Wikisource copyright templates/navigation, People.cn editor footers) inside their final articles, and one law had a section-heading fragment bleeding into article text — all stripped at the build clean layer (`strip_source_furniture`), corpus rebuilt (28 instruments / 4,306 entries unchanged), article counts and gold metrics intact.
 - Law detail version-tab placeholder copy updated to match the fully-covered version-registry state (single-version laws now honestly read "no collected historical versions" instead of "registry pending").
 
 ## v1.1.0-rc.1 — 2026-09-08

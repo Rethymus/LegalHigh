@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-14T18:55:51.419329",
+  "built_at": "2026-09-15T19:57:22.665915",
   "fetch_date": "2026-09-08",
   "laws": [
     {
@@ -23,7 +23,7 @@
       "snapshot": "docs/research/evidence/ws_中华人民共和国民法典.html",
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "b94ab740ff2da5d2050fabedf86b81d0329da6bc925747484604c79ce8144df0",
-      "output_sha256": "d4ae7fff4197633ddbba5f6a20ead8b0ad6d5fb62599373b5ad3ab83842e6d1e"
+      "output_sha256": "e85bed0062581b91270dd62a7e4baf1a8b2a6fa8251a99b95a1912761143a108"
     },
     {
       "law_id": "cl-2013",
@@ -123,7 +123,7 @@
       "snapshot": "docs/research/evidence/ws_电子商务法.json",
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "699753a0a04a20687d02c2a920db9e68bc7cb985d7c15cb5d933b4b60cd9408d",
-      "output_sha256": "c05af3b634965cfebafbc6b5773d4ac1a13d40273445d4b32d1bacb66d371767"
+      "output_sha256": "b18ab66fa4cff368f11f2bff6b72431a26ac54276edc759f6f522dc175b9961d"
     },
     {
       "law_id": "pcl-2023",
@@ -284,7 +284,7 @@
       "snapshot": "docs/research/evidence/ws_刑法2023.html",
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "6880bf5092f6fcde0a40968bc2cb2ef43376c8ca096c0db11b44f0f20b962f0c",
-      "output_sha256": "e5597cb1169b142e8f4e1ca07da8590a62e3cadf03dd70b159ff48393e424f01"
+      "output_sha256": "a0fcf62a5e3df082f3891bab28cc9cfd57c9ae3b49cf23a477b2082a044e77bd"
     },
     {
       "law_id": "dv-2015",
@@ -307,7 +307,7 @@
       "snapshot": "docs/research/evidence/ws_反家庭暴力法.html",
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "468b666ddd1f4b8f7bdf54194b6159c9903bbc46db0f1a1d91f948dbc3afe9d5",
-      "output_sha256": "a352f4e885cb865b4a5c66c31de6e68483d15551786b9c0c26854374a1eb6a5f"
+      "output_sha256": "61e10466488e507c7689fa53a75c3dcbdfc23f58a5d7fae41b66f5dcd8262cc6"
     },
     {
       "law_id": "social-ins-2018",
@@ -330,7 +330,7 @@
       "snapshot": "docs/research/evidence/ws_社会保险法.html",
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "d85bb6635b87ff5e5da8e7ebb9515d95fea0f9104ff1e50f9c4563c263ddb52c",
-      "output_sha256": "42e7c1286aa7a46e3b61010e86e67b9b93c1e783b952362d01bc09d6f1135a01"
+      "output_sha256": "487e86e196ffa551d59296ff6e005bad37812b057a8d3109f8ab2717653575e5"
     },
     {
       "law_id": "food-safety-2021",
@@ -353,7 +353,7 @@
       "snapshot": "docs/research/evidence/ws_食品安全法.html",
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "e83ff64a6943d5031bccad1fa234666dc95328d0b8887dcf0fe4fd0adff8f8bb",
-      "output_sha256": "b0fa8226845439e708bed15e2fcd2f99467372c29f2d8bfc0e5e789f33797a35"
+      "output_sha256": "832163256a799fee1eee9c855133d0d2add449982eb43e80d8353381b33bf36c"
     },
     {
       "law_id": "con-2018",
@@ -399,7 +399,7 @@
       "snapshot": "docs/research/evidence/gov_刑事诉讼法2018.html",
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "697b4d68ce2d8b08acf13d62f19d3443599a8c5857685d9967e747d08a49452e",
-      "output_sha256": "b8b34cbb398f37b379bf897d59673652012d13aea39448f54faafc958b720179"
+      "output_sha256": "b3b47261a42bb80643c164118f965b200bb6e45ca2432f7cc1ce8c9cf00a5551"
     },
     {
       "law_id": "lcar-2007",
@@ -422,7 +422,7 @@
       "snapshot": "docs/research/evidence/gjxfj_劳动争议调解仲裁法2007.html",
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "cebba3b9e3f80e0774dc71226b188a5ac7045764f72d7945fbc9131d6a09c2df",
-      "output_sha256": "84e28b79ac35496374ef27f9732c54b231854f478de10a528628d831e91215e5"
+      "output_sha256": "1cba01f7919f7d1beac99c805ca3e5c6ba0ad21035321927487bedfe8a8c9947"
     },
     {
       "law_id": "dsl-2021",
@@ -468,7 +468,7 @@
       "snapshot": "docs/research/evidence/cac_网络安全法2025.html",
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "996925d52a92735a0f9ef4506b7254086ae9ef591a9ea36a6e091788d04fcdc9",
-      "output_sha256": "cf12280f1782cd92f93e5db32d123dfeea13c5a392ade86e3edb152993358e59"
+      "output_sha256": "0340182a024963f3fe9fc5b19f58b2e94247e539d51487534c606d465315dc71"
     },
     {
       "law_id": "penal-2021",
@@ -491,7 +491,7 @@
       "snapshot": "docs/research/evidence/people_行政处罚法2021.html",
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "502c01f2d29a6bbae34b7167698acf0bbd9bfb105eedf425625cde2d9ee3741b",
-      "output_sha256": "dd4f43a274b2a8be962b905d51600882d4260c3c71976acf34c24f08be3ab791"
+      "output_sha256": "efb52aac8773d940db43b603822245ef9eb5511e0eb54813d48d2d4f5643c329"
     },
     {
       "law_id": "women-2022",
@@ -514,7 +514,7 @@
       "snapshot": "docs/research/evidence/people_妇女权益保障法2022.html",
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "348acad7861bdb38811be35ae49d2d25b880a9edc7159f50a75a895eac74325e",
-      "output_sha256": "4787d5a17f3f8365352777bff3d7dc2fb8946ee9bacfcdb32a7b0d6f85da8bc3"
+      "output_sha256": "216aa497b84575805d613d6eb9f2b442a2a9895debf2b5a18abb0255fb0ea08f"
     },
     {
       "law_id": "minor-2024",
@@ -560,7 +560,7 @@
       "snapshot": "docs/research/evidence/people_治安管理处罚法2025.html",
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "7c5209dc1314c45263964f5ae8f721d70aedca7e3581e9902f24e538ca23ed01",
-      "output_sha256": "7aac68bd4e221a7753691c897af60b68f149481357e1776f56ef60913a82ad7a"
+      "output_sha256": "ef37720399042b9fcf94825d8fb1702f3fdff5434f41e25f839397d477b7052c"
     },
     {
       "law_id": "pipl-2021",
@@ -583,7 +583,7 @@
       "snapshot": "docs/research/evidence/npc_个人信息保护法2021.html",
       "fetched_at": "2026-09-08",
       "snapshot_sha256": "23eeb747cb57b852929e30906c51b5816095dc43977868543a4bce5b3540b429",
-      "output_sha256": "6b06e3a408e7abaf1ddcf2610db80717b56730eb4fbb52d1fa14b3e7ded8531a"
+      "output_sha256": "c26fa5836e2702bcff7962441fb021e18e1a892e5e255a5271cd039103ffb809"
     },
     {
       "law_id": "legal-aid-2021",
@@ -629,7 +629,7 @@
       "snapshot": "docs/research/evidence/npc_行政复议法2023.html",
       "fetched_at": "2026-09-08",
       "snapshot_sha256": "a86e57e7aa2b1568ad6445008ed226d953bdf1993647486db70b1a0b544a03c6",
-      "output_sha256": "326d980ba61b0f69895912299450be8db741e3b0a6952f42acd352073df178e9"
+      "output_sha256": "83031838148d68e6839b1ca7093b02bfd6f36161b367250c8bcb1327444e2ec2"
     },
     {
       "law_id": "admin-litigation-2017",
@@ -652,7 +652,7 @@
       "snapshot": "docs/research/evidence/npc_行政诉讼法2017.html",
       "fetched_at": "2026-09-08",
       "snapshot_sha256": "bc0ab2282880cbed44b0e36f71f63dc15282b60709c15434c4b885731758ac96",
-      "output_sha256": "1e5e811624bddc0cde11d3030630b4a547d04c05a7f2b9396a199b4f56b61d05"
+      "output_sha256": "81e7d8ab98e4b2aa619ecdc01449668d7b0a5c4e0853913e68aed338b2227984"
     }
   ]
 }
