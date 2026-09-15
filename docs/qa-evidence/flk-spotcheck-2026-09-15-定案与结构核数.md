@@ -25,3 +25,17 @@
 ## 边界复证（同日补）
 
 - **DOCX 通道同样止于内网**：previewLink 对 `ossWordPath`（.docx）同样有效并返回签名 download_url，但签名主机为 `flkoss.obs-bj2-internal.cucloud.cn`（内部对象存储），浏览器侧 `Failed to fetch`——官方正文字节不经公网暴露，文本级比对确需人工在阅读器目验（或业主手动下载 WPS 版本 DOCX 后提供文件）。
+
+## 里程碑补记（同日，开源调研产物）：pcl-2023 文本级 306/306 全量一致
+
+- **新通道**：GitHub `lawtext/laws`（97★）——自述原始文件来自 flk 官方数据库，收录 2000+ 部法律的转录；
+  其 `content/法律/<bbbs>.md` 文件名即 flk 的 bbbs 编号，front matter 自证
+  （id=ff8081818a21dc13018b425303b7086d、file=中华人民共和国民事诉讼法_20230901_….docx、公布/施行日期）。
+- **文本级全量比对**：语料（Wikisource 转录链）vs lawtext（flk DOCX 转录链）——两条**独立转录链**逐条
+  比对 306/306 全部一致（条号序列 + 剥离版式标记后的正文文本）。
+  第 300–306 强制复核区（含第 306 条「试行废止」附则）全部在证。
+- **口径诚实性**：lawtext 为第三方对 flk 文件的再转录，非 flk 原件直核；
+  「两条独立转录链吻合」是极强的交叉印证，但 flk 原件的最终目验口径保持不变。
+- 比对结果：`docs/qa-evidence/flk-textcheck-pcl-2023-2026-09-15.json`
+  （sequence_ok=true，text_match=306/306）；lawtext 原件存证
+  `docs/research/evidence/lawtext-pcl-2023-ff8081818a21dc13018b425303b7086d.md`。
