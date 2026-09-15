@@ -56,6 +56,7 @@ const index = `# LegalHigh · 法律智能知识库
 ## 全文版
 
 - [llms-full.txt](https://legalhigh.pages.dev/llms-full.txt)：术语卡全部条目与项目口径说明的完整文本
+- [data/laws-md/](https://legalhigh.pages.dev/data/laws-md/README.md)：28 部法律全语料 markdown 导出（每法一文件，含官方元数据；同 laws.json 源）
 `
 
 const full = `# LegalHigh · 法律智能知识库（全文版）
