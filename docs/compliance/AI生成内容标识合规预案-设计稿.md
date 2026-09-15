@@ -52,7 +52,7 @@
 
 ## 五、隐式标识设计（第 5 条映射，文件元数据层）
 
-### 5.1 DOCX 导出（**本设计稿的实质新增项**，A4 现状无元数据标识）
+### 5.1 DOCX 导出（✅ 已实施，R97；此前 A4 无元数据标识）
 
 - python-docx `core_properties` 写入：
   - `comments`：`LegalHigh AI 修订建议 · 内容编号 {audit_id}`（A3 未来若有解读导出则写 `AI 起草 · 人工审核 · 内容编号 {audit_id}`）；
@@ -69,7 +69,7 @@
 | # | 任务 | 验收 |
 |---|---|---|
 | 1 | `AIContentBadge` 组件抽取 + explains 数据流补 `drafted_by` 结构化字段 + 存量迁移 | 徽章行为与现状等价；author 判定路径删除；巡检/a11y 过 |
-| 2 | DOCX 元数据三字段（A4 立即可做） | 导出文件属性含 AI 参与声明与内容编号；pytest 元数据断言 |
+| 2 | DOCX 元数据（A4，✅ 已实施 R97）：category=AI-assisted、comments=LegalHigh AI 修订建议 · 内容编号 {审查记录 id}；author 保留操作者 | test_review_docx_ai_metadata 钉住（pytest 209） |
 | 3 | 分享/复制通道若扩展到解读内容，输出文本追加「（AI 起草，经人工审核）」（第 10 条预置约束） | 文案检查 |
 | 4 | 合规测试：`drafted_by` 缺失不显示徽章（诚实降级）| pytest 钉住 |
 | 5 | 本文档状态从「设计稿」改「已实施」并在 CHANGELOG 登记 | 版本段链接 |

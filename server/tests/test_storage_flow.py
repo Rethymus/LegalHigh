@@ -153,6 +153,26 @@ def test_review_docx_tracked_insertions(tmp_db):
     assert "建议：" in xml
 
 
+def test_review_docx_ai_metadata(tmp_db):
+    """S6-T2 第 5 条隐式标识回归：审查 DOCX 元数据须携带 AI 参与声明与内容编号。
+
+    《人工智能生成合成内容标识办法》第 5 条（2025-09-01 施行）要求在生成合成内容的
+    文件元数据中添加隐式标识（内容属性、提供者名称或编码、内容编号）。本导出的内容
+    编号=审查记录 id，审计日志按该 id 留痕，形成「元数据编号 → 审计记录」回溯闭环。
+    """
+    import io as _io
+    from docx import Document as _Doc
+    from app import review as _review, docxgen as _docxgen
+    text = "第一条 服务：乙方提供咨询服务。第二条 免责：乙方对一切损失概不负责。"
+    rid = storage.create_review("元数据测试", text, _review.analyze_contract(text, "元数据测试"))
+    r = storage.get_review(rid)
+    data = _docxgen.generate_review_docx(r)
+    props = _Doc(_io.BytesIO(data)).core_properties
+    assert props.category == "AI-assisted", props.category
+    assert "LegalHigh AI 修订建议" in (props.comments or ""), props.comments
+    assert f"内容编号 {rid}" in (props.comments or ""), props.comments
+
+
 def test_docx_return_roundtrip(tmp_db):
     """D9 后半回归：导出→（模拟律师接受 f1、拒绝 f2）→回传解析→状态机同步→审计。"""
     import io as _io

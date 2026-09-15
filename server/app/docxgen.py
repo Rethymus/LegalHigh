@@ -193,6 +193,13 @@ def generate_review_docx(review: dict) -> bytes:
         _add_tracked_insert(p3, f"建议：{f['suggestion']}", "LegalHigh AI", date, doc)
     doc.add_paragraph(review["result"]["disclaimer"])
 
+    # 生成式AI内容标识办法第 5 条隐式标识（S6-T2）：文件元数据携带 AI 参与声明与
+    # 内容编号（=审查记录 id，审计日志按该 id 留痕，可回溯全部动作）。
+    # 作者字段保留文件操作者，不因标识转移内容生产者责任。
+    props = doc.core_properties
+    props.category = "AI-assisted"
+    props.comments = f"LegalHigh AI 修订建议 · 内容编号 {review['id']}"
+
     from io import BytesIO
     buf = BytesIO()
     doc.save(buf)
