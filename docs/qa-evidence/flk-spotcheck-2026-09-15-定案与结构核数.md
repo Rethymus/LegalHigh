@@ -130,3 +130,15 @@ registry pending_note 已记录三日期全貌与 flk 结构核验结果（bbbs=
   （cpl 主旨源特征 / htjs lawtext 侧目录行 / 4 部 lawtext 未收录）。
 - 比对明细：docs/qa-evidence/lawtext-verify-con-crpl-2026-09-15.json
 - arXiv 论文扫描：export.arxiv.org API 本网络限流（curl 失败），如实跳过——R79/R90/R106 已有三轮论文与仓库调研存量。
+
+## con/crpl lawtext 全量比对复跑（R116，标记修复后确认）+ 修十二内容核验边界
+
+- **con-2018 宪法：143/143 序列一致、文本不一致 0**（「本作品是」标记生效后全量复跑确认）
+- **crpl-imp-2024 消保条例：53/53 序列一致、文本不一致 0**（「解读」标记生效后确认）
+- **修十二（bbbs=ff8081818c3ce31f018cb6a6bc412f55）内容核验边界**：flfgDetails 内容树为
+  空节点（0 个）——修正案类文档正文仅存于 OFD/DOCX 附件，结构 API 无文本可提取。
+  cl-2023 的修十二条文文本（第 165/166/169/390/391/393 条修改）因此维持
+  「Wikisource 整合转录 + flk 2020 结构树基座核验」双通道结论，文本级逐字比对
+  待人工阅读器目验（与全库 flk 文本级余量同一闸门）。
+- **lawtext 文本级覆盖终值：26/28 部全一致**（24 自动 + con-2018/crpl-imp-2024 手工确认）；
+  余 2 部：cl-2023（lawtext 仅收录修正案单件，无整合版）、genai-2023（lawtext 未收录部门规章）。
