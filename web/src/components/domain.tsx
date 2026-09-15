@@ -15,6 +15,16 @@ const KIND_LABEL: Record<SourceKind, { cls: string; label: string }> = {
   foreign: { cls: 'sg-foreign', label: '域外资料' },
   ai: { cls: 'sg-ai', label: 'AI 内容' },
 }
+/** AI drafting mark (S6-T2, labeling-measures Article 4): rendered only when the
+ * structured drafted_by field is 'ai' — the author string never drives the badge,
+ * and a missing field degrades honestly to no badge. */
+export function AIContentBadge({ draftedBy }: { draftedBy?: 'ai' | 'human' }) {
+  if (draftedBy !== 'ai') return null
+  return (
+    <span className="bdg bdg-gray" title="本内容由 AI 起草、经具名审核人核验后发布；生成环节使用已备案大模型">AI 起草</span>
+  )
+}
+
 export function SourceBadge({ kind, grade }: { kind: SourceKind; grade?: '强' | '中' | '弱' }) {
   const k = KIND_LABEL[kind]
   return (

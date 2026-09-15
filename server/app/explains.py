@@ -65,7 +65,12 @@ def set_review(law_id: str, no: int, action: str, reviewer: str) -> dict:
 
 
 def approved_for(law_id: str) -> dict[int, dict]:
-    """指定法律的已审核解读（key=条号）。draft/缺 reviewer 的条目一律不返回。"""
+    """指定法律的已审核解读（key=条号）。draft/缺 reviewer 的条目一律不返回。
+
+    drafted_by 结构化字段（S6-T2 标识办法第 4 条映射）：'ai' | 'human'；
+    缺省归一为 'human'（诚实降级：字段缺失不显示 AI 徽章，author 字符串
+    不再参与标识判定——审核人姓名含「AI」不再误标）。
+    """
     out: dict[int, dict] = {}
     for e in load_explains():
         if e["law_id"] != law_id or e.get("status") != "approved" or not e.get("reviewer"):
@@ -73,6 +78,7 @@ def approved_for(law_id: str) -> dict[int, dict]:
         out[int(e["no"])] = {
             "text": e["text"],
             "author": e["author"],
+            "drafted_by": e.get("drafted_by") or "human",
             "reviewer": e["reviewer"],
             "date": e.get("date"),
             "source_note": e.get("source_note"),

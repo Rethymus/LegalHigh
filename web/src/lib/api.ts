@@ -429,6 +429,8 @@ export interface ArticleLink {
 export interface ArticleExplain {
   text: string
   author: string
+  /** Structured AI-participation mark (S6-T2, Article 4): 'ai' | 'human'; missing = human (honest degradation; the author string never drives the badge). */
+  drafted_by?: 'ai' | 'human'
   reviewer: string
   date?: string
   source_note?: string

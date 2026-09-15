@@ -68,7 +68,7 @@
 
 | # | 任务 | 验收 |
 |---|---|---|
-| 1 | `AIContentBadge` 组件抽取 + explains 数据流补 `drafted_by` 结构化字段 + 存量迁移 | 徽章行为与现状等价；author 判定路径删除；巡检/a11y 过 |
+| 1 | `AIContentBadge` 组件抽取 + explains 数据流补 `drafted_by` 结构化字段 + 存量迁移（✅ 已实施 R99：10 条存量迁移，approved_for 缺省归一 human，author 判定路径删除） | test_drafted_by_structured_field 钉住（诚实降级：author 含 AI 但字段缺失→human） |
 | 2 | DOCX 元数据（A4，✅ 已实施 R97）：category=AI-assisted、comments=LegalHigh AI 修订建议 · 内容编号 {审查记录 id}；author 保留操作者 | test_review_docx_ai_metadata 钉住（pytest 209） |
 | 3 | 分享/复制通道若扩展到解读内容，输出文本追加「（AI 起草，经人工审核）」（第 10 条预置约束） | 文案检查 |
 | 4 | 合规测试：`drafted_by` 缺失不显示徽章（诚实降级）| pytest 钉住 |

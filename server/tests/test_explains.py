@@ -82,3 +82,39 @@ def test_reviewer_is_audit_label_not_credential(tmp_path, monkeypatch):
         assert "reviewer_role" not in pub
     finally:
         explains.load_explains.cache_clear()
+
+
+def test_drafted_by_structured_field(tmp_path, monkeypatch):
+    """S6-T2 第 4 条映射：AI 起草标识走结构化 drafted_by 字段，author 字符串不参与判定。
+
+    诚实降级语义：drafted_by 缺失 → 归一为 'human' → 前端不显示 AI 徽章——
+    即使 author 含「AI」也不触发（审核人姓名含 AI 不再误标，重命名不再漏标）。
+    """
+    import json as _json
+    import shutil as _shutil
+
+    tmp_file = tmp_path / "article_explains.json"
+    _shutil.copy(explains.DATA_PATH, tmp_file)
+    monkeypatch.setattr(explains, "DATA_PATH", tmp_file)
+    explains.load_explains.cache_clear()
+    try:
+        data = _json.loads(tmp_file.read_text(encoding="utf-8"))
+        # 真实存量：AI 起草条目已迁移为 drafted_by='ai'
+        assert any(e.get("drafted_by") == "ai" for e in data["explains"]), "存量迁移缺失"
+        # 合成反例：author 含「AI」但无 drafted_by → 对外归一为 human（旧隐式判定路径已删）
+        target = data["explains"][0]
+        target["drafted_by"] = None
+        target["reviewer"], target["status"] = "测试审核人", "approved"
+        tmp_file.write_text(_json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        explains.load_explains.cache_clear()
+        pub = explains.approved_for(target["law_id"])[int(target["no"])]
+        assert pub["drafted_by"] == "human", pub
+        # 迁移条目：drafted_by 原样透传
+        ai_entry = next(e for e in data["explains"] if e.get("drafted_by") == "ai" and e is not target)
+        ai_entry["reviewer"], ai_entry["status"] = "测试审核人", "approved"
+        tmp_file.write_text(_json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        explains.load_explains.cache_clear()
+        pub_ai = explains.approved_for(ai_entry["law_id"])[int(ai_entry["no"])]
+        assert pub_ai["drafted_by"] == "ai", pub_ai
+    finally:
+        explains.load_explains.cache_clear()
