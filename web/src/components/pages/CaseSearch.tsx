@@ -14,6 +14,8 @@ const DOMAIN_RULES: { key: string; label: string; match: (c: CaseRecord) => bool
   { key: 'criminal', label: '刑事', match: (c) => /盗窃|诈骗|故意伤害|正当防卫|罪/.test(c.cause + c.name) },
   { key: 'admin', label: '行政', match: (c) => /行政/.test(c.cause + c.name) },
   { key: 'tort', label: '侵权 · 交通事故 · 人格权', match: (c) => /交通事故|名誉|荣誉|人身损害/.test(c.cause + c.name) },
+  { key: 'datapriv', label: '网络 · 数据 · 个人信息', match: (c) => /个人信息|隐私|数据|网络/.test(c.cause + c.name) },
+  { key: 'family', label: '婚姻家事', match: (c) => /离婚|抚养|继承|赡养|婚姻/.test(c.cause + c.name) },
   { key: 'civil', label: '民事 · 合同 · 侵权', match: () => true },
 ]
 
