@@ -54,6 +54,10 @@ def _strip_templates(wt: str) -> str:
 
 
 def wikilink_text(s: str) -> str:
+    # Category/分类命名空间链接没有正文显示文本（|后是排序键），必须整链丢弃——
+    # 否则排序键单字符会泄漏进末条文本（第三链校验 R130：电子商务法末条「D」实锤）
+    s = re.sub(r"\[\[\s*[Cc]ategory\s*:[^\]]+\]\]", "", s)
+    s = re.sub(r"\[\[\s*(?:分类|Category|category)\s*:[^\]]+\]\]", "", s)
     s = re.sub(r"\[\[[^\]|]+\|([^\]]+)\]\]", r"\1", s)
     s = re.sub(r"\[\[([^\]]+)\]\]", r"\1", s)
     return s
@@ -164,8 +168,8 @@ def strip_source_furniture(text: str) -> str:
     text = text[:cut].rstrip()
     text = re.sub(r"<!--[\s\S]*$", "", text).rstrip()  # HTML 注释残尾
     text = re.sub(r"-->\s*$", "", text).rstrip()
-    text = re.sub(r"[\n\t\s]*（\s*$", "", text).rstrip()  # 孤立开括号残片
-    tail = re.search(r"。([^。]{1,30})$", text)
+    text = re.sub(r"[\n\t\s]*[（(]\s*$", "", text).rstrip()  # 孤立开括号残片（含半角——人民网「(责编：…)」剥离后残留）
+    tail = re.search(r"。([^。]{1,60})$", text)
     if tail and re.match(r"^\s*第[一二三四五六七八九十]+[节章编]", tail.group(1)):
         text = text[: tail.start() + 1]
     return text.rstrip()

@@ -30,7 +30,7 @@ OUT_DIR = REPO_ROOT / "server" / "data" / "laws"
 FETCH_DATE = "2026-08-29"
 EXPANSION_FETCH_DATE = "2026-09-08"
 WS_BASE = "https://zh.wikisource.org/wiki/"
-SAFE_FILE = re.compile(r"^[\w\u4e00-\u9fff()（）.-]+\.(json|html)$")
+SAFE_FILE = re.compile(r"^[\w\u4e00-\u9fff()（）.-]+\.(json|html|md)$")  # md：lawtext flk-DOCX 转录快照（R130）
 VERSION_META_FILE = "official_version_effective_dates_2026-09-01.json"
 
 LAW_FILES = {
@@ -60,7 +60,8 @@ LAW_FILES = {
     "minor_ws_html": "ws_宪法2018.html",
     "dv_ws_html": "ws_反家庭暴力法.html",
     "social_ins_ws_html": "ws_社会保险法.html",
-    "food_safety_ws_html": "ws_食品安全法.html",
+    "food_safety_ws_html": "ws_食品安全法.html",  # 2021 修正版（历史版证据，现行文本见 lawtext 键）
+    "food_safety_2025_lawtext_md": "lawtext_食品安全法2025.md",  # 2025 第三次修正（flk DOCX 转录，R130）
     "cl_ws_html": "ws_刑法2023.html",
 }
 
@@ -197,6 +198,56 @@ def build_wikisource_html_law(key, law_id, title, meta, html_page):
     }
 
 
+def build_lawtext_md_law(key, law_id, title, meta, flk_url):
+    """lawtext/laws（GitHub，flk 官方 DOCX 转录）markdown 快照 → 语料条目。
+
+    R130 第三链校验引入：维基文库 (2025年) 全文页存在转写缺陷（81 条末句漏改一处
+    「婴幼儿配方液态乳」——官方修改决定要求条内每处「婴幼儿配方乳粉」后增补），
+    故本部法律改用 flk DOCX 转录链构建；bbbs 与公布/施行元数据经 flk 官方
+    flfgDetails API 独立核验（evidence/flk_食品安全法2025_detail.json）。
+    """
+    raw = read_evidence_text(key)
+    m = re.match(r"^---\n[\s\S]*?\n---\n", raw)
+    body = raw[m.end():] if m else raw
+    # 剥目录段（「## 目录」至下一个水平线/标题之间）——目录的章名列表会污染章位上下文
+    body = re.sub(r"^#{1,6}\s*目\s*录\s*$[\s\S]*?(?=^---\s*$|^#{1,6}\s)", "", body, count=1, flags=re.M)
+    out = []
+    for ln in body.split("\n"):
+        s = ln.strip()
+        if not s or s == "---":
+            continue
+        if s.startswith("#"):
+            # 章/节标题行转为纯文本行（切条器收进 chapter 上下文）；其余标题（书名等）丢弃
+            plain = re.sub(r"^#+\s*", "", s).replace(" ", "\u3000")
+            out.append(plain if re.match(r"^第[一二三四五六七八九十百零]+[编章节]", plain) else "")
+            continue
+        s = re.sub(r"^>\s*", "", s)              # 引用块（沿革序言）
+        s = s.replace("**", "")                  # 加粗
+        s = re.sub(r"^- ", "", s)                # 列表符（条文条号行）
+        out.append(s)
+    articles, expected = split_articles("\n".join(out))
+    return {
+        "law_id": law_id,
+        "title": title,
+        **meta,
+        "effective_date_evidence": date_evidence(
+            meta, title=title, url=flk_url, accessed_at=FETCH_DATE,
+            grade="中", source_kind="flk-docx-transcription",
+        ),
+        "source": {
+            "kind": "flk-docx-transcription",
+            "url": flk_url,
+            "pageid": None,
+            "revid": None,
+            "snapshot": "docs/research/evidence/" + LAW_FILES[key],
+            "fetched_at": FETCH_DATE,
+            "sha256": snapshot_sha256(key),
+        },
+        "authority_pointer": "国家法律法规数据库 https://flk.npc.gov.cn （检索该法条目核对）",
+        "articles": articles,
+    }
+
+
 def build_govcn_law(key, law_id, title, meta):
     html = read_evidence_text(key)
     articles, expected = split_articles(clean_html_to_text(html))
@@ -282,7 +333,7 @@ EXPECTED_COUNTS = {
     "cl-2023": 505,  # 452 基条 + 53 子条号条目（之一/之二…自 2026-09-14 起独立成条）
     "dv-2015": 38,
     "social-ins-2018": 98,
-    "food-safety-2021": 154,
+    "food-safety-2025": 154,
     "crpl-imp-2024": 53,
     "genai-2023": 24,
     "pipl-2021": 74,
@@ -413,14 +464,14 @@ def main():
             },
             "%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E7%A4%BE%E6%9C%83%E4%BF%9D%E9%9A%AA%E6%B3%95",
         ),
-        build_wikisource_html_law(
-            "food_safety_ws_html", "food-safety-2021", "中华人民共和国食品安全法",
+        build_lawtext_md_law(
+            "food_safety_2025_lawtext_md", "food-safety-2025", "中华人民共和国食品安全法",
             {
-                "status": "现行有效（2021修正）",
-                "promulgation": {"date": "2021-04-29", "organ": "全国人民代表大会常务委员会"},
+                "status": "现行有效（2025修正）",
+                "promulgation": {"date": "2025-09-12", "organ": "全国人民代表大会常务委员会"},
                 "effective_date": "2015-10-01",
             },
-            "%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E9%A3%9F%E5%93%81%E5%AE%89%E5%85%A8%E6%B3%95_(2021%E5%B9%B4)",
+            "https://flk.npc.gov.cn/detail?id=7b5a76d0461745a08d3f964916b87ef3",
         ),
         build_wikisource_html_law(
             "minor_ws_html", "con-2018", "中华人民共和国宪法",

@@ -1807,22 +1807,77 @@
       "question": "从事食品生产需要取得什么许可",
       "expect": [
         {
-          "law_id": "food-safety-2021",
+          "law_id": "food-safety-2025",
           "no": 35
         }
       ],
-      "note": "2026-09-14 增（food-safety-2021 入库金标）：食品生产经营许可第35条。"
+      "note": "2026-09-14 增（food-safety-2021 入库金标）：食品生产经营许可第35条。2026-09-16 随 2025 修正版入库改挂 food-safety-2025（第35条未变）。"
     },
     {
       "id": "gold-fs-recall",
       "question": "发现生产经营的食品不符合食品安全标准应当怎么处理",
       "expect": [
         {
-          "law_id": "food-safety-2021",
+          "law_id": "food-safety-2025",
           "no": 63
         }
       ],
-      "note": "2026-09-14 增（food-safety-2021）：食品召回制度第63条。"
+      "note": "2026-09-14 增（food-safety-2021）：食品召回制度第63条。2026-09-16 随 2025 修正版入库改挂 food-safety-2025（第63条未变）。"
+    },
+    {
+      "id": "gold-fs25-liquid-formula-register",
+      "question": "婴儿液态奶配方需要注册吗",
+      "expect": [
+        {
+          "law_id": "food-safety-2025",
+          "no": 81
+        }
+      ],
+      "note": "2026-09-16 增（2025 修正亮点）：婴幼儿配方液态乳纳入配方注册第81条。词法鸿沟实录：问法「液态奶」vs 条文「液态乳」。"
+    },
+    {
+      "id": "gold-fs25-bulk-transport-license",
+      "question": "散装食用油罐车运输需要办什么证",
+      "expect": [
+        {
+          "law_id": "food-safety-2025",
+          "no": 41
+        }
+      ],
+      "note": "2026-09-16 增（2025 修正亮点）：重点液态食品道路散装运输准运证第41条。词法鸿沟实录：问法「散装食用油/办证」vs 条文「重点液态食品/准运证」。"
+    },
+    {
+      "id": "gold-fs25-transport-container",
+      "question": "散装食用油运输的容器有什么要求",
+      "expect": [
+        {
+          "law_id": "food-safety-2025",
+          "no": 41
+        }
+      ],
+      "note": "2026-09-16 增（2025 修正亮点）：专用运输容器与铅封核验第41条。词法鸿沟实录：初拟「运输食用油的罐车有什么卫生要求」未入 top5（「罐车/卫生」与条文「运输容器/食品安全要求」无词面），改题后 rank 2。"
+    },
+    {
+      "id": "gold-fs25-no-permit-penalty",
+      "question": "没有准运证从事散装食用油运输会怎么处罚",
+      "expect": [
+        {
+          "law_id": "food-safety-2025",
+          "no": 132
+        }
+      ],
+      "note": "2026-09-16 增（2025 修正亮点）：未取得准运证运输处罚第132条第三款。"
+    },
+    {
+      "id": "gold-fs25-same-formula-brands",
+      "question": "同一企业用同一配方生产不同品牌的婴幼儿奶粉违法吗",
+      "expect": [
+        {
+          "law_id": "food-safety-2025",
+          "no": 81
+        }
+      ],
+      "note": "2026-09-16 增（2025 修正亮点）：同配方禁产不同品牌第81条第四款。"
     }
   ]
 }

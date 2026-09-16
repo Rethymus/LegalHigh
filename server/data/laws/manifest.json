@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-15T22:24:18.363941",
+  "built_at": "2026-09-16T20:45:54.273413",
   "fetch_date": "2026-09-08",
   "laws": [
     {
@@ -123,7 +123,7 @@
       "snapshot": "docs/research/evidence/ws_电子商务法.json",
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "699753a0a04a20687d02c2a920db9e68bc7cb985d7c15cb5d933b4b60cd9408d",
-      "output_sha256": "c05af3b634965cfebafbc6b5773d4ac1a13d40273445d4b32d1bacb66d371767"
+      "output_sha256": "f88333d013b1345a931d0c28a49c484a8f09012e466f6b00a1c37a14e7c20ad7"
     },
     {
       "law_id": "pcl-2023",
@@ -333,27 +333,27 @@
       "output_sha256": "487e86e196ffa551d59296ff6e005bad37812b057a8d3109f8ab2717653575e5"
     },
     {
-      "law_id": "food-safety-2021",
+      "law_id": "food-safety-2025",
       "title": "中华人民共和国食品安全法",
-      "status": "现行有效（2021修正）",
+      "status": "现行有效（2025修正）",
       "effective_date": "2015-10-01",
       "effective_date_evidence": {
         "title": "中华人民共和国食品安全法",
-        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E9%A3%9F%E5%93%81%E5%AE%89%E5%85%A8%E6%B3%95_(2021%E5%B9%B4)",
+        "url": "https://flk.npc.gov.cn/detail?id=7b5a76d0461745a08d3f964916b87ef3",
         "accessed_at": "2026-08-29",
         "grade": "中",
-        "source_kind": "wikisource-transcription",
-        "version": "现行有效（2021修正）"
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2025修正）"
       },
       "promulgation_instrument": null,
       "article_count": 154,
       "expected_count": 154,
       "missing_numbers": [],
-      "source_url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E9%A3%9F%E5%93%81%E5%AE%89%E5%85%A8%E6%B3%95_(2021%E5%B9%B4)",
-      "snapshot": "docs/research/evidence/ws_食品安全法.html",
+      "source_url": "https://flk.npc.gov.cn/detail?id=7b5a76d0461745a08d3f964916b87ef3",
+      "snapshot": "docs/research/evidence/lawtext_食品安全法2025.md",
       "fetched_at": "2026-08-29",
-      "snapshot_sha256": "e83ff64a6943d5031bccad1fa234666dc95328d0b8887dcf0fe4fd0adff8f8bb",
-      "output_sha256": "4054a7cf56b68178606b095b5bbd709841dc15e3078152917ee66f50e6f0e195"
+      "snapshot_sha256": "b9fe6dbee29426573cbbcc149a9d38d8680d8b317f6fe301eb47b2885eb69365",
+      "output_sha256": "ff7b08bbdacf7548adb1e6be28e60514ab876f58dfcde8742ac5cb54321ab5e7"
     },
     {
       "law_id": "con-2018",
@@ -399,7 +399,7 @@
       "snapshot": "docs/research/evidence/gov_刑事诉讼法2018.html",
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "697b4d68ce2d8b08acf13d62f19d3443599a8c5857685d9967e747d08a49452e",
-      "output_sha256": "4b4e7d332818cfc8861390d069b82ace409831723381a20aabf2c803dff445f0"
+      "output_sha256": "3a12c075b0bfac5a8ce2f99f5fadf9a8a3689181618f2718483545913a37a80f"
     },
     {
       "law_id": "lcar-2007",
@@ -514,7 +514,7 @@
       "snapshot": "docs/research/evidence/people_妇女权益保障法2022.html",
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "348acad7861bdb38811be35ae49d2d25b880a9edc7159f50a75a895eac74325e",
-      "output_sha256": "216aa497b84575805d613d6eb9f2b442a2a9895debf2b5a18abb0255fb0ea08f"
+      "output_sha256": "50d8f50240a7881f49887cd3b7416d201903434119ca1c966d667b6a2def0915"
     },
     {
       "law_id": "minor-2024",
@@ -560,7 +560,7 @@
       "snapshot": "docs/research/evidence/people_治安管理处罚法2025.html",
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "7c5209dc1314c45263964f5ae8f721d70aedca7e3581e9902f24e538ca23ed01",
-      "output_sha256": "ef37720399042b9fcf94825d8fb1702f3fdff5434f41e25f839397d477b7052c"
+      "output_sha256": "d57ebf5d66fdd5659faf87f084a416924a2a065e25d5837c7c4ff7d63cf713fb"
     },
     {
       "law_id": "pipl-2021",

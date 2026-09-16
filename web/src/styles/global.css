@@ -622,7 +622,7 @@ svg { display: block; flex: none; }
   display: flex; gap: 10px; align-items: flex-start;
 }
 .banner-warm .banner-tx { color: var(--tx); }
-.banner-warm .cit { height: 22px; margin-left: 6px; vertical-align: -5px; }
+.banner-warm .cit { margin-left: 6px; vertical-align: -5px; } /* 高度回归 .cit 基线 24px（R32 WCAG 2.5.8；22px 变体被 qa_a11y 判小目标） */
 
 /* Toast：bouncy 弹簧入场（overshoot 峰值 1.046）+ 退场（.is-out 由 ToastProvider 挂载） */
 .toast-host { position: fixed; top: 18px; left: 50%; transform: translateX(-50%); z-index: 90; display: flex; flex-direction: column; gap: 8px; align-items: center; pointer-events: none; }

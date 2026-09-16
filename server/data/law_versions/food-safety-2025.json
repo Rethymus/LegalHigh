@@ -1,0 +1,44 @@
+{
+  "law_id": "food-safety-2025",
+  "title": "中华人民共和国食品安全法",
+  "schema_version": 1,
+  "note": "R130（2026-09-16）第三链校验暴露时效缺口：2025 第三次修正（2025-09-12 公布、2025-12-01 施行）已施行近 10 个月而语料仍持 2021 版，本轮升级为 2025 现行版。",
+  "versions": [
+    {
+      "version_id": "2021-amendment",
+      "label": "2021 修正",
+      "status": "被修正",
+      "promulgation_date": "2021-04-29",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2015-10-01",
+      "article_count": 154,
+      "current": false,
+      "evidence": {
+        "kind": "wikisource-transcription",
+        "grade": "中",
+        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E9%A3%9F%E5%93%81%E5%AE%89%E5%85%A8%E6%B3%95_(2021%E5%B9%B4)",
+        "accessed_at": "2026-09-14",
+        "snapshot": "docs/research/evidence/ws_食品安全法.html"
+      }
+    },
+    {
+      "version_id": "2025-amendment",
+      "label": "2025 修正",
+      "status": "现行有效（2025修正）",
+      "promulgation_date": "2025-09-12",
+      "promulgation_instrument": "主席令第五十六号",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2015-10-01",
+      "article_count": 154,
+      "current": true,
+      "evidence": {
+        "kind": "flk-docx-transcription",
+        "grade": "中",
+        "url": "https://flk.npc.gov.cn/detail?id=7b5a76d0461745a08d3f964916b87ef3",
+        "accessed_at": "2026-09-16",
+        "snapshot": "docs/research/evidence/lawtext_食品安全法2025.md"
+      }
+    }
+  ],
+  "pending_note": "2025 修正版条号序列与文本已经 flk 官方 flfgDetails API 元数据核验（bbbs=7b5a76d0461745a08d3f964916b87ef3，公布 2025-09-12/施行 2025-12-01，证据 flk_食品安全法2025_detail.json）+ lttxzmj/chinese-law-corpus 参照库 154/154 逐字一致。effective_date 沿用现行文本附则自载施行日 2015-10-01（R65 scl 先例：跨修正延续）；2025 修正决定自身的施行日为 2025-12-01（flk sxrq 与维基文库序言一致）。已发现并记录维基文库 (2025年) 全文页转写缺陷：第 81 条末句漏改一处「、婴幼儿配方液态乳」（官方修改决定要求条内每处「婴幼儿配方乳粉」后增补）——该缺陷页 ws_食品安全法2025.html 仅作旁证不再作构建源。flk 官方 DOCX 直连下载被 SPA/OSS 拦截，【强】级直证待补。2009 原版与 2015 修订版全文未采集。"
+}

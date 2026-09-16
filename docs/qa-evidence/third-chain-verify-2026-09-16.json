@@ -1,0 +1,304 @@
+[
+ {
+  "law_id": "civl-2020",
+  "slug": "civil-code",
+  "articles": 1260,
+  "class": {
+   "punct": 0,
+   "zhu": 0,
+   "ref_head": 1,
+   "version": 0,
+   "real": []
+  }
+ },
+ {
+  "law_id": "cl-2013",
+  "slug": "consumer-rights-protection-law",
+  "articles": 63,
+  "class": {
+   "punct": 5,
+   "zhu": 0,
+   "ref_head": 0,
+   "version": 0,
+   "real": []
+  }
+ },
+ {
+  "law_id": "lcl-2012",
+  "slug": "labor-contract-law",
+  "articles": 98,
+  "class": {
+   "punct": 2,
+   "zhu": 0,
+   "ref_head": 0,
+   "version": 0,
+   "real": []
+  }
+ },
+ {
+  "law_id": "ll-2017",
+  "slug": "lawyers-law",
+  "articles": 60,
+  "class": {
+   "punct": 14,
+   "zhu": 0,
+   "ref_head": 0,
+   "version": 0,
+   "real": []
+  }
+ },
+ {
+  "law_id": "ecom-2018",
+  "slug": "e-commerce-law",
+  "articles": 89,
+  "class": {
+   "punct": 1,
+   "zhu": 0,
+   "ref_head": 0,
+   "version": 0,
+   "real": []
+  }
+ },
+ {
+  "law_id": "pcl-2023",
+  "slug": "civil-procedure-law",
+  "articles": 306,
+  "class": {
+   "punct": 0,
+   "zhu": 0,
+   "ref_head": 0,
+   "version": 0,
+   "real": []
+  }
+ },
+ {
+  "law_id": "htjs-2023",
+  "slug": "sfjs-mfd-hetong",
+  "articles": 69,
+  "class": {
+   "punct": 0,
+   "zhu": 0,
+   "ref_head": 8,
+   "version": 0,
+   "real": []
+  }
+ },
+ {
+  "law_id": "wlxf-2022",
+  "slug": "sfjs-0bb4df4166",
+  "articles": 20,
+  "class": {
+   "punct": 0,
+   "zhu": 0,
+   "ref_head": 0,
+   "version": 0,
+   "real": []
+  }
+ },
+ {
+  "law_id": "scl-2012",
+  "slug": "law-cd4d392750",
+  "articles": 42,
+  "class": {
+   "punct": 0,
+   "zhu": 0,
+   "ref_head": 0,
+   "version": 2,
+   "real": []
+  }
+ },
+ {
+  "law_id": "dv-2015",
+  "slug": "law-8d296329b7",
+  "articles": 38,
+  "class": {
+   "punct": 0,
+   "zhu": 0,
+   "ref_head": 0,
+   "version": 0,
+   "real": []
+  }
+ },
+ {
+  "law_id": "social-ins-2018",
+  "slug": "social-insurance-law",
+  "articles": 98,
+  "class": {
+   "punct": 0,
+   "zhu": 0,
+   "ref_head": 0,
+   "version": 0,
+   "real": []
+  }
+ },
+ {
+  "law_id": "food-safety-2025",
+  "slug": "food-safety-law",
+  "articles": 154,
+  "class": {
+   "punct": 1,
+   "zhu": 0,
+   "ref_head": 0,
+   "version": 0,
+   "real": [
+    81
+   ]
+  }
+ },
+ {
+  "law_id": "con-2018",
+  "slug": "constitution",
+  "articles": 143,
+  "class": {
+   "punct": 0,
+   "zhu": 0,
+   "ref_head": 0,
+   "version": 0,
+   "real": []
+  }
+ },
+ {
+  "law_id": "cpl-2018",
+  "slug": "criminal-procedure-law",
+  "articles": 308,
+  "class": {
+   "punct": 0,
+   "zhu": 308,
+   "ref_head": 0,
+   "version": 0,
+   "real": []
+  }
+ },
+ {
+  "law_id": "lcar-2007",
+  "slug": "labor-dispute-mediation-arbitration-law",
+  "articles": 54,
+  "class": {
+   "punct": 9,
+   "zhu": 0,
+   "ref_head": 0,
+   "version": 0,
+   "real": []
+  }
+ },
+ {
+  "law_id": "dsl-2021",
+  "slug": "data-security-law",
+  "articles": 55,
+  "class": {
+   "punct": 0,
+   "zhu": 0,
+   "ref_head": 0,
+   "version": 0,
+   "real": []
+  }
+ },
+ {
+  "law_id": "csl-2025",
+  "slug": "cybersecurity-law",
+  "articles": 81,
+  "class": {
+   "punct": 0,
+   "zhu": 0,
+   "ref_head": 0,
+   "version": 0,
+   "real": []
+  }
+ },
+ {
+  "law_id": "penal-2021",
+  "slug": "administrative-penalty-law",
+  "articles": 86,
+  "class": {
+   "punct": 0,
+   "zhu": 0,
+   "ref_head": 0,
+   "version": 0,
+   "real": []
+  }
+ },
+ {
+  "law_id": "women-2022",
+  "slug": "women-rights-protection-law",
+  "articles": 86,
+  "class": {
+   "punct": 0,
+   "zhu": 0,
+   "ref_head": 0,
+   "version": 0,
+   "real": []
+  }
+ },
+ {
+  "law_id": "minor-2024",
+  "slug": "minors-protection-law",
+  "articles": 132,
+  "class": {
+   "punct": 0,
+   "zhu": 0,
+   "ref_head": 0,
+   "version": 0,
+   "real": []
+  }
+ },
+ {
+  "law_id": "psm-2025",
+  "slug": "public-security-administration-punishments-law",
+  "articles": 144,
+  "class": {
+   "punct": 0,
+   "zhu": 0,
+   "ref_head": 0,
+   "version": 0,
+   "real": []
+  }
+ },
+ {
+  "law_id": "pipl-2021",
+  "slug": "personal-information-protection-law",
+  "articles": 74,
+  "class": {
+   "punct": 2,
+   "zhu": 0,
+   "ref_head": 0,
+   "version": 0,
+   "real": []
+  }
+ },
+ {
+  "law_id": "legal-aid-2021",
+  "slug": "legal-aid-law",
+  "articles": 71,
+  "class": {
+   "punct": 0,
+   "zhu": 0,
+   "ref_head": 0,
+   "version": 0,
+   "real": []
+  }
+ },
+ {
+  "law_id": "admin-review-2023",
+  "slug": "administrative-reconsideration-law",
+  "articles": 90,
+  "class": {
+   "punct": 0,
+   "zhu": 0,
+   "ref_head": 0,
+   "version": 0,
+   "real": []
+  }
+ },
+ {
+  "law_id": "admin-litigation-2017",
+  "slug": "administrative-procedure-law",
+  "articles": 103,
+  "class": {
+   "punct": 0,
+   "zhu": 0,
+   "ref_head": 0,
+   "version": 0,
+   "real": []
+  }
+ }
+]
