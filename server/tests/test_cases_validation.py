@@ -30,6 +30,31 @@ def test_cases_data_discipline():
         assert c["verified"] is True and c["no"], f"真实案例缺案号: {c['id']}"
 
 
+def test_guiding_cases_holding_matches_official_snapshot():
+    """R131 案例级第三链校验钉住：中文指导案例的裁判要点必须是官方发布页逐字。
+
+    12 件指导案例的 holding 逐字出自 court.gov.cn 官方发布页快照（grade 全部【强】）；
+    快照在仓库内，本测试离线可跑——任何回退到「摘要改写」或篡改要点的行为直接失败。
+    """
+    import pathlib
+
+    cases = cases_mod.load_cases()
+    ws = re.compile(r"[\s　]+")
+    guiding = [c for c in cases if c["id"].startswith("guidance-")]
+    assert len(guiding) >= 12
+    for c in guiding:
+        assert c["grade"] == "强", f"{c['id']} 证据等级未达【强】"
+        assert "court.gov.cn" in c["source_url"], f"{c['id']} 来源非最高法官网"
+        n = re.search(r"(\d+)", c["no"]).group(1)
+        snap = pathlib.Path("../docs/research/evidence") / f"court_指导案例{n}号.html"
+        assert snap.exists(), f"缺少官方快照: {snap}"
+        raw = snap.read_text(encoding="utf-8", errors="replace")
+        text = ws.sub("", re.sub(r"<[^>]+>", " ", raw))
+        holding = ws.sub("", c["holding"])
+        assert len(holding) >= 20, f"{c['id']} 裁判要点过短"
+        assert holding in text, f"{c['id']} 裁判要点与官方快照逐字不一致"
+
+
 def test_cases_search_and_get():
     hits = cases_mod.search_cases("违约")
     assert isinstance(hits, list)

@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 """确定性需求解析：关键词、引用不变量与案例直接来源。"""
+import re
+
 import pytest
 
 from app import needs  # noqa: E402
@@ -23,7 +25,8 @@ def test_parse_cases_official_entries(tmp_db):
         assert c["verified"] is True
         assert c["official_entries"], "案例必须携带直接核验来源"
         assert c["source_url"] == c["official_entries"][0]["url"]
-        assert c["source_accessed_at"] == "2026-09-01"
+        # 核验日随采集轮次推进（R131 升级为 2026-09-16 官方快照核验），冻结具体日期会让合法更新变成假失败
+        assert re.fullmatch(r"\d{4}-\d{2}-\d{2}", c["source_accessed_at"])
         for e in c["official_entries"]:
             assert e["url"].startswith("https://")
 

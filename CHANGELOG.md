@@ -22,6 +22,8 @@
 
 ### Fixed / 修复
 
+- Case-level third-chain verification (R131): all 12 Chinese guiding cases in the library matched the reference repository and were upgraded — official Supreme People's Court publication pages (court.gov.cn) became reachable again and were snapshotted as in-repo evidence, lifting the nine 【中】-grade (Wikisource-corroborated) cases to 【强】 with verbatim official 裁判要点 replacing the earlier hand-written summaries; guidance-01's date corrected from the judgment date (2011-04-12) to the official release date (2011-12-20). A new pinning test requires every guiding-case holding to appear character-for-character in its official snapshot, and a frozen-date assertion in the needs tests was fixed to the ISO-format convention (R80 anti-pattern, second occurrence).
+
 - OWASP LLM Top-10 (2025) gaps: prompt-injection probe suite in `llm_eval`, outbound personal-information scanning (counts only, never echoes values), per-actor daily call quota (`LH_AI_DAILY_LIMIT`, 429).
 - Local pre-commit now runs oxlint (aligned with CI Gate 2); performance-budget gate skips cleanly when no dist exists (Pages workflow).
 - Motion-probe assertion count corrected to the real 11 (a previously logged "20" never landed in git history); README quality table updated.
@@ -41,8 +43,6 @@ Source and static-site prerelease / 源码与静态站点预发布。
 - 具名专业解读登记与法条关联；来源、身份依据和摘要范围可追溯。Evidence coverage is explicitly not accuracy; calibrated legal accuracy remains unavailable.
 - Six-step fact preparation, explicit candidate selection and audience-specific navigation. No default claim model or fictional user identity.
 - Public coverage inventory and a clearly separated not-yet-imported queue.
-
-### Fixed / 修复
 
 - Removed runtime design-system pages and fictional contract records.
 - Hardened AI output checks with server-owned citations, per-clause evidence matching and conservative outcome-language checks. These lexical checks are not semantic correctness guarantees.
