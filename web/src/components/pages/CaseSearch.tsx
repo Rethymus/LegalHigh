@@ -13,6 +13,7 @@ const DOMAIN_RULES: { key: string; label: string; match: (c: CaseRecord) => bool
   { key: 'labor', label: '劳动 · 就业', match: (c) => /劳动合同|劳动争议|竞业限制|平等就业|年终奖|解除劳动合同/.test(c.cause + c.name) },
   { key: 'criminal', label: '刑事', match: (c) => /盗窃|诈骗|故意伤害|正当防卫|罪/.test(c.cause + c.name) },
   { key: 'admin', label: '行政', match: (c) => /行政/.test(c.cause + c.name) },
+  { key: 'tort', label: '侵权 · 交通事故 · 人格权', match: (c) => /交通事故|名誉|荣誉|人身损害/.test(c.cause + c.name) },
   { key: 'civil', label: '民事 · 合同 · 侵权', match: () => true },
 ]
 
