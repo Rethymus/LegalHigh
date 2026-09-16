@@ -892,7 +892,7 @@ def evals():
 
 # 前端构建产物静态托管（存在 web/dist 时）：/assets 走静态文件，其余非 API 路径
 # 一律回退 index.html（React SPA 客户端路由刷新时不得 404）。
-from fastapi.responses import FileResponse  # noqa: E402
+from fastapi.responses import FileResponse, JSONResponse  # noqa: E402
 
 WEB_DIST = Path(_os.environ.get("WEB_DIST_DIR", str(Path(__file__).resolve().parent.parent.parent / "web" / "dist")))
 
@@ -913,6 +913,25 @@ def _static_file_candidate(full_path: str) -> Path | None:
 
 if (WEB_DIST / "assets").exists():
     app.mount("/assets", StaticFiles(directory=str(WEB_DIST / "assets")), name="assets")
+
+
+@app.post("/mcp", include_in_schema=True)
+async def mcp_http_endpoint(request: Request):
+    """MCP streamable-HTTP 端点（v7 S2-T1 双传输的 HTTP 侧）：接受 JSON-RPC 2.0 单条消息。
+
+    无状态（不维护会话/订阅）；仅暴露检索三工具（红线：无生成型工具）。
+    """
+    from mcp_server import handle  # 延迟导入避免循环
+
+    try:
+        msg = await request.json()
+    except Exception:
+        return JSONResponse({"jsonrpc": "2.0", "id": None,
+                             "error": {"code": -32700, "message": "parse error"}}, status_code=400)
+    resp = handle(msg)
+    if resp is None:
+        return JSONResponse({}, status_code=202)  # notification
+    return JSONResponse(resp)
 
 
 @app.get("/{full_path:path}", include_in_schema=False)
