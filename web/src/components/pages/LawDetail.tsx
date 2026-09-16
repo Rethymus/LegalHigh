@@ -8,6 +8,7 @@ import { EmptyState, PageHeader, SkeletonLines, Tabs, useCopy, useToast, Validit
 import { AIContentBadge, AIWarning, CitationChip, OfficialArticle, SourceBadge } from '../domain'
 import { api, isFav as isFavKey, toggleFav, type ArticleExplain, type ArticleLink, type LawAnalysisContext } from '../../lib/api'
 import type { AppOutletContext } from '../AppShell'
+import TERMS from '../../data/terms.json'
 
 const TABS = [
   { key: 'rel-js', label: '关联司法解释' },
@@ -75,6 +76,11 @@ export default function LawDetail() {
   }, [lawId, articleNo])
   // 当前条号的已审核人工解读（决策项4：无则保持 AI 通用指引）
   const explain = article ? explains[String(article.no)] : undefined
+  // 本法关联术语卡反查（v7 粉饰：打通术语卡↔法条详情双向导航）
+  const relatedTerms = useMemo(
+    () => TERMS.filter((t) => t.refs.some((r) => r.law_id === lawId)),
+    [lawId],
+  )
   const [favState, setFavState] = useState(false)
   useEffect(() => { setFavState(lawId ? isFavKey(`law:${lawId}#${no}`) : false) }, [lawId, no])
 
@@ -198,10 +204,22 @@ export default function LawDetail() {
                 </div>
               )}
               {tab === 'related' && (
-                <div className="chips">
-                  {sibling.slice(0, 8).map((a) => (
-                    <button key={artParam(a.no, a.sub)} className="chip" onClick={() => setSp({ art: artParam(a.no, a.sub) })}>{a.label}</button>
-                  ))}
+                <div>
+                  <div className="chips mb-12">
+                    {sibling.slice(0, 8).map((a) => (
+                      <button key={artParam(a.no, a.sub)} className="chip" onClick={() => setSp({ art: artParam(a.no, a.sub) })}>{a.label}</button>
+                    ))}
+                  </div>
+                  {relatedTerms.length > 0 && (
+                    <div className="mt-12">
+                      <div className="tiny bold mb-8">相关术语卡（{relatedTerms.length}）</div>
+                      <div className="chips">
+                        {relatedTerms.map((t) => (
+                          <Link key={t.term} to="/terms" className="chip">{t.term}</Link>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
               {tab === 'version' && (
