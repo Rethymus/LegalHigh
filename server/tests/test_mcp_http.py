@@ -34,6 +34,20 @@ def test_mcp_http_search():
     assert inner["articles"][0]["source_url"].startswith("https://")
 
 
+def test_mcp_http_search_cases():
+    r = client.post("/mcp", json={
+        "jsonrpc": "2.0", "id": 6, "method": "tools/call",
+        "params": {"name": "search_cases",
+                   "arguments": {"query": "竞业限制", "top_k": 3}},
+    })
+    assert r.status_code == 200
+    d = r.json()
+    inner = json.loads(d["result"]["content"][0]["text"])
+    assert inner["count"] >= 1
+    assert inner["cases"][0]["case_id"].startswith("guidance-")
+    assert inner["cases"][0]["source_url"].startswith("https://")
+
+
 def test_mcp_http_unknown_tool():
     r = client.post("/mcp", json={
         "jsonrpc": "2.0", "id": 3, "method": "tools/call",
