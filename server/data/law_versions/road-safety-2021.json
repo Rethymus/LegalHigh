@@ -1,0 +1,26 @@
+{
+  "law_id": "road-safety-2021",
+  "title": "中华人民共和国道路交通安全法",
+  "schema_version": 1,
+  "note": "R133（2026-09-16）第三轮领域扩张：高频普法法律经 lawtext（flk DOCX 转录）链入库。",
+  "versions": [
+    {
+      "version_id": "current",
+      "label": "2021 修正",
+      "status": "现行有效（2021修正）",
+      "promulgation_date": "2021-04-29",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2004-05-01",
+      "article_count": 124,
+      "current": true,
+      "evidence": {
+        "kind": "flk-docx-transcription",
+        "grade": "中",
+        "url": "https://flk.npc.gov.cn/detail?id=ff8081817ab231eb017abd617ef70519",
+        "accessed_at": "2026-09-16",
+        "snapshot": "docs/research/evidence/lawtext_道交法2021.md"
+      }
+    }
+  ],
+  "pending_note": "2003 通过原版与 2007/2011 修正版全文未采集；2021 修正决定主席令号快照未载，省略。R133 由 lawtext（flk DOCX 转录）链入库，bbbs 经 flk 官方 API 核验（pub 2021-04-29/eff 2021-04-29/有效）。"
+}

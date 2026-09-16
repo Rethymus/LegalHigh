@@ -157,7 +157,8 @@ export default function CaseDetail() {
             {tab === '判决结果' && (
               <>
                 <h4>裁判结果</h4>
-                <p>{c.summary}</p>
+                {c.result ? <p className="q">{c.result}</p> : <p>{c.summary}</p>}
+                {c.result && <p>以上为官方发布文本所载裁判结果（逐字）。</p>}
               </>
             )}
             {tab === '相关案例' && (
@@ -200,7 +201,7 @@ export default function CaseDetail() {
                 <div className="mt-12">
                   <div className="tiny bold mb-8">研究性参照（非本案裁判依据）</div>
                   <div className="citations">
-                    {c.research_refs.map((r) => <CitationChip key={r.no} label={r.label} to={`/laws/${r.law_id}?art=${r.no}`} />)}
+                    {c.research_refs.map((r) => <CitationChip key={r.no} label={r.label} to={`/laws/${r.law_id}?art=${r.no}${r.sub ?? ''}}`} />)}
                   </div>
                 </div>
               )}
@@ -216,7 +217,7 @@ export default function CaseDetail() {
                   <div className="mb-12">
                     <div className="tiny bold mb-8">可对照的中国法源（本地语料）</div>
                     <div className="citations">
-                      {c.research_refs!.map((r) => <CitationChip key={r.no} label={r.label} to={`/laws/${r.law_id}?art=${r.no}`} />)}
+                      {c.research_refs!.map((r) => <CitationChip key={r.no} label={r.label} to={`/laws/${r.law_id}?art=${r.no}${r.sub ?? ''}}`} />)}
                     </div>
                   </div>
                 )}

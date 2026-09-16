@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-16T20:45:54.273413",
+  "built_at": "2026-09-16T22:09:13.164082",
   "fetch_date": "2026-09-08",
   "laws": [
     {
@@ -354,6 +354,75 @@
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "b9fe6dbee29426573cbbcc149a9d38d8680d8b317f6fe301eb47b2885eb69365",
       "output_sha256": "ff7b08bbdacf7548adb1e6be28e60514ab876f58dfcde8742ac5cb54321ab5e7"
+    },
+    {
+      "law_id": "road-safety-2021",
+      "title": "中华人民共和国道路交通安全法",
+      "status": "现行有效（2021修正）",
+      "effective_date": "2004-05-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国道路交通安全法",
+        "url": "https://flk.npc.gov.cn/detail?id=ff8081817ab231eb017abd617ef70519",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2021修正）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 124,
+      "expected_count": 124,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=ff8081817ab231eb017abd617ef70519",
+      "snapshot": "docs/research/evidence/lawtext_道交法2021.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "35e3afe8fee152efa51ed2370b0bc9b98a7b718d07b7eeb9147ffb942135f9f9",
+      "output_sha256": "b5cb6db3981f83e6f9ad8cd5b62dcbd78f35b50548e07dcfac3361d56b6301fc"
+    },
+    {
+      "law_id": "labor-law-2018",
+      "title": "中华人民共和国劳动法",
+      "status": "现行有效（2018修正）",
+      "effective_date": "1995-01-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国劳动法",
+        "url": "https://flk.npc.gov.cn/detail?id=ff8080816f135f46016f20f16ee11737",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2018修正）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 107,
+      "expected_count": 107,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=ff8080816f135f46016f20f16ee11737",
+      "snapshot": "docs/research/evidence/lawtext_劳动法2018.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "f75e9fd90dfed8a9f302e222ec66f87faa5489ed8a198a9927541087af95becd",
+      "output_sha256": "e02d876a33ad1ff3c105781115e8b888c50e8ce9ba2d0d9cec159fdfbb4e4ebd"
+    },
+    {
+      "law_id": "product-quality-2018",
+      "title": "中华人民共和国产品质量法",
+      "status": "现行有效（2018修正）",
+      "effective_date": "1993-09-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国产品质量法",
+        "url": "https://flk.npc.gov.cn/detail?id=ff8080816f135f46016f1d6dfd7614d3",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2018修正）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 74,
+      "expected_count": 74,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=ff8080816f135f46016f1d6dfd7614d3",
+      "snapshot": "docs/research/evidence/lawtext_产品质量法2018.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "e8567076027a4062cb70e1a23d9163d3f0999877060a463e7efc48969684cbd0",
+      "output_sha256": "6a17318839de3df5a4f2219e3557c733c67dfb1bef2baf9ad733774dcb0bd1aa"
     },
     {
       "law_id": "con-2018",

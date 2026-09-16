@@ -62,6 +62,9 @@ LAW_FILES = {
     "social_ins_ws_html": "ws_社会保险法.html",
     "food_safety_ws_html": "ws_食品安全法.html",  # 2021 修正版（历史版证据，现行文本见 lawtext 键）
     "food_safety_2025_lawtext_md": "lawtext_食品安全法2025.md",  # 2025 第三次修正（flk DOCX 转录，R130）
+    "road_safety_2021_lawtext_md": "lawtext_道交法2021.md",  # 道路交通安全法 2021 第三次修正（R133）
+    "labor_law_2018_lawtext_md": "lawtext_劳动法2018.md",  # 劳动法 2018 修正（R133）
+    "product_quality_2018_lawtext_md": "lawtext_产品质量法2018.md",  # 产品质量法 2018 修正（R133）
     "cl_ws_html": "ws_刑法2023.html",
 }
 
@@ -334,6 +337,9 @@ EXPECTED_COUNTS = {
     "dv-2015": 38,
     "social-ins-2018": 98,
     "food-safety-2025": 154,
+    "road-safety-2021": 124,
+    "labor-law-2018": 107,
+    "product-quality-2018": 74,
     "crpl-imp-2024": 53,
     "genai-2023": 24,
     "pipl-2021": 74,
@@ -472,6 +478,33 @@ def main():
                 "effective_date": "2015-10-01",
             },
             "https://flk.npc.gov.cn/detail?id=7b5a76d0461745a08d3f964916b87ef3",
+        ),
+        build_lawtext_md_law(
+            "road_safety_2021_lawtext_md", "road-safety-2021", "中华人民共和国道路交通安全法",
+            {
+                "status": "现行有效（2021修正）",
+                "promulgation": {"date": "2021-04-29", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "2004-05-01",
+            },
+            "https://flk.npc.gov.cn/detail?id=ff8081817ab231eb017abd617ef70519",
+        ),
+        build_lawtext_md_law(
+            "labor_law_2018_lawtext_md", "labor-law-2018", "中华人民共和国劳动法",
+            {
+                "status": "现行有效（2018修正）",
+                "promulgation": {"date": "2018-12-29", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "1995-01-01",
+            },
+            "https://flk.npc.gov.cn/detail?id=ff8080816f135f46016f20f16ee11737",
+        ),
+        build_lawtext_md_law(
+            "product_quality_2018_lawtext_md", "product-quality-2018", "中华人民共和国产品质量法",
+            {
+                "status": "现行有效（2018修正）",
+                "promulgation": {"date": "2018-12-29", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "1993-09-01",
+            },
+            "https://flk.npc.gov.cn/detail?id=ff8080816f135f46016f1d6dfd7614d3",
         ),
         build_wikisource_html_law(
             "minor_ws_html", "con-2018", "中华人民共和国宪法",

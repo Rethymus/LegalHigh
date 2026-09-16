@@ -136,6 +136,33 @@
       "no_effective_date": false,
       "effective_date_evidence_valid": true
     },
+    "road-safety-2021": {
+      "manifest_count": 124,
+      "actual_count": 124,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "labor-law-2018": {
+      "manifest_count": 107,
+      "actual_count": 107,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "product-quality-2018": {
+      "manifest_count": 74,
+      "actual_count": 74,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
     "con-2018": {
       "manifest_count": 143,
       "actual_count": 143,
@@ -272,6 +299,7 @@
     "food-safety-2025": 2,
     "genai-2023": 1,
     "htjs-2023": 1,
+    "labor-law-2018": 1,
     "lcar-2007": 1,
     "lcl-2012": 2,
     "legal-aid-2021": 1,
@@ -280,7 +308,9 @@
     "pcl-2023": 6,
     "penal-2021": 4,
     "pipl-2021": 1,
+    "product-quality-2018": 1,
     "psm-2025": 3,
+    "road-safety-2021": 1,
     "scl-2012": 3,
     "social-ins-2018": 1,
     "wlxf-2022": 1,

@@ -681,7 +681,7 @@ export interface ResearchMemo {
 }
 
 /* ---------- 案例记录（server/data/cases.json） ---------- */
-export interface CaseStatute { law_id: string; no: number; label: string }
+export interface CaseStatute { law_id: string; no: number; label: string; sub?: string }
 export interface CaseRecord {
   id: string
   name: string
@@ -696,6 +696,7 @@ export interface CaseRecord {
   summary: string
   facts: string
   holding: string
+  result?: string
   statutes: CaseStatute[]
   research_refs?: CaseStatute[]
   court_level?: string

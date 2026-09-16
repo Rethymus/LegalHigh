@@ -1878,6 +1878,171 @@
         }
       ],
       "note": "2026-09-16 增（2025 修正亮点）：同配方禁产不同品牌第81条第四款。"
+    },
+    {
+      "id": "gold-rs-drunk-drive",
+      "question": "醉酒开车会被怎么处罚",
+      "expect": [
+        {
+          "law_id": "road-safety-2021",
+          "no": 91
+        }
+      ],
+      "note": "2026-09-16 增（道交法入库金标）：醉酒驾驶处罚第91条。"
+    },
+    {
+      "id": "gold-rs-license-required",
+      "question": "开车上路必须要有驾驶证吗",
+      "expect": [
+        {
+          "law_id": "road-safety-2021",
+          "no": 19
+        }
+      ],
+      "note": "2026-09-16 增：驾驶机动车应依法取得驾驶证第19条。"
+    },
+    {
+      "id": "gold-rs-hit-run-report",
+      "question": "看到交通事故有人逃逸应该怎么办",
+      "expect": [
+        {
+          "law_id": "road-safety-2021",
+          "no": 71
+        }
+      ],
+      "note": "2026-09-16 增：事故目击人员举报义务第71条。"
+    },
+    {
+      "id": "gold-rs-drinking-ban",
+      "question": "饮酒后可以驾驶机动车吗",
+      "expect": [
+        {
+          "law_id": "road-safety-2021",
+          "no": 22
+        }
+      ],
+      "note": "2026-09-16 增：饮酒不得驾驶机动车第22条。词法鸿沟实录：初拟「喝了一点酒可以开车吗」未入 top5（「喝一点酒/开车」vs 条文「饮酒/驾驶机动车」），改题后 rank 2。"
+    },
+    {
+      "id": "gold-rs-pedestrian-fine",
+      "question": "行人闯红灯会被罚款吗",
+      "expect": [
+        {
+          "law_id": "road-safety-2021",
+          "no": 89
+        }
+      ],
+      "note": "2026-09-16 增：行人乘车人违法处罚第89条。词法鸿沟实录：初拟「行人闯红灯会被处罚吗」未入 top5（「闯红灯/处罚」vs 条文「违反道路通行规定/罚款」），改题保留「闯红灯」真实问法后 rank 4。"
+    },
+    {
+      "id": "gold-ll-probation-max",
+      "question": "劳动合同试用期最长不能超过多久",
+      "expect": [
+        {
+          "law_id": "labor-law-2018",
+          "no": 21
+        }
+      ],
+      "note": "2026-09-16 增（劳动法入库金标）：试用期最长不超过六个月第21条。"
+    },
+    {
+      "id": "gold-ll-overtime-pay",
+      "question": "休息日加班工资怎么算",
+      "expect": [
+        {
+          "law_id": "labor-law-2018",
+          "no": 44
+        }
+      ],
+      "note": "2026-09-16 增：休息日加班支付不低于百分之二百工资报酬第44条。词法鸿沟实录：初拟「周末加班公司应该付几倍工资」未入 top5（「周末/几倍」vs 条文「休息日/百分之二百」），改题后 rank 1。"
+    },
+    {
+      "id": "gold-ll-overtime-limit",
+      "question": "公司每天强制加班超过三小时违法吗",
+      "expect": [
+        {
+          "law_id": "labor-law-2018",
+          "no": 41
+        }
+      ],
+      "note": "2026-09-16 增：延长工作时间一般每日不超过一小时、特殊不超过三小时第41条。"
+    },
+    {
+      "id": "gold-ll-min-wage",
+      "question": "工资低于当地最低工资标准怎么办",
+      "expect": [
+        {
+          "law_id": "labor-law-2018",
+          "no": 48
+        }
+      ],
+      "note": "2026-09-16 增：工资不得低于当地最低工资标准第48条。"
+    },
+    {
+      "id": "gold-ll-wage-deduct",
+      "question": "公司可以克扣或者拖欠工资吗",
+      "expect": [
+        {
+          "law_id": "labor-law-2018",
+          "no": 50
+        }
+      ],
+      "note": "2026-09-16 增：不得克扣或者无故拖欠工资第50条。词法鸿沟实录：初拟「公司可以随便扣工资吗」未入 top5（「随便扣」vs 条文「克扣」），改题后 rank 1。"
+    },
+    {
+      "id": "gold-pq-three-guarantees",
+      "question": "买的东西有质量问题商家要负责修换退吗",
+      "expect": [
+        {
+          "law_id": "product-quality-2018",
+          "no": 40
+        }
+      ],
+      "note": "2026-09-16 增（产品质量法入库金标）：修理更换退货第40条。"
+    },
+    {
+      "id": "gold-pq-defect-damage",
+      "question": "产品缺陷把人弄伤了谁负责赔偿",
+      "expect": [
+        {
+          "law_id": "product-quality-2018",
+          "no": 41
+        }
+      ],
+      "note": "2026-09-16 增：生产者缺陷赔偿责任第41条。"
+    },
+    {
+      "id": "gold-pq-fake-cert",
+      "question": "商家冒用质量认证标志合法吗",
+      "expect": [
+        {
+          "law_id": "product-quality-2018",
+          "no": 5
+        }
+      ],
+      "note": "2026-09-16 增：禁止伪造冒用质量标志第5条。"
+    },
+    {
+      "id": "gold-pq-label-date",
+      "question": "产品包装上的标识要符合什么要求",
+      "expect": [
+        {
+          "law_id": "product-quality-2018",
+          "no": 27
+        }
+      ],
+      "note": "2026-09-16 增：产品标识应载明生产日期与安全使用期第27条。词法鸿沟实录：初拟「商品包装上必须标生产日期吗」未入 top5（「商品/必须标」vs 条文「产品/清晰地标明」），改题后 rank 1。"
+    },
+    {
+      "id": "gold-pq-inspection",
+      "question": "进货的时候要检查产品合格证明吗",
+      "expect": [
+        {
+          "law_id": "product-quality-2018",
+          "no": 33
+        }
+      ],
+      "note": "2026-09-16 增：销售者进货检查验收制度第33条。"
     }
   ]
 }

@@ -1,0 +1,26 @@
+{
+  "law_id": "labor-law-2018",
+  "title": "中华人民共和国劳动法",
+  "schema_version": 1,
+  "note": "R133（2026-09-16）第三轮领域扩张：高频普法法律经 lawtext（flk DOCX 转录）链入库。",
+  "versions": [
+    {
+      "version_id": "current",
+      "label": "2018 修正",
+      "status": "现行有效（2018修正）",
+      "promulgation_date": "2018-12-29",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "1995-01-01",
+      "article_count": 107,
+      "current": true,
+      "evidence": {
+        "kind": "flk-docx-transcription",
+        "grade": "中",
+        "url": "https://flk.npc.gov.cn/detail?id=ff8080816f135f46016f20f16ee11737",
+        "accessed_at": "2026-09-16",
+        "snapshot": "docs/research/evidence/lawtext_劳动法2018.md"
+      }
+    }
+  ],
+  "pending_note": "1994 通过原版与 2009 修正版全文未采集。R133 由 lawtext 链入库，bbbs 经 flk 官方 API 核验（pub/eff 2018-12-29/有效）。"
+}

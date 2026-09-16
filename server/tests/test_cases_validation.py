@@ -53,6 +53,9 @@ def test_guiding_cases_holding_matches_official_snapshot():
         holding = ws.sub("", c["holding"])
         assert len(holding) >= 20, f"{c['id']} 裁判要点过短"
         assert holding in text, f"{c['id']} 裁判要点与官方快照逐字不一致"
+        result = ws.sub("", c.get("result", ""))
+        assert len(result) >= 20, f"{c['id']} 缺少逐字裁判结果（R133）"
+        assert result in text, f"{c['id']} 裁判结果与官方快照逐字不一致"
 
 
 def test_cases_search_and_get():
