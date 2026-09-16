@@ -217,6 +217,33 @@
       "no_effective_date": false,
       "effective_date_evidence_valid": true
     },
+    "copyright-2020": {
+      "manifest_count": 67,
+      "actual_count": 67,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "patent-2020": {
+      "manifest_count": 82,
+      "actual_count": 82,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "trademark-2026": {
+      "manifest_count": 87,
+      "actual_count": 87,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
     "con-2018": {
       "manifest_count": 143,
       "actual_count": 143,
@@ -345,6 +372,7 @@
     "cl-2013": 1,
     "cl-2023": 4,
     "con-2018": 5,
+    "copyright-2020": 1,
     "cpl-2018": 1,
     "crime-prev-2020": 1,
     "crpl-imp-2024": 1,
@@ -365,6 +393,7 @@
     "ll-2017": 5,
     "mediation-2010": 1,
     "minor-2024": 5,
+    "patent-2020": 1,
     "pcl-2023": 6,
     "penal-2021": 4,
     "pipl-2021": 1,
@@ -373,6 +402,7 @@
     "road-safety-2021": 1,
     "scl-2012": 3,
     "social-ins-2018": 1,
+    "trademark-2026": 1,
     "wlxf-2022": 1,
     "women-2022": 4
   }

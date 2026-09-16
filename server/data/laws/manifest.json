@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-16T22:53:51.504197",
+  "built_at": "2026-09-16T23:20:56.514019",
   "fetch_date": "2026-09-08",
   "laws": [
     {
@@ -561,6 +561,75 @@
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "d1def5ebda686096767449f01126655afcbb09fb8a5a7dfdec8ee9d8fbe0ed44",
       "output_sha256": "4a4b51947105cbc59efe053dfd4e54b1e18fee145592dd329b1eac21e86e9b37"
+    },
+    {
+      "law_id": "copyright-2020",
+      "title": "中华人民共和国著作权法",
+      "status": "现行有效（2020修正）",
+      "effective_date": "2021-06-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国著作权法",
+        "url": "https://flk.npc.gov.cn/detail?id=ff808081752b7d430175e4766bab1557",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2020修正）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 67,
+      "expected_count": 67,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=ff808081752b7d430175e4766bab1557",
+      "snapshot": "docs/research/evidence/lawtext_著作权法2020.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "dcc1f5fbd57bc361deec38a9cc3c6ac598f01ce511d2edfb7098cce17f45a58a",
+      "output_sha256": "bc65f6916b724adad4e0e6bb5924557a0dfd2b0ef4c9d26c396956c709e74023"
+    },
+    {
+      "law_id": "patent-2020",
+      "title": "中华人民共和国专利法",
+      "status": "现行有效（2020修正）",
+      "effective_date": "2021-06-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国专利法",
+        "url": "https://flk.npc.gov.cn/detail?id=ff808081752b7d430175e4651cbd1547",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2020修正）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 82,
+      "expected_count": 82,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=ff808081752b7d430175e4651cbd1547",
+      "snapshot": "docs/research/evidence/lawtext_专利法2020.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "b1763d504d19f1a200b117bce8b308086bcf51f5a2ea2039858f472a952d2692",
+      "output_sha256": "f72c9f35701b2c7fac4f41233f266f8cbd29c68cfbfdbe6c2cc7af952125860a"
+    },
+    {
+      "law_id": "trademark-2026",
+      "title": "中华人民共和国商标法",
+      "status": "已公布（2026修订，2027-01-01 施行）",
+      "effective_date": "2027-01-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国商标法",
+        "url": "https://flk.npc.gov.cn/detail?id=95bb747db54e419184eff06546515826",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "已公布（2026修订，2027-01-01 施行）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 87,
+      "expected_count": 87,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=95bb747db54e419184eff06546515826",
+      "snapshot": "docs/research/evidence/lawtext_商标法2026.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "51778872c382f8f0c8f5c19c417a81f5788d97bcfaaa275658cda5cdd02fb064",
+      "output_sha256": "fbd9177443b872f578ed615498f4719f9cd363c2dd940797ca887b59d6be705f"
     },
     {
       "law_id": "con-2018",

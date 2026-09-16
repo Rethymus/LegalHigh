@@ -1,0 +1,26 @@
+{
+  "law_id": "trademark-2026",
+  "title": "中华人民共和国商标法",
+  "schema_version": 1,
+  "note": "R136（2026-09-16）知识产权三法批次：经 lawtext（flk DOCX 转录）链入库。",
+  "versions": [
+    {
+      "version_id": "current",
+      "label": "2026 修订",
+      "status": "已公布（2026修订，2027-01-01 施行）",
+      "promulgation_date": "2026-06-26",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2027-01-01",
+      "article_count": 87,
+      "current": true,
+      "evidence": {
+        "kind": "flk-docx-transcription",
+        "grade": "中",
+        "url": "https://flk.npc.gov.cn/detail?id=95bb747db54e419184eff06546515826",
+        "accessed_at": "2026-09-16",
+        "snapshot": "docs/research/evidence/lawtext_商标法2026.md"
+      }
+    }
+  ],
+  "pending_note": "1982 通过以来历次修正版全文未采集。2026-06-26 修订通过、2027-01-01 施行（附则自载与 flk sxrq 一致）——截至采集日为尚未施行的最新通过文本，status 如实标注「已公布」；2019 版等既往版本在施行日届至前仍为实际施行文本，用户引用时须核对时间效力。R136 lawtext 链入库。"
+}

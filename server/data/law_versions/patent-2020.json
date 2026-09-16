@@ -1,0 +1,26 @@
+{
+  "law_id": "patent-2020",
+  "title": "中华人民共和国专利法",
+  "schema_version": 1,
+  "note": "R136（2026-09-16）知识产权三法批次：经 lawtext（flk DOCX 转录）链入库。",
+  "versions": [
+    {
+      "version_id": "current",
+      "label": "2020 修正",
+      "status": "现行有效（2020修正）",
+      "promulgation_date": "2020-10-17",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2021-06-01",
+      "article_count": 82,
+      "current": true,
+      "evidence": {
+        "kind": "flk-docx-transcription",
+        "grade": "中",
+        "url": "https://flk.npc.gov.cn/detail?id=ff808081752b7d430175e4651cbd1547",
+        "accessed_at": "2026-09-16",
+        "snapshot": "docs/research/evidence/lawtext_专利法2020.md"
+      }
+    }
+  ],
+  "pending_note": "1984 通过原版与 1992/2000/2008 修正版全文未采集。effective_date 取 2020 修正决定施行日 2021-06-01（flk sxrq 自证）；附则自载原版施行日 1985-04-01，跨四十一年沿用、对本版语义误导性大，注记存档。R136 lawtext 链入库。"
+}

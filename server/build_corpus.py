@@ -71,6 +71,9 @@ LAW_FILES = {
     "advertising_2021_lawtext_md": "lawtext_广告法2021.md",  # 广告法 2021 修正（R135）
     "fire_2021_lawtext_md": "lawtext_消防法2021.md",  # 消防法 2021 修正（R135）
     "drug_2019_lawtext_md": "lawtext_药品管理法2019.md",  # 药品管理法 2019 修订（R135）
+    "copyright_2020_lawtext_md": "lawtext_著作权法2020.md",  # 著作权法 2020 修正（R136）
+    "patent_2020_lawtext_md": "lawtext_专利法2020.md",  # 专利法 2020 修正（R136）
+    "trademark_2026_lawtext_md": "lawtext_商标法2026.md",  # 商标法（2026 新法，2027-01-01 施行）（R136）
     "cl_ws_html": "ws_刑法2023.html",
 }
 
@@ -352,6 +355,9 @@ EXPECTED_COUNTS = {
     "advertising-2021": 74,
     "fire-2021": 74,
     "drug-admin-2019": 155,
+    "copyright-2020": 67,
+    "patent-2020": 82,
+    "trademark-2026": 87,
     "crpl-imp-2024": 53,
     "genai-2023": 24,
     "pipl-2021": 74,
@@ -571,6 +577,33 @@ def main():
                 "effective_date": "2019-12-01",
             },
             "https://flk.npc.gov.cn/detail?id=ff8080816f3cbb3c016f46242d6127ed",
+        ),
+        build_lawtext_md_law(
+            "copyright_2020_lawtext_md", "copyright-2020", "中华人民共和国著作权法",
+            {
+                "status": "现行有效（2020修正）",
+                "promulgation": {"date": "2020-11-11", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "2021-06-01",
+            },
+            "https://flk.npc.gov.cn/detail?id=ff808081752b7d430175e4766bab1557",
+        ),
+        build_lawtext_md_law(
+            "patent_2020_lawtext_md", "patent-2020", "中华人民共和国专利法",
+            {
+                "status": "现行有效（2020修正）",
+                "promulgation": {"date": "2020-10-17", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "2021-06-01",
+            },
+            "https://flk.npc.gov.cn/detail?id=ff808081752b7d430175e4651cbd1547",
+        ),
+        build_lawtext_md_law(
+            "trademark_2026_lawtext_md", "trademark-2026", "中华人民共和国商标法",
+            {
+                "status": "已公布（2026修订，2027-01-01 施行）",
+                "promulgation": {"date": "2026-06-26", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "2027-01-01",
+            },
+            "https://flk.npc.gov.cn/detail?id=95bb747db54e419184eff06546515826",
         ),
         build_wikisource_html_law(
             "minor_ws_html", "con-2018", "中华人民共和国宪法",
