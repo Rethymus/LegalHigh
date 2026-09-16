@@ -68,6 +68,9 @@ LAW_FILES = {
     "crime_prev_2020_lawtext_md": "lawtext_预防未成年人犯罪法2020.md",  # 预防未成年人犯罪法 2020 修订（R134）
     "elderly_2018_lawtext_md": "lawtext_老年人权益保障法2018.md",  # 老年人权益保障法 2018 修正（R134）
     "mediation_2010_lawtext_md": "lawtext_人民调解法2010.md",  # 人民调解法（R134）
+    "advertising_2021_lawtext_md": "lawtext_广告法2021.md",  # 广告法 2021 修正（R135）
+    "fire_2021_lawtext_md": "lawtext_消防法2021.md",  # 消防法 2021 修正（R135）
+    "drug_2019_lawtext_md": "lawtext_药品管理法2019.md",  # 药品管理法 2019 修订（R135）
     "cl_ws_html": "ws_刑法2023.html",
 }
 
@@ -346,6 +349,9 @@ EXPECTED_COUNTS = {
     "crime-prev-2020": 68,
     "elderly-2018": 85,
     "mediation-2010": 35,
+    "advertising-2021": 74,
+    "fire-2021": 74,
+    "drug-admin-2019": 155,
     "crpl-imp-2024": 53,
     "genai-2023": 24,
     "pipl-2021": 74,
@@ -538,6 +544,33 @@ def main():
                 "effective_date": "2011-01-01",
             },
             "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf7105c05af",
+        ),
+        build_lawtext_md_law(
+            "advertising_2021_lawtext_md", "advertising-2021", "中华人民共和国广告法",
+            {
+                "status": "现行有效（2021修正）",
+                "promulgation": {"date": "2021-04-29", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "2015-09-01",
+            },
+            "https://flk.npc.gov.cn/detail?id=ff8081817ab231eb017abd6bd860052d",
+        ),
+        build_lawtext_md_law(
+            "fire_2021_lawtext_md", "fire-2021", "中华人民共和国消防法",
+            {
+                "status": "现行有效（2021修正）",
+                "promulgation": {"date": "2021-04-29", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "2009-05-01",
+            },
+            "https://flk.npc.gov.cn/detail?id=ff8081817ab22e0c017abd909312060a",
+        ),
+        build_lawtext_md_law(
+            "drug_2019_lawtext_md", "drug-admin-2019", "中华人民共和国药品管理法",
+            {
+                "status": "现行有效（2019修订）",
+                "promulgation": {"date": "2019-08-26", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "2019-12-01",
+            },
+            "https://flk.npc.gov.cn/detail?id=ff8080816f3cbb3c016f46242d6127ed",
         ),
         build_wikisource_html_law(
             "minor_ws_html", "con-2018", "中华人民共和国宪法",

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-16T22:35:07.289941",
+  "built_at": "2026-09-16T22:53:51.504197",
   "fetch_date": "2026-09-08",
   "laws": [
     {
@@ -492,6 +492,75 @@
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "d84f3ec21601e915784133096ee5587c0f1eea64cd9d27328a2ef7c1f583174f",
       "output_sha256": "75fbbac313649bba10534ccfed29d34d706b39e3985644c6a55c9d590347479c"
+    },
+    {
+      "law_id": "advertising-2021",
+      "title": "中华人民共和国广告法",
+      "status": "现行有效（2021修正）",
+      "effective_date": "2015-09-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国广告法",
+        "url": "https://flk.npc.gov.cn/detail?id=ff8081817ab231eb017abd6bd860052d",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2021修正）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 74,
+      "expected_count": 74,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=ff8081817ab231eb017abd6bd860052d",
+      "snapshot": "docs/research/evidence/lawtext_广告法2021.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "d5edeffb79dd23eddda3ff296937133f94ca6d6af5d978a6087d3bbb35b2508a",
+      "output_sha256": "6c0ae6874bebd1ee954cc9fe19a5bf4d30e9e942230e482758845377dbdab148"
+    },
+    {
+      "law_id": "fire-2021",
+      "title": "中华人民共和国消防法",
+      "status": "现行有效（2021修正）",
+      "effective_date": "2009-05-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国消防法",
+        "url": "https://flk.npc.gov.cn/detail?id=ff8081817ab22e0c017abd909312060a",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2021修正）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 74,
+      "expected_count": 74,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=ff8081817ab22e0c017abd909312060a",
+      "snapshot": "docs/research/evidence/lawtext_消防法2021.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "808074aca09ef33ea198b26b4cf2852dd62fb52c54a2d83fae74fdd519c7b416",
+      "output_sha256": "77302ebcaea5f2410445541ddfdc52e9d75e09b0782c0c2c0cbdfe67b2865028"
+    },
+    {
+      "law_id": "drug-admin-2019",
+      "title": "中华人民共和国药品管理法",
+      "status": "现行有效（2019修订）",
+      "effective_date": "2019-12-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国药品管理法",
+        "url": "https://flk.npc.gov.cn/detail?id=ff8080816f3cbb3c016f46242d6127ed",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2019修订）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 155,
+      "expected_count": 155,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=ff8080816f3cbb3c016f46242d6127ed",
+      "snapshot": "docs/research/evidence/lawtext_药品管理法2019.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "d1def5ebda686096767449f01126655afcbb09fb8a5a7dfdec8ee9d8fbe0ed44",
+      "output_sha256": "4a4b51947105cbc59efe053dfd4e54b1e18fee145592dd329b1eac21e86e9b37"
     },
     {
       "law_id": "con-2018",

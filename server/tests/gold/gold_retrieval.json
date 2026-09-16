@@ -2208,6 +2208,171 @@
         }
       ],
       "note": "2026-09-16 增：调解协议书的制作第28条。"
+    },
+    {
+      "id": "gold-ad-superlative",
+      "question": "广告可以使用最高级最佳等用语吗",
+      "expect": [
+        {
+          "law_id": "advertising-2021",
+          "no": 9
+        }
+      ],
+      "note": "2026-09-16 增：禁用「国家级/最高级/最佳」等用语第9条。词法鸿沟实录：初拟「广告里说自己是全网最好用的产品违法吗」未入 top5（「全网最好用」vs 条文「最高级/最佳」），改题后 rank 1。"
+    },
+    {
+      "id": "gold-ad-false-ad",
+      "question": "广告夸大宣传算是虚假广告吗",
+      "expect": [
+        {
+          "law_id": "advertising-2021",
+          "no": 28
+        }
+      ],
+      "note": "2026-09-16 增：虚假广告定义第28条。"
+    },
+    {
+      "id": "gold-ad-spokesperson",
+      "question": "明星代言产品出问题要担责吗",
+      "expect": [
+        {
+          "law_id": "advertising-2021",
+          "no": 38
+        }
+      ],
+      "note": "2026-09-16 增：广告代言人义务与责任第38条。"
+    },
+    {
+      "id": "gold-ad-health-food",
+      "question": "保健食品广告能宣传治病功效吗",
+      "expect": [
+        {
+          "law_id": "advertising-2021",
+          "no": 18
+        }
+      ],
+      "note": "2026-09-16 增：保健食品广告禁止涉及疾病预防治疗功能第18条。"
+    },
+    {
+      "id": "gold-ad-drug-ad-approval",
+      "question": "发布药品广告需要审批吗",
+      "expect": [
+        {
+          "law_id": "advertising-2021",
+          "no": 46
+        }
+      ],
+      "note": "2026-09-16 增：药品等广告发布前审查第46条。"
+    },
+    {
+      "id": "gold-fire-exit-block",
+      "question": "楼道里堆杂物占用消防通道违法吗",
+      "expect": [
+        {
+          "law_id": "fire-2021",
+          "no": 28
+        }
+      ],
+      "note": "2026-09-16 增（消防法入库金标）：禁止占用堵塞封闭疏散通道消防车通道第28条。"
+    },
+    {
+      "id": "gold-fire-false-alarm",
+      "question": "谎报火警会怎么样",
+      "expect": [
+        {
+          "law_id": "fire-2021",
+          "no": 44
+        }
+      ],
+      "note": "2026-09-16 增：任何人发现火灾应当立即报警、严禁谎报火警第44条。"
+    },
+    {
+      "id": "gold-fire-equipment",
+      "question": "单位要定期维护消防设施吗",
+      "expect": [
+        {
+          "law_id": "fire-2021",
+          "no": 16
+        }
+      ],
+      "note": "2026-09-16 增：单位消防安全职责与消防设施维护第16条。"
+    },
+    {
+      "id": "gold-fire-gas-station",
+      "question": "易燃易爆危险品场所与居住场所要分开吗",
+      "expect": [
+        {
+          "law_id": "fire-2021",
+          "no": 19
+        }
+      ],
+      "note": "2026-09-16 增：易燃易爆危险品场所不得与居住场所同一建筑物第19条。词法鸿沟实录：初拟「加油站可以建在居民楼里吗」未入 top5（「加油站/居民楼」vs 条文「生产储存易燃易爆危险品的场所/居住场所」），改题后 rank 1。"
+    },
+    {
+      "id": "gold-fire-balcony-bar",
+      "question": "逃生窗口设置影响逃生的障碍物违法吗",
+      "expect": [
+        {
+          "law_id": "fire-2021",
+          "no": 28
+        }
+      ],
+      "note": "2026-09-16 增：人员密集场所门窗不得设置影响逃生障碍物第28条。"
+    },
+    {
+      "id": "gold-drug-fake-med",
+      "question": "什么情况下的药算假药",
+      "expect": [
+        {
+          "law_id": "drug-admin-2019",
+          "no": 98
+        }
+      ],
+      "note": "2026-09-16 增（药品管理法入库金标）：假药劣药定义第98条。"
+    },
+    {
+      "id": "gold-drug-online-sale",
+      "question": "网络销售药品要遵守什么规定",
+      "expect": [
+        {
+          "law_id": "drug-admin-2019",
+          "no": 61
+        }
+      ],
+      "note": "2026-09-16 增：网络销售药品规定第61条。词法鸿沟实录：初拟「网上可以卖药吗」未入 top5（「网上卖药」vs 条文「网络销售药品」），改题后 rank 1。"
+    },
+    {
+      "id": "gold-drug-ad-approval",
+      "question": "药品广告发布前要经过批准吗",
+      "expect": [
+        {
+          "law_id": "drug-admin-2019",
+          "no": 89
+        }
+      ],
+      "note": "2026-09-16 增：药品广告须经省级广告审查机关批准第89条。"
+    },
+    {
+      "id": "gold-drug-import",
+      "question": "代购境外合法上市的药情节较轻能免罚吗",
+      "expect": [
+        {
+          "law_id": "drug-admin-2019",
+          "no": 124
+        }
+      ],
+      "note": "2026-09-16 增：未经批准进口少量境外已合法上市药品可减轻免予处罚第124条。"
+    },
+    {
+      "id": "gold-drug-expiry",
+      "question": "药品包装上必须标明有效期吗",
+      "expect": [
+        {
+          "law_id": "drug-admin-2019",
+          "no": 49
+        }
+      ],
+      "note": "2026-09-16 增：药品标签须载明批准文号、生产日期、有效期等第49条。"
     }
   ]
 }

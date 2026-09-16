@@ -1,0 +1,26 @@
+{
+  "law_id": "drug-admin-2019",
+  "title": "中华人民共和国药品管理法",
+  "schema_version": 1,
+  "note": "R135（2026-09-16）领域扩张续批：经 lawtext（flk DOCX 转录）链入库。",
+  "versions": [
+    {
+      "version_id": "current",
+      "label": "2019 修订",
+      "status": "现行有效（2019修订）",
+      "promulgation_date": "2019-08-26",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2019-12-01",
+      "article_count": 155,
+      "current": true,
+      "evidence": {
+        "kind": "flk-docx-transcription",
+        "grade": "中",
+        "url": "https://flk.npc.gov.cn/detail?id=ff8080816f3cbb3c016f46242d6127ed",
+        "accessed_at": "2026-09-16",
+        "snapshot": "docs/research/evidence/lawtext_药品管理法2019.md"
+      }
+    }
+  ],
+  "pending_note": "1984 通过原版与 2001/2013/2015 修订修正版全文未采集；2019 全面修订施行日 2019-12-01（附则与 flk sxrq 一致）。R135 lawtext 链入库，bbbs 经 flk 官方 API 核验（有效）。"
+}

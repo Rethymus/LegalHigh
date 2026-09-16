@@ -190,6 +190,33 @@
       "no_effective_date": false,
       "effective_date_evidence_valid": true
     },
+    "advertising-2021": {
+      "manifest_count": 74,
+      "actual_count": 74,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "fire-2021": {
+      "manifest_count": 74,
+      "actual_count": 74,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "drug-admin-2019": {
+      "manifest_count": 155,
+      "actual_count": 155,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
     "con-2018": {
       "manifest_count": 143,
       "actual_count": 143,
@@ -313,6 +340,7 @@
   "version_registries": {
     "admin-litigation-2017": 2,
     "admin-review-2023": 4,
+    "advertising-2021": 1,
     "civl-2020": 1,
     "cl-2013": 1,
     "cl-2023": 4,
@@ -321,10 +349,12 @@
     "crime-prev-2020": 1,
     "crpl-imp-2024": 1,
     "csl-2025": 2,
+    "drug-admin-2019": 1,
     "dsl-2021": 1,
     "dv-2015": 1,
     "ecom-2018": 1,
     "elderly-2018": 1,
+    "fire-2021": 1,
     "food-safety-2025": 2,
     "genai-2023": 1,
     "htjs-2023": 1,
