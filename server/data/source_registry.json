@@ -1,0 +1,158 @@
+{
+  "schema_version": 1,
+  "note": "Legal Source Registry（R138，对应 FLERF 报告 §6/§7）：语料与案例引用的全部外部来源在此登记，含权威等级、访问方式与合规批准。任何未来 Fetcher 只允许访问本表 approved=true 的来源；reference_only 来源只作交叉核验、禁止作为构建源。等级口径：OFFICIAL_PRIMARY=官方一手；OFFICIAL_REPRINT=官方媒体受权转载；COMMUNITY_TRANSCRIPTION=社区转录（grade 降为【中】）；REFERENCE_ONLY=只读参照；FOREIGN_OFFICIAL=域外官方法源（比较研究，绝不可呈现为中国拘束性权威）。",
+  "approval_version": "compliance-2026-09-16",
+  "sources": [
+    {
+      "id": "npc_flk",
+      "name": "国家法律法规数据库",
+      "host": "flk.npc.gov.cn",
+      "authority_class": "OFFICIAL_PRIMARY",
+      "jurisdiction": "CN",
+      "access": {"mode": "WEB", "official_api_documented": false, "bulk_download_allowed": "UNKNOWN", "cache_policy": "SNAPSHOT_WITH_HASH"},
+      "roles": ["law-metadata-verification", "authority-pointer"],
+      "compliance": {"approved": true},
+      "note": "flfgDetails 结构树接口只读核验用；DOCX 直连下载受 SPA/OSS 拦截，从未绕过。"
+    },
+    {
+      "id": "npc_www",
+      "name": "中国人大网",
+      "host": "www.npc.gov.cn",
+      "authority_class": "OFFICIAL_PRIMARY",
+      "jurisdiction": "CN",
+      "access": {"mode": "WEB", "official_api_documented": false, "bulk_download_allowed": "UNKNOWN", "cache_policy": "SNAPSHOT_WITH_HASH"},
+      "roles": ["law-fulltext"],
+      "compliance": {"approved": true}
+    },
+    {
+      "id": "court_gov",
+      "name": "最高人民法院官网",
+      "host": "www.court.gov.cn",
+      "authority_class": "OFFICIAL_PRIMARY",
+      "jurisdiction": "CN",
+      "access": {"mode": "WEB", "official_api_documented": false, "bulk_download_allowed": "UNKNOWN", "cache_policy": "SNAPSHOT_WITH_HASH"},
+      "roles": ["guiding-case-fulltext"],
+      "compliance": {"approved": true},
+      "note": "指导案例发布页逐字快照来源；holding/result 钉住测试逐字校验。"
+    },
+    {
+      "id": "gov_cn",
+      "name": "中国政府网",
+      "host": "www.gov.cn",
+      "authority_class": "OFFICIAL_PRIMARY",
+      "jurisdiction": "CN",
+      "access": {"mode": "WEB", "official_api_documented": false, "bulk_download_allowed": "UNKNOWN", "cache_policy": "SNAPSHOT_WITH_HASH"},
+      "roles": ["regulation-fulltext"],
+      "compliance": {"approved": true}
+    },
+    {
+      "id": "cac",
+      "name": "国家网信办",
+      "host": "www.cac.gov.cn",
+      "authority_class": "OFFICIAL_PRIMARY",
+      "jurisdiction": "CN",
+      "access": {"mode": "WEB", "official_api_documented": false, "bulk_download_allowed": "UNKNOWN", "cache_policy": "SNAPSHOT_WITH_HASH"},
+      "roles": ["law-fulltext", "regulation-fulltext"],
+      "compliance": {"approved": true}
+    },
+    {
+      "id": "gjxfj",
+      "name": "国家信访局法律法规库",
+      "host": "www.gjxfj.gov.cn",
+      "authority_class": "OFFICIAL_PRIMARY",
+      "jurisdiction": "CN",
+      "access": {"mode": "WEB", "official_api_documented": false, "bulk_download_allowed": "UNKNOWN", "cache_policy": "SNAPSHOT_WITH_HASH"},
+      "roles": ["law-fulltext"],
+      "compliance": {"approved": true}
+    },
+    {
+      "id": "szns_gov",
+      "name": "深圳市南山区政府",
+      "host": "www.szns.gov.cn",
+      "authority_class": "OFFICIAL_PRIMARY",
+      "jurisdiction": "CN",
+      "access": {"mode": "WEB", "official_api_documented": false, "bulk_download_allowed": "UNKNOWN", "cache_policy": "SNAPSHOT_WITH_HASH"},
+      "roles": ["law-fulltext-reprint"],
+      "compliance": {"approved": true},
+      "note": "政府门户转载单页（部委反爬时的可靠备源）。"
+    },
+    {
+      "id": "yantian_gov",
+      "name": "深圳市盐田区政府",
+      "host": "www.yantian.gov.cn",
+      "authority_class": "OFFICIAL_PRIMARY",
+      "jurisdiction": "CN",
+      "access": {"mode": "WEB", "official_api_documented": false, "bulk_download_allowed": "UNKNOWN", "cache_policy": "SNAPSHOT_WITH_HASH"},
+      "roles": ["law-fulltext-reprint"],
+      "compliance": {"approved": true}
+    },
+    {
+      "id": "people_politics",
+      "name": "人民网（受权发布栏目）",
+      "host": "politics.people.com.cn",
+      "authority_class": "OFFICIAL_REPRINT",
+      "jurisdiction": "CN",
+      "access": {"mode": "WEB", "official_api_documented": false, "bulk_download_allowed": "UNKNOWN", "cache_policy": "SNAPSHOT_WITH_HASH"},
+      "roles": ["law-fulltext-reprint"],
+      "compliance": {"approved": true},
+      "note": "仅采用「受权发布」栏目（官方授权转载）；GB18030 编码坑已入管线。"
+    },
+    {
+      "id": "wikisource",
+      "name": "维基文库",
+      "host": "zh.wikisource.org",
+      "authority_class": "COMMUNITY_TRANSCRIPTION",
+      "jurisdiction": "CN",
+      "access": {"mode": "WEB", "official_api_documented": false, "bulk_download_allowed": "UNKNOWN", "cache_policy": "SNAPSHOT_WITH_HASH"},
+      "roles": ["law-fulltext", "historical-versions", "case-corroboration"],
+      "compliance": {"approved": true},
+      "note": "grade【中】；已知转写缺陷先例（食品安全法 2025 页 81 条漏改）——凡维基来源入库前须双链或参照库交叉核验。"
+    },
+    {
+      "id": "lawtext_github",
+      "name": "lawtext/laws（flk DOCX 转录社区库）",
+      "host": "github.com",
+      "authority": {"repo": "lawtext/laws"},
+      "authority_class": "COMMUNITY_TRANSCRIPTION",
+      "jurisdiction": "CN",
+      "access": {"mode": "GIT_CLONE", "official_api_documented": false, "bulk_download_allowed": "UNKNOWN", "cache_policy": "SNAPSHOT_WITH_HASH"},
+      "roles": ["law-fulltext-transcription"],
+      "compliance": {"approved": true},
+      "note": "bbbs 与元数据必须经 flk 官方 API 独立核验后方可作为构建源（R133 起管线标准）。"
+    },
+    {
+      "id": "clc_reference",
+      "name": "lttxzmj/chinese-law-corpus（参照库）",
+      "host": "github.com",
+      "authority": {"repo": "lttxzmj/chinese-law-corpus"},
+      "authority_class": "REFERENCE_ONLY",
+      "jurisdiction": "CN",
+      "access": {"mode": "GIT_CLONE", "official_api_documented": false, "bulk_download_allowed": "UNKNOWN", "cache_policy": "NO_CACHE"},
+      "roles": ["third-chain-verification", "case-url-locator"],
+      "compliance": {"approved": true},
+      "note": "只作逐字交叉核验与 sourceUrl 定位器，禁止作为语料构建源；其元数据不可信（scl eff 日期自证错误先例）。"
+    },
+    {
+      "id": "loc_gov",
+      "name": "美国国会图书馆",
+      "host": "tile.loc.gov",
+      "authority_class": "FOREIGN_OFFICIAL",
+      "jurisdiction": "US",
+      "access": {"mode": "WEB", "official_api_documented": false, "bulk_download_allowed": "UNKNOWN", "cache_policy": "SNAPSHOT_WITH_HASH"},
+      "roles": ["foreign-case-comparison"],
+      "compliance": {"approved": true},
+      "note": "域外判例仅作比较研究，永不呈现为中国拘束性权威。"
+    },
+    {
+      "id": "bailii",
+      "name": "英国与爱尔兰法律信息研究院",
+      "host": "www.bailii.org",
+      "authority_class": "FOREIGN_OFFICIAL",
+      "jurisdiction": "UK",
+      "access": {"mode": "WEB", "official_api_documented": false, "bulk_download_allowed": "UNKNOWN", "cache_policy": "SNAPSHOT_WITH_HASH"},
+      "roles": ["foreign-case-comparison"],
+      "compliance": {"approved": true},
+      "note": "同上。"
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+# LegalHigh 不可协商不变式（R138，对应 FLERF 报告 §28/§44/§29）
+# 这些不是 Prompt——每条都映射到机械可验证的检查（test_architecture_invariants.py / 既有测试 / CI 门）。
+# Agent 不得为让任何门变绿而修改本文件、删除对应测试或降低阈值（报告 §44 红线）。
+schema_version: 1
+approval_version: compliance-2026-09-16
+
+invariants:
+  - id: LEGAL-001
+    rule: "LLM 不得生成引用——引用只能来自服务端语料对象（qa 答案=语料卡片；AI 草稿引用经 citation_of 服务端解析与版本/生效/来源字段一致性校验，越界即拦截）"
+    mechanical_check: "tests/test_architecture_invariants.py::test_citation_rendering_is_server_side; ai_governor gate2/3 测试"
+
+  - id: LEGAL-002
+    rule: "任何法律事实性断言须有已核验证据；无依据时拒答（no_answer 显式消息），禁止「没检索到但我大概知道」"
+    mechanical_check: "app/qa.py no_answer 分支; qa 拒答正确率评测（5 乱码探针恒 1.0）"
+
+  - id: LEGAL-003
+    rule: "域外权威绝不可呈现为中国拘束性权威（外国判例 kind=foreign 单列比较研究）"
+    mechanical_check: "cases kind 字段与前端「域外判例（比较研究）」分组; source_registry FOREIGN_OFFICIAL 等级"
+
+  - id: LEGAL-004
+    rule: "历史问题必须使用时间上适用的法律版本；引用一律携带版本/生效日期，用户可核对时间效力"
+    mechanical_check: "引用不变量四要素（law_status/effective_date/source_url/label）完整率恒 1.0 评测; law_versions 注册表 fail-closed 校验。AS_OF_DATE 检索为已登记未实现项（见 FLERF 对齐审计 §17），未实现前系统不回答『当年是否合法』类时间旅行断言"
+
+  - id: LEGAL-005
+    rule: "来源适配只能访问 Source Registry 中 approved=true 的来源；reference_only 来源禁止作为构建源"
+    mechanical_check: "tests/test_architecture_invariants.py::test_source_registry_covers_corpus; registry 覆盖全部语料 source 域名与案例 host"
+
+  - id: LEGAL-006
+    rule: "永不绕过反爬或访问控制（无验证码绕过/IP 池/伪装重放）；接口只读、按需、低频"
+    mechanical_check: "本仓无任何绕过代码; flk DOCX 直连被拦即止并如实登记（先例：食品安全法 2025 强级直证待补）"
+
+  - id: LEGAL-007
+    rule: "AI 生成内容必须与官方原文可区分（AI 草稿 status=draft 不对外; 引用卡片呈现条文原文而非改写）"
+    mechanical_check: "解读双轨管线（draft→人工 approved 才对外）; qa answer_cards=原文"
+
+  - id: LEGAL-008
+    rule: "未核验证据不得进入生成上下文（AI 上下文只注入语料条文，客户端自报引用字段被服务端覆盖）"
+    mechanical_check: "ai_governor _resolve_allowed_ref：客户端自报 law_status/effective_date/source 一律以语料为准，不一致即拒"
+
+  - id: LEGAL-009
+    rule: "用户私密案情不得原文外发公网（出域前 PII 扫描只报数量与类型、不回显；搜索查询经法律抽象化关键词）"
+    mechanical_check: "scan_outbound_privacy 测试（不回显命中值）; needs.py 检索用清洗后关键词而非原文"
+
+  - id: LEGAL-010
+    rule: "不得静默编造缺失事实（不确定字段写「未核实」; 案例法条不在语料时如实登记不作深链）"
+    mechanical_check: "快照自证纪律（日期/令号以快照为准）; guidance-40/94/107 如实登记先例; 数据真实性审计口径"
+
+  - id: ARCH-001
+    rule: "生成路径网络隔离：app/ 内仅 ai_governor 允许导入 openai；任何 app 模块不得导入 requests/httpx/aiohttp/urllib.request"
+    mechanical_check: "tests/test_architecture_invariants.py::test_network_import_isolation（源码扫描，CI 钉住）"
+
+  - id: ARCH-002
+    rule: "MCP 工具白名单只增不静默改：search_articles/get_article/list_laws/search_cases，全部只读检索、无生成型工具"
+    mechanical_check: "test_mcp_server 红线审计断言"
+
+  - id: ARCH-003
+    rule: "检索单一引擎=服务端 BM25（决策2/ADR-0001）；前端禁止重建第二检索路径"
+    mechanical_check: "check_api_parity 门; gate2 真值边界"
+
+  - id: ARCH-004
+    rule: "敏感接口 fail-closed：无 LH_ADMIN_TOKEN 配置一律 503、缺令牌 401、错令牌 403；客户端自报 actor/role 被拒（extra=forbid）"
+    mechanical_check: "主体安全模型测试（第十七轮起钉住）"
+
+  - id: ARCH-005
+    rule: "Agent 不得以改 CI/删测试/改 golden/降阈值的方式让门变绿；阈值修订须 ADR + CHANGELOG 明示"
+    mechanical_check: "golden 快照 git 追踪; 本文件与对应测试同仓同审"
