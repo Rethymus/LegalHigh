@@ -34,7 +34,7 @@ def test_initialize_handshake():
 
 
 def test_tools_list_red_line_audit():
-    """红线审计：MCP 只暴露检索三工具——无任何生成型/AI/文书/审查工具。"""
+    """红线审计：MCP 只暴露检索四工具——无任何生成型/AI/文书/审查工具。"""
     out = _roundtrip([
         {"jsonrpc": "2.0", "id": 1, "method": "initialize",
          "params": {"protocolVersion": "2024-11-05"}},
@@ -42,7 +42,7 @@ def test_tools_list_red_line_audit():
     ])
     tools = [m for m in out if m.get("id") == 2][0]["result"]["tools"]
     names = sorted(t["name"] for t in tools)
-    assert names == ["get_article", "list_laws", "search_articles"], names
+    assert names == ["get_article", "list_laws", "search_articles", "search_cases"], names
     # 每个工具描述都带「不构成法律意见」声明
     for t in tools:
         assert "不构成法律意见" in t["description"], t["name"]
@@ -60,6 +60,9 @@ def test_tools_call_search_and_article():
                     "arguments": {"law_id": "civl-2020", "no": 188}}},
         {"jsonrpc": "2.0", "id": 4, "method": "tools/call",
          "params": {"name": "list_laws", "arguments": {}}},
+        {"jsonrpc": "2.0", "id": 5, "method": "tools/call",
+         "params": {"name": "search_cases",
+                    "arguments": {"query": "竞业限制", "top_k": 3}}},
     ])
     by_id = {m.get("id"): m for m in out if m.get("id") is not None}
     search = json.loads(by_id[2]["result"]["content"][0]["text"])
@@ -67,6 +70,12 @@ def test_tools_call_search_and_article():
     hit = search["articles"][0]
     assert hit["law_id"] and hit["text"] and hit["source_url"].startswith("https://")
     assert "不构成法律意见" in search["disclaimer"]
+
+    cases = json.loads(by_id[5]["result"]["content"][0]["text"])
+    assert cases["count"] >= 1
+    chit = cases["cases"][0]
+    assert chit["case_id"].startswith("guidance-")
+    assert chit["name"] and chit["source_url"].startswith("https://")
 
     article = json.loads(by_id[3]["result"]["content"][0]["text"])
     assert article["no"] == 188

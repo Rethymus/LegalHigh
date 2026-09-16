@@ -86,6 +86,28 @@ def tool_list_laws() -> dict:
     return {"count": len(laws), "laws": laws, "disclaimer": DISCLAIMER}
 
 
+def tool_search_cases(query: str, top_k: int = 5, level: str | None = None) -> dict:
+    """检索已核实的公开案例（15 件：最高法指导案例 + 域外判例比较研究）。"""
+    from app import cases as cases_mod
+
+    hits = cases_mod.search_cases(query.strip(), level=level or None)
+    items = []
+    for c in hits[: max(1, min(int(top_k), 20))]:
+        items.append({
+            "case_id": c["id"],
+            "name": c["name"],
+            "no": c.get("no", ""),
+            "court": c.get("court", ""),
+            "date": c.get("date", ""),
+            "cause": c.get("cause", ""),
+            "level": c.get("level", ""),
+            "summary": c.get("summary", ""),
+            "focus": c.get("focus", []),
+            "source_url": c.get("source_url", ""),
+        })
+    return {"query": query, "count": len(items), "cases": items, "disclaimer": DISCLAIMER}
+
+
 TOOLS = [
     {
         "name": "search_articles",
@@ -122,6 +144,23 @@ TOOLS = [
         "description": "列出受控语料全部法律（ID/标题/状态/施行日期/条数）。输出为元数据列表，不构成法律意见。",
         "inputSchema": {"type": "object", "properties": {}},
     },
+    {
+        "name": "search_cases",
+        "description": (
+            "检索已核实的公开案例（15 件：最高人民法院指导案例与域外经典判例比较研究），"
+            "返回裁判要点摘要+法院+来源 URL。确定性关键词匹配（无 AI 生成）。"
+            "输出为案例结构化摘要，不构成法律意见。"
+        ),
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "query": {"type": "string", "description": "检索关键词（案由/法院/争议焦点）"},
+                "top_k": {"type": "integer", "description": "返回条数（默认 5，最大 20）"},
+                "level": {"type": "string", "description": "限定层级（可选：指导性案例/外国判例）"},
+            },
+            "required": ["query"],
+        },
+    },
 ]
 
 
@@ -134,6 +173,10 @@ def dispatch(name: str, args: dict):
         return tool_get_article(args.get("law_id", ""), args.get("no", 0), args.get("sub"))
     if name == "list_laws":
         return tool_list_laws()
+    if name == "search_cases":
+        return tool_search_cases(
+            args.get("query", ""), args.get("top_k", 5), args.get("level")
+        )
     raise KeyError(f"unknown tool: {name}")
 
 

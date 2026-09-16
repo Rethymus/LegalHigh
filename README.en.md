@@ -210,7 +210,7 @@ LegalHigh's citation-bound statute retrieval is available as a **Model Context P
 python server/mcp_server.py
 ```
 
-Three tools: `search_articles` (BM25 full-text statute retrieval), `get_article` (single article with full metadata), `list_laws` (corpus inventory). **Retrieval only, no generative tools**; output always carries article text + metadata + official source URL, with a "not legal advice" disclaimer. HTTP endpoint `POST /mcp` also available (JSON-RPC 2.0).
+Four tools: `search_articles` (BM25 full-text statute retrieval), `get_article` (single article with full metadata), `list_laws` (corpus inventory), `search_cases` (guiding cases and foreign precedents). **Retrieval only, no generative tools**; output always carries article text + metadata + official source URL, with a "not legal advice" disclaimer. HTTP endpoint `POST /mcp` also available (JSON-RPC 2.0).
 
 ## Open data
 
