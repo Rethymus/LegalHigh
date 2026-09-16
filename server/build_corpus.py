@@ -74,6 +74,9 @@ LAW_FILES = {
     "copyright_2020_lawtext_md": "lawtext_著作权法2020.md",  # 著作权法 2020 修正（R136）
     "patent_2020_lawtext_md": "lawtext_专利法2020.md",  # 专利法 2020 修正（R136）
     "trademark_2026_lawtext_md": "lawtext_商标法2026.md",  # 商标法（2026 新法，2027-01-01 施行）（R136）
+    "family_edu_2021_lawtext_md": "lawtext_家庭教育促进法2021.md",  # 家庭教育促进法 2021（R137）
+    "tourism_2018_lawtext_md": "lawtext_旅游法2018.md",  # 旅游法 2018 修正（R137）
+    "disabled_2018_lawtext_md": "lawtext_残疾人保障法2018.md",  # 残疾人保障法 2018 修正（R137）
     "cl_ws_html": "ws_刑法2023.html",
 }
 
@@ -358,6 +361,9 @@ EXPECTED_COUNTS = {
     "copyright-2020": 67,
     "patent-2020": 82,
     "trademark-2026": 87,
+    "family-edu-2021": 55,
+    "tourism-2018": 112,
+    "disabled-2018": 68,
     "crpl-imp-2024": 53,
     "genai-2023": 24,
     "pipl-2021": 74,
@@ -604,6 +610,33 @@ def main():
                 "effective_date": "2027-01-01",
             },
             "https://flk.npc.gov.cn/detail?id=95bb747db54e419184eff06546515826",
+        ),
+        build_lawtext_md_law(
+            "family_edu_2021_lawtext_md", "family-edu-2021", "中华人民共和国家庭教育促进法",
+            {
+                "status": "现行有效",
+                "promulgation": {"date": "2021-10-23", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "2022-01-01",
+            },
+            "https://flk.npc.gov.cn/detail?id=ff8081817cac3b2d017cac5a6c6f0109",
+        ),
+        build_lawtext_md_law(
+            "tourism_2018_lawtext_md", "tourism-2018", "中华人民共和国旅游法",
+            {
+                "status": "现行有效（2018修正）",
+                "promulgation": {"date": "2018-10-26", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "2013-10-01",
+            },
+            "https://flk.npc.gov.cn/detail?id=ff8080816f135f46016f1d08f6da12f6",
+        ),
+        build_lawtext_md_law(
+            "disabled_2018_lawtext_md", "disabled-2018", "中华人民共和国残疾人保障法",
+            {
+                "status": "现行有效（2018修正）",
+                "promulgation": {"date": "2018-10-26", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "2008-07-01",
+            },
+            "https://flk.npc.gov.cn/detail?id=ff8080816f135f46016f1d134c88132b",
         ),
         build_wikisource_html_law(
             "minor_ws_html", "con-2018", "中华人民共和国宪法",

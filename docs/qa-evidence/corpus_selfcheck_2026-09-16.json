@@ -244,6 +244,33 @@
       "no_effective_date": false,
       "effective_date_evidence_valid": true
     },
+    "family-edu-2021": {
+      "manifest_count": 55,
+      "actual_count": 55,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "tourism-2018": {
+      "manifest_count": 112,
+      "actual_count": 112,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "disabled-2018": {
+      "manifest_count": 68,
+      "actual_count": 68,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
     "con-2018": {
       "manifest_count": 143,
       "actual_count": 143,
@@ -377,11 +404,13 @@
     "crime-prev-2020": 1,
     "crpl-imp-2024": 1,
     "csl-2025": 2,
+    "disabled-2018": 1,
     "drug-admin-2019": 1,
     "dsl-2021": 1,
     "dv-2015": 1,
     "ecom-2018": 1,
     "elderly-2018": 1,
+    "family-edu-2021": 1,
     "fire-2021": 1,
     "food-safety-2025": 2,
     "genai-2023": 1,
@@ -402,6 +431,7 @@
     "road-safety-2021": 1,
     "scl-2012": 3,
     "social-ins-2018": 1,
+    "tourism-2018": 1,
     "trademark-2026": 1,
     "wlxf-2022": 1,
     "women-2022": 4

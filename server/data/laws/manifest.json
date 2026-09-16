@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-16T23:20:56.514019",
+  "built_at": "2026-09-16T23:36:20.586209",
   "fetch_date": "2026-09-08",
   "laws": [
     {
@@ -630,6 +630,75 @@
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "51778872c382f8f0c8f5c19c417a81f5788d97bcfaaa275658cda5cdd02fb064",
       "output_sha256": "fbd9177443b872f578ed615498f4719f9cd363c2dd940797ca887b59d6be705f"
+    },
+    {
+      "law_id": "family-edu-2021",
+      "title": "中华人民共和国家庭教育促进法",
+      "status": "现行有效",
+      "effective_date": "2022-01-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国家庭教育促进法",
+        "url": "https://flk.npc.gov.cn/detail?id=ff8081817cac3b2d017cac5a6c6f0109",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效"
+      },
+      "promulgation_instrument": null,
+      "article_count": 55,
+      "expected_count": 55,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=ff8081817cac3b2d017cac5a6c6f0109",
+      "snapshot": "docs/research/evidence/lawtext_家庭教育促进法2021.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "466516c0e527cfca2dd66f00c37b0fe0ba3abc57ced9421cb83e31531f2f63ce",
+      "output_sha256": "c84e93d50200f7ec83f7a59d4aab3ec560bfb8fe535d8164ffa1887df67371e9"
+    },
+    {
+      "law_id": "tourism-2018",
+      "title": "中华人民共和国旅游法",
+      "status": "现行有效（2018修正）",
+      "effective_date": "2013-10-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国旅游法",
+        "url": "https://flk.npc.gov.cn/detail?id=ff8080816f135f46016f1d08f6da12f6",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2018修正）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 112,
+      "expected_count": 112,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=ff8080816f135f46016f1d08f6da12f6",
+      "snapshot": "docs/research/evidence/lawtext_旅游法2018.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "7db0795789ea5356c98946065c76dc4b50373aa06e3c7fe6534b700bfaa6135c",
+      "output_sha256": "e45d4f757cee9919ca07f6093993fc92462b1cac679af5762b15483cbf96b996"
+    },
+    {
+      "law_id": "disabled-2018",
+      "title": "中华人民共和国残疾人保障法",
+      "status": "现行有效（2018修正）",
+      "effective_date": "2008-07-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国残疾人保障法",
+        "url": "https://flk.npc.gov.cn/detail?id=ff8080816f135f46016f1d134c88132b",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2018修正）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 68,
+      "expected_count": 68,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=ff8080816f135f46016f1d134c88132b",
+      "snapshot": "docs/research/evidence/lawtext_残疾人保障法2018.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "e7a8323507fa2feffb028fa17ad0e0a49aa236bceafeeef20d52fe275958af28",
+      "output_sha256": "8fd485c9a05f7db94ed116e84e4cbb612f335be8a20d227ada10af925237eb2c"
     },
     {
       "law_id": "con-2018",
