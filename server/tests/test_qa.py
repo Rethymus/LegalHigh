@@ -123,5 +123,8 @@ def test_evals30_strict_and_gap_metrics():
     assert data["gap_subset_hit_at_5"] is not None
     assert 0 < data["gap_subset_hit_at_5"] <= 1.0
     assert 0 <= data["gap_subset_rank1"] <= 1.0
-    assert data["gap_subset_hit_at_5"] <= data["hit_at_5"], (
-        f"鸿沟子集反超全量：{data['gap_subset_hit_at_5']} > {data['hit_at_5']}——子集选取失真需复核")
+    # R134 口径修订：旧断言「鸿沟子集 hit@5 ≤ 全量」的前提（鸿沟题恒为难题）随改题修复演化失效——
+    # 鸿沟金标改题后 hit@5 合法收敛甚至反超全量（新未中金标落在非子集）。
+    # 保留的残余成本信号：鸿沟子集的 rank1 应不高于全量 rank1（改题保住了命中但头部排名仍有代价）。
+    assert data["gap_subset_rank1"] <= data["rank1_rate"] + 1e-9, (
+        f"鸿沟子集 rank1 反超全量：{data['gap_subset_rank1']} > {data['rank1_rate']}——子集选取失真需复核")

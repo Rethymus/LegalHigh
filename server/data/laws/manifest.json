@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-16T22:09:13.164082",
+  "built_at": "2026-09-16T22:35:07.289941",
   "fetch_date": "2026-09-08",
   "laws": [
     {
@@ -423,6 +423,75 @@
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "e8567076027a4062cb70e1a23d9163d3f0999877060a463e7efc48969684cbd0",
       "output_sha256": "6a17318839de3df5a4f2219e3557c733c67dfb1bef2baf9ad733774dcb0bd1aa"
+    },
+    {
+      "law_id": "crime-prev-2020",
+      "title": "中华人民共和国预防未成年人犯罪法",
+      "status": "现行有效（2020修订）",
+      "effective_date": "2021-06-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国预防未成年人犯罪法",
+        "url": "https://flk.npc.gov.cn/detail?id=ff80808175265dd40176a88c218f2853",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2020修订）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 68,
+      "expected_count": 68,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=ff80808175265dd40176a88c218f2853",
+      "snapshot": "docs/research/evidence/lawtext_预防未成年人犯罪法2020.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "0c0c5b8ea3b0f9ff8ec41554ff887c215c9030e084dca7f855f4ce157515f3a4",
+      "output_sha256": "636d97aab76f98e499f06cfb6e6297c841c7f4cde2ad7fe68d5d5b95f36254c6"
+    },
+    {
+      "law_id": "elderly-2018",
+      "title": "中华人民共和国老年人权益保障法",
+      "status": "现行有效（2018修正）",
+      "effective_date": "2013-07-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国老年人权益保障法",
+        "url": "https://flk.npc.gov.cn/detail?id=ff8080816f135f46016f20f4bf851746",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2018修正）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 85,
+      "expected_count": 85,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=ff8080816f135f46016f20f4bf851746",
+      "snapshot": "docs/research/evidence/lawtext_老年人权益保障法2018.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "aa87aaefbb907ed2b204e5441d902678620b1f5381e8751e9b6d1253c8d4acd8",
+      "output_sha256": "92f16aa8c8163710f4ee4bc37d7fc0f8d51bf9eba0d407b531eb49bac7ad60af"
+    },
+    {
+      "law_id": "mediation-2010",
+      "title": "中华人民共和国人民调解法",
+      "status": "现行有效",
+      "effective_date": "2011-01-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国人民调解法",
+        "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf7105c05af",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效"
+      },
+      "promulgation_instrument": null,
+      "article_count": 35,
+      "expected_count": 35,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf7105c05af",
+      "snapshot": "docs/research/evidence/lawtext_人民调解法2010.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "d84f3ec21601e915784133096ee5587c0f1eea64cd9d27328a2ef7c1f583174f",
+      "output_sha256": "75fbbac313649bba10534ccfed29d34d706b39e3985644c6a55c9d590347479c"
     },
     {
       "law_id": "con-2018",

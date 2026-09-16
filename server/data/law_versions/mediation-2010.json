@@ -1,0 +1,26 @@
+{
+  "law_id": "mediation-2010",
+  "title": "中华人民共和国人民调解法",
+  "schema_version": 1,
+  "note": "R134（2026-09-16）领域扩张续批：经 lawtext（flk DOCX 转录）链入库。",
+  "versions": [
+    {
+      "version_id": "current",
+      "label": "2010 通过",
+      "status": "现行有效",
+      "promulgation_date": "2010-08-28",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2011-01-01",
+      "article_count": 35,
+      "current": true,
+      "evidence": {
+        "kind": "flk-docx-transcription",
+        "grade": "中",
+        "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf7105c05af",
+        "accessed_at": "2026-09-16",
+        "snapshot": "docs/research/evidence/lawtext_人民调解法2010.md"
+      }
+    }
+  ],
+  "pending_note": "R134 由 lawtext 链入库，bbbs 经 flk 官方 API 核验（pub 2010-08-28/eff 2011-01-01/有效）。本法暂无修正记录。"
+}

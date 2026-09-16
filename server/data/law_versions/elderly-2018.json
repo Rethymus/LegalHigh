@@ -1,0 +1,26 @@
+{
+  "law_id": "elderly-2018",
+  "title": "中华人民共和国老年人权益保障法",
+  "schema_version": 1,
+  "note": "R134（2026-09-16）领域扩张续批：经 lawtext（flk DOCX 转录）链入库。",
+  "versions": [
+    {
+      "version_id": "current",
+      "label": "2018 修正",
+      "status": "现行有效（2018修正）",
+      "promulgation_date": "2018-12-29",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2013-07-01",
+      "article_count": 85,
+      "current": true,
+      "evidence": {
+        "kind": "flk-docx-transcription",
+        "grade": "中",
+        "url": "https://flk.npc.gov.cn/detail?id=ff8080816f135f46016f20f4bf851746",
+        "accessed_at": "2026-09-16",
+        "snapshot": "docs/research/evidence/lawtext_老年人权益保障法2018.md"
+      }
+    }
+  ],
+  "pending_note": "1996 通过原版与 2009/2012/2015 修正版全文未采集。R134 由 lawtext 链入库，bbbs 经 flk 官方 API 核验（pub/eff 2018-12-29/有效）。附则自载施行日 2013-07-01（2012 修订改定，2015/2018 修正延续；1996 原版施行日 1996-10-01 不再适用于现行文本）。"
+}

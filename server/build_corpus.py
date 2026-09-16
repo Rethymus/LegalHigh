@@ -65,6 +65,9 @@ LAW_FILES = {
     "road_safety_2021_lawtext_md": "lawtext_道交法2021.md",  # 道路交通安全法 2021 第三次修正（R133）
     "labor_law_2018_lawtext_md": "lawtext_劳动法2018.md",  # 劳动法 2018 修正（R133）
     "product_quality_2018_lawtext_md": "lawtext_产品质量法2018.md",  # 产品质量法 2018 修正（R133）
+    "crime_prev_2020_lawtext_md": "lawtext_预防未成年人犯罪法2020.md",  # 预防未成年人犯罪法 2020 修订（R134）
+    "elderly_2018_lawtext_md": "lawtext_老年人权益保障法2018.md",  # 老年人权益保障法 2018 修正（R134）
+    "mediation_2010_lawtext_md": "lawtext_人民调解法2010.md",  # 人民调解法（R134）
     "cl_ws_html": "ws_刑法2023.html",
 }
 
@@ -340,6 +343,9 @@ EXPECTED_COUNTS = {
     "road-safety-2021": 124,
     "labor-law-2018": 107,
     "product-quality-2018": 74,
+    "crime-prev-2020": 68,
+    "elderly-2018": 85,
+    "mediation-2010": 35,
     "crpl-imp-2024": 53,
     "genai-2023": 24,
     "pipl-2021": 74,
@@ -505,6 +511,33 @@ def main():
                 "effective_date": "1993-09-01",
             },
             "https://flk.npc.gov.cn/detail?id=ff8080816f135f46016f1d6dfd7614d3",
+        ),
+        build_lawtext_md_law(
+            "crime_prev_2020_lawtext_md", "crime-prev-2020", "中华人民共和国预防未成年人犯罪法",
+            {
+                "status": "现行有效（2020修订）",
+                "promulgation": {"date": "2020-12-26", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "2021-06-01",
+            },
+            "https://flk.npc.gov.cn/detail?id=ff80808175265dd40176a88c218f2853",
+        ),
+        build_lawtext_md_law(
+            "elderly_2018_lawtext_md", "elderly-2018", "中华人民共和国老年人权益保障法",
+            {
+                "status": "现行有效（2018修正）",
+                "promulgation": {"date": "2018-12-29", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "2013-07-01",
+            },
+            "https://flk.npc.gov.cn/detail?id=ff8080816f135f46016f20f4bf851746",
+        ),
+        build_lawtext_md_law(
+            "mediation_2010_lawtext_md", "mediation-2010", "中华人民共和国人民调解法",
+            {
+                "status": "现行有效",
+                "promulgation": {"date": "2010-08-28", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "2011-01-01",
+            },
+            "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf7105c05af",
         ),
         build_wikisource_html_law(
             "minor_ws_html", "con-2018", "中华人民共和国宪法",

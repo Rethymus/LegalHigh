@@ -1,0 +1,26 @@
+{
+  "law_id": "crime-prev-2020",
+  "title": "中华人民共和国预防未成年人犯罪法",
+  "schema_version": 1,
+  "note": "R134（2026-09-16）领域扩张续批：经 lawtext（flk DOCX 转录）链入库。",
+  "versions": [
+    {
+      "version_id": "current",
+      "label": "2020 修订",
+      "status": "现行有效（2020修订）",
+      "promulgation_date": "2020-12-26",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2021-06-01",
+      "article_count": 68,
+      "current": true,
+      "evidence": {
+        "kind": "flk-docx-transcription",
+        "grade": "中",
+        "url": "https://flk.npc.gov.cn/detail?id=ff80808175265dd40176a88c218f2853",
+        "accessed_at": "2026-09-16",
+        "snapshot": "docs/research/evidence/lawtext_预防未成年人犯罪法2020.md"
+      }
+    }
+  ],
+  "pending_note": "1999 通过原版与 2012 修正版全文未采集。R134 由 lawtext 链入库，bbbs 经 flk 官方 API 核验（pub 2020-12-26/eff 2021-06-01/有效）。附则自载施行日 2021-06-01（2020 全面修订新定施行日，快照自证；1999 原版施行日 1999-11-01 不再适用于现行文本）。"
+}

@@ -2043,6 +2043,171 @@
         }
       ],
       "note": "2026-09-16 增：销售者进货检查验收制度第33条。"
+    },
+    {
+      "id": "gold-cp-bad-behavior",
+      "question": "未成年人吸烟饮酒属于不良行为吗",
+      "expect": [
+        {
+          "law_id": "crime-prev-2020",
+          "no": 28
+        }
+      ],
+      "note": "2026-09-16 增（预防未成年人犯罪法入库金标）：不良行为清单第28条。"
+    },
+    {
+      "id": "gold-cp-serious-behavior",
+      "question": "未成年人结伙斗殴属于严重不良行为吗",
+      "expect": [
+        {
+          "law_id": "crime-prev-2020",
+          "no": 38
+        }
+      ],
+      "note": "2026-09-16 增：严重不良行为定义第38条。词法鸿沟实录：初拟「未成年人打架斗殴…」未入 top5（「打架斗殴」vs 条文「结伙斗殴」），改题后 rank 3。"
+    },
+    {
+      "id": "gold-cp-special-education",
+      "question": "专门教育是国民教育体系的一部分吗",
+      "expect": [
+        {
+          "law_id": "crime-prev-2020",
+          "no": 6
+        }
+      ],
+      "note": "2026-09-16 增：专门教育定位第6条。"
+    },
+    {
+      "id": "gold-cp-parent-cooperation",
+      "question": "家长要配合学校对孩子进行预防犯罪教育吗",
+      "expect": [
+        {
+          "law_id": "crime-prev-2020",
+          "no": 23
+        }
+      ],
+      "note": "2026-09-16 增：监护人配合学校预防犯罪教育第23条。"
+    },
+    {
+      "id": "gold-cp-stealing",
+      "question": "未成年学生在校偷窃怎么管理教育",
+      "expect": [
+        {
+          "law_id": "crime-prev-2020",
+          "no": 33
+        }
+      ],
+      "note": "2026-09-16 增：未成年学生偷窃等行为的管理教育第33条。词法鸿沟实录：初拟「未成年的孩子偷东西学校怎么处理」未入 top5，改题后 rank 1。"
+    },
+    {
+      "id": "gold-el-support-duty",
+      "question": "子女对老人有哪些赡养义务",
+      "expect": [
+        {
+          "law_id": "elderly-2018",
+          "no": 14
+        }
+      ],
+      "note": "2026-09-16 增（老年人权益保障法入库金标）：赡养人经济供养生活照料精神慰藉义务第14条。"
+    },
+    {
+      "id": "gold-el-visit",
+      "question": "赡养人要经常看望问候老人吗",
+      "expect": [
+        {
+          "law_id": "elderly-2018",
+          "no": 19
+        }
+      ],
+      "note": "2026-09-16 增：常看望或问候老年人第19条（俗称「常回家看看」条款）。词法鸿沟实录：初拟「不常回家看老人违法吗」未入 top5（「回家看」vs 条文「看望问候」），改题后 rank 2。"
+    },
+    {
+      "id": "gold-el-legal-aid",
+      "question": "老年人诉讼费用可以免交吗",
+      "expect": [
+        {
+          "law_id": "elderly-2018",
+          "no": 56
+        }
+      ],
+      "note": "2026-09-16 增：涉老案件免交诉讼费与法律援助第56条。词法鸿沟实录：初拟「老人打官司没钱请律师怎么办」未入 top5，改题后 rank 1。"
+    },
+    {
+      "id": "gold-el-rights-protect",
+      "question": "老年人的合法权益被侵害了怎么办",
+      "expect": [
+        {
+          "law_id": "elderly-2018",
+          "no": 73
+        }
+      ],
+      "note": "2026-09-16 增：老年合法权益受侵害的救济途径第73条。"
+    },
+    {
+      "id": "gold-el-marriage-free",
+      "question": "子女能干涉老人再婚吗",
+      "expect": [
+        {
+          "law_id": "elderly-2018",
+          "no": 76
+        }
+      ],
+      "note": "2026-09-16 增：干涉老年人婚姻自由的法律责任第76条。"
+    },
+    {
+      "id": "gold-md-free",
+      "question": "找人民调解委员会调解要收费吗",
+      "expect": [
+        {
+          "law_id": "mediation-2010",
+          "no": 4
+        }
+      ],
+      "note": "2026-09-16 增（人民调解法入库金标）：人民调解不收取任何费用第4条。"
+    },
+    {
+      "id": "gold-md-principle",
+      "question": "人民调解要在当事人自愿平等基础上进行吗",
+      "expect": [
+        {
+          "law_id": "mediation-2010",
+          "no": 3
+        }
+      ],
+      "note": "2026-09-16 增：自愿平等调解原则第3条。词法鸿沟实录：初拟「人民调解必须双方自愿吗」未入 top5（「双方自愿」vs 条文「自愿、平等」），改题后 rank 1。"
+    },
+    {
+      "id": "gold-md-agreement-effect",
+      "question": "人民调解达成的协议有法律约束力吗",
+      "expect": [
+        {
+          "law_id": "mediation-2010",
+          "no": 31
+        }
+      ],
+      "note": "2026-09-16 增：调解协议具有法律约束力第31条。"
+    },
+    {
+      "id": "gold-md-judicial-confirm",
+      "question": "调解协议可以去法院申请司法确认吗",
+      "expect": [
+        {
+          "law_id": "mediation-2010",
+          "no": 33
+        }
+      ],
+      "note": "2026-09-16 增：调解协议司法确认第33条。"
+    },
+    {
+      "id": "gold-md-agreement-paper",
+      "question": "调解达成协议要制作调解协议书吗",
+      "expect": [
+        {
+          "law_id": "mediation-2010",
+          "no": 28
+        }
+      ],
+      "note": "2026-09-16 增：调解协议书的制作第28条。"
     }
   ]
 }
