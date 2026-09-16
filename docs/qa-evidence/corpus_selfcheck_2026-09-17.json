@@ -1,0 +1,469 @@
+{
+  "date": "2026-09-17",
+  "laws": {
+    "civl-2020": {
+      "manifest_count": 1260,
+      "actual_count": 1260,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "cl-2013": {
+      "manifest_count": 63,
+      "actual_count": 63,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "lcl-2012": {
+      "manifest_count": 98,
+      "actual_count": 98,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "ll-2017": {
+      "manifest_count": 60,
+      "actual_count": 60,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "ecom-2018": {
+      "manifest_count": 89,
+      "actual_count": 89,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "pcl-2023": {
+      "manifest_count": 306,
+      "actual_count": 306,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "htjs-2023": {
+      "manifest_count": 69,
+      "actual_count": 69,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "wlxf-2022": {
+      "manifest_count": 20,
+      "actual_count": 20,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "crpl-imp-2024": {
+      "manifest_count": 53,
+      "actual_count": 53,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "genai-2023": {
+      "manifest_count": 24,
+      "actual_count": 24,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "scl-2012": {
+      "manifest_count": 42,
+      "actual_count": 42,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "cl-2023": {
+      "manifest_count": 505,
+      "actual_count": 505,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "dv-2015": {
+      "manifest_count": 38,
+      "actual_count": 38,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "social-ins-2018": {
+      "manifest_count": 98,
+      "actual_count": 98,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "food-safety-2025": {
+      "manifest_count": 154,
+      "actual_count": 154,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "road-safety-2021": {
+      "manifest_count": 124,
+      "actual_count": 124,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "labor-law-2018": {
+      "manifest_count": 107,
+      "actual_count": 107,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "product-quality-2018": {
+      "manifest_count": 74,
+      "actual_count": 74,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "crime-prev-2020": {
+      "manifest_count": 68,
+      "actual_count": 68,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "elderly-2018": {
+      "manifest_count": 85,
+      "actual_count": 85,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "mediation-2010": {
+      "manifest_count": 35,
+      "actual_count": 35,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "advertising-2021": {
+      "manifest_count": 74,
+      "actual_count": 74,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "fire-2021": {
+      "manifest_count": 74,
+      "actual_count": 74,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "drug-admin-2019": {
+      "manifest_count": 155,
+      "actual_count": 155,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "copyright-2020": {
+      "manifest_count": 67,
+      "actual_count": 67,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "patent-2020": {
+      "manifest_count": 82,
+      "actual_count": 82,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "trademark-2026": {
+      "manifest_count": 87,
+      "actual_count": 87,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "family-edu-2021": {
+      "manifest_count": 55,
+      "actual_count": 55,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "tourism-2018": {
+      "manifest_count": 112,
+      "actual_count": 112,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "disabled-2018": {
+      "manifest_count": 68,
+      "actual_count": 68,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "unfair-competition-2025": {
+      "manifest_count": 41,
+      "actual_count": 41,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "environment-2014": {
+      "manifest_count": 70,
+      "actual_count": 70,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "id-card-2011": {
+      "manifest_count": 23,
+      "actual_count": 23,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "con-2018": {
+      "manifest_count": 143,
+      "actual_count": 143,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "cpl-2018": {
+      "manifest_count": 308,
+      "actual_count": 308,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "lcar-2007": {
+      "manifest_count": 54,
+      "actual_count": 54,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "dsl-2021": {
+      "manifest_count": 55,
+      "actual_count": 55,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "csl-2025": {
+      "manifest_count": 81,
+      "actual_count": 81,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "penal-2021": {
+      "manifest_count": 86,
+      "actual_count": 86,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "women-2022": {
+      "manifest_count": 86,
+      "actual_count": 86,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "minor-2024": {
+      "manifest_count": 132,
+      "actual_count": 132,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "psm-2025": {
+      "manifest_count": 144,
+      "actual_count": 144,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "pipl-2021": {
+      "manifest_count": 74,
+      "actual_count": 74,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "legal-aid-2021": {
+      "manifest_count": 71,
+      "actual_count": 71,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "admin-review-2023": {
+      "manifest_count": 90,
+      "actual_count": 90,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "admin-litigation-2017": {
+      "manifest_count": 103,
+      "actual_count": 103,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    }
+  },
+  "pending": [],
+  "problems": [],
+  "version_registries": {
+    "admin-litigation-2017": 2,
+    "admin-review-2023": 4,
+    "advertising-2021": 1,
+    "civl-2020": 1,
+    "cl-2013": 1,
+    "cl-2023": 4,
+    "con-2018": 5,
+    "copyright-2020": 1,
+    "cpl-2018": 1,
+    "crime-prev-2020": 1,
+    "crpl-imp-2024": 1,
+    "csl-2025": 2,
+    "disabled-2018": 1,
+    "drug-admin-2019": 1,
+    "dsl-2021": 1,
+    "dv-2015": 1,
+    "ecom-2018": 1,
+    "elderly-2018": 1,
+    "environment-2014": 1,
+    "family-edu-2021": 1,
+    "fire-2021": 1,
+    "food-safety-2025": 2,
+    "genai-2023": 1,
+    "htjs-2023": 1,
+    "id-card-2011": 1,
+    "labor-law-2018": 1,
+    "lcar-2007": 1,
+    "lcl-2012": 2,
+    "legal-aid-2021": 1,
+    "ll-2017": 5,
+    "mediation-2010": 1,
+    "minor-2024": 5,
+    "patent-2020": 1,
+    "pcl-2023": 6,
+    "penal-2021": 4,
+    "pipl-2021": 1,
+    "product-quality-2018": 1,
+    "psm-2025": 3,
+    "road-safety-2021": 1,
+    "scl-2012": 3,
+    "social-ins-2018": 1,
+    "tourism-2018": 1,
+    "trademark-2026": 1,
+    "unfair-competition-2025": 1,
+    "wlxf-2022": 1,
+    "women-2022": 4
+  }
+}

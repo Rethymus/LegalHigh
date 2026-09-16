@@ -1,0 +1,26 @@
+{
+  "law_id": "unfair-competition-2025",
+  "title": "中华人民共和国反不正当竞争法",
+  "schema_version": 1,
+  "note": "R139（2026-09-16）续批：经 lawtext（flk DOCX 转录）链入库。",
+  "versions": [
+    {
+      "version_id": "current",
+      "label": "2025 修正",
+      "status": "现行有效（2025修正）",
+      "promulgation_date": "2025-06-27",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2025-10-15",
+      "article_count": 41,
+      "current": true,
+      "evidence": {
+        "kind": "flk-docx-transcription",
+        "grade": "中",
+        "url": "https://flk.npc.gov.cn/detail?id=ff808181971552b40197b1016efc5437",
+        "accessed_at": "2026-09-16",
+        "snapshot": "docs/research/evidence/lawtext_反不正当竞争法2025.md"
+      }
+    }
+  ],
+  "pending_note": "1993 通过原版与 2017/2019 修正版全文未采集。2025 修正施行日 2025-10-15（附则自载与 flk sxrq 一致，采集日已施行）。R139 lawtext 链入库，bbbs 经 flk 官方 API 核验（lsyg 高亮现行）。"
+}

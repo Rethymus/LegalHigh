@@ -77,6 +77,9 @@ LAW_FILES = {
     "family_edu_2021_lawtext_md": "lawtext_家庭教育促进法2021.md",  # 家庭教育促进法 2021（R137）
     "tourism_2018_lawtext_md": "lawtext_旅游法2018.md",  # 旅游法 2018 修正（R137）
     "disabled_2018_lawtext_md": "lawtext_残疾人保障法2018.md",  # 残疾人保障法 2018 修正（R137）
+    "unfair_comp_2025_lawtext_md": "lawtext_反不正当竞争法2025.md",  # 反不正当竞争法 2025 修正（R139）
+    "environment_2014_lawtext_md": "lawtext_环境保护法2014.md",  # 环境保护法 2014 修订（R139）
+    "id_card_2011_lawtext_md": "lawtext_居民身份证法2011.md",  # 居民身份证法 2011 修正（R139）
     "cl_ws_html": "ws_刑法2023.html",
 }
 
@@ -234,7 +237,17 @@ def build_lawtext_md_law(key, law_id, title, meta, flk_url):
         if s.startswith("#"):
             # 章/节标题行转为纯文本行（切条器收进 chapter 上下文）；其余标题（书名等）丢弃
             plain = re.sub(r"^#+\s*", "", s).replace(" ", "\u3000")
-            out.append(plain if re.match(r"^第[一二三四五六七八九十百零]+[编章节]", plain) else "")
+            if not re.match(r"^第[一二三四五六七八九十百零]+[编章节]", plain):
+                continue
+            # lawtext 源缺陷归一化（R139 环保法先例）：章标题与条号粘在同一 heading 行
+            # （「## 第五章…公众参与第五十三条 …」）——在第X条处拆开，让条号回到行首
+            glued = re.search(r"第[一二三四五六七八九十百零]+条", plain[2:])
+            if glued:
+                cut = 2 + glued.start()
+                out.append(plain[:cut].rstrip("\u3000 "))
+                out.append(plain[cut:])
+            else:
+                out.append(plain)
             continue
         s = re.sub(r"^>\s*", "", s)              # 引用块（沿革序言）
         s = s.replace("**", "")                  # 加粗
@@ -364,6 +377,9 @@ EXPECTED_COUNTS = {
     "family-edu-2021": 55,
     "tourism-2018": 112,
     "disabled-2018": 68,
+    "unfair-competition-2025": 41,
+    "environment-2014": 70,
+    "id-card-2011": 23,
     "crpl-imp-2024": 53,
     "genai-2023": 24,
     "pipl-2021": 74,
@@ -637,6 +653,33 @@ def main():
                 "effective_date": "2008-07-01",
             },
             "https://flk.npc.gov.cn/detail?id=ff8080816f135f46016f1d134c88132b",
+        ),
+        build_lawtext_md_law(
+            "unfair_comp_2025_lawtext_md", "unfair-competition-2025", "中华人民共和国反不正当竞争法",
+            {
+                "status": "现行有效（2025修正）",
+                "promulgation": {"date": "2025-06-27", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "2025-10-15",
+            },
+            "https://flk.npc.gov.cn/detail?id=ff808181971552b40197b1016efc5437",
+        ),
+        build_lawtext_md_law(
+            "environment_2014_lawtext_md", "environment-2014", "中华人民共和国环境保护法",
+            {
+                "status": "现行有效（2014修订）",
+                "promulgation": {"date": "2014-04-24", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "2015-01-01",
+            },
+            "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf76c1d0717",
+        ),
+        build_lawtext_md_law(
+            "id_card_2011_lawtext_md", "id-card-2011", "中华人民共和国居民身份证法",
+            {
+                "status": "现行有效（2011修正）",
+                "promulgation": {"date": "2011-10-29", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "2004-01-01",
+            },
+            "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf736e30627",
         ),
         build_wikisource_html_law(
             "minor_ws_html", "con-2018", "中华人民共和国宪法",

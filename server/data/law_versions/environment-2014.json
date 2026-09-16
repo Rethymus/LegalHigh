@@ -1,0 +1,26 @@
+{
+  "law_id": "environment-2014",
+  "title": "中华人民共和国环境保护法",
+  "schema_version": 1,
+  "note": "R139（2026-09-16）续批：经 lawtext（flk DOCX 转录）链入库。",
+  "versions": [
+    {
+      "version_id": "current",
+      "label": "2014 修订",
+      "status": "现行有效（2014修订）",
+      "promulgation_date": "2014-04-24",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2015-01-01",
+      "article_count": 70,
+      "current": true,
+      "evidence": {
+        "kind": "flk-docx-transcription",
+        "grade": "中",
+        "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf76c1d0717",
+        "accessed_at": "2026-09-16",
+        "snapshot": "docs/research/evidence/lawtext_环境保护法2014.md"
+      }
+    }
+  ],
+  "pending_note": "1989 通过原版全文未采集。2014 全面修订（「史上最严」）施行日 2015-01-01（附则自载）。flk sxx=1 语义未核实（其他法律 sxx=3），现行地位由 lawtext 单版本覆盖佐证（2026-09-14 更新的 flk DOCX 转录库仅载 2014 版）。R139 入库时修复 lawtext 源缺陷：第五章标题行粘附第五十三条（快照保留原样，builder 层归一化拆分）。"
+}

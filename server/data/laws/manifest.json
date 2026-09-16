@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-16T23:36:20.586209",
+  "built_at": "2026-09-17T00:08:53.022578",
   "fetch_date": "2026-09-08",
   "laws": [
     {
@@ -699,6 +699,75 @@
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "e7a8323507fa2feffb028fa17ad0e0a49aa236bceafeeef20d52fe275958af28",
       "output_sha256": "8fd485c9a05f7db94ed116e84e4cbb612f335be8a20d227ada10af925237eb2c"
+    },
+    {
+      "law_id": "unfair-competition-2025",
+      "title": "中华人民共和国反不正当竞争法",
+      "status": "现行有效（2025修正）",
+      "effective_date": "2025-10-15",
+      "effective_date_evidence": {
+        "title": "中华人民共和国反不正当竞争法",
+        "url": "https://flk.npc.gov.cn/detail?id=ff808181971552b40197b1016efc5437",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2025修正）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 41,
+      "expected_count": 41,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=ff808181971552b40197b1016efc5437",
+      "snapshot": "docs/research/evidence/lawtext_反不正当竞争法2025.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "a5676d9ade5eb2107badc815e15dd585ffeae5dbaec08350e08f701b929f6255",
+      "output_sha256": "54f5d1cbb775d56f28d0ac5b0067b098a271884874c2ff6077bf26d79c2e5085"
+    },
+    {
+      "law_id": "environment-2014",
+      "title": "中华人民共和国环境保护法",
+      "status": "现行有效（2014修订）",
+      "effective_date": "2015-01-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国环境保护法",
+        "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf76c1d0717",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2014修订）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 70,
+      "expected_count": 70,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf76c1d0717",
+      "snapshot": "docs/research/evidence/lawtext_环境保护法2014.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "6bab696faa824e415132af5e12059a1eb650b441de7a1a975e7525e6483130b2",
+      "output_sha256": "3d1bece6dba442c86ccc1bc4f736399642145b42dc40055838c6e8299887c152"
+    },
+    {
+      "law_id": "id-card-2011",
+      "title": "中华人民共和国居民身份证法",
+      "status": "现行有效（2011修正）",
+      "effective_date": "2004-01-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国居民身份证法",
+        "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf736e30627",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2011修正）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 23,
+      "expected_count": 23,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf736e30627",
+      "snapshot": "docs/research/evidence/lawtext_居民身份证法2011.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "01a03f8ca6494a666b38c61646d66ebe37739570bc2d999cc9e3654370e7255e",
+      "output_sha256": "d546a718270ede49eaf93816b636143ee9ce6208a4fcedbe2f8f8fba70ed1111"
     },
     {
       "law_id": "con-2018",

@@ -2703,6 +2703,171 @@
         }
       ],
       "note": "2026-09-16 增：残疾预防工作第11条。"
+    },
+    {
+      "id": "gold-uc-confusion",
+      "question": "擅自使用他人有影响的包装装潢引人误认违法吗",
+      "expect": [
+        {
+          "law_id": "unfair-competition-2025",
+          "no": 7
+        }
+      ],
+      "note": "2026-09-16 增：混淆行为第7条。词法鸿沟实录：初拟「山寨别人的包装让消费者误以为是名牌」未入 top5（「山寨/名牌」vs 条文「混淆/有一定影响/引人误认」），改题后 rank 1。"
+    },
+    {
+      "id": "gold-uc-bribery",
+      "question": "经营者给予财物贿赂谋取交易机会违法吗",
+      "expect": [
+        {
+          "law_id": "unfair-competition-2025",
+          "no": 8
+        }
+      ],
+      "note": "2026-09-16 增：商业贿赂第8条。词法鸿沟实录：初拟「给采购回扣算商业贿赂吗」未入 top5——「商业贿赂」一词在 2025 修正条文文本中并不出现（条文用「贿赂下列单位或者个人，以谋取交易机会或者竞争优势」），「回扣」亦无词面；改题后 rank 1。行业惯用语与条文语汇的典型鸿沟。"
+    },
+    {
+      "id": "gold-uc-false-publicity",
+      "question": "虚构交易虚构用户评价违法吗",
+      "expect": [
+        {
+          "law_id": "unfair-competition-2025",
+          "no": 9
+        }
+      ],
+      "note": "2026-09-16 增：虚假商业宣传（销售状况/用户评价）第9条。词法鸿沟实录：初拟「店铺刷好评虚构销量」未入 top5（「刷好评」vs 条文「虚构交易、虚构用户评价」），改题后 rank 4。"
+    },
+    {
+      "id": "gold-uc-trade-secret",
+      "question": "跳槽员工带走客户名单侵犯商业秘密吗",
+      "expect": [
+        {
+          "law_id": "unfair-competition-2025",
+          "no": 10
+        }
+      ],
+      "note": "2026-09-16 增：侵犯商业秘密行为第10条。"
+    },
+    {
+      "id": "gold-uc-defamation",
+      "question": "编造谣言抹黑竞争对手违法吗",
+      "expect": [
+        {
+          "law_id": "unfair-competition-2025",
+          "no": 12
+        }
+      ],
+      "note": "2026-09-16 增：损害商业信誉商品声誉第12条。"
+    },
+    {
+      "id": "gold-env-daily-fine",
+      "question": "企业排污拒不改正会被按日连续处罚吗",
+      "expect": [
+        {
+          "law_id": "environment-2014",
+          "no": 59
+        }
+      ],
+      "note": "2026-09-16 增（环保法入库金标）：按日连续处罚第59条。"
+    },
+    {
+      "id": "gold-env-eia",
+      "question": "建设项目要先做环境影响评价吗",
+      "expect": [
+        {
+          "law_id": "environment-2014",
+          "no": 19
+        }
+      ],
+      "note": "2026-09-16 增：环境影响评价制度第19条。"
+    },
+    {
+      "id": "gold-env-info-disclosure",
+      "question": "重点排污单位要公开环境信息吗",
+      "expect": [
+        {
+          "law_id": "environment-2014",
+          "no": 55
+        }
+      ],
+      "note": "2026-09-16 增：信息公开和公众参与（重点排污单位公开义务在第55条，第五章）。词法鸿沟实录：第五章标题在源文件粘附第53条，程序定位后锚第55条。"
+    },
+    {
+      "id": "gold-env-public-interest",
+      "question": "污染环境损害社会公共利益谁可以起诉",
+      "expect": [
+        {
+          "law_id": "environment-2014",
+          "no": 58
+        }
+      ],
+      "note": "2026-09-16 增：环境公益诉讼第58条。"
+    },
+    {
+      "id": "gold-env-criminal",
+      "question": "违反环境保护法构成犯罪的依法追究刑事责任吗",
+      "expect": [
+        {
+          "law_id": "environment-2014",
+          "no": 69
+        }
+      ],
+      "note": "2026-09-16 增：刑事责任条款第69条。词法鸿沟实录：初拟「污染环境构成犯罪怎么追究」未入 top5（「污染环境」是刑法语汇），改题后 rank 4。"
+    },
+    {
+      "id": "gold-id-fraud-apply",
+      "question": "用假材料骗领身份证会怎么处罚",
+      "expect": [
+        {
+          "law_id": "id-card-2011",
+          "no": 16
+        }
+      ],
+      "note": "2026-09-16 增（居民身份证法入库金标）：骗领/出租出借转让身份证的处罚第16条。"
+    },
+    {
+      "id": "gold-id-lend",
+      "question": "把身份证借给朋友违法吗",
+      "expect": [
+        {
+          "law_id": "id-card-2011",
+          "no": 16
+        }
+      ],
+      "note": "2026-09-16 增：出租出借转让身份证违法第16条。词法鸿沟实录：初拟「身份证可以借给别人用吗」未入 top5（「借给别人用」vs 条文「出借」），改题后 rank 2。"
+    },
+    {
+      "id": "gold-id-foreigner",
+      "question": "外国人在华要办什么身份证件",
+      "expect": [
+        {
+          "law_id": "id-card-2011",
+          "no": 9
+        }
+      ],
+      "note": "2026-09-16 增：外国人永久居留身份证参照适用第9条。"
+    },
+    {
+      "id": "gold-id-reissue",
+      "question": "身份证丢了怎么补办",
+      "expect": [
+        {
+          "law_id": "id-card-2011",
+          "no": 12
+        }
+      ],
+      "note": "2026-09-16 增：补领换领程序第12条。词法鸿沟实录：问法「丢了补办」vs 条文「补领」。"
+    },
+    {
+      "id": "gold-uc-platform",
+      "question": "平台强制商家二选一违法吗",
+      "expect": [
+        {
+          "law_id": "unfair-competition-2025",
+          "no": 14
+        }
+      ],
+      "note": "2026-09-16 增：平台经营者不得强制不合理条件第14条。词法鸿沟实录：问法「二选一」vs 条文「不合理条件」。"
     }
   ]
 }
