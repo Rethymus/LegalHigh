@@ -202,6 +202,21 @@ The last three are behavior probes (headless Chrome): motion physics, WCAG 2.2 A
 
 Lock files split into runtime `requirements.lock`, acceptance `requirements-dev.lock` and desktop `requirements-desktop.lock`, all with versions and download hashes. Web and desktop use the committed `package-lock.json`; CI uses `npm ci`.
 
+## MCP Server · AI assistant integration
+
+LegalHigh's citation-bound statute retrieval is available as a **Model Context Protocol server** for any MCP client (Claude, Cursor, etc.) — zero third-party dependencies (pure stdlib stdio transport):
+
+```bash
+python server/mcp_server.py
+```
+
+Three tools: `search_articles` (BM25 full-text statute retrieval), `get_article` (single article with full metadata), `list_laws` (corpus inventory). **Retrieval only, no generative tools**; output always carries article text + metadata + official source URL, with a "not legal advice" disclaimer. HTTP endpoint `POST /mcp` also available (JSON-RPC 2.0).
+
+## Open data
+
+- `web/public/data/laws-md/`: full-corpus markdown export (28 instruments, one file per law, with official metadata headers), same source as `data/laws.json`.
+- [llms.txt](web/public/llms.txt) / [llms-full.txt](web/public/llms-full.txt): LLM-friendly corpus index and full text.
+
 ## Architecture & security boundary
 
 ```text
