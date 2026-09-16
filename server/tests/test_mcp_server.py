@@ -86,6 +86,17 @@ def test_tools_call_search_and_article():
     assert laws["count"] >= 28
     assert all(l["article_count"] > 0 for l in laws["laws"])
 
+    # 子条号精确取回（R129：get_article sub 参数修复）
+    out5 = _roundtrip([
+        {"jsonrpc": "2.0", "id": 5, "method": "tools/call",
+         "params": {"name": "get_article",
+                    "arguments": {"law_id": "cl-2023", "no": 287, "sub": "之一"}}},
+    ])
+    sub = json.loads([m for m in out5 if m.get("id") == 5][0]["result"]["content"][0]["text"])
+    assert sub["sub"] == "之一", sub
+    assert "信息网络" in sub["text"]  # 287之一 帮信罪特征用语
+    assert sub["text"] != article["text"]  # 与基条 287 是不同条文
+
 
 def test_tools_call_unknown_tool_is_error():
     out = _roundtrip([

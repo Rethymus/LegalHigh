@@ -48,9 +48,13 @@ def tool_search_articles(query: str, top_k: int = 5, law_id: str | None = None) 
 
 def tool_get_article(law_id: str, no: int, sub: str | None = None) -> dict:
     corpus = get_corpus()
-    a = corpus.get_article(law_id, int(no))
-    if a and sub and a.get("sub") != sub:
-        a = None  # 指定了子条号但基条不匹配（MCP 暂不索引子条独立条目）
+    if sub:
+        # 子条号是独立语料条目（如 287之一）——按 (law_id, no, sub) 精确匹配
+        a = next((a for a in corpus.articles
+                  if a["law_id"] == law_id and a["no"] == int(no) and a.get("sub") == sub), None)
+    else:
+        a = corpus.get_article(law_id, int(no))
+    if not a:
         return {"error": f"article not found: {law_id} 第{no}条{sub or ''}"}
     law = corpus.laws.get(law_id, {})
     return {
