@@ -1,0 +1,26 @@
+{
+  "law_id": "arbitration-2025",
+  "title": "中华人民共和国仲裁法",
+  "schema_version": 1,
+  "note": "R141（2026-09-17）续批：经 lawtext（flk DOCX 转录）链入库。",
+  "versions": [
+    {
+      "version_id": "current",
+      "label": "2025 修订",
+      "status": "现行有效（2025修订）",
+      "promulgation_date": "2025-09-12",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2026-03-01",
+      "article_count": 96,
+      "current": true,
+      "evidence": {
+        "kind": "flk-docx-transcription",
+        "grade": "中",
+        "url": "https://flk.npc.gov.cn/detail?id=58d7569a322b4eca9b22feaa4f5d7d4f",
+        "accessed_at": "2026-09-17",
+        "snapshot": "docs/research/evidence/lawtext_仲裁法2025.md"
+      }
+    }
+  ],
+  "pending_note": "1994 通过原版与 2009/2017 修正版全文未采集。2025 全面修订施行日 2026-03-01（附则自载与 flk sxrq 一致，采集日已施行）。R141 lawtext 链入库——时效跟进（与食品安全法 2025/反法 2025 同型）。"
+}

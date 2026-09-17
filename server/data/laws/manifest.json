@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-17T00:24:19.951172",
+  "built_at": "2026-09-17T11:25:57.633670",
   "fetch_date": "2026-09-08",
   "laws": [
     {
@@ -837,6 +837,75 @@
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "04dc37b02652ca86c00ef97650dd6a95e0afc39bdbed1b4d59b3172aad88277d",
       "output_sha256": "e4558a5c89590665effdd3ad40c5143bbcc6f05bfc5ecdd27626ad78d035a92e"
+    },
+    {
+      "law_id": "anti-fraud-2022",
+      "title": "中华人民共和国反电信网络诈骗法",
+      "status": "现行有效",
+      "effective_date": "2022-12-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国反电信网络诈骗法",
+        "url": "https://flk.npc.gov.cn/detail?id=ff80818182cf5c220182fd54401023d6",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效"
+      },
+      "promulgation_instrument": null,
+      "article_count": 50,
+      "expected_count": 50,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=ff80818182cf5c220182fd54401023d6",
+      "snapshot": "docs/research/evidence/lawtext_反电信网络诈骗法2022.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "30ecfb8ae4aba1acdf973bb943b0acb93dc1ee459ebfe3e5abed8c023b2f56b7",
+      "output_sha256": "45332caf753aee803a6febc76575d86b5e81e9f9c0addbca19c7623f3646ac4b"
+    },
+    {
+      "law_id": "compulsory-edu-2018",
+      "title": "中华人民共和国义务教育法",
+      "status": "现行有效（2018修正）",
+      "effective_date": "2006-09-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国义务教育法",
+        "url": "https://flk.npc.gov.cn/detail?id=ff8080816f135f46016f210efccb17b9",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2018修正）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 63,
+      "expected_count": 63,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=ff8080816f135f46016f210efccb17b9",
+      "snapshot": "docs/research/evidence/lawtext_义务教育法2018.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "fc25478f6732efd97e0f138c8bac9fe9796263ac7be324c2298d2177fe31d422",
+      "output_sha256": "5a9a3c321b2581a446597753fe261d200a789ad7712aa616793882bcfa670190"
+    },
+    {
+      "law_id": "arbitration-2025",
+      "title": "中华人民共和国仲裁法",
+      "status": "现行有效（2025修订）",
+      "effective_date": "2026-03-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国仲裁法",
+        "url": "https://flk.npc.gov.cn/detail?id=58d7569a322b4eca9b22feaa4f5d7d4f",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2025修订）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 96,
+      "expected_count": 96,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=58d7569a322b4eca9b22feaa4f5d7d4f",
+      "snapshot": "docs/research/evidence/lawtext_仲裁法2025.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "1ad6f38e3da4713fa5d42416736d48e9b05d1098f232b3ccaaa8c1f164883077",
+      "output_sha256": "4aa4285576bcad0b5c3ca74064da037e82a33cfa23b84e3e83149b69cf8e943b"
     },
     {
       "law_id": "con-2018",

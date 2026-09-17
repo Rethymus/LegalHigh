@@ -325,6 +325,33 @@
       "no_effective_date": false,
       "effective_date_evidence_valid": true
     },
+    "anti-fraud-2022": {
+      "manifest_count": 50,
+      "actual_count": 50,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "compulsory-edu-2018": {
+      "manifest_count": 63,
+      "actual_count": 63,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "arbitration-2025": {
+      "manifest_count": 96,
+      "actual_count": 96,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
     "con-2018": {
       "manifest_count": 143,
       "actual_count": 143,
@@ -450,9 +477,12 @@
     "admin-review-2023": 4,
     "advertising-2021": 1,
     "agri-quality-2022": 1,
+    "anti-fraud-2022": 1,
+    "arbitration-2025": 1,
     "civl-2020": 1,
     "cl-2013": 1,
     "cl-2023": 4,
+    "compulsory-edu-2018": 1,
     "con-2018": 5,
     "copyright-2020": 1,
     "cpl-2018": 1,

@@ -1,0 +1,26 @@
+{
+  "law_id": "anti-fraud-2022",
+  "title": "中华人民共和国反电信网络诈骗法",
+  "schema_version": 1,
+  "note": "R141（2026-09-17）续批：经 lawtext（flk DOCX 转录）链入库。",
+  "versions": [
+    {
+      "version_id": "current",
+      "label": "2022 通过",
+      "status": "现行有效",
+      "promulgation_date": "2022-09-02",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2022-12-01",
+      "article_count": 50,
+      "current": true,
+      "evidence": {
+        "kind": "flk-docx-transcription",
+        "grade": "中",
+        "url": "https://flk.npc.gov.cn/detail?id=ff80818182cf5c220182fd54401023d6",
+        "accessed_at": "2026-09-17",
+        "snapshot": "docs/research/evidence/lawtext_反电信网络诈骗法2022.md"
+      }
+    }
+  ],
+  "pending_note": "R141 lawtext 链入库，bbbs 经 flk 官方 API 核验（pub 2022-09-02/eff 2022-12-01/有效）；附则自载施行日一致。"
+}
