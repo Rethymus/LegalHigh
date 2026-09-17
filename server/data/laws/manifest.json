@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-17T00:08:53.022578",
+  "built_at": "2026-09-17T00:24:19.951172",
   "fetch_date": "2026-09-08",
   "laws": [
     {
@@ -768,6 +768,75 @@
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "01a03f8ca6494a666b38c61646d66ebe37739570bc2d999cc9e3654370e7255e",
       "output_sha256": "d546a718270ede49eaf93816b636143ee9ce6208a4fcedbe2f8f8fba70ed1111"
+    },
+    {
+      "law_id": "price-1997",
+      "title": "中华人民共和国价格法",
+      "status": "现行有效",
+      "effective_date": "1998-05-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国价格法",
+        "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf5e05801ef",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效"
+      },
+      "promulgation_instrument": null,
+      "article_count": 48,
+      "expected_count": 48,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf5e05801ef",
+      "snapshot": "docs/research/evidence/lawtext_价格法1997.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "9e010835904878c2452749d466f5dcad50058d6e4ccfe8de6e405aedb1b306d1",
+      "output_sha256": "9c513ad3592fc9e091fe9b4831faadd771c1549142588e678a10e2d5c81ef5ef"
+    },
+    {
+      "law_id": "notary-2017",
+      "title": "中华人民共和国公证法",
+      "status": "现行有效（2017修正）",
+      "effective_date": "2006-03-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国公证法",
+        "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf8688a0a5f",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2017修正）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 47,
+      "expected_count": 47,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf8688a0a5f",
+      "snapshot": "docs/research/evidence/lawtext_公证法2017.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "83daf85e6c36f30da57cd3de2dba2d4b6f2994a99fc0bc586ab33aadc025726c",
+      "output_sha256": "0f0632348531aab8fc5162e454e1723e1a497d678a2f0b0f851a13245ebb1323"
+    },
+    {
+      "law_id": "agri-quality-2022",
+      "title": "中华人民共和国农产品质量安全法",
+      "status": "现行有效（2022修订）",
+      "effective_date": "2023-01-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国农产品质量安全法",
+        "url": "https://flk.npc.gov.cn/detail?id=ff80818182cf5d600182fd5d77dd23cf",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2022修订）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 81,
+      "expected_count": 81,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=ff80818182cf5d600182fd5d77dd23cf",
+      "snapshot": "docs/research/evidence/lawtext_农产品质量安全法2022.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "04dc37b02652ca86c00ef97650dd6a95e0afc39bdbed1b4d59b3172aad88277d",
+      "output_sha256": "e4558a5c89590665effdd3ad40c5143bbcc6f05bfc5ecdd27626ad78d035a92e"
     },
     {
       "law_id": "con-2018",

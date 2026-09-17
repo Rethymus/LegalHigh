@@ -1,0 +1,26 @@
+{
+  "law_id": "price-1997",
+  "title": "中华人民共和国价格法",
+  "schema_version": 1,
+  "note": "R140（2026-09-17）续批：经 lawtext（flk DOCX 转录）链入库。",
+  "versions": [
+    {
+      "version_id": "current",
+      "label": "1997 通过",
+      "status": "现行有效",
+      "promulgation_date": "1997-12-29",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "1998-05-01",
+      "article_count": 48,
+      "current": true,
+      "evidence": {
+        "kind": "flk-docx-transcription",
+        "grade": "中",
+        "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf5e05801ef",
+        "accessed_at": "2026-09-17",
+        "snapshot": "docs/research/evidence/lawtext_价格法1997.md"
+      }
+    }
+  ],
+  "pending_note": "R140 lawtext 链入库，bbbs 经 flk 官方 API 核验（pub 1997-12-29/eff 1998-05-01/有效 sxx=3）；本法至今未见修正记录（flk 单版本）。"
+}

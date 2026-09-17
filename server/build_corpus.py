@@ -80,6 +80,9 @@ LAW_FILES = {
     "unfair_comp_2025_lawtext_md": "lawtext_反不正当竞争法2025.md",  # 反不正当竞争法 2025 修正（R139）
     "environment_2014_lawtext_md": "lawtext_环境保护法2014.md",  # 环境保护法 2014 修订（R139）
     "id_card_2011_lawtext_md": "lawtext_居民身份证法2011.md",  # 居民身份证法 2011 修正（R139）
+    "price_1997_lawtext_md": "lawtext_价格法1997.md",  # 价格法（R140）
+    "notary_2017_lawtext_md": "lawtext_公证法2017.md",  # 公证法 2017 修正（R140）
+    "agri_quality_2022_lawtext_md": "lawtext_农产品质量安全法2022.md",  # 农产品质量安全法 2022 修订（R140）
     "cl_ws_html": "ws_刑法2023.html",
 }
 
@@ -380,6 +383,9 @@ EXPECTED_COUNTS = {
     "unfair-competition-2025": 41,
     "environment-2014": 70,
     "id-card-2011": 23,
+    "price-1997": 48,
+    "notary-2017": 47,
+    "agri-quality-2022": 81,
     "crpl-imp-2024": 53,
     "genai-2023": 24,
     "pipl-2021": 74,
@@ -680,6 +686,33 @@ def main():
                 "effective_date": "2004-01-01",
             },
             "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf736e30627",
+        ),
+        build_lawtext_md_law(
+            "price_1997_lawtext_md", "price-1997", "中华人民共和国价格法",
+            {
+                "status": "现行有效",
+                "promulgation": {"date": "1997-12-29", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "1998-05-01",
+            },
+            "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf5e05801ef",
+        ),
+        build_lawtext_md_law(
+            "notary_2017_lawtext_md", "notary-2017", "中华人民共和国公证法",
+            {
+                "status": "现行有效（2017修正）",
+                "promulgation": {"date": "2017-09-01", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "2006-03-01",
+            },
+            "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf8688a0a5f",
+        ),
+        build_lawtext_md_law(
+            "agri_quality_2022_lawtext_md", "agri-quality-2022", "中华人民共和国农产品质量安全法",
+            {
+                "status": "现行有效（2022修订）",
+                "promulgation": {"date": "2022-09-02", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "2023-01-01",
+            },
+            "https://flk.npc.gov.cn/detail?id=ff80818182cf5d600182fd5d77dd23cf",
         ),
         build_wikisource_html_law(
             "minor_ws_html", "con-2018", "中华人民共和国宪法",
