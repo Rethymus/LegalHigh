@@ -678,8 +678,12 @@ def complaints(admin: AdminPrincipal = Depends(require_admin)):
 # ---------- 案例库（只收录带直接来源与核验日期的公开真实案件） ----------
 
 @app.get("/api/cases")
-def list_cases(q: str | None = None, level: str | None = None):
-    return {"cases": cases_mod.search_cases(q or "", level, verified_only=True)}
+def list_cases(q: str | None = None, level: str | None = None, bias: str = "balanced"):
+    """bias（R146 字段加权）：balanced / facts（类似案情，Facts↔Facts）/ reasoning（裁判理由）。"""
+    try:
+        return {"cases": cases_mod.search_cases(q or "", level, verified_only=True, bias=bias)}
+    except ValueError as e:
+        raise HTTPException(422, str(e))
 
 
 @app.get("/api/cases/{case_id}")

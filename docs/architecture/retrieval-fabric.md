@@ -6,4 +6,4 @@
 
 **评测**：金标 248 组（hit@5 0.9556/MRR 0.7724），拒答正确率 1.0（5 乱码探针），引用四要素 1.0。金标纪律：语料/分词变更前必须先加金标（决策13）；改题保留真实问法形态并把鸿沟写进 note。
 
-**已知白区**：案例按字段加权检索（Facts↔Facts）；AS_OF_DATE 时间过滤（见 temporal-model.md）。
+**已知白区**：AS_OF_DATE 已实现 fail-closed 形态（见 temporal-model.md）；案例字段加权检索已实现（R146：cases.py 三档 bias，facts↔facts / reasoning 分野）。剩余白区：历史版本全文时点检索。
