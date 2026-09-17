@@ -86,6 +86,8 @@ LAW_FILES = {
     "anti_fraud_2022_lawtext_md": "lawtext_反电信网络诈骗法2022.md",  # 反电信网络诈骗法（R141）
     "compulsory_edu_2018_lawtext_md": "lawtext_义务教育法2018.md",  # 义务教育法 2018 修正（R141）
     "arbitration_2025_lawtext_md": "lawtext_仲裁法2025.md",  # 仲裁法 2025 修订（R141）
+    "company_2023_lawtext_md": "lawtext_公司法2023.md",  # 公司法 2023 修订（R142）
+    "police_2012_lawtext_md": "lawtext_人民警察法2012.md",  # 人民警察法 2012 修正（R142）
     "cl_ws_html": "ws_刑法2023.html",
 }
 
@@ -392,6 +394,8 @@ EXPECTED_COUNTS = {
     "anti-fraud-2022": 50,
     "compulsory-edu-2018": 63,
     "arbitration-2025": 96,
+    "company-2023": 266,
+    "police-2012": 52,
     "crpl-imp-2024": 53,
     "genai-2023": 24,
     "pipl-2021": 74,
@@ -746,6 +750,24 @@ def main():
                 "effective_date": "2026-03-01",
             },
             "https://flk.npc.gov.cn/detail?id=58d7569a322b4eca9b22feaa4f5d7d4f",
+        ),
+        build_lawtext_md_law(
+            "company_2023_lawtext_md", "company-2023", "中华人民共和国公司法",
+            {
+                "status": "现行有效（2023修订）",
+                "promulgation": {"date": "2023-12-29", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "2024-07-01",
+            },
+            "https://flk.npc.gov.cn/detail?id=ff8081818c9108eb018cb6922f750c07",
+        ),
+        build_lawtext_md_law(
+            "police_2012_lawtext_md", "police-2012", "中华人民共和国人民警察法",
+            {
+                "status": "现行有效（2012修正）",
+                "promulgation": {"date": "2012-10-26", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "1995-02-28",
+            },
+            "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf74cef06a9",
         ),
         build_wikisource_html_law(
             "minor_ws_html", "con-2018", "中华人民共和国宪法",

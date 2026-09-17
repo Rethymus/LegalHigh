@@ -352,6 +352,24 @@
       "no_effective_date": false,
       "effective_date_evidence_valid": true
     },
+    "company-2023": {
+      "manifest_count": 266,
+      "actual_count": 266,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "police-2012": {
+      "manifest_count": 52,
+      "actual_count": 52,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
     "con-2018": {
       "manifest_count": 143,
       "actual_count": 143,
@@ -482,6 +500,7 @@
     "civl-2020": 1,
     "cl-2013": 1,
     "cl-2023": 4,
+    "company-2023": 1,
     "compulsory-edu-2018": 1,
     "con-2018": 5,
     "copyright-2020": 1,
@@ -514,6 +533,7 @@
     "pcl-2023": 6,
     "penal-2021": 4,
     "pipl-2021": 1,
+    "police-2012": 1,
     "price-1997": 1,
     "product-quality-2018": 1,
     "psm-2025": 3,

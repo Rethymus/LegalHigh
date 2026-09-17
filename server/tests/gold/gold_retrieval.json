@@ -3198,6 +3198,171 @@
         }
       ],
       "note": "2026-09-17 增：预警劝阻与涉案资金及时返还被害人第34条。锚点勘误：初锚第36条（出境限制），程序核验后改锚第34条（返还制度本体）。词法鸿沟实录：初拟「被骗的钱能追回来吗」未入 top5。"
+    },
+    {
+      "id": "gold-cp-registered-capital",
+      "question": "开公司注册资本要一次缴清吗",
+      "expect": [
+        {
+          "law_id": "company-2023",
+          "no": 47
+        }
+      ],
+      "note": "2026-09-17 增（公司法入库金标）：认缴出资五年内缴足第47条（2023 新规）。"
+    },
+    {
+      "id": "gold-cp-shareholder-inspection",
+      "question": "股东可以查公司的账簿吗",
+      "expect": [
+        {
+          "law_id": "company-2023",
+          "no": 57
+        }
+      ],
+      "note": "2026-09-17 增：股东知情权（查阅复制+会计账簿凭证）第57条。"
+    },
+    {
+      "id": "gold-cp-appraisal-exit",
+      "question": "公司连续五年不分红小股东能要求退股吗",
+      "expect": [
+        {
+          "law_id": "company-2023",
+          "no": 89
+        }
+      ],
+      "note": "2026-09-17 增：异议股东回购请求权第89条。词法鸿沟实录：问法「退股」vs 条文「请求公司收购其股权」。"
+    },
+    {
+      "id": "gold-cp-legal-rep",
+      "question": "公司法定代表人要以登记为准吗",
+      "expect": [
+        {
+          "law_id": "company-2023",
+          "no": 10
+        }
+      ],
+      "note": "2026-09-17 增：法定代表人登记与变更第10条。"
+    },
+    {
+      "id": "gold-cp-liquidation-duty",
+      "question": "公司解散后谁负责清算",
+      "expect": [
+        {
+          "law_id": "company-2023",
+          "no": 232
+        }
+      ],
+      "note": "2026-09-17 增：董事为清算义务人第232条（2023 新规：董事清算义务）。词法鸿沟实录：问法「谁负责清算」vs 条文「董事为公司清算义务人」。"
+    },
+    {
+      "id": "gold-cp-capital-reduction",
+      "question": "公司减少注册资本应当通知债权人吗",
+      "expect": [
+        {
+          "law_id": "company-2023",
+          "no": 224
+        }
+      ],
+      "note": null
+    },
+    {
+      "id": "gold-cp-cancellation",
+      "question": "公司不经营了可以简易注销吗",
+      "expect": [
+        {
+          "law_id": "company-2023",
+          "no": 240
+        }
+      ],
+      "note": "2026-09-17 增：简易注销程序第240条（2023 新增）。词法鸿沟实录：问法「不经营了」vs 条文「简易注销」。"
+    },
+    {
+      "id": "gold-pp-stop-questioning",
+      "question": "警察可以把人带走盘问多久",
+      "expect": [
+        {
+          "law_id": "police-2012",
+          "no": 9
+        }
+      ],
+      "note": "2026-09-17 增（人民警察法入库金标）：留置盘问（带至公安机关继续盘问 24/48 小时）第9条。词法鸿沟实录：问法「带走盘问多久」vs 条文「继续盘问」。"
+    },
+    {
+      "id": "gold-pp-weapons",
+      "question": "人民警察遇有暴力犯罪行为紧急情形经警告可以使用武器吗",
+      "expect": [
+        {
+          "law_id": "police-2012",
+          "no": 10
+        }
+      ],
+      "note": null
+    },
+    {
+      "id": "gold-pp-search",
+      "question": "公安机关人民警察可以依法执行拘留搜查逮捕吗",
+      "expect": [
+        {
+          "law_id": "police-2012",
+          "no": 12
+        }
+      ],
+      "note": null
+    },
+    {
+      "id": "gold-pp-duty-scope",
+      "question": "遇到危险报警警察必须出警吗",
+      "expect": [
+        {
+          "law_id": "police-2012",
+          "no": 21
+        }
+      ],
+      "note": "2026-09-17 增：人民警察义务（救助/立即救助）第21条。词法鸿沟实录：问法「必须出警」vs 条文「立即救助」。"
+    },
+    {
+      "id": "gold-pp-ID",
+      "question": "警察查身份证当事人要配合吗",
+      "expect": [
+        {
+          "law_id": "id-card-2011",
+          "no": 15
+        }
+      ],
+      "note": "2026-09-17 增：人民警察查验居民身份证的法定情形与配合义务第15条。锚点勘误：初锚治安管理处罚法第53条（虐待家庭成员——完全错位），程序核验后改锚居民身份证法第15条。"
+    },
+    {
+      "id": "gold-cp-board-directors",
+      "question": "董事监事高级管理人员应当遵守法律法规和公司章程吗",
+      "expect": [
+        {
+          "law_id": "company-2023",
+          "no": 179
+        }
+      ],
+      "note": null
+    },
+    {
+      "id": "gold-cp-guarantee",
+      "question": "公司对外担保要股东会同意吗",
+      "expect": [
+        {
+          "law_id": "company-2023",
+          "no": 15
+        }
+      ],
+      "note": "2026-09-17 增：公司担保决议程序第15条。"
+    },
+    {
+      "id": "gold-pp-discipline",
+      "question": "警察违法行使职权造成损害受害人能要求国家赔偿吗",
+      "expect": [
+        {
+          "law_id": "scl-2012",
+          "no": 2
+        }
+      ],
+      "note": "2026-09-17 增：国家赔偿请求权第2条（警察职权违法的赔偿衔接）。词法鸿沟实录：初拟「能要求赔偿吗」泛问，改题含「国家赔偿」后锚定。"
     }
   ]
 }

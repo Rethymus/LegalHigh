@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-17T11:25:57.633670",
+  "built_at": "2026-09-17T11:46:56.695525",
   "fetch_date": "2026-09-08",
   "laws": [
     {
@@ -906,6 +906,52 @@
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "1ad6f38e3da4713fa5d42416736d48e9b05d1098f232b3ccaaa8c1f164883077",
       "output_sha256": "4aa4285576bcad0b5c3ca74064da037e82a33cfa23b84e3e83149b69cf8e943b"
+    },
+    {
+      "law_id": "company-2023",
+      "title": "中华人民共和国公司法",
+      "status": "现行有效（2023修订）",
+      "effective_date": "2024-07-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国公司法",
+        "url": "https://flk.npc.gov.cn/detail?id=ff8081818c9108eb018cb6922f750c07",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2023修订）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 266,
+      "expected_count": 266,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=ff8081818c9108eb018cb6922f750c07",
+      "snapshot": "docs/research/evidence/lawtext_公司法2023.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "0032112a6e10e72dc96d032feed36b9c33595f1cf33eb7e931c4a502a95a45ba",
+      "output_sha256": "2c4e5a3222f264e9ac3f6f9b8521d526ff41d64108219ea2a616667c1e1f7a0d"
+    },
+    {
+      "law_id": "police-2012",
+      "title": "中华人民共和国人民警察法",
+      "status": "现行有效（2012修正）",
+      "effective_date": "1995-02-28",
+      "effective_date_evidence": {
+        "title": "中华人民共和国人民警察法",
+        "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf74cef06a9",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2012修正）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 52,
+      "expected_count": 52,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf74cef06a9",
+      "snapshot": "docs/research/evidence/lawtext_人民警察法2012.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "c1f2aefb6d90ae49b7436bf73a4e619d8c9268ef15d65472e8e5e63dbb151cdb",
+      "output_sha256": "e141a0288979a1bdfa5bad14d61059ca410c1b199c7674fe66d52f724acdce40"
     },
     {
       "law_id": "con-2018",
