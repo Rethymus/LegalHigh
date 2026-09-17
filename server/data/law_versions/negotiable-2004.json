@@ -1,0 +1,26 @@
+{
+  "law_id": "negotiable-2004",
+  "title": "中华人民共和国票据法",
+  "schema_version": 1,
+  "note": "R147（2026-09-17）金融与应急批次：经 lawtext（flk DOCX 转录）链入库。",
+  "versions": [
+    {
+      "version_id": "current",
+      "label": "2004 修正",
+      "status": "现行有效（2004修正）",
+      "promulgation_date": "2004-08-28",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "1996-01-01",
+      "article_count": 110,
+      "current": true,
+      "evidence": {
+        "kind": "flk-docx-transcription",
+        "grade": "中",
+        "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf62b2a02df",
+        "accessed_at": "2026-09-17",
+        "snapshot": "docs/research/evidence/lawtext_票据法2004.md"
+      }
+    }
+  ],
+  "pending_note": "1995 通过原版与 1999 修正版全文未采集。附则自载施行日 1996-01-01（原版施行日跨修正沿用）；2004 修正决定施行日 2004-08-28（flk sxrq，公布即施行）存档注记。R147 lawtext 链入库。"
+}

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-17T19:16:18.789725",
+  "built_at": "2026-09-17T19:56:31.877325",
   "fetch_date": "2026-09-08",
   "laws": [
     {
@@ -1090,6 +1090,75 @@
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "3a18d6f090eee6c5fe4afb80d32c5ff1ded61d42a77944898d19246dcb7c05a2",
       "output_sha256": "eacd28831207cce43107e56263432e2746be1670c75ab5a19d238b2211e86ac7"
+    },
+    {
+      "law_id": "commercial-bank-2015",
+      "title": "中华人民共和国商业银行法",
+      "status": "现行有效（2015修正）",
+      "effective_date": "2015-10-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国商业银行法",
+        "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf7eba9086b",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2015修正）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 95,
+      "expected_count": 95,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf7eba9086b",
+      "snapshot": "docs/research/evidence/lawtext_商业银行法2015.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "730d42b73d3d39190a5ca8bdebc2a1cd9239ce897e331910cf28164b6f21000f",
+      "output_sha256": "74390da992bf7a7872f87f9f620a32f2b3725fe72b9e49c139b12b23c95d6641"
+    },
+    {
+      "law_id": "negotiable-2004",
+      "title": "中华人民共和国票据法",
+      "status": "现行有效（2004修正）",
+      "effective_date": "1996-01-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国票据法",
+        "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf62b2a02df",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2004修正）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 110,
+      "expected_count": 110,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf62b2a02df",
+      "snapshot": "docs/research/evidence/lawtext_票据法2004.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "30bad8efb9a2ccc45ecc1f73aa2f716f825e33bd1ee239ec8748351f37943b44",
+      "output_sha256": "e82f32de89ba06cef882d50fed4d464558dbb94b222228446108c8fae0ee979b"
+    },
+    {
+      "law_id": "emergency-2024",
+      "title": "中华人民共和国突发事件应对法",
+      "status": "现行有效（2024修订）",
+      "effective_date": "2024-11-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国突发事件应对法",
+        "url": "https://flk.npc.gov.cn/detail?id=ff8081818d6a424b01905f13edba2efb",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2024修订）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 106,
+      "expected_count": 106,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=ff8081818d6a424b01905f13edba2efb",
+      "snapshot": "docs/research/evidence/lawtext_突发事件应对法2024.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "84bfe424441773ed0fca3dfe0e2150b20f5cd6d82699827fb90f0f185854ab42",
+      "output_sha256": "77fa7fa60f2f2fd68c91a3acad2b362fe05e0212398ea5c81fc056e7b526aecb"
     },
     {
       "law_id": "con-2018",

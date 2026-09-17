@@ -94,6 +94,9 @@ LAW_FILES = {
     "infectious_2025_lawtext_md": "lawtext_传染病防治法2025.md",  # 传染病防治法 2025 修订（R145）
     "partnership_2006_lawtext_md": "lawtext_合伙企业法2006.md",  # 合伙企业法（R145）
     "tax_admin_2015_lawtext_md": "lawtext_税收征收管理法2015.md",  # 税收征收管理法 2015 修正（R145）
+    "commercial_bank_2015_lawtext_md": "lawtext_商业银行法2015.md",  # 商业银行法 2015 修正（R147）
+    "negotiable_2004_lawtext_md": "lawtext_票据法2004.md",  # 票据法 2004 修正（R147）
+    "emergency_2024_lawtext_md": "lawtext_突发事件应对法2024.md",  # 突发事件应对法 2024 修订（R147）
     "cl_ws_html": "ws_刑法2023.html",
 }
 
@@ -408,6 +411,9 @@ EXPECTED_COUNTS = {
     "infectious-2025": 115,
     "partnership-2006": 109,
     "tax-admin-2015": 94,
+    "commercial-bank-2015": 95,
+    "negotiable-2004": 110,
+    "emergency-2024": 106,
     "crpl-imp-2024": 53,
     "genai-2023": 24,
     "pipl-2021": 74,
@@ -834,6 +840,33 @@ def main():
                 "effective_date": "2001-05-01",
             },
             "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf78cff0785",
+        ),
+        build_lawtext_md_law(
+            "commercial_bank_2015_lawtext_md", "commercial-bank-2015", "中华人民共和国商业银行法",
+            {
+                "status": "现行有效（2015修正）",
+                "promulgation": {"date": "2015-08-29", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "2015-10-01",
+            },
+            "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf7eba9086b",
+        ),
+        build_lawtext_md_law(
+            "negotiable_2004_lawtext_md", "negotiable-2004", "中华人民共和国票据法",
+            {
+                "status": "现行有效（2004修正）",
+                "promulgation": {"date": "2004-08-28", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "1996-01-01",
+            },
+            "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf62b2a02df",
+        ),
+        build_lawtext_md_law(
+            "emergency_2024_lawtext_md", "emergency-2024", "中华人民共和国突发事件应对法",
+            {
+                "status": "现行有效（2024修订）",
+                "promulgation": {"date": "2024-06-28", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "2024-11-01",
+            },
+            "https://flk.npc.gov.cn/detail?id=ff8081818d6a424b01905f13edba2efb",
         ),
         build_wikisource_html_law(
             "minor_ws_html", "con-2018", "中华人民共和国宪法",

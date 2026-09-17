@@ -3693,6 +3693,171 @@
         }
       ],
       "note": "2026-09-17 增：多缴税款退还（三年内发现的退还+利息）第51条。"
+    },
+    {
+      "id": "gold-cb-depositor-protection",
+      "question": "商业银行办理个人储蓄要为存款人保密吗",
+      "expect": [
+        {
+          "law_id": "commercial-bank-2015",
+          "no": 29
+        }
+      ],
+      "note": "2026-09-17 增（商业银行法入库金标）：为存款人保密原则与查询冻结扣划的法定限制第29条。"
+    },
+    {
+      "id": "gold-cb-takeover",
+      "question": "银行经营不好会被接管吗",
+      "expect": [
+        {
+          "law_id": "commercial-bank-2015",
+          "no": 64
+        }
+      ],
+      "note": "2026-09-17 增：接管制度第64条。词法鸿沟实录：问法「经营不好」vs 条文「已经或者可能发生信用危机，严重影响存款人的利益」。"
+    },
+    {
+      "id": "gold-cb-loan-conditions",
+      "question": "银行借钱给人要审查还款能力吗",
+      "expect": [
+        {
+          "law_id": "commercial-bank-2015",
+          "no": 35
+        }
+      ],
+      "note": "2026-09-17 增：贷款审查制度第35条。词法鸿沟实录：问法「借钱给人要审查」vs 条文「借款人的借款用途、偿还能力、还款方式」。"
+    },
+    {
+      "id": "gold-cb-debt-repayment",
+      "question": "银行破产了存款怎么办",
+      "expect": [
+        {
+          "law_id": "commercial-bank-2015",
+          "no": 71
+        }
+      ],
+      "note": "2026-09-17 增：破产清算时个人储蓄存款优先支付第71条。"
+    },
+    {
+      "id": "gold-nb-endorsement",
+      "question": "持票人可以将汇票权利转让给他人吗",
+      "expect": [
+        {
+          "law_id": "negotiable-2004",
+          "no": 27
+        }
+      ],
+      "note": "2026-09-17 增：背书转让第27条。词法鸿沟实录：初拟「汇票可以背书转让吗」未入 top5（虚词稀释），改题后 rank 1。"
+    },
+    {
+      "id": "gold-nb-acceptance",
+      "question": "汇票承兑是什么意思",
+      "expect": [
+        {
+          "law_id": "negotiable-2004",
+          "no": 38
+        }
+      ],
+      "note": "2026-09-17 增：承兑定义第38条。"
+    },
+    {
+      "id": "gold-nb-recourse",
+      "question": "持票人到期拿不到钱可以追索吗",
+      "expect": [
+        {
+          "law_id": "negotiable-2004",
+          "no": 61
+        }
+      ],
+      "note": "2026-09-17 增：追索权制度第61条。词法鸿沟实录：问法「拿不到钱」vs 条文「到期被拒绝付款…可以对背书人、出票人…行使追索权」。"
+    },
+    {
+      "id": "gold-nb-cheque-payment",
+      "question": "支票限于见票即付吗",
+      "expect": [
+        {
+          "law_id": "negotiable-2004",
+          "no": 90
+        }
+      ],
+      "note": "2026-09-17 增：支票见票即付第90条。锚点勘误：初锚第82条（支票存款账户开立），程序核验后改锚第90条。"
+    },
+    {
+      "id": "gold-nb-forgery",
+      "question": "伪造的票据签章还有效吗",
+      "expect": [
+        {
+          "law_id": "negotiable-2004",
+          "no": 14
+        }
+      ],
+      "note": "2026-09-17 增：票据上有伪造签章的不影响其他真实签章效力第14条。"
+    },
+    {
+      "id": "gold-em-warning",
+      "question": "发布三级四级一级二级预警后政府可以采取什么措施",
+      "expect": [
+        {
+          "law_id": "emergency-2024",
+          "no": 63
+        }
+      ],
+      "note": "2026-09-17 增：预警分级发布制度第63条。词法鸿沟实录：初拟「要发布预警吗」未入 top5，改题含分级形态后 rank 1。"
+    },
+    {
+      "id": "gold-em-requisition",
+      "question": "政府应急时可以征用民房物资吗",
+      "expect": [
+        {
+          "law_id": "emergency-2024",
+          "no": 12
+        }
+      ],
+      "note": "2026-09-17 增：应急征用与事后补偿第12条。词法鸿沟实录：问法「征用民房物资」vs 条文「征用…房屋、交通工具以及相关设施、设备」＋返还补偿。"
+    },
+    {
+      "id": "gold-em-compensation",
+      "question": "因应对突发事件财产被征用毁损的补偿",
+      "expect": [
+        {
+          "law_id": "emergency-2024",
+          "no": 95
+        }
+      ],
+      "note": "2026-09-17 增：征用补偿与损害赔偿第95条。词法鸿沟实录：初拟「损毁了能获得补偿吗」未入 top5，改题后 rank 3。"
+    },
+    {
+      "id": "gold-em-shelter",
+      "question": "城市要建应急避难场所吗",
+      "expect": [
+        {
+          "law_id": "emergency-2024",
+          "no": 31
+        }
+      ],
+      "note": "2026-09-17 增：应急避难场所建设第31条。"
+    },
+    {
+      "id": "gold-em-info",
+      "question": "突发事件信息要统一发布吗",
+      "expect": [
+        {
+          "law_id": "emergency-2024",
+          "no": 7
+        }
+      ],
+      "note": "2026-09-17 增：信息发布与舆情引导第7条。"
+    },
+    {
+      "id": "gold-nb-lost-note",
+      "question": "票据丢了可以挂失止付吗",
+      "expect": [
+        {
+          "law_id": "negotiable-2004",
+          "no": 15
+        }
+      ],
+      "note": "2026-09-17 增：票据丧失挂失止付与公示催告第15条。词法鸿沟实录：问法「丢了挂失」vs 条文「票据丧失…挂失止付」。"
     }
   ]
 }

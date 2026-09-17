@@ -1,0 +1,26 @@
+{
+  "law_id": "commercial-bank-2015",
+  "title": "中华人民共和国商业银行法",
+  "schema_version": 1,
+  "note": "R147（2026-09-17）金融与应急批次：经 lawtext（flk DOCX 转录）链入库。",
+  "versions": [
+    {
+      "version_id": "current",
+      "label": "2015 修正",
+      "status": "现行有效（2015修正）",
+      "promulgation_date": "2015-08-29",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2015-10-01",
+      "article_count": 95,
+      "current": true,
+      "evidence": {
+        "kind": "flk-docx-transcription",
+        "grade": "中",
+        "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf7eba9086b",
+        "accessed_at": "2026-09-17",
+        "snapshot": "docs/research/evidence/lawtext_商业银行法2015.md"
+      }
+    }
+  ],
+  "pending_note": "1995 通过原版与 2003/2004 修正版全文未采集。2015 修正施行日 2015-10-01（flk sxrq；附则自载同日）。R147 lawtext 链入库。"
+}

@@ -424,6 +424,33 @@
       "no_effective_date": false,
       "effective_date_evidence_valid": true
     },
+    "commercial-bank-2015": {
+      "manifest_count": 95,
+      "actual_count": 95,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "negotiable-2004": {
+      "manifest_count": 110,
+      "actual_count": 110,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "emergency-2024": {
+      "manifest_count": 106,
+      "actual_count": 106,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
     "con-2018": {
       "manifest_count": 143,
       "actual_count": 143,
@@ -556,6 +583,7 @@
     "civl-2020": 1,
     "cl-2013": 1,
     "cl-2023": 4,
+    "commercial-bank-2015": 1,
     "company-2023": 1,
     "compulsory-edu-2018": 1,
     "con-2018": 5,
@@ -570,6 +598,7 @@
     "dv-2015": 1,
     "ecom-2018": 1,
     "elderly-2018": 1,
+    "emergency-2024": 1,
     "environment-2014": 1,
     "family-edu-2021": 1,
     "fire-2021": 1,
@@ -586,6 +615,7 @@
     "ll-2017": 5,
     "mediation-2010": 1,
     "minor-2024": 5,
+    "negotiable-2004": 1,
     "notary-2017": 1,
     "partnership-2006": 1,
     "patent-2020": 1,

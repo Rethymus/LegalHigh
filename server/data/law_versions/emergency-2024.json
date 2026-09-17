@@ -1,0 +1,26 @@
+{
+  "law_id": "emergency-2024",
+  "title": "中华人民共和国突发事件应对法",
+  "schema_version": 1,
+  "note": "R147（2026-09-17）金融与应急批次：经 lawtext（flk DOCX 转录）链入库。",
+  "versions": [
+    {
+      "version_id": "current",
+      "label": "2024 修订",
+      "status": "现行有效（2024修订）",
+      "promulgation_date": "2024-06-28",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2024-11-01",
+      "article_count": 106,
+      "current": true,
+      "evidence": {
+        "kind": "flk-docx-transcription",
+        "grade": "中",
+        "url": "https://flk.npc.gov.cn/detail?id=ff8081818d6a424b01905f13edba2efb",
+        "accessed_at": "2026-09-17",
+        "snapshot": "docs/research/evidence/lawtext_突发事件应对法2024.md"
+      }
+    }
+  ],
+  "pending_note": "2007 通过原版全文未采集。2024 全面修订（70→106 条）施行日 2024-11-01（附则自载与 flk sxrq 一致）。R147 lawtext 链入库。"
+}
