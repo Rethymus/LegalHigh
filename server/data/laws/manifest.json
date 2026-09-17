@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-17T18:27:14.228795",
+  "built_at": "2026-09-17T19:16:18.789725",
   "fetch_date": "2026-09-08",
   "laws": [
     {
@@ -1021,6 +1021,75 @@
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "4c5765797ce099f1848832525865c5bd3dc665c30dd67d4ee91732e9e70ae27c",
       "output_sha256": "ccdfe7bf791a8c0e3425727dadcad06eb03b2d7502d31e92e1506aab35b245db"
+    },
+    {
+      "law_id": "infectious-2025",
+      "title": "中华人民共和国传染病防治法",
+      "status": "现行有效（2025修订）",
+      "effective_date": "2025-09-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国传染病防治法",
+        "url": "https://flk.npc.gov.cn/detail?id=ff8081819667441b019686946a752bbd",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2025修订）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 115,
+      "expected_count": 115,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=ff8081819667441b019686946a752bbd",
+      "snapshot": "docs/research/evidence/lawtext_传染病防治法2025.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "8ddf65c77b51c7ce2af70444931aee6391653f61899d65db6981ef2057016413",
+      "output_sha256": "dcba859847b41e68e7c8035f164bcac68c17621abee381f01efd00b02aca7bdc"
+    },
+    {
+      "law_id": "partnership-2006",
+      "title": "中华人民共和国合伙企业法",
+      "status": "现行有效（2006修订）",
+      "effective_date": "2007-06-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国合伙企业法",
+        "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf63dce034d",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2006修订）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 109,
+      "expected_count": 109,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf63dce034d",
+      "snapshot": "docs/research/evidence/lawtext_合伙企业法2006.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "954ec656c41a1e4ed266b654068fb18de393eedf64a950b459c6a619112e451b",
+      "output_sha256": "b2635b17bab9b3b948e51e284f8c523463c1671a2d74b6c4b440814c22ba8db1"
+    },
+    {
+      "law_id": "tax-admin-2015",
+      "title": "中华人民共和国税收征收管理法",
+      "status": "现行有效（2015修正）",
+      "effective_date": "2001-05-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国税收征收管理法",
+        "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf78cff0785",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2015修正）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 94,
+      "expected_count": 94,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf78cff0785",
+      "snapshot": "docs/research/evidence/lawtext_税收征收管理法2015.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "3a18d6f090eee6c5fe4afb80d32c5ff1ded61d42a77944898d19246dcb7c05a2",
+      "output_sha256": "eacd28831207cce43107e56263432e2746be1670c75ab5a19d238b2211e86ac7"
     },
     {
       "law_id": "con-2018",

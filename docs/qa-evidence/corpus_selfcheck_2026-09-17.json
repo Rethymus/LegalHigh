@@ -397,6 +397,33 @@
       "no_effective_date": false,
       "effective_date_evidence_valid": true
     },
+    "infectious-2025": {
+      "manifest_count": 115,
+      "actual_count": 115,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "partnership-2006": {
+      "manifest_count": 109,
+      "actual_count": 109,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "tax-admin-2015": {
+      "manifest_count": 94,
+      "actual_count": 94,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
     "con-2018": {
       "manifest_count": 143,
       "actual_count": 143,
@@ -550,6 +577,7 @@
     "genai-2023": 1,
     "htjs-2023": 1,
     "id-card-2011": 1,
+    "infectious-2025": 1,
     "insurance-2015": 1,
     "labor-law-2018": 1,
     "lcar-2007": 1,
@@ -559,6 +587,7 @@
     "mediation-2010": 1,
     "minor-2024": 5,
     "notary-2017": 1,
+    "partnership-2006": 1,
     "patent-2020": 1,
     "pcl-2023": 6,
     "penal-2021": 4,
@@ -570,6 +599,7 @@
     "road-safety-2021": 1,
     "scl-2012": 3,
     "social-ins-2018": 1,
+    "tax-admin-2015": 1,
     "tourism-2018": 1,
     "trademark-2026": 1,
     "unfair-competition-2025": 1,
