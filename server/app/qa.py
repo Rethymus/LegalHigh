@@ -5,6 +5,7 @@ import re
 
 from .corpus import get_corpus
 from .retrieval_terms import orchestrated_search
+from . import temporal
 
 DISCLAIMER = (
     "本系统为法律信息检索工具，输出内容为法条原文与程序性信息，不构成法律意见，"
@@ -71,10 +72,12 @@ def check_premise(question: str):
     return None
 
 
-def ask(question: str, top_k: int = 6):
+def ask(question: str, top_k: int = 6, as_of: str | None = None):
     corpus = get_corpus()
     premise = check_premise(question)
     hits, retrieval = orchestrated_search(corpus, question, top_k=top_k)
+    t_block = temporal.temporal_block(question, as_of)
+    as_of_ref = t_block.get("as_of") if t_block else None
     cards = [
         {
             "law_id": h["law_id"],
@@ -89,12 +92,15 @@ def ask(question: str, top_k: int = 6):
             "source_url": h["source_url"],
             "source_kind": h["source_kind"],
             "score": h["score"],
+            # 时间上下文存在才带标记——非时间问法的响应形态保持不变（契约稳定）
+            **({"in_force_at_as_of": temporal.in_force_at(h.get("effective_date"), as_of_ref)} if t_block else {}),
         }
         for h in hits
     ]
     return {
         "question": question,
         "premise_check": premise,
+        "temporal": t_block,
         "answer_cards": cards,
         "no_answer": len(cards) == 0,
         "no_answer_message": (

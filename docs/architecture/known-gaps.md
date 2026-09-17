@@ -2,7 +2,7 @@
 
 按 FLERF 审计（2026-09-16）登记。白区=已知未实现、有明确实现路径、系统在未实现前 fail-closed（拒答/标注）而非错答：
 
-1. **AS_OF_DATE 时间检索**——历史问题不能自动用当时适用版本；引用恒带生效日供人工核对。数据基础（版本注册表多版本时间线）已具备。
+1. **AS_OF_DATE 时间检索**——✅ fail-closed 形态已实现（R144，`app/temporal.py`）：时间指涉检测（明确年份/指代词）+ 逐命中 `in_force_at_as_of` 标记 + 显式告知块（现行版本≠时点适用文本，不断言当时合法性）；`/api/qa/ask` 与 `/api/search` 均支持显式 `as_of`。**剩余白区**：历史版本全文独立成条后的真正时点文本检索（历史文本现仅注册表登记）。
 2. **claim 级 NLI 校验**——gate3 词面级已有；全句级 entailment 未实现（ai_governor 头注标注）。
 3. **统一 A0–D 权威枚举**——分层事实存在（grade/source_kind/level/authority_class），统一命名待法律专家审查（报告 §18 自述「不应由工程师规定法律效力」）。
 4. **运行时 On-demand Fetcher**——原型全快照制、无运行时外呼；Source Registry 已为未来 Fetcher 备好合规门（approved 才可运行）。

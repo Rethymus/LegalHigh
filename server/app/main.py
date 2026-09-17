@@ -43,6 +43,7 @@ from app import (  # noqa: E402
     research_report,
     review,
     storage,
+    temporal,
     validation,
 )
 from app.corpus import get_corpus  # noqa: E402
@@ -267,11 +268,13 @@ def review_explain(law_id: str, no: int, body: ExplainReviewBody, admin: AdminPr
 
 
 @app.get("/api/search")
-def search_articles(q: str, top_k: int = 20, law_id: str | None = None):
+def search_articles(q: str, top_k: int = 20, law_id: str | None = None, as_of: str | None = None):
     """主检索（BM25，与问答/研究同一引擎）：条文级命中 + 相关度。
 
     前端结果列表的唯一排序来源；多词/口语化查询在此仍可命中（词法级），
     不再走前端子串匹配。top_k 上限 60，与前端单页渲染上限一致。
+    as_of（R144）：时间效力标记（in_force_at_as_of + temporal 告知块）——
+    只标记不排名，fail-closed 不冒充历史文本。
     """
     query = q.strip()
     if not query:
@@ -279,8 +282,10 @@ def search_articles(q: str, top_k: int = 20, law_id: str | None = None):
     corpus = get_corpus()
     requested_laws = [law_id] if law_id else None
     hits, retrieval = research.orchestrated_search(corpus, query, top_k=min(max(top_k, 1), 60), law_ids=requested_laws)
+    t_block = temporal.temporal_block(query, as_of)
     return {
         "query": query,
+        "temporal": t_block,
         "total": len(hits),
         "hits": [
             {
@@ -289,6 +294,8 @@ def search_articles(q: str, top_k: int = 20, law_id: str | None = None):
                 "law_status": h.get("law_status", ""), "effective_date": h.get("effective_date", ""),
                 "source_url": h.get("source_url", ""), "source_kind": h.get("source_kind", ""),
                 "score": h["score"],
+                # 时间上下文存在才带标记——非时间检索的响应形态保持不变（契约稳定）
+                **({"in_force_at_as_of": temporal.in_force_at(h.get("effective_date"), t_block.get("as_of") if t_block else None)} if t_block else {}),
             }
             for h in hits
         ],
@@ -299,13 +306,14 @@ def search_articles(q: str, top_k: int = 20, law_id: str | None = None):
 class AskBody(BaseModel):
     question: str = Field(min_length=1, max_length=20_000)
     top_k: int = Field(default=6, ge=1, le=60)
+    as_of: str | None = Field(default=None, pattern=r"^\d{4}-\d{2}-\d{2}$")
 
 
 @app.post("/api/qa/ask")
 def ask(body: AskBody):
     if not body.question.strip():
         raise HTTPException(422, "问题不能为空")
-    return qa.ask(body.question.strip(), top_k=min(max(body.top_k, 1), 12))
+    return qa.ask(body.question.strip(), top_k=min(max(body.top_k, 1), 12), as_of=body.as_of)
 
 
 class ResearchBody(BaseModel):

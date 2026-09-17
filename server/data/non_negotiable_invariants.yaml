@@ -19,7 +19,7 @@ invariants:
 
   - id: LEGAL-004
     rule: "历史问题必须使用时间上适用的法律版本；引用一律携带版本/生效日期，用户可核对时间效力"
-    mechanical_check: "引用不变量四要素（law_status/effective_date/source_url/label）完整率恒 1.0 评测; law_versions 注册表 fail-closed 校验。AS_OF_DATE 检索为已登记未实现项（见 FLERF 对齐审计 §17），未实现前系统不回答『当年是否合法』类时间旅行断言"
+    mechanical_check: "引用不变量四要素（law_status/effective_date/source_url/label）完整率恒 1.0 评测; law_versions 注册表 fail-closed 校验; tests/test_temporal.py（R144：时间指涉检测/in_force_at_as_of 标记/告知块含『不会据此断言当时是否合法』措辞断言）"
 
   - id: LEGAL-005
     rule: "来源适配只能访问 Source Registry 中 approved=true 的来源；reference_only 来源禁止作为构建源"
