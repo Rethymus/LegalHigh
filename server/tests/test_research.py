@@ -170,8 +170,9 @@ def test_consumer_question_is_consistent_across_public_retrieval_paths():
     client = TestClient(app)
     search = client.get("/api/search", params={"q": query, "top_k": 8}).json()
     assert_consumer(search["hits"], "no")
+    # R143：原句组加入轮转后 matched_groups 首位为 raw-query（受控主题不再替换原句）
     assert search["retrieval_meta"]["matched_groups"] == [
-        "consumer-fraud", "consumer-return", "online-platform",
+        "raw-query", "consumer-fraud", "consumer-return", "online-platform",
     ]
 
     answer = client.post("/api/qa/ask", json={"question": query, "top_k": 8}).json()

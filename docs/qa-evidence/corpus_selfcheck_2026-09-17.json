@@ -370,6 +370,33 @@
       "no_effective_date": false,
       "effective_date_evidence_valid": true
     },
+    "anti-monopoly-2022": {
+      "manifest_count": 70,
+      "actual_count": 70,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "bankruptcy-2006": {
+      "manifest_count": 136,
+      "actual_count": 136,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "insurance-2015": {
+      "manifest_count": 185,
+      "actual_count": 185,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
     "con-2018": {
       "manifest_count": 143,
       "actual_count": 143,
@@ -496,7 +523,9 @@
     "advertising-2021": 1,
     "agri-quality-2022": 1,
     "anti-fraud-2022": 1,
+    "anti-monopoly-2022": 1,
     "arbitration-2025": 1,
+    "bankruptcy-2006": 1,
     "civl-2020": 1,
     "cl-2013": 1,
     "cl-2023": 4,
@@ -521,6 +550,7 @@
     "genai-2023": 1,
     "htjs-2023": 1,
     "id-card-2011": 1,
+    "insurance-2015": 1,
     "labor-law-2018": 1,
     "lcar-2007": 1,
     "lcl-2012": 2,

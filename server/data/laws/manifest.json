@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-17T11:46:56.695525",
+  "built_at": "2026-09-17T18:27:14.228795",
   "fetch_date": "2026-09-08",
   "laws": [
     {
@@ -952,6 +952,75 @@
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "c1f2aefb6d90ae49b7436bf73a4e619d8c9268ef15d65472e8e5e63dbb151cdb",
       "output_sha256": "e141a0288979a1bdfa5bad14d61059ca410c1b199c7674fe66d52f724acdce40"
+    },
+    {
+      "law_id": "anti-monopoly-2022",
+      "title": "中华人民共和国反垄断法",
+      "status": "现行有效（2022修正）",
+      "effective_date": "2022-08-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国反垄断法",
+        "url": "https://flk.npc.gov.cn/detail?id=ff8081818234ccb501829f46c6ac2a5a",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2022修正）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 70,
+      "expected_count": 70,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=ff8081818234ccb501829f46c6ac2a5a",
+      "snapshot": "docs/research/evidence/lawtext_反垄断法2022.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "3ba611ef736fdbcb64f3097495792a94a9b18b823f7dd0091e50037dfa34d55c",
+      "output_sha256": "e5bf0275161af0bf61c224b157c3276317d8e41930a076a5bf23828665c8d4f6"
+    },
+    {
+      "law_id": "bankruptcy-2006",
+      "title": "中华人民共和国企业破产法",
+      "status": "现行有效",
+      "effective_date": "2007-06-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国企业破产法",
+        "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf63c7c0343",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效"
+      },
+      "promulgation_instrument": null,
+      "article_count": 136,
+      "expected_count": 136,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf63c7c0343",
+      "snapshot": "docs/research/evidence/lawtext_企业破产法2006.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "6428118de7d431354ca5bbaa820cee78ba2dafbd908c7e93d0b22fe327b7d102",
+      "output_sha256": "63249f1c1e7f1441d29dcb52ea4145dab1869895085367afbce6aa044f476c69"
+    },
+    {
+      "law_id": "insurance-2015",
+      "title": "中华人民共和国保险法",
+      "status": "现行有效（2015修正）",
+      "effective_date": "2009-10-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国保险法",
+        "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf7c4060811",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2015修正）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 185,
+      "expected_count": 185,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf7c4060811",
+      "snapshot": "docs/research/evidence/lawtext_保险法2015.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "4c5765797ce099f1848832525865c5bd3dc665c30dd67d4ee91732e9e70ae27c",
+      "output_sha256": "ccdfe7bf791a8c0e3425727dadcad06eb03b2d7502d31e92e1506aab35b245db"
     },
     {
       "law_id": "con-2018",

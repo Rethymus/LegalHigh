@@ -32,16 +32,18 @@ def domain_terms(text: str) -> list[str]:
     return out
 
 
-# 每个主题组是一项可解释的检索意图。消费者主题限定在已收录的消费者/电子商务
-# 规范中，避免“欺诈”等普通词把刑事或民事程序条文推到公众结果前列。
+# 每个主题组是一项可解释的检索意图：查询词面由受控组提供（避免口语噪声），
+# 但不再限定 law_ids——语料扩至商法/竞争法后，「经营者」一词横跨消保/反垄断/
+# 公司法，硬白名单会把商法条文锁出结果（R143 实测：反垄断法第25/26条近原文
+# 问法被消保法全占）。主题组只保查询纪律，排名交给 BM25。
 CONTROLLED_TOPICS = [
     {
         "id": "consumer",
         "pattern": r"消费者|经营者|商品|假货|退货|网购|欺诈|三无产品|网络交易",
         "groups": [
-            {"id": "consumer-fraud", "query": "消费者 欺诈", "law_ids": ["cl-2013", "ecom-2018", "wlxf-2022"]},
-            {"id": "consumer-return", "query": "商品 退货", "law_ids": ["cl-2013", "ecom-2018", "wlxf-2022"]},
-            {"id": "online-platform", "query": "网络交易 平台", "law_ids": ["cl-2013", "ecom-2018", "wlxf-2022"]},
+            {"id": "consumer-fraud", "query": "消费者 欺诈"},
+            {"id": "consumer-return", "query": "商品 退货"},
+            {"id": "online-platform", "query": "网络交易 平台"},
         ],
     },
 ]
@@ -81,15 +83,36 @@ def orchestrated_search(corpus, query: str, top_k: int = 8, law_ids: list[str] |
 
     ranked_by_group: list[tuple[dict, list[dict]]] = []
     for group in groups:
-        allowed = [lid for lid in group["law_ids"] if not requested or lid in requested]
         merged: dict[tuple[str, int], dict] = {}
-        for law_id in allowed:
-            for hit in corpus.search(group["query"], top_k=top_k, law_id=law_id):
+        # R143：主题组不再限定 law_ids（商法入库后白名单过时）；组查询在全库跑，
+        # 调用方显式传 law_ids 时仍收敛到请求范围
+        if requested:
+            for law_id in sorted(requested):
+                for hit in corpus.search(group["query"], top_k=top_k, law_id=law_id):
+                    key = (hit["law_id"], hit["no"])
+                    if key not in merged or hit["score"] > merged[key]["score"]:
+                        merged[key] = hit
+        else:
+            for hit in corpus.search(group["query"], top_k=top_k):
                 key = (hit["law_id"], hit["no"])
                 if key not in merged or hit["score"] > merged[key]["score"]:
                     merged[key] = hit
         ranked = sorted(merged.values(), key=lambda h: (-h["score"], h["law_id"], h["no"]))
         ranked_by_group.append((group, ranked))
+
+    # R143：原始查询作为首个检索组参与轮转——受控主题不再「替换」用户词面。
+    # 语料扩至竞争法/商法后，「经营者/商品」等词横跨多法域，固定组查询若完全
+    # 丢弃原句，商法独有词（搭售/集中/重整）永远到不了 BM25（反垄断法第22条
+    # 近原文问法被消费固定组全占的实测）。原句组+受控组轮转合并：既保留主题
+    # 纪律（口语噪声不直达），又保证原句独有词参与排名。
+    raw_query = (query or "").strip()
+    if raw_query:
+        merged_raw: dict[tuple[str, int], dict] = {}
+        raw_hits = (corpus.search(raw_query, top_k=top_k, law_id=sorted(requested)[0])
+                    if requested and len(requested) == 1 else corpus.search(raw_query, top_k=top_k))
+        for hit in raw_hits:
+            merged_raw[(hit["law_id"], hit["no"])] = hit
+        ranked_by_group.insert(0, ({"id": "raw-query", "query": raw_query, "topic": "raw"}, sorted(merged_raw.values(), key=lambda h: (-h["score"], h["law_id"], h["no"]))))
 
     selected: list[dict] = []
     positions = [0] * len(ranked_by_group)

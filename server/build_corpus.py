@@ -88,6 +88,9 @@ LAW_FILES = {
     "arbitration_2025_lawtext_md": "lawtext_仲裁法2025.md",  # 仲裁法 2025 修订（R141）
     "company_2023_lawtext_md": "lawtext_公司法2023.md",  # 公司法 2023 修订（R142）
     "police_2012_lawtext_md": "lawtext_人民警察法2012.md",  # 人民警察法 2012 修正（R142）
+    "anti_monopoly_2022_lawtext_md": "lawtext_反垄断法2022.md",  # 反垄断法 2022 修正（R143）
+    "bankruptcy_2006_lawtext_md": "lawtext_企业破产法2006.md",  # 企业破产法（R143）
+    "insurance_2015_lawtext_md": "lawtext_保险法2015.md",  # 保险法 2015 修正（R143）
     "cl_ws_html": "ws_刑法2023.html",
 }
 
@@ -396,6 +399,9 @@ EXPECTED_COUNTS = {
     "arbitration-2025": 96,
     "company-2023": 266,
     "police-2012": 52,
+    "anti-monopoly-2022": 70,
+    "bankruptcy-2006": 136,
+    "insurance-2015": 185,
     "crpl-imp-2024": 53,
     "genai-2023": 24,
     "pipl-2021": 74,
@@ -768,6 +774,33 @@ def main():
                 "effective_date": "1995-02-28",
             },
             "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf74cef06a9",
+        ),
+        build_lawtext_md_law(
+            "anti_monopoly_2022_lawtext_md", "anti-monopoly-2022", "中华人民共和国反垄断法",
+            {
+                "status": "现行有效（2022修正）",
+                "promulgation": {"date": "2022-06-24", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "2022-08-01",
+            },
+            "https://flk.npc.gov.cn/detail?id=ff8081818234ccb501829f46c6ac2a5a",
+        ),
+        build_lawtext_md_law(
+            "bankruptcy_2006_lawtext_md", "bankruptcy-2006", "中华人民共和国企业破产法",
+            {
+                "status": "现行有效",
+                "promulgation": {"date": "2006-08-27", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "2007-06-01",
+            },
+            "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf63c7c0343",
+        ),
+        build_lawtext_md_law(
+            "insurance_2015_lawtext_md", "insurance-2015", "中华人民共和国保险法",
+            {
+                "status": "现行有效（2015修正）",
+                "promulgation": {"date": "2015-04-24", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "2009-10-01",
+            },
+            "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf7c4060811",
         ),
         build_wikisource_html_law(
             "minor_ws_html", "con-2018", "中华人民共和国宪法",

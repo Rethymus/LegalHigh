@@ -1,0 +1,26 @@
+{
+  "law_id": "anti-monopoly-2022",
+  "title": "中华人民共和国反垄断法",
+  "schema_version": 1,
+  "note": "R143（2026-09-17）商法批次：经 lawtext（flk DOCX 转录）链入库。",
+  "versions": [
+    {
+      "version_id": "current",
+      "label": "2022 修正",
+      "status": "现行有效（2022修正）",
+      "promulgation_date": "2022-06-24",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2022-08-01",
+      "article_count": 70,
+      "current": true,
+      "evidence": {
+        "kind": "flk-docx-transcription",
+        "grade": "中",
+        "url": "https://flk.npc.gov.cn/detail?id=ff8081818234ccb501829f46c6ac2a5a",
+        "accessed_at": "2026-09-17",
+        "snapshot": "docs/research/evidence/lawtext_反垄断法2022.md"
+      }
+    }
+  ],
+  "pending_note": "2007 通过原版全文未采集。2022 修正决定施行日 2022-08-01（flk sxrq）；附则自载 2008-08-01 原版施行日跨修正沿用、对本版语义误导，两说存档（R136 著作权/专利先例）。R143 lawtext 链入库。"
+}
