@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-17T19:56:31.877325",
+  "built_at": "2026-09-17T20:17:41.739986",
   "fetch_date": "2026-09-08",
   "laws": [
     {
@@ -1159,6 +1159,75 @@
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "84bfe424441773ed0fca3dfe0e2150b20f5cd6d82699827fb90f0f185854ab42",
       "output_sha256": "77fa7fa60f2f2fd68c91a3acad2b362fe05e0212398ea5c81fc056e7b526aecb"
+    },
+    {
+      "law_id": "work-safety-2021",
+      "title": "中华人民共和国安全生产法",
+      "status": "现行有效（2021修正）",
+      "effective_date": "2021-09-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国安全生产法",
+        "url": "https://flk.npc.gov.cn/detail?id=ff8081817a66b816017a7956b7db0ad4",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2021修正）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 119,
+      "expected_count": 119,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=ff8081817a66b816017a7956b7db0ad4",
+      "snapshot": "docs/research/evidence/lawtext_安全生产法2021.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "6dbcb39aee3c767713f018f88c96c399a9af1d327c356177e38f1381fb177a40",
+      "output_sha256": "116ab42682e26fdfaefe47fefaa37b074789c8194d4a9fbda2d4bd22a4b3b98b"
+    },
+    {
+      "law_id": "securities-2019",
+      "title": "中华人民共和国证券法",
+      "status": "现行有效（2019修订）",
+      "effective_date": "2020-03-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国证券法",
+        "url": "https://flk.npc.gov.cn/detail?id=ff80808171e9e18101727e32b94d7de6",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2019修订）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 226,
+      "expected_count": 226,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=ff80808171e9e18101727e32b94d7de6",
+      "snapshot": "docs/research/evidence/lawtext_证券法2019.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "72151a43384173fdcde0b1fb008027799d1f7ebea773f6f3432603965b751f27",
+      "output_sha256": "a2c71bf0cfe4d2a50adc3dd560e16cfdaf6ffb8019fad74e81e1e318ca4d7654"
+    },
+    {
+      "law_id": "accounting-2024",
+      "title": "中华人民共和国会计法",
+      "status": "现行有效（2024修正）",
+      "effective_date": "2000-07-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国会计法",
+        "url": "https://flk.npc.gov.cn/detail?id=ff8081818d6a46390191686dca9952bf",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2024修正）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 51,
+      "expected_count": 51,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=ff8081818d6a46390191686dca9952bf",
+      "snapshot": "docs/research/evidence/lawtext_会计法2024.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "abaf021f1c0d8bdac316e99b34af15d9722d1f9f52ab2e0ae26f2e6e6712e63c",
+      "output_sha256": "36f85d679e84f1b5280a2ab62abef09ce2712c3fcb6db641d7133056e6200cec"
     },
     {
       "law_id": "con-2018",

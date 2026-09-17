@@ -451,6 +451,33 @@
       "no_effective_date": false,
       "effective_date_evidence_valid": true
     },
+    "work-safety-2021": {
+      "manifest_count": 119,
+      "actual_count": 119,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "securities-2019": {
+      "manifest_count": 226,
+      "actual_count": 226,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "accounting-2024": {
+      "manifest_count": 51,
+      "actual_count": 51,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
     "con-2018": {
       "manifest_count": 143,
       "actual_count": 143,
@@ -572,6 +599,7 @@
   "pending": [],
   "problems": [],
   "version_registries": {
+    "accounting-2024": 1,
     "admin-litigation-2017": 2,
     "admin-review-2023": 4,
     "advertising-2021": 1,
@@ -628,12 +656,14 @@
     "psm-2025": 3,
     "road-safety-2021": 1,
     "scl-2012": 3,
+    "securities-2019": 1,
     "social-ins-2018": 1,
     "tax-admin-2015": 1,
     "tourism-2018": 1,
     "trademark-2026": 1,
     "unfair-competition-2025": 1,
     "wlxf-2022": 1,
-    "women-2022": 4
+    "women-2022": 4,
+    "work-safety-2021": 1
   }
 }

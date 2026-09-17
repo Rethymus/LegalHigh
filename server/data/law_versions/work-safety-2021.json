@@ -1,0 +1,26 @@
+{
+  "law_id": "work-safety-2021",
+  "title": "中华人民共和国安全生产法",
+  "schema_version": 1,
+  "note": "R148（2026-09-17）安全与金融批次：经 lawtext（flk DOCX 转录）链入库。",
+  "versions": [
+    {
+      "version_id": "current",
+      "label": "2021 修正",
+      "status": "现行有效（2021修正）",
+      "promulgation_date": "2021-06-10",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2021-09-01",
+      "article_count": 119,
+      "current": true,
+      "evidence": {
+        "kind": "flk-docx-transcription",
+        "grade": "中",
+        "url": "https://flk.npc.gov.cn/detail?id=ff8081817a66b816017a7956b7db0ad4",
+        "accessed_at": "2026-09-17",
+        "snapshot": "docs/research/evidence/lawtext_安全生产法2021.md"
+      }
+    }
+  ],
+  "pending_note": "2002 通过原版与 2009/2014 修正版全文未采集。2021 修正决定施行日 2021-09-01（flk sxrq）；附则自载 2002-11-01 原版施行日跨修正沿用、对本版语义误导，两说存档（R136 先例）。R148 lawtext 链入库。"
+}

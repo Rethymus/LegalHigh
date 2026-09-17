@@ -1,0 +1,26 @@
+{
+  "law_id": "securities-2019",
+  "title": "中华人民共和国证券法",
+  "schema_version": 1,
+  "note": "R148（2026-09-17）安全与金融批次：经 lawtext（flk DOCX 转录）链入库。",
+  "versions": [
+    {
+      "version_id": "current",
+      "label": "2019 修订",
+      "status": "现行有效（2019修订）",
+      "promulgation_date": "2019-12-28",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2020-03-01",
+      "article_count": 226,
+      "current": true,
+      "evidence": {
+        "kind": "flk-docx-transcription",
+        "grade": "中",
+        "url": "https://flk.npc.gov.cn/detail?id=ff80808171e9e18101727e32b94d7de6",
+        "accessed_at": "2026-09-17",
+        "snapshot": "docs/research/evidence/lawtext_证券法2019.md"
+      }
+    }
+  ],
+  "pending_note": "1998 通过原版与 2003/2005/2013/2014 历次修正修订版全文未采集。2019 全面修订（注册制改革配套）施行日 2020-03-01（附则自载与 flk sxrq 一致）。R148 lawtext 链入库。"
+}

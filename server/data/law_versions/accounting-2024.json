@@ -1,0 +1,26 @@
+{
+  "law_id": "accounting-2024",
+  "title": "中华人民共和国会计法",
+  "schema_version": 1,
+  "note": "R148（2026-09-17）安全与金融批次：经 lawtext（flk DOCX 转录）链入库。",
+  "versions": [
+    {
+      "version_id": "current",
+      "label": "2024 修正",
+      "status": "现行有效（2024修正）",
+      "promulgation_date": "2024-06-28",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2000-07-01",
+      "article_count": 51,
+      "current": true,
+      "evidence": {
+        "kind": "flk-docx-transcription",
+        "grade": "中",
+        "url": "https://flk.npc.gov.cn/detail?id=ff8081818d6a46390191686dca9952bf",
+        "accessed_at": "2026-09-17",
+        "snapshot": "docs/research/evidence/lawtext_会计法2024.md"
+      }
+    }
+  ],
+  "pending_note": "1985 通过原版与 1993/1999/2017 历次修正修订版全文未采集。附则自载施行日 2000-07-01（1999 修订改定跨修正沿用）；2024 修正决定施行日 2024-07-01（flk sxrq）存档注记。R148 lawtext 链入库。"
+}

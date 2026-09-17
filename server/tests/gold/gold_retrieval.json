@@ -3858,6 +3858,171 @@
         }
       ],
       "note": "2026-09-17 增：票据丧失挂失止付与公示催告第15条。词法鸿沟实录：问法「丢了挂失」vs 条文「票据丧失…挂失止付」。"
+    },
+    {
+      "id": "gold-ws-refuse-order",
+      "question": "工人可以拒绝违章指挥和强令冒险作业吗",
+      "expect": [
+        {
+          "law_id": "work-safety-2021",
+          "no": 54
+        }
+      ],
+      "note": "2026-09-17 增（安全生产法入库金标）：从业人员拒绝违章指挥强令冒险作业权第54条。"
+    },
+    {
+      "id": "gold-ws-work-injury",
+      "question": "生产安全事故伤亡的员工依法享有工伤保险吗",
+      "expect": [
+        {
+          "law_id": "work-safety-2021",
+          "no": 56
+        }
+      ],
+      "note": "2026-09-17 增：事故伤亡赔偿与工伤保险衔接第56条。词法鸿沟实录：问法「伤亡的员工」vs 条文「因生产安全事故受到损害的从业人员」。"
+    },
+    {
+      "id": "gold-ws-contract-clause",
+      "question": "劳动合同应当载明保障劳动安全防止职业危害的事项吗",
+      "expect": [
+        {
+          "law_id": "work-safety-2021",
+          "no": 52
+        }
+      ],
+      "note": null
+    },
+    {
+      "id": "gold-ws-dispatch-workers",
+      "question": "被派遣劳动者享有同等的安全生产权利吗",
+      "expect": [
+        {
+          "law_id": "work-safety-2021",
+          "no": 28
+        }
+      ],
+      "note": "2026-09-17 增：劳务派遣人员安全生产同等权利义务第28条。"
+    },
+    {
+      "id": "gold-ws-hidden-danger",
+      "question": "从业人员发现事故隐患要立即报告吗",
+      "expect": [
+        {
+          "law_id": "work-safety-2021",
+          "no": 59
+        }
+      ],
+      "note": "2026-09-17 增：隐患报告与停止作业权第59条。词法鸿沟实录：问法「发现隐患要报告」vs 条文「发现事故隐患或者其他不安全因素应当立即报告」。"
+    },
+    {
+      "id": "gold-sc-info-disclosure",
+      "question": "发行人要真实准确完整披露信息吗",
+      "expect": [
+        {
+          "law_id": "securities-2019",
+          "no": 78
+        }
+      ],
+      "note": "2026-09-17 增（证券法入库金标）：信息披露真实准确完整义务第78条。"
+    },
+    {
+      "id": "gold-sc-false-claim",
+      "question": "虚假陈述致使投资者在证券交易中遭受损失的民事赔偿责任",
+      "expect": [
+        {
+          "law_id": "securities-2019",
+          "no": 85
+        }
+      ],
+      "note": null
+    },
+    {
+      "id": "gold-sc-insider",
+      "question": "内幕交易是违法行为吗",
+      "expect": [
+        {
+          "law_id": "securities-2019",
+          "no": 53
+        }
+      ],
+      "note": "2026-09-17 增：内幕交易禁止第53条。"
+    },
+    {
+      "id": "gold-sc-manipulation",
+      "question": "操纵证券市场要承担赔偿责任吗",
+      "expect": [
+        {
+          "law_id": "securities-2019",
+          "no": 55
+        }
+      ],
+      "note": "2026-09-17 增：操纵市场民事赔偿第55条。"
+    },
+    {
+      "id": "gold-sc-advance-compensation",
+      "question": "发行人虚假陈述先行赔付制度是什么",
+      "expect": [
+        {
+          "law_id": "securities-2019",
+          "no": 93
+        }
+      ],
+      "note": "2026-09-17 增：控股股东实控人先行赔付第93条（2019 新设）。"
+    },
+    {
+      "id": "gold-sc-shareholder-action",
+      "question": "股东可以委托征集股东权利吗",
+      "expect": [
+        {
+          "law_id": "securities-2019",
+          "no": 90
+        }
+      ],
+      "note": "2026-09-17 增：投资者保护机构征集股东权利第90条。"
+    },
+    {
+      "id": "gold-ac-fake-accounts",
+      "question": "做假账要负法律责任吗",
+      "expect": [
+        {
+          "law_id": "accounting-2024",
+          "no": 38
+        }
+      ],
+      "note": "2026-09-17 增（会计法入库金标）：伪造变造凭证账簿等法律责任第38条。词法鸿沟实录：问法「做假账」vs 条文「伪造、变造会计凭证、会计账簿」。"
+    },
+    {
+      "id": "gold-ac-unit-head",
+      "question": "单位负责人对会计资料真实性负责吗",
+      "expect": [
+        {
+          "law_id": "accounting-2024",
+          "no": 4
+        }
+      ],
+      "note": "2026-09-17 增：单位负责人会计责任第4条。"
+    },
+    {
+      "id": "gold-ac-vouchers",
+      "question": "会计凭证要按规定保管吗不能销毁吗",
+      "expect": [
+        {
+          "law_id": "accounting-2024",
+          "no": 23
+        }
+      ],
+      "note": "2026-09-17 增：会计档案保管年限与禁止销毁第23条。词法鸿沟实录：问法「不能销毁」需程序核验条号。"
+    },
+    {
+      "id": "gold-ws-three-simultaneities",
+      "question": "生产经营单位建设项目的安全设施三同时是什么",
+      "expect": [
+        {
+          "law_id": "work-safety-2021",
+          "no": 33
+        }
+      ],
+      "note": null
     }
   ]
 }

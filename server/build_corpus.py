@@ -97,6 +97,9 @@ LAW_FILES = {
     "commercial_bank_2015_lawtext_md": "lawtext_商业银行法2015.md",  # 商业银行法 2015 修正（R147）
     "negotiable_2004_lawtext_md": "lawtext_票据法2004.md",  # 票据法 2004 修正（R147）
     "emergency_2024_lawtext_md": "lawtext_突发事件应对法2024.md",  # 突发事件应对法 2024 修订（R147）
+    "work_safety_2021_lawtext_md": "lawtext_安全生产法2021.md",  # 安全生产法 2021 修正（R148）
+    "securities_2019_lawtext_md": "lawtext_证券法2019.md",  # 证券法 2019 修订（R148）
+    "accounting_2024_lawtext_md": "lawtext_会计法2024.md",  # 会计法 2024 修正（R148）
     "cl_ws_html": "ws_刑法2023.html",
 }
 
@@ -414,6 +417,9 @@ EXPECTED_COUNTS = {
     "commercial-bank-2015": 95,
     "negotiable-2004": 110,
     "emergency-2024": 106,
+    "work-safety-2021": 119,
+    "securities-2019": 226,
+    "accounting-2024": 51,
     "crpl-imp-2024": 53,
     "genai-2023": 24,
     "pipl-2021": 74,
@@ -867,6 +873,33 @@ def main():
                 "effective_date": "2024-11-01",
             },
             "https://flk.npc.gov.cn/detail?id=ff8081818d6a424b01905f13edba2efb",
+        ),
+        build_lawtext_md_law(
+            "work_safety_2021_lawtext_md", "work-safety-2021", "中华人民共和国安全生产法",
+            {
+                "status": "现行有效（2021修正）",
+                "promulgation": {"date": "2021-06-10", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "2021-09-01",
+            },
+            "https://flk.npc.gov.cn/detail?id=ff8081817a66b816017a7956b7db0ad4",
+        ),
+        build_lawtext_md_law(
+            "securities_2019_lawtext_md", "securities-2019", "中华人民共和国证券法",
+            {
+                "status": "现行有效（2019修订）",
+                "promulgation": {"date": "2019-12-28", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "2020-03-01",
+            },
+            "https://flk.npc.gov.cn/detail?id=ff80808171e9e18101727e32b94d7de6",
+        ),
+        build_lawtext_md_law(
+            "accounting_2024_lawtext_md", "accounting-2024", "中华人民共和国会计法",
+            {
+                "status": "现行有效（2024修正）",
+                "promulgation": {"date": "2024-06-28", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "2000-07-01",
+            },
+            "https://flk.npc.gov.cn/detail?id=ff8081818d6a46390191686dca9952bf",
         ),
         build_wikisource_html_law(
             "minor_ws_html", "con-2018", "中华人民共和国宪法",
