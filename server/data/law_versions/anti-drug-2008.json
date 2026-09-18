@@ -1,0 +1,26 @@
+{
+  "law_id": "anti-drug-2008",
+  "title": "中华人民共和国禁毒法",
+  "schema_version": 1,
+  "note": "R152（2026-09-18）民生保护第二批次：经 lawtext（flk DOCX 转录）链入库。",
+  "versions": [
+    {
+      "version_id": "current",
+      "label": "2008 制定",
+      "status": "现行有效",
+      "promulgation_date": "2007-12-29",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2008-06-01",
+      "article_count": 71,
+      "current": true,
+      "evidence": {
+        "kind": "flk-docx-transcription",
+        "grade": "中",
+        "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf64d550393",
+        "accessed_at": "2026-09-18",
+        "snapshot": "docs/research/evidence/lawtext_禁毒法2008.md"
+      }
+    }
+  ],
+  "pending_note": "2007 通过以来未再修正（flk lsyg 空）。禁毒领域基础法律。"
+}

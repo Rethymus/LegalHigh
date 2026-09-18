@@ -532,6 +532,33 @@
       "no_effective_date": false,
       "effective_date_evidence_valid": true
     },
+    "mental-health-2018": {
+      "manifest_count": 85,
+      "actual_count": 85,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "anti-drug-2008": {
+      "manifest_count": 71,
+      "actual_count": 71,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "rural-land-2018": {
+      "manifest_count": 70,
+      "actual_count": 70,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
     "con-2018": {
       "manifest_count": 143,
       "actual_count": 143,
@@ -660,6 +687,7 @@
     "advertising-2021": 1,
     "agri-quality-2022": 1,
     "aml-2024": 1,
+    "anti-drug-2008": 1,
     "anti-fraud-2022": 1,
     "anti-monopoly-2022": 1,
     "arbitration-2025": 1,
@@ -701,6 +729,7 @@
     "ll-2017": 5,
     "martyrs-2018": 1,
     "mediation-2010": 1,
+    "mental-health-2018": 1,
     "minor-2024": 5,
     "negotiable-2004": 1,
     "notary-2017": 1,
@@ -714,6 +743,7 @@
     "product-quality-2018": 1,
     "psm-2025": 3,
     "road-safety-2021": 1,
+    "rural-land-2018": 1,
     "scl-2012": 3,
     "securities-2019": 1,
     "social-ins-2018": 1,

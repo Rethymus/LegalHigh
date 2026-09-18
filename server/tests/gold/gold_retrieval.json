@@ -4353,6 +4353,171 @@
         }
       ],
       "note": "2026-09-18 增：托育机构违反标准规范警告/罚款/停业第41条。"
+    },
+    {
+      "id": "gold-mh-voluntary-inpatient",
+      "question": "精神障碍患者住院治疗是自愿的吗",
+      "expect": [
+        {
+          "law_id": "mental-health-2018",
+          "no": 30
+        }
+      ],
+      "note": "2026-09-18 增：住院自愿原则+应当住院治疗两类例外第30条。"
+    },
+    {
+      "id": "gold-mh-re-diagnosis",
+      "question": "对精神障碍诊断结论有异议可以要求再次诊断吗",
+      "expect": [
+        {
+          "law_id": "mental-health-2018",
+          "no": 32
+        }
+      ],
+      "note": "2026-09-18 增：患者或监护人异议可要求再次诊断和鉴定第32条。"
+    },
+    {
+      "id": "gold-mh-counselor-limit",
+      "question": "心理咨询师可以做心理治疗吗",
+      "expect": [
+        {
+          "law_id": "mental-health-2018",
+          "no": 23
+        }
+      ],
+      "note": "2026-09-18 增：心理咨询人员不得从事心理治疗或精神障碍诊断第23条。词法鸿沟实录：咨询师 vs 心理咨询人员。"
+    },
+    {
+      "id": "gold-mh-no-inpatient",
+      "question": "再次诊断说不严重医院还非要住院怎么办",
+      "expect": [
+        {
+          "law_id": "mental-health-2018",
+          "no": 35
+        }
+      ],
+      "note": "2026-09-18 增：再次诊断表明不需要住院的不得实施住院治疗第35条。"
+    },
+    {
+      "id": "gold-mh-psychotherapy-venue",
+      "question": "心理治疗只能在医疗机构里做吗",
+      "expect": [
+        {
+          "law_id": "mental-health-2018",
+          "no": 51
+        }
+      ],
+      "note": "2026-09-18 增：心理治疗活动应当在医疗机构内开展第51条。"
+    },
+    {
+      "id": "gold-drug-compulsory-rehab",
+      "question": "拒绝社区戒毒会被强制隔离戒毒吗",
+      "expect": [
+        {
+          "law_id": "anti-drug-2008",
+          "no": 38
+        }
+      ],
+      "note": "2026-09-18 增：强制隔离戒毒四种法定情形第38条。"
+    },
+    {
+      "id": "gold-drug-community-rehab",
+      "question": "社区戒毒的期限是多久",
+      "expect": [
+        {
+          "law_id": "anti-drug-2008",
+          "no": 33
+        }
+      ],
+      "note": "2026-09-18 增：社区戒毒期限三年第33条。"
+    },
+    {
+      "id": "gold-drug-after-release",
+      "question": "解除强制隔离戒毒后还要接受社区康复吗",
+      "expect": [
+        {
+          "law_id": "anti-drug-2008",
+          "no": 48
+        }
+      ],
+      "note": "2026-09-18 增：可责令接受不超过三年社区康复第48条。"
+    },
+    {
+      "id": "gold-drug-school-edu",
+      "question": "学校要对学生进行禁毒教育吗",
+      "expect": [
+        {
+          "law_id": "anti-drug-2008",
+          "no": 13
+        }
+      ],
+      "note": "2026-09-18 增：禁毒知识纳入教育教学内容第13条。"
+    },
+    {
+      "id": "gold-drug-maintain-therapy",
+      "question": "什么是戒毒药物维持治疗",
+      "expect": [
+        {
+          "law_id": "anti-drug-2008",
+          "no": 51
+        }
+      ],
+      "note": "2026-09-18 增：戒毒药物维持治疗组织规定第51条。"
+    },
+    {
+      "id": "gold-land-lease-term",
+      "question": "耕地的承包期是多少年",
+      "expect": [
+        {
+          "law_id": "rural-land-2018",
+          "no": 21
+        }
+      ],
+      "note": "2026-09-18 增：耕地承包期三十年+届满再延长三十年第21条。"
+    },
+    {
+      "id": "gold-land-women-retain",
+      "question": "妇女结婚后原承包地会被收回吗",
+      "expect": [
+        {
+          "law_id": "rural-land-2018",
+          "no": 31
+        }
+      ],
+      "note": "2026-09-18 增：妇女结婚未在新居住地取得承包地不得收回第31条。"
+    },
+    {
+      "id": "gold-land-urban-settle",
+      "question": "进城落户必须交回承包地吗",
+      "expect": [
+        {
+          "law_id": "rural-land-2018",
+          "no": 27
+        }
+      ],
+      "note": "2026-09-18 增：不得以退出承包经营权作为进城落户条件第27条。"
+    },
+    {
+      "id": "gold-land-transfer-mode",
+      "question": "承包地可以出租入股流转给他人吗",
+      "expect": [
+        {
+          "law_id": "rural-land-2018",
+          "no": 36
+        }
+      ],
+      "note": "2026-09-18 增：出租（转包）/入股等经营权流转+备案第36条。"
+    },
+    {
+      "id": "gold-land-exchange",
+      "question": "同村承包地之间可以互换吗",
+      "expect": [
+        {
+          "law_id": "rural-land-2018",
+          "no": 33
+        }
+      ],
+      "note": "2026-09-18 增：同一集体经济组织土地承包经营权互换+备案第33条。"
     }
   ]
 }

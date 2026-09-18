@@ -106,6 +106,9 @@ LAW_FILES = {
     "vaccine_2019_lawtext_md": "lawtext_疫苗管理法2019.md",  # 疫苗管理法 2019（R151）
     "martyrs_2018_lawtext_md": "lawtext_英雄烈士保护法2018.md",  # 英雄烈士保护法 2018（R151）
     "family_plan_2021_lawtext_md": "lawtext_人口与计划生育法2021.md",  # 人口与计划生育法 2021 修正（R151）
+    "mental_health_2018_lawtext_md": "lawtext_精神卫生法2018.md",  # 精神卫生法 2018 修正（R152）
+    "anti_drug_2008_lawtext_md": "lawtext_禁毒法2008.md",  # 禁毒法 2008（R152）
+    "rural_land_2018_lawtext_md": "lawtext_农村土地承包法2018.md",  # 农村土地承包法 2018 修订（R152）
     "cl_ws_html": "ws_刑法2023.html",
 }
 
@@ -432,6 +435,9 @@ EXPECTED_COUNTS = {
     "vaccine-2019": 100,
     "martyrs-2018": 30,
     "family-plan-2021": 48,
+    "mental-health-2018": 85,
+    "anti-drug-2008": 71,
+    "rural-land-2018": 70,
     "crpl-imp-2024": 53,
     "genai-2023": 24,
     "pipl-2021": 74,
@@ -966,6 +972,33 @@ def main():
                 "effective_date": "2021-08-20",
             },
             "https://flk.npc.gov.cn/detail?id=ff8081817ba965c4017bb8921d13077a",
+        ),
+        build_lawtext_md_law(
+            "mental_health_2018_lawtext_md", "mental-health-2018", "中华人民共和国精神卫生法",
+            {
+                "status": "现行有效（2018修正）",
+                "promulgation": {"date": "2018-04-27", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "2018-04-27",
+            },
+            "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf7448a066d",
+        ),
+        build_lawtext_md_law(
+            "anti_drug_2008_lawtext_md", "anti-drug-2008", "中华人民共和国禁毒法",
+            {
+                "status": "现行有效",
+                "promulgation": {"date": "2007-12-29", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "2008-06-01",
+            },
+            "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf64d550393",
+        ),
+        build_lawtext_md_law(
+            "rural_land_2018_lawtext_md", "rural-land-2018", "中华人民共和国农村土地承包法",
+            {
+                "status": "现行有效（2018修订）",
+                "promulgation": {"date": "2018-12-29", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "2019-01-01",
+            },
+            "https://flk.npc.gov.cn/detail?id=ff8080816f135f46016f2104531f1774",
         ),
         build_wikisource_html_law(
             "minor_ws_html", "con-2018", "中华人民共和国宪法",

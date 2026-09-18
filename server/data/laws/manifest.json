@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-18T18:10:50.352156",
+  "built_at": "2026-09-18T18:39:41.063048",
   "fetch_date": "2026-09-08",
   "laws": [
     {
@@ -1366,6 +1366,75 @@
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "ef315843f78644420f55842ebd940c07a375c9cd3d9cbbb9f6faacf21bc27a07",
       "output_sha256": "12d9a74fc09198148cdabb01da8d495327ced2d9aade0ce73c400d8facd1b5bc"
+    },
+    {
+      "law_id": "mental-health-2018",
+      "title": "中华人民共和国精神卫生法",
+      "status": "现行有效（2018修正）",
+      "effective_date": "2018-04-27",
+      "effective_date_evidence": {
+        "title": "中华人民共和国精神卫生法",
+        "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf7448a066d",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2018修正）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 85,
+      "expected_count": 85,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf7448a066d",
+      "snapshot": "docs/research/evidence/lawtext_精神卫生法2018.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "2cecabe2f9ef8f9135106690f64e587d0ceac3f8616a9f50171f3a84393de7f7",
+      "output_sha256": "3b833487d056c110d42b6b6925e498fe560fedd377f8c3684069c13526a70524"
+    },
+    {
+      "law_id": "anti-drug-2008",
+      "title": "中华人民共和国禁毒法",
+      "status": "现行有效",
+      "effective_date": "2008-06-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国禁毒法",
+        "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf64d550393",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效"
+      },
+      "promulgation_instrument": null,
+      "article_count": 71,
+      "expected_count": 71,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf64d550393",
+      "snapshot": "docs/research/evidence/lawtext_禁毒法2008.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "ccdcc3ce021d6d9e0544b9b7ee6f7f166c47ce843c200196dda7d3b47114bd9a",
+      "output_sha256": "6b46dc814399cd6e7fa78305f4b823f2ccd0aa67fbf7781705ee6c73f0673d98"
+    },
+    {
+      "law_id": "rural-land-2018",
+      "title": "中华人民共和国农村土地承包法",
+      "status": "现行有效（2018修订）",
+      "effective_date": "2019-01-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国农村土地承包法",
+        "url": "https://flk.npc.gov.cn/detail?id=ff8080816f135f46016f2104531f1774",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2018修订）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 70,
+      "expected_count": 70,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=ff8080816f135f46016f2104531f1774",
+      "snapshot": "docs/research/evidence/lawtext_农村土地承包法2018.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "092f3cf8f776102ea7c09ba8d06d0938c42f1b49080eec4fcf727f1ed2f0bafa",
+      "output_sha256": "1ce7b227215f668852dd4db516296326805c2968aa3d333164e9d286bd232987"
     },
     {
       "law_id": "con-2018",
