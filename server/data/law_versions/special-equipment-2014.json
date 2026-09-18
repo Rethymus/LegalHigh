@@ -1,0 +1,26 @@
+{
+  "law_id": "special-equipment-2014",
+  "title": "中华人民共和国特种设备安全法",
+  "schema_version": 1,
+  "note": "R155（2026-09-18）教育慈善与安全批次：经 lawtext（flk DOCX 转录）链入库。",
+  "versions": [
+    {
+      "version_id": "current",
+      "label": "2013 制定",
+      "status": "现行有效",
+      "promulgation_date": "2013-06-29",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2014-01-01",
+      "article_count": 101,
+      "current": true,
+      "evidence": {
+        "kind": "flk-docx-transcription",
+        "grade": "中",
+        "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf74ede06c7",
+        "accessed_at": "2026-09-18",
+        "snapshot": "docs/research/evidence/lawtext_特种设备安全法2014.md"
+      }
+    }
+  ],
+  "pending_note": "2013 制定以来未再修正。电梯/锅炉/压力容器等特种设备安全基础法。"
+}

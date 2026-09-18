@@ -4848,6 +4848,171 @@
         }
       ],
       "note": "2026-09-18 增：中西医并重/鼓励中西医结合第3条。"
+    },
+    {
+      "id": "gold-he-fee-waiver",
+      "question": "家庭经济困难的大学生可以申请减免学费吗",
+      "expect": [
+        {
+          "law_id": "higher-edu-2018",
+          "no": 54
+        }
+      ],
+      "note": "2026-09-18 增：困难学生申请补助或减免学费第54条。"
+    },
+    {
+      "id": "gold-he-scholarship",
+      "question": "国家设立奖学金品学兼优的学生能申请吗",
+      "expect": [
+        {
+          "law_id": "higher-edu-2018",
+          "no": 55
+        }
+      ],
+      "note": "2026-09-18 增：国家设立奖学金+勤工助学基金第55条。"
+    },
+    {
+      "id": "gold-he-degree-self-study",
+      "question": "自学达到水平能申请学位吗",
+      "expect": [
+        {
+          "law_id": "higher-edu-2018",
+          "no": 22
+        }
+      ],
+      "note": "2026-09-18 增：学位制度三级+公民自学达标可申请学位第22条。"
+    },
+    {
+      "id": "gold-he-graduation-credit",
+      "question": "修满学分才能毕业吗",
+      "expect": [
+        {
+          "law_id": "higher-edu-2018",
+          "no": 58
+        }
+      ],
+      "note": "2026-09-18 增：思想品德合格+学完规定课程成绩合格或修满学分准予毕业第58条。"
+    },
+    {
+      "id": "gold-he-autonomous-enrollment",
+      "question": "高校可以自主调节系科招生比例吗",
+      "expect": [
+        {
+          "law_id": "higher-edu-2018",
+          "no": 32
+        }
+      ],
+      "note": "2026-09-18 增：高校办学自主权（招生方案/调节系科比例）第32条。"
+    },
+    {
+      "id": "gold-charity-coop-fundraising",
+      "question": "没有公募资格的组织能和别人合作募捐吗",
+      "expect": [
+        {
+          "law_id": "charity-2023",
+          "no": 26
+        }
+      ],
+      "note": "2026-09-18 增：无资格组织与慈善组织合作募捐第26条。"
+    },
+    {
+      "id": "gold-charity-internet-platform",
+      "question": "网络募捐要在指定平台进行吗",
+      "expect": [
+        {
+          "law_id": "charity-2023",
+          "no": 27
+        }
+      ],
+      "note": "2026-09-18 增：互联网公开募捐须在民政部指定服务平台第27条。"
+    },
+    {
+      "id": "gold-charity-donation-property",
+      "question": "捐赠的财产有什么要求",
+      "expect": [
+        {
+          "law_id": "charity-2023",
+          "no": 36
+        }
+      ],
+      "note": "2026-09-18 增：捐赠财产须有权处分合法财产+实物标准第36条。"
+    },
+    {
+      "id": "gold-charity-personal-help",
+      "question": "个人网络求助信息要真实吗平台有什么责任",
+      "expect": [
+        {
+          "law_id": "charity-2023",
+          "no": 124
+        }
+      ],
+      "note": "2026-09-18 增：个人求助信息真实性义务+平台须经民政部门指定第124条（2023 修正新增）。"
+    },
+    {
+      "id": "gold-charity-donation-receipt",
+      "question": "捐款后能拿到捐赠票据吗",
+      "expect": [
+        {
+          "law_id": "charity-2023",
+          "no": 38
+        }
+      ],
+      "note": "2026-09-18 增：慈善组织应开具捐赠票据第38条。"
+    },
+    {
+      "id": "gold-se-elevator-maintenance",
+      "question": "电梯的维护保养应当由什么单位进行",
+      "expect": [
+        {
+          "law_id": "special-equipment-2014",
+          "no": 45
+        }
+      ],
+      "note": "2026-09-18 增：电梯维护保养由制造单位或取得许可单位进行第45条。词法鸿沟实录：初拟「维保必须由有资质的单位做吗」（维保=缩略词、有资质 vs 取得许可双重词面差）未入 top5，改题 rank1。"
+    },
+    {
+      "id": "gold-se-public-operator-duty",
+      "question": "电梯运营使用单位要对安全负责吗",
+      "expect": [
+        {
+          "law_id": "special-equipment-2014",
+          "no": 36
+        }
+      ],
+      "note": "2026-09-18 增：公众服务特种设备运营使用单位安全责任+安全管理机构/专职人员第36条。"
+    },
+    {
+      "id": "gold-se-daily-check",
+      "question": "电梯索道每天投用前要试运行检查吗",
+      "expect": [
+        {
+          "law_id": "special-equipment-2014",
+          "no": 43
+        }
+      ],
+      "note": "2026-09-18 增：每日投入使用前试运行和例行安全检查第43条。"
+    },
+    {
+      "id": "gold-se-complaint",
+      "question": "检验机构故意刁难可以向哪里投诉",
+      "expect": [
+        {
+          "law_id": "special-equipment-2014",
+          "no": 56
+        }
+      ],
+      "note": "2026-09-18 增：对检验机构刁难的投诉权第56条。"
+    },
+    {
+      "id": "gold-se-accountability",
+      "question": "特种设备使用单位主要负责人对安全负责吗",
+      "expect": [
+        {
+          "law_id": "special-equipment-2014",
+          "no": 13
+        }
+      ],
+      "note": "2026-09-18 增：生产经营范围使用单位及主要负责人安全责任第13条。"
     }
   ]
 }

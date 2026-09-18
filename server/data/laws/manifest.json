@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-18T19:19:21.945769",
+  "built_at": "2026-09-18T19:39:13.504016",
   "fetch_date": "2026-09-08",
   "laws": [
     {
@@ -1573,6 +1573,75 @@
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "b0ee626f01a8f4ddaf18f8c001c47e270289b704c7a93b754e636dcdbbe5507a",
       "output_sha256": "0011365db6f448d2ba1b375a791196c5f1df0e2568ba5ba8f59288694c96e008"
+    },
+    {
+      "law_id": "higher-edu-2018",
+      "title": "中华人民共和国高等教育法",
+      "status": "现行有效（2018修正）",
+      "effective_date": "2018-12-29",
+      "effective_date_evidence": {
+        "title": "中华人民共和国高等教育法",
+        "url": "https://flk.npc.gov.cn/detail?id=ff8080816f135f46016f20df64ec16c5",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2018修正）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 69,
+      "expected_count": 69,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=ff8080816f135f46016f20df64ec16c5",
+      "snapshot": "docs/research/evidence/lawtext_高等教育法2018.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "ad78621878f78204d5c7d6b006268cbae401c011bed55f7b612d5fd1a10a2b8e",
+      "output_sha256": "92e6ef47a8da3712124e5841e178cb129ace23b4e3a184252114c88db61183f9"
+    },
+    {
+      "law_id": "charity-2023",
+      "title": "中华人民共和国慈善法",
+      "status": "现行有效（2023修正）",
+      "effective_date": "2024-09-05",
+      "effective_date_evidence": {
+        "title": "中华人民共和国慈善法",
+        "url": "https://flk.npc.gov.cn/detail?id=ff8081818d6a4639018df3f1fc7e122d",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2023修正）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 125,
+      "expected_count": 125,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=ff8081818d6a4639018df3f1fc7e122d",
+      "snapshot": "docs/research/evidence/lawtext_慈善法2023.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "cbeb9e1925a186fc2702fd1eb0d1b12d33b527098e2ef1acde7776687549d2dc",
+      "output_sha256": "0b76d83ec906519aa4fed6cb99fcdb3bc91c0cd8d91848b9e5d2db7e5d94d9a1"
+    },
+    {
+      "law_id": "special-equipment-2014",
+      "title": "中华人民共和国特种设备安全法",
+      "status": "现行有效",
+      "effective_date": "2014-01-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国特种设备安全法",
+        "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf74ede06c7",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效"
+      },
+      "promulgation_instrument": null,
+      "article_count": 101,
+      "expected_count": 101,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf74ede06c7",
+      "snapshot": "docs/research/evidence/lawtext_特种设备安全法2014.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "2cb117073534d577f547092d825dcba07a9a8f01949aa550ca7d13db5427cbc9",
+      "output_sha256": "5f29f7cd7a21d3d166451c5e82666908ea9d71266f07f0c9d6bb84e71257df0b"
     },
     {
       "law_id": "con-2018",

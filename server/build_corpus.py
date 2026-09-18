@@ -115,6 +115,9 @@ LAW_FILES = {
     "trade_union_2021_lawtext_md": "lawtext_工会法2021.md",  # 工会法 2021 修正（R154）
     "blood_donation_1998_lawtext_md": "lawtext_献血法1998.md",  # 献血法 1997（R154）
     "tcm_2017_lawtext_md": "lawtext_中医药法2017.md",  # 中医药法 2016（R154）
+    "higher_edu_2018_lawtext_md": "lawtext_高等教育法2018.md",  # 高等教育法 2018 修正（R155）
+    "charity_2023_lawtext_md": "lawtext_慈善法2023.md",  # 慈善法 2023 修正（R155）
+    "special_equipment_2014_lawtext_md": "lawtext_特种设备安全法2014.md",  # 特种设备安全法 2013（R155）
     "cl_ws_html": "ws_刑法2023.html",
 }
 
@@ -450,6 +453,9 @@ EXPECTED_COUNTS = {
     "trade-union-2021": 58,
     "blood-donation-1998": 24,
     "tcm-2017": 63,
+    "higher-edu-2018": 69,
+    "charity-2023": 125,
+    "special-equipment-2014": 101,
     "crpl-imp-2024": 53,
     "genai-2023": 24,
     "pipl-2021": 74,
@@ -1065,6 +1071,33 @@ def main():
                 "effective_date": "2017-07-01",
             },
             "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf8382809ab",
+        ),
+        build_lawtext_md_law(
+            "higher_edu_2018_lawtext_md", "higher-edu-2018", "中华人民共和国高等教育法",
+            {
+                "status": "现行有效（2018修正）",
+                "promulgation": {"date": "2018-12-29", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "2018-12-29",
+            },
+            "https://flk.npc.gov.cn/detail?id=ff8080816f135f46016f20df64ec16c5",
+        ),
+        build_lawtext_md_law(
+            "charity_2023_lawtext_md", "charity-2023", "中华人民共和国慈善法",
+            {
+                "status": "现行有效（2023修正）",
+                "promulgation": {"date": "2023-12-29", "organ": "全国人民代表大会"},
+                "effective_date": "2024-09-05",
+            },
+            "https://flk.npc.gov.cn/detail?id=ff8081818d6a4639018df3f1fc7e122d",
+        ),
+        build_lawtext_md_law(
+            "special_equipment_2014_lawtext_md", "special-equipment-2014", "中华人民共和国特种设备安全法",
+            {
+                "status": "现行有效",
+                "promulgation": {"date": "2013-06-29", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "2014-01-01",
+            },
+            "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf74ede06c7",
         ),
         build_wikisource_html_law(
             "minor_ws_html", "con-2018", "中华人民共和国宪法",

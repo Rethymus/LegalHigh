@@ -159,7 +159,12 @@ ok &= c7
 # --- C7 案例检索 server 端 ---
 from urllib.parse import urlencode
 st, d = call("GET", "/api/cases?" + urlencode({"q": "保险"}))
-c8 = st == 200 and len(d["cases"]) >= 1 and all("保险" in (c["name"] + c["cause"] + c["summary"] + c["court"]) for c in d["cases"])
+# R146 起案例检索为字段加权（facts/holding/result 入索引）——R155 修：相关性核对覆盖全部可检索字段
+# （此前 guidance-17 以 facts 字段命中「保险」暴露旧断言只查轻字段的滞后，R146 扩索引时未同步此断言）
+c8 = st == 200 and len(d["cases"]) >= 1 and all(
+    "保险" in (c["name"] + c["cause"] + c["summary"] + c["court"] + (c.get("facts") or "") + (c.get("holding") or "") + (c.get("result") or ""))
+    for c in d["cases"]
+)
 print(f"[C7] /api/cases?q=保险 → {len(d['cases'])} 件全含关键词 ->", "PASS" if c8 else "FAIL")
 ok &= c8
 
