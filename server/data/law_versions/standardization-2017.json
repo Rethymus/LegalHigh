@@ -1,0 +1,26 @@
+{
+  "law_id": "standardization-2017",
+  "title": "中华人民共和国标准化法",
+  "schema_version": 1,
+  "note": "R159（2026-09-18）计量标准与成果批次：经 lawtext（flk DOCX 转录）链入库。",
+  "versions": [
+    {
+      "version_id": "current",
+      "label": "2017 修订",
+      "status": "现行有效（2017修订）",
+      "promulgation_date": "2017-11-04",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2018-01-01",
+      "article_count": 45,
+      "current": true,
+      "evidence": {
+        "kind": "flk-docx-transcription",
+        "grade": "中",
+        "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf876430a91",
+        "accessed_at": "2026-09-18",
+        "snapshot": "docs/research/evidence/lawtext_标准化法2017.md"
+      }
+    }
+  ],
+  "pending_note": "1988 原版全文未采集。强制性标准/团体标准/企业标准自我声明公开。"
+}

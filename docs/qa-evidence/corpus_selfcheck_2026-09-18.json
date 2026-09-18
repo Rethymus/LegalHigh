@@ -721,6 +721,33 @@
       "no_effective_date": false,
       "effective_date_evidence_valid": true
     },
+    "metrology-2018": {
+      "manifest_count": 34,
+      "actual_count": 34,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "standardization-2017": {
+      "manifest_count": 45,
+      "actual_count": 45,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "tech-transfer-2015": {
+      "manifest_count": 52,
+      "actual_count": 52,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
     "con-2018": {
       "manifest_count": 143,
       "actual_count": 143,
@@ -900,6 +927,7 @@
     "maternal-infant-2017": 1,
     "mediation-2010": 1,
     "mental-health-2018": 1,
+    "metrology-2018": 1,
     "mine-safety-2009": 1,
     "minor-2024": 5,
     "negotiable-2004": 1,
@@ -924,8 +952,10 @@
     "securities-2019": 1,
     "social-ins-2018": 1,
     "special-equipment-2014": 1,
+    "standardization-2017": 1,
     "tax-admin-2015": 1,
     "tcm-2017": 1,
+    "tech-transfer-2015": 1,
     "tourism-2018": 1,
     "trade-union-2021": 1,
     "trademark-2026": 1,

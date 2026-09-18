@@ -1,0 +1,26 @@
+{
+  "law_id": "tech-transfer-2015",
+  "title": "中华人民共和国促进科技成果转化法",
+  "schema_version": 1,
+  "note": "R159（2026-09-18）计量标准与成果批次：经 lawtext（flk DOCX 转录）链入库。",
+  "versions": [
+    {
+      "version_id": "current",
+      "label": "2015 修正",
+      "status": "现行有效（2015修正）",
+      "promulgation_date": "2015-08-29",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2015-10-01",
+      "article_count": 52,
+      "current": true,
+      "evidence": {
+        "kind": "flk-docx-transcription",
+        "grade": "中",
+        "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf7e3540843",
+        "accessed_at": "2026-09-18",
+        "snapshot": "docs/research/evidence/lawtext_促进科技成果转化法2015.md"
+      }
+    }
+  ],
+  "pending_note": "1996 原版全文未采集（2015 全面修订）。奖励与报酬/职务成果转化。"
+}

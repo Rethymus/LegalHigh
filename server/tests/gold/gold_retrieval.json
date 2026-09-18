@@ -5464,6 +5464,72 @@
         }
       ],
       "note": "2026-09-18 增：服务国家目标与鼓励自由探索结合+超前部署第7条。"
+    },
+    {
+      "id": "gold-me-compulsory-verification",
+      "question": "民用水电表的计量器具要强制检定吗",
+      "expect": [
+        {
+          "law_id": "metrology-2018",
+          "no": 9
+        }
+      ],
+      "note": "2026-09-18 增：贸易结算/安全防护/医疗卫生/环境监测列入目录的工作计量器具强制检定第9条。词法鸿沟实录：水表电表非条文词面（属贸易结算类目），问法保留。"
+    },
+    {
+      "id": "gold-me-accuracy-protection",
+      "question": "用计量器具作弊破坏准确度违法吗",
+      "expect": [
+        {
+          "law_id": "metrology-2018",
+          "no": 16
+        }
+      ],
+      "note": "2026-09-18 增：使用计量器具不得破坏其准确度损害国家消费者利益第16条。"
+    },
+    {
+      "id": "gold-st-self-declaration",
+      "question": "企业执行的标准要自我声明公开吗",
+      "expect": [
+        {
+          "law_id": "standardization-2017",
+          "no": 27
+        }
+      ],
+      "note": "2026-09-18 增：团体标准企业标准自我声明公开和监督制度第27条。"
+    },
+    {
+      "id": "gold-st-floor-rule",
+      "question": "团体标准企业标准能低于强制性国家标准吗",
+      "expect": [
+        {
+          "law_id": "standardization-2017",
+          "no": 21
+        }
+      ],
+      "note": "2026-09-18 增：技术要求不得低于强制性国家标准第21条。"
+    },
+    {
+      "id": "gold-tt-award-default",
+      "question": "职务科技成果转化没约定奖励怎么算",
+      "expect": [
+        {
+          "law_id": "tech-transfer-2015",
+          "no": 45
+        }
+      ],
+      "note": "2026-09-18 增：未规定未约定的法定奖励报酬标准（转让许可净收入比例等）第45条。"
+    },
+    {
+      "id": "gold-tt-award-agreement",
+      "question": "职务科技成果转化后要给科研人员奖励报酬吗",
+      "expect": [
+        {
+          "law_id": "tech-transfer-2015",
+          "no": 44
+        }
+      ],
+      "note": "2026-09-18 增：完成单位应对重要贡献人员给予奖励和报酬+可规定或约定第44条。"
     }
   ]
 }

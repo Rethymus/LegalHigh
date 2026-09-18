@@ -127,6 +127,9 @@ LAW_FILES = {
     "archives_2020_lawtext_md": "lawtext_档案法2020.md",  # 档案法 2020 修订（R158）
     "animal_epidemic_2021_lawtext_md": "lawtext_动物防疫法2021.md",  # 动物防疫法 2021 修订（R158）
     "sci_tech_2021_lawtext_md": "lawtext_科学技术进步法2021.md",  # 科学技术进步法 2021 修订（R158）
+    "metrology_2018_lawtext_md": "lawtext_计量法2018.md",  # 计量法 2018 修正（R159）
+    "standardization_2017_lawtext_md": "lawtext_标准化法2017.md",  # 标准化法 2017 修订（R159）
+    "tech_transfer_2015_lawtext_md": "lawtext_促进科技成果转化法2015.md",  # 促进科技成果转化法 2015 修正（R159）
     "cl_ws_html": "ws_刑法2023.html",
 }
 
@@ -474,6 +477,9 @@ EXPECTED_COUNTS = {
     "archives-2020": 53,
     "animal-epidemic-2021": 113,
     "sci-tech-2021": 117,
+    "metrology-2018": 34,
+    "standardization-2017": 45,
+    "tech-transfer-2015": 52,
     "crpl-imp-2024": 53,
     "genai-2023": 24,
     "pipl-2021": 74,
@@ -1197,6 +1203,33 @@ def main():
                 "effective_date": "2022-01-01",
             },
             "https://flk.npc.gov.cn/detail?id=ff8081817d99a39f017dec555db834da",
+        ),
+        build_lawtext_md_law(
+            "metrology_2018_lawtext_md", "metrology-2018", "中华人民共和国计量法",
+            {
+                "status": "现行有效（2018修正）",
+                "promulgation": {"date": "2018-10-26", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "2018-10-26",
+            },
+            "https://flk.npc.gov.cn/detail?id=ff8080816f135f46016f1cf499ff11eb",
+        ),
+        build_lawtext_md_law(
+            "standardization_2017_lawtext_md", "standardization-2017", "中华人民共和国标准化法",
+            {
+                "status": "现行有效（2017修订）",
+                "promulgation": {"date": "2017-11-04", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "2018-01-01",
+            },
+            "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf876430a91",
+        ),
+        build_lawtext_md_law(
+            "tech_transfer_2015_lawtext_md", "tech-transfer-2015", "中华人民共和国促进科技成果转化法",
+            {
+                "status": "现行有效（2015修正）",
+                "promulgation": {"date": "2015-08-29", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "2015-10-01",
+            },
+            "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf7e3540843",
         ),
         build_wikisource_html_law(
             "minor_ws_html", "con-2018", "中华人民共和国宪法",

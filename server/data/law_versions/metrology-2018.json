@@ -1,0 +1,26 @@
+{
+  "law_id": "metrology-2018",
+  "title": "中华人民共和国计量法",
+  "schema_version": 1,
+  "note": "R159（2026-09-18）计量标准与成果批次：经 lawtext（flk DOCX 转录）链入库。",
+  "versions": [
+    {
+      "version_id": "current",
+      "label": "2018 修正",
+      "status": "现行有效（2018修正）",
+      "promulgation_date": "2018-10-26",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2018-10-26",
+      "article_count": 34,
+      "current": true,
+      "evidence": {
+        "kind": "flk-docx-transcription",
+        "grade": "中",
+        "url": "https://flk.npc.gov.cn/detail?id=ff8080816f135f46016f1cf499ff11eb",
+        "accessed_at": "2026-09-18",
+        "snapshot": "docs/research/evidence/lawtext_计量法2018.md"
+      }
+    }
+  ],
+  "pending_note": "1985 原版与 2009/2013/2015/2017 修正版全文未采集（2017 修正条目已修改弃用）。民生计量/强制检定。"
+}

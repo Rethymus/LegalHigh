@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-18T21:07:17.199304",
+  "built_at": "2026-09-18T21:35:17.910430",
   "fetch_date": "2026-09-08",
   "laws": [
     {
@@ -1849,6 +1849,75 @@
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "8ed04feb2ce8d8ee8becaf4c8cc6aebac7da540de116a8ac6f872058fe57155c",
       "output_sha256": "eb1719224760c8b161714b17fb98d5f124ab33d945ed78848761e44a7a98887e"
+    },
+    {
+      "law_id": "metrology-2018",
+      "title": "中华人民共和国计量法",
+      "status": "现行有效（2018修正）",
+      "effective_date": "2018-10-26",
+      "effective_date_evidence": {
+        "title": "中华人民共和国计量法",
+        "url": "https://flk.npc.gov.cn/detail?id=ff8080816f135f46016f1cf499ff11eb",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2018修正）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 34,
+      "expected_count": 34,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=ff8080816f135f46016f1cf499ff11eb",
+      "snapshot": "docs/research/evidence/lawtext_计量法2018.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "4d75a17308fc1a6c8b49ffe787169dfe83f841ec051772dc788e8f12e4664b53",
+      "output_sha256": "94e26f2f37f7ed6910449434afcf6001702dce7c7c4211096e400e0d9f7ffe85"
+    },
+    {
+      "law_id": "standardization-2017",
+      "title": "中华人民共和国标准化法",
+      "status": "现行有效（2017修订）",
+      "effective_date": "2018-01-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国标准化法",
+        "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf876430a91",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2017修订）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 45,
+      "expected_count": 45,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf876430a91",
+      "snapshot": "docs/research/evidence/lawtext_标准化法2017.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "6fe16c51ac396c895911034fb01974d918488376b3ed60faac98aa0ff9a7c544",
+      "output_sha256": "52729870864bff9436e71630080594d7e7383e359797ccd62f5128c594e21ace"
+    },
+    {
+      "law_id": "tech-transfer-2015",
+      "title": "中华人民共和国促进科技成果转化法",
+      "status": "现行有效（2015修正）",
+      "effective_date": "2015-10-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国促进科技成果转化法",
+        "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf7e3540843",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2015修正）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 52,
+      "expected_count": 52,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf7e3540843",
+      "snapshot": "docs/research/evidence/lawtext_促进科技成果转化法2015.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "6c6642e30892f844818b2e188a8f65e6ab800bc94930993f5aff12e1ba91ef42",
+      "output_sha256": "a47b591f307980c227a0f58bffe2b059cc234ab57a1093d84144c7b12ef9e3b8"
     },
     {
       "law_id": "con-2018",
