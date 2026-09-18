@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-18T22:49:53.607868",
+  "built_at": "2026-09-18T23:12:46.849210",
   "fetch_date": "2026-09-08",
   "laws": [
     {
@@ -2125,6 +2125,75 @@
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "7bfe8252ca8d65fb06d53fec613265f327e06bf077954b82d2cebc78eeb3d0b6",
       "output_sha256": "ad5c0152025947434f4a7a95177324b47aff50b9cbe273164a6991f0131eef2e"
+    },
+    {
+      "law_id": "village-committee-2025",
+      "title": "中华人民共和国村民委员会组织法",
+      "status": "现行有效（2025修正）",
+      "effective_date": "2026-01-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国村民委员会组织法",
+        "url": "https://flk.npc.gov.cn/detail?id=090f4cc550f84241941e1109c8772e76",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2025修正）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 50,
+      "expected_count": 50,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=090f4cc550f84241941e1109c8772e76",
+      "snapshot": "docs/research/evidence/lawtext_村民委员会组织法2025.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "e0e6430d9f816c8c1e218e7aec405b2b90aa68f9b740e915d4966134298ad5d6",
+      "output_sha256": "db0e07f9fcfc89bced7c2c6058c3ba770b9240fa922f262e13f476f4d0e2c5bf"
+    },
+    {
+      "law_id": "residents-committee-2025",
+      "title": "中华人民共和国城市居民委员会组织法",
+      "status": "现行有效（2025修正）",
+      "effective_date": "2026-01-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国城市居民委员会组织法",
+        "url": "https://flk.npc.gov.cn/detail?id=5d9b0a64413e4a80b060a0bd742f5fb6",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2025修正）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 50,
+      "expected_count": 50,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=5d9b0a64413e4a80b060a0bd742f5fb6",
+      "snapshot": "docs/research/evidence/lawtext_居民委员会组织法2025.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "b4f2578ef27d50345210d4168d01d845b0d6c29ee4ff5fe7ebbbd920655e7abb",
+      "output_sha256": "ebda86880ae9e3d81ab3b60f5db2bf0a370dda7475d3cc13146d83ac4979b88c"
+    },
+    {
+      "law_id": "sports-2023",
+      "title": "中华人民共和国体育法",
+      "status": "现行有效（2022修订）",
+      "effective_date": "2023-01-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国体育法",
+        "url": "https://flk.npc.gov.cn/detail?id=ff808181818e90e701819485a96c0192",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2022修订）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 122,
+      "expected_count": 122,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=ff808181818e90e701819485a96c0192",
+      "snapshot": "docs/research/evidence/lawtext_体育法2023.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "41ec0754dfe088656f925f1f23760e1691e673e5cb1347e74faf464f76926a11",
+      "output_sha256": "75567e2a69c8af765ed6e8712473fa43ad879a1d96a86e4337b99a261291c62d"
     },
     {
       "law_id": "con-2018",

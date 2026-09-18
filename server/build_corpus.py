@@ -139,6 +139,9 @@ LAW_FILES = {
     "legal_publicity_2025_lawtext_md": "lawtext_法治宣传教育法2025.md",  # 法治宣传教育法 2025（R162）
     "defense_edu_2024_lawtext_md": "lawtext_国防教育法2024.md",  # 国防教育法 2024 修正（R162）
     "agriculture_2013_lawtext_md": "lawtext_农业法2013.md",  # 农业法 2012 修正（R162，现行；2026 修订尚未生效）
+    "village_committee_2025_lawtext_md": "lawtext_村民委员会组织法2025.md",  # 村民委员会组织法 2025 修正（R163）
+    "residents_committee_2025_lawtext_md": "lawtext_居民委员会组织法2025.md",  # 城市居民委员会组织法 2025 修正（R163）
+    "sports_2023_lawtext_md": "lawtext_体育法2023.md",  # 体育法 2022 修订（R163）
     "cl_ws_html": "ws_刑法2023.html",
 }
 
@@ -498,6 +501,9 @@ EXPECTED_COUNTS = {
     "legal-publicity-2025": 65,
     "defense-edu-2024": 42,
     "agriculture-2013": 99,
+    "village-committee-2025": 50,
+    "residents-committee-2025": 50,
+    "sports-2023": 122,
     "crpl-imp-2024": 53,
     "genai-2023": 24,
     "pipl-2021": 74,
@@ -1329,6 +1335,33 @@ def main():
                 "effective_date": "2013-01-01",
             },
             "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf74e1106bd",
+        ),
+        build_lawtext_md_law(
+            "village_committee_2025_lawtext_md", "village-committee-2025", "中华人民共和国村民委员会组织法",
+            {
+                "status": "现行有效（2025修正）",
+                "promulgation": {"date": "2025-10-28", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "2026-01-01",
+            },
+            "https://flk.npc.gov.cn/detail?id=090f4cc550f84241941e1109c8772e76",
+        ),
+        build_lawtext_md_law(
+            "residents_committee_2025_lawtext_md", "residents-committee-2025", "中华人民共和国城市居民委员会组织法",
+            {
+                "status": "现行有效（2025修正）",
+                "promulgation": {"date": "2025-10-28", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "2026-01-01",
+            },
+            "https://flk.npc.gov.cn/detail?id=5d9b0a64413e4a80b060a0bd742f5fb6",
+        ),
+        build_lawtext_md_law(
+            "sports_2023_lawtext_md", "sports-2023", "中华人民共和国体育法",
+            {
+                "status": "现行有效（2022修订）",
+                "promulgation": {"date": "2022-06-24", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "2023-01-01",
+            },
+            "https://flk.npc.gov.cn/detail?id=ff808181818e90e701819485a96c0192",
         ),
         build_wikisource_html_law(
             "minor_ws_html", "con-2018", "中华人民共和国宪法",

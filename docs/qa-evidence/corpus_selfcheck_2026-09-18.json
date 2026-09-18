@@ -829,6 +829,33 @@
       "no_effective_date": false,
       "effective_date_evidence_valid": true
     },
+    "village-committee-2025": {
+      "manifest_count": 50,
+      "actual_count": 50,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "residents-committee-2025": {
+      "manifest_count": 50,
+      "actual_count": 50,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "sports-2023": {
+      "manifest_count": 122,
+      "actual_count": 122,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
     "con-2018": {
       "manifest_count": 143,
       "actual_count": 143,
@@ -1033,6 +1060,7 @@
     "prison-2012": 1,
     "product-quality-2018": 1,
     "psm-2025": 3,
+    "residents-committee-2025": 1,
     "road-safety-2021": 1,
     "rural-land-2018": 1,
     "rural-revitalization-2021": 1,
@@ -1042,6 +1070,7 @@
     "seeds-2022": 1,
     "social-ins-2018": 1,
     "special-equipment-2014": 1,
+    "sports-2023": 1,
     "standardization-2017": 1,
     "tax-admin-2015": 1,
     "tcm-2017": 1,
@@ -1051,6 +1080,7 @@
     "trademark-2026": 1,
     "unfair-competition-2025": 1,
     "vaccine-2019": 1,
+    "village-committee-2025": 1,
     "vocational-edu-2022": 1,
     "wlxf-2022": 1,
     "women-2022": 4,

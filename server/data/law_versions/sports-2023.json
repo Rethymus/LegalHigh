@@ -1,0 +1,26 @@
+{
+  "law_id": "sports-2023",
+  "title": "中华人民共和国体育法",
+  "schema_version": 1,
+  "note": "R163（2026-09-18）基层自治与体育批次：经 lawtext（flk DOCX 转录）链入库。",
+  "versions": [
+    {
+      "version_id": "current",
+      "label": "2022 修订",
+      "status": "现行有效（2022修订）",
+      "promulgation_date": "2022-06-24",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2023-01-01",
+      "article_count": 122,
+      "current": true,
+      "evidence": {
+        "kind": "flk-docx-transcription",
+        "grade": "中",
+        "url": "https://flk.npc.gov.cn/detail?id=ff808181818e90e701819485a96c0192",
+        "accessed_at": "2026-09-18",
+        "snapshot": "docs/research/evidence/lawtext_体育法2023.md"
+      }
+    }
+  ],
+  "pending_note": "1995 原版与 2009/2016 修正版全文未采集。2022 全面修订：体育仲裁/全民健身/青少年体育。"
+}
