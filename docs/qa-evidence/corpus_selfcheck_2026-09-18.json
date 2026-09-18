@@ -586,6 +586,33 @@
       "no_effective_date": false,
       "effective_date_evidence_valid": true
     },
+    "trade-union-2021": {
+      "manifest_count": 58,
+      "actual_count": 58,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "blood-donation-1998": {
+      "manifest_count": 24,
+      "actual_count": 24,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "tcm-2017": {
+      "manifest_count": 63,
+      "actual_count": 63,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
     "con-2018": {
       "manifest_count": 143,
       "actual_count": 143,
@@ -720,6 +747,7 @@
     "arbitration-2025": 1,
     "audit-2021": 1,
     "bankruptcy-2006": 1,
+    "blood-donation-1998": 1,
     "civl-2020": 1,
     "cl-2013": 1,
     "cl-2023": 4,
@@ -778,7 +806,9 @@
     "securities-2019": 1,
     "social-ins-2018": 1,
     "tax-admin-2015": 1,
+    "tcm-2017": 1,
     "tourism-2018": 1,
+    "trade-union-2021": 1,
     "trademark-2026": 1,
     "unfair-competition-2025": 1,
     "vaccine-2019": 1,

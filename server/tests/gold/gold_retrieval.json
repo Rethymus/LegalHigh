@@ -4683,6 +4683,171 @@
         }
       ],
       "note": "2026-09-18 增：给据邮件查询与赔偿处理程序第49条。"
+    },
+    {
+      "id": "gold-tu-basic-duty",
+      "question": "工会的基本职责是什么",
+      "expect": [
+        {
+          "law_id": "trade-union-2021",
+          "no": 6
+        }
+      ],
+      "note": "2026-09-18 增：维护职工合法权益竭诚服务职工群众+平等协商集体合同制度第6条。"
+    },
+    {
+      "id": "gold-tu-collective-contract",
+      "question": "集体合同是工会代表职工签的吗",
+      "expect": [
+        {
+          "law_id": "trade-union-2021",
+          "no": 21
+        }
+      ],
+      "note": "2026-09-18 增：工会帮助指导签订劳动合同+代表职工平等协商签订集体合同第21条。"
+    },
+    {
+      "id": "gold-tu-grassroots-setup",
+      "question": "单位有多少会员要建立基层工会",
+      "expect": [
+        {
+          "law_id": "trade-union-2021",
+          "no": 11
+        }
+      ],
+      "note": "2026-09-18 增：会员二十五人以上应当建立基层工会委员会第11条。"
+    },
+    {
+      "id": "gold-tu-women-workers",
+      "question": "工会要保护女职工权益吗",
+      "expect": [
+        {
+          "law_id": "trade-union-2021",
+          "no": 23
+        }
+      ],
+      "note": "2026-09-18 增：女职工委员会与女职工权益维护第23条。词法鸿沟实录：问法以条文第23条女职工委员会为锚（6/11/39 均有女职工词面，实测后定锚）。"
+    },
+    {
+      "id": "gold-tu-labor-dispute",
+      "question": "劳动争议工会能帮职工打官司吗",
+      "expect": [
+        {
+          "law_id": "trade-union-2021",
+          "no": 29
+        }
+      ],
+      "note": "2026-09-18 增：工会职工法律援助与代理第29条。"
+    },
+    {
+      "id": "gold-bd-age-range",
+      "question": "献血要多大年龄才行",
+      "expect": [
+        {
+          "law_id": "blood-donation-1998",
+          "no": 2
+        }
+      ],
+      "note": "2026-09-18 增：无偿献血制度+十八至五十五周岁健康公民自愿献血第2条。词法鸿沟实录：多大年龄 vs 十八周岁至五十五周岁。"
+    },
+    {
+      "id": "gold-bd-free-clinical",
+      "question": "无偿献血者自己用血免费吗家属呢",
+      "expect": [
+        {
+          "law_id": "blood-donation-1998",
+          "no": 14
+        }
+      ],
+      "note": "2026-09-18 增：无偿献血者临床免费用血+配偶直系亲属减免第14条。"
+    },
+    {
+      "id": "gold-bd-organize",
+      "question": "单位要组织员工参加献血吗",
+      "expect": [
+        {
+          "law_id": "blood-donation-1998",
+          "no": 6
+        }
+      ],
+      "note": "2026-09-18 增：动员组织适龄公民献血+献血者补助第6条。"
+    },
+    {
+      "id": "gold-bd-reward",
+      "question": "积极参加献血会得到奖励吗",
+      "expect": [
+        {
+          "law_id": "blood-donation-1998",
+          "no": 17
+        }
+      ],
+      "note": "2026-09-18 增：政府和红十字会对献血显著成绩者奖励第17条。"
+    },
+    {
+      "id": "gold-bd-mutual-aid",
+      "question": "临床用血互助献血是怎么回事",
+      "expect": [
+        {
+          "law_id": "blood-donation-1998",
+          "no": 15
+        }
+      ],
+      "note": "2026-09-18 增：互助献血制度第15条。"
+    },
+    {
+      "id": "gold-tcm-clinic-record",
+      "question": "开中医诊所要审批还是备案",
+      "expect": [
+        {
+          "law_id": "tcm-2017",
+          "no": 14
+        }
+      ],
+      "note": "2026-09-18 增：中医诊所备案制（报县级中医药主管部门备案即可执业）第14条。"
+    },
+    {
+      "id": "gold-tcm-master-apprentice",
+      "question": "师承学中医能考医师资格吗",
+      "expect": [
+        {
+          "law_id": "tcm-2017",
+          "no": 15
+        }
+      ],
+      "note": "2026-09-18 增：师承/多年实践医术确有专长人员考核取得中医医师资格第15条。"
+    },
+    {
+      "id": "gold-tcm-classic-formula",
+      "question": "古代经典名方制剂申报有什么优惠",
+      "expect": [
+        {
+          "law_id": "tcm-2017",
+          "no": 30
+        }
+      ],
+      "note": "2026-09-18 增：经典名方复方制剂仅需非临床安全性研究资料第30条。"
+    },
+    {
+      "id": "gold-tcm-processing",
+      "question": "中药饮片传统炮制工艺受保护吗",
+      "expect": [
+        {
+          "law_id": "tcm-2017",
+          "no": 27
+        }
+      ],
+      "note": "2026-09-18 增：保护中药饮片传统炮制技术和工艺第27条。"
+    },
+    {
+      "id": "gold-tcm-integration",
+      "question": "国家鼓励中西医结合吗",
+      "expect": [
+        {
+          "law_id": "tcm-2017",
+          "no": 3
+        }
+      ],
+      "note": "2026-09-18 增：中西医并重/鼓励中西医结合第3条。"
     }
   ]
 }

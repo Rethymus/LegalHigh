@@ -112,6 +112,9 @@ LAW_FILES = {
     "education_2021_lawtext_md": "lawtext_教育法2021.md",  # 教育法 2021 修正（R153）
     "community_correction_2020_lawtext_md": "lawtext_社区矫正法2020.md",  # 社区矫正法 2019（R153）
     "postal_2015_lawtext_md": "lawtext_邮政法2015.md",  # 邮政法 2015 修正（R153）
+    "trade_union_2021_lawtext_md": "lawtext_工会法2021.md",  # 工会法 2021 修正（R154）
+    "blood_donation_1998_lawtext_md": "lawtext_献血法1998.md",  # 献血法 1997（R154）
+    "tcm_2017_lawtext_md": "lawtext_中医药法2017.md",  # 中医药法 2016（R154）
     "cl_ws_html": "ws_刑法2023.html",
 }
 
@@ -444,6 +447,9 @@ EXPECTED_COUNTS = {
     "education-2021": 86,
     "community-correction-2020": 63,
     "postal-2015": 87,
+    "trade-union-2021": 58,
+    "blood-donation-1998": 24,
+    "tcm-2017": 63,
     "crpl-imp-2024": 53,
     "genai-2023": 24,
     "pipl-2021": 74,
@@ -1032,6 +1038,33 @@ def main():
                 "effective_date": "2015-04-24",
             },
             "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf7bb6307f3",
+        ),
+        build_lawtext_md_law(
+            "trade_union_2021_lawtext_md", "trade-union-2021", "中华人民共和国工会法",
+            {
+                "status": "现行有效（2021修正）",
+                "promulgation": {"date": "2021-12-24", "organ": "全国人民代表大会"},
+                "effective_date": "2022-01-01",
+            },
+            "https://flk.npc.gov.cn/detail?id=ff8081817f072a2e017f0ae1a7f600f0",
+        ),
+        build_lawtext_md_law(
+            "blood_donation_1998_lawtext_md", "blood-donation-1998", "中华人民共和国献血法",
+            {
+                "status": "现行有效",
+                "promulgation": {"date": "1997-12-29", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "1998-10-01",
+            },
+            "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf5e71801f9",
+        ),
+        build_lawtext_md_law(
+            "tcm_2017_lawtext_md", "tcm-2017", "中华人民共和国中医药法",
+            {
+                "status": "现行有效",
+                "promulgation": {"date": "2016-12-25", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "2017-07-01",
+            },
+            "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf8382809ab",
         ),
         build_wikisource_html_law(
             "minor_ws_html", "con-2018", "中华人民共和国宪法",

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-18T19:00:02.867251",
+  "built_at": "2026-09-18T19:19:21.945769",
   "fetch_date": "2026-09-08",
   "laws": [
     {
@@ -1504,6 +1504,75 @@
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "0812d212ebdcc3fe25ff3bb093c442384022c3534751f135cfe9ecd109435ae6",
       "output_sha256": "88e78e78bc72f0203e11a0575a38da29ded88b9d10de42687e30edc38591449a"
+    },
+    {
+      "law_id": "trade-union-2021",
+      "title": "中华人民共和国工会法",
+      "status": "现行有效（2021修正）",
+      "effective_date": "2022-01-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国工会法",
+        "url": "https://flk.npc.gov.cn/detail?id=ff8081817f072a2e017f0ae1a7f600f0",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2021修正）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 58,
+      "expected_count": 58,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=ff8081817f072a2e017f0ae1a7f600f0",
+      "snapshot": "docs/research/evidence/lawtext_工会法2021.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "9200549957d2c97204964f697e629a02ef72c74ff064e7508b4c45502dc7c0d4",
+      "output_sha256": "a840a5899402f656ea534eeed317049e0db1c7738f7ffba9a5d6d7502967b7ee"
+    },
+    {
+      "law_id": "blood-donation-1998",
+      "title": "中华人民共和国献血法",
+      "status": "现行有效",
+      "effective_date": "1998-10-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国献血法",
+        "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf5e71801f9",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效"
+      },
+      "promulgation_instrument": null,
+      "article_count": 24,
+      "expected_count": 24,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf5e71801f9",
+      "snapshot": "docs/research/evidence/lawtext_献血法1998.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "125157ccd3b57b518ee20bf7fe3042c8ee559bbc5515d7bfb74ab819afacec76",
+      "output_sha256": "a8b327a2ea75d7b8a0f8fb27651e45fcc824ca7b7f82ae71148d772b5a3de46a"
+    },
+    {
+      "law_id": "tcm-2017",
+      "title": "中华人民共和国中医药法",
+      "status": "现行有效",
+      "effective_date": "2017-07-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国中医药法",
+        "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf8382809ab",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效"
+      },
+      "promulgation_instrument": null,
+      "article_count": 63,
+      "expected_count": 63,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf8382809ab",
+      "snapshot": "docs/research/evidence/lawtext_中医药法2017.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "b0ee626f01a8f4ddaf18f8c001c47e270289b704c7a93b754e636dcdbbe5507a",
+      "output_sha256": "0011365db6f448d2ba1b375a791196c5f1df0e2568ba5ba8f59288694c96e008"
     },
     {
       "law_id": "con-2018",

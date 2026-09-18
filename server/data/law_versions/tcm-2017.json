@@ -1,0 +1,26 @@
+{
+  "law_id": "tcm-2017",
+  "title": "中华人民共和国中医药法",
+  "schema_version": 1,
+  "note": "R154（2026-09-18）劳动与健康批次：经 lawtext（flk DOCX 转录）链入库。",
+  "versions": [
+    {
+      "version_id": "current",
+      "label": "2016 制定",
+      "status": "现行有效",
+      "promulgation_date": "2016-12-25",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2017-07-01",
+      "article_count": 63,
+      "current": true,
+      "evidence": {
+        "kind": "flk-docx-transcription",
+        "grade": "中",
+        "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf8382809ab",
+        "accessed_at": "2026-09-18",
+        "snapshot": "docs/research/evidence/lawtext_中医药法2017.md"
+      }
+    }
+  ],
+  "pending_note": "2016 制定以来未再修正。中医药服务与中药保护管理基础法。"
+}

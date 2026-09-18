@@ -1,0 +1,26 @@
+{
+  "law_id": "blood-donation-1998",
+  "title": "中华人民共和国献血法",
+  "schema_version": 1,
+  "note": "R154（2026-09-18）劳动与健康批次：经 lawtext（flk DOCX 转录）链入库。",
+  "versions": [
+    {
+      "version_id": "current",
+      "label": "1997 制定",
+      "status": "现行有效",
+      "promulgation_date": "1997-12-29",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "1998-10-01",
+      "article_count": 24,
+      "current": true,
+      "evidence": {
+        "kind": "flk-docx-transcription",
+        "grade": "中",
+        "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf5e71801f9",
+        "accessed_at": "2026-09-18",
+        "snapshot": "docs/research/evidence/lawtext_献血法1998.md"
+      }
+    }
+  ],
+  "pending_note": "1997 制定以来未再修正（24 条小法）。无偿献血制度与献血者权益基础法。"
+}

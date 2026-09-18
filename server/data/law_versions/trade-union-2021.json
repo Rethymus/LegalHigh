@@ -1,0 +1,26 @@
+{
+  "law_id": "trade-union-2021",
+  "title": "中华人民共和国工会法",
+  "schema_version": 1,
+  "note": "R154（2026-09-18）劳动与健康批次：经 lawtext（flk DOCX 转录）链入库。",
+  "versions": [
+    {
+      "version_id": "current",
+      "label": "2021 修正",
+      "status": "现行有效（2021修正）",
+      "promulgation_date": "2021-12-24",
+      "promulgation_organ": "全国人民代表大会",
+      "effective_date": "2022-01-01",
+      "article_count": 58,
+      "current": true,
+      "evidence": {
+        "kind": "flk-docx-transcription",
+        "grade": "中",
+        "url": "https://flk.npc.gov.cn/detail?id=ff8081817f072a2e017f0ae1a7f600f0",
+        "accessed_at": "2026-09-18",
+        "snapshot": "docs/research/evidence/lawtext_工会法2021.md"
+      }
+    }
+  ],
+  "pending_note": "1992 原版与 2001/2009 修正版全文未采集。公布机关依 flk zdjg 与 lawtext author 双源一致登记为全国人民代表大会（1992 制定机关）。"
+}
