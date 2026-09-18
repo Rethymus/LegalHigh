@@ -1,0 +1,26 @@
+{
+  "law_id": "medical-insurance-2027",
+  "title": "中华人民共和国医疗保障法",
+  "schema_version": 1,
+  "note": "R160（2026-09-18）无障碍医保与绿税批次：经 lawtext（flk DOCX 转录）链入库。",
+  "versions": [
+    {
+      "version_id": "current",
+      "label": "2026 制定",
+      "status": "已公布，尚未生效（2027-01-01 施行）",
+      "promulgation_date": "2026-08-28",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2027-01-01",
+      "article_count": 56,
+      "current": true,
+      "evidence": {
+        "kind": "flk-docx-transcription",
+        "grade": "中",
+        "url": "https://flk.npc.gov.cn/detail?id=5d298a33dc474da595bf956cec680163",
+        "accessed_at": "2026-09-18",
+        "snapshot": "docs/research/evidence/lawtext_医疗保障法2027.md"
+      }
+    }
+  ],
+  "pending_note": "2026-08-28 公布、2027-01-01 施行——收录时点尚未生效，状态诚实标注（商标法 2026 先例同口径）；生效前不作为现行依据引用。"
+}

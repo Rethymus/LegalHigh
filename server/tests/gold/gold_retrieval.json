@@ -5530,6 +5530,94 @@
         }
       ],
       "note": "2026-09-18 增：完成单位应对重要贡献人员给予奖励和报酬+可规定或约定第44条。"
+    },
+    {
+      "id": "gold-ac-tv-subtitle",
+      "question": "电视台要配同步字幕和手语吗",
+      "expect": [
+        {
+          "law_id": "accessibility-2023",
+          "no": 30
+        }
+      ],
+      "note": "2026-09-18 增：电视台同步字幕+每天至少一次配播手语新闻第30条。"
+    },
+    {
+      "id": "gold-ac-emergency-call",
+      "question": "110和120热线要有无障碍功能吗",
+      "expect": [
+        {
+          "law_id": "accessibility-2023",
+          "no": 35
+        }
+      ],
+      "note": "2026-09-18 增：紧急呼叫系统逐步具备语音大字盲文一键呼叫等无障碍功能第35条。词法鸿沟实录：110/120 非条文词面（报警求助/医疗急救），问法保留。"
+    },
+    {
+      "id": "gold-ac-drug-label",
+      "question": "药品说明书要提供盲文大字版吗",
+      "expect": [
+        {
+          "law_id": "accessibility-2023",
+          "no": 37
+        }
+      ],
+      "note": "2026-09-18 增：药品标签说明书语音大字盲文电子无障碍格式版本第37条。"
+    },
+    {
+      "id": "gold-ac-guide-dog",
+      "question": "盲人带导盲犬能进公共场所坐公交吗",
+      "expect": [
+        {
+          "law_id": "accessibility-2023",
+          "no": 46
+        }
+      ],
+      "note": "2026-09-18 增：为携带导盲犬导听犬辅助犬提供便利第46条。"
+    },
+    {
+      "id": "gold-mi-direct-settlement",
+      "question": "异地就医能直接结算吗",
+      "expect": [
+        {
+          "law_id": "medical-insurance-2027",
+          "no": 32
+        }
+      ],
+      "note": "2026-09-18 增：直接结算机制+联网结算第32条（尚未生效法，金标衡量检索不构成现行依据引用）。"
+    },
+    {
+      "id": "gold-mi-catastrophic",
+      "question": "大病高额医疗费用有进一步保障吗",
+      "expect": [
+        {
+          "law_id": "medical-insurance-2027",
+          "no": 16
+        }
+      ],
+      "note": "2026-09-18 增：职工大额补助/居民大病保险进一步保障第16条（尚未生效法，同上口径）。"
+    },
+    {
+      "id": "gold-et-taxable",
+      "question": "环境保护税的应税污染物是哪几类",
+      "expect": [
+        {
+          "law_id": "env-tax-2025",
+          "no": 3
+        }
+      ],
+      "note": "2026-09-18 增：应税污染物四类（大气/水/固体废物/噪声）第3条。词法鸿沟实录：初拟「环保税对什么征税」（环保税=缩略词）未入 top5，改题 rank1。"
+    },
+    {
+      "id": "gold-et-reduction",
+      "question": "排放浓度低能减征环保税吗",
+      "expect": [
+        {
+          "law_id": "env-tax-2025",
+          "no": 13
+        }
+      ],
+      "note": "2026-09-18 增：低于排放标准30%减按75%/50%征收第13条。"
     }
   ]
 }

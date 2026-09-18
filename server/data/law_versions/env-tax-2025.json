@@ -1,0 +1,26 @@
+{
+  "law_id": "env-tax-2025",
+  "title": "中华人民共和国环境保护税法",
+  "schema_version": 1,
+  "note": "R160（2026-09-18）无障碍医保与绿税批次：经 lawtext（flk DOCX 转录）链入库。",
+  "versions": [
+    {
+      "version_id": "current",
+      "label": "2025 修正",
+      "status": "现行有效（2025修正）",
+      "promulgation_date": "2025-10-28",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2025-10-28",
+      "article_count": 29,
+      "current": true,
+      "evidence": {
+        "kind": "flk-docx-transcription",
+        "grade": "中",
+        "url": "https://flk.npc.gov.cn/detail?id=6bae366fd9f94fbf9450c48a68bfc68a",
+        "accessed_at": "2026-09-18",
+        "snapshot": "docs/research/evidence/lawtext_环境保护税法2025.md"
+      }
+    }
+  ],
+  "pending_note": "2016 原版全文未采集（2025 修正公布即施行，flk sxrq 自证）。绿色税制。"
+}

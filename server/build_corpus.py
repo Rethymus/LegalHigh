@@ -130,6 +130,9 @@ LAW_FILES = {
     "metrology_2018_lawtext_md": "lawtext_计量法2018.md",  # 计量法 2018 修正（R159）
     "standardization_2017_lawtext_md": "lawtext_标准化法2017.md",  # 标准化法 2017 修订（R159）
     "tech_transfer_2015_lawtext_md": "lawtext_促进科技成果转化法2015.md",  # 促进科技成果转化法 2015 修正（R159）
+    "accessibility_2023_lawtext_md": "lawtext_无障碍环境建设法2023.md",  # 无障碍环境建设法 2023（R160）
+    "medical_insurance_2027_lawtext_md": "lawtext_医疗保障法2027.md",  # 医疗保障法 2026 公布 2027 施行（R160，尚未生效诚实标注）
+    "env_tax_2025_lawtext_md": "lawtext_环境保护税法2025.md",  # 环境保护税法 2025 修正（R160）
     "cl_ws_html": "ws_刑法2023.html",
 }
 
@@ -480,6 +483,9 @@ EXPECTED_COUNTS = {
     "metrology-2018": 34,
     "standardization-2017": 45,
     "tech-transfer-2015": 52,
+    "accessibility-2023": 72,
+    "medical-insurance-2027": 56,
+    "env-tax-2025": 29,
     "crpl-imp-2024": 53,
     "genai-2023": 24,
     "pipl-2021": 74,
@@ -1230,6 +1236,33 @@ def main():
                 "effective_date": "2015-10-01",
             },
             "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf7e3540843",
+        ),
+        build_lawtext_md_law(
+            "accessibility_2023_lawtext_md", "accessibility-2023", "中华人民共和国无障碍环境建设法",
+            {
+                "status": "现行有效",
+                "promulgation": {"date": "2023-06-28", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "2023-09-01",
+            },
+            "https://flk.npc.gov.cn/detail?id=ff80818188d7430b0189018493370940",
+        ),
+        build_lawtext_md_law(
+            "medical_insurance_2027_lawtext_md", "medical-insurance-2027", "中华人民共和国医疗保障法",
+            {
+                "status": "已公布，尚未生效（2027-01-01 施行）",
+                "promulgation": {"date": "2026-08-28", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "2027-01-01",
+            },
+            "https://flk.npc.gov.cn/detail?id=5d298a33dc474da595bf956cec680163",
+        ),
+        build_lawtext_md_law(
+            "env_tax_2025_lawtext_md", "env-tax-2025", "中华人民共和国环境保护税法",
+            {
+                "status": "现行有效（2025修正）",
+                "promulgation": {"date": "2025-10-28", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "2025-10-28",
+            },
+            "https://flk.npc.gov.cn/detail?id=6bae366fd9f94fbf9450c48a68bfc68a",
         ),
         build_wikisource_html_law(
             "minor_ws_html", "con-2018", "中华人民共和国宪法",

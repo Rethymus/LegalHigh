@@ -1,0 +1,26 @@
+{
+  "law_id": "accessibility-2023",
+  "title": "中华人民共和国无障碍环境建设法",
+  "schema_version": 1,
+  "note": "R160（2026-09-18）无障碍医保与绿税批次：经 lawtext（flk DOCX 转录）链入库。",
+  "versions": [
+    {
+      "version_id": "current",
+      "label": "2023 制定",
+      "status": "现行有效",
+      "promulgation_date": "2023-06-28",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2023-09-01",
+      "article_count": 72,
+      "current": true,
+      "evidence": {
+        "kind": "flk-docx-transcription",
+        "grade": "中",
+        "url": "https://flk.npc.gov.cn/detail?id=ff80818188d7430b0189018493370940",
+        "accessed_at": "2026-09-18",
+        "snapshot": "docs/research/evidence/lawtext_无障碍环境建设法2023.md"
+      }
+    }
+  ],
+  "pending_note": "2023 制定以来未再修正。无障碍设施建设/信息交流/社区服务。"
+}

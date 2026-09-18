@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-18T21:35:17.910430",
+  "built_at": "2026-09-18T22:03:09.835130",
   "fetch_date": "2026-09-08",
   "laws": [
     {
@@ -1918,6 +1918,75 @@
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "6c6642e30892f844818b2e188a8f65e6ab800bc94930993f5aff12e1ba91ef42",
       "output_sha256": "a47b591f307980c227a0f58bffe2b059cc234ab57a1093d84144c7b12ef9e3b8"
+    },
+    {
+      "law_id": "accessibility-2023",
+      "title": "中华人民共和国无障碍环境建设法",
+      "status": "现行有效",
+      "effective_date": "2023-09-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国无障碍环境建设法",
+        "url": "https://flk.npc.gov.cn/detail?id=ff80818188d7430b0189018493370940",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效"
+      },
+      "promulgation_instrument": null,
+      "article_count": 72,
+      "expected_count": 72,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=ff80818188d7430b0189018493370940",
+      "snapshot": "docs/research/evidence/lawtext_无障碍环境建设法2023.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "d3dd69edfa92a99acde21259fe0c25acd81057902f8462d172254e624eb759ee",
+      "output_sha256": "9d28bca52c61d686d4afe9b1e228bca0a62b3478630081ee33bb6d22b4239790"
+    },
+    {
+      "law_id": "medical-insurance-2027",
+      "title": "中华人民共和国医疗保障法",
+      "status": "已公布，尚未生效（2027-01-01 施行）",
+      "effective_date": "2027-01-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国医疗保障法",
+        "url": "https://flk.npc.gov.cn/detail?id=5d298a33dc474da595bf956cec680163",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "已公布，尚未生效（2027-01-01 施行）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 56,
+      "expected_count": 56,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=5d298a33dc474da595bf956cec680163",
+      "snapshot": "docs/research/evidence/lawtext_医疗保障法2027.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "a464317459cc67dd8406c79e926539874af55e3937fdf14cd6e7e5588ee6ecdb",
+      "output_sha256": "63184668f76396b1172bede75b88509d868902b4b6ce6517e4c7df2a6a7cf3a3"
+    },
+    {
+      "law_id": "env-tax-2025",
+      "title": "中华人民共和国环境保护税法",
+      "status": "现行有效（2025修正）",
+      "effective_date": "2025-10-28",
+      "effective_date_evidence": {
+        "title": "中华人民共和国环境保护税法",
+        "url": "https://flk.npc.gov.cn/detail?id=6bae366fd9f94fbf9450c48a68bfc68a",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2025修正）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 29,
+      "expected_count": 29,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=6bae366fd9f94fbf9450c48a68bfc68a",
+      "snapshot": "docs/research/evidence/lawtext_环境保护税法2025.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "27e872566754929d6aaca904730e867ce5da7a8673a56ad8c588d9cd175bdee9",
+      "output_sha256": "31c26f5120fac866bb2e017633a8a02a2e4f76a336573e7b480d9de1b4fa9320"
     },
     {
       "law_id": "con-2018",

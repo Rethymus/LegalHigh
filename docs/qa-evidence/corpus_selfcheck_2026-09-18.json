@@ -748,6 +748,33 @@
       "no_effective_date": false,
       "effective_date_evidence_valid": true
     },
+    "accessibility-2023": {
+      "manifest_count": 72,
+      "actual_count": 72,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "medical-insurance-2027": {
+      "manifest_count": 56,
+      "actual_count": 56,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "env-tax-2025": {
+      "manifest_count": 29,
+      "actual_count": 29,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
     "con-2018": {
       "manifest_count": 143,
       "actual_count": 143,
@@ -870,6 +897,7 @@
   "problems": [],
   "version_registries": {
     "academic-degree-2024": 1,
+    "accessibility-2023": 1,
     "accounting-2024": 1,
     "admin-litigation-2017": 2,
     "admin-review-2023": 4,
@@ -907,6 +935,7 @@
     "education-2021": 1,
     "elderly-2018": 1,
     "emergency-2024": 1,
+    "env-tax-2025": 1,
     "environment-2014": 1,
     "family-edu-2021": 1,
     "family-plan-2021": 1,
@@ -926,6 +955,7 @@
     "martyrs-2018": 1,
     "maternal-infant-2017": 1,
     "mediation-2010": 1,
+    "medical-insurance-2027": 1,
     "mental-health-2018": 1,
     "metrology-2018": 1,
     "mine-safety-2009": 1,
