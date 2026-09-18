@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-17T20:17:41.739986",
+  "built_at": "2026-09-18T10:23:36.153378",
   "fetch_date": "2026-09-08",
   "laws": [
     {
@@ -1228,6 +1228,75 @@
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "abaf021f1c0d8bdac316e99b34af15d9722d1f9f52ab2e0ae26f2e6e6712e63c",
       "output_sha256": "36f85d679e84f1b5280a2ab62abef09ce2712c3fcb6db641d7133056e6200cec"
+    },
+    {
+      "law_id": "audit-2021",
+      "title": "中华人民共和国审计法",
+      "status": "现行有效（2021修正）",
+      "effective_date": "2022-01-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国审计法",
+        "url": "https://flk.npc.gov.cn/detail?id=ff8081817d99a43a017dbd2663521c3f",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2021修正）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 60,
+      "expected_count": 60,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=ff8081817d99a43a017dbd2663521c3f",
+      "snapshot": "docs/research/evidence/lawtext_审计法2021.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "a87b44a9d042098b6e4c6fd0ed8965cd1a6193cb4dd6d9d4597e155448ceba83",
+      "output_sha256": "e99c4a466b3d7ec727b5f7fe00027555729462cb16cfb774b3524314e7d84566"
+    },
+    {
+      "law_id": "aml-2024",
+      "title": "中华人民共和国反洗钱法",
+      "status": "现行有效（2024修订）",
+      "effective_date": "2025-01-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国反洗钱法",
+        "url": "https://flk.npc.gov.cn/detail?id=ff808181927b2d1a01930c84b1c96d8b",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2024修订）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 65,
+      "expected_count": 65,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=ff808181927b2d1a01930c84b1c96d8b",
+      "snapshot": "docs/research/evidence/lawtext_反洗钱法2024.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "1fb62c349dce669e70c7478ff95aa755c994d07232acc753aea26c841abc059e",
+      "output_sha256": "5c5311665ee052b5237cf012966a45cd14cbd26d175e544945a03b7f3cc89e4d"
+    },
+    {
+      "law_id": "academic-degree-2024",
+      "title": "中华人民共和国学位法",
+      "status": "现行有效",
+      "effective_date": "2025-01-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国学位法",
+        "url": "https://flk.npc.gov.cn/detail?id=ff8081818d6a424b018f1a63b49a796a",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效"
+      },
+      "promulgation_instrument": null,
+      "article_count": 45,
+      "expected_count": 45,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=ff8081818d6a424b018f1a63b49a796a",
+      "snapshot": "docs/research/evidence/lawtext_学位法2024.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "9e61746b8bc7adfcd785a2c68757622290062b72ceeb2a1870f95c8626db6494",
+      "output_sha256": "6340e941d2801f77fb47b6c146571a8c65a902eaf9e648d02c41e0ceca365836"
     },
     {
       "law_id": "con-2018",

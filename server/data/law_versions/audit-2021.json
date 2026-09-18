@@ -1,0 +1,26 @@
+{
+  "law_id": "audit-2021",
+  "title": "中华人民共和国审计法",
+  "schema_version": 1,
+  "note": "R149（2026-09-17）监督与教育批次：经 lawtext（flk DOCX 转录）链入库。",
+  "versions": [
+    {
+      "version_id": "current",
+      "label": "2021 修正",
+      "status": "现行有效（2021修正）",
+      "promulgation_date": "2021-10-23",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2022-01-01",
+      "article_count": 60,
+      "current": true,
+      "evidence": {
+        "kind": "flk-docx-transcription",
+        "grade": "中",
+        "url": "https://flk.npc.gov.cn/detail?id=ff8081817d99a43a017dbd2663521c3f",
+        "accessed_at": "2026-09-17",
+        "snapshot": "docs/research/evidence/lawtext_审计法2021.md"
+      }
+    }
+  ],
+  "pending_note": "1994 通过原版与 2006 修正版全文未采集。2021 修正决定施行日 2022-01-01（flk sxrq）；附则自载 1995-01-01 原版施行日跨修正沿用、对本版语义误导，两说存档（R136 先例）。R149 lawtext 链入库。"
+}

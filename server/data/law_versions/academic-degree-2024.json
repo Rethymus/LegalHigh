@@ -1,0 +1,26 @@
+{
+  "law_id": "academic-degree-2024",
+  "title": "中华人民共和国学位法",
+  "schema_version": 1,
+  "note": "R149（2026-09-17）监督与教育批次：经 lawtext（flk DOCX 转录）链入库。",
+  "versions": [
+    {
+      "version_id": "current",
+      "label": "2024 通过",
+      "status": "现行有效",
+      "promulgation_date": "2024-04-26",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2025-01-01",
+      "article_count": 45,
+      "current": true,
+      "evidence": {
+        "kind": "flk-docx-transcription",
+        "grade": "中",
+        "url": "https://flk.npc.gov.cn/detail?id=ff8081818d6a424b018f1a63b49a796a",
+        "accessed_at": "2026-09-17",
+        "snapshot": "docs/research/evidence/lawtext_学位法2024.md"
+      }
+    }
+  ],
+  "pending_note": "本法律为 2024 新制定（承继 1980 学位条例制度），施行日 2025-01-01（附则自载与 flk sxrq 一致）；1980 学位条例全文未采集。R149 lawtext 链入库。"
+}

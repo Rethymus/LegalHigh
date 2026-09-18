@@ -100,6 +100,9 @@ LAW_FILES = {
     "work_safety_2021_lawtext_md": "lawtext_安全生产法2021.md",  # 安全生产法 2021 修正（R148）
     "securities_2019_lawtext_md": "lawtext_证券法2019.md",  # 证券法 2019 修订（R148）
     "accounting_2024_lawtext_md": "lawtext_会计法2024.md",  # 会计法 2024 修正（R148）
+    "audit_2021_lawtext_md": "lawtext_审计法2021.md",  # 审计法 2021 修正（R149）
+    "aml_2024_lawtext_md": "lawtext_反洗钱法2024.md",  # 反洗钱法 2024 修订（R149）
+    "academic_degree_2024_lawtext_md": "lawtext_学位法2024.md",  # 学位法 2024（R149）
     "cl_ws_html": "ws_刑法2023.html",
 }
 
@@ -420,6 +423,9 @@ EXPECTED_COUNTS = {
     "work-safety-2021": 119,
     "securities-2019": 226,
     "accounting-2024": 51,
+    "audit-2021": 60,
+    "aml-2024": 65,
+    "academic-degree-2024": 45,
     "crpl-imp-2024": 53,
     "genai-2023": 24,
     "pipl-2021": 74,
@@ -900,6 +906,33 @@ def main():
                 "effective_date": "2000-07-01",
             },
             "https://flk.npc.gov.cn/detail?id=ff8081818d6a46390191686dca9952bf",
+        ),
+        build_lawtext_md_law(
+            "audit_2021_lawtext_md", "audit-2021", "中华人民共和国审计法",
+            {
+                "status": "现行有效（2021修正）",
+                "promulgation": {"date": "2021-10-23", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "2022-01-01",
+            },
+            "https://flk.npc.gov.cn/detail?id=ff8081817d99a43a017dbd2663521c3f",
+        ),
+        build_lawtext_md_law(
+            "aml_2024_lawtext_md", "aml-2024", "中华人民共和国反洗钱法",
+            {
+                "status": "现行有效（2024修订）",
+                "promulgation": {"date": "2024-11-08", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "2025-01-01",
+            },
+            "https://flk.npc.gov.cn/detail?id=ff808181927b2d1a01930c84b1c96d8b",
+        ),
+        build_lawtext_md_law(
+            "academic_degree_2024_lawtext_md", "academic-degree-2024", "中华人民共和国学位法",
+            {
+                "status": "现行有效",
+                "promulgation": {"date": "2024-04-26", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "2025-01-01",
+            },
+            "https://flk.npc.gov.cn/detail?id=ff8081818d6a424b018f1a63b49a796a",
         ),
         build_wikisource_html_law(
             "minor_ws_html", "con-2018", "中华人民共和国宪法",

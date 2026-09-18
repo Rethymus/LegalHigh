@@ -1,0 +1,26 @@
+{
+  "law_id": "aml-2024",
+  "title": "中华人民共和国反洗钱法",
+  "schema_version": 1,
+  "note": "R149（2026-09-17）监督与教育批次：经 lawtext（flk DOCX 转录）链入库。",
+  "versions": [
+    {
+      "version_id": "current",
+      "label": "2024 修订",
+      "status": "现行有效（2024修订）",
+      "promulgation_date": "2024-11-08",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2025-01-01",
+      "article_count": 65,
+      "current": true,
+      "evidence": {
+        "kind": "flk-docx-transcription",
+        "grade": "中",
+        "url": "https://flk.npc.gov.cn/detail?id=ff808181927b2d1a01930c84b1c96d8b",
+        "accessed_at": "2026-09-17",
+        "snapshot": "docs/research/evidence/lawtext_反洗钱法2024.md"
+      }
+    }
+  ],
+  "pending_note": "2006 通过原版全文未采集。2024 全面修订（37→65 条）施行日 2025-01-01（附则自载与 flk sxrq 一致）。R149 lawtext 链入库。"
+}

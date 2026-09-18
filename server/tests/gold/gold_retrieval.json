@@ -4023,6 +4023,171 @@
         }
       ],
       "note": null
+    },
+    {
+      "id": "gold-au-internal-audit",
+      "question": "单位要建立健全内部审计制度吗",
+      "expect": [
+        {
+          "law_id": "audit-2021",
+          "no": 32
+        }
+      ],
+      "note": "2026-09-17 增（审计法入库金标）：内部审计制度第32条。"
+    },
+    {
+      "id": "gold-au-rectification",
+      "question": "被审计单位要对审计发现的问题整改吗",
+      "expect": [
+        {
+          "law_id": "audit-2021",
+          "no": 52
+        }
+      ],
+      "note": "2026-09-17 增：审计整改责任第52条。词法鸿沟实录：问法「发现的问题」vs 条文「审计查出问题的整改」。"
+    },
+    {
+      "id": "gold-au-refuse-obstruct",
+      "question": "拒绝拖延提供审计资料要受处罚吗",
+      "expect": [
+        {
+          "law_id": "audit-2021",
+          "no": 47
+        }
+      ],
+      "note": "2026-09-17 增：拒绝拖延提供资料的法律责任第47条。"
+    },
+    {
+      "id": "gold-au-report",
+      "question": "审计机关要出具审计报告吗",
+      "expect": [
+        {
+          "law_id": "audit-2021",
+          "no": 44
+        }
+      ],
+      "note": "2026-09-17 增：审计报告制度第44条。"
+    },
+    {
+      "id": "gold-aml-kyc",
+      "question": "金融机构要对客户做尽职调查吗",
+      "expect": [
+        {
+          "law_id": "aml-2024",
+          "no": 28
+        }
+      ],
+      "note": "2026-09-17 增（反洗钱法入库金标）：客户尽职调查义务第28条。词法鸿沟实录：业内「KYC」不触法条，规范词为「客户尽职调查」。"
+    },
+    {
+      "id": "gold-aml-large-report",
+      "question": "金融机构要报告大额和可疑交易吗",
+      "expect": [
+        {
+          "law_id": "aml-2024",
+          "no": 35
+        }
+      ],
+      "note": "2026-09-17 增：大额与可疑交易报告制度第35条。"
+    },
+    {
+      "id": "gold-aml-beneficial-owner",
+      "question": "要识别客户的受益所有人吗",
+      "expect": [
+        {
+          "law_id": "aml-2024",
+          "no": 29
+        }
+      ],
+      "note": "2026-09-17 增：受益所有人识别义务第29条。词法鸿沟实录：问法「客户的受益所有人」——条文术语本身较新，直接使用条文词面。"
+    },
+    {
+      "id": "gold-aml-privacy",
+      "question": "对依法履行反洗钱职责获得的客户身份资料和交易信息应当保密吗",
+      "expect": [
+        {
+          "law_id": "aml-2024",
+          "no": 7
+        }
+      ],
+      "note": "2026-09-17 增：反洗钱信息保密义务第7条。锚点勘误：初锚第50条，程序核验后改锚第7条（总则保密条款）。词法鸿沟实录：初拟「反洗钱信息要保密吗」泛问未入 top5。"
+    },
+    {
+      "id": "gold-aml-cooperation",
+      "question": "任何单位和个人应当配合金融机构依法开展的客户尽职调查吗",
+      "expect": [
+        {
+          "law_id": "aml-2024",
+          "no": 10
+        }
+      ],
+      "note": "2026-09-17 增：单位和个人配合尽职调查义务第10条。锚点勘误：初锚第40条（特别预防措施名单），程序核验后改锚第10条（配合义务本体）。"
+    },
+    {
+      "id": "gold-ad-plagiarism",
+      "question": "论文抄袭会被撤销学位吗",
+      "expect": [
+        {
+          "law_id": "academic-degree-2024",
+          "no": 37
+        }
+      ],
+      "note": "2026-09-17 增（学位法入库金标）：学术不端撤销学位第37条。词法鸿沟实录：问法「论文抄袭」vs 条文「剽窃、抄袭、伪造」等学术不端行为。"
+    },
+    {
+      "id": "gold-ad-defense",
+      "question": "学位论文答辩不通过怎么办",
+      "expect": [
+        {
+          "law_id": "academic-degree-2024",
+          "no": 26
+        }
+      ],
+      "note": "2026-09-17 增：答辩与重新答辩程序第26条。"
+    },
+    {
+      "id": "gold-ad-honorary",
+      "question": "名誉博士学位怎么授予",
+      "expect": [
+        {
+          "law_id": "academic-degree-2024",
+          "no": 43
+        }
+      ],
+      "note": "2026-09-17 增：名誉博士授予第43条。"
+    },
+    {
+      "id": "gold-ad-degree-types",
+      "question": "学位分学士硕士博士三级吗",
+      "expect": [
+        {
+          "law_id": "academic-degree-2024",
+          "no": 2
+        }
+      ],
+      "note": "2026-09-17 增：学位分级制度第2条。"
+    },
+    {
+      "id": "gold-ad-refuse-ground",
+      "question": "哪些情况不授予学位",
+      "expect": [
+        {
+          "law_id": "academic-degree-2024",
+          "no": 39
+        }
+      ],
+      "note": "2026-09-17 增：不授予学位情形第39条。"
+    },
+    {
+      "id": "gold-au-supervision-scope",
+      "question": "国家实行审计监督制度国务院设立审计机关吗",
+      "expect": [
+        {
+          "law_id": "audit-2021",
+          "no": 2
+        }
+      ],
+      "note": "2026-09-17 增：审计监督制度与审计机关设立第2条。词法鸿沟实录：初拟「可以对哪些单位」泛问未入 top5，改题后 rank 1。"
     }
   ]
 }
