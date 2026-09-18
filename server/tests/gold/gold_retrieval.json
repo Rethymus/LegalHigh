@@ -5178,6 +5178,171 @@
         }
       ],
       "note": "2026-09-18 增：悔改立功可减刑+重大立功应当减刑情形第29条。"
+    },
+    {
+      "id": "gold-ms-hidden-danger",
+      "question": "矿山企业要对哪些事故隐患采取预防措施",
+      "expect": [
+        {
+          "law_id": "mine-safety-2009",
+          "no": 18
+        }
+      ],
+      "note": "2026-09-18 增：五类事故隐患预防措施（冒顶片帮/瓦斯爆炸/冲击地压/火灾水害/爆破器材）第18条。"
+    },
+    {
+      "id": "gold-ms-underground-women",
+      "question": "矿山井下能用女工和未成年人吗",
+      "expect": [
+        {
+          "law_id": "mine-safety-2009",
+          "no": 29
+        }
+      ],
+      "note": "2026-09-18 增：不得录用未成年人从事井下劳动+女职工特殊劳动保护第29条。"
+    },
+    {
+      "id": "gold-ms-air-detection",
+      "question": "井下空气有毒有害物质要检测吗",
+      "expect": [
+        {
+          "law_id": "mine-safety-2009",
+          "no": 17
+        }
+      ],
+      "note": "2026-09-18 增：作业场所有毒有害物质与井下空气含氧量检测第17条。"
+    },
+    {
+      "id": "gold-ms-rewards",
+      "question": "矿山安全取得显著成绩的会有奖励吗",
+      "expect": [
+        {
+          "law_id": "mine-safety-2009",
+          "no": 6
+        }
+      ],
+      "note": "2026-09-18 增：安全生产/抢险救护/科研显著成绩奖励第6条。"
+    },
+    {
+      "id": "gold-rr-food-security",
+      "question": "国家粮食安全战略是什么",
+      "expect": [
+        {
+          "law_id": "rural-revitalization-2021",
+          "no": 8
+        }
+      ],
+      "note": "2026-09-18 增：以我为主立足国内确保产能适度进口科技支撑+藏粮于地藏粮于技第8条。"
+    },
+    {
+      "id": "gold-rr-urban-settle",
+      "question": "农民进城落户要退出承包地吗",
+      "expect": [
+        {
+          "law_id": "rural-revitalization-2021",
+          "no": 55
+        }
+      ],
+      "note": "2026-09-18 增：不得以退出土地承包经营权等作为进城落户条件第55条。"
+    },
+    {
+      "id": "gold-rr-rural-land",
+      "question": "盘活农村存量建设用地满足什么需求",
+      "expect": [
+        {
+          "law_id": "rural-revitalization-2021",
+          "no": 67
+        }
+      ],
+      "note": "2026-09-18 增：节约集约用地+盘活存量+新增保障机制第67条。"
+    },
+    {
+      "id": "gold-ph-emergency",
+      "question": "医生能拒绝急救处置吗",
+      "expect": [
+        {
+          "law_id": "physicians-2021",
+          "no": 27
+        }
+      ],
+      "note": "2026-09-18 增：紧急救治义务不得拒绝急救处置+紧急情况负责人批准施治第27条。"
+    },
+    {
+      "id": "gold-ph-multi-site",
+      "question": "医师可以在多个医疗机构执业吗",
+      "expect": [
+        {
+          "law_id": "physicians-2021",
+          "no": 15
+        }
+      ],
+      "note": "2026-09-18 增：二个以上机构定期执业以一个为主办理手续+鼓励下沉基层第15条。"
+    },
+    {
+      "id": "gold-ph-consent",
+      "question": "手术前要取得患者明确同意吗",
+      "expect": [
+        {
+          "law_id": "physicians-2021",
+          "no": 25
+        }
+      ],
+      "note": "2026-09-18 增：说明病情医疗风险替代方案+取得明确同意第25条。"
+    },
+    {
+      "id": "gold-ph-registration",
+      "question": "医师执业要注册吗",
+      "expect": [
+        {
+          "law_id": "physicians-2021",
+          "no": 13
+        }
+      ],
+      "note": "2026-09-18 增：医师经注册后执业（锚点以条文文本为准）。"
+    },
+    {
+      "id": "gold-ph-professional-ethos",
+      "question": "医师的职业精神要求是什么",
+      "expect": [
+        {
+          "law_id": "physicians-2021",
+          "no": 3
+        }
+      ],
+      "note": "2026-09-18 增：人民至上生命至上+敬佑生命救死扶伤职业精神第3条。"
+    },
+    {
+      "id": "gold-ph-training",
+      "question": "医师执业活动中享有哪些权利",
+      "expect": [
+        {
+          "law_id": "physicians-2021",
+          "no": 22
+        }
+      ],
+      "note": "2026-09-18 增：执业权利清单（含按规定参加培训接受继续医学教育）第22条。词法鸿沟实录：初拟义务式问法「要接受继续教育吗」未命中，且初锚未经条文预检（22 条实为权利清单——先验后锚纪律的执行偏差被实测抓住），改权利式问法锚定同条。"
+    },
+    {
+      "id": "gold-ms-mine-labor",
+      "question": "矿山企业必须对职工进行安全教育吗",
+      "expect": [
+        {
+          "law_id": "mine-safety-2009",
+          "no": 26
+        }
+      ],
+      "note": "2026-09-18 增：矿山安全教育（锚点以条文文本为准，条号经验证）。"
+    },
+    {
+      "id": "gold-rr-public-services",
+      "question": "农村医疗教育资源要向农村倾斜吗",
+      "expect": [
+        {
+          "law_id": "rural-revitalization-2021",
+          "no": 53
+        }
+      ],
+      "note": "2026-09-18 增：公共教育医疗卫生社会保障资源向农村倾斜+基本公共服务均等化第53条。初锚 33 条未经预检（实为文化产业条款），实查后改锚 53 并改题——先验后锚必须逐条执行不得跳步。"
     }
   ]
 }

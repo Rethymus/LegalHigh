@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-18T20:15:45.077899",
+  "built_at": "2026-09-18T20:35:22.440603",
   "fetch_date": "2026-09-08",
   "laws": [
     {
@@ -1711,6 +1711,75 @@
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "d7e92d78d299d56a0cbaa6bd3519b49474bbf363b97f3edb31986a52bc0dc4a1",
       "output_sha256": "4943fa9b00dcdb794b93155128c43351339619ad99626c9664c8654ba9740139"
+    },
+    {
+      "law_id": "mine-safety-2009",
+      "title": "中华人民共和国矿山安全法",
+      "status": "现行有效（2009修正）",
+      "effective_date": "2009-08-27",
+      "effective_date_evidence": {
+        "title": "中华人民共和国矿山安全法",
+        "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf6b19e04f1",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2009修正）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 50,
+      "expected_count": 50,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf6b19e04f1",
+      "snapshot": "docs/research/evidence/lawtext_矿山安全法2009.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "62f0a832d3477af370319e91982d7017c56b276c59bbb2b8ce70b8b8115c94e4",
+      "output_sha256": "76940f3177e69d6640f77e2799475d92f3e9f74d9a6e0b3e6ccd3a33c01dd2b0"
+    },
+    {
+      "law_id": "rural-revitalization-2021",
+      "title": "中华人民共和国乡村振兴促进法",
+      "status": "现行有效",
+      "effective_date": "2021-06-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国乡村振兴促进法",
+        "url": "https://flk.npc.gov.cn/detail?id=ff80818178efe3620179206d421428ce",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效"
+      },
+      "promulgation_instrument": null,
+      "article_count": 74,
+      "expected_count": 74,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=ff80818178efe3620179206d421428ce",
+      "snapshot": "docs/research/evidence/lawtext_乡村振兴促进法2021.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "0ae32ef7081ba4f6282e6adc87a3191c8b5ae967f66fb7651309932c544456e7",
+      "output_sha256": "e50d2f3c79024f3b3e91fd88eddf2021dda28dd76443253de7bc35601978f1ae"
+    },
+    {
+      "law_id": "physicians-2021",
+      "title": "中华人民共和国医师法",
+      "status": "现行有效",
+      "effective_date": "2022-03-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国医师法",
+        "url": "https://flk.npc.gov.cn/detail?id=ff8081817b6450e6017b657ba9500116",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效"
+      },
+      "promulgation_instrument": null,
+      "article_count": 67,
+      "expected_count": 67,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=ff8081817b6450e6017b657ba9500116",
+      "snapshot": "docs/research/evidence/lawtext_医师法2021.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "2d2037b79365735d201204101ca313866ac5d4e1988007acd967d6fca34d1a8f",
+      "output_sha256": "55cc5606dbfb5d956e38ab150f46122c936ee54c147a1c0d05e4f65ad58f49e3"
     },
     {
       "law_id": "con-2018",

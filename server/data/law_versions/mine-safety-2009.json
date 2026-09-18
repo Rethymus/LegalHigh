@@ -1,0 +1,26 @@
+{
+  "law_id": "mine-safety-2009",
+  "title": "中华人民共和国矿山安全法",
+  "schema_version": 1,
+  "note": "R157（2026-09-18）安全三农与医疗批次：经 lawtext（flk DOCX 转录）链入库。",
+  "versions": [
+    {
+      "version_id": "current",
+      "label": "2009 修正",
+      "status": "现行有效（2009修正）",
+      "promulgation_date": "2009-08-27",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2009-08-27",
+      "article_count": 50,
+      "current": true,
+      "evidence": {
+        "kind": "flk-docx-transcription",
+        "grade": "中",
+        "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf6b19e04f1",
+        "accessed_at": "2026-09-18",
+        "snapshot": "docs/research/evidence/lawtext_矿山安全法2009.md"
+      }
+    }
+  ],
+  "pending_note": "1992 原版全文未采集（2009 修正公布即施行，flk sxrq 自证）。矿山安全生产基础法。"
+}

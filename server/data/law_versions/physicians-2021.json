@@ -1,0 +1,26 @@
+{
+  "law_id": "physicians-2021",
+  "title": "中华人民共和国医师法",
+  "schema_version": 1,
+  "note": "R157（2026-09-18）安全三农与医疗批次：经 lawtext（flk DOCX 转录）链入库。",
+  "versions": [
+    {
+      "version_id": "current",
+      "label": "2021 制定",
+      "status": "现行有效",
+      "promulgation_date": "2021-08-20",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2022-03-01",
+      "article_count": 67,
+      "current": true,
+      "evidence": {
+        "kind": "flk-docx-transcription",
+        "grade": "中",
+        "url": "https://flk.npc.gov.cn/detail?id=ff8081817b6450e6017b657ba9500116",
+        "accessed_at": "2026-09-18",
+        "snapshot": "docs/research/evidence/lawtext_医师法2021.md"
+      }
+    }
+  ],
+  "pending_note": "承继 1998 执业医师法（lawtext 该条目 status=已废止，本库不收废止法）。执业规则/多点执业/紧急救治义务。"
+}

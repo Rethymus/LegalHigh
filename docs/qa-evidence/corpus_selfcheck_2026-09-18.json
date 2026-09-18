@@ -667,6 +667,33 @@
       "no_effective_date": false,
       "effective_date_evidence_valid": true
     },
+    "mine-safety-2009": {
+      "manifest_count": 50,
+      "actual_count": 50,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "rural-revitalization-2021": {
+      "manifest_count": 74,
+      "actual_count": 74,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "physicians-2021": {
+      "manifest_count": 67,
+      "actual_count": 67,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
     "con-2018": {
       "manifest_count": 143,
       "actual_count": 143,
@@ -844,6 +871,7 @@
     "maternal-infant-2017": 1,
     "mediation-2010": 1,
     "mental-health-2018": 1,
+    "mine-safety-2009": 1,
     "minor-2024": 5,
     "negotiable-2004": 1,
     "notary-2017": 1,
@@ -851,6 +879,7 @@
     "patent-2020": 1,
     "pcl-2023": 6,
     "penal-2021": 4,
+    "physicians-2021": 1,
     "pipl-2021": 1,
     "police-2012": 1,
     "postal-2015": 1,
@@ -860,6 +889,7 @@
     "psm-2025": 3,
     "road-safety-2021": 1,
     "rural-land-2018": 1,
+    "rural-revitalization-2021": 1,
     "scl-2012": 3,
     "securities-2019": 1,
     "social-ins-2018": 1,

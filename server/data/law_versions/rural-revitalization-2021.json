@@ -1,0 +1,26 @@
+{
+  "law_id": "rural-revitalization-2021",
+  "title": "中华人民共和国乡村振兴促进法",
+  "schema_version": 1,
+  "note": "R157（2026-09-18）安全三农与医疗批次：经 lawtext（flk DOCX 转录）链入库。",
+  "versions": [
+    {
+      "version_id": "current",
+      "label": "2021 制定",
+      "status": "现行有效",
+      "promulgation_date": "2021-04-29",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2021-06-01",
+      "article_count": 74,
+      "current": true,
+      "evidence": {
+        "kind": "flk-docx-transcription",
+        "grade": "中",
+        "url": "https://flk.npc.gov.cn/detail?id=ff80818178efe3620179206d421428ce",
+        "accessed_at": "2026-09-18",
+        "snapshot": "docs/research/evidence/lawtext_乡村振兴促进法2021.md"
+      }
+    }
+  ],
+  "pending_note": "2021 制定以来未再修正。三农领域促进法（与农村土地承包法构成乡村制度拼图）。"
+}

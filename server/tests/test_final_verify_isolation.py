@@ -27,7 +27,11 @@ def test_final_verify_defaults_to_isolated_database():
         env=env,
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
-        timeout=60,
+        # 2026-09-18 R157 修订 60→180s：冷进程 final_verify 需自起服务并跑全量金标评测
+        # （488 组 + 90 部语料索引），语料增长使固定 60s 不再可靠（R155 观察到的超时
+        # 实为本因，端口独占只是并发条件之一）。验证语义不变——仍然断言 ALL PASS 与
+        # 数据库快照不变。
+        timeout=180,
         check=False,
     )
 
