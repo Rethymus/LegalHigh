@@ -559,6 +559,33 @@
       "no_effective_date": false,
       "effective_date_evidence_valid": true
     },
+    "education-2021": {
+      "manifest_count": 86,
+      "actual_count": 86,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "community-correction-2020": {
+      "manifest_count": 63,
+      "actual_count": 63,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "postal-2015": {
+      "manifest_count": 87,
+      "actual_count": 87,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
     "con-2018": {
       "manifest_count": 143,
       "actual_count": 143,
@@ -697,6 +724,7 @@
     "cl-2013": 1,
     "cl-2023": 4,
     "commercial-bank-2015": 1,
+    "community-correction-2020": 1,
     "company-2023": 1,
     "compulsory-edu-2018": 1,
     "con-2018": 5,
@@ -710,6 +738,7 @@
     "dsl-2021": 1,
     "dv-2015": 1,
     "ecom-2018": 1,
+    "education-2021": 1,
     "elderly-2018": 1,
     "emergency-2024": 1,
     "environment-2014": 1,
@@ -739,6 +768,7 @@
     "penal-2021": 4,
     "pipl-2021": 1,
     "police-2012": 1,
+    "postal-2015": 1,
     "price-1997": 1,
     "product-quality-2018": 1,
     "psm-2025": 3,

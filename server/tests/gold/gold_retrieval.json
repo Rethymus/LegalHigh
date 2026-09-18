@@ -4518,6 +4518,171 @@
         }
       ],
       "note": "2026-09-18 增：同一集体经济组织土地承包经营权互换+备案第33条。"
+    },
+    {
+      "id": "gold-edu-compulsory-9y",
+      "question": "义务教育孩子必须上完九年吗",
+      "expect": [
+        {
+          "law_id": "education-2021",
+          "no": 19
+        }
+      ],
+      "note": "2026-09-18 增：九年制义务教育制度+监护人义务第19条。词法鸿沟实录：初拟「孩子上学要上满几年义务教育」（口语序偏离条文词面）未入 top5，改题 rank2；义务教育法第2条同义竞争为正常形态。"
+    },
+    {
+      "id": "gold-edu-student-rights",
+      "question": "学生有权利获得奖学金助学金吗",
+      "expect": [
+        {
+          "law_id": "education-2021",
+          "no": 43
+        }
+      ],
+      "note": "2026-09-18 增：受教育者权利清单（奖学金贷学金助学金/公正评价/申诉起诉）第43条。"
+    },
+    {
+      "id": "gold-edu-refund-illegal-fee",
+      "question": "学校乱收费要退还给学生吗",
+      "expect": [
+        {
+          "law_id": "education-2021",
+          "no": 78
+        }
+      ],
+      "note": "2026-09-18 增：违规收费责令退还+责任人处分第78条。"
+    },
+    {
+      "id": "gold-edu-teacher-qual",
+      "question": "当老师需要教师资格吗",
+      "expect": [
+        {
+          "law_id": "education-2021",
+          "no": 35
+        }
+      ],
+      "note": "2026-09-18 增：教师资格职务聘任制度第35条。"
+    },
+    {
+      "id": "gold-edu-poor-area-fund",
+      "question": "国家扶持贫困地区义务教育的专项资金",
+      "expect": [
+        {
+          "law_id": "education-2021",
+          "no": 57
+        }
+      ],
+      "note": "2026-09-18 增：教育专项资金重点扶持边远贫困地区第57条。"
+    },
+    {
+      "id": "gold-cc-electronic-monitor",
+      "question": "社区矫正对象什么情况会被戴电子定位",
+      "expect": [
+        {
+          "law_id": "community-correction-2020",
+          "no": 29
+        }
+      ],
+      "note": "2026-09-18 增：电子定位装置使用情形第29条。"
+    },
+    {
+      "id": "gold-cc-leave-county",
+      "question": "社区矫正对象离开所在县市要批准吗",
+      "expect": [
+        {
+          "law_id": "community-correction-2020",
+          "no": 27
+        }
+      ],
+      "note": "2026-09-18 增：离开所居住市县或迁居报经批准第27条。"
+    },
+    {
+      "id": "gold-cc-parole-recommend",
+      "question": "社区矫正对象表现好可以减刑吗",
+      "expect": [
+        {
+          "law_id": "community-correction-2020",
+          "no": 33
+        }
+      ],
+      "note": "2026-09-18 增：符合刑法减刑条件的减刑建议程序第33条。"
+    },
+    {
+      "id": "gold-cc-minor-measures",
+      "question": "对未成年社区矫正对象有什么特殊措施",
+      "expect": [
+        {
+          "law_id": "community-correction-2020",
+          "no": 52
+        }
+      ],
+      "note": "2026-09-18 增：未成年人针对性矫正措施+熟悉未成年人身心特点人员参与第52条。"
+    },
+    {
+      "id": "gold-cc-staff-liability",
+      "question": "社区矫正工作人员收受贿赂怎么处理",
+      "expect": [
+        {
+          "law_id": "community-correction-2020",
+          "no": 61
+        }
+      ],
+      "note": "2026-09-18 增：工作人员违法行为处分/刑责第61条。"
+    },
+    {
+      "id": "gold-postal-compensation",
+      "question": "快递邮件丢了保价按什么赔",
+      "expect": [
+        {
+          "law_id": "postal-2015",
+          "no": 47
+        }
+      ],
+      "note": "2026-09-18 增：给据邮件损失赔偿规则（保价按保价额/未保价按资费三倍）第47条。"
+    },
+    {
+      "id": "gold-postal-no-compensation",
+      "question": "哪些情况邮政企业不承担赔偿责任",
+      "expect": [
+        {
+          "law_id": "postal-2015",
+          "no": 48
+        }
+      ],
+      "note": "2026-09-18 增：免责情形（不可抗力/自然性质/寄件人过错——保价不可抗力除外）第48条。词法鸿沟实录：初拟「不用赔偿」非条文词面「不承担赔偿责任」，改题 rank2；同法相邻赔偿条款竞争上位属预期。"
+    },
+    {
+      "id": "gold-postal-inspection",
+      "question": "寄快递要当场验视内件吗",
+      "expect": [
+        {
+          "law_id": "postal-2015",
+          "no": 25
+        }
+      ],
+      "note": "2026-09-18 增：收寄验视制度（信件外邮件当场验视/拒绝验视不予收寄）第25条。"
+    },
+    {
+      "id": "gold-postal-express-apply",
+      "question": "邮政法关于邮政企业的规定快递企业也适用吗",
+      "expect": [
+        {
+          "law_id": "postal-2015",
+          "no": 59
+        }
+      ],
+      "note": "2026-09-18 增：快递企业准用条款第59条。"
+    },
+    {
+      "id": "gold-postal-query",
+      "question": "邮件可以查询吗丢了怎么办",
+      "expect": [
+        {
+          "law_id": "postal-2015",
+          "no": 49
+        }
+      ],
+      "note": "2026-09-18 增：给据邮件查询与赔偿处理程序第49条。"
     }
   ]
 }

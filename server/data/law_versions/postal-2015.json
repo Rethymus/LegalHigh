@@ -1,0 +1,26 @@
+{
+  "law_id": "postal-2015",
+  "title": "中华人民共和国邮政法",
+  "schema_version": 1,
+  "note": "R153（2026-09-18）教育与民生批次：经 lawtext（flk DOCX 转录）链入库。",
+  "versions": [
+    {
+      "version_id": "current",
+      "label": "2015 修正",
+      "status": "现行有效（2015修正）",
+      "promulgation_date": "2015-04-24",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2015-04-24",
+      "article_count": 87,
+      "current": true,
+      "evidence": {
+        "kind": "flk-docx-transcription",
+        "grade": "中",
+        "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf7bb6307f3",
+        "accessed_at": "2026-09-18",
+        "snapshot": "docs/research/evidence/lawtext_邮政法2015.md"
+      }
+    }
+  ],
+  "pending_note": "1986 原版与 2009 修订版全文未采集。快递业务经营许可与用户权益条款为民生高频。"
+}

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-18T18:39:41.063048",
+  "built_at": "2026-09-18T19:00:02.867251",
   "fetch_date": "2026-09-08",
   "laws": [
     {
@@ -1435,6 +1435,75 @@
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "092f3cf8f776102ea7c09ba8d06d0938c42f1b49080eec4fcf727f1ed2f0bafa",
       "output_sha256": "1ce7b227215f668852dd4db516296326805c2968aa3d333164e9d286bd232987"
+    },
+    {
+      "law_id": "education-2021",
+      "title": "中华人民共和国教育法",
+      "status": "现行有效（2021修正）",
+      "effective_date": "2021-04-30",
+      "effective_date_evidence": {
+        "title": "中华人民共和国教育法",
+        "url": "https://flk.npc.gov.cn/detail?id=ff8081817ab22b8a017abd777cdc05d8",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2021修正）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 86,
+      "expected_count": 86,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=ff8081817ab22b8a017abd777cdc05d8",
+      "snapshot": "docs/research/evidence/lawtext_教育法2021.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "5be65e52143cd98280041fcee06a2bdefb06f6f98f08019c5535b4fd995ddf82",
+      "output_sha256": "fd0dd40bdaa5ff01d682c1c652c651c4afad5f13cf8939bf668e3cd27d8d3c66"
+    },
+    {
+      "law_id": "community-correction-2020",
+      "title": "中华人民共和国社区矫正法",
+      "status": "现行有效",
+      "effective_date": "2020-07-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国社区矫正法",
+        "url": "https://flk.npc.gov.cn/detail?id=ff80808171e9e18101727e4443b37e86",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效"
+      },
+      "promulgation_instrument": null,
+      "article_count": 63,
+      "expected_count": 63,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=ff80808171e9e18101727e4443b37e86",
+      "snapshot": "docs/research/evidence/lawtext_社区矫正法2020.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "830e3bc1e01f9b14d0720d154c0f63707668e6bd94fc4d7e81d6e019d8c64824",
+      "output_sha256": "5b158f00fb3418dd9d7c1c6cd18cea10b2477b30cad508f5a743bfa6ff1b0148"
+    },
+    {
+      "law_id": "postal-2015",
+      "title": "中华人民共和国邮政法",
+      "status": "现行有效（2015修正）",
+      "effective_date": "2015-04-24",
+      "effective_date_evidence": {
+        "title": "中华人民共和国邮政法",
+        "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf7bb6307f3",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2015修正）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 87,
+      "expected_count": 87,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf7bb6307f3",
+      "snapshot": "docs/research/evidence/lawtext_邮政法2015.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "0812d212ebdcc3fe25ff3bb093c442384022c3534751f135cfe9ecd109435ae6",
+      "output_sha256": "88e78e78bc72f0203e11a0575a38da29ded88b9d10de42687e30edc38591449a"
     },
     {
       "law_id": "con-2018",
