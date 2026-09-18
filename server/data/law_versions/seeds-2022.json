@@ -1,0 +1,26 @@
+{
+  "law_id": "seeds-2022",
+  "title": "中华人民共和国种子法",
+  "schema_version": 1,
+  "note": "R161（2026-09-18）学前种子与爱国批次：经 lawtext（flk DOCX 转录）链入库。",
+  "versions": [
+    {
+      "version_id": "current",
+      "label": "2021 修订",
+      "status": "现行有效（2021修订）",
+      "promulgation_date": "2021-12-24",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2022-03-01",
+      "article_count": 92,
+      "current": true,
+      "evidence": {
+        "kind": "flk-docx-transcription",
+        "grade": "中",
+        "url": "https://flk.npc.gov.cn/detail?id=ff8081817f072a2e017f0b66fb640166",
+        "accessed_at": "2026-09-18",
+        "snapshot": "docs/research/evidence/lawtext_种子法2022.md"
+      }
+    }
+  ],
+  "pending_note": "2000 原版与 2004/2013/2015 修正版全文未采集（双 bbbs 按 status 定案 2021 修订版）。**与指导案例 275 号（植物新品种）呼应——可回补深链**。"
+}

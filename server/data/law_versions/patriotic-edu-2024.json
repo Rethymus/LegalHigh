@@ -1,0 +1,26 @@
+{
+  "law_id": "patriotic-edu-2024",
+  "title": "中华人民共和国爱国主义教育法",
+  "schema_version": 1,
+  "note": "R161（2026-09-18）学前种子与爱国批次：经 lawtext（flk DOCX 转录）链入库。",
+  "versions": [
+    {
+      "version_id": "current",
+      "label": "2023 制定",
+      "status": "现行有效",
+      "promulgation_date": "2023-10-24",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2024-01-01",
+      "article_count": 40,
+      "current": true,
+      "evidence": {
+        "kind": "flk-docx-transcription",
+        "grade": "中",
+        "url": "https://flk.npc.gov.cn/detail?id=ff8081818a21dc13018b625b4a68173f",
+        "accessed_at": "2026-09-18",
+        "snapshot": "docs/research/evidence/lawtext_爱国主义教育法2024.md"
+      }
+    }
+  ],
+  "pending_note": "2023 制定以来未再修正。与英烈保护法同域（英烈事迹是爱国主义教育内容）。"
+}

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-18T22:03:09.835130",
+  "built_at": "2026-09-18T22:26:49.580523",
   "fetch_date": "2026-09-08",
   "laws": [
     {
@@ -1987,6 +1987,75 @@
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "27e872566754929d6aaca904730e867ce5da7a8673a56ad8c588d9cd175bdee9",
       "output_sha256": "31c26f5120fac866bb2e017633a8a02a2e4f76a336573e7b480d9de1b4fa9320"
+    },
+    {
+      "law_id": "preschool-edu-2025",
+      "title": "中华人民共和国学前教育法",
+      "status": "现行有效",
+      "effective_date": "2025-06-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国学前教育法",
+        "url": "https://flk.npc.gov.cn/detail?id=ff808181927b083b01930c734c776beb",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效"
+      },
+      "promulgation_instrument": null,
+      "article_count": 85,
+      "expected_count": 85,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=ff808181927b083b01930c734c776beb",
+      "snapshot": "docs/research/evidence/lawtext_学前教育法2025.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "0243029693aa93a23ae10f9ec3717a876eff80d244335c49533a662c5c4f1c0b",
+      "output_sha256": "bd776e711ea3792c1de4f37db1e7e3c558bc119cced76e32c4da32bfe5c69ed1"
+    },
+    {
+      "law_id": "seeds-2022",
+      "title": "中华人民共和国种子法",
+      "status": "现行有效（2021修订）",
+      "effective_date": "2022-03-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国种子法",
+        "url": "https://flk.npc.gov.cn/detail?id=ff8081817f072a2e017f0b66fb640166",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2021修订）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 92,
+      "expected_count": 92,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=ff8081817f072a2e017f0b66fb640166",
+      "snapshot": "docs/research/evidence/lawtext_种子法2022.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "06662c77cdb2f214bca577dfc028dcf6a4160b9ca3d3a2ad2ffdd795210a2d52",
+      "output_sha256": "ee1835305de947d7d50441fc9593b4af0851ef3c388425b64dcb67e1cf88a4cf"
+    },
+    {
+      "law_id": "patriotic-edu-2024",
+      "title": "中华人民共和国爱国主义教育法",
+      "status": "现行有效",
+      "effective_date": "2024-01-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国爱国主义教育法",
+        "url": "https://flk.npc.gov.cn/detail?id=ff8081818a21dc13018b625b4a68173f",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效"
+      },
+      "promulgation_instrument": null,
+      "article_count": 40,
+      "expected_count": 40,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=ff8081818a21dc13018b625b4a68173f",
+      "snapshot": "docs/research/evidence/lawtext_爱国主义教育法2024.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "6856b7f43f8f58ddc5fe58a461c398b80f56a543ed65d90428d98781795e1e35",
+      "output_sha256": "cdcca2123bf932619db7d73f42e84a608f73dadb634d21b81e6390cf405df992"
     },
     {
       "law_id": "con-2018",

@@ -5618,6 +5618,94 @@
         }
       ],
       "note": "2026-09-18 增：低于排放标准30%减按75%/50%征收第13条。"
+    },
+    {
+      "id": "gold-pe-no-primary-schooling",
+      "question": "幼儿园能提前教小学课程吗",
+      "expect": [
+        {
+          "law_id": "preschool-edu-2025",
+          "no": 59
+        }
+      ],
+      "note": "2026-09-18 增：不得采用小学化教育方式/不得教授小学课程+小学零起点教学第59条。"
+    },
+    {
+      "id": "gold-pe-financial-aid",
+      "question": "困难家庭孩子上幼儿园有资助吗",
+      "expect": [
+        {
+          "law_id": "preschool-edu-2025",
+          "no": 65
+        }
+      ],
+      "note": "2026-09-18 增：学前教育资助制度（家庭经济困难适龄儿童普惠资助）第65条。"
+    },
+    {
+      "id": "gold-pe-inclusive-kindergarten",
+      "question": "普惠性民办幼儿园收费受管制吗",
+      "expect": [
+        {
+          "law_id": "preschool-edu-2025",
+          "no": 24
+        }
+      ],
+      "note": "2026-09-18 增：政府扶持普惠民办园+收费政府指导价第24条。"
+    },
+    {
+      "id": "gold-sd-fake-seeds",
+      "question": "卖假种子会怎么处罚",
+      "expect": [
+        {
+          "law_id": "seeds-2022",
+          "no": 74
+        }
+      ],
+      "note": "2026-09-18 增：生产经营假种子责令停止/没收/吊销许可证/罚款第74条。"
+    },
+    {
+      "id": "gold-sd-fake-definition",
+      "question": "什么样的种子算假种子",
+      "expect": [
+        {
+          "law_id": "seeds-2022",
+          "no": 48
+        }
+      ],
+      "note": "2026-09-18 增：假种子界定（非种子冒充/品种不符/无标签）第48条。"
+    },
+    {
+      "id": "gold-sd-new-variety-link",
+      "question": "种子法与植物新品种保护什么关系",
+      "expect": [
+        {
+          "law_id": "seeds-2022",
+          "no": 25
+        }
+      ],
+      "note": "2026-09-18 增：植物新品种保护制度与品种权授予第25条（与指导案例 275 号呼应）。改锚实录：初锚 90 条（用语含义）词面弱未入 top5——25-27 条品种权实体条款词面更强且更切题，改锚后命中；**「问关系」类问法应锚实体制度条而非定义条**。"
+    },
+    {
+      "id": "gold-pt-prohibited-acts",
+      "question": "侮辱国旗丑化英烈违法吗",
+      "expect": [
+        {
+          "law_id": "patriotic-edu-2024",
+          "no": 37
+        }
+      ],
+      "note": "2026-09-18 增：公民组织不得侮辱国旗国歌/歪曲丑化亵渎否定英烈事迹第37条。"
+    },
+    {
+      "id": "gold-pt-memorial-days",
+      "question": "烈士纪念日要举行纪念活动吗",
+      "expect": [
+        {
+          "law_id": "patriotic-edu-2024",
+          "no": 28
+        }
+      ],
+      "note": "2026-09-18 增：重要纪念日纪念仪式（敬献花篮/瞻仰纪念设施/公祭）第28条。"
     }
   ]
 }

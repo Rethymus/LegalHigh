@@ -775,6 +775,33 @@
       "no_effective_date": false,
       "effective_date_evidence_valid": true
     },
+    "preschool-edu-2025": {
+      "manifest_count": 85,
+      "actual_count": 85,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "seeds-2022": {
+      "manifest_count": 92,
+      "actual_count": 92,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "patriotic-edu-2024": {
+      "manifest_count": 40,
+      "actual_count": 40,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
     "con-2018": {
       "manifest_count": 143,
       "actual_count": 143,
@@ -964,12 +991,14 @@
     "notary-2017": 1,
     "partnership-2006": 1,
     "patent-2020": 1,
+    "patriotic-edu-2024": 1,
     "pcl-2023": 6,
     "penal-2021": 4,
     "physicians-2021": 1,
     "pipl-2021": 1,
     "police-2012": 1,
     "postal-2015": 1,
+    "preschool-edu-2025": 1,
     "price-1997": 1,
     "prison-2012": 1,
     "product-quality-2018": 1,
@@ -980,6 +1009,7 @@
     "sci-tech-2021": 1,
     "scl-2012": 3,
     "securities-2019": 1,
+    "seeds-2022": 1,
     "social-ins-2018": 1,
     "special-equipment-2014": 1,
     "standardization-2017": 1,

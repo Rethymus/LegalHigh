@@ -1,0 +1,26 @@
+{
+  "law_id": "preschool-edu-2025",
+  "title": "中华人民共和国学前教育法",
+  "schema_version": 1,
+  "note": "R161（2026-09-18）学前种子与爱国批次：经 lawtext（flk DOCX 转录）链入库。",
+  "versions": [
+    {
+      "version_id": "current",
+      "label": "2024 制定",
+      "status": "现行有效",
+      "promulgation_date": "2024-11-08",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2025-06-01",
+      "article_count": 85,
+      "current": true,
+      "evidence": {
+        "kind": "flk-docx-transcription",
+        "grade": "中",
+        "url": "https://flk.npc.gov.cn/detail?id=ff808181927b083b01930c734c776beb",
+        "accessed_at": "2026-09-18",
+        "snapshot": "docs/research/evidence/lawtext_学前教育法2025.md"
+      }
+    }
+  ],
+  "pending_note": "2024 新制定（填补学前教育立法空白），2025-06-01 施行。普惠性幼儿园/科学保教。"
+}

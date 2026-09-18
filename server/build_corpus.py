@@ -133,6 +133,9 @@ LAW_FILES = {
     "accessibility_2023_lawtext_md": "lawtext_无障碍环境建设法2023.md",  # 无障碍环境建设法 2023（R160）
     "medical_insurance_2027_lawtext_md": "lawtext_医疗保障法2027.md",  # 医疗保障法 2026 公布 2027 施行（R160，尚未生效诚实标注）
     "env_tax_2025_lawtext_md": "lawtext_环境保护税法2025.md",  # 环境保护税法 2025 修正（R160）
+    "preschool_edu_2025_lawtext_md": "lawtext_学前教育法2025.md",  # 学前教育法 2024（R161）
+    "seeds_2022_lawtext_md": "lawtext_种子法2022.md",  # 种子法 2021 修订（R161）
+    "patriotic_edu_2024_lawtext_md": "lawtext_爱国主义教育法2024.md",  # 爱国主义教育法 2023（R161）
     "cl_ws_html": "ws_刑法2023.html",
 }
 
@@ -486,6 +489,9 @@ EXPECTED_COUNTS = {
     "accessibility-2023": 72,
     "medical-insurance-2027": 56,
     "env-tax-2025": 29,
+    "preschool-edu-2025": 85,
+    "seeds-2022": 92,
+    "patriotic-edu-2024": 40,
     "crpl-imp-2024": 53,
     "genai-2023": 24,
     "pipl-2021": 74,
@@ -1263,6 +1269,33 @@ def main():
                 "effective_date": "2025-10-28",
             },
             "https://flk.npc.gov.cn/detail?id=6bae366fd9f94fbf9450c48a68bfc68a",
+        ),
+        build_lawtext_md_law(
+            "preschool_edu_2025_lawtext_md", "preschool-edu-2025", "中华人民共和国学前教育法",
+            {
+                "status": "现行有效",
+                "promulgation": {"date": "2024-11-08", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "2025-06-01",
+            },
+            "https://flk.npc.gov.cn/detail?id=ff808181927b083b01930c734c776beb",
+        ),
+        build_lawtext_md_law(
+            "seeds_2022_lawtext_md", "seeds-2022", "中华人民共和国种子法",
+            {
+                "status": "现行有效（2021修订）",
+                "promulgation": {"date": "2021-12-24", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "2022-03-01",
+            },
+            "https://flk.npc.gov.cn/detail?id=ff8081817f072a2e017f0b66fb640166",
+        ),
+        build_lawtext_md_law(
+            "patriotic_edu_2024_lawtext_md", "patriotic-edu-2024", "中华人民共和国爱国主义教育法",
+            {
+                "status": "现行有效",
+                "promulgation": {"date": "2023-10-24", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "2024-01-01",
+            },
+            "https://flk.npc.gov.cn/detail?id=ff8081818a21dc13018b625b4a68173f",
         ),
         build_wikisource_html_law(
             "minor_ws_html", "con-2018", "中华人民共和国宪法",
