@@ -1,0 +1,26 @@
+{
+  "law_id": "animal-epidemic-2021",
+  "title": "中华人民共和国动物防疫法",
+  "schema_version": 1,
+  "note": "R158（2026-09-18）档案动物与科技批次：经 lawtext（flk DOCX 转录）链入库。",
+  "versions": [
+    {
+      "version_id": "current",
+      "label": "2021 修订",
+      "status": "现行有效（2021修订）",
+      "promulgation_date": "2021-01-22",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2021-05-01",
+      "article_count": 113,
+      "current": true,
+      "evidence": {
+        "kind": "flk-docx-transcription",
+        "grade": "中",
+        "url": "https://flk.npc.gov.cn/detail?id=ff8080817703add2017737395a973e31",
+        "accessed_at": "2026-09-18",
+        "snapshot": "docs/research/evidence/lawtext_动物防疫法2021.md"
+      }
+    }
+  ],
+  "pending_note": "1997 原版与 2007/2013/2015 修正版全文未采集。犬只登记/人畜共患防控/检疫电子出证。"
+}

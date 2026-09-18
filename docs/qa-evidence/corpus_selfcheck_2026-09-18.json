@@ -694,6 +694,33 @@
       "no_effective_date": false,
       "effective_date_evidence_valid": true
     },
+    "archives-2020": {
+      "manifest_count": 53,
+      "actual_count": 53,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "animal-epidemic-2021": {
+      "manifest_count": 113,
+      "actual_count": 113,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "sci-tech-2021": {
+      "manifest_count": 117,
+      "actual_count": 117,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
     "con-2018": {
       "manifest_count": 143,
       "actual_count": 143,
@@ -822,10 +849,12 @@
     "advertising-2021": 1,
     "agri-quality-2022": 1,
     "aml-2024": 1,
+    "animal-epidemic-2021": 1,
     "anti-drug-2008": 1,
     "anti-fraud-2022": 1,
     "anti-monopoly-2022": 1,
     "arbitration-2025": 1,
+    "archives-2020": 1,
     "audit-2021": 1,
     "bankruptcy-2006": 1,
     "blood-donation-1998": 1,
@@ -890,6 +919,7 @@
     "road-safety-2021": 1,
     "rural-land-2018": 1,
     "rural-revitalization-2021": 1,
+    "sci-tech-2021": 1,
     "scl-2012": 3,
     "securities-2019": 1,
     "social-ins-2018": 1,

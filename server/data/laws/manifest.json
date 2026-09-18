@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-18T20:35:22.440603",
+  "built_at": "2026-09-18T21:07:17.199304",
   "fetch_date": "2026-09-08",
   "laws": [
     {
@@ -1780,6 +1780,75 @@
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "2d2037b79365735d201204101ca313866ac5d4e1988007acd967d6fca34d1a8f",
       "output_sha256": "55cc5606dbfb5d956e38ab150f46122c936ee54c147a1c0d05e4f65ad58f49e3"
+    },
+    {
+      "law_id": "archives-2020",
+      "title": "中华人民共和国档案法",
+      "status": "现行有效（2020修订）",
+      "effective_date": "2021-01-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国档案法",
+        "url": "https://flk.npc.gov.cn/detail?id=ff80808172b5f24f0172e4ef05e218d4",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2020修订）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 53,
+      "expected_count": 53,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=ff80808172b5f24f0172e4ef05e218d4",
+      "snapshot": "docs/research/evidence/lawtext_档案法2020.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "f0d5adb4a1aa38e50886848d1110ff9a779d0b9208efc0f29ca2cfde878ced1d",
+      "output_sha256": "1eb10fb6e8757d07dc3972e40b1339f73f1e9814bb680163d0644139468e391f"
+    },
+    {
+      "law_id": "animal-epidemic-2021",
+      "title": "中华人民共和国动物防疫法",
+      "status": "现行有效（2021修订）",
+      "effective_date": "2021-05-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国动物防疫法",
+        "url": "https://flk.npc.gov.cn/detail?id=ff8080817703add2017737395a973e31",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2021修订）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 113,
+      "expected_count": 113,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=ff8080817703add2017737395a973e31",
+      "snapshot": "docs/research/evidence/lawtext_动物防疫法2021.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "53fab3195fe832663a8e26d6c30bc3e498df7a009b8458fd188d2ed9c0f8ca20",
+      "output_sha256": "3cb4d65c8351c63c54b2bba8a39d1098f13c750910f0822115eb82fa1544830f"
+    },
+    {
+      "law_id": "sci-tech-2021",
+      "title": "中华人民共和国科学技术进步法",
+      "status": "现行有效（2021修订）",
+      "effective_date": "2022-01-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国科学技术进步法",
+        "url": "https://flk.npc.gov.cn/detail?id=ff8081817d99a39f017dec555db834da",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2021修订）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 117,
+      "expected_count": 117,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=ff8081817d99a39f017dec555db834da",
+      "snapshot": "docs/research/evidence/lawtext_科学技术进步法2021.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "8ed04feb2ce8d8ee8becaf4c8cc6aebac7da540de116a8ac6f872058fe57155c",
+      "output_sha256": "eb1719224760c8b161714b17fb98d5f124ab33d945ed78848761e44a7a98887e"
     },
     {
       "law_id": "con-2018",

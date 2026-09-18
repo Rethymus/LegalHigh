@@ -1,0 +1,26 @@
+{
+  "law_id": "archives-2020",
+  "title": "中华人民共和国档案法",
+  "schema_version": 1,
+  "note": "R158（2026-09-18）档案动物与科技批次：经 lawtext（flk DOCX 转录）链入库。",
+  "versions": [
+    {
+      "version_id": "current",
+      "label": "2020 修订",
+      "status": "现行有效（2020修订）",
+      "promulgation_date": "2020-06-20",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2021-01-01",
+      "article_count": 53,
+      "current": true,
+      "evidence": {
+        "kind": "flk-docx-transcription",
+        "grade": "中",
+        "url": "https://flk.npc.gov.cn/detail?id=ff80808172b5f24f0172e4ef05e218d4",
+        "accessed_at": "2026-09-18",
+        "snapshot": "docs/research/evidence/lawtext_档案法2020.md"
+      }
+    }
+  ],
+  "pending_note": "1987 原版与 2016 修正版全文未采集（双 bbbs 候选按 status 定案 2020 修订版）。档案开放利用与电子档案制度。"
+}

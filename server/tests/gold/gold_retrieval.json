@@ -5343,6 +5343,127 @@
         }
       ],
       "note": "2026-09-18 增：公共教育医疗卫生社会保障资源向农村倾斜+基本公共服务均等化第53条。初锚 33 条未经预检（实为文化产业条款），实查后改锚 53 并改题——先验后锚必须逐条执行不得跳步。"
+    },
+    {
+      "id": "gold-ar-open-25y",
+      "question": "档案馆的档案多少年向社会开放",
+      "expect": [
+        {
+          "law_id": "archives-2020",
+          "no": 27
+        }
+      ],
+      "note": "2026-09-18 增：满二十五年开放+经济教育科技类可少于+安全类可多于第27条。词法鸿沟实录：多少年 vs 二十五年（数字类问法惯例）。"
+    },
+    {
+      "id": "gold-ar-open-review",
+      "question": "馆藏档案开放审核由谁负责",
+      "expect": [
+        {
+          "law_id": "archives-2020",
+          "no": 30
+        }
+      ],
+      "note": "2026-09-18 增：档案馆会同形成或移交单位共同负责+未移交自审附意见第30条。"
+    },
+    {
+      "id": "gold-ar-electronic",
+      "question": "电子档案要安全保存吗",
+      "expect": [
+        {
+          "law_id": "archives-2020",
+          "no": 35
+        }
+      ],
+      "note": "2026-09-18 增：档案信息化规划+电子档案数字资源安全保存有效利用第35条。"
+    },
+    {
+      "id": "gold-ar-confidential",
+      "question": "涉及国家安全的档案到期也要开放吗",
+      "expect": [
+        {
+          "law_id": "archives-2020",
+          "no": 27
+        }
+      ],
+      "note": "2026-09-18 增：到期不宜开放的可以多于二十五年（同第27条后半句——分双问覆盖一条多义）。"
+    },
+    {
+      "id": "gold-an-dog-registration",
+      "question": "养狗要打狂犬疫苗登记吗",
+      "expect": [
+        {
+          "law_id": "animal-epidemic-2021",
+          "no": 30
+        }
+      ],
+      "note": "2026-09-18 增：犬只定期免疫接种+凭免疫证明登记+出户系犬绳第30条。"
+    },
+    {
+      "id": "gold-an-dog-penalty",
+      "question": "不给狗打狂犬病疫苗会被罚款吗",
+      "expect": [
+        {
+          "law_id": "animal-epidemic-2021",
+          "no": 92
+        }
+      ],
+      "note": "2026-09-18 增：未按规定定期狂犬病免疫接种的责令改正/一千至五千罚款第92条第三项。词法鸿沟实录：初拟「遛狗不牵绳」（罚则条首段泛化+牵绳义务在30条词面更强，92 条以免疫罚则为判别性词面）两轮改题实录。"
+    },
+    {
+      "id": "gold-an-culling-compensation",
+      "question": "扑杀的动物政府给补偿吗",
+      "expect": [
+        {
+          "law_id": "animal-epidemic-2021",
+          "no": 85
+        }
+      ],
+      "note": "2026-09-18 增：强制扑杀销毁由县级以上政府补偿第85条。"
+    },
+    {
+      "id": "gold-an-quarantine-declare",
+      "question": "卖动物前要申报检疫吗",
+      "expect": [
+        {
+          "law_id": "animal-epidemic-2021",
+          "no": 49
+        }
+      ],
+      "note": "2026-09-18 增：屠宰出售运输前向动物卫生监督机构申报检疫第49条。"
+    },
+    {
+      "id": "gold-st-research-integrity",
+      "question": "科研造假会进诚信档案吗",
+      "expect": [
+        {
+          "law_id": "sci-tech-2021",
+          "no": 104
+        }
+      ],
+      "note": "2026-09-18 增：科技项目诚信档案+失信行为预防调查处理机制第104条。"
+    },
+    {
+      "id": "gold-st-institution-duty",
+      "question": "科研机构要建科研诚信制度吗",
+      "expect": [
+        {
+          "law_id": "sci-tech-2021",
+          "no": 51
+        }
+      ],
+      "note": "2026-09-18 增：章程职能定位+科研诚信科技伦理管理制度第51条。"
+    },
+    {
+      "id": "gold-st-free-exploration",
+      "question": "国家支持自由探索的基础研究吗",
+      "expect": [
+        {
+          "law_id": "sci-tech-2021",
+          "no": 7
+        }
+      ],
+      "note": "2026-09-18 增：服务国家目标与鼓励自由探索结合+超前部署第7条。"
     }
   ]
 }
