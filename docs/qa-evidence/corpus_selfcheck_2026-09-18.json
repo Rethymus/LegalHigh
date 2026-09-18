@@ -802,6 +802,33 @@
       "no_effective_date": false,
       "effective_date_evidence_valid": true
     },
+    "legal-publicity-2025": {
+      "manifest_count": 65,
+      "actual_count": 65,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "defense-edu-2024": {
+      "manifest_count": 42,
+      "actual_count": 42,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "agriculture-2013": {
+      "manifest_count": 99,
+      "actual_count": 99,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
     "con-2018": {
       "manifest_count": 143,
       "actual_count": 143,
@@ -930,6 +957,7 @@
     "admin-review-2023": 4,
     "advertising-2021": 1,
     "agri-quality-2022": 1,
+    "agriculture-2013": 1,
     "aml-2024": 1,
     "animal-epidemic-2021": 1,
     "anti-drug-2008": 1,
@@ -954,6 +982,7 @@
     "crime-prev-2020": 1,
     "crpl-imp-2024": 1,
     "csl-2025": 2,
+    "defense-edu-2024": 1,
     "disabled-2018": 1,
     "drug-admin-2019": 1,
     "dsl-2021": 1,
@@ -978,6 +1007,7 @@
     "lcar-2007": 1,
     "lcl-2012": 2,
     "legal-aid-2021": 1,
+    "legal-publicity-2025": 1,
     "ll-2017": 5,
     "martyrs-2018": 1,
     "maternal-infant-2017": 1,

@@ -5706,6 +5706,83 @@
         }
       ],
       "note": "2026-09-18 增：重要纪念日纪念仪式（敬献花篮/瞻仰纪念设施/公祭）第28条。"
+    },
+    {
+      "id": "gold-lp-who-preaches",
+      "question": "谁执法谁普法是什么制度",
+      "expect": [
+        {
+          "law_id": "legal-publicity-2025",
+          "no": 9
+        }
+      ],
+      "note": "2026-09-18 增：国家机关实行普法责任制第9条（2025 新法）。"
+    },
+    {
+      "id": "gold-lp-cadre-list",
+      "question": "领导干部要学法吗有清单制度吗",
+      "expect": [
+        {
+          "law_id": "legal-publicity-2025",
+          "no": 37
+        }
+      ],
+      "note": "2026-09-18 增：领导干部应知应会法律法规清单制度+动态调整第37条。"
+    },
+    {
+      "id": "gold-lp-school-legal-edu",
+      "question": "学校要开法治课吗要聘法治副校长吗",
+      "expect": [
+        {
+          "law_id": "legal-publicity-2025",
+          "no": 41
+        }
+      ],
+      "note": "2026-09-18 增：各级各类学校法治教育课程+中小学聘任法治副校长第41条。"
+    },
+    {
+      "id": "gold-de-education-day",
+      "question": "全民国防教育日是哪天",
+      "expect": [
+        {
+          "law_id": "defense-edu-2024",
+          "no": 12
+        }
+      ],
+      "note": "2026-09-18 增：每年九月第三个星期六第12条。"
+    },
+    {
+      "id": "gold-de-military-training",
+      "question": "普通高等学校高中阶段学校学生要军事训练吗",
+      "expect": [
+        {
+          "law_id": "defense-edu-2024",
+          "no": 17
+        }
+      ],
+      "note": "2026-09-18 增：普通高校与高中阶段学校按规定组织学生军事训练第17条。词法鸿沟实录：初拟「大学生要参加军训吗」（大学生/军训均非条文词面「普通高等学校/学生军事训练」）未入 top5，改题 rank1——高校学生问法需用「普通高等学校」全称词面。"
+    },
+    {
+      "id": "gold-ag-food-security",
+      "question": "农业法怎么保障粮食安全",
+      "expect": [
+        {
+          "law_id": "agriculture-2013",
+          "no": 31
+        }
+      ],
+      "note": "2026-09-18 增：保护提高粮食综合生产能力+耕地保护与基本农田特殊保护第31条。"
+    },
+    {
+      "id": "gold-ag-product-quality",
+      "question": "农产品质量安全体系怎么建",
+      "expect": [
+        {
+          "law_id": "agriculture-2013",
+          "no": 22
+        }
+      ],
+      "note": "2026-09-18 增：质量标准体系+检验检测监督体系第22条。"
     }
   ]
 }

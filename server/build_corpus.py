@@ -136,6 +136,9 @@ LAW_FILES = {
     "preschool_edu_2025_lawtext_md": "lawtext_学前教育法2025.md",  # 学前教育法 2024（R161）
     "seeds_2022_lawtext_md": "lawtext_种子法2022.md",  # 种子法 2021 修订（R161）
     "patriotic_edu_2024_lawtext_md": "lawtext_爱国主义教育法2024.md",  # 爱国主义教育法 2023（R161）
+    "legal_publicity_2025_lawtext_md": "lawtext_法治宣传教育法2025.md",  # 法治宣传教育法 2025（R162）
+    "defense_edu_2024_lawtext_md": "lawtext_国防教育法2024.md",  # 国防教育法 2024 修正（R162）
+    "agriculture_2013_lawtext_md": "lawtext_农业法2013.md",  # 农业法 2012 修正（R162，现行；2026 修订尚未生效）
     "cl_ws_html": "ws_刑法2023.html",
 }
 
@@ -492,6 +495,9 @@ EXPECTED_COUNTS = {
     "preschool-edu-2025": 85,
     "seeds-2022": 92,
     "patriotic-edu-2024": 40,
+    "legal-publicity-2025": 65,
+    "defense-edu-2024": 42,
+    "agriculture-2013": 99,
     "crpl-imp-2024": 53,
     "genai-2023": 24,
     "pipl-2021": 74,
@@ -1296,6 +1302,33 @@ def main():
                 "effective_date": "2024-01-01",
             },
             "https://flk.npc.gov.cn/detail?id=ff8081818a21dc13018b625b4a68173f",
+        ),
+        build_lawtext_md_law(
+            "legal_publicity_2025_lawtext_md", "legal-publicity-2025", "中华人民共和国法治宣传教育法",
+            {
+                "status": "现行有效",
+                "promulgation": {"date": "2025-09-12", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "2025-11-01",
+            },
+            "https://flk.npc.gov.cn/detail?id=189021012184442fa2ecd6b4c26dcba0",
+        ),
+        build_lawtext_md_law(
+            "defense_edu_2024_lawtext_md", "defense-edu-2024", "中华人民共和国国防教育法",
+            {
+                "status": "现行有效（2024修正）",
+                "promulgation": {"date": "2024-09-13", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "2024-09-21",
+            },
+            "https://flk.npc.gov.cn/detail?id=ff80818191db55220191eba9396a08f4",
+        ),
+        build_lawtext_md_law(
+            "agriculture_2013_lawtext_md", "agriculture-2013", "中华人民共和国农业法",
+            {
+                "status": "现行有效（2012修正；2026修订已公布尚未生效）",
+                "promulgation": {"date": "2012-12-28", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "2013-01-01",
+            },
+            "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf74e1106bd",
         ),
         build_wikisource_html_law(
             "minor_ws_html", "con-2018", "中华人民共和国宪法",

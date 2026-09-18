@@ -1,0 +1,26 @@
+{
+  "law_id": "legal-publicity-2025",
+  "title": "中华人民共和国法治宣传教育法",
+  "schema_version": 1,
+  "note": "R162（2026-09-18）普法国防与农业批次：经 lawtext（flk DOCX 转录）链入库。",
+  "versions": [
+    {
+      "version_id": "current",
+      "label": "2025 制定",
+      "status": "现行有效",
+      "promulgation_date": "2025-09-12",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2025-11-01",
+      "article_count": 65,
+      "current": true,
+      "evidence": {
+        "kind": "flk-docx-transcription",
+        "grade": "中",
+        "url": "https://flk.npc.gov.cn/detail?id=189021012184442fa2ecd6b4c26dcba0",
+        "accessed_at": "2026-09-18",
+        "snapshot": "docs/research/evidence/lawtext_法治宣传教育法2025.md"
+      }
+    }
+  ],
+  "pending_note": "2025 新制定（接续全民法治宣传教育的决议传统），2025-11-01 施行——新鲜度入款。"
+}

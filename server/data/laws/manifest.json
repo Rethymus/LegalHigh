@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-18T22:26:49.580523",
+  "built_at": "2026-09-18T22:49:53.607868",
   "fetch_date": "2026-09-08",
   "laws": [
     {
@@ -2056,6 +2056,75 @@
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "6856b7f43f8f58ddc5fe58a461c398b80f56a543ed65d90428d98781795e1e35",
       "output_sha256": "cdcca2123bf932619db7d73f42e84a608f73dadb634d21b81e6390cf405df992"
+    },
+    {
+      "law_id": "legal-publicity-2025",
+      "title": "中华人民共和国法治宣传教育法",
+      "status": "现行有效",
+      "effective_date": "2025-11-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国法治宣传教育法",
+        "url": "https://flk.npc.gov.cn/detail?id=189021012184442fa2ecd6b4c26dcba0",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效"
+      },
+      "promulgation_instrument": null,
+      "article_count": 65,
+      "expected_count": 65,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=189021012184442fa2ecd6b4c26dcba0",
+      "snapshot": "docs/research/evidence/lawtext_法治宣传教育法2025.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "40cb75685fad75596949c72062b2f6af804aa12775e14a9fdf7344d10e2031c6",
+      "output_sha256": "4b83162b0c225af7d4f62bb54503b9e0a198b3d9b108e3f533548a2bc9361466"
+    },
+    {
+      "law_id": "defense-edu-2024",
+      "title": "中华人民共和国国防教育法",
+      "status": "现行有效（2024修正）",
+      "effective_date": "2024-09-21",
+      "effective_date_evidence": {
+        "title": "中华人民共和国国防教育法",
+        "url": "https://flk.npc.gov.cn/detail?id=ff80818191db55220191eba9396a08f4",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2024修正）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 42,
+      "expected_count": 42,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=ff80818191db55220191eba9396a08f4",
+      "snapshot": "docs/research/evidence/lawtext_国防教育法2024.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "c78180e75ca798f9b0e148f67a62cc2db4af80b340226d47964f13263201f90f",
+      "output_sha256": "7dee2704468486d75b65641d8540a212cae26e83d0ad1a953e2ef223a4e74e73"
+    },
+    {
+      "law_id": "agriculture-2013",
+      "title": "中华人民共和国农业法",
+      "status": "现行有效（2012修正；2026修订已公布尚未生效）",
+      "effective_date": "2013-01-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国农业法",
+        "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf74e1106bd",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2012修正；2026修订已公布尚未生效）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 99,
+      "expected_count": 99,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf74e1106bd",
+      "snapshot": "docs/research/evidence/lawtext_农业法2013.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "7bfe8252ca8d65fb06d53fec613265f327e06bf077954b82d2cebc78eeb3d0b6",
+      "output_sha256": "ad5c0152025947434f4a7a95177324b47aff50b9cbe273164a6991f0131eef2e"
     },
     {
       "law_id": "con-2018",

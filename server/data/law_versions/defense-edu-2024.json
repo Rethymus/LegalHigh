@@ -1,0 +1,26 @@
+{
+  "law_id": "defense-edu-2024",
+  "title": "中华人民共和国国防教育法",
+  "schema_version": 1,
+  "note": "R162（2026-09-18）普法国防与农业批次：经 lawtext（flk DOCX 转录）链入库。",
+  "versions": [
+    {
+      "version_id": "current",
+      "label": "2024 修正",
+      "status": "现行有效（2024修正）",
+      "promulgation_date": "2024-09-13",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2024-09-21",
+      "article_count": 42,
+      "current": true,
+      "evidence": {
+        "kind": "flk-docx-transcription",
+        "grade": "中",
+        "url": "https://flk.npc.gov.cn/detail?id=ff80818191db55220191eba9396a08f4",
+        "accessed_at": "2026-09-18",
+        "snapshot": "docs/research/evidence/lawtext_国防教育法2024.md"
+      }
+    }
+  ],
+  "pending_note": "2001 原版与 2018 修正版全文未采集（双 bbbs 按 status 定案 2024 修正版）。"
+}

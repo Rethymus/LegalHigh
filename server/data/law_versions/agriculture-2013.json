@@ -1,0 +1,26 @@
+{
+  "law_id": "agriculture-2013",
+  "title": "中华人民共和国农业法",
+  "schema_version": 1,
+  "note": "R162（2026-09-18）普法国防与农业批次：经 lawtext（flk DOCX 转录）链入库。",
+  "versions": [
+    {
+      "version_id": "current",
+      "label": "2012 修正",
+      "status": "现行有效（2012修正；2026修订已公布尚未生效）",
+      "promulgation_date": "2012-12-28",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2013-01-01",
+      "article_count": 99,
+      "current": true,
+      "evidence": {
+        "kind": "flk-docx-transcription",
+        "grade": "中",
+        "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf74e1106bd",
+        "accessed_at": "2026-09-18",
+        "snapshot": "docs/research/evidence/lawtext_农业法2013.md"
+      }
+    }
+  ],
+  "pending_note": "1993 原版与 2002/2009 修正版全文未采集。**2026-08-28 全面修订已公布（2027-01-01 施行，bbbs 19fc16b7…）——现行版本仍为 2012 修正版，修订版生效前如实施换**。"
+}
