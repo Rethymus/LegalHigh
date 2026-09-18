@@ -640,6 +640,33 @@
       "no_effective_date": false,
       "effective_date_evidence_valid": true
     },
+    "vocational-edu-2022": {
+      "manifest_count": 69,
+      "actual_count": 69,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "maternal-infant-2017": {
+      "manifest_count": 39,
+      "actual_count": 39,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "prison-2012": {
+      "manifest_count": 78,
+      "actual_count": 78,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
     "con-2018": {
       "manifest_count": 143,
       "actual_count": 143,
@@ -814,6 +841,7 @@
     "legal-aid-2021": 1,
     "ll-2017": 5,
     "martyrs-2018": 1,
+    "maternal-infant-2017": 1,
     "mediation-2010": 1,
     "mental-health-2018": 1,
     "minor-2024": 5,
@@ -827,6 +855,7 @@
     "police-2012": 1,
     "postal-2015": 1,
     "price-1997": 1,
+    "prison-2012": 1,
     "product-quality-2018": 1,
     "psm-2025": 3,
     "road-safety-2021": 1,
@@ -842,6 +871,7 @@
     "trademark-2026": 1,
     "unfair-competition-2025": 1,
     "vaccine-2019": 1,
+    "vocational-edu-2022": 1,
     "wlxf-2022": 1,
     "women-2022": 4,
     "work-safety-2021": 1

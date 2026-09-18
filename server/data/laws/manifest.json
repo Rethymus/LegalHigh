@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-18T19:39:13.504016",
+  "built_at": "2026-09-18T20:15:45.077899",
   "fetch_date": "2026-09-08",
   "laws": [
     {
@@ -1642,6 +1642,75 @@
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "2cb117073534d577f547092d825dcba07a9a8f01949aa550ca7d13db5427cbc9",
       "output_sha256": "5f29f7cd7a21d3d166451c5e82666908ea9d71266f07f0c9d6bb84e71257df0b"
+    },
+    {
+      "law_id": "vocational-edu-2022",
+      "title": "中华人民共和国职业教育法",
+      "status": "现行有效（2022修订）",
+      "effective_date": "2022-05-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国职业教育法",
+        "url": "https://flk.npc.gov.cn/detail?id=ff808181802d2853018044c7370108c6",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2022修订）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 69,
+      "expected_count": 69,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=ff808181802d2853018044c7370108c6",
+      "snapshot": "docs/research/evidence/lawtext_职业教育法2022.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "939bfe6028dfc7520514a68984d381d78dd814069eccdea6b52272ae75924edc",
+      "output_sha256": "448d9b50c6216a6acb76914a2c0177388db135ba043eb51efb07d4442f609bb3"
+    },
+    {
+      "law_id": "maternal-infant-2017",
+      "title": "中华人民共和国母婴保健法",
+      "status": "现行有效（2017修正）",
+      "effective_date": "2017-11-05",
+      "effective_date_evidence": {
+        "title": "中华人民共和国母婴保健法",
+        "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf8867e0ad7",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2017修正）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 39,
+      "expected_count": 39,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf8867e0ad7",
+      "snapshot": "docs/research/evidence/lawtext_母婴保健法2017.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "b3cba9e35541dca7cc0e489397a3820c7c6d339a671c3665cbca74df6040b696",
+      "output_sha256": "ff9adb08e880ed5bcf69866fcd50556279a67f6dbfec6e38f5315e18eebf8bf9"
+    },
+    {
+      "law_id": "prison-2012",
+      "title": "中华人民共和国监狱法",
+      "status": "现行有效（2012修正）",
+      "effective_date": "2013-01-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国监狱法",
+        "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf745870677",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2012修正）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 78,
+      "expected_count": 78,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf745870677",
+      "snapshot": "docs/research/evidence/lawtext_监狱法2012.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "d7e92d78d299d56a0cbaa6bd3519b49474bbf363b97f3edb31986a52bc0dc4a1",
+      "output_sha256": "4943fa9b00dcdb794b93155128c43351339619ad99626c9664c8654ba9740139"
     },
     {
       "law_id": "con-2018",

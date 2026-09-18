@@ -1,0 +1,26 @@
+{
+  "law_id": "vocational-edu-2022",
+  "title": "中华人民共和国职业教育法",
+  "schema_version": 1,
+  "note": "R156（2026-09-18）职业健康与执行批次：经 lawtext（flk DOCX 转录）链入库。",
+  "versions": [
+    {
+      "version_id": "current",
+      "label": "2022 修订",
+      "status": "现行有效（2022修订）",
+      "promulgation_date": "2022-04-20",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2022-05-01",
+      "article_count": 69,
+      "current": true,
+      "evidence": {
+        "kind": "flk-docx-transcription",
+        "grade": "中",
+        "url": "https://flk.npc.gov.cn/detail?id=ff808181802d2853018044c7370108c6",
+        "accessed_at": "2026-09-18",
+        "snapshot": "docs/research/evidence/lawtext_职业教育法2022.md"
+      }
+    }
+  ],
+  "pending_note": "1996 原版全文未采集。2022 全面修订（40→69 条）：职教高考/产教融合/普职协调发展。"
+}

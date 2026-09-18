@@ -118,6 +118,9 @@ LAW_FILES = {
     "higher_edu_2018_lawtext_md": "lawtext_高等教育法2018.md",  # 高等教育法 2018 修正（R155）
     "charity_2023_lawtext_md": "lawtext_慈善法2023.md",  # 慈善法 2023 修正（R155）
     "special_equipment_2014_lawtext_md": "lawtext_特种设备安全法2014.md",  # 特种设备安全法 2013（R155）
+    "vocational_edu_2022_lawtext_md": "lawtext_职业教育法2022.md",  # 职业教育法 2022 修订（R156）
+    "maternal_infant_2017_lawtext_md": "lawtext_母婴保健法2017.md",  # 母婴保健法 2017 修正（R156）
+    "prison_2012_lawtext_md": "lawtext_监狱法2012.md",  # 监狱法 2012 修正（R156）
     "cl_ws_html": "ws_刑法2023.html",
 }
 
@@ -456,6 +459,9 @@ EXPECTED_COUNTS = {
     "higher-edu-2018": 69,
     "charity-2023": 125,
     "special-equipment-2014": 101,
+    "vocational-edu-2022": 69,
+    "maternal-infant-2017": 39,
+    "prison-2012": 78,
     "crpl-imp-2024": 53,
     "genai-2023": 24,
     "pipl-2021": 74,
@@ -1098,6 +1104,33 @@ def main():
                 "effective_date": "2014-01-01",
             },
             "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf74ede06c7",
+        ),
+        build_lawtext_md_law(
+            "vocational_edu_2022_lawtext_md", "vocational-edu-2022", "中华人民共和国职业教育法",
+            {
+                "status": "现行有效（2022修订）",
+                "promulgation": {"date": "2022-04-20", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "2022-05-01",
+            },
+            "https://flk.npc.gov.cn/detail?id=ff808181802d2853018044c7370108c6",
+        ),
+        build_lawtext_md_law(
+            "maternal_infant_2017_lawtext_md", "maternal-infant-2017", "中华人民共和国母婴保健法",
+            {
+                "status": "现行有效（2017修正）",
+                "promulgation": {"date": "2017-11-04", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "2017-11-05",
+            },
+            "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf8867e0ad7",
+        ),
+        build_lawtext_md_law(
+            "prison_2012_lawtext_md", "prison-2012", "中华人民共和国监狱法",
+            {
+                "status": "现行有效（2012修正）",
+                "promulgation": {"date": "2012-10-26", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "2013-01-01",
+            },
+            "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf745870677",
         ),
         build_wikisource_html_law(
             "minor_ws_html", "con-2018", "中华人民共和国宪法",

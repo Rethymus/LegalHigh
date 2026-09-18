@@ -5013,6 +5013,171 @@
         }
       ],
       "note": "2026-09-18 增：生产经营范围使用单位及主要负责人安全责任第13条。"
+    },
+    {
+      "id": "gold-ve-apprenticeship",
+      "question": "中国特色学徒制是什么企业要设学徒岗位吗",
+      "expect": [
+        {
+          "law_id": "vocational-edu-2022",
+          "no": 30
+        }
+      ],
+      "note": "2026-09-18 增：中国特色学徒制+企业按岗位总量比例设学徒岗位第30条。"
+    },
+    {
+      "id": "gold-ve-fee-rules",
+      "question": "职业学校能以安排实习名义收钱吗",
+      "expect": [
+        {
+          "law_id": "vocational-edu-2022",
+          "no": 42
+        }
+      ],
+      "note": "2026-09-18 增：不得以介绍工作安排实习实训名义违法收费+符合条件减免第42条。"
+    },
+    {
+      "id": "gold-ve-student-aid",
+      "question": "职校经济困难学生有资助吗",
+      "expect": [
+        {
+          "law_id": "vocational-edu-2022",
+          "no": 52
+        }
+      ],
+      "note": "2026-09-18 增：奖励资助制度+艰苦特殊行业倾斜第52条。"
+    },
+    {
+      "id": "gold-ve-certificates",
+      "question": "职业学校毕业拿什么证书职业培训也有证书吗",
+      "expect": [
+        {
+          "law_id": "vocational-edu-2022",
+          "no": 51
+        }
+      ],
+      "note": "2026-09-18 增：学业证书/培训证书/职业资格证书三类第51条。"
+    },
+    {
+      "id": "gold-ve-school-conditions",
+      "question": "设立职业学校要符合什么基本条件",
+      "expect": [
+        {
+          "law_id": "vocational-edu-2022",
+          "no": 33
+        }
+      ],
+      "note": "2026-09-18 增：设立基本条件（机构章程/师资/场所设施课程体系/资金）第33条。"
+    },
+    {
+      "id": "gold-mi-hospital-birth",
+      "question": "不能住院分娩的孕妇怎么安全接生",
+      "expect": [
+        {
+          "law_id": "maternal-infant-2017",
+          "no": 22
+        }
+      ],
+      "note": "2026-09-18 增：消毒接生+具备接生能力人员第22条。"
+    },
+    {
+      "id": "gold-mi-terminate-pregnancy",
+      "question": "产前诊断出胎儿严重疾病医生会建议终止妊娠吗",
+      "expect": [
+        {
+          "law_id": "maternal-infant-2017",
+          "no": 18
+        }
+      ],
+      "note": "2026-09-18 增：终止妊娠医学意见三类情形第18条。"
+    },
+    {
+      "id": "gold-mi-premarital-check",
+      "question": "婚前医学检查查哪些病",
+      "expect": [
+        {
+          "law_id": "maternal-infant-2017",
+          "no": 8
+        }
+      ],
+      "note": "2026-09-18 增：婚前医学检查三类疾病+检查证明第8条。"
+    },
+    {
+      "id": "gold-mi-prenatal-care",
+      "question": "孕产妇能享受哪些孕产期保健服务",
+      "expect": [
+        {
+          "law_id": "maternal-infant-2017",
+          "no": 14
+        }
+      ],
+      "note": "2026-09-18 增：孕产期保健服务内容第14条。"
+    },
+    {
+      "id": "gold-mi-newborn",
+      "question": "新生儿疾病筛查查什么",
+      "expect": [
+        {
+          "law_id": "maternal-infant-2017",
+          "no": 24
+        }
+      ],
+      "note": "2026-09-18 增：医疗保健机构提供新生儿疾病筛查等保健服务第24条（条文自证）。"
+    },
+    {
+      "id": "gold-pr-rewards",
+      "question": "罪犯服刑表现好有什么奖励",
+      "expect": [
+        {
+          "law_id": "prison-2012",
+          "no": 57
+        }
+      ],
+      "note": "2026-09-18 增：表扬物质奖励记功情形第57条。"
+    },
+    {
+      "id": "gold-pr-visits",
+      "question": "服刑期间可以会见亲属吗",
+      "expect": [
+        {
+          "law_id": "prison-2012",
+          "no": 48
+        }
+      ],
+      "note": "2026-09-18 增：按规定会见亲属监护人第48条。"
+    },
+    {
+      "id": "gold-pr-parole",
+      "question": "监狱怎么提出假释建议",
+      "expect": [
+        {
+          "law_id": "prison-2012",
+          "no": 32
+        }
+      ],
+      "note": "2026-09-18 增：假释建议+法院一个月内审核裁定第32条。"
+    },
+    {
+      "id": "gold-pr-release-aid",
+      "question": "刑满释放人员政府帮助安置生活吗",
+      "expect": [
+        {
+          "law_id": "prison-2012",
+          "no": 37
+        }
+      ],
+      "note": "2026-09-18 增：当地政府帮助安置+丧失劳动能力者救济第37条。"
+    },
+    {
+      "id": "gold-pr-commutation",
+      "question": "服刑期间有立功能减刑吗",
+      "expect": [
+        {
+          "law_id": "prison-2012",
+          "no": 29
+        }
+      ],
+      "note": "2026-09-18 增：悔改立功可减刑+重大立功应当减刑情形第29条。"
     }
   ]
 }

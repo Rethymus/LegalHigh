@@ -1,0 +1,26 @@
+{
+  "law_id": "prison-2012",
+  "title": "中华人民共和国监狱法",
+  "schema_version": 1,
+  "note": "R156（2026-09-18）职业健康与执行批次：经 lawtext（flk DOCX 转录）链入库。",
+  "versions": [
+    {
+      "version_id": "current",
+      "label": "2012 修正",
+      "status": "现行有效（2012修正）",
+      "promulgation_date": "2012-10-26",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2013-01-01",
+      "article_count": 78,
+      "current": true,
+      "evidence": {
+        "kind": "flk-docx-transcription",
+        "grade": "中",
+        "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf745870677",
+        "accessed_at": "2026-09-18",
+        "snapshot": "docs/research/evidence/lawtext_监狱法2012.md"
+      }
+    }
+  ],
+  "pending_note": "1994 原版与 2012 修正决定全文未采集。刑罚执行基础法（双 bbbs 候选按 status 定案 2012 版）。"
+}
