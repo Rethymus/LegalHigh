@@ -8,6 +8,6 @@
 4. **运行时 On-demand Fetcher**——原型全快照制、无运行时外呼；Source Registry 已为未来 Fetcher 备好合规门（approved 才可运行）。
 5. **自动 Source Drift canary**——现行为人工 SOP（季度/半年/事件驱动）+selfcheck；自动化待建设。
 6. **Citator 产品层**（被引用于/负面历史检查/后续案例）——LawDetail 版本 Tab+相关条文+术语卡反查为雏形；需案例引用语料规模化后建设。
-7. **案例按字段加权检索**——✅ 已实现（R146）：`app/cases.py` 字段权重三档（balanced/facts/reasoning），facts 偏向零化 holding/result（纯 Facts↔Facts）、reasoning 偏向 Holding×4+Result×3（「为什么这么判」）；`/api/cases` 增 bias 参数；8 项钉住测试（偏向改变排名/召回扩到 facts 字段/案号精确保底/确定性）。**剩余**：前端 bias 选择器 UI（API 已就绪）。
+7. **案例按字段加权检索**——✅ 全链闭环（R146 API + R150 前端）：`app/cases.py` 字段权重三档（balanced/facts/reasoning），facts 偏向零化 holding/result（纯 Facts↔Facts）、reasoning 偏向 Holding×4+Result×3（「为什么这么判」）；`/api/cases` 增 bias 参数；8 项钉住测试（偏向改变排名/召回扩到 facts 字段/案号精确保底/确定性）；前端 CaseSearch 分段控件（综合/类似案情/裁判理由）+ 一句话口径说明，选档即触发重查（api.listCases 携带 bias）。
 
 白区不阻塞发布：每一项都有「未实现即不冒充」的 fail-closed 形态兜底。

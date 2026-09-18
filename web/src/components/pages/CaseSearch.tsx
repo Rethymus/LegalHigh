@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Icon } from '../icons'
-import { EmptyState, PageHeader, SkeletonLines, Tabs } from '../ui'
+import { EmptyState, PageHeader, Segmented, SkeletonLines, Tabs } from '../ui'
 import { CitationChip, SourceBadge } from '../domain'
 import { api, ApiError, type CaseRecord } from '../../lib/api'
 
@@ -69,6 +69,9 @@ export default function CaseSearch() {
   const [tab, setTab] = useState('all')
   const [kw, setKw] = useState('')
   const [q, setQ] = useState('')
+  // 检索偏向（R150）：类似案情=纯 Facts↔Facts 比对；裁判理由=Holding/Result 主导——
+  // 与后端 /api/cases bias 参数一一对应（R146 字段加权检索的 UI 面）
+  const [bias, setBias] = useState<'balanced' | 'facts' | 'reasoning'>('balanced')
   const [cases, setCases] = useState<CaseRecord[]>([])
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
@@ -79,12 +82,12 @@ export default function CaseSearch() {
     setLoading(true)
     setError(null)
     const level = tab === '指导性案例' || tab === '外国判例' ? tab : undefined
-    api.listCases(q.trim(), level).then(
+    api.listCases(q.trim(), level, bias).then(
       (d) => alive && (setCases(d.cases.filter((c) => c.verified && !c.sample)), setLoading(false)),
       (e) => alive && (setError(e instanceof ApiError ? e.message : String(e)), setLoading(false)),
     )
     return () => { alive = false }
-  }, [q, tab])
+  }, [q, tab, bias])
 
   const hits = cases
 
@@ -154,6 +157,19 @@ export default function CaseSearch() {
       <div className="card mt-16">
         <div style={{ padding: '0 16px' }}>
           <Tabs tabs={TAB_DEFS} active={tab} onChange={setTab} right={<span className="tiny">{hits.length} 件当前结果</span>} />
+          <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 10, margin: '10px 0 4px' }}>
+            <Segmented
+              ariaLabel="案例检索偏向"
+              value={bias}
+              onChange={(k) => setBias(k as typeof bias)}
+              options={[
+                { key: 'balanced', label: '综合' },
+                { key: 'facts', label: '类似案情' },
+                { key: 'reasoning', label: '裁判理由' },
+              ]}
+            />
+            <span className="tiny">「类似案情」按案情事实比对；「裁判理由」按法院说理排序——同一关键词两种视角。</span>
+          </div>
         </div>
         <div className="card-b">
           {error && <div className="banner banner-danger mb-12"><Icon name="alert" size={15} />{error}</div>}

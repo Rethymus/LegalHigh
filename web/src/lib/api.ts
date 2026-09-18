@@ -298,8 +298,8 @@ export const api = {
     }),
 
   // 已核实案例清单（生产端点默认排除未核实记录）
-  listCases: (q = '', level?: string) =>
-    req<{ cases: CaseRecord[] }>(`/cases?q=${encodeURIComponent(q)}${level ? `&level=${encodeURIComponent(level)}` : ''}`),
+  listCases: (q = '', level?: string, bias: 'balanced' | 'facts' | 'reasoning' = 'balanced') =>
+    req<{ cases: CaseRecord[] }>(`/cases?q=${encodeURIComponent(q)}${level ? `&level=${encodeURIComponent(level)}` : ''}&bias=${bias}`),
   getCase: (caseId: string) => req<CaseRecord>(`/cases/${caseId}`),
 
   // 官方解读关联层（决策项15）：法条 → 对应司法解释条文（来源已核实）
