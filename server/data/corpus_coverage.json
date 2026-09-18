@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-09-14",
+  "updated_at": "2026-09-18",
   "national_law_catalog": {
     "count": 310,
     "as_of": "2026-03-16",
@@ -79,7 +79,10 @@
     "accounting-2024",
     "audit-2021",
     "aml-2024",
-    "academic-degree-2024"
+    "academic-degree-2024",
+    "vaccine-2019",
+    "martyrs-2018",
+    "family-plan-2021"
   ],
   "priority_backlog": [],
   "update_protocol": [

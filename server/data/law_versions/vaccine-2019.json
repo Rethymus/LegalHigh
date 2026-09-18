@@ -1,0 +1,26 @@
+{
+  "law_id": "vaccine-2019",
+  "title": "中华人民共和国疫苗管理法",
+  "schema_version": 1,
+  "note": "R151（2026-09-18）民生保护批次：经 lawtext（flk DOCX 转录）链入库。",
+  "versions": [
+    {
+      "version_id": "current",
+      "label": "2019 制定",
+      "status": "现行有效",
+      "promulgation_date": "2019-06-29",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2019-12-01",
+      "article_count": 100,
+      "current": true,
+      "evidence": {
+        "kind": "flk-docx-transcription",
+        "grade": "中",
+        "url": "https://flk.npc.gov.cn/detail?id=ff8080816f135f46016f219a9e101bba",
+        "accessed_at": "2026-09-18",
+        "snapshot": "docs/research/evidence/lawtext_疫苗管理法2019.md"
+      }
+    }
+  ],
+  "pending_note": "2019 制定以来未再修正（flk lsyg 仅本版）。全球首部综合性疫苗管理立法。"
+}

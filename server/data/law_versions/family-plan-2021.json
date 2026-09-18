@@ -1,0 +1,26 @@
+{
+  "law_id": "family-plan-2021",
+  "title": "中华人民共和国人口与计划生育法",
+  "schema_version": 1,
+  "note": "R151（2026-09-18）民生保护批次：经 lawtext（flk DOCX 转录）链入库。",
+  "versions": [
+    {
+      "version_id": "current",
+      "label": "2021 修正",
+      "status": "现行有效（2021修正）",
+      "promulgation_date": "2021-08-20",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2021-08-20",
+      "article_count": 48,
+      "current": true,
+      "evidence": {
+        "kind": "flk-docx-transcription",
+        "grade": "中",
+        "url": "https://flk.npc.gov.cn/detail?id=ff8081817ba965c4017bb8921d13077a",
+        "accessed_at": "2026-09-18",
+        "snapshot": "docs/research/evidence/lawtext_人口与计划生育法2021.md"
+      }
+    }
+  ],
+  "pending_note": "2001 原版与 2015 第一次修正版全文未采集（flk lsyg 载 2015-12-27 版）。2021 修正公布即施行（flk sxrq 2021-08-20），附则施行日两说并存以修正决定为准。"
+}

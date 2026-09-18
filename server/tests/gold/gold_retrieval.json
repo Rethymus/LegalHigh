@@ -4188,6 +4188,171 @@
         }
       ],
       "note": "2026-09-17 增：审计监督制度与审计机关设立第2条。词法鸿沟实录：初拟「可以对哪些单位」泛问未入 top5，改题后 rank 1。"
+    },
+    {
+      "id": "gold-vaccine-adverse-comp",
+      "question": "打疫苗出现异常反应死亡能拿到补偿吗",
+      "expect": [
+        {
+          "law_id": "vaccine-2019",
+          "no": 56
+        }
+      ],
+      "note": "2026-09-18 增：预防接种异常反应补偿制度第56条（死亡/严重残疾应予补偿）。"
+    },
+    {
+      "id": "gold-vaccine-school-check",
+      "question": "孩子入托入学要查验预防接种证吗",
+      "expect": [
+        {
+          "law_id": "vaccine-2019",
+          "no": 48
+        }
+      ],
+      "note": "2026-09-18 增：儿童入托入学查验接种证+补种配合第48条。"
+    },
+    {
+      "id": "gold-vaccine-recall",
+      "question": "疫苗出现质量问题必须召回吗",
+      "expect": [
+        {
+          "law_id": "vaccine-2019",
+          "no": 73
+        }
+      ],
+      "note": "2026-09-18 增：质量问题停止销售/配送/使用并按规定召回第73条。"
+    },
+    {
+      "id": "gold-vaccine-lot-release",
+      "question": "每一批疫苗上市前都要批签发吗",
+      "expect": [
+        {
+          "law_id": "vaccine-2019",
+          "no": 26
+        }
+      ],
+      "note": "2026-09-18 增：批签发制度第26条（每批销售前或进口时审核检验）。"
+    },
+    {
+      "id": "gold-vaccine-fake-penalty",
+      "question": "生产销售假疫苗会受到什么处罚",
+      "expect": [
+        {
+          "law_id": "vaccine-2019",
+          "no": 80
+        }
+      ],
+      "note": "2026-09-18 增：假药没收违法所得/停产停业/吊销许可证第80条。"
+    },
+    {
+      "id": "gold-martyrs-defame-online",
+      "question": "在网上发布丑化英雄烈士的言论违法吗",
+      "expect": [
+        {
+          "law_id": "martyrs-2018",
+          "no": 22
+        }
+      ],
+      "note": "2026-09-18 增：禁止歪曲丑化亵渎否定英烈事迹精神第22条。"
+    },
+    {
+      "id": "gold-martyrs-who-sues",
+      "question": "侮辱英雄烈士谁来起诉检察院可以吗",
+      "expect": [
+        {
+          "law_id": "martyrs-2018",
+          "no": 25
+        }
+      ],
+      "note": "2026-09-18 增：近亲属可诉+无近亲属检察机关公益诉讼第25条。"
+    },
+    {
+      "id": "gold-martyrs-facility-order",
+      "question": "在英雄烈士纪念设施里跳舞喧哗会被制止处罚吗",
+      "expect": [
+        {
+          "law_id": "martyrs-2018",
+          "no": 27
+        }
+      ],
+      "note": "2026-09-18 增：纪念设施保护范围内有损环境氛围活动劝阻/处罚第27条。词法鸿沟实录：初拟「在烈士陵园里跳广场舞会被处罚吗」（陵园/广场舞均非条文词面）未入 top5，改题 rank5。"
+    },
+    {
+      "id": "gold-martyrs-free-entry",
+      "question": "去烈士纪念设施参观要买门票吗",
+      "expect": [
+        {
+          "law_id": "martyrs-2018",
+          "no": 9
+        }
+      ],
+      "note": "2026-09-18 增：英烈纪念设施免费向社会开放第9条。"
+    },
+    {
+      "id": "gold-martyrs-damage-facility",
+      "question": "侵占破坏烈士纪念设施有什么后果",
+      "expect": [
+        {
+          "law_id": "martyrs-2018",
+          "no": 28
+        }
+      ],
+      "note": "2026-09-18 增：侵占破坏污损纪念设施责令改正/民事/治安责任第28条。"
+    },
+    {
+      "id": "gold-fp-three-children",
+      "question": "现在一对夫妻可以生育三个孩子吗",
+      "expect": [
+        {
+          "law_id": "family-plan-2021",
+          "no": 18
+        }
+      ],
+      "note": "2026-09-18 增：一对夫妻可以生育三个子女第18条。词法鸿沟实录：初拟「现在生三孩合法吗」（三孩 vs 三个子女——同义数字缩略是 R39 数字鸿沟的新子类）未入 top5，改题 rank1。"
+    },
+    {
+      "id": "gold-fp-parental-leave",
+      "question": "男方有育儿假吗爸爸也能休吗",
+      "expect": [
+        {
+          "law_id": "family-plan-2021",
+          "no": 25
+        }
+      ],
+      "note": "2026-09-18 增：父母育儿假+延长生育假奖励第25条。词法鸿沟实录：男方/爸爸均非条文词面，问法保留。"
+    },
+    {
+      "id": "gold-fp-single-child-award",
+      "question": "领了独生子女证的夫妻还能享受奖励吗",
+      "expect": [
+        {
+          "law_id": "family-plan-2021",
+          "no": 31
+        }
+      ],
+      "note": "2026-09-18 增：独生子女父母光荣证奖励延续第31条。"
+    },
+    {
+      "id": "gold-fp-surgery-leave",
+      "question": "做计划生育手术有休假吗",
+      "expect": [
+        {
+          "law_id": "family-plan-2021",
+          "no": 26
+        }
+      ],
+      "note": "2026-09-18 增：实行计划生育手术享受国家规定休假+孕产哺乳特殊劳动保护第26条。"
+    },
+    {
+      "id": "gold-fp-childcare-penalty",
+      "question": "托育机构不规范会被处罚吗",
+      "expect": [
+        {
+          "law_id": "family-plan-2021",
+          "no": 41
+        }
+      ],
+      "note": "2026-09-18 增：托育机构违反标准规范警告/罚款/停业第41条。"
     }
   ]
 }

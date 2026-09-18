@@ -1,0 +1,26 @@
+{
+  "law_id": "martyrs-2018",
+  "title": "中华人民共和国英雄烈士保护法",
+  "schema_version": 1,
+  "note": "R151（2026-09-18）民生保护批次：经 lawtext（flk DOCX 转录）链入库。",
+  "versions": [
+    {
+      "version_id": "current",
+      "label": "2018 制定",
+      "status": "现行有效",
+      "promulgation_date": "2018-04-27",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2018-05-01",
+      "article_count": 30,
+      "current": true,
+      "evidence": {
+        "kind": "flk-docx-transcription",
+        "grade": "中",
+        "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf8a38c0b59",
+        "accessed_at": "2026-09-18",
+        "snapshot": "docs/research/evidence/lawtext_英雄烈士保护法2018.md"
+      }
+    }
+  ],
+  "pending_note": "2018 制定以来未再修正（flk lsyg 仅本版）。与在库指导案例 99 号（侵害英雄烈士名誉）直接配对。"
+}

@@ -505,6 +505,33 @@
       "no_effective_date": false,
       "effective_date_evidence_valid": true
     },
+    "vaccine-2019": {
+      "manifest_count": 100,
+      "actual_count": 100,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "martyrs-2018": {
+      "manifest_count": 30,
+      "actual_count": 30,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "family-plan-2021": {
+      "manifest_count": 48,
+      "actual_count": 48,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
     "con-2018": {
       "manifest_count": 143,
       "actual_count": 143,
@@ -659,6 +686,7 @@
     "emergency-2024": 1,
     "environment-2014": 1,
     "family-edu-2021": 1,
+    "family-plan-2021": 1,
     "fire-2021": 1,
     "food-safety-2025": 2,
     "genai-2023": 1,
@@ -671,6 +699,7 @@
     "lcl-2012": 2,
     "legal-aid-2021": 1,
     "ll-2017": 5,
+    "martyrs-2018": 1,
     "mediation-2010": 1,
     "minor-2024": 5,
     "negotiable-2004": 1,
@@ -692,6 +721,7 @@
     "tourism-2018": 1,
     "trademark-2026": 1,
     "unfair-competition-2025": 1,
+    "vaccine-2019": 1,
     "wlxf-2022": 1,
     "women-2022": 4,
     "work-safety-2021": 1

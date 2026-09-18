@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-18T10:23:36.153378",
+  "built_at": "2026-09-18T18:10:50.352156",
   "fetch_date": "2026-09-08",
   "laws": [
     {
@@ -1297,6 +1297,75 @@
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "9e61746b8bc7adfcd785a2c68757622290062b72ceeb2a1870f95c8626db6494",
       "output_sha256": "6340e941d2801f77fb47b6c146571a8c65a902eaf9e648d02c41e0ceca365836"
+    },
+    {
+      "law_id": "vaccine-2019",
+      "title": "中华人民共和国疫苗管理法",
+      "status": "现行有效",
+      "effective_date": "2019-12-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国疫苗管理法",
+        "url": "https://flk.npc.gov.cn/detail?id=ff8080816f135f46016f219a9e101bba",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效"
+      },
+      "promulgation_instrument": null,
+      "article_count": 100,
+      "expected_count": 100,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=ff8080816f135f46016f219a9e101bba",
+      "snapshot": "docs/research/evidence/lawtext_疫苗管理法2019.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "8b9a69f4301c69b0123e4df8ccf87a22f46c0b67bed6f29c30b5b6966ba8b762",
+      "output_sha256": "2fa664908748080754f366971e6007f57a6b56dcdaf86f9d5f2e12799d43d865"
+    },
+    {
+      "law_id": "martyrs-2018",
+      "title": "中华人民共和国英雄烈士保护法",
+      "status": "现行有效",
+      "effective_date": "2018-05-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国英雄烈士保护法",
+        "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf8a38c0b59",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效"
+      },
+      "promulgation_instrument": null,
+      "article_count": 30,
+      "expected_count": 30,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf8a38c0b59",
+      "snapshot": "docs/research/evidence/lawtext_英雄烈士保护法2018.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "42823e645f688a465e1ee4e10cc8a0246cfae557204dc07627900a04d248b228",
+      "output_sha256": "3e0364d849fe5a3c9d9bb6a9c21fcc8eca3aee01c59435e426e6ad15cf26bd98"
+    },
+    {
+      "law_id": "family-plan-2021",
+      "title": "中华人民共和国人口与计划生育法",
+      "status": "现行有效（2021修正）",
+      "effective_date": "2021-08-20",
+      "effective_date_evidence": {
+        "title": "中华人民共和国人口与计划生育法",
+        "url": "https://flk.npc.gov.cn/detail?id=ff8081817ba965c4017bb8921d13077a",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2021修正）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 48,
+      "expected_count": 48,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=ff8081817ba965c4017bb8921d13077a",
+      "snapshot": "docs/research/evidence/lawtext_人口与计划生育法2021.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "ef315843f78644420f55842ebd940c07a375c9cd3d9cbbb9f6faacf21bc27a07",
+      "output_sha256": "12d9a74fc09198148cdabb01da8d495327ced2d9aade0ce73c400d8facd1b5bc"
     },
     {
       "law_id": "con-2018",
