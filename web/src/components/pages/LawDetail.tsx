@@ -92,6 +92,15 @@ export default function LawDetail() {
   const [cited, setCited] = useState<Awaited<ReturnType<typeof api.citedBy>> | null>(null)
   const [ftVid, setFtVid] = useState<string | null>(null)
   const [fulltext, setFulltext] = useState<Awaited<ReturnType<typeof api.versionFulltext>> | null>(null)
+  const [renumber, setRenumber] = useState<Awaited<ReturnType<typeof api.renumberMap>> | null>(null)
+  useEffect(() => {
+    let alive = true
+    api.renumberMap(lawId ?? '').then(
+      (d) => alive && setRenumber(d),
+      () => alive && setRenumber(null),
+    )
+    return () => { alive = false }
+  }, [lawId])
   const [histQ, setHistQ] = useState('')
   const [histHits, setHistHits] = useState<Awaited<ReturnType<typeof api.historySearch>> | null>(null)
   const [histBusy, setHistBusy] = useState(false)
@@ -333,6 +342,19 @@ export default function LawDetail() {
                                 {v.promulgation_instrument ? ` · ${v.promulgation_instrument}` : ''}
                                 {' · '}{v.effective_date} 施行
                                 {v.article_count != null && ` · ${v.article_count} 条`}
+                                {renumber && (() => {
+                                  const pair = renumber.pairs.find((p) => p.to_version === v.version_id)
+                                  if (!pair) return null
+                                  const changed = pair.matches.filter((m) => m.text_changed).length
+                                  const added = pair.unmatched_to.length
+                                  const removed = pair.unmatched_from.length
+                                  const parts = [
+                                    changed > 0 && `修改 ${changed} 条`,
+                                    added > 0 && `新增 ${added} 条`,
+                                    removed > 0 && `废止 ${removed} 条`,
+                                  ].filter(Boolean)
+                                  return parts.length > 0 && <span> · 较上一版：{parts.join('、')}</span>
+                                })()}
                               </div>
                               {v.has_fulltext && (
                                 <button className="btn btn-secondary btn-sm mt-8" onClick={() => setFtVid(ftVid === v.version_id ? null : v.version_id)}>

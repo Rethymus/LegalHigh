@@ -220,6 +220,21 @@ export interface HistorySearch {
   index_articles: number
 }
 
+/** 跨版本条号重编号映射（相邻版本两两对齐，text_changed 标记实质修改）。 */
+export interface RenumberMap {
+  law_id: string
+  pairs: {
+    from_version: string
+    to_version: string
+    matches: { from_no: number; from_sub: string | null; to_no: number; to_sub: string | null; kind: 'same' | 'renumbered'; ratio: number; text_changed: boolean; label: string }[]
+    unmatched_from: number[][]
+    unmatched_to: number[][]
+  }[]
+  pair_count: number
+  renumbered_count: number
+  scope_note: string
+}
+
 export interface TemplateField {
   key: string
   label: string
@@ -400,6 +415,10 @@ export const api = {
     })
     return req<HistorySearch>(`/history/search?${p}`)
   },
+
+  // 跨版本条号重编号映射（known-gaps #1）：difflib 确定性对齐（公开只读；少两个版本 404）
+  renumberMap: (lawId: string) =>
+    req<RenumberMap>(`/laws/${encodeURIComponent(lawId)}/renumber-map`),
 
   // 原文 + 官方解释 + 具名专业观点；证据覆盖分明确不等于正确率
   lawAnalysisContext: (lawId: string, no: number) =>

@@ -42,10 +42,25 @@ def test_tools_list_red_line_audit():
     ])
     tools = [m for m in out if m.get("id") == 2][0]["result"]["tools"]
     names = sorted(t["name"] for t in tools)
-    assert names == ["get_article", "list_laws", "search_articles", "search_cases"], names
+    assert names == ["get_article", "list_laws", "search_articles", "search_cases", "search_history"], names
     # 每个工具描述都带「不构成法律意见」声明
     for t in tools:
         assert "不构成法律意见" in t["description"], t["name"]
+
+
+def test_tools_call_search_history():
+    out = _roundtrip([
+        {"jsonrpc": "2.0", "id": 1, "method": "initialize",
+         "params": {"protocolVersion": "2024-11-05"}},
+        {"jsonrpc": "2.0", "id": 2, "method": "tools/call",
+         "params": {"name": "search_history",
+                    "arguments": {"query": "网络安全 等级保护", "law_id": "csl-2025",
+                                  "version_id": "2016-enacted", "top_k": 3}}},
+    ])
+    payload = [m for m in out if m.get("id") == 2][0]["result"]
+    text = payload["content"][0]["text"]
+    assert "2016-enacted" in text and "等级保护" in text
+    assert "非现行" in text
 
 
 def test_tools_call_search_and_article():

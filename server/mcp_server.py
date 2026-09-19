@@ -112,11 +112,32 @@ def tool_search_cases(query: str, top_k: int = 5, level: str | None = None) -> d
     return {"query": query, "count": len(items), "cases": items, "disclaimer": DISCLAIMER}
 
 
+def tool_search_history(query: str, top_k: int = 5, law_id: str | None = None,
+                        version_id: str | None = None) -> dict:
+    """在历史版本文本（非现行）中检索：独立命名空间，仅供对照研究。"""
+    from app import history_index
+
+    out = history_index.search(query.strip(), top_k=max(1, min(int(top_k), 20)),
+                               law_id=law_id, version_id=version_id)
+    return {
+        "query": query,
+        "count": len(out["hits"]),
+        "hits": [{
+            "law_id": h["law_id"], "version_id": h["version_id"],
+            "version_label": h["version_label"], "effective_date": h["effective_date"],
+            "no": h["no"], "sub": h.get("sub"), "label": h["label"],
+            "text": h["text"], "score": h["score"],
+        } for h in out["hits"]],
+        "scope_note": out["scope_note"],
+        "disclaimer": DISCLAIMER,
+    }
+
+
 TOOLS = [
     {
         "name": "search_articles",
         "description": (
-            "按关键词全文检索 LegalHigh 受控语料（28 部中国现行法律，4,306 条），"
+            "按关键词全文检索 LegalHigh 受控语料（中国现行法律与规范文件）。"
             "返回法条原文+法规元数据+官方来源 URL。BM25 确定性排序（无 AI 生成）。"
             "输出为法条原文引用，不构成法律意见。"
         ),
@@ -126,6 +147,24 @@ TOOLS = [
                 "query": {"type": "string", "description": "检索关键词或自然语言问句"},
                 "top_k": {"type": "integer", "description": "返回条数（默认 5，最大 20）"},
                 "law_id": {"type": "string", "description": "限定法律 ID（可选，如 civl-2020）"},
+            },
+            "required": ["query"],
+        },
+    },
+    {
+        "name": "search_history",
+        "description": (
+            "在【历史版本文本】（非现行）中检索：覆盖已采集的历史版本全文，"
+            "独立于现行检索命名空间，仅供对照研究。BM25 确定性排序（无 AI 生成）。"
+            "输出为历史条文原文引用，不构成法律意见，不构成对时点适用文本的认定。"
+        ),
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "query": {"type": "string", "description": "检索关键词或自然语言问句"},
+                "top_k": {"type": "integer", "description": "返回条数（默认 5，最大 20）"},
+                "law_id": {"type": "string", "description": "限定法律 ID（可选）"},
+                "version_id": {"type": "string", "description": "限定版本 ID（可选，如 2016-enacted）"},
             },
             "required": ["query"],
         },
@@ -180,6 +219,11 @@ def dispatch(name: str, args: dict):
     if name == "search_cases":
         return tool_search_cases(
             args.get("query", ""), args.get("top_k", 5), args.get("level")
+        )
+    if name == "search_history":
+        return tool_search_history(
+            args.get("query", ""), args.get("top_k", 5),
+            args.get("law_id"), args.get("version_id")
         )
     raise KeyError(f"unknown tool: {name}")
 

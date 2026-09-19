@@ -38,7 +38,7 @@ def test_mcp_server_tools_declared_separately():
     sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parents[1]))
     from mcp_server import TOOLS  # noqa: E402
     names = sorted(t["name"] for t in TOOLS)
-    assert names == ["get_article", "list_laws", "search_articles", "search_cases"]
+    assert names == ["get_article", "list_laws", "search_articles", "search_cases", "search_history"]
     # MCP 与 HTTP 是两个独立面：MCP 工具名不等于 HTTP 路径
     for t in TOOLS:
         assert not t["name"].startswith("/api/")

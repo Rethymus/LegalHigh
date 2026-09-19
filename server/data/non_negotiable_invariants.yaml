@@ -50,7 +50,7 @@ invariants:
     mechanical_check: "tests/test_architecture_invariants.py::test_network_import_isolation（源码扫描，CI 钉住）"
 
   - id: ARCH-002
-    rule: "MCP 工具白名单只增不静默改：search_articles/get_article/list_laws/search_cases，全部只读检索、无生成型工具"
+    rule: "MCP 工具白名单只增不静默改：search_articles/get_article/list_laws/search_cases/search_history，全部只读检索、无生成型工具"
     mechanical_check: "test_mcp_server 红线审计断言"
 
   - id: ARCH-003
