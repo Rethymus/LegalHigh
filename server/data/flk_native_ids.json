@@ -310,5 +310,17 @@
  "higher-edu-2018": {
   "bbbs": "ff8080816f135f46016f20df64ec16c5",
   "evidence": "docs/research/evidence/flk_高等教育法2018_detail.json"
+ },
+ "preschool-edu-2025": {
+  "bbbs": "ff808181927b083b01930c734c776beb",
+  "evidence": "docs/research/evidence/flk_学前教育法2025_detail.json"
+ },
+ "legal-publicity-2025": {
+  "bbbs": "189021012184442fa2ecd6b4c26dcba0",
+  "evidence": "docs/research/evidence/flk_法治宣传教育法2025_detail.json"
+ },
+ "patriotic-edu-2024": {
+  "bbbs": "ff8081818a21dc13018b625b4a68173f",
+  "evidence": "docs/research/evidence/flk_爱国主义教育法2024_detail.json"
  }
 }
