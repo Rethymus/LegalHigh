@@ -271,6 +271,8 @@ export const api = {
     hit_at_5: number
     mrr: number
     precision_at_5: number
+    recall_at_20: number
+    ndcg_at_10: number
     abstention_probes: number
     abstention_correct_rate: number
     citation_entity_total: number

@@ -128,3 +128,17 @@ def test_evals30_strict_and_gap_metrics():
     # ②「子集 rank1 ≤ 全量 rank1」于 R135 退役——改题金标刻意与法条词面对齐，头部排名天然靠前，
     #   而全量持续纳入新入库法律的初拟难题。两条排序前提均被实证演化击穿，子集真实价值在
     #   「记录问法鸿沟 + 量化修复后排位」，其绝对值随语料与金标结构浮动属正常现象。
+
+
+def test_evals_recall20_and_ndcg():
+    """评测 3.1（R176，报告 §34 指标扩充）：Recall@20 与 nDCG@10 的单调与界。
+
+    recall@20 ≥ hit@5（top-20 覆盖 top-5，同一排名的前缀关系）；
+    nDCG@10 ∈ [0,1]。两者确定性、随金标实时复算。
+    """
+    from app.main import evals
+    data = evals()
+    assert "recall_at_20" in data and "ndcg_at_10" in data
+    assert data["recall_at_20"] >= data["hit_at_5"], "recall@20 不得低于 hit@5（前缀包含关系）"
+    assert data["recall_at_20"] <= 1.0
+    assert 0.0 <= data["ndcg_at_10"] <= 1.0

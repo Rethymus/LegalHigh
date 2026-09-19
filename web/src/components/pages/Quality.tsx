@@ -19,6 +19,8 @@ interface EvalsData {
   citation_entity_completeness: number
   rank1_rate?: number
   precision_at_5?: number
+  recall_at_20?: number
+  ndcg_at_10?: number
   gap_subset_count?: number
   gap_subset_hit_at_5?: number | null
   gap_subset_rank1?: number | null
@@ -123,6 +125,8 @@ export default function Quality() {
                 <div className="stat"><b>{(evals.hit_at_5 * 100).toFixed(1)}%</b><span>hit@5（{evals.case_count} 组金标）</span></div>
                 <div className="stat"><b>{evals.rank1_rate != null ? `${(evals.rank1_rate * 100).toFixed(1)}%` : '—'}</b><span>rank-1 命中率（更严口径）</span></div>
                 <div className="stat"><b>{evals.mrr.toFixed(2)}</b><span>MRR</span></div>
+                <div className="stat"><b>{evals.recall_at_20 != null ? `${(evals.recall_at_20 * 100).toFixed(1)}%` : '—'}</b><span>Recall@20（宽截断召回）</span></div>
+                <div className="stat"><b>{evals.ndcg_at_10 != null ? evals.ndcg_at_10.toFixed(2) : '—'}</b><span>nDCG@10</span></div>
                 <div className="stat"><b>{(evals.abstention_correct_rate * 100).toFixed(0)}%</b><span>拒答正确率（{evals.abstention_probes} 探针）</span></div>
                 <div className="stat"><b>{(evals.citation_entity_completeness * 100).toFixed(1)}%</b><span>引用卡四要素完整率</span></div>
               </div>

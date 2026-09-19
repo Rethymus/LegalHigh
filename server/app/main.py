@@ -1002,6 +1002,27 @@ def evals():
     gap_hits = sum(1 for r in gap_items if r is not None)
     gap_rank1 = sum(1 for r in gap_items if r == 1)
 
+    # 评测 3.1（R176，报告 §34 指标扩充）：Recall@20 与 nDCG@10（binary relevance）。
+    # 仍是条文级口径、确定性、随金标实时复算；不改变任何既有指标的计算。
+    import math as _math
+
+    recall20 = 0
+    ndcg_sum = 0.0
+    for g in gold["cases"]:
+        res20 = corpus.search(g["question"], top_k=20)
+        keys20 = [(r["law_id"], r["no"], r.get("sub") or "") for r in res20]
+        expected = [(e["law_id"], e["no"], e.get("sub", "")) for e in g["expect"]]
+        if any(k in expected for k in keys20):
+            recall20 += 1
+        gains = [1.0 if k in expected else 0.0 for k in keys20[:10]]
+        dcg = sum(gv / _math.log2(i + 2) for i, gv in enumerate(gains))
+        ideal_gains = [1.0] * min(len(expected), 10)
+        idcg = sum(gv / _math.log2(i + 2) for i, gv in enumerate(ideal_gains))
+        if idcg:
+            ndcg_sum += dcg / idcg
+    recall_at_20 = round(recall20 / n, 4)
+    ndcg_at_10 = round(ndcg_sum / n, 4)
+
     # 评测 2.0（S2-T2，全部确定性、随金标实时复算）：
     # ① 拒答正确率——固定乱码探针集必须全部低于拒答阈值（与 qa.ask 同一 6.0 分界），
     #    即「语料外问题不得输出法条卡片」；②引用实体完整率——金标检索命中引用卡
@@ -1041,6 +1062,10 @@ def evals():
         "precision_at_5": round(prec_sum / n, 4),
         "rank1_rate": round(rank1 / n, 4),
         "rank1_note": "金标条文排在第 1 位的比例（比 hit@5 更严格的口径）",
+        "recall_at_20": recall_at_20,
+        "recall_at_20_note": "金标条文出现在 top-20 的比例（报告 §34 指标；排名截断更宽的召回口径）",
+        "ndcg_at_10": ndcg_at_10,
+        "ndcg_at_10_note": "nDCG@10（binary relevance，IDCG 归一；报告 §34 指标）",
         "gap_subset_count": gap_total,
         "gap_subset_hit_at_5": round(gap_hits / gap_total, 4) if gap_total else None,
         "gap_subset_rank1": round(gap_rank1 / gap_total, 4) if gap_total else None,
