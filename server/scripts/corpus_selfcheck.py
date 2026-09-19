@@ -181,9 +181,29 @@ def main() -> int:
                         problems.append(f"历史全文 {lid}/{vid}: 快照 SHA-256 不匹配")
     report["version_fulltexts"] = fulltext_count
 
+    # flk native id 映射校验（R188）：bbbs 非空且 evidence 文件在库（evidence.py 消费方 fail-open，
+    # 此处是唯一的机器门——损坏的映射会让 source_native_id 静默变 None 而无人知晓）。
+    native_ids_path = ROOT / "data" / "flk_native_ids.json"
+    native_count = 0
+    if native_ids_path.is_file():
+        try:
+            native_map = json.loads(native_ids_path.read_text(encoding="utf-8"))
+            for lid, rec in native_map.items():
+                native_count += 1
+                bbbs = (rec or {}).get("bbbs")
+                if not bbbs or not re.fullmatch(r"[\w-]{8,}", str(bbbs)):
+                    problems.append(f"flk native id {lid}: bbbs 形态异常")
+                ev_rel = (rec or {}).get("evidence")
+                ev_path = (ROOT.parent / str(ev_rel)).resolve() if ev_rel else None
+                if not ev_rel or not ev_path.is_file():
+                    problems.append(f"flk native id {lid}: 证据文件缺失 {ev_rel}")
+        except ValueError as e:
+            problems.append(f"flk native id 映射不可解析: {e}")
+    report["flk_native_ids"] = native_count
+
     out.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
     total = sum(r["actual_count"] for r in report["laws"].values())
-    print(f"语料自检：{len(report['laws'])} 部 {total} 条，结构/哈希问题 {len(problems)} 项，待核 {len(pending)} 项，版本注册表 {len(version_registries)} 份，历史全文 {fulltext_count} 份")
+    print(f"语料自检：{len(report['laws'])} 部 {total} 条，结构/哈希问题 {len(problems)} 项，待核 {len(pending)} 项，版本注册表 {len(version_registries)} 份，历史全文 {fulltext_count} 份，flk native id {native_count} 部")
     for p in problems:
         print("  -", p)
     for p in pending:

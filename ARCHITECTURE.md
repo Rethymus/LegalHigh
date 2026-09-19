@@ -13,9 +13,12 @@
   ↓
 FastAPI app/
   ├─ qa / research / needs / cases / drafting / review   ← 只读语料，零联网
-  ├─ ai_governor                                          ← 唯一联网模块（受控 openai SDK，四道 gate）
-  ├─ corpus / law_versions                                ← 语料单例 + 版本注册表（fail-closed）
-  └─ storage / audit                                      ← 审计留痕（Evidence Ledger 原型）
+  ├─ ai_governor                                          ← 唯一联网模块（受控 openai SDK，四道 gate + 数值一致性）
+  ├─ corpus / law_versions / version_fulltext             ← 语料单例 + 版本注册表 + 历史全文（fail-closed）
+  ├─ history_index / citator / version_renumber           ← 历史独立检索 / 被引用反查 / 重编号映射（只读派生）
+  ├─ source_registry / evidence / temporal                ← 来源登记 / 证据账本（§19） / 时间效力层
+  ├─ mcp_server                                           ← stdio/HTTP JSON-RPC（五只读工具，无生成）
+  └─ storage / audit / evidence_ledger                    ← 审计留痕 + 证据账本（append-only）
   ↓
 数据 data/
   ├─ laws/（43 部 5,573 条，source+sha256+生效日证据）
@@ -47,7 +50,8 @@ FastAPI app/
 - `docs/adr/0002-llm-cannot-create-citations.md`
 - `docs/adr/0003-fail-closed-verification.md`
 - `docs/adr/0004-guiding-cases-not-full-corpus.md`
+- `docs/adr/0005-labor-termination-controlled-groups.md`（R166：劳动解除受控组 + 金标先行 A/B 数据决策）
 
 ## 对 FLERF 报告的完整审计
 
-`docs/research/FLERF对齐审计-2026-09-16.md`（49 节逐主题核对，含 ✅/🟡/⚪/⚖️ 判定与证据）。
+`docs/research/FLERF对齐审计-2026-09-16.md`（49 节逐主题核对，含 ✅/🟡/⚪/⚖️ 判定与证据）。R175 起的持续收口（历史检索全链路、证据账本六链路、robots 红线、§32/§34）以 `docs/architecture/known-gaps.md` 为唯一权威白区登记处；`ARCHITECTURE.md` 与各主题文档不逐轮同步。
