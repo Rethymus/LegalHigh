@@ -68,6 +68,52 @@ def test_deictic_temporal_without_as_of_is_noop():
     assert version_fulltext.historical_for_card("csl-2025", "", 74) is None
 
 
+def test_renumber_map_relocates_when_same_no_missing(monkeypatch):
+    """重编号映射接入（R171）：同条号未命中时经映射祖先条号取历史文本。
+
+    合成映射（真实语料条号稳定，无 renumbered 对——见 test_version_renumber）：
+    适用版 1997 中「第384条」的内容系由前一版「第177条」重编号而来，卡片条号
+    384 未在 1997 出现 → 反查映射得 177，返回 177 的文本并标注定位方式。
+    """
+    from app import version_renumber
+    fake_map = {"law_id": "cl-2023", "pair_count": 1, "renumbered_count": 1, "pairs": [{
+        "from_version": "1979-enacted", "to_version": "1997-revision",
+        "matches": [{"from_no": 177, "from_sub": None, "to_no": 384, "to_sub": None,
+                     "kind": "renumbered", "ratio": 0.91, "text_changed": False, "label": "第一百七十七条"}],
+        "unmatched_from": [], "unmatched_to": [],
+    }]}
+    monkeypatch.setattr(version_renumber, "build_map", lambda law_id: fake_map)
+    hist = version_fulltext.historical_for_card("cl-2023", "2020-05-01", 384)
+    assert hist is not None and hist["text"], "映射命中必须给出历史文本"
+    assert hist["located_via"] == "renumber-map"
+    assert hist["mapped_from_no"] == 177 and hist["mapped_ratio"] == 0.91
+    assert "经重编号映射定位（ratio 0.91）" in hist["shift_note"]
+
+
+def test_renumber_map_identity_does_not_override(monkeypatch):
+    """身份映射（from==to）不得改动同条号结果，也不得附带 located_via。"""
+    from app import version_renumber
+    fake_map = {"law_id": "cl-2023", "pair_count": 1, "renumbered_count": 0, "pairs": [{
+        "from_version": "1979-enacted", "to_version": "1997-revision",
+        "matches": [{"from_no": 17, "from_sub": None, "to_no": 17, "to_sub": None,
+                     "kind": "same", "ratio": 1.0, "text_changed": True, "label": "第十七条"}],
+        "unmatched_from": [], "unmatched_to": [],
+    }]}
+    monkeypatch.setattr(version_renumber, "build_map", lambda law_id: fake_map)
+    hist = version_fulltext.historical_for_card("cl-2023", "2020-05-01", 17)
+    assert hist is not None and hist["text"]
+    assert "located_via" not in hist
+
+
+def test_real_pair_identity_stays_plain(monkeypatch):
+    """真实数据（条号稳定，零 renumbered）：cl-2023 对照卡不得出现 located_via。"""
+    out = qa.ask("2019 年网络运营者不履行安全保护义务会怎样")
+    for c in out["answer_cards"]:
+        hv = c.get("historical_version")
+        if hv:
+            assert "located_via" not in hv
+
+
 def test_unknown_article_number_in_history_is_honest():
     """条号在历史版本不存在的场景：文本 None、移位标注在位、不出错。"""
     hist = version_fulltext.historical_for_card("cl-2023", "2019-01-01", 999)

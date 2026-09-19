@@ -85,6 +85,30 @@ def list_available(law_id: str) -> list[str]:
 _SHIFT_NOTE = "历史版本按同条号对照；版本间条文序号可能因修正移位，仅供对照、不自动断言适用。"
 
 
+def _locate_mapped_ancestor(law_id: str, applicable_vid: str, no: int, sub: str | None):
+    """在相邻版本对（前一全文版 → 适用版）中反查卡片条号的映射祖先。
+
+    返回 kind=renumbered 且 to_key=卡片键的条目（from_no=内容在适用版中的
+    真实条号）；身份映射（from==to）与无条目返回 None——同条号即祖先。
+    延迟导入 version_renumber 防循环（其自身引用本模块）。
+    """
+    from . import version_renumber  # noqa: PLC0415 延迟导入防循环
+
+    try:
+        mapping = version_renumber.build_map(law_id)
+    except (ValueError, FileNotFoundError):
+        return None
+    for p in mapping.get("pairs", []):
+        if p["to_version"] != applicable_vid:
+            continue
+        for e in p.get("matches", []):
+            if e["to_no"] == int(no) and (e["to_sub"] or "") == (sub or ""):
+                if e["from_no"] != no or (e["from_sub"] or "") != (sub or ""):
+                    return e
+                return None
+    return None
+
+
 def applicable_version(law_id: str, as_of: str) -> dict | None:
     """注册表口径下的 as_of 适用版本：施行日与公布日均 ≤ as_of 的版本中，公布日最新者。
 
@@ -124,6 +148,22 @@ def historical_for_card(law_id: str, as_of: str, no: int, sub: str | None = None
         return None
     article = next((a for a in doc["articles"]
                     if a["no"] == int(no) and (a.get("sub") or "") == (sub or "")), None)
+    # 重编号映射接入（R171）：同条号未命中或命中但映射显示该条内容系重编号而来时，
+    # 反查映射祖先条号（from_no），返回映射后条号的历史文本并显式标注定位方式。
+    mapped_entry = _locate_mapped_ancestor(law_id, version["version_id"], no, sub)
+    via = None
+    if mapped_entry is not None:
+        mapped_key = (mapped_entry["from_no"], mapped_entry["from_sub"] or "")
+        candidate = next((a for a in doc["articles"] if (a["no"], a.get("sub") or "") == mapped_key), None)
+        if candidate is not None:
+            article = candidate
+            via = {
+                "located_via": "renumber-map",
+                "mapped_from_no": mapped_entry["from_no"],
+                "mapped_from_sub": mapped_entry["from_sub"] or None,
+                "mapped_ratio": mapped_entry["ratio"],
+            }
+    shift_note = (f"经重编号映射定位（ratio {mapped_entry['ratio']}）；" if via else "") + _SHIFT_NOTE
     return {
         "version_id": version["version_id"],
         "label": version["label"],
@@ -131,5 +171,7 @@ def historical_for_card(law_id: str, as_of: str, no: int, sub: str | None = None
         "effective_date": version.get("effective_date"),
         "text": article["text"] if article else None,
         "label_found": article["label"] if article else None,
-        "shift_note": _SHIFT_NOTE,
+        **({"located_via": via["located_via"], "mapped_from_no": via["mapped_from_no"],
+            "mapped_from_sub": via["mapped_from_sub"], "mapped_ratio": via["mapped_ratio"]} if via else {}),
+        "shift_note": shift_note,
     }
