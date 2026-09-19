@@ -4,7 +4,7 @@ import { Icon } from '../icons'
 import { lawEvidenceGrade, useLaws } from '../../data/model'
 import { SourceBadge } from '../domain'
 import { PageHeader, SkeletonLines, ValidityBadge } from '../ui'
-import { api, type CaseRecord } from '../../lib/api'
+import { api, type CaseRecord, type HistorySearch } from '../../lib/api'
 
 function lawSourceLabel(sourceUrl: string): string {
   try {
@@ -34,6 +34,25 @@ export default function DataSources() {
   const [evals, setEvals] = useState<Awaited<ReturnType<typeof api.evals>> | null>(null)
   const [evalsState, setEvalsState] = useState<'loading' | 'done'>('loading')
   const [registry, setRegistry] = useState<Awaited<ReturnType<typeof api.sources>> | null>(null)
+  const [histQ, setHistQ] = useState('')
+  const [histOut, setHistOut] = useState<HistorySearch | null>(null)
+  const [histBusy, setHistBusy] = useState(false)
+  const [histError, setHistError] = useState<string | null>(null)
+
+  const runHistSearch = () => {
+    const q = histQ.trim()
+    if (!q) return
+    setHistBusy(true)
+    setHistError(null)
+    api.historySearch(q, { topK: 10 }).then(
+      (out) => { setHistOut(out); setHistBusy(false) },
+      (reason: unknown) => {
+        setHistOut(null)
+        setHistError(reason instanceof Error ? reason.message : String(reason))
+        setHistBusy(false)
+      },
+    )
+  }
 
   useEffect(() => {
     let alive = true
@@ -91,6 +110,54 @@ export default function DataSources() {
         <div className="stat"><b>{data ? articleCount.toLocaleString() : '—'}</b><span>已加载条文</span></div>
         <div className="stat"><b>{cases ? cases.length : '—'}</b><span>逐件核实案例</span></div>
       </div>
+
+      <section className="card mb-20">
+        <div className="card-h row-wrap">
+          <b className="card-h-t">历史版本文本检索（全站）</b>
+          <span className="spacer" />
+          <span className="tiny">非现行 · 仅供对照研究</span>
+        </div>
+        <div className="card-b">
+          <div className="row row-wrap mb-8">
+            <input
+              className="inp"
+              style={{ maxWidth: 320 }}
+              aria-label="历史版本文本检索词（全站）"
+              placeholder="如：网络安全等级保护"
+              value={histQ}
+              onChange={(e) => setHistQ(e.target.value)}
+              onKeyDown={(e) => { if (e.key === 'Enter') runHistSearch() }}
+            />
+            <button className="btn btn-secondary btn-sm" onClick={runHistSearch} disabled={histBusy || !histQ.trim()}>
+              {histBusy ? '检索中…' : '检索历史文本'}
+            </button>
+          </div>
+          {histError && <div className="tiny" style={{ color: 'var(--danger)' }}>{histError}</div>}
+          {histOut && (
+            <div className="mt-12">
+              <div className="tiny muted mb-8">
+                索引：{histOut.index_articles.toLocaleString()} 条 / {histOut.index_versions} 个历史版本 · {histOut.scope_note}
+              </div>
+              {histOut.hits.length === 0 ? (
+                <div className="tiny">历史版本中未检出该词。</div>
+              ) : (
+                <div className="list-divided">
+                  {histOut.hits.map((h) => (
+                    <div key={`${h.law_id}-${h.version_id}-${h.no}-${h.sub ?? ''}`} className="lrow" style={{ alignItems: 'flex-start' }}>
+                      <span className="bdg bdg-gray">{h.version_label}</span>
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <b style={{ fontSize: 12.5 }}><span className="muted">{h.law_id}</span> · {h.label}</b>
+                        <div className="tiny" style={{ lineHeight: 1.8 }}>{h.text.slice(0, 110)}{h.text.length > 110 ? '…' : ''}</div>
+                      </div>
+                      <span className="tiny">{h.effective_date} 施行</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      </section>
 
       {evalsState === 'loading' && (
         <section className="card mb-20"><div className="card-b tiny muted">检索质量评测复算中…（金标 106 组逐题检索，首次约 3 秒）</div></section>

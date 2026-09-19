@@ -35,6 +35,7 @@ from app import (  # noqa: E402
     drafting,
     docx_return,
     docxgen,
+    evidence as evidence_mod,
     explains as explains_mod,
     commentaries as commentaries_mod,
     law_versions as law_versions_mod,
@@ -378,11 +379,20 @@ def ask(body: AskBody):
         raise HTTPException(422, "问题不能为空")
     question = body.question.strip()
     out = qa.ask(question, top_k=min(max(body.top_k, 1), 12), as_of=body.as_of)
-    # Evidence Ledger（FLERF §19/§23 最小闭环）：答案所依据证据的哈希快照随 append-only
-    # 审计表持久化，不随缓存过期；账本只留问题哈希不留原文。
-    storage.audit("anonymous", "qa", qa.question_id(question), "evidence_snapshot",
-                  qa.ledger_payload(question, out))
+    # Evidence Ledger（FLERF §19/§23，R174 强类型）：§19 VerifiedEvidence 快照入独立账本，
+    # 不随缓存过期；账本只留问题哈希不留原文；拒答（no_answer）同样留痕。
+    _write_evidence_ledger("qa", out["answer_cards"], extra={
+        "question_sha256": qa.question_id(question),
+        "no_answer": out["no_answer"],
+    })
     return out
+
+
+@app.get("/api/evidence")
+def evidence_ledger(entity_type: str | None = None, limit: int = 50,
+                    admin: AdminPrincipal = Depends(require_admin)):
+    """证据账本只读查询（敏感端点：与 /api/audit 同门；内容为公共条文哈希）。"""
+    return {"entries": storage.list_evidence(entity_type, limit=min(max(limit, 1), 500))}
 
 
 @app.get("/api/sources")
@@ -424,9 +434,8 @@ def research_memo(body: ResearchBody):
     except ValueError as e:
         raise HTTPException(422, str(e))
     # Evidence Ledger：备忘录与 qa 同账本——「当时依据了哪些条文」事后可证。
-    storage.audit("anonymous", "research", qa.question_id(body.question.strip()), "evidence_snapshot",
-                  {"question_sha256": qa.question_id(body.question.strip()),
-                   **qa.evidence_snapshot({"answer_cards": memo["cards"]})})
+    _write_evidence_ledger("research", memo["cards"],
+                           extra={"question_sha256": qa.question_id(body.question.strip())})
     return memo
 
 
@@ -507,15 +516,18 @@ def analyze(body: AnalyzeBody):
 
 
 def _write_evidence_ledger(entity_type: str, citations: list, actor: str = "anonymous",
-                           entity_id: str | None = None) -> str:
-    """按 qa/research 同款口径把依据条目写入证据账本；返回实体 id。
+                           entity_id: str | None = None, extra: dict | None = None) -> str:
+    """依据条目升格为 §19 VerifiedEvidence 并写入独立 evidence_ledger 表（append-only）。
 
-    案件分析链路红线（模块无状态、不写库）：实体 id 一律随机 uuid、
-    绝不取案情文本哈希；payload 只含公共条文的哈希与版本/来源字段——
-    账本证明「分析依据了哪段公共文本」，不留下任何用户材料痕迹。
+    案件分析链路红线（模块无状态、不写库）的尊重方式：实体 id 一律随机 uuid、
+    绝不取案情文本哈希；快照只含公共条文哈希与版本/来源——账本证明
+    「分析依据了哪段公共文本」，不留下任何用户材料痕迹。
     """
     eid = entity_id or _uuid.uuid4().hex[:12]
-    storage.audit(actor, entity_type, eid, "evidence_snapshot", qa.snapshot_from_citations(citations))
+    snapshot = evidence_mod.snapshot_from_citations(citations)
+    if extra:
+        snapshot = {**extra, **snapshot}
+    storage.record_evidence(actor, entity_type, eid, "evidence_snapshot", snapshot)
     return eid
 
 

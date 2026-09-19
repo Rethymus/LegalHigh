@@ -89,6 +89,7 @@ def ask(question: str, top_k: int = 6, as_of: str | None = None):
             "effective_date": h["effective_date"],
             "promulgation_instrument": h["promulgation_instrument"],
             "article_no": h["no"],
+            "sub": h.get("sub"),
             "article_label": h["label"],
             "chapter": h["chapter"],
             "text": h["text"],
@@ -124,57 +125,3 @@ def ask(question: str, top_k: int = 6, as_of: str | None = None):
 def question_id(question: str) -> str:
     """问题指纹：账本只留哈希不留原文（LEGAL-009 卫生纪律——审计表不是 PII 表）。"""
     return hashlib.sha256(question.encode("utf-8")).hexdigest()[:12]
-
-
-def evidence_snapshot(answer: dict) -> dict:
-    """EvidenceSnapshot（FLERF 报告 §19/§23 的最小闭环）。
-
-    回答产生时刻所依据的每条证据：精确文本哈希 + 版本/生效字段 + 官方来源 URL
-    （+ 存在时间上下文时的 in_force_at_as_of 标记）。随 append-only 审计表持久化、
-    不随任何缓存过期——一年后法条改了，仍能证明「当时系统依据的是哪段文本」。
-    """
-    evidence = []
-    for card in answer.get("answer_cards", []):
-        item = {
-            "evidence_id": f"{card['law_id']}#{card['article_no']}",
-            "text_sha256": hashlib.sha256(card.get("text", "").encode("utf-8")).hexdigest(),
-            "law_status": card.get("law_status"),
-            "effective_date": card.get("effective_date"),
-            "source_url": card.get("source_url"),
-        }
-        if "in_force_at_as_of" in card:
-            item["in_force_at_as_of"] = card["in_force_at_as_of"]
-        evidence.append(item)
-    return {
-        "no_answer": answer.get("no_answer"),
-        "corpus_size": (answer.get("retrieval_meta") or {}).get("corpus_size"),
-        "evidence_count": len(evidence),
-        "evidence": evidence,
-    }
-
-
-def ledger_payload(question: str, answer: dict) -> dict:
-    return {"question_sha256": question_id(question), **evidence_snapshot(answer)}
-
-
-def snapshot_from_citations(citations: list[dict]) -> dict:
-    """审查/要件分析链路的 EvidenceSnapshot（FLERF §19/§23，R170）。
-
-    依据条目（citation_of 对象）→ 与 qa 同款快照：条文精确文本 sha256 +
-    版本/生效 + 来源 URL；按 evidence_id 去重。无条文文本的依据
-    （指引/程序性条目）不入证据账——账本只记「依据了哪段公共文本」。
-    """
-    by_id: dict[str, dict] = {}
-    for cit in citations or []:
-        text = cit.get("text") or ""
-        if not text or cit.get("law_id") is None or cit.get("article_no") is None:
-            continue
-        by_id[f"{cit['law_id']}#{cit['article_no']}"] = {
-            "evidence_id": f"{cit['law_id']}#{cit['article_no']}",
-            "text_sha256": hashlib.sha256(text.encode("utf-8")).hexdigest(),
-            "law_status": cit.get("status") or cit.get("law_status"),
-            "effective_date": cit.get("effective_date"),
-            "source_url": cit.get("source_url"),
-        }
-    evidence = list(by_id.values())
-    return {"evidence_count": len(evidence), "evidence": evidence}

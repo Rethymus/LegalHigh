@@ -10,6 +10,10 @@ import json
 from app import history_index, main, storage
 
 
+def _payload(row):
+    return json.loads(row["snapshot_json"])
+
+
 def test_history_search_hits_and_scope():
     out = history_index.search("网络运营者 等级保护", top_k=5)
     assert out["total"] == 5
@@ -61,14 +65,15 @@ def test_draft_creation_writes_ledger(tmp_db):
         "deadline": "2026-09-30",
     })
     out = main.create_draft(body, admin=main.AdminPrincipal(name="drafter-x"))
-    rows = [r for r in storage.list_audit(None) if r["entity_type"] == "draft" and r["action"] == "evidence_snapshot"]
+    rows = [r for r in storage.list_evidence("draft") if r["action"] == "evidence_snapshot"]
     assert len(rows) == 1 and rows[0]["entity_id"] == out["draft_id"]
-    payload = json.loads(rows[0]["payload_json"])
+    payload = _payload(rows[0])
     assert payload["evidence_count"] == 2
     citations = {f"{c['law_id']}#{c['article_no']}": c for c in out["content"]["citations"]}
     for ev in payload["evidence"]:
         cit = citations[ev["evidence_id"]]
-        assert ev["text_sha256"] == hashlib.sha256(cit["text"].encode("utf-8")).hexdigest()
+        assert ev["content_hash"] == hashlib.sha256(cit["text"].encode("utf-8")).hexdigest()
+        assert ev["canonical_unit_id"] == ev["evidence_id"]
     assert marker not in json.dumps(payload, ensure_ascii=False), "用户填写字段不得入账"
 
 
@@ -79,6 +84,6 @@ def test_draft_without_citations_records_empty(tmp_db):
         "license_no": "A0000", "authority_scope": ["诉讼代理"], "term": "至本案审结止",
     })
     out = main.create_draft(body, admin=main.AdminPrincipal(name="drafter-x"))
-    rows = [r for r in storage.list_audit(None) if r["entity_type"] == "draft" and r["action"] == "evidence_snapshot"]
-    payload = json.loads(rows[0]["payload_json"])
+    rows = [r for r in storage.list_evidence("draft") if r["action"] == "evidence_snapshot"]
+    payload = _payload(rows[0])
     assert payload["evidence_count"] == 0 and payload["evidence"] == []

@@ -47,6 +47,11 @@ CREATE TABLE IF NOT EXISTS audit_log (
   entity_type TEXT NOT NULL, entity_id TEXT NOT NULL, action TEXT NOT NULL,
   payload_json TEXT NOT NULL
 );
+CREATE TABLE IF NOT EXISTS evidence_ledger (
+  id INTEGER PRIMARY KEY AUTOINCREMENT, ts TEXT NOT NULL, actor TEXT NOT NULL,
+  entity_type TEXT NOT NULL, entity_id TEXT NOT NULL, action TEXT NOT NULL,
+  snapshot_json TEXT NOT NULL
+);
 """
 
 # 批注状态机：pending → adopted / amended / rejected（单向，终态不可再变更）
@@ -323,7 +328,36 @@ def export_all() -> dict:
         "drafts": [dict(r) for r in conn.execute("SELECT * FROM drafts").fetchall()],
         "complaints": [dict(r) for r in conn.execute("SELECT * FROM complaints").fetchall()],
         "audit_log": [dict(r) for r in conn.execute("SELECT * FROM audit_log ORDER BY id").fetchall()],
+        "evidence_ledger": [dict(r) for r in conn.execute("SELECT * FROM evidence_ledger ORDER BY id").fetchall()],
     }
+
+
+def record_evidence(actor: str, entity_type: str, entity_id: str, action: str, snapshot: dict):
+    """Evidence Ledger（FLERF §23）：append-only，无更新/删除通道，不随缓存过期。"""
+    with _lock:
+        conn = get_conn()
+        conn.execute(
+            "INSERT INTO evidence_ledger (ts, actor, entity_type, entity_id, action, snapshot_json) VALUES (?,?,?,?,?,?)",
+            (_now(), actor or "anonymous", entity_type, entity_id, action, json.dumps(snapshot, ensure_ascii=False)),
+        )
+        conn.commit()
+
+
+def list_evidence(entity_type: str | None = None, entity_id: str | None = None, limit: int = 200):
+    conn = get_conn()
+    q = "SELECT * FROM evidence_ledger"
+    conds, args = [], []
+    if entity_type:
+        conds.append("entity_type=?")
+        args.append(entity_type)
+    if entity_id:
+        conds.append("entity_id=?")
+        args.append(entity_id)
+    if conds:
+        q += " WHERE " + " AND ".join(conds)
+    q += " ORDER BY id DESC LIMIT ?"
+    args.append(limit)
+    return [dict(r) for r in conn.execute(q, args).fetchall()]
 
 
 def create_complaint(contact: str | None, subject: str, content: str, kind: str = "general",
