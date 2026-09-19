@@ -50,6 +50,7 @@ from app import (  # noqa: E402
     validation,
     version_fulltext as version_fulltext_mod,
     version_renumber as version_renumber_mod,
+    history_index as history_index_mod,
 )
 from app.corpus import get_corpus  # noqa: E402
 
@@ -271,6 +272,20 @@ def law_renumber_map(law_id: str):
     if out["pair_count"] == 0:
         raise HTTPException(404, "该法少于两个已采集历史版本，无可对齐版本对")
     return out
+
+
+@app.get("/api/history/search")
+def history_search(q: str, top_k: int = 10, law_id: str | None = None, version_id: str | None = None):
+    """历史文本独立检索（known-gaps #1，R172）：37 份历史全文的独立 BM25 命中。
+
+    与主检索同一引擎/分词、独立命名空间——历史条文永不混入现行检索排名；
+    每条命中携带版本标识与非现行口径。公开只读。
+    """
+    query = q.strip()
+    if not query:
+        raise HTTPException(422, "检索词不能为空")
+    return history_index_mod.search(query, top_k=min(max(top_k, 1), 60),
+                                    law_id=law_id, version_id=version_id)
 
 
 @app.get("/api/laws/{law_id}/articles/{no}/analysis-context")
@@ -678,6 +693,10 @@ def create_draft(body: DraftBody, admin: AdminPrincipal = Depends(require_admin)
     except ValueError as e:
         raise HTTPException(422, str(e))
     did = storage.create_draft(body.template_id, body.fields, gen["content"], gen["content"]["citations"], gen["snapshot"], actor=admin.name)
+    # Evidence Ledger（FLERF §19/§23，R172）：起草链路依据条目入账——
+    # 文书所引条文在生成时刻的精确文本哈希随 append-only 账本持久化；
+    # payload 只含公共条文哈希与版本/来源，用户填写字段不入账。
+    _write_evidence_ledger("draft", gen["content"].get("citations"), actor=admin.name, entity_id=did)
     return {"draft_id": did, "status": "draft", **gen}
 
 
