@@ -9,6 +9,7 @@ import json
 import os as _os
 import secrets
 import sys
+import uuid as _uuid
 from dataclasses import dataclass
 from datetime import date
 from pathlib import Path
@@ -48,6 +49,7 @@ from app import (  # noqa: E402
     temporal,
     validation,
     version_fulltext as version_fulltext_mod,
+    version_renumber as version_renumber_mod,
 )
 from app.corpus import get_corpus  # noqa: E402
 
@@ -253,6 +255,24 @@ def law_version_fulltext(law_id: str, version_id: str):
         raise HTTPException(500, str(e))
 
 
+@app.get("/api/laws/{law_id}/renumber-map")
+def law_renumber_map(law_id: str):
+    """跨版本条号重编号映射（known-gaps #1，R170）：difflib 确定性文本对齐。
+
+    相邻历史版本两两对齐（子条号参与键）；不足两个全文版本 → 404（诚实无数据，
+    与 fulltext 端点的 404 语义一致——重编号映射是派生资源而非兜底空表）。
+    """
+    if law_id not in get_corpus().laws:
+        raise HTTPException(404, "law not found")
+    try:
+        out = version_renumber_mod.build_map(law_id)
+    except (ValueError, FileNotFoundError) as e:
+        raise HTTPException(404, str(e))
+    if out["pair_count"] == 0:
+        raise HTTPException(404, "该法少于两个已采集历史版本，无可对齐版本对")
+    return out
+
+
 @app.get("/api/laws/{law_id}/articles/{no}/analysis-context")
 def law_analysis_context(law_id: str, no: int):
     """原文、官方解释与具名专业观点的证据包；覆盖分不等于正确率。"""
@@ -415,8 +435,8 @@ class CaseBody(BaseModel):
 
 
 @app.post("/api/case/analyze")
-def case_analyze(body: CaseBody):
-    """案件分析（完全无状态：不写库、不落盘，case_text 仅在内存中做正则扫描）。"""
+def _case_analyze_core(body: CaseBody):
+    """案件分析核心（完全无状态：不写库、不落盘，case_text 仅在内存中做正则扫描）。"""
     if len(body.case_text.strip()) < 30:
         raise HTTPException(422, "案件文本过短（至少 30 字）")
     if not body.claim_id:
@@ -427,10 +447,25 @@ def case_analyze(body: CaseBody):
         raise HTTPException(422, str(e))
 
 
+def _case_citations(analysis: dict) -> list:
+    """要件分析的全部 statute 引用条目（elements[].citations）。"""
+    claim = analysis.get("claim") or {}
+    return [c for el in (claim.get("elements") or []) for c in (el.get("citations") or [])]
+
+
+@app.post("/api/case/analyze")
+def case_analyze(body: CaseBody):
+    analysis = _case_analyze_core(body)
+    # Evidence Ledger（R170）：要件分析的依据条目入账。红线（模块无状态）的
+    # 尊重方式：实体=随机 uuid（绝不取案情哈希），payload 只含公共条文哈希与版本/来源。
+    _write_evidence_ledger("case", _case_citations(analysis))
+    return analysis
+
+
 @app.post("/api/case/report")
 def case_report_docx(body: CaseBody):
-    """案件分析报告 DOCX 下载（仅响应用户显式请求时在内存生成，不落盘）。"""
-    analysis = case_analyze(body)
+    """案件分析报告 DOCX 下载（仅响应用户显式请求时在内存生成，不落盘；不重复写账本）。"""
+    analysis = _case_analyze_core(body)
     data = case_report.generate_case_docx(analysis)
     filename = f"case_analysis_{date.today().strftime('%Y%m%d')}.docx"
     return Response(
@@ -449,13 +484,33 @@ class AnalyzeBody(BaseModel):
 def analyze(body: AnalyzeBody):
     if len(body.contract_text.strip()) < 30:
         raise HTTPException(422, "合同文本过短（至少 30 字）")
-    return review.analyze_contract(body.contract_text, body.title)
+    result = review.analyze_contract(body.contract_text, body.title)
+    # Evidence Ledger（FLERF §19/§23，R170）：审查依据条目入 append-only 账本。
+    # dry-run 无持久 id——实体用随机 uuid，payload 只含公共条文哈希，不带合同文本。
+    _write_evidence_ledger("review", [f.get("citation") for f in result.get("findings", []) if f.get("citation")])
+    return result
+
+
+def _write_evidence_ledger(entity_type: str, citations: list, actor: str = "anonymous",
+                           entity_id: str | None = None) -> str:
+    """按 qa/research 同款口径把依据条目写入证据账本；返回实体 id。
+
+    案件分析链路红线（模块无状态、不写库）：实体 id 一律随机 uuid、
+    绝不取案情文本哈希；payload 只含公共条文的哈希与版本/来源字段——
+    账本证明「分析依据了哪段公共文本」，不留下任何用户材料痕迹。
+    """
+    eid = entity_id or _uuid.uuid4().hex[:12]
+    storage.audit(actor, entity_type, eid, "evidence_snapshot", qa.snapshot_from_citations(citations))
+    return eid
 
 
 @app.post("/api/reviews")
 def create_review(body: AnalyzeBody, admin: AdminPrincipal = Depends(require_admin)):
-    result = analyze(body)
+    result = review.analyze_contract(body.contract_text, body.title)
     rid = storage.create_review(result["title"], body.contract_text, result, actor=admin.name)
+    # 账本实体=持久 rid（区别于 dry-run 的 uuid）；与 create 审计行同实体可并读
+    _write_evidence_ledger("review", [f.get("citation") for f in result.get("findings", []) if f.get("citation")],
+                           actor=admin.name, entity_id=rid)
     return {"review_id": rid, **result}
 
 

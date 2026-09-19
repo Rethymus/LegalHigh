@@ -87,3 +87,57 @@ def test_run_checks_all_healthy_path(tmp_path):
                  for s in REGISTRY["sources"] if "canary" in s}
     results, all_healthy = canary.run_checks(REGISTRY, _fake_fetch(responses), {})
     assert all_healthy and all(r["healthy"] for r in results)
+
+
+APPROVED = {"sources": [
+    {"id": "h1", "host": "a.example", "authority_class": "OFFICIAL_PRIMARY",
+     "compliance": {"approved": True}},
+    {"id": "h2", "host": "z.example", "authority_class": "OFFICIAL_PRIMARY",
+     "compliance": {"approved": True}},
+]}
+
+
+def _deep_docs():
+    return [
+        {"law_id": "law-a", "version_id": "v1", "law_title": "甲法", "source": {"url": "https://a.example/p/1"}},
+        {"law_id": "law-a2", "version_id": "v1", "law_title": "甲法实施条例", "source": {"url": "https://a.example/p/2"}},
+        {"law_id": "law-z", "version_id": "v9", "law_title": "乙法", "source": {"url": "https://z.example/p/9"}},
+        {"law_id": "law-bad", "version_id": "v1", "law_title": "未批准法", "source": {"url": "https://evil.example/p/1"}},
+    ]
+
+
+def test_pick_deep_samples_across_hosts(tmp_path, monkeypatch):
+    ft = tmp_path / "law_versions_fulltext"
+    for i, d in enumerate(_deep_docs()):
+        p = ft / d["law_id"] / f"{d['version_id']}.json"
+        p.parent.mkdir(parents=True, exist_ok=True)
+        p.write_text(json.dumps({"law_id": d["law_id"], "version_id": d["version_id"],
+                                 "law_title": d["law_title"], "source": {"url": d["source"]["url"]}}),
+                     encoding="utf-8")
+    picked = canary.pick_deep_targets(ft, 2, approved_hosts={"a.example", "z.example"})
+    hosts = {t["host"] for t in picked}
+    assert hosts == {"a.example", "z.example"}, "按 host 轮转抽样必须跨站覆盖且剔除未批准 host"
+    assert all(t["title"] for t in picked)
+
+
+def test_run_deep_enforces_approved_hosts():
+    targets = [{"key": "deep:law-bad/v1", "title": "未批准法",
+                "url": "https://evil.example/p/1", "host": "evil.example"},
+               {"key": "deep:law-a/v1", "title": "甲法",
+                "url": "https://a.example/p/1", "host": "a.example"}]
+    called = []
+    results, ok = canary.run_deep(targets, APPROVED,
+                                  lambda u: (called.append(u), (200, "甲法 正文"))[1], {})
+    by_id = {r["source_id"]: r for r in results}
+    assert not by_id["deep:law-bad/v1"]["healthy"]
+    assert "LEGAL-005" in by_id["deep:law-bad/v1"]["error"]
+    assert by_id["deep:law-a/v1"]["healthy"]
+    assert called == ["https://a.example/p/1"], "未批准 host 不得触网"
+    assert not ok
+
+
+def test_run_deep_degraded_on_missing_marker():
+    results, ok = canary.run_deep(
+        [{"key": "deep:law-a/v1", "title": "甲法", "url": "https://a.example/p/1", "host": "a.example"}],
+        APPROVED, lambda u: (200, "页面被改版，标题没了"), {})
+    assert not ok and results[0]["markers_ok"]["甲法"] is False

@@ -78,3 +78,68 @@ def test_research_memo_also_recorded(tmp_db):
     for card, ev in zip(out["cards"], payload["evidence"]):
         assert ev["text_sha256"] == hashlib.sha256(card["text"].encode("utf-8")).hexdigest()
     assert "question" not in payload
+
+
+def test_review_analyze_dry_writes_ledger_without_contract_text(tmp_db):
+    """审查 dry-run：statute 依据条目入账；合同文本与指引类依据（无条文文本）不入账。"""
+    marker = "青云电子科技 peculiar-marker-7741"
+    contract = (
+        "第一条 费用与押金\n乙方应向甲方支付押金五千元，合同期满后押金不予退还。\n"
+        f"第二条 违约责任\n乙方提前解约的，应支付违约金五万元。{marker}\n"
+        "第三条 争议解决\n本合同未尽事宜，甲方拥有最终解释权。"
+    )
+    out = main.analyze(main.AnalyzeBody(title="t", contract_text=contract))
+    rows = [r for r in storage.list_audit(None) if r["entity_type"] == "review"]
+    assert len(rows) == 1
+    payload = json.loads(rows[0]["payload_json"])
+    statute_ids = {f"{f['citation']['law_id']}#{f['citation']['article_no']}"
+                   for f in out["findings"] if (f.get("citation") or {}).get("text")}
+    assert statute_ids, "测试文本必须触发至少一个 statute 审查点"
+    assert {e["evidence_id"] for e in payload["evidence"]} == statute_ids
+    for ev in payload["evidence"]:
+        cit = next(f["citation"] for f in out["findings"]
+                   if f.get("citation") and f["citation"].get("text")
+                   and f"{f['citation']['law_id']}#{f['citation']['article_no']}" == ev["evidence_id"])
+        assert ev["text_sha256"] == hashlib.sha256(cit["text"].encode("utf-8")).hexdigest()
+    assert marker not in json.dumps(payload, ensure_ascii=False), "合同文本不得入账"
+    assert rows[0]["entity_id"] != "t"
+
+
+def test_create_review_ledger_uses_persistent_rid(tmp_db):
+    body = main.AnalyzeBody(title="审查台账", contract_text="甲方未按约定支付费用，且收取押金后未退还，主张违约责任与押金返还。")
+    principal = main.AdminPrincipal(name="reviewer-x")
+    out = main.create_review(body, admin=principal)
+    rows = [r for r in storage.list_audit(None, out["review_id"])]
+    actions = {r["action"] for r in rows}
+    assert {"evidence_snapshot"} <= actions
+    snap_rows = [r for r in rows if r["action"] == "evidence_snapshot"]
+    assert all(r["entity_id"] == out["review_id"] for r in snap_rows)
+
+
+def test_case_analyze_ledger_no_user_trace(tmp_db):
+    """要件分析入账但零用户痕迹：uuid 实体互不相同、案情文本不入 payload。"""
+    markers = ["云梯小区 peculiar-aaa-9182", "临江商贸 peculiar-bbb-7733"]
+    ids = []
+    for marker in markers:
+        main.case_analyze(main.CaseBody(
+            case_text=f"{marker} 用人单位拖欠劳动报酬，劳动者主张支付令与经济补偿，事实经过需结合证据认定。",
+            claim_id="wage_claim", title="t"))
+        ids.append([r for r in storage.list_audit(None) if r["entity_type"] == "case"][0]["entity_id"])
+    assert ids[0] != ids[1], "实体 id 不得由案情派生"
+    for row in [r for r in storage.list_audit(None) if r["entity_type"] == "case"]:
+        raw = row["payload_json"]
+        for marker in markers:
+            assert marker not in raw
+        payload = json.loads(raw)
+        assert payload["evidence_count"] > 0
+        for ev in payload["evidence"]:
+            assert ev["text_sha256"] and ev["source_url"]
+
+
+def test_case_core_does_not_write_ledger(tmp_db):
+    """核心分析函数保持无状态红线：不写库（报告下载路径复用 core，不产生账本行）。"""
+    before = len(storage.list_audit(None))
+    main._case_analyze_core(main.CaseBody(
+        case_text="用人单位拖欠劳动报酬，劳动者主张支付令，事实需结合证据认定，年限与工资待核。",
+        claim_id="wage_claim", title="t"))
+    assert len(storage.list_audit(None)) == before

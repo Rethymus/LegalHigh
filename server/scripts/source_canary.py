@@ -30,6 +30,7 @@ SERVER_DIR = pathlib.Path(__file__).resolve().parent.parent
 DEFAULT_REGISTRY = SERVER_DIR / "data" / "source_registry.json"
 DEFAULT_STATE = SERVER_DIR / "data" / "source_canary_state.json"
 DEFAULT_REPORT = SERVER_DIR.parent / "docs" / "qa-evidence" / "source-canary.json"
+DEFAULT_FULLTEXT_DIR = SERVER_DIR / "data" / "law_versions_fulltext"
 USER_AGENT = "LegalHigh-canary/1 (prototype; contact: repo issues)"
 SIZE_BUCKET = 4096  # 体积按 4KB 分档；健康判定容忍 ±1 档，突变 ≥2 档报 STRUCTURE_DRIFT
 
@@ -95,6 +96,82 @@ def run_checks(registry: dict, fetch_fn, state: dict) -> tuple[list[dict], bool]
     return results, all_healthy
 
 
+def pick_deep_targets(fulltext_dir, sample: int, approved_hosts: set[str] | None = None) -> list[dict]:
+    """逐法条页（文档级）canary 目标：历史全文来源页，按 host 轮转确定性抽样。
+
+    抽样纪律：同一 URL 去重；按 (law_id, version_id) 排序后按 host 轮转取样，
+    保证一次深检覆盖尽量多的不同来源站点而非同站多页；提供 approved_hosts 时
+    未批准 host 在抽样阶段即剔除（不浪费名额），run_deep 仍保留防御性拒绝。
+    """
+    docs: list[dict] = []
+    seen_urls: set[str] = set()
+    for p in sorted(pathlib.Path(fulltext_dir).glob("*/*.json")):
+        try:
+            d = json.loads(p.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            continue
+        url = (d.get("source") or {}).get("url") or ""
+        if not url or url in seen_urls:
+            continue
+        host = url.split("/")[2] if url.startswith("http") else ""
+        if approved_hosts is not None and host not in approved_hosts:
+            continue
+        seen_urls.add(url)
+        docs.append({
+            "key": f"deep:{d.get('law_id')}/{d.get('version_id')}",
+            "title": d.get("law_title") or "",
+            "url": url,
+            "host": host,
+        })
+    if sample <= 0:
+        return []
+    by_host: dict[str, list[dict]] = {}
+    for d in docs:
+        by_host.setdefault(d["host"], []).append(d)
+    picked: list[dict] = []
+    hosts = sorted(by_host)
+    while len(picked) < sample and hosts:
+        for h in hosts:
+            if by_host[h] and len(picked) < sample:
+                picked.append(by_host[h].pop(0))
+        hosts = [h for h in hosts if by_host[h]]
+    return picked
+
+
+def run_deep(deep_targets: list[dict], registry: dict, fetch_fn, state: dict) -> tuple[list[dict], bool]:
+    """文档级指纹：HTTP 200 + 法条标题标记在位。host 必须是注册表 approved 来源。"""
+    approved_hosts = {s.get("host") for s in registry.get("sources", [])
+                      if (s.get("compliance") or {}).get("approved")}
+    results = []
+    all_healthy = True
+    checked_at = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    for t in deep_targets:
+        if t["host"] not in approved_hosts:
+            results.append({"source_id": t["key"], "url": t["url"], "checked_at": checked_at,
+                            "status": 0, "markers_ok": {}, "size_bucket": None, "drift": None,
+                            "error": "host 未在 Source Registry approved 列表——拒绝探测（LEGAL-005）",
+                            "healthy": False})
+            all_healthy = False
+            continue
+        try:
+            status, html = fetch_fn(t["url"])
+            error = None
+        except RuntimeError as exc:
+            status, html, error = 0, "", str(exc)
+        fp = fingerprint(html, [t["title"]] if t["title"] else [])
+        healthy = status == 200 and fp["markers_healthy"]
+        state[t["key"]] = {"checked_at": checked_at, "url": t["url"],
+                           "status": status, "size_bucket": fp["size_bucket"]}
+        results.append({
+            "source_id": t["key"], "url": t["url"], "checked_at": checked_at,
+            "status": status, "markers_ok": fp["markers_ok"],
+            "size_bucket": fp["size_bucket"], "drift": None,
+            "error": error, "healthy": healthy,
+        })
+        all_healthy = all_healthy and healthy
+    return results, all_healthy
+
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description="Source Drift canary（只读诊断）")
     ap.add_argument("--all", action="store_true", help="检测注册表内全部 canary 目标")
@@ -103,6 +180,8 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--state", type=pathlib.Path, default=DEFAULT_STATE)
     ap.add_argument("--report", type=pathlib.Path, default=DEFAULT_REPORT)
     ap.add_argument("--timeout", type=int, default=20)
+    ap.add_argument("--deep", type=int, default=0,
+                    help="文档级 canary 抽样数（按 host 轮转取历史全文来源页；0=关闭）")
     args = ap.parse_args(argv)
 
     try:
@@ -125,6 +204,13 @@ def main(argv: list[str] | None = None) -> int:
             state = {}  # 状态文件损坏按无历史处理，绝不因账本问题放过一次真实检测
 
     results, all_healthy = run_checks(registry, lambda u: fetch(u, args.timeout), state)
+    if args.deep > 0:
+        approved = {s.get("host") for s in registry.get("sources", [])
+                    if (s.get("compliance") or {}).get("approved")}
+        deep = pick_deep_targets(DEFAULT_FULLTEXT_DIR, args.deep, approved)
+        deep_results, deep_ok = run_deep(deep, registry, lambda u: fetch(u, args.timeout), state)
+        results.extend(deep_results)
+        all_healthy = all_healthy and deep_ok
     args.state.parent.mkdir(parents=True, exist_ok=True)
     args.state.write_text(json.dumps(state, ensure_ascii=False, indent=2), encoding="utf-8")
     args.report.parent.mkdir(parents=True, exist_ok=True)
