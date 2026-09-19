@@ -23,6 +23,7 @@ import argparse
 import datetime
 import json
 import pathlib
+import re
 import subprocess
 import sys
 
@@ -33,6 +34,9 @@ DEFAULT_REPORT = SERVER_DIR.parent / "docs" / "qa-evidence" / "source-canary.jso
 DEFAULT_FULLTEXT_DIR = SERVER_DIR / "data" / "law_versions_fulltext"
 USER_AGENT = "LegalHigh-canary/1 (prototype; contact: repo issues)"
 SIZE_BUCKET = 4096  # 体积按 4KB 分档；健康判定容忍 ±1 档，突变 ≥2 档报 STRUCTURE_DRIFT
+
+sys.path.insert(0, str(SERVER_DIR))
+from build_corpus import clean_html_to_text  # noqa: E402  # stdlib-only 模块（CI 可用）
 
 
 def fetch(url: str, timeout: int = 20) -> tuple[int, str]:
@@ -172,6 +176,94 @@ def run_deep(deep_targets: list[dict], registry: dict, fetch_fn, state: dict) ->
     return results, all_healthy
 
 
+def pick_article_targets(fulltext_dir, sample: int, approved_hosts: set[str] | None = None) -> list[dict]:
+    """逐「条」级 canary 目标：从历史全文中确定性抽取具体条文做在线存在性探测。
+
+    每个文档取其中位条（避开首条导语与末条附则/尾注），文档间按 host 轮转，
+    直至凑满 sample；提供 approved_hosts 时未批准 host 在抽样阶段剔除。
+    """
+    docs: list[dict] = []
+    seen_urls: set[str] = set()
+    for p in sorted(pathlib.Path(fulltext_dir).glob("*/*.json")):
+        try:
+            d = json.loads(p.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            continue
+        url = (d.get("source") or {}).get("url") or ""
+        if not url or url in seen_urls:
+            continue
+        host = url.split("/")[2] if url.startswith("http") else ""
+        if approved_hosts is not None and host not in approved_hosts:
+            continue
+        articles = d.get("articles") or []
+        if not articles:
+            continue
+        seen_urls.add(url)
+        mid = articles[len(articles) // 2]
+        docs.append({
+            "key": f"deep-art:{d.get('law_id')}/{d.get('version_id')}#{mid['no']}{mid.get('sub') or ''}",
+            "title": d.get("law_title") or "",
+            "url": url,
+            "host": host,
+            "law_id": d.get("law_id"), "version_id": d.get("version_id"),
+            "no": mid["no"], "sub": mid.get("sub"),
+            "probe_text": re.sub(r"[\s\u3000\xa0]+", "", mid["text"])[:80],
+        })
+    if sample <= 0:
+        return []
+    by_host: dict[str, list[dict]] = {}
+    for d in docs:
+        by_host.setdefault(d["host"], []).append(d)
+    picked: list[dict] = []
+    hosts = sorted(by_host)
+    while len(picked) < sample and hosts:
+        for h in hosts:
+            if by_host[h] and len(picked) < sample:
+                picked.append(by_host[h].pop(0))
+        hosts = [h for h in hosts if by_host[h]]
+    return picked
+
+
+def run_article_targets(targets: list[dict], registry: dict, fetch_fn, state: dict) -> tuple[list[dict], bool]:
+    """逐条指纹：同一 URL 只取一次，用本仓解析器清洗页面后探测条文本是否仍在。"""
+    approved_hosts = {s.get("host") for s in registry.get("sources", [])
+                      if (s.get("compliance") or {}).get("approved")}
+    results = []
+    all_healthy = True
+    checked_at = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    pages: dict[str, str] = {}
+    for t in targets:
+        if t["host"] not in approved_hosts:
+            results.append({"source_id": t["key"], "url": t["url"], "checked_at": checked_at,
+                            "status": 0, "markers_ok": {}, "size_bucket": None, "drift": None,
+                            "error": "host 未在 Source Registry approved 列表——拒绝探测（LEGAL-005）",
+                            "healthy": False})
+            all_healthy = False
+            continue
+        if t["url"] not in pages:
+            try:
+                status, html = fetch_fn(t["url"])
+                pages[t["url"]] = re.sub(r"[\s\u3000\xa0]+", "", clean_html_to_text(html)) if status == 200 else ""
+            except RuntimeError as exc:
+                pages[t["url"]] = ""
+                results.append({"source_id": t["key"], "url": t["url"], "checked_at": checked_at,
+                                "status": 0, "markers_ok": {}, "size_bucket": None, "drift": None,
+                                "error": str(exc), "healthy": False})
+                all_healthy = False
+                continue
+        page_norm = pages[t["url"]]
+        present = bool(t["probe_text"]) and t["probe_text"] in page_norm
+        healthy = present
+        state[t["key"]] = {"checked_at": checked_at, "url": t["url"], "present": present}
+        results.append({
+            "source_id": t["key"], "url": t["url"], "checked_at": checked_at,
+            "status": 200, "markers_ok": {f"条文{t['no']}{t['sub'] or ''}在页": present},
+            "size_bucket": None, "drift": None, "error": None, "healthy": healthy,
+        })
+        all_healthy = all_healthy and healthy
+    return results, all_healthy
+
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description="Source Drift canary（只读诊断）")
     ap.add_argument("--all", action="store_true", help="检测注册表内全部 canary 目标")
@@ -182,6 +274,8 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--timeout", type=int, default=20)
     ap.add_argument("--deep", type=int, default=0,
                     help="文档级 canary 抽样数（按 host 轮转取历史全文来源页；0=关闭）")
+    ap.add_argument("--deep-articles", type=int, default=0,
+                    help="逐条级 canary 抽样数（历史全文来源页内探测具体条文仍在；0=关闭）")
     args = ap.parse_args(argv)
 
     try:
@@ -211,6 +305,13 @@ def main(argv: list[str] | None = None) -> int:
         deep_results, deep_ok = run_deep(deep, registry, lambda u: fetch(u, args.timeout), state)
         results.extend(deep_results)
         all_healthy = all_healthy and deep_ok
+    if args.deep_articles > 0:
+        approved = {s.get("host") for s in registry.get("sources", [])
+                    if (s.get("compliance") or {}).get("approved")}
+        art_targets = pick_article_targets(DEFAULT_FULLTEXT_DIR, args.deep_articles, approved)
+        art_results, art_ok = run_article_targets(art_targets, registry, lambda u: fetch(u, args.timeout), state)
+        results.extend(art_results)
+        all_healthy = all_healthy and art_ok
     args.state.parent.mkdir(parents=True, exist_ok=True)
     args.state.write_text(json.dumps(state, ensure_ascii=False, indent=2), encoding="utf-8")
     args.report.parent.mkdir(parents=True, exist_ok=True)

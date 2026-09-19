@@ -141,3 +141,58 @@ def test_run_deep_degraded_on_missing_marker():
         [{"key": "deep:law-a/v1", "title": "甲法", "url": "https://a.example/p/1", "host": "a.example"}],
         APPROVED, lambda u: (200, "页面被改版，标题没了"), {})
     assert not ok and results[0]["markers_ok"]["甲法"] is False
+
+
+def _article_docs():
+    docs = []
+    for d, mid_text in zip(_deep_docs(), ["中位条文甲的全部文本内容", "甲法实施条例中位条文文本", "乙法中位条文内容"]):
+        docs.append({**d, "mid_text": mid_text})
+    return docs
+
+
+def test_pick_article_targets_round_robin(tmp_path):
+    ft = tmp_path / "law_versions_fulltext"
+    for d in _article_docs():
+        p = ft / d["law_id"] / f"{d['version_id']}.json"
+        p.parent.mkdir(parents=True, exist_ok=True)
+        p.write_text(json.dumps({
+            "law_id": d["law_id"], "version_id": d["version_id"], "law_title": d["law_title"],
+            "source": {"url": d["source"]["url"]},
+            "articles": [
+                {"no": 1, "label": "第一条", "text": "首条导语"},
+                {"no": 2, "label": "第二条", "text": d["mid_text"]},
+                {"no": 3, "label": "第三条", "text": "末条附则"},
+            ],
+        }), encoding="utf-8")
+    picked = canary.pick_article_targets(ft, 3, approved_hosts={"a.example", "z.example"})
+    assert len(picked) == 3
+    assert {t["host"] for t in picked} == {"a.example", "z.example"}
+    assert all(t["probe_text"] and "首条" not in t["probe_text"] for t in picked), "中位条抽样避开首条"
+
+
+def test_run_article_probes_presence_and_blocks_unapproved():
+    docs = _article_docs()
+    pages = {
+        "https://a.example/p/1": "<p>第一条 首条导语</p><p>第二条 中位条文甲的全部文本内容</p>",
+        "https://z.example/p/9": "<p>第九条 乙法该条已经整体改写，原文本完全不再出现</p>",
+    }
+    def fake_fetch(url):
+        if url not in pages:
+            raise RuntimeError(f"连接失败：{url}")
+        return 200, pages[url]
+
+    targets = [{"key": f"deep-art:{d['law_id']}/{d['version_id']}#2", "title": d["law_title"],
+                "url": d["source"]["url"], "host": d["source"]["url"].split("/")[2],
+                "no": 2, "sub": None,
+                "probe_text": d["mid_text"].replace(" ", "")}
+               for d in docs]
+    targets.append({"key": "deep-art:law-bad/v1#2", "title": "未批准法",
+                    "url": "https://evil.example/p/1", "host": "evil.example",
+                    "no": 2, "sub": None, "probe_text": "未批准法中位条文"})
+    results, ok = canary.run_article_targets(targets, APPROVED, fake_fetch, {})
+    by_id = {r["source_id"]: r for r in results}
+    assert by_id["deep-art:law-a/v1#2"]["healthy"], "页内存在的条文应判健康"
+    assert not by_id["deep-art:law-z/v9#2"]["healthy"], "条文本被删除应判降级"
+    assert not by_id["deep-art:law-bad/v1#2"]["healthy"]
+    assert "LEGAL-005" in by_id["deep-art:law-bad/v1#2"]["error"]
+    assert not ok

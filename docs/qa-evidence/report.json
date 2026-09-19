@@ -20,16 +20,6 @@
     "title": "LegalHigh · 法律智能知识库"
   },
   {
-    "name": "32-narrow-law-detail",
-    "path": "/laws/civl-2020?art=25",
-    "consoleErrors": [],
-    "consoleWarnings": [],
-    "pageErrors": [],
-    "failedRequests": [],
-    "finalUrl": "http://localhost:5173/laws/civl-2020?art=25",
-    "title": "LegalHigh · 法律智能知识库"
-  },
-  {
     "name": "35-dark-law-detail",
     "path": "/laws/civl-2020?art=25",
     "consoleErrors": [],

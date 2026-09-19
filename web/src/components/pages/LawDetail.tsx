@@ -92,6 +92,10 @@ export default function LawDetail() {
   const [cited, setCited] = useState<Awaited<ReturnType<typeof api.citedBy>> | null>(null)
   const [ftVid, setFtVid] = useState<string | null>(null)
   const [fulltext, setFulltext] = useState<Awaited<ReturnType<typeof api.versionFulltext>> | null>(null)
+  const [histQ, setHistQ] = useState('')
+  const [histHits, setHistHits] = useState<Awaited<ReturnType<typeof api.historySearch>> | null>(null)
+  const [histBusy, setHistBusy] = useState(false)
+  const [histError, setHistError] = useState<string | null>(null)
   useEffect(() => {
     let alive = true
     if (!ftVid) { setFulltext(null); return () => { alive = false } }
@@ -103,6 +107,17 @@ export default function LawDetail() {
     return () => { alive = false }
   }, [lawId, ftVid])
   useEffect(() => { setFtVid(null) }, [lawId])
+
+  const runHistSearch = () => {
+    const q = histQ.trim()
+    if (!q) return
+    setHistBusy(true)
+    setHistError(null)
+    api.historySearch(q, { lawId: lawId ?? undefined, topK: 10 }).then(
+      (out) => { setHistHits(out); setHistBusy(false) },
+      (reason: unknown) => { setHistHits(null); setHistError(reason instanceof Error ? reason.message : String(reason)); setHistBusy(false) },
+    )
+  }
   useEffect(() => {
     let alive = true
     // Citator「被引用于」：已核实案例对本法的精确引用（research_refs，含子条号）
@@ -265,6 +280,45 @@ export default function LawDetail() {
                   {versions && versions.versions.length > 1 ? (
                     <>
                       <div className="tiny mb-12">以下为版本注册表（server/data/law_versions，快照自证）登记的版本时间线；已采集全文的历史版本可展开对照查阅（非现行文本，不进检索语料）；跨版本对比仍禁用以避免误引。</div>
+                      <div className="card mb-12" style={{ padding: 14 }}>
+                        <div className="tiny bold mb-8">历史版本全文检索（非现行文本，仅供对照）</div>
+                        <div className="row row-wrap">
+                          <input
+                            className="inp"
+                            style={{ maxWidth: 300 }}
+                            aria-label="历史版本全文检索词"
+                            placeholder="如：网络安全等级保护"
+                            value={histQ}
+                            onChange={(e) => setHistQ(e.target.value)}
+                            onKeyDown={(e) => { if (e.key === 'Enter') runHistSearch() }}
+                          />
+                          <button className="btn btn-secondary btn-sm" onClick={runHistSearch} disabled={histBusy}>
+                            {histBusy ? '检索中…' : '检索本法历史文本'}
+                          </button>
+                        </div>
+                        {histError && <div className="tiny mt-8" style={{ color: 'var(--danger)' }}>{histError}</div>}
+                        {histHits && (
+                          <div className="mt-12">
+                            <div className="tiny muted mb-8">索引：{histHits.index_articles.toLocaleString()} 条 / {histHits.index_versions} 个历史版本 · {histHits.scope_note}</div>
+                            {histHits.hits.length === 0 ? (
+                              <div className="tiny">本法历史版本中未检出该词。</div>
+                            ) : (
+                              <div className="list-divided">
+                                {histHits.hits.map((h) => (
+                                  <div key={`${h.version_id}-${h.no}-${h.sub ?? ''}`} className="lrow" style={{ alignItems: 'flex-start' }}>
+                                    <span className="bdg bdg-gray">{h.version_label}</span>
+                                    <div style={{ flex: 1, minWidth: 0 }}>
+                                      <b style={{ fontSize: 12.5 }}>{h.label}</b>
+                                      <div className="tiny" style={{ lineHeight: 1.8 }}>{h.text.slice(0, 120)}{h.text.length > 120 ? '…' : ''}</div>
+                                    </div>
+                                    <span className="tiny">{h.effective_date} 施行</span>
+                                  </div>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                        )}
+                      </div>
                       <div className="list-divided mb-12">
                         {[...versions.versions].reverse().map((v) => (
                           <div key={v.version_id} className="list-row" style={{ alignItems: 'flex-start' }}>

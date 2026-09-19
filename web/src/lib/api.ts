@@ -199,6 +199,27 @@ export interface VersionFulltext {
   articles: { no: number; sub?: string; label: string; chapter?: string; text: string }[]
 }
 
+/** 历史文本独立检索（独立命名空间，永不混入现行检索排名）。 */
+export interface HistorySearch {
+  query: string
+  total: number
+  hits: {
+    law_id: string
+    version_id: string
+    version_label: string
+    effective_date: string | null
+    no: number
+    sub?: string | null
+    label: string
+    chapter?: string | null
+    text: string
+    score: number
+  }[]
+  scope_note: string
+  index_versions: number
+  index_articles: number
+}
+
 export interface TemplateField {
   key: string
   label: string
@@ -366,6 +387,17 @@ export const api = {
   // 历史版本全文（known-gaps #1 切片）：仅已采集版本可用；非现行文本对照查阅
   versionFulltext: (lawId: string, versionId: string) =>
     req<VersionFulltext>(`/laws/${encodeURIComponent(lawId)}/versions/${encodeURIComponent(versionId)}/fulltext`),
+
+  // 历史文本独立检索（known-gaps #1）：37 份历史全文的独立 BM25 命中（非现行，独立命名空间）
+  historySearch: (q: string, opts?: { lawId?: string; versionId?: string; topK?: number }) => {
+    const p = new URLSearchParams({
+      q,
+      top_k: String(opts?.topK ?? 10),
+      ...(opts?.lawId ? { law_id: opts.lawId } : {}),
+      ...(opts?.versionId ? { version_id: opts.versionId } : {}),
+    })
+    return req<HistorySearch>(`/history/search?${p}`)
+  },
 
   // 原文 + 官方解释 + 具名专业观点；证据覆盖分明确不等于正确率
   lawAnalysisContext: (lawId: string, no: number) =>

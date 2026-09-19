@@ -1,0 +1,97 @@
+{
+  "checked_at": "2026-09-19T07:46:59Z",
+  "all_healthy": true,
+  "results": [
+    {
+      "source_id": "npc_flk",
+      "url": "https://flk.npc.gov.cn/",
+      "checked_at": "2026-09-19T07:46:59Z",
+      "status": 200,
+      "markers_ok": {
+        "国家法律法规数据库": true
+      },
+      "size_bucket": 0,
+      "drift": null,
+      "error": null,
+      "healthy": true
+    },
+    {
+      "source_id": "court_gov",
+      "url": "https://www.court.gov.cn/",
+      "checked_at": "2026-09-19T07:46:59Z",
+      "status": 200,
+      "markers_ok": {
+        "最高人民法院": true
+      },
+      "size_bucket": 17,
+      "drift": null,
+      "error": null,
+      "healthy": true
+    },
+    {
+      "source_id": "gov_cn",
+      "url": "https://www.gov.cn/",
+      "checked_at": "2026-09-19T07:46:59Z",
+      "status": 200,
+      "markers_ok": {
+        "中央人民政府门户网站": true
+      },
+      "size_bucket": 15,
+      "drift": null,
+      "error": null,
+      "healthy": true
+    },
+    {
+      "source_id": "wikisource",
+      "url": "https://zh.wikisource.org/",
+      "checked_at": "2026-09-19T07:46:59Z",
+      "status": 200,
+      "markers_ok": {
+        "维基文库": true
+      },
+      "size_bucket": 28,
+      "drift": null,
+      "error": null,
+      "healthy": true
+    },
+    {
+      "source_id": "deep-art:admin-litigation-2017/1989-enacted#38",
+      "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E8%A1%8C%E6%94%BF%E8%A8%B4%E8%A8%9F%E6%B3%95_(1989%E5%B9%B4)",
+      "checked_at": "2026-09-19T07:47:02Z",
+      "status": 200,
+      "markers_ok": {
+        "条文38在页": true
+      },
+      "size_bucket": null,
+      "drift": null,
+      "error": null,
+      "healthy": true
+    },
+    {
+      "source_id": "deep-art:admin-review-2023/1999-enacted#22",
+      "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E8%A1%8C%E6%94%BF%E5%A4%8D%E8%AE%AE%E6%B3%95_(1999%E5%B9%B4)",
+      "checked_at": "2026-09-19T07:47:02Z",
+      "status": 200,
+      "markers_ok": {
+        "条文22在页": true
+      },
+      "size_bucket": null,
+      "drift": null,
+      "error": null,
+      "healthy": true
+    },
+    {
+      "source_id": "deep-art:admin-review-2023/2009-amendment#22",
+      "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E8%A1%8C%E6%94%BF%E5%A4%8D%E8%AE%AE%E6%B3%95_(2009%E5%B9%B4)",
+      "checked_at": "2026-09-19T07:47:02Z",
+      "status": 200,
+      "markers_ok": {
+        "条文22在页": true
+      },
+      "size_bucket": null,
+      "drift": null,
+      "error": null,
+      "healthy": true
+    }
+  ]
+}
