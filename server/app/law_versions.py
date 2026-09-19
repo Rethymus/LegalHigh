@@ -81,7 +81,13 @@ def load_registry(law_id: str) -> dict:
 
 
 def describe(law_id: str) -> dict:
-    """对外形态：只暴露可证字段 + pending 说明；不携带任何未核实占位。"""
+    """对外形态：只暴露可证字段 + pending 说明；不携带任何未核实占位。
+
+    R167 起每版本携带 has_fulltext（历史全文文件是否已采集入库）——
+    前端据此决定是否展示「查看该版全文」，不提供死按钮。
+    """
+    from . import version_fulltext
+
     data = load_registry(law_id)
     return {
         "law_id": data["law_id"],
@@ -97,9 +103,10 @@ def describe(law_id: str) -> dict:
             "article_count": v.get("article_count"),
             "article_count_note": v.get("article_count_note", ""),
             "current": v["current"],
+            "has_fulltext": version_fulltext.has_fulltext(law_id, v["version_id"]),
             "evidence": {f: v["evidence"][f] for f in _REQUIRED_EVIDENCE_FIELDS},
         } for v in data["versions"]],
         "amendments": data.get("amendments", []),
         "pending_note": data.get("pending_note", ""),
-        "scope_note": "版本注册表只登记已入证据库的版本；历史版本全文入库走 build_corpus 证据快照管线。",
+        "scope_note": "版本注册表只登记已入证据库的版本；历史版本全文按证据快照管线滚动采集（build_version_fulltext）。",
     }

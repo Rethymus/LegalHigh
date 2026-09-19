@@ -90,6 +90,19 @@ export default function LawDetail() {
     [law, article],
   )
   const [cited, setCited] = useState<Awaited<ReturnType<typeof api.citedBy>> | null>(null)
+  const [ftVid, setFtVid] = useState<string | null>(null)
+  const [fulltext, setFulltext] = useState<Awaited<ReturnType<typeof api.versionFulltext>> | null>(null)
+  useEffect(() => {
+    let alive = true
+    if (!ftVid) { setFulltext(null); return () => { alive = false } }
+    // 历史版本全文（仅 has_fulltext 版本可展开）；不可用时诚实报错不伪造
+    api.versionFulltext(lawId ?? '', ftVid).then(
+      (d) => alive && setFulltext(d),
+      () => alive && setFulltext(null),
+    )
+    return () => { alive = false }
+  }, [lawId, ftVid])
+  useEffect(() => { setFtVid(null) }, [lawId])
   useEffect(() => {
     let alive = true
     // Citator「被引用于」：已核实案例对本法的精确引用（research_refs，含子条号）
@@ -251,11 +264,11 @@ export default function LawDetail() {
                 <div>
                   {versions && versions.versions.length > 1 ? (
                     <>
-                      <div className="tiny mb-12">以下为版本注册表（server/data/law_versions，快照自证）登记的版本时间线；历史版本全文尚未进入检索语料，本页禁用跨版本对比以避免误引。</div>
+                      <div className="tiny mb-12">以下为版本注册表（server/data/law_versions，快照自证）登记的版本时间线；已采集全文的历史版本可展开对照查阅（非现行文本，不进检索语料）；跨版本对比仍禁用以避免误引。</div>
                       <div className="list-divided mb-12">
                         {[...versions.versions].reverse().map((v) => (
                           <div key={v.version_id} className="list-row" style={{ alignItems: 'flex-start' }}>
-                            <div style={{ minWidth: 0 }}>
+                            <div style={{ minWidth: 0, flex: 1 }}>
                               <div className="bold" style={{ fontSize: 13 }}>
                                 {v.label}
                                 {v.current && <span className="bdg bdg-green" style={{ marginLeft: 8 }}>现行有效</span>}
@@ -267,6 +280,27 @@ export default function LawDetail() {
                                 {' · '}{v.effective_date} 施行
                                 {v.article_count != null && ` · ${v.article_count} 条`}
                               </div>
+                              {v.has_fulltext && (
+                                <button className="btn btn-secondary btn-sm mt-8" onClick={() => setFtVid(ftVid === v.version_id ? null : v.version_id)}>
+                                  {ftVid === v.version_id ? '收起该版全文' : '查看该版全文（对照）'}
+                                </button>
+                              )}
+                              {ftVid === v.version_id && (
+                                fulltext ? (
+                                  <div className="card mt-8" style={{ padding: 14 }}>
+                                    <div className="banner banner-warn mb-12"><Icon name="alert" size={15} /><span className="banner-tx">{fulltext.scope_note}</span></div>
+                                    <div className="tiny mb-8">{fulltext.label} · {fulltext.promulgation_date} 通过 · {fulltext.effective_date} 施行 · {fulltext.article_count} 条 · 证据等级【{fulltext.source.grade}】· 查阅于 {fulltext.source.accessed_at} · <a href={fulltext.source.url} target="_blank" rel="noreferrer">来源页</a></div>
+                                    {fulltext.articles.map((a) => (
+                                      <div key={`${a.no}-${a.sub ?? ''}`} className="ot mb-8">
+                                        <div className="ot-h"><b>{a.label}</b>{a.chapter && <span className="ot-tag">{a.chapter}</span>}</div>
+                                        <div style={{ fontSize: 12.5, lineHeight: 1.9 }}>{a.text}</div>
+                                      </div>
+                                    ))}
+                                  </div>
+                                ) : (
+                                  <div className="tiny muted mt-8">历史全文加载中…（若长期为空说明该版本全文暂不可用）</div>
+                                )
+                              )}
                             </div>
                           </div>
                         ))}

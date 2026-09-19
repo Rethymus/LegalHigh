@@ -1,33 +1,5 @@
 [
   {
-    "name": "03-needs",
-    "path": "/needs",
-    "consoleErrors": [],
-    "consoleWarnings": [],
-    "pageErrors": [],
-    "failedRequests": [],
-    "finalUrl": "http://localhost:5173/needs",
-    "title": "LegalHigh · 法律智能知识库"
-  },
-  {
-    "name": "04-needs-run",
-    "path": "/needs",
-    "consoleErrors": [],
-    "consoleWarnings": [],
-    "pageErrors": [],
-    "failedRequests": [],
-    "step1": "ok",
-    "step2": "clicked",
-    "step3": "clicked",
-    "step4": "clicked",
-    "step5": "clicked",
-    "step6": "clicked",
-    "step7": "clicked",
-    "step8": "public-needs-ok",
-    "finalUrl": "http://localhost:5173/needs",
-    "title": "LegalHigh · 法律智能知识库"
-  },
-  {
     "name": "07-law-detail",
     "path": "/laws/civl-2020?art=25",
     "consoleErrors": [],
@@ -48,6 +20,16 @@
     "title": "LegalHigh · 法律智能知识库"
   },
   {
+    "name": "32-narrow-law-detail",
+    "path": "/laws/civl-2020?art=25",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "finalUrl": "http://localhost:5173/laws/civl-2020?art=25",
+    "title": "LegalHigh · 法律智能知识库"
+  },
+  {
     "name": "35-dark-law-detail",
     "path": "/laws/civl-2020?art=25",
     "consoleErrors": [],
@@ -55,6 +37,18 @@
     "pageErrors": [],
     "failedRequests": [],
     "finalUrl": "http://localhost:5173/laws/civl-2020?art=25",
+    "title": "LegalHigh · 法律智能知识库"
+  },
+  {
+    "name": "45-law-versions",
+    "path": "/laws/cl-2023?art=287之一",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "step1": "clicked",
+    "step2": "versions-missing",
+    "finalUrl": "http://localhost:5173/laws/cl-2023?art=287%E4%B9%8B%E4%B8%80",
     "title": "LegalHigh · 法律智能知识库"
   }
 ]

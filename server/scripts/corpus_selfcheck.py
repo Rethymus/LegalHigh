@@ -154,9 +154,36 @@ def main() -> int:
                 problems.append(f"版本注册表 {lid}: {e}")
     report["version_registries"] = {lid: len(d["versions"]) for lid, d in version_registries.items()}
 
+    # 历史版本全文校验（R167，known-gaps #1 垂直切片）：有全文文件的法律必须
+    # 双向过检（schema + 注册表对齐 + 快照哈希复算）；无全文文件不算问题（滚动采集）。
+    fulltext_count = 0
+    fulltext_dir = ROOT / "data" / "law_versions_fulltext"
+    if fulltext_dir.is_dir():
+        from app import version_fulltext  # noqa: E402
+        for law_dir in sorted(fulltext_dir.iterdir()):
+            if not law_dir.is_dir():
+                continue
+            for ft_file in sorted(law_dir.glob("*.json")):
+                fulltext_count += 1
+                lid, vid = law_dir.name, ft_file.stem
+                try:
+                    ft = version_fulltext.load(lid, vid)
+                except (ValueError, FileNotFoundError) as e:
+                    problems.append(f"历史全文 {lid}/{vid}: {e}")
+                    continue
+                snapshot_path = (ROOT.parent / ft["source"]["snapshot"]).resolve()
+                try:
+                    snapshot_path.relative_to(EVIDENCE_DIR)
+                except (ValueError, OSError):
+                    problems.append(f"历史全文 {lid}/{vid}: 快照路径不在 evidence 目录")
+                else:
+                    if not snapshot_path.is_file() or hashlib.sha256(snapshot_path.read_bytes()).hexdigest() != ft["source"]["sha256"]:
+                        problems.append(f"历史全文 {lid}/{vid}: 快照 SHA-256 不匹配")
+    report["version_fulltexts"] = fulltext_count
+
     out.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
     total = sum(r["actual_count"] for r in report["laws"].values())
-    print(f"语料自检：{len(report['laws'])} 部 {total} 条，结构/哈希问题 {len(problems)} 项，待核 {len(pending)} 项，版本注册表 {len(version_registries)} 份")
+    print(f"语料自检：{len(report['laws'])} 部 {total} 条，结构/哈希问题 {len(problems)} 项，待核 {len(pending)} 项，版本注册表 {len(version_registries)} 份，历史全文 {fulltext_count} 份")
     for p in problems:
         print("  -", p)
     for p in pending:

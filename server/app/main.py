@@ -47,6 +47,7 @@ from app import (  # noqa: E402
     storage,
     temporal,
     validation,
+    version_fulltext as version_fulltext_mod,
 )
 from app.corpus import get_corpus  # noqa: E402
 
@@ -231,6 +232,23 @@ def law_versions(law_id: str):
             "pending_note": "未建版本注册表",
             "scope_note": "版本注册表只登记已入证据库的版本。",
         }
+    except ValueError as e:
+        raise HTTPException(500, str(e))
+
+
+@app.get("/api/laws/{law_id}/versions/{version_id}/fulltext")
+def law_version_fulltext(law_id: str, version_id: str):
+    """历史版本全文（known-gaps #1 垂直切片，R167）：已采集的历史版本文本对照查阅。
+
+    只读、fail-closed：law 不在语料/注册表未建/版本未登记/全文未采集 → 404；
+    文件与注册表双向不一致 → 500。响应携带「非现行」口径与快照来源；不进检索语料。
+    """
+    if law_id not in get_corpus().laws:
+        raise HTTPException(404, "law not found")
+    try:
+        return version_fulltext_mod.load(law_id, version_id)
+    except FileNotFoundError as e:
+        raise HTTPException(404, str(e))
     except ValueError as e:
         raise HTTPException(500, str(e))
 

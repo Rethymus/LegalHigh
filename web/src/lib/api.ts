@@ -183,6 +183,22 @@ export interface CitedBy {
   scope_note: string
 }
 
+/** 历史版本全文（非现行文本，仅供对照；不进现行检索语料）。 */
+export interface VersionFulltext {
+  law_id: string
+  law_title: string
+  version_id: string
+  label: string
+  status_note: string
+  promulgation_date: string
+  promulgation_organ: string | null
+  effective_date: string
+  article_count: number
+  scope_note: string
+  source: { kind: string; grade: string; url: string; snapshot: string; accessed_at: string; sha256: string }
+  articles: { no: number; sub?: string; label: string; chapter?: string; text: string }[]
+}
+
 export interface TemplateField {
   key: string
   label: string
@@ -338,7 +354,7 @@ export const api = {
   lawVersions: (lawId: string) =>
     req<{
       law_id: string; title: string
-      versions: { version_id: string; label: string; status: string; promulgation_date: string; promulgation_organ?: string; promulgation_instrument?: string; effective_date: string; article_count: number | null; article_count_note?: string; current: boolean }[]
+      versions: { version_id: string; label: string; status: string; promulgation_date: string; promulgation_organ?: string; promulgation_instrument?: string; effective_date: string; article_count: number | null; article_count_note?: string; current: boolean; has_fulltext?: boolean }[]
       amendments?: { no: string; title: string; passed_date: string; effective: string }[]
       pending_note: string
     }>(`/laws/${encodeURIComponent(lawId)}/versions`),
@@ -346,6 +362,10 @@ export const api = {
   // Citator「被引用于」（FLERF §26）：已核实案例对本法的精确引用反查（公开只读）
   citedBy: (lawId: string) =>
     req<CitedBy>(`/laws/${encodeURIComponent(lawId)}/cited-by`),
+
+  // 历史版本全文（known-gaps #1 切片）：仅已采集版本可用；非现行文本对照查阅
+  versionFulltext: (lawId: string, versionId: string) =>
+    req<VersionFulltext>(`/laws/${encodeURIComponent(lawId)}/versions/${encodeURIComponent(versionId)}/fulltext`),
 
   // 原文 + 官方解释 + 具名专业观点；证据覆盖分明确不等于正确率
   lawAnalysisContext: (lawId: string, no: number) =>
