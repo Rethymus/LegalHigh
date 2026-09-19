@@ -84,12 +84,22 @@ def test_endpoint_404_matrix():
     with pytest.raises(Exception) as e1:
         main.law_version_fulltext("csl-2025", "nope")
     assert getattr(e1.value, "status_code", None) == 404
-    with pytest.raises(Exception) as e2:
-        main.law_version_fulltext("lcl-2012", "2007-enacted")
-    assert getattr(e2.value, "status_code", None) == 404
     with pytest.raises(Exception) as e3:
         main.law_version_fulltext("no-such-law", "x")
     assert getattr(e3.value, "status_code", None) == 404
+
+
+def test_endpoint_500_on_inconsistent_file(tmp_path, monkeypatch):
+    """全文文件与注册表不一致 → 端点 500（fail-closed，不降级返回半份数据）。"""
+    d = json.loads(FT.read_text(encoding="utf-8"))
+    d["article_count"] = 1
+    bad_dir = tmp_path / "law_versions_fulltext" / "csl-2025"
+    bad_dir.mkdir(parents=True)
+    (bad_dir / "2016-enacted.json").write_text(json.dumps(d, ensure_ascii=False), encoding="utf-8")
+    monkeypatch.setattr(version_fulltext, "FULLTEXT_DIR", tmp_path / "law_versions_fulltext")
+    with pytest.raises(Exception) as e:
+        main.law_version_fulltext("csl-2025", "2016-enacted")
+    assert getattr(e.value, "status_code", None) == 500
 
 
 def test_endpoint_public_shape():
@@ -100,3 +110,49 @@ def test_endpoint_public_shape():
     assert out["status_note"].startswith("已取代")
     # 子条号纪律：2016 原版无子条号（切分器输出与法典演进互证）
     assert all("sub" not in a or a["sub"] is None for a in out["articles"])
+
+
+def test_all_fulltext_files_bidirectionally_valid():
+    """滚动采集（R168）后：每份全文文件都必须通过服务层双校验 + 洁净断言。
+
+    与 corpus_selfcheck 同口径的 pytest 钉（selfcheck 是脚本门，这里是 CI 测试门）。
+    """
+    files = sorted((DATA_DIR / "law_versions_fulltext").glob("*/*.json"))
+    assert len(files) >= 37, "历史全文文件数异常回落"
+    for ft in files:
+        law_id, vid = ft.parent.name, ft.stem
+        d = version_fulltext.load(law_id, vid)  # 双向校验：任一不一致抛 ValueError
+        assert d["article_count"] == len(d["articles"])
+        assert "非现行" in d["scope_note"]
+        for a in d["articles"]:
+            assert a["text"].strip()
+            assert "新华社" not in a["text"] and "责任编辑" not in a["text"]
+
+
+def test_registry_versions_fully_covered():
+    """注册表里每个非现行版本都必须有全文文件（known-gaps #1 滚动采集收口不变式）。"""
+    missing = []
+    for reg in sorted((DATA_DIR / "law_versions").glob("*.json")):
+        registry = json.loads(reg.read_text(encoding="utf-8"))
+        for v in registry.get("versions", []):
+            if v.get("current"):
+                continue
+            if not version_fulltext.has_fulltext(registry["law_id"], v["version_id"]):
+                missing.append(f"{registry['law_id']}/{v['version_id']}")
+    assert not missing, f"非现行版本缺历史全文：{missing}"
+
+
+def test_derive_targets_matches_registry_count():
+    """构建器枚举（注册表即白名单）覆盖全部非现行版本，无 SKIP。"""
+    import importlib.util
+    spec = importlib.util.spec_from_file_location(
+        "bvf", pathlib.Path(__file__).resolve().parent.parent / "scripts" / "build_version_fulltext.py")
+    bvf = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(bvf)
+    targets, skipped = bvf.derive_targets()
+    total_noncurrent = sum(
+        1 for reg in (DATA_DIR / "law_versions").glob("*.json")
+        for v in json.loads(reg.read_text(encoding="utf-8")).get("versions", [])
+        if not v.get("current"))
+    assert len(targets) == total_noncurrent
+    assert skipped == []

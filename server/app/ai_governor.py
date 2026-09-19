@@ -10,9 +10,10 @@
 - 合规四道 gate（默认全程启用）：
   gate1 红线词扫描：输出含「胜诉率/包赢/必胜/法院会判…」等确定性承诺表述即拦截；
   gate2 引用绑定：AI 草稿中出现的《法名》条文号必须在提供的依据集合内（轻量正则级；
-        全句级 NLI 校验留待后续迭代），越界引用被标记而非静默放行；
-  gate3 逐句引用与词面支持：防止“真实条号 + 无关虚构断言”作装饰；
-        明示这仍不是完整语义蕴含证明，低支持时宁可扣留全文；
+        全句级 NLI 校验需引入模型，benchmark-gated），越界引用被标记而非静默放行；
+  gate3 逐句引用 + 词面支持 + 数值一致性（R168 确定性 claim 级中间步）：防止
+        “真实条号 + 无关虚构断言/编造数字”作装饰；明示这仍不是完整语义蕴含
+        证明，低支持或数值不一致时宁可扣留全文；
   gate4 免责声明强制附加 + audit_log 留痕（who/provider/model/entity/action）。
 - 默认关闭：未配置任何可用密钥时端点返回 409 明确提示，不提供任何「演示模型」。
 """
@@ -417,22 +418,71 @@ _UNCERTAINTY_RE = re.compile(
     r"需(?:要)?结合|取决于|视.{0,10}而定|存在.{0,8}可能)"
 )
 
+# 数值一致性核验（R168，claim 级确定性 entailment 中间步）：
+# 断言分句中出现的「数值+单位」（三十日/6个月/二倍/3年…）必须能在被引条文中找到
+# 同值同单位——词面重合抓不住「编造数字」，这是高精度确定性代理。
+# 条文引用本身（第五百八十六条/第21条之一）先剥离，不按事实数值处理。
+_PROVISION_REF_RE = re.compile(r"第[零〇一二三四五六七八九十百千两]+(?:之一)?[条款章节编次]|第\d+(?:之一)?[条款章节编次]")
+_NUM_UNIT_RE = re.compile(r"(\d+|[零〇一二三四五六七八九十百千两]+)(个工作日|个工作月|个月|小时|万元|日|天|年|月|元|倍|岁|%|％)")
+_CN_DIGIT = {"零": 0, "〇": 0, "一": 1, "二": 2, "两": 2, "三": 3, "四": 4, "五": 5, "六": 6, "七": 7, "八": 8, "九": 9}
+
+
+def _cn_numeral_to_int(text: str) -> int | None:
+    """解析法条句常见 CN 数值（三/十/三十/一百/二百五十六级别）；解析失败返回 None。"""
+    s = text.replace("两", "二")
+    if not s:
+        return None
+    if s.isdigit():
+        return int(s)
+    total, section = 0, 0  # section=百位以下的暂存
+    for ch in s:
+        if ch in _CN_DIGIT:
+            section = _CN_DIGIT[ch]
+        elif ch == "十":
+            section = (section or 1) * 10
+            total += section
+            section = 0
+        elif ch == "百":
+            section = (section or 1) * 100
+            total += section
+            section = 0
+        elif ch == "千":
+            section = (section or 1) * 1000
+            total += section
+            section = 0
+        else:
+            return None
+    return total + section
+
+
+def _claim_number_values(text: str) -> list[tuple[int, str]]:
+    """抽取断言中的 (数值, 单位)；条文引用（第X条/款/项/章…）不按事实数值处理。"""
+    cleaned = _PROVISION_REF_RE.sub("", text or "")
+    out: list[tuple[int, str]] = []
+    for m in _NUM_UNIT_RE.finditer(cleaned):
+        value = _cn_numeral_to_int(m.group(1))
+        if value is not None:
+            out.append((value, m.group(2)))
+    return out
+
 
 def gate_claim_support(text: str, evidence_contexts: list[dict]) -> dict:
-    """逐句词面证据门。
+    """逐句词面证据门 + 数值一致性核验（claim 级确定性中间步，R168）。
 
     这不是语义蕴含证明，但比“全文任意位置挂一个真实条号”更严格：每个陈述句
-    必须在本句写出规范引用，并与服务端原文/司法解释/登记摘要有足够词面重合。
-    纯粹的下一步核验建议可以不带引文。低重合或装饰性引用一律扣留全文。
+    必须在本句写出规范引用，并与服务端原文/司法解释/登记摘要有足够词面重合；
+    断言中的数值（三十日/6个月/二倍…）必须能在被引条文中找到同值同单位——
+    编造数字是词面重合抓不住的高频幻觉，数值一致性是其高精度确定性代理。
+    纯粹的下一步核验建议可以不带引文。低重合、装饰性引用或数值不一致一律扣留全文。
     """
-    sources_by_ref: dict[tuple[str, int], list[set[str]]] = {}
+    sources_by_ref: dict[tuple[str, int], list[dict]] = {}
     for ctx in evidence_contexts:
         citation = ctx["citation"]
         sources = [citation["text"]]
         sources.extend(item["text"] for item in ctx["official_interpretations"])
         sources.extend(item["summary"] for item in ctx["professional_commentaries"])
         sources_by_ref[(_title_key(citation["law_title"]), int(citation["article_no"]))] = [
-            _zh_bigrams(source) for source in sources if source
+            {"grams": _zh_bigrams(source), "raw": source} for source in sources if source
         ]
     raw_sentences = [s.strip() for s in re.split(r"(?<=[。！？；\n])", text or "") if s.strip()]
     checks = []
@@ -461,8 +511,21 @@ def gate_claim_support(text: str, evidence_contexts: list[dict]) -> dict:
                 _JUDICIAL_OUTCOME_RE.search(content) and not _UNCERTAINTY_RE.search(content)
             )
             grams = _zh_bigrams(content)
-            overlap = max((len(grams & source) / max(1, len(grams)) for source in active_sources), default=0.0)
-            supported = not categorical_outcome and (advisory or (active_citation and overlap >= 0.20))
+            overlap = max((len(grams & src["grams"]) / max(1, len(grams)) for src in active_sources), default=0.0)
+            # 数值一致性（claim 级确定性中间步）：断言数字必须能在被引原文中找到同值同单位。
+            numbers = _claim_number_values(content)
+            number_missing: list[str] = []
+            if active_citation and numbers:
+                source_values = set()
+                for src in active_sources:
+                    source_values.update(_claim_number_values(src["raw"]))
+                number_missing = [
+                    f"{value}{unit}" for value, unit in numbers if (value, unit) not in source_values
+                ]
+            supported = (
+                not categorical_outcome
+                and (advisory or (active_citation and overlap >= 0.20 and not number_missing))
+            )
             checks.append({
                 "sentence": index,
                 "clause": clause_index,
@@ -470,11 +533,15 @@ def gate_claim_support(text: str, evidence_contexts: list[dict]) -> dict:
                 "lexical_overlap": round(overlap, 3),
                 "advisory": advisory,
                 "categorical_case_outcome": categorical_outcome,
+                "numbers_checked": [f"{v}{u}" for v, u in numbers],
+                "numbers_missing": number_missing,
                 "pass": supported,
             })
             if not supported:
                 if categorical_outcome:
                     why = "包含不得作出的具体案件确定性裁判承诺"
+                elif number_missing:
+                    why = f"断言数值 {'、'.join(number_missing)} 在引用条文中未出现（数值一致性核验失败）"
                 else:
                     why = "缺少本分句规范引用" if not active_citation else "与同一引用的服务端证据词面重合不足"
                 violations.append(f"第{index}句第{clause_index}分句{why}")
@@ -483,7 +550,7 @@ def gate_claim_support(text: str, evidence_contexts: list[dict]) -> dict:
     return {
         "gate": "claim_support",
         "pass": not violations,
-        "verification_scope": "逐句引用与词面支持；不是完整语义正确性证明",
+        "verification_scope": "逐句引用、词面支持与数值一致性；不是完整语义正确性证明",
         "checks": checks[:30],
         "violations": violations[:10],
     }

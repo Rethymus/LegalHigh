@@ -1,0 +1,32 @@
+# Source Drift canary（FLERF §42；known-gaps #5 接线，R168）
+# 手动触发（workflow_dispatch）——定时调度挂部署决策（决策清单），不在 CI 常态化外呼。
+# 只读诊断：对 Source Registry 中配置 canary 的来源做结构指纹检测，
+# 异常退出码 2（SOURCE_DEGRADED）——保留已验证快照、生成 parser repair 任务，
+# 绝不写语料。报告无论成败均上传为 artifact 供人工处置。
+name: source-canary
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  canary:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run source canary (read-only diagnostics)
+        working-directory: server
+        run: |
+          python scripts/source_canary.py --all --report ../docs/qa-evidence/source-canary-ci.json
+      - name: Upload canary report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: source-canary-report
+          path: docs/qa-evidence/source-canary-ci.json
+          if-no-files-found: warn

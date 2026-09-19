@@ -142,6 +142,44 @@ def test_cn_to_int_safe_works():
     assert ai_governor._cn_to_int_safe("≌") is None
 
 
+def test_claim_number_extraction_strips_provision_refs():
+    """条文引用（第X条/第X之一/第X项）不按事实数值抽取。"""
+    nums = ai_governor._claim_number_values("依照本法第五百八十六条和第21条之一的规定，定金为二倍返还，期限三十日")
+    assert (2, "倍") in nums and (30, "日") in nums
+    assert all(not (586, "条") == n for n in nums)  # 引用不产生数值对
+    assert all(u not in {"条"} for _, u in nums)
+
+
+def test_claim_support_blocks_fabricated_number():
+    """编造数值（两年——19 条原文只有一/二/三/六个月与一年/三年，无两年）必须被数值一致性门拦下。"""
+    from app.commentaries import analysis_context
+    ctx = analysis_context("lcl-2012", 19)  # 原文：试用期不得超过一/二/六个月；期限三年以上…
+    result = ai_governor.gate_claim_support(
+        "依据《劳动合同法》第19条，试用期最长不得超过两年。",
+        [ctx],
+    )
+    assert result["pass"] is False
+    assert any("数值一致性核验失败" in v and "2年" in v for v in result["violations"])
+
+
+def test_claim_support_passes_correct_numbers_with_normalization():
+    """真值数字（CN/阿拉伯同值同单位）放行：三年==3年。"""
+    from app.commentaries import analysis_context
+    ctx = analysis_context("civl-2020", 188)  # 原文：诉讼时效期间为三年
+    cn = ai_governor.gate_claim_support(
+        "依据《民法典》第188条，向人民法院请求保护民事权利的诉讼时效期间为三年。",
+        [ctx],
+    )
+    assert cn["pass"] is True
+    ar = ai_governor.gate_claim_support(
+        "依据《民法典》第188条，向人民法院请求保护民事权利的诉讼时效期间为3年。",
+        [ctx],
+    )
+    assert ar["pass"] is True
+    checked = [c for c in cn["checks"] if c["numbers_checked"]]
+    assert checked and checked[0]["numbers_missing"] == []
+
+
 def test_chat_requires_key(tmp_db):
     with pytest.raises(PermissionError):
         ai_governor.chat("deepseek", "deepseek-chat", [{"role": "user", "content": "hi"}])
