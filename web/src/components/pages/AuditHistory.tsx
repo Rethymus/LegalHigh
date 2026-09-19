@@ -66,12 +66,23 @@ export default function AuditHistory() {
   const [browse, setBrowse] = useState<BrowseItem[]>(loadBrowse)
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
+  const [evEntries, setEvEntries] = useState<Awaited<ReturnType<typeof api.evidenceLedger>>['entries'] | null>(null)
+  const [evError, setEvError] = useState<string | null>(null)
 
   useEffect(() => {
     let alive = true
     api.auditAll(200).then(
       (d) => alive && (setEntries(d.entries), setLoading(false)),
       (e) => alive && (setError(e instanceof ApiError ? e.message : String(e)), setLoading(false)),
+    )
+    return () => { alive = false }
+  }, [])
+
+  useEffect(() => {
+    let alive = true
+    api.evidenceLedger(100).then(
+      (d) => alive && setEvEntries(d.entries),
+      (e) => alive && setEvError(e instanceof ApiError ? e.message : String(e)),
     )
     return () => { alive = false }
   }, [])
@@ -86,7 +97,53 @@ export default function AuditHistory() {
         actions={<button className="btn btn-ghost btn-sm" onClick={() => { setBrowse(loadBrowse()); api.auditAll(200).then((d) => { setEntries(d.entries); }).catch(() => { }) }}><Icon name="refresh" size={13} />刷新</button>}
       />
 
-      <Tabs tabs={[{ key: 'audit', label: '操作审计' }, { key: 'browse', label: '浏览历史' }]} active={tab} onChange={setTab} />
+      <Tabs tabs={[{ key: 'audit', label: '操作审计' }, { key: 'evidence', label: '证据账本' }, { key: 'browse', label: '浏览历史' }]} active={tab} onChange={setTab} />
+
+      {tab === 'evidence' && (
+        <>
+          <div className="banner banner-info mt-16 mb-12"><Icon name="info" size={15} />
+            <span className="banner-tx">
+              证据账本（append-only，无更新/删除通道）：六条链路（问答/研究/审查/要件分析/起草/AI 生成）每次作答所依据证据的 §19 快照——条文精确文本哈希、文档级哈希、规范 id 与来源核验状态。快照只含公共语料数据与问题哈希，不含用户输入原文；不随缓存过期。
+            </span>
+          </div>
+          <div className="card">
+            {evError && <div className="card-pad"><div className="banner banner-danger mb-12"><Icon name="alert" size={15} /><span className="banner-tx">{evError}</span></div><div className="tiny muted">证据账本为敏感端点（与操作审计同门）：需在设置页配置本机管理令牌后查看。</div></div>}
+            {!evError && !evEntries && <div className="card-pad"><SkeletonLines n={6} tall /></div>}
+            {!evError && evEntries && evEntries.length === 0 && <div className="card-pad"><div className="tiny">账本为空——六条链路尚无带依据的作答记录。</div></div>}
+            {!evError && evEntries && evEntries.length > 0 && (
+              <div style={{ overflowX: 'auto' }}>
+                <table className="tbl">
+                  <thead>
+                    <tr><th>时间</th><th>链路</th><th>依据条数</th><th>涉及文档</th><th>实体</th></tr>
+                  </thead>
+                  <tbody>
+                    {evEntries.map((l) => {
+                      let count = '—'
+                      let docs = '—'
+                      try {
+                        const p = JSON.parse(l.snapshot_json)
+                        count = String(p.evidence_count ?? '—')
+                        const cd = p.canonical_documents as string[] | undefined
+                        if (cd?.length) docs = cd.map((x) => x.split('@')[0].replace(/^/, '')).slice(0, 3).join('、') + (cd.length > 3 ? ` 等 ${cd.length} 部` : '')
+                        if (p.question_sha256) docs = `问题 ${p.question_sha256.slice(0, 8)}… · ${docs}`
+                      } catch { /* 快照损坏按原样展示实体 */ }
+                      return (
+                        <tr key={l.id}>
+                          <td className="tiny mono">{fmtTime(l.ts)}</td>
+                          <td><span className="bdg bdg-purple">{ENTITY_LABEL[l.entity_type] ?? l.entity_type}</span></td>
+                          <td className="mono">{count}</td>
+                          <td className="tiny">{docs}</td>
+                          <td className="tiny mono">{String(l.entity_id ?? '').slice(0, 18)}</td>
+                        </tr>
+                      )
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        </>
+      )}
 
       {tab === 'audit' && (
         <>

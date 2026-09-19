@@ -488,6 +488,11 @@ export const api = {
   // 全站审计（append-only）
   auditAll: (limit = 100) => req<{ entries: AuditEntry[] }>(`/audit?limit=${limit}`),
 
+  // 证据账本只读查询（管理门；§19 VerifiedEvidence 快照，六链路 append-only）
+  evidenceLedger: (limit = 100, entityType?: string) =>
+    req<{ entries: { id: number; ts: string; actor: string; entity_type: string; entity_id: string; action: string; snapshot_json: string }[] }>(
+      `/evidence?limit=${limit}${entityType ? `&entity_type=${encodeURIComponent(entityType)}` : ''}`),
+
   session: () => req<{ principal: string; assurance: string }>('/session'),
 
   // AI 模型插件（OpenAI 协议 harness；BYO key，密钥仅随请求瞬态发送）

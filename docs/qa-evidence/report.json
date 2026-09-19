@@ -1,22 +1,12 @@
 [
   {
-    "name": "06-search-results",
-    "path": "/search/results?q=%E8%AF%95%E7%94%A8%E6%9C%9F%20%E4%B8%80%E5%B9%B4",
+    "name": "25-audit",
+    "path": "/audit",
     "consoleErrors": [],
     "consoleWarnings": [],
     "pageErrors": [],
     "failedRequests": [],
-    "finalUrl": "http://localhost:5173/search/results?q=%E8%AF%95%E7%94%A8%E6%9C%9F%20%E4%B8%80%E5%B9%B4",
-    "title": "LegalHigh · 法律智能知识库"
-  },
-  {
-    "name": "35-dark-law-detail",
-    "path": "/laws/civl-2020?art=25",
-    "consoleErrors": [],
-    "consoleWarnings": [],
-    "pageErrors": [],
-    "failedRequests": [],
-    "finalUrl": "http://localhost:5173/laws/civl-2020?art=25",
+    "finalUrl": "http://localhost:5173/audit",
     "title": "LegalHigh · 法律智能知识库"
   }
 ]
