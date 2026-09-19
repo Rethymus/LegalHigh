@@ -328,8 +328,9 @@ export default function DataSources() {
         <div className="card-h"><b className="card-h-t">当前明确未提供的能力</b></div>
         <div className="card-b">
           <ul className="plain-list">
-            <li>没有连接国家法律法规数据库的实时接口，也没有完整的历史版本库。</li>
-            <li>没有接入人民法院案例库、裁判文书网或任何批量裁判文书抓取通道。</li>
+            <li>没有连接国家法律法规数据库的实时接口——flk 数据库按其 robots 声明禁止自动化访问，核验仅走人工浏览器路径。</li>
+            <li>历史版本全文已采集 37 版（版本 Tab 可对照查阅、支持独立检索），但跨版本对比仍禁用，且历史文本不进入现行检索排名。</li>
+            <li>没有接入裁判文书网或任何批量裁判文书抓取通道；人民法院案例库仅作官方核对入口。</li>
             <li>没有接入商业法律数据库、学术论文库、CAIL 个案库或通用域外案例 API。</li>
             <li>未获得明确许可的数据集不会进入正式语料；无许可证的 LawRefBook 副本已从项目中移除。</li>
           </ul>
