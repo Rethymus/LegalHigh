@@ -141,7 +141,7 @@ LegalHigh 的引用绑定法条检索可作为 **Model Context Protocol 服务�
 python server/mcp_server.py
 ```
 
-四工具：`search_articles`（BM25 全文检索法条原文）、`get_article`（按 ID+条号取原文与元数据）、`list_laws`（语料清单）、`search_cases`（指导案例与域外判例检索）。**只暴露检索，无任何生成型工具**；输出永远为法条原文+元数据+官方来源 URL，并声明「不构成法律意见」。详见 [v7 路线图](docs/plan/开发计划-v7-生态就绪路线图-2026-09.md) S2。
+五工具：`search_articles`（BM25 全文检索法条原文）、`get_article`（按 ID+条号取原文与元数据）、`list_laws`（语料清单）、`search_cases`（指导案例与域外判例检索）、`search_history`（历史版本文本独立检索，非现行仅供对照）。**只暴露检索，无任何生成型工具**；输出永远为法条原文+元数据+官方来源 URL，并声明「不构成法律意见」。详见 [v7 路线图](docs/plan/开发计划-v7-生态就绪路线图-2026-09.md) S2。
 
 REST API：运行 `server` 后 [openapi.json](http://localhost:8000/openapi.json) 与 [交互文档](http://localhost:8000/docs) 自动可用（FastAPI 生成，49 路径）；检索响应与 MCP 同源（引用绑定+免责声明）。
 

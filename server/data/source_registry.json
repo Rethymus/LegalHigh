@@ -9,11 +9,11 @@
       "host": "flk.npc.gov.cn",
       "authority_class": "OFFICIAL_PRIMARY",
       "jurisdiction": "CN",
-      "access": {"mode": "WEB", "official_api_documented": false, "bulk_download_allowed": "UNKNOWN", "cache_policy": "SNAPSHOT_WITH_HASH"},
+      "access": {"mode": "WEB", "official_api_documented": false, "bulk_download_allowed": "UNKNOWN", "cache_policy": "SNAPSHOT_WITH_HASH", "robots_disallow_all": true},
       "roles": ["law-metadata-verification", "authority-pointer"],
       "compliance": {"approved": true},
-      "canary": {"url": "https://flk.npc.gov.cn/", "expect": ["国家法律法规数据库"]},
-      "note": "flfgDetails 结构树接口只读核验用；DOCX 直连下载受 SPA/OSS 拦截，从未绕过。"
+      "canary": null,
+      "note": "flfgDetails 结构树接口只读核验用；DOCX 直连下载受 SPA/OSS 拦截，从未绕过。R181：robots.txt 明文「禁止使用任何自动化工具、脚本、爬虫程序采集或复制网站数据」（Disallow: /）——本来源的一切自动化请求（含 canary/逐条探测/程序化 flfgDetails）均已停止；核验仅限人工浏览器操作，native id 映射止步于既有人工核验记录（81/108）。"
     },
     {
       "id": "npc_www",

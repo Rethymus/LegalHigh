@@ -45,9 +45,9 @@ def test_validate_rejects_missing_approval_bool():
 
 
 def test_canary_targets_are_approved_and_wellformed():
-    """canary 配置只允许出现在 approved 来源上，且带 url+expect。"""
+    """canary 配置只允许出现在 approved 来源上，且带 url+expect；null=曾配置后禁用（合规停用）。"""
     for s in source_registry.load_registry()["sources"]:
-        if "canary" in s:
+        if s.get("canary"):
             assert s["compliance"]["approved"] is True, f"{s['id']} 未批准却配置 canary"
             assert s["canary"]["url"].startswith("https://")
             assert isinstance(s["canary"].get("expect"), list) and s["canary"]["expect"]
