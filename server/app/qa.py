@@ -7,6 +7,7 @@ import re
 from .corpus import get_corpus
 from .retrieval_terms import orchestrated_search
 from . import temporal
+from . import version_fulltext
 
 DISCLAIMER = (
     "本系统为法律信息检索工具，输出内容为法条原文与程序性信息，不构成法律意见，"
@@ -79,8 +80,9 @@ def ask(question: str, top_k: int = 6, as_of: str | None = None):
     hits, retrieval = orchestrated_search(corpus, question, top_k=top_k)
     t_block = temporal.temporal_block(question, as_of)
     as_of_ref = t_block.get("as_of") if t_block else None
-    cards = [
-        {
+    cards = []
+    for h in hits:
+        card = {
             "law_id": h["law_id"],
             "law_title": h["law_title"],
             "law_status": h["law_status"],
@@ -93,11 +95,16 @@ def ask(question: str, top_k: int = 6, as_of: str | None = None):
             "source_url": h["source_url"],
             "source_kind": h["source_kind"],
             "score": h["score"],
-            # 时间上下文存在才带标记——非时间问法的响应形态保持不变（契约稳定）
-            **({"in_force_at_as_of": temporal.in_force_at(h.get("effective_date"), as_of_ref)} if t_block else {}),
         }
-        for h in hits
-    ]
+        if t_block:
+            # 时间上下文存在才带标记——非时间问法的响应形态保持不变（契约稳定）
+            card["in_force_at_as_of"] = temporal.in_force_at(h.get("effective_date"), as_of_ref)
+            # as_of 命中面（known-gaps #1）：适用历史版本的「同条号对照」文本；
+            # 适用版本即现行时不出字段，移位风险随行显式标注。
+            hist = version_fulltext.historical_for_card(h["law_id"], as_of_ref, h["no"], h.get("sub"))
+            if hist:
+                card["historical_version"] = hist
+        cards.append(card)
     return {
         "question": question,
         "premise_check": premise,

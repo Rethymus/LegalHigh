@@ -303,22 +303,30 @@ def search_articles(q: str, top_k: int = 20, law_id: str | None = None, as_of: s
     requested_laws = [law_id] if law_id else None
     hits, retrieval = research.orchestrated_search(corpus, query, top_k=min(max(top_k, 1), 60), law_ids=requested_laws)
     t_block = temporal.temporal_block(query, as_of)
+    as_of_ref = t_block.get("as_of") if t_block else None
+
+    def _hit_row(h: dict) -> dict:
+        row = {
+            "law_id": h["law_id"], "law_title": h["law_title"], "no": h["no"],
+            "sub": h.get("sub"), "label": h["label"], "chapter": h["chapter"], "text": h["text"],
+            "law_status": h.get("law_status", ""), "effective_date": h.get("effective_date", ""),
+            "source_url": h.get("source_url", ""), "source_kind": h.get("source_kind", ""),
+            "score": h["score"],
+        }
+        if t_block:
+            # 时间上下文存在才带标记——非时间检索的响应形态保持不变（契约稳定）
+            row["in_force_at_as_of"] = temporal.in_force_at(h.get("effective_date"), as_of_ref)
+            # as_of 命中面（known-gaps #1）：适用历史版本的「同条号对照」，移位风险随行标注
+            hist = version_fulltext_mod.historical_for_card(h["law_id"], as_of_ref, h["no"], h.get("sub"))
+            if hist:
+                row["historical_version"] = hist
+        return row
+
     return {
         "query": query,
         "temporal": t_block,
         "total": len(hits),
-        "hits": [
-            {
-                "law_id": h["law_id"], "law_title": h["law_title"], "no": h["no"],
-                "sub": h.get("sub"), "label": h["label"], "chapter": h["chapter"], "text": h["text"],
-                "law_status": h.get("law_status", ""), "effective_date": h.get("effective_date", ""),
-                "source_url": h.get("source_url", ""), "source_kind": h.get("source_kind", ""),
-                "score": h["score"],
-                # 时间上下文存在才带标记——非时间检索的响应形态保持不变（契约稳定）
-                **({"in_force_at_as_of": temporal.in_force_at(h.get("effective_date"), t_block.get("as_of") if t_block else None)} if t_block else {}),
-            }
-            for h in hits
-        ],
+        "hits": [_hit_row(h) for h in hits],
         "retrieval_meta": {**retrieval, "corpus_size": len(corpus.articles)},
     }
 

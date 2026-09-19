@@ -2,7 +2,7 @@
 
 按 FLERF 审计（2026-09-16）登记。白区=已知未实现、有明确实现路径、系统在未实现前 fail-closed（拒答/标注）而非错答：
 
-1. **AS_OF_DATE 时间检索**——✅ fail-closed 形态已实现（R144，`app/temporal.py`）：时间指涉检测（明确年份/指代词）+ 逐命中 `in_force_at_as_of` 标记 + 显式告知块；`/api/qa/ask` 与 `/api/search` 均支持显式 `as_of`。**时点文本对照查阅已全量落地（R167 垂直切片 → R168 滚动采集收口）**：全部 37 份非现行历史版本全文经 `build_version_fulltext`（注册表即白名单 + 条数逐一相等 + 尾注恰一次剥离 + 快照哈希随行）解析入 `data/law_versions_fulltext/`，双向过 corpus_selfcheck（0 问题/37 份）与 pytest 覆盖不变式；`GET /api/laws/{id}/versions/{vid}/fulltext` + LawDetail 版本 Tab 对照查阅（非现行横幅）。**剩余白区**：历史文本进入 as_of 检索命中面（版本级索引——现状是对照查阅而非检索命中）；未来新多版本法律按「注册→采集→derive_targets 自动构建」照单滚动。
+1. **AS_OF_DATE 时间检索**——✅ fail-closed 形态已实现（R144，`app/temporal.py`）：时间指涉检测 + 逐命中 `in_force_at_as_of` 标记 + 显式告知块；`/api/qa/ask` 与 `/api/search` 均支持显式 `as_of`。**时点文本对照已全量落地（R167 切片 → R168 全量采集 → R169 as_of 命中面收口）**：全部 37 份非现行历史版本全文结构化入 `data/law_versions_fulltext/`（双向过 selfcheck/pytest）；`GET /api/laws/{id}/versions/{vid}/fulltext` + LawDetail 版本 Tab 对照查阅；**as_of 命中时答案卡/检索命中自动携带 `historical_version`**（适用版本=施行日与公布日均 ≤ as_of 中公布日最新者；同条号对照文本+移位风险随行标注；适用即现行时不出字段）。**剩余白区**：跨版本条号重编号映射（重编号条文的精确历史定位）与历史文本独立检索索引。
 2. **claim 级 NLI 校验**——🟡 确定性中间步已落地（R168，gate3 升级）：逐句逐分句引用绑定 + 词面重合（≥0.20）+ 确定性裁判承诺识别之外，新增**数值一致性核验**——断言分句中的数值（三十日/6个月/二倍/3年…，CN 与阿拉伯归一化、条文引用第X条不按事实数值抽取）必须能在被引原文中找到同值同单位，否则扣留全文（「编造数字」是词面重合抓不住的高频幻觉，此为高精度确定性代理；既有 42 项 gate 测试零回归）。**剩余白区**：全句级语义 NLI 需引入模型——继续 benchmark-gated（须凭 ADR + 评测数据引入，不静默加依赖）。
 3. **统一 A0–D 权威枚举**——分层事实存在（grade/source_kind/level/authority_class），统一命名待法律专家审查（报告 §18 自述「不应由工程师规定法律效力」）。
 4. **运行时 On-demand Fetcher**——原型全快照制、无运行时外呼；Source Registry 已为未来 Fetcher 备好合规门（approved 才可运行）。
