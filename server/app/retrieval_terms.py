@@ -46,15 +46,40 @@ CONTROLLED_TOPICS = [
             {"id": "online-platform", "query": "网络交易 平台"},
         ],
     },
+    {
+        # known-gaps #9（R166）：「开除/辞退」类口语词面在语料扩张后与证券法
+        # 125/147（「被开除…不得招聘」）、治安法等跨法域撞车——金标基线 5 组 4 MISS。
+        # 组查询=目标条文的规范词面（组内 #1 实测逐条验证）；主题组只提供查询纪律
+        # （名次轮转），排名仍交给 BM25。A/B 全量对比与采纳依据见 docs/adr/0005。
+        "id": "labor-termination",
+        "pattern": r"开除|辞退|解雇|炒鱿鱼|违法解除|被开了|让我走人|不用来上班",
+        "groups": [
+            {"id": "termination-illegal", "query": "违反本法规定解除或者终止劳动合同 二倍 赔偿金"},
+            {"id": "termination-comp", "query": "经济补偿 每满一年支付一个月工资"},
+            {"id": "termination-notice", "query": "额外支付劳动者一个月工资 提前三十日"},
+            {"id": "termination-rules", "query": "严重违反用人单位的规章制度"},
+            {"id": "termination-probation", "when": r"试用期", "query": "试用期 用人单位不得解除劳动合同"},
+        ],
+    },
 ]
 
 
 def controlled_groups(text: str) -> list[dict]:
-    """返回原文实际触发的检索组；不命中时返回空列表。"""
+    """返回原文实际触发的检索组；不命中时返回空列表。
+
+    组可带 `when`（更细的触发词面）：仅当原文命中时该组激活，且激活的条件组
+    排在无条件组之前——特定词面（如「试用期」）出现时其专属条文组优先供位，
+    泛化组不挤占其轮转位置（R166 A/B：试用期问法 21 条由 r6 提到 r2）。
+    """
     groups: list[dict] = []
     for topic in CONTROLLED_TOPICS:
         if re.search(topic["pattern"], text or "", re.I):
-            groups.extend({**group, "topic": topic["id"]} for group in topic["groups"])
+            for group in topic["groups"]:
+                when = group.get("when")
+                if when and not re.search(when, text or "", re.I):
+                    continue
+                groups.append({**group, "topic": topic["id"]})
+    groups.sort(key=lambda g: 0 if g.get("when") else 1)
     return groups
 
 
