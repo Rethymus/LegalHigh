@@ -42,6 +42,7 @@ from app import (  # noqa: E402
     research,
     research_report,
     review,
+    source_registry as source_registry_mod,
     storage,
     temporal,
     validation,
@@ -313,7 +314,23 @@ class AskBody(BaseModel):
 def ask(body: AskBody):
     if not body.question.strip():
         raise HTTPException(422, "问题不能为空")
-    return qa.ask(body.question.strip(), top_k=min(max(body.top_k, 1), 12), as_of=body.as_of)
+    question = body.question.strip()
+    out = qa.ask(question, top_k=min(max(body.top_k, 1), 12), as_of=body.as_of)
+    # Evidence Ledger（FLERF §19/§23 最小闭环）：答案所依据证据的哈希快照随 append-only
+    # 审计表持久化，不随缓存过期；账本只留问题哈希不留原文。
+    storage.audit("anonymous", "qa", qa.question_id(question), "evidence_snapshot",
+                  qa.ledger_payload(question, out))
+    return out
+
+
+@app.get("/api/sources")
+def sources():
+    """Legal Source Registry（FLERF §6/§7）：全部外部来源与合规批准状态，公开只读。
+
+    未来任何抓取/核验只允许访问 approved=true 的来源；REFERENCE_ONLY 只作交叉核验。
+    注册表 schema 问题 fail-closed（ValueError → 500），绝不返回半份登记数据。
+    """
+    return source_registry_mod.load_registry()
 
 
 class ResearchBody(BaseModel):

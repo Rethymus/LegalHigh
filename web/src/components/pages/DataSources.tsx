@@ -17,6 +17,14 @@ function lawSourceLabel(sourceUrl: string): string {
   }
 }
 
+const AUTHORITY_LABEL: Record<string, string> = {
+  OFFICIAL_PRIMARY: '官方一手',
+  OFFICIAL_REPRINT: '官方媒体受权转载',
+  COMMUNITY_TRANSCRIPTION: '社区转录【中】',
+  REFERENCE_ONLY: '只读参照',
+  FOREIGN_OFFICIAL: '域外官方法源',
+}
+
 export default function DataSources() {
   const { data, error: lawsError } = useLaws()
   const [cases, setCases] = useState<CaseRecord[] | null>(null)
@@ -25,6 +33,7 @@ export default function DataSources() {
   const [coverage, setCoverage] = useState<Awaited<ReturnType<typeof api.corpusCoverage>> | null>(null)
   const [evals, setEvals] = useState<Awaited<ReturnType<typeof api.evals>> | null>(null)
   const [evalsState, setEvalsState] = useState<'loading' | 'done'>('loading')
+  const [registry, setRegistry] = useState<Awaited<ReturnType<typeof api.sources>> | null>(null)
 
   useEffect(() => {
     let alive = true
@@ -53,6 +62,7 @@ export default function DataSources() {
   useEffect(() => {
     let alive = true
     api.compliance().then((c) => alive && setCompliance(c), () => { /* 合规声明加载失败不阻塞数据源展示 */ })
+    api.sources().then((r) => alive && setRegistry(r), () => { /* 登记册不可用时不伪造替代数据 */ })
     return () => { alive = false }
   }, [])
 
@@ -120,6 +130,42 @@ export default function DataSources() {
               {coverage.priority_backlog.map((item) => <span key={item.title} className="chip" title={item.reason}>{item.title.replace(/^中华人民共和国/, '')}</span>)}
             </div>
             <div className="tiny"><b>入库顺序：</b>{coverage.update_protocol.join(' → ')}</div>
+          </div>
+        </section>
+      )}
+
+      {registry && (
+        <section className="card mb-20">
+          <div className="card-h row-wrap">
+            <b className="card-h-t">来源登记册（Source Registry）</b>
+            <span className="spacer" />
+            <span className="tiny">{registry.sources.length} 个外部来源 · 审批版本 {registry.approval_version}</span>
+          </div>
+          <div className="card-b">
+            <div className="banner banner-info mb-12">
+              <Icon name="info" size={15} />
+              <span className="banner-tx">
+                任何抓取、核验或未来的按需获取只允许访问下表「已批准」的来源；「只读参照」仅用于交叉核验、永不作为语料构建源；域外来源仅作比较研究。这是本项目的合规门，不是能力宣传。
+              </span>
+            </div>
+            <div className="list-divided">
+              {registry.sources.map((s) => (
+                <article key={s.id} className="list-row" style={{ alignItems: 'flex-start' }}>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div className="row-wrap mb-8">
+                      <b>{s.name}</b>
+                      <span className="chip">{AUTHORITY_LABEL[s.authority_class] ?? s.authority_class}</span>
+                      {s.canary && <span className="chip" title={`canary 探测：${s.canary.url}`}>canary 在位</span>}
+                    </div>
+                    <div className="tiny">{s.host} · {s.jurisdiction} · 角色：{(s.roles ?? []).join('、') || '—'}</div>
+                    {s.note && <div className="tiny mt-8">{s.note}</div>}
+                  </div>
+                  <span className="tiny bold" style={{ color: s.compliance.approved ? 'var(--ok)' : 'var(--tx-3)' }}>
+                    {s.compliance.approved ? '已批准' : '未批准'}
+                  </span>
+                </article>
+              ))}
+            </div>
           </div>
         </section>
       )}

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "note": "Legal Source Registry（R138，对应 FLERF 报告 §6/§7）：语料与案例引用的全部外部来源在此登记，含权威等级、访问方式与合规批准。任何未来 Fetcher 只允许访问本表 approved=true 的来源；reference_only 来源只作交叉核验、禁止作为构建源。等级口径：OFFICIAL_PRIMARY=官方一手；OFFICIAL_REPRINT=官方媒体受权转载；COMMUNITY_TRANSCRIPTION=社区转录（grade 降为【中】）；REFERENCE_ONLY=只读参照；FOREIGN_OFFICIAL=域外官方法源（比较研究，绝不可呈现为中国拘束性权威）。",
+  "note": "Legal Source Registry（R138，对应 FLERF 报告 §6/§7）：语料与案例引用的全部外部来源在此登记，含权威等级、访问方式与合规批准。任何未来 Fetcher 只允许访问本表 approved=true 的来源；reference_only 来源只作交叉核验、禁止作为构建源。等级口径：OFFICIAL_PRIMARY=官方一手；OFFICIAL_REPRINT=官方媒体受权转载；COMMUNITY_TRANSCRIPTION=社区转录（grade 降为【中】）；REFERENCE_ONLY=只读参照；FOREIGN_OFFICIAL=域外官方法源（比较研究，绝不可呈现为中国拘束性权威）。R164 起部分来源携带 canary 配置（url+expect 标记），由 scripts/source_canary.py 做只读结构指纹检测；canary 增删同样走人工审批。",
   "approval_version": "compliance-2026-09-16",
   "sources": [
     {
@@ -12,6 +12,7 @@
       "access": {"mode": "WEB", "official_api_documented": false, "bulk_download_allowed": "UNKNOWN", "cache_policy": "SNAPSHOT_WITH_HASH"},
       "roles": ["law-metadata-verification", "authority-pointer"],
       "compliance": {"approved": true},
+      "canary": {"url": "https://flk.npc.gov.cn/", "expect": ["国家法律法规数据库"]},
       "note": "flfgDetails 结构树接口只读核验用；DOCX 直连下载受 SPA/OSS 拦截，从未绕过。"
     },
     {
@@ -33,6 +34,7 @@
       "access": {"mode": "WEB", "official_api_documented": false, "bulk_download_allowed": "UNKNOWN", "cache_policy": "SNAPSHOT_WITH_HASH"},
       "roles": ["guiding-case-fulltext"],
       "compliance": {"approved": true},
+      "canary": {"url": "https://www.court.gov.cn/", "expect": ["最高人民法院"]},
       "note": "指导案例发布页逐字快照来源；holding/result 钉住测试逐字校验。"
     },
     {
@@ -43,7 +45,8 @@
       "jurisdiction": "CN",
       "access": {"mode": "WEB", "official_api_documented": false, "bulk_download_allowed": "UNKNOWN", "cache_policy": "SNAPSHOT_WITH_HASH"},
       "roles": ["regulation-fulltext"],
-      "compliance": {"approved": true}
+      "compliance": {"approved": true},
+      "canary": {"url": "https://www.gov.cn/", "expect": ["中央人民政府门户网站"]}
     },
     {
       "id": "cac",
@@ -106,6 +109,7 @@
       "access": {"mode": "WEB", "official_api_documented": false, "bulk_download_allowed": "UNKNOWN", "cache_policy": "SNAPSHOT_WITH_HASH"},
       "roles": ["law-fulltext", "historical-versions", "case-corroboration"],
       "compliance": {"approved": true},
+      "canary": {"url": "https://zh.wikisource.org/", "expect": ["维基文库"]},
       "note": "grade【中】；已知转写缺陷先例（食品安全法 2025 页 81 条漏改）——凡维基来源入库前须双链或参照库交叉核验。"
     },
     {

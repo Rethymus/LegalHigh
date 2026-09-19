@@ -159,6 +159,19 @@ export interface AuditEntry {
   [k: string]: unknown
 }
 
+/** 来源登记册条目（server/data/source_registry.json，公开只读）。 */
+export interface SourceRegistryEntry {
+  id: string
+  name: string
+  host: string
+  authority_class: 'OFFICIAL_PRIMARY' | 'OFFICIAL_REPRINT' | 'COMMUNITY_TRANSCRIPTION' | 'REFERENCE_ONLY' | 'FOREIGN_OFFICIAL'
+  jurisdiction: string
+  roles?: string[]
+  compliance: { approved: boolean }
+  note?: string
+  canary?: { url: string; expect: string[] }
+}
+
 export interface TemplateField {
   key: string
   label: string
@@ -336,6 +349,10 @@ export const api = {
   // 平台合规声明（公开端点：定位/红线/模型状态，供页面公示与审计者核查）
   compliance: () =>
     req<{ positioning: string; disclaimer: string; model_status: { status: string; detail: string; filing_no: string | null }; red_lines: string[] }>('/compliance'),
+
+  // 来源登记册（公开端点：全部外部来源的权威等级与合规批准状态；approved 之外禁止抓取）
+  sources: () =>
+    req<{ schema_version: number; approval_version: string; sources: SourceRegistryEntry[] }>('/sources'),
 
   // 交付前校验
   listDrafts: () => req<{ drafts: { id: string; created_at: string; template_id: string; status: string }[] }>('/drafts'),

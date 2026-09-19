@@ -1,0 +1,26 @@
+{
+  "npc_flk": {
+    "checked_at": "2026-09-19T03:04:17Z",
+    "url": "https://flk.npc.gov.cn/",
+    "status": 200,
+    "size_bucket": 0
+  },
+  "court_gov": {
+    "checked_at": "2026-09-19T03:04:17Z",
+    "url": "https://www.court.gov.cn/",
+    "status": 200,
+    "size_bucket": 17
+  },
+  "gov_cn": {
+    "checked_at": "2026-09-19T03:04:17Z",
+    "url": "https://www.gov.cn/",
+    "status": 200,
+    "size_bucket": 15
+  },
+  "wikisource": {
+    "checked_at": "2026-09-19T03:04:17Z",
+    "url": "https://zh.wikisource.org/",
+    "status": 200,
+    "size_bucket": 28
+  }
+}

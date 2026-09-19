@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """引用式问答：检索 → 命中条文卡片。原型期回答层是「命中的法条原文」而非自由生成，
 天然满足引用不变量；LLM 适配层为后续可选扩展（须逐句通过引用绑定校验）。"""
+import hashlib
 import re
 
 from .corpus import get_corpus
@@ -111,3 +112,39 @@ def ask(question: str, top_k: int = 6, as_of: str | None = None):
         "disclaimer": DISCLAIMER,
         "retrieval_meta": {**retrieval, "top_k": top_k, "corpus_size": len(corpus.articles)},
     }
+
+
+def question_id(question: str) -> str:
+    """问题指纹：账本只留哈希不留原文（LEGAL-009 卫生纪律——审计表不是 PII 表）。"""
+    return hashlib.sha256(question.encode("utf-8")).hexdigest()[:12]
+
+
+def evidence_snapshot(answer: dict) -> dict:
+    """EvidenceSnapshot（FLERF 报告 §19/§23 的最小闭环）。
+
+    回答产生时刻所依据的每条证据：精确文本哈希 + 版本/生效字段 + 官方来源 URL
+    （+ 存在时间上下文时的 in_force_at_as_of 标记）。随 append-only 审计表持久化、
+    不随任何缓存过期——一年后法条改了，仍能证明「当时系统依据的是哪段文本」。
+    """
+    evidence = []
+    for card in answer.get("answer_cards", []):
+        item = {
+            "evidence_id": f"{card['law_id']}#{card['article_no']}",
+            "text_sha256": hashlib.sha256(card.get("text", "").encode("utf-8")).hexdigest(),
+            "law_status": card.get("law_status"),
+            "effective_date": card.get("effective_date"),
+            "source_url": card.get("source_url"),
+        }
+        if "in_force_at_as_of" in card:
+            item["in_force_at_as_of"] = card["in_force_at_as_of"]
+        evidence.append(item)
+    return {
+        "no_answer": answer.get("no_answer"),
+        "corpus_size": (answer.get("retrieval_meta") or {}).get("corpus_size"),
+        "evidence_count": len(evidence),
+        "evidence": evidence,
+    }
+
+
+def ledger_payload(question: str, answer: dict) -> dict:
+    return {"question_sha256": question_id(question), **evidence_snapshot(answer)}

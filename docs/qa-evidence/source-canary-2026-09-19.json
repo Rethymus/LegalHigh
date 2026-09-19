@@ -1,0 +1,58 @@
+{
+  "checked_at": "2026-09-19T03:04:17Z",
+  "all_healthy": true,
+  "results": [
+    {
+      "source_id": "npc_flk",
+      "url": "https://flk.npc.gov.cn/",
+      "checked_at": "2026-09-19T03:04:17Z",
+      "status": 200,
+      "markers_ok": {
+        "国家法律法规数据库": true
+      },
+      "size_bucket": 0,
+      "drift": null,
+      "error": null,
+      "healthy": true
+    },
+    {
+      "source_id": "court_gov",
+      "url": "https://www.court.gov.cn/",
+      "checked_at": "2026-09-19T03:04:17Z",
+      "status": 200,
+      "markers_ok": {
+        "最高人民法院": true
+      },
+      "size_bucket": 17,
+      "drift": null,
+      "error": null,
+      "healthy": true
+    },
+    {
+      "source_id": "gov_cn",
+      "url": "https://www.gov.cn/",
+      "checked_at": "2026-09-19T03:04:17Z",
+      "status": 200,
+      "markers_ok": {
+        "中央人民政府门户网站": true
+      },
+      "size_bucket": 15,
+      "drift": null,
+      "error": null,
+      "healthy": true
+    },
+    {
+      "source_id": "wikisource",
+      "url": "https://zh.wikisource.org/",
+      "checked_at": "2026-09-19T03:04:17Z",
+      "status": 200,
+      "markers_ok": {
+        "维基文库": true
+      },
+      "size_bucket": 28,
+      "drift": null,
+      "error": null,
+      "healthy": true
+    }
+  ]
+}
