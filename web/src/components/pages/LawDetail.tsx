@@ -89,20 +89,20 @@ export default function LawDetail() {
     () => (law && article ? law.articles.filter((a) => a.chapter === article.chapter) : []),
     [law, article],
   )
-  const [linkedCases, setLinkedCases] = useState<{ id: string; name: string; no: string; level: string }[]>([])
+  const [cited, setCited] = useState<Awaited<ReturnType<typeof api.citedBy>> | null>(null)
   useEffect(() => {
     let alive = true
-    // 关联案例：server 已核实案例中 research_refs / statutes 指向本条的记录
-    api.listCases().then(
-      (d) => alive && setLinkedCases(
-        d.cases.filter((c) => c.verified && [...(c.statutes ?? []), ...(c.research_refs ?? [])]
-          .some((s) => s.law_id === lawId && Math.abs(s.no - no) <= 40))
-          .map((c) => ({ id: c.id, name: c.name, no: c.no, level: c.level })),
-      ),
-      () => { /* 案例库不可用时不阻塞法条页 */ },
+    // Citator「被引用于」：已核实案例对本法的精确引用（research_refs，含子条号）
+    api.citedBy(lawId ?? '').then(
+      (d) => alive && setCited(d),
+      () => { /* Citator 不可用时不阻塞法条页 */ },
     )
     return () => { alive = false }
-  }, [lawId, no])
+  }, [lawId])
+  const articleCitedCases = useMemo(
+    () => (cited?.cases ?? []).filter((c) => c.cited_articles.some((a) => a.no === no && (a.sub ?? '') === (art?.sub ?? ''))),
+    [cited, no, art?.sub],
+  )
 
   if (error) return <div className="page"><div className="banner banner-danger"><Icon name="alert" size={15} />语料加载失败：{error}</div></div>
   if (!data) return <div className="page"><div className="card card-pad"><SkeletonLines n={8} tall /></div></div>
@@ -160,16 +160,19 @@ export default function LawDetail() {
             </div>
             <div className="card-b">
               {tab === 'rel-case' && (
-                linkedCases.length > 0 ? (
-                  linkedCases.map((c) => (
-                    <Link key={c.id} to={`/cases/${c.id}`} className="lrow">
-                      <span className="bdg bdg-teal">{c.level}</span>
-                      <span className="lrow-t">{c.name}</span>
-                      <span className="tiny">{c.no}</span>
-                    </Link>
-                  ))
+                articleCitedCases.length > 0 ? (
+                  <div>
+                    <div className="tiny mb-8">以下已核实案例的依据条文中<b>精确引用</b>了{article.label}（含子条号匹配；邻近/相似不冒充引用）。</div>
+                    {articleCitedCases.map((c) => (
+                      <Link key={c.id} to={`/cases/${c.id}`} className="lrow">
+                        <span className={'bdg ' + (c.kind === 'foreign' ? 'bdg-gray' : 'bdg-teal')}>{c.level}</span>
+                        <span className="lrow-t">{c.name}</span>
+                        <span className="tiny">{c.case_no}{c.date ? ` · ${c.date}` : ''}</span>
+                      </Link>
+                    ))}
+                  </div>
                 ) : (
-                  <div className="tiny">当前已核实案例清单中没有检出直接引用本条的记录。</div>
+                  <div className="tiny">当前已核实案例清单中没有精确引用本条的记录（只认依据条文精确匹配，不做邻近猜测）。</div>
                 )
               )}
               {tab === 'rel-js' && (
@@ -193,10 +196,32 @@ export default function LawDetail() {
                 )
               )}
               {tab === 'cite' && (
-                <div className="citations">
-                  <CitationChip label={`${law.title} ${article.label}`} />
-                  <span className="tiny">引用关系图谱将在知识图谱（Neo4j）阶段提供，当前展示引用标识与复制能力。</span>
-                </div>
+                cited && cited.case_count > 0 ? (
+                  <div style={{ display: 'grid', gap: 12 }}>
+                    <div className="stats">
+                      <div className="stat"><b>{cited.case_count}</b><span>被引案例（精确引用）</span></div>
+                      <div className="stat"><b>{cited.by_level['指导性案例'] ?? 0}</b><span>指导性案例（应当参照）</span></div>
+                      <div className="stat"><b>{cited.by_level['外国判例'] ?? 0}</b><span>域外判例（比较研究）</span></div>
+                    </div>
+                    <div>
+                      <div className="tiny bold mb-8">本法被引用最多的条文（点击跳转该条，其被引案例见「关联案例」）</div>
+                      <div className="chips">
+                        {cited.articles.slice(0, 10).map((a) => (
+                          <button key={`${a.no}-${a.sub ?? ''}`} className="chip" onClick={() => setSp({ art: artParam(a.no, a.sub ?? undefined) })}>
+                            第{a.no}{a.sub ?? ''}条 · {a.case_count} 件
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="banner banner-info"><Icon name="info" size={15} /><span className="banner-tx">{cited.scope_note}</span></div>
+                    <div className="banner banner-warn"><Icon name="alert" size={15} /><span className="banner-tx">{cited.negative_history_note}</span></div>
+                  </div>
+                ) : (
+                  <div className="citations">
+                    <CitationChip label={`${law.title} ${article.label}`} />
+                    <span className="tiny">当前已核实案例清单中没有引用本法的记录。引用关系只认精确匹配，不做图谱推断。</span>
+                  </div>
+                )
               )}
               {tab === 'revision' && (
                 <div className="banner banner-info"><Icon name="info" size={15} />

@@ -66,3 +66,15 @@ def test_temporal_answer_snapshot_carries_as_of_flag(tmp_db):
     assert out["temporal"], "时间问法必须有 temporal 告知块"
     assert any("in_force_at_as_of" in ev for ev in payload["evidence"]), \
         "时间上下文下的快照必须携带时点适用标记"
+
+
+def test_research_memo_also_recorded(tmp_db):
+    """Evidence Ledger 覆盖研究备忘录：与 qa 同账本，「当时依据了哪些条文」可证。"""
+    out = main.research_memo(main.ResearchBody(question="试用期最长不得超过多久"))
+    rows = [r for r in storage.list_audit(None) if r["entity_type"] == "research"]
+    assert len(rows) == 1
+    payload = json.loads(rows[0]["payload_json"])
+    assert payload["evidence_count"] == len(out["cards"]) > 0
+    for card, ev in zip(out["cards"], payload["evidence"]):
+        assert ev["text_sha256"] == hashlib.sha256(card["text"].encode("utf-8")).hexdigest()
+    assert "question" not in payload

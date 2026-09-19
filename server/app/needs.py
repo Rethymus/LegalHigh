@@ -57,6 +57,97 @@ def issue_candidates(fact_parts: list[str]) -> list[dict]:
 _MEASURE_CHARS = set("零〇一二三四五六七八九十百千万亿两几个年月日天元块钱")
 
 
+# 关键事实清单（FLERF 报告 §8「unknown_material_facts」的确定性形态，R165）：
+# 每个领域列出作出法律判断通常必需的事实项；凡用户描述中未见对应词面即列入「缺失」。
+# 目的是防止系统（或任何人）看见「迟到两次」就断言「严重违反规章制度」——
+# 缺失的事实只能被提示补充，不能被脑补。清单只提示补充方向，不构成案件定性。
+MATERIAL_FACT_CHECKLISTS: list[dict] = [
+    {
+        "domain": "劳动报酬与劳动关系",
+        "pattern": r"工资|欠薪|不发工资|劳动报酬|加班费|辞退|离职|开除|用人单位|劳动合同",
+        "facts": [
+            {"id": "employment-duration", "fact": "劳动关系存续时间（入职/离职日期）",
+             "detect": r"入职|离职|\d+\s*年|\d+\s*个月|20\d\d\s*年",
+             "why": "经济补偿按工作年限计算，年限不清则无法估算补偿区间。"},
+            {"id": "wage-standard", "fact": "工资标准与构成（月薪/时薪/加班费基数）",
+             "detect": r"月薪|日薪|底薪|时薪|工资.{0,8}\d|一个月.{0,4}\d",
+             "why": "补偿与赔偿多以离职前平均工资为基数，标准缺失只能给规则不能给区间。"},
+            {"id": "written-contract", "fact": "是否签订书面劳动合同",
+             "detect": r"书面合同|没签.{0,4}合同|未.{0,4}签.{0,6}合同|签订.{0,4}劳动合同",
+             "why": "未签书面合同另有二倍工资等规则，与已签合同的处理路径不同。"},
+            {"id": "termination-reason", "fact": "单位给出的解除/终止理由与制度依据",
+             "detect": r"理由|原因|规章制度|严重违反|解除通知|书面通知",
+             "why": "不同解除事由对应不同补偿/赔偿规则；「迟到」「顶嘴」等片段不足以认定「严重违反规章制度」，须以依法制定并公示的制度与证据为准。"},
+        ],
+    },
+    {
+        "domain": "消费者权益与网络交易",
+        "pattern": r"网购|商家|消费者|退货|退款|假货|平台|三无产品|欺诈",
+        "facts": [
+            {"id": "purchase-channel", "fact": "购买渠道与凭证（平台订单/线下小票/聊天记录）",
+             "detect": r"平台|订单|小票|发票|聊天记录|截图",
+             "why": "渠道决定适用网络交易规则还是线下规则，凭证决定能否举证。"},
+            {"id": "goods-condition", "fact": "商品状态与问题描述（是否使用/瑕疵表现）",
+             "detect": r"质量|破损|过期|瑕疵|假货|描述.{0,4}符",
+             "why": "七日无理由退货与质量问题的适用条件不同（前者有商品完好要求）。"},
+            {"id": "merchant-response", "fact": "商家/平台当前处理态度（是否拒绝、有无承诺）",
+             "detect": r"拒绝|同意|退款.{0,4}到|客服|承诺",
+             "why": "有无承诺与拒绝记录影响救济路径与时效起算。"},
+        ],
+    },
+    {
+        "domain": "房屋租赁",
+        "pattern": r"租房|房东|承租|出租|押金|房租|租客|中介",
+        "facts": [
+            {"id": "lease-contract", "fact": "有无书面租赁合同及其押金/解约条款",
+             "detect": r"合同|协议|条款|押金条",
+             "why": "押金返还与违约责任首先按合同约定处理。"},
+            {"id": "deposit-amount", "fact": "押金数额与支付凭证",
+             "detect": r"押金.{0,6}\d|\d.{0,4}押金|转账|收据",
+             "why": "押金请求的金额与举证都依赖数额与凭证。"},
+            {"id": "checkout-status", "fact": "退租/交房是否完成、房屋交接状态",
+             "detect": r"退租|交房|搬走|到期|解约",
+             "why": "交接状态决定返还请求是否已到期可主张。"},
+        ],
+    },
+    {
+        "domain": "借款与款项返还",
+        "pattern": r"借款|借贷|借钱|欠钱|还款|欠款|借条",
+        "facts": [
+            {"id": "loan-evidence", "fact": "借款凭证（借条/转账记录/聊天记录）",
+             "detect": r"借条|转账|记录|聊天|凭证|欠条",
+             "why": "民间借贷须证明合意与交付，凭证决定主张能否成立。"},
+            {"id": "loan-amount-date", "fact": "借款金额与约定还款时间",
+             "detect": r"\d+\s*(元|万)|约定.{0,6}还|到期|还款日",
+             "why": "金额与还款期影响诉讼时效起算与利息主张。"},
+        ],
+    },
+]
+
+
+def missing_material_facts(text: str) -> list[dict]:
+    """确定性「缺失关键事实」清单：领域命中后，凡描述中未见对应词面的事实项列入缺失。
+
+    只提示补充方向与咨询律师时应携带的信息，不断言案件定性（报告 §8：AI 不得
+    看见片段事实就推断「严重违反规章制度」一类的中间结论）。
+    """
+    out: list[dict] = []
+    for group in MATERIAL_FACT_CHECKLISTS:
+        if not re.search(group["pattern"], text or "", re.I):
+            continue
+        missing = [f for f in group["facts"]
+                   if not re.search(f["detect"], text or "", re.I)]
+        if not missing:
+            continue
+        out.append({
+            "domain": group["domain"],
+            "missing": [{"id": f["id"], "fact": f["fact"], "why": f["why"]} for f in missing],
+            "note": "以上为常见必需事实的缺失提示，用于补充描述或咨询律师时对照携带；"
+                    "不代表案件定性，系统不会替你假设这些事实的答案。",
+        })
+    return out[:3]
+
+
 def _is_noise_token(tok: str) -> bool:
     return any(ch in _MEASURE_CHARS for ch in tok)
 
@@ -156,6 +247,8 @@ def parse_needs(text: str) -> dict:
     corpus = get_corpus()
     # 展示降噪：域词从原文重算；内部 bigram 只参与检索，不作为专业判断展示。
     parse["keywords_display"] = curate_display(parse["keywords"], domain_terms(text))
+    # 关键事实缺失清单（报告 §8 unknown_material_facts）：只提示补充，不脑补结论。
+    parse["missing_material_facts"] = missing_material_facts(text)
     return {
         "input": text,
         "parse": parse,
@@ -221,6 +314,7 @@ def build_intake_plan(payload: dict) -> dict:
     fact_text = "\n".join(fact_parts)
     parsed = deterministic_parse(fact_text)
     parsed["keywords_display"] = curate_display(parsed["keywords"], domain_terms(fact_text))
+    parsed["missing_material_facts"] = missing_material_facts(fact_text)
     candidates = issue_candidates(fact_parts)
     parsed["issue_type"] = candidates[0]["label"] if len(candidates) == 1 else f"{len(candidates)} 个候选方向"
     parsed["understood"] = "已按用户确认的信息形成事实记录，并在本地语料中检索可能相关的依据。"

@@ -172,6 +172,17 @@ export interface SourceRegistryEntry {
   canary?: { url: string; expect: string[] }
 }
 
+/** Citator「被引用于」反查（已核实案例对本法的精确引用）。 */
+export interface CitedBy {
+  law_id: string
+  case_count: number
+  by_level: Record<string, number>
+  articles: { no: number; sub?: string | null; case_count: number }[]
+  cases: { id: string; name: string; case_no: string | null; court: string | null; date: string | null; level: string | null; kind: string | null; cited_articles: { no: number; sub?: string | null }[] }[]
+  negative_history_note: string
+  scope_note: string
+}
+
 export interface TemplateField {
   key: string
   label: string
@@ -331,6 +342,10 @@ export const api = {
       amendments?: { no: string; title: string; passed_date: string; effective: string }[]
       pending_note: string
     }>(`/laws/${encodeURIComponent(lawId)}/versions`),
+
+  // Citator「被引用于」（FLERF §26）：已核实案例对本法的精确引用反查（公开只读）
+  citedBy: (lawId: string) =>
+    req<CitedBy>(`/laws/${encodeURIComponent(lawId)}/cited-by`),
 
   // 原文 + 官方解释 + 具名专业观点；证据覆盖分明确不等于正确率
   lawAnalysisContext: (lawId: string, no: number) =>
@@ -587,6 +602,8 @@ export interface NeedsParseResult {
     assumed_causes: string[]; keywords: string[]; cautions: string[]
     /** 展示降噪后的关键词（决策项2：有域词时仅显示域词）；缺省回退 keywords */
     keywords_display?: string[]
+    /** 关键事实缺失清单（FLERF §8 unknown_material_facts）：只提示补充，不定性 */
+    missing_material_facts?: { domain: string; missing: { id: string; fact: string; why: string }[]; note: string }[]
     by: 'deterministic'
   }
   ai_error: string | null

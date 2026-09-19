@@ -28,6 +28,7 @@ from app import (  # noqa: E402
     case_analysis,
     case_report,
     cases as cases_mod,
+    citator as citator_mod,
     compare as compare_mod,
     article_links as links_mod,
     drafting,
@@ -333,6 +334,18 @@ def sources():
     return source_registry_mod.load_registry()
 
 
+@app.get("/api/laws/{law_id}/cited-by")
+def law_cited_by(law_id: str):
+    """Citator 种子（FLERF §26）：已核实案例对本法条文的精确引用反查（公开只读）。
+
+    只做 research_refs 精确匹配（邻近/语义相似不是引用）；负面历史检查无数据源，
+    如实登记不提供。law_id 不在语料中 404（与 versions 端点语义一致）。
+    """
+    if law_id not in get_corpus().laws:
+        raise HTTPException(404, "law not found")
+    return citator_mod.cited_by(law_id)
+
+
 class ResearchBody(BaseModel):
     question: str = Field(min_length=1, max_length=20_000)
     law_ids: list[str] | None = Field(default=None, max_length=32)
@@ -345,10 +358,15 @@ def research_memo(body: ResearchBody):
     if not body.question.strip():
         raise HTTPException(422, "问题不能为空")
     try:
-        return research.build_research_memo(
+        memo = research.build_research_memo(
             body.question.strip(), law_ids=body.law_ids, top_k=body.top_k)
     except ValueError as e:
         raise HTTPException(422, str(e))
+    # Evidence Ledger：备忘录与 qa 同账本——「当时依据了哪些条文」事后可证。
+    storage.audit("anonymous", "research", qa.question_id(body.question.strip()), "evidence_snapshot",
+                  {"question_sha256": qa.question_id(body.question.strip()),
+                   **qa.evidence_snapshot({"answer_cards": memo["cards"]})})
+    return memo
 
 
 @app.post("/api/research/report")
