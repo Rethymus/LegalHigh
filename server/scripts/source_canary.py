@@ -176,11 +176,16 @@ def run_deep(deep_targets: list[dict], registry: dict, fetch_fn, state: dict) ->
     return results, all_healthy
 
 
-def pick_article_targets(fulltext_dir, sample: int, approved_hosts: set[str] | None = None) -> list[dict]:
+def pick_article_targets(fulltext_dir, sample: int, approved_hosts: set[str] | None = None,
+                         positions: str = "middle") -> list[dict]:
     """逐「条」级 canary 目标：从历史全文中确定性抽取具体条文做在线存在性探测。
 
-    每个文档取其中位条（避开首条导语与末条附则/尾注），文档间按 host 轮转，
-    直至凑满 sample；提供 approved_hosts 时未批准 host 在抽样阶段剔除。
+    positions 抽样位：
+    - "middle"：每文档取中位条（避开首条导语与末条附则/尾注）；
+    - "ends"：每文档取首条+末条（首条=导语区边界、末条=附则/尾注区边界——
+      两端是解析器最易吞并/粘连的位置，R45 教训）；
+    文档间按 host 轮转，直至凑满 sample；提供 approved_hosts 时未批准 host 在
+    抽样阶段剔除。
     """
     docs: list[dict] = []
     seen_urls: set[str] = set()
@@ -199,16 +204,20 @@ def pick_article_targets(fulltext_dir, sample: int, approved_hosts: set[str] | N
         if not articles:
             continue
         seen_urls.add(url)
-        mid = articles[len(articles) // 2]
-        docs.append({
-            "key": f"deep-art:{d.get('law_id')}/{d.get('version_id')}#{mid['no']}{mid.get('sub') or ''}",
-            "title": d.get("law_title") or "",
-            "url": url,
-            "host": host,
-            "law_id": d.get("law_id"), "version_id": d.get("version_id"),
-            "no": mid["no"], "sub": mid.get("sub"),
-            "probe_text": re.sub(r"[\s\u3000\xa0]+", "", mid["text"])[:80],
-        })
+        if positions == "ends":
+            picks = [articles[0], articles[-1]]
+        else:
+            picks = [articles[len(articles) // 2]]
+        for mid in picks:
+            docs.append({
+                "key": f"deep-art:{d.get('law_id')}/{d.get('version_id')}#{mid['no']}{mid.get('sub') or ''}",
+                "title": d.get("law_title") or "",
+                "url": url,
+                "host": host,
+                "law_id": d.get("law_id"), "version_id": d.get("version_id"),
+                "no": mid["no"], "sub": mid.get("sub"),
+                "probe_text": re.sub(r"[\s\u3000\xa0]+", "", mid["text"])[:80],
+            })
     if sample <= 0:
         return []
     by_host: dict[str, list[dict]] = {}
@@ -276,6 +285,8 @@ def main(argv: list[str] | None = None) -> int:
                     help="文档级 canary 抽样数（按 host 轮转取历史全文来源页；0=关闭）")
     ap.add_argument("--deep-articles", type=int, default=0,
                     help="逐条级 canary 抽样数（历史全文来源页内探测具体条文仍在；0=关闭）")
+    ap.add_argument("--article-positions", choices=["middle", "ends"], default="middle",
+                    help="逐条抽样位：middle=中位条（默认）；ends=首条+末条（解析边界敏感区）")
     args = ap.parse_args(argv)
 
     try:
@@ -308,7 +319,8 @@ def main(argv: list[str] | None = None) -> int:
     if args.deep_articles > 0:
         approved = {s.get("host") for s in registry.get("sources", [])
                     if (s.get("compliance") or {}).get("approved")}
-        art_targets = pick_article_targets(DEFAULT_FULLTEXT_DIR, args.deep_articles, approved)
+        art_targets = pick_article_targets(DEFAULT_FULLTEXT_DIR, args.deep_articles, approved,
+                                           positions=args.article_positions)
         art_results, art_ok = run_article_targets(art_targets, registry, lambda u: fetch(u, args.timeout), state)
         results.extend(art_results)
         all_healthy = all_healthy and art_ok

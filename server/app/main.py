@@ -259,10 +259,9 @@ def law_version_fulltext(law_id: str, version_id: str):
 
 @app.get("/api/laws/{law_id}/renumber-map")
 def law_renumber_map(law_id: str):
-    """跨版本条号重编号映射（known-gaps #1，R170）：difflib 确定性文本对齐。
-
-    相邻历史版本两两对齐（子条号参与键）；不足两个全文版本 → 404（诚实无数据，
-    与 fulltext 端点的 404 语义一致——重编号映射是派生资源而非兜底空表）。
+    """跨版本条号重编号映射（known-gaps #1，R170→R180 语义对齐 versions 端点）：
+    少于两个已采集历史版本 → 200 空映射（正常态，前端静默降级；404 会给每页
+    控制台留错误日志——R170 的 404 语义被 R176 全站巡检证伪后修正）。
     """
     if law_id not in get_corpus().laws:
         raise HTTPException(404, "law not found")
@@ -270,8 +269,6 @@ def law_renumber_map(law_id: str):
         out = version_renumber_mod.build_map(law_id)
     except (ValueError, FileNotFoundError) as e:
         raise HTTPException(404, str(e))
-    if out["pair_count"] == 0:
-        raise HTTPException(404, "该法少于两个已采集历史版本，无可对齐版本对")
     return out
 
 

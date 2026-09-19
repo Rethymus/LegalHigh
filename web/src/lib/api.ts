@@ -356,7 +356,7 @@ export const api = {
   draftDocxDownload: (did: string, templateId: string) => downloadApi(`/drafts/${did}/docx`, `${templateId}_${did}.docx`),
 
   // 引用式问答
-  ask: (question: string, topK = 6) =>
+  ask: (question: string, topK = 6, asOf?: string) =>
     req<{
       question: string
       premise_check: { rule_id: string; warning: string; citation: Citation } | null
@@ -364,9 +364,23 @@ export const api = {
         law_id: string; law_title: string; law_status: string; effective_date: string
         promulgation_instrument: string; article_no: number; article_label: string
         chapter: string; text: string; source_url: string; source_kind: string; score: number; sub?: string
+        in_force_at_as_of?: boolean
+        historical_version?: {
+          version_id: string
+          label: string
+          promulgation_date: string | null
+          effective_date: string | null
+          text: string | null
+          label_found: string | null
+          located_via?: string
+          mapped_from_no?: number
+          mapped_ratio?: number
+          shift_note: string
+        }
       }[]
+      temporal?: { reference_detected: boolean; as_of: string | null; granularity: string; notice: string; limitation: string } | null
       no_answer: boolean
-    }>('/qa/ask', { method: 'POST', body: JSON.stringify({ question, top_k: topK }) }),
+    }>('/qa/ask', { method: 'POST', body: JSON.stringify({ question, top_k: topK, ...(asOf ? { as_of: asOf } : {}) }) }),
 
   // 合规中心：投诉工单（真实落库 + 审计留痕）
   createComplaint: (subject: string, content: string, contact?: string, kind: 'general' | 'mobile' = 'general') =>

@@ -20,7 +20,8 @@ const SYNONYM_HINTS: [string, string][] = [
 interface QaResult {
   question: string
   premise_check: { rule_id: string; warning: string; citation: { law_id: string; law_title: string; article_no: number; article_label: string } } | null
-  answer_cards: { law_id: string; law_title: string; law_status: string; effective_date: string; article_no: number; article_label: string; chapter: string; text: string; source_url: string; score: number }[]
+  temporal?: { reference_detected: boolean; as_of: string | null; notice: string; limitation: string } | null
+  answer_cards: { law_id: string; law_title: string; law_status: string; effective_date: string; article_no: number; article_label: string; chapter: string; text: string; source_url: string; score: number; in_force_at_as_of?: boolean; historical_version?: { version_id: string; label: string; effective_date: string | null; text: string | null; located_via?: string; mapped_from_no?: number; mapped_ratio?: number; shift_note: string } }[]
   no_answer: boolean
 }
 
@@ -191,7 +192,7 @@ export default function SearchResults() {
   const runQa = async () => {
     if (!qaQ.trim()) return
     setQaBusy(true); setQaError(null)
-    try { setQa(await api.ask(qaQ.trim())) }
+    try { setQa(await api.ask(qaQ.trim(), 6, asOf.trim() || undefined)) }
     catch (e) { setQaError(e instanceof ApiError ? e.message : String(e)) }
     finally { setQaBusy(false) }
   }
@@ -309,6 +310,11 @@ export default function SearchResults() {
               </div>
             )}
             {qa.no_answer && <div className="banner banner-info" style={{ padding: '8px 12px' }}><Icon name="info" size={14} /><span className="banner-tx">库内未找到依据——本系统不生成无依据的回答。</span></div>}
+            {qa.temporal && (
+              <div className="banner banner-warn mb-8" style={{ padding: '8px 12px' }}><Icon name="alert" size={14} />
+                <span className="banner-tx"><b>时间视角 as_of = {qa.temporal.as_of}</b>：{qa.temporal.limitation}</span>
+              </div>
+            )}
             {qa.answer_cards.slice(0, 3).map((c) => (
               <div key={`${c.law_id}-${c.article_no}`} className="ot" style={{ marginBottom: 8, padding: '11px 14px' }}>
                 <div className="ot-h" style={{ marginBottom: 6 }}>
@@ -317,6 +323,23 @@ export default function SearchResults() {
                   <span className="ot-src">{c.law_status} · {c.effective_date || '施行日期待核'}{c.effective_date ? ' 施行' : ''} · 相关度 {c.score.toFixed(3)}</span>
                 </div>
                 <div style={{ fontSize: 13, lineHeight: 1.9 }}>{c.text}</div>
+                {c.in_force_at_as_of === false && (
+                  <div className="tiny mt-8">⚠ 所问时间点早于本条现行版本的施行日——该时点本条尚未以当前文本生效。</div>
+                )}
+                {c.historical_version && (
+                  <div className="tiny mt-8" style={{ background: 'var(--warn-soft, rgba(0,0,0,0.04))', padding: '8px 10px', borderRadius: 8 }}>
+                    <b>as_of 对照 · {c.historical_version.label}（{c.historical_version.effective_date} 施行）</b>
+                    {c.historical_version.located_via === 'renumber-map' && c.historical_version.mapped_from_no != null && (
+                      <span> · 经重编号映射定位（自第{c.historical_version.mapped_from_no}条，ratio {c.historical_version.mapped_ratio}）</span>
+                    )}
+                    <div style={{ marginTop: 4 }}>
+                      {c.historical_version.text
+                        ? `${c.historical_version.text.slice(0, 90)}${c.historical_version.text.length > 90 ? '…' : ''}`
+                        : '该版本未检出同条号条文（版本间条号可能移位）。'}
+                    </div>
+                    <div style={{ marginTop: 4, color: 'var(--tx-3)' }}>{c.historical_version.shift_note}</div>
+                  </div>
+                )}
               </div>
             ))}
             <div className="tiny">问答为「命中的法条原文」卡片，非生成文本；不构成法律意见。</div>

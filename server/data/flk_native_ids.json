@@ -1,0 +1,314 @@
+{
+ "patent-2020": {
+  "bbbs": "ff808081752b7d430175e4651cbd1547",
+  "evidence": "docs/research/evidence/flk_专利法2020_detail.json"
+ },
+ "tcm-2017": {
+  "bbbs": "2c909fdd678bf17901678bf8382809ab",
+  "evidence": "docs/research/evidence/flk_中医药法2017_detail.json"
+ },
+ "compulsory-edu-2018": {
+  "bbbs": "ff8080816f135f46016f210efccb17b9",
+  "evidence": "docs/research/evidence/flk_义务教育法2018_detail.json"
+ },
+ "rural-revitalization-2021": {
+  "bbbs": "ff80818178efe3620179206d421428ce",
+  "evidence": "docs/research/evidence/flk_乡村振兴促进法_detail.json"
+ },
+ "product-quality-2018": {
+  "bbbs": "ff8080816f135f46016f1d6dfd7614d3",
+  "evidence": "docs/research/evidence/flk_产品质量法2018_detail.json"
+ },
+ "family-plan-2021": {
+  "bbbs": "ff8081817ba965c4017bb8921d13077a",
+  "evidence": "docs/research/evidence/flk_人口与计划生育法2021_detail.json"
+ },
+ "police-2012": {
+  "bbbs": "2c909fdd678bf17901678bf74cef06a9",
+  "evidence": "docs/research/evidence/flk_人民警察法2012_detail.json"
+ },
+ "mediation-2010": {
+  "bbbs": "2c909fdd678bf17901678bf7105c05af",
+  "evidence": "docs/research/evidence/flk_人民调解法2010_detail.json"
+ },
+ "arbitration-2025": {
+  "bbbs": "58d7569a322b4eca9b22feaa4f5d7d4f",
+  "evidence": "docs/research/evidence/flk_仲裁法2025_detail.json"
+ },
+ "price-1997": {
+  "bbbs": "2c909fdd678bf17901678bf5e05801ef",
+  "evidence": "docs/research/evidence/flk_价格法1997_detail.json"
+ },
+ "bankruptcy-2006": {
+  "bbbs": "2c909fdd678bf17901678bf63c7c0343",
+  "evidence": "docs/research/evidence/flk_企业破产法2006_detail.json"
+ },
+ "accounting-2024": {
+  "bbbs": "ff8081818d6a46390191686dca9952bf",
+  "evidence": "docs/research/evidence/flk_会计法2024_detail.json"
+ },
+ "infectious-2025": {
+  "bbbs": "ff8081819667441b019686946a752bbd",
+  "evidence": "docs/research/evidence/flk_传染病防治法2025_detail.json"
+ },
+ "sports-2023": {
+  "bbbs": "ff808181818e90e701819485a96c0192",
+  "evidence": "docs/research/evidence/flk_体育法_detail.json"
+ },
+ "tech-transfer-2015": {
+  "bbbs": "2c909fdd678bf17901678bf7e3540843",
+  "evidence": "docs/research/evidence/flk_促进科技成果转化法_detail.json"
+ },
+ "insurance-2015": {
+  "bbbs": "2c909fdd678bf17901678bf7c4060811",
+  "evidence": "docs/research/evidence/flk_保险法2015_detail.json"
+ },
+ "company-2023": {
+  "bbbs": "ff8081818c9108eb018cb6922f750c07",
+  "evidence": "docs/research/evidence/flk_公司法2023_detail.json"
+ },
+ "notary-2017": {
+  "bbbs": "2c909fdd678bf17901678bf8688a0a5f",
+  "evidence": "docs/research/evidence/flk_公证法2017_detail.json"
+ },
+ "agriculture-2013": {
+  "bbbs": "2c909fdd678bf17901678bf74e1106bd",
+  "evidence": "docs/research/evidence/flk_农业法2013现行_detail.json"
+ },
+ "agri-quality-2022": {
+  "bbbs": "ff80818182cf5d600182fd5d77dd23cf",
+  "evidence": "docs/research/evidence/flk_农产品质量安全法2022_detail.json"
+ },
+ "rural-land-2018": {
+  "bbbs": "ff8080816f135f46016f2104531f1774",
+  "evidence": "docs/research/evidence/flk_农村土地承包法2018_detail.json"
+ },
+ "animal-epidemic-2021": {
+  "bbbs": "ff8080817703add2017737395a973e31",
+  "evidence": "docs/research/evidence/flk_动物防疫法2021_detail.json"
+ },
+ "labor-law-2018": {
+  "bbbs": "ff8080816f135f46016f20f16ee11737",
+  "evidence": "docs/research/evidence/flk_劳动法2018_detail.json"
+ },
+ "physicians-2021": {
+  "bbbs": "2c909fdd678bf17901678bf6fe11052d",
+  "evidence": "docs/research/evidence/flk_执业医师法_detail.json"
+ },
+ "medical-insurance-2027": {
+  "bbbs": "5d298a33dc474da595bf956cec680163",
+  "evidence": "docs/research/evidence/flk_医疗保障法2027_detail.json"
+ },
+ "unfair-competition-2025": {
+  "bbbs": "ff808181971552b40197b1016efc5437",
+  "evidence": "docs/research/evidence/flk_反不正当竞争法2025_detail.json"
+ },
+ "anti-monopoly-2022": {
+  "bbbs": "ff8081818234ccb501829f46c6ac2a5a",
+  "evidence": "docs/research/evidence/flk_反垄断法2022_detail.json"
+ },
+ "aml-2024": {
+  "bbbs": "ff808181927b2d1a01930c84b1c96d8b",
+  "evidence": "docs/research/evidence/flk_反洗钱法2024_detail.json"
+ },
+ "anti-fraud-2022": {
+  "bbbs": "ff80818182cf5c220182fd54401023d6",
+  "evidence": "docs/research/evidence/flk_反电信网络诈骗法2022_detail.json"
+ },
+ "partnership-2006": {
+  "bbbs": "2c909fdd678bf17901678bf63dce034d",
+  "evidence": "docs/research/evidence/flk_合伙企业法2006_detail.json"
+ },
+ "commercial-bank-2015": {
+  "bbbs": "2c909fdd678bf17901678bf7eba9086b",
+  "evidence": "docs/research/evidence/flk_商业银行法2015_detail.json"
+ },
+ "trademark-2026": {
+  "bbbs": "95bb747db54e419184eff06546515826",
+  "evidence": "docs/research/evidence/flk_商标法2026_detail.json"
+ },
+ "defense-edu-2024": {
+  "bbbs": "ff80818191db55220191eba9396a08f4",
+  "evidence": "docs/research/evidence/flk_国防教育法2024_detail.json"
+ },
+ "academic-degree-2024": {
+  "bbbs": "ff8081818d6a424b018f1a63b49a796a",
+  "evidence": "docs/research/evidence/flk_学位法2024_detail.json"
+ },
+ "education-2021": {
+  "bbbs": "ff8081818a21dc13018b625b4a68173f",
+  "evidence": "docs/research/evidence/flk_爱国主义教育法2024_detail.json"
+ },
+ "work-safety-2021": {
+  "bbbs": "ff8081817a66b816017a7956b7db0ad4",
+  "evidence": "docs/research/evidence/flk_安全生产法2021_detail.json"
+ },
+ "audit-2021": {
+  "bbbs": "ff8081817d99a43a017dbd2663521c3f",
+  "evidence": "docs/research/evidence/flk_审计法2021_detail.json"
+ },
+ "family-edu-2021": {
+  "bbbs": "ff8081817cac3b2d017cac5a6c6f0109",
+  "evidence": "docs/research/evidence/flk_家庭教育促进法2021_detail.json"
+ },
+ "residents-committee-2025": {
+  "bbbs": "5d9b0a64413e4a80b060a0bd742f5fb6",
+  "evidence": "docs/research/evidence/flk_居民委员会组织法_detail.json"
+ },
+ "id-card-2011": {
+  "bbbs": "2c909fdd678bf17901678bf736e30627",
+  "evidence": "docs/research/evidence/flk_居民身份证法2011_detail.json"
+ },
+ "trade-union-2021": {
+  "bbbs": "ff8081817f072a2e017f0ae1a7f600f0",
+  "evidence": "docs/research/evidence/flk_工会法2021_detail.json"
+ },
+ "advertising-2021": {
+  "bbbs": "ff8081817ab231eb017abd6bd860052d",
+  "evidence": "docs/research/evidence/flk_广告法2021_detail.json"
+ },
+ "charity-2023": {
+  "bbbs": "ff8081818d6a4639018df3f1fc7e122d",
+  "evidence": "docs/research/evidence/flk_慈善法2023_detail.json"
+ },
+ "tourism-2018": {
+  "bbbs": "ff8080816f135f46016f1d08f6da12f6",
+  "evidence": "docs/research/evidence/flk_旅游法2018_detail.json"
+ },
+ "accessibility-2023": {
+  "bbbs": "ff80818188d7430b0189018493370940",
+  "evidence": "docs/research/evidence/flk_无障碍环境建设法2023_detail.json"
+ },
+ "village-committee-2025": {
+  "bbbs": "090f4cc550f84241941e1109c8772e76",
+  "evidence": "docs/research/evidence/flk_村民委员会组织法_detail.json"
+ },
+ "standardization-2017": {
+  "bbbs": "2c909fdd678bf17901678bf876430a91",
+  "evidence": "docs/research/evidence/flk_标准化法2017_detail.json"
+ },
+ "archives-2020": {
+  "bbbs": "ff80808172b5f24f0172e4ef05e218d4",
+  "evidence": "docs/research/evidence/flk_档案法2020_detail.json"
+ },
+ "disabled-2018": {
+  "bbbs": "ff8080816f135f46016f1d134c88132b",
+  "evidence": "docs/research/evidence/flk_残疾人保障法2018_detail.json"
+ },
+ "maternal-infant-2017": {
+  "bbbs": "2c909fdd678bf17901678bf8867e0ad7",
+  "evidence": "docs/research/evidence/flk_母婴保健法2017_detail.json"
+ },
+ "fire-2021": {
+  "bbbs": "ff8081817ab22e0c017abd909312060a",
+  "evidence": "docs/research/evidence/flk_消防法2021_detail.json"
+ },
+ "special-equipment-2014": {
+  "bbbs": "2c909fdd678bf17901678bf74ede06c7",
+  "evidence": "docs/research/evidence/flk_特种设备安全法2014_detail.json"
+ },
+ "blood-donation-1998": {
+  "bbbs": "2c909fdd678bf17901678bf5e71801f9",
+  "evidence": "docs/research/evidence/flk_献血法1998_detail.json"
+ },
+ "environment-2014": {
+  "bbbs": "2c909fdd678bf17901678bf76c1d0717",
+  "evidence": "docs/research/evidence/flk_环境保护法2014_detail.json"
+ },
+ "env-tax-2025": {
+  "bbbs": "6bae366fd9f94fbf9450c48a68bfc68a",
+  "evidence": "docs/research/evidence/flk_环境保护税法2025_detail.json"
+ },
+ "vaccine-2019": {
+  "bbbs": "ff8080816f135f46016f219a9e101bba",
+  "evidence": "docs/research/evidence/flk_疫苗管理法2019_detail.json"
+ },
+ "prison-2012": {
+  "bbbs": "2c909fdd678bf17901678bf745870677",
+  "evidence": "docs/research/evidence/flk_监狱法2012_detail.json"
+ },
+ "mine-safety-2009": {
+  "bbbs": "2c909fdd678bf17901678bf6b19e04f1",
+  "evidence": "docs/research/evidence/flk_矿山安全法_detail.json"
+ },
+ "community-correction-2020": {
+  "bbbs": "ff80808171e9e18101727e4443b37e86",
+  "evidence": "docs/research/evidence/flk_社区矫正法2020_detail.json"
+ },
+ "negotiable-2004": {
+  "bbbs": "2c909fdd678bf17901678bf62b2a02df",
+  "evidence": "docs/research/evidence/flk_票据法2004_detail.json"
+ },
+ "anti-drug-2008": {
+  "bbbs": "2c909fdd678bf17901678bf64d550393",
+  "evidence": "docs/research/evidence/flk_禁毒法2008_detail.json"
+ },
+ "seeds-2022": {
+  "bbbs": "ff8081817f072a2e017f0b66fb640166",
+  "evidence": "docs/research/evidence/flk_种子法2022_detail.json"
+ },
+ "sci-tech-2021": {
+  "bbbs": "ff8081817d99a39f017dec555db834da",
+  "evidence": "docs/research/evidence/flk_科学技术进步法2021_detail.json"
+ },
+ "tax-admin-2015": {
+  "bbbs": "2c909fdd678bf17901678bf78cff0785",
+  "evidence": "docs/research/evidence/flk_税收征收管理法2015_detail.json"
+ },
+ "emergency-2024": {
+  "bbbs": "ff8081818d6a424b01905f13edba2efb",
+  "evidence": "docs/research/evidence/flk_突发事件应对法2024_detail.json"
+ },
+ "mental-health-2018": {
+  "bbbs": "2c909fdd678bf17901678bf7448a066d",
+  "evidence": "docs/research/evidence/flk_精神卫生法2018_detail.json"
+ },
+ "elderly-2018": {
+  "bbbs": "ff8080816f135f46016f20f4bf851746",
+  "evidence": "docs/research/evidence/flk_老年人权益保障法2018_detail.json"
+ },
+ "vocational-edu-2022": {
+  "bbbs": "ff808181802d2853018044c7370108c6",
+  "evidence": "docs/research/evidence/flk_职业教育法2022_detail.json"
+ },
+ "martyrs-2018": {
+  "bbbs": "2c909fdd678bf17901678bf8a38c0b59",
+  "evidence": "docs/research/evidence/flk_英雄烈士保护法2018_detail.json"
+ },
+ "drug-admin-2019": {
+  "bbbs": "ff8080816f3cbb3c016f46242d6127ed",
+  "evidence": "docs/research/evidence/flk_药品管理法2019_detail.json"
+ },
+ "copyright-2020": {
+  "bbbs": "ff808081752b7d430175e4766bab1557",
+  "evidence": "docs/research/evidence/flk_著作权法2020_detail.json"
+ },
+ "metrology-2018": {
+  "bbbs": "ff8080816f135f46016f1cf499ff11eb",
+  "evidence": "docs/research/evidence/flk_计量法2018_detail.json"
+ },
+ "securities-2019": {
+  "bbbs": "ff80808171e9e18101727e32b94d7de6",
+  "evidence": "docs/research/evidence/flk_证券法2019_detail.json"
+ },
+ "road-safety-2021": {
+  "bbbs": "ff8081817ab231eb017abd617ef70519",
+  "evidence": "docs/research/evidence/flk_道交法2021_detail.json"
+ },
+ "postal-2015": {
+  "bbbs": "2c909fdd678bf17901678bf7bb6307f3",
+  "evidence": "docs/research/evidence/flk_邮政法2015_detail.json"
+ },
+ "crime-prev-2020": {
+  "bbbs": "ff80808175265dd40176a88c218f2853",
+  "evidence": "docs/research/evidence/flk_预防未成年人犯罪法2020_detail.json"
+ },
+ "food-safety-2025": {
+  "bbbs": "7b5a76d0461745a08d3f964916b87ef3",
+  "evidence": "docs/research/evidence/flk_食品安全法2025_detail.json"
+ },
+ "higher-edu-2018": {
+  "bbbs": "ff8080816f135f46016f20df64ec16c5",
+  "evidence": "docs/research/evidence/flk_高等教育法2018_detail.json"
+ }
+}

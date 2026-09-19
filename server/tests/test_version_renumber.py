@@ -45,9 +45,12 @@ def test_known_sub_article_not_lost():
 
 
 def test_endpoint_matrix():
-    with pytest.raises(Exception) as e:
-        main.law_renumber_map("civl-2020")  # 单版本、无历史全文
-    assert getattr(e.value, "status_code", None) == 404
+    """语义对齐 versions 端点（R180）：无 pair → 200 空映射（前端静默降级；
+    404 会给每页控制台留错误日志——R176 全站巡检证伪了 404 语义后修正）；
+    law 不在语料仍 404。"""
+    out = main.law_renumber_map("civl-2020")  # 单版本、无历史全文
+    assert out["pair_count"] == 0
+    assert out["scope_note"]
     with pytest.raises(Exception) as e2:
         main.law_renumber_map("no-such-law")
     assert getattr(e2.value, "status_code", None) == 404

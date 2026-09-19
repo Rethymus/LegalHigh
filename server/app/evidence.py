@@ -11,7 +11,9 @@
 只读公共语料构造；不携带任何用户输入。
 """
 import hashlib
+import json
 import re
+import pathlib
 from functools import lru_cache
 from urllib.parse import urlparse
 
@@ -56,6 +58,19 @@ def _host_to_source() -> dict[str, dict]:
     return out
 
 
+@lru_cache(maxsize=1)
+def _native_ids() -> dict[str, dict]:
+    """flk flfgDetails 官方接口核验记录（R133 起管线标准）→ law_id → {bbbs, evidence}。
+
+    无文件或文件损坏返回空 dict（source_native_id 诚实留空，绝不编造）。
+    """
+    path = pathlib.Path(__file__).resolve().parent.parent / "data" / "flk_native_ids.json"
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return {}
+
+
 def _host(url: str) -> str:
     try:
         return (urlparse(url).hostname or "").lower()
@@ -88,7 +103,7 @@ def verified_evidence(cit: dict) -> dict | None:
     ve = {
         "evidence_id": f"{law_id}#{no}",
         "source_id": src_entry["id"],
-        "source_native_id": None,  # 官方 native id（flk bbbs 等）未入语料对象，诚实留空
+        "source_native_id": _native_ids().get(law_id, {}).get("bbbs"),  # flk 官方 native id（未核验法诚实留空）
         "canonical_document_id": f"{law_id}@{effective or '未核'}",
         "canonical_unit_id": f"{law_id}#{no}{('-' + sub) if sub else ''}",
         "document_type": _DOCUMENT_TYPE,
