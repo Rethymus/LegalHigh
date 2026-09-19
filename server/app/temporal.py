@@ -79,9 +79,9 @@ def temporal_block(question: str, as_of: str | None = None) -> dict | None:
         "granularity": detected["granularity"] if not explicit else "explicit",
         "notice": TEMPORAL_NOTICE,
         "limitation": (
-            "本库仅收录现行版本全文；历史版本登记于版本注册表（law_versions）但不进检索。"
+            "命中卡随附适用历史版本的「同条号」对照文本（可能经重编号映射定位）；"
             "in_force_at_as_of 仅表示现行文本适用起点与 as_of 的先后关系，"
-            "不构成对时点适用文本的认定。"
+            "对照不构成对时点适用文本的认定。"
         ),
     }
     return block

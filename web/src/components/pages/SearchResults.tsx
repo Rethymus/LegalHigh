@@ -7,7 +7,7 @@ import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { Icon } from '../icons'
 import { lawDisplayTitle, lawEvidenceGrade, useLaws } from '../../data/model'
 import { EmptyState, SkeletonLines, Tabs, ValidityBadge } from '../ui'
-import { api, ApiError, toggleFav, isFav, type CaseRecord, type SearchHit } from '../../lib/api'
+import { api, ApiError, toggleFav, isFav, type CaseRecord, type SearchHit, type SearchResult } from '../../lib/api'
 import { CitationChip, SourceBadge } from '../domain'
 
 // 同义写法词表（v6 粉饰③）：只收录金标词法鸿沟实录过的写法对——
@@ -77,6 +77,25 @@ function LawResultCard({ r, q, si }: { r: ResolvedHit; q: string; si?: number })
         <span>相关度：<b className="mono">{hit.score.toFixed(2)}</b></span>
       </div>
       <p className="res-snip">{highlight(hit.text, q)}</p>
+      {hit.in_force_at_as_of === false && (
+        <div className="tiny mt-8">
+          ⚠ 所问时间点早于本条现行版本的施行日——该时点本条尚未以当前文本生效。
+        </div>
+      )}
+      {hit.historical_version && (
+        <div className="tiny mt-8" style={{ background: 'var(--warn-soft, rgba(0,0,0,0.04))', padding: '8px 10px', borderRadius: 8 }}>
+          <b>as_of 对照 · {hit.historical_version.label}（{hit.historical_version.effective_date} 施行）</b>
+          {hit.historical_version.located_via === 'renumber-map' && hit.historical_version.mapped_from_no != null && (
+            <span> · 经重编号映射定位（自第{hit.historical_version.mapped_from_no}条，ratio {hit.historical_version.mapped_ratio}）</span>
+          )}
+          <div style={{ marginTop: 4 }}>
+            {hit.historical_version.text
+              ? `${hit.historical_version.text.slice(0, 100)}${hit.historical_version.text.length > 100 ? '…' : ''}`
+              : '该版本未检出同条号条文（版本间条号可能移位）。'}
+          </div>
+          <div style={{ marginTop: 4, color: 'var(--tx-3)' }}>{hit.historical_version.shift_note}</div>
+        </div>
+      )}
       <div className="res-acts">
         <CitationChip label={`引用 ${hit.law_id}#${hit.no}`} to={to} />
         <span className="spacer" />
@@ -131,10 +150,11 @@ export default function SearchResults() {
   const scopeTab = requestedScope === '法规' ? 'law' : requestedScope === '司法解释' ? 'js' : requestedScope === '案例' ? 'case' : 'all'
   const [input, setInput] = useState(q)
   const [tab, setTab] = useState(scopeTab)
+  const [asOf, setAsOf] = useState(sp.get('as_of') ?? '')
   const { data: laws, error } = useLaws()
 
   // 主检索：server BM25（与问答/研究同一引擎）；laws.json 仅用于补齐机关/日期等元数据
-  const [srv, setSrv] = useState<{ hits: SearchHit[]; corpus: number } | null>(null)
+  const [srv, setSrv] = useState<{ hits: SearchHit[]; corpus: number; temporal: SearchResult['temporal'] } | null>(null)
   const [srvError, setSrvError] = useState<string | null>(null)
   useEffect(() => {
     setTab(scopeTab)
@@ -143,12 +163,12 @@ export default function SearchResults() {
     if (!q.trim()) { setSrv(null); setSrvError(null); return }
     let alive = true
     setSrv(null); setSrvError(null)
-    api.search(q.trim(), 60).then(
-      (d) => alive && setSrv({ hits: d.hits, corpus: d.retrieval_meta.corpus_size }),
+    api.search(q.trim(), 60, undefined, asOf.trim() || undefined).then(
+      (d) => alive && setSrv({ hits: d.hits, corpus: d.retrieval_meta.corpus_size, temporal: d.temporal ?? null }),
       (e) => alive && setSrvError(e instanceof ApiError ? e.message : String(e)),
     )
     return () => { alive = false }
-  }, [q])
+  }, [q, asOf])
 
   // 引用式问答（server BM25 检索，无 LLM 自由生成）
   const [qaQ, setQaQ] = useState(q)
@@ -227,8 +247,25 @@ export default function SearchResults() {
           <input className="inp" value={input} onChange={(e) => setInput(e.target.value)} placeholder="修改检索词…" aria-label="修改检索词" />
           <button className="btn btn-primary">重新检索</button>
         </form>
+        <input
+          className="inp"
+          style={{ maxWidth: 210 }}
+          aria-label="时间视角 as_of（可选，格式 YYYY-MM-DD）"
+          placeholder="时间视角：如 2019-12-31"
+          value={asOf}
+          onChange={(e) => setAsOf(e.target.value)}
+        />
         <Link className="btn btn-ghost" to="/search"><Icon name="sliders" size={14} />检索说明</Link>
       </div>
+      {srv?.temporal && (
+        <div className="banner banner-warn mb-16">
+          <Icon name="alert" size={15} />
+          <span className="banner-tx">
+            <b>时间视角 as_of = {srv.temporal.as_of}</b>：{srv.temporal.notice}
+            <div className="mt-8">{srv.temporal.limitation}</div>
+          </span>
+        </div>
+      )}
 
       {synonymPair && (
         <div className="banner banner-info mb-16"><Icon name="info" size={14} />

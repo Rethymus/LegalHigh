@@ -412,8 +412,11 @@ export const api = {
     req<{ status: string }>(`/explains/${encodeURIComponent(lawId)}/${no}`, { method: 'PATCH', body: JSON.stringify({ action }) }),
 
   // 主检索（server BM25，与问答/研究同一引擎；多词/口语化查询可命中）
-  search: (q: string, topK = 20, lawId?: string) =>
-    req<SearchResult>(`/search?q=${encodeURIComponent(q)}&top_k=${topK}${lawId ? `&law_id=${encodeURIComponent(lawId)}` : ''}`),
+  // asOf（可选，YYYY-MM-DD）：时间视角——命中携带时点适用标记与历史版本对照
+  search: (q: string, topK = 20, lawId?: string, asOf?: string) => {
+    const extra = `${lawId ? `&law_id=${encodeURIComponent(lawId)}` : ''}${asOf ? `&as_of=${encodeURIComponent(asOf)}` : ''}`
+    return req<SearchResult>(`/search?q=${encodeURIComponent(q)}&top_k=${topK}${extra}`)
+  },
 
   // 平台合规声明（公开端点：定位/红线/模型状态，供页面公示与审计者核查）
   compliance: () =>
@@ -571,12 +574,33 @@ export interface SearchHit {
   chapter: string; text: string; score: number
   law_status: string; effective_date: string
   source_url: string; source_kind: string
+  /** 时间视角（as_of）存在时的时点适用标记与历史版本对照（R169/R178） */
+  in_force_at_as_of?: boolean
+  historical_version?: {
+    version_id: string
+    label: string
+    promulgation_date: string | null
+    effective_date: string | null
+    text: string | null
+    label_found: string | null
+    located_via?: string
+    mapped_from_no?: number
+    mapped_ratio?: number
+    shift_note: string
+  }
 }
 export interface SearchResult {
   query: string
   total: number
   hits: SearchHit[]
   retrieval_meta: { method: string; corpus_size: number }
+  temporal?: {
+    reference_detected: boolean
+    as_of: string | null
+    granularity: string
+    notice: string
+    limitation: string
+  } | null
 }
 
 /* ---------- 版本对比（difflib 结构差异） ---------- */
