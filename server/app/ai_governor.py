@@ -661,6 +661,8 @@ def chat(provider_id: str, model: str, messages: list[dict], *, api_key: str | N
             "evidence_coverage": ctx["evidence_coverage"],
             "calibrated_accuracy": ctx["calibrated_accuracy"],
         } for ctx in evidence_contexts],
+        # 服务端证据的 citation_of 对象（供证据账本升格为 §19 快照；公共语料数据，无泄露面）
+        "citations": [ctx["citation"] for ctx in evidence_contexts],
         "disclaimer": "AI 生成内容，仅作普法前置与证据导航，不构成法律意见，也不替代执业律师；具体问题须结合完整材料由律师独立判断。",
     }
 

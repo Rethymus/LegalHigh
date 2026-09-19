@@ -894,7 +894,7 @@ def ai_test(body: AiChatBody, admin: AdminPrincipal = Depends(require_admin)):
 @app.post("/api/ai/chat")
 def ai_chat(body: AiChatBody, admin: AdminPrincipal = Depends(require_admin)):
     try:
-        return ai_governor.chat(
+        out = ai_governor.chat(
             body.provider_id, body.model, body.messages,
             api_key=body.api_key, base_url_override=body.base_url_override,
             allowed_refs=body.allowed_refs, temperature=body.temperature, actor=admin.name)
@@ -906,6 +906,12 @@ def ai_chat(body: AiChatBody, admin: AdminPrincipal = Depends(require_admin)):
         raise HTTPException(409, str(e))
     except RuntimeError as e:
         raise HTTPException(502, str(e))
+    # Evidence Ledger（R184）：AI 生成链路的依据条目入账（第六条链路收口）——
+    # AI 草稿「依据了哪些证据」与 qa/审查同账本可证；实体=provider/model（非用户输入）。
+    _write_evidence_ledger("ai_chat", out.get("citations") or [],
+                           actor=admin.name, entity_id=f"{body.provider_id}/{body.model}",
+                           extra={"blocked": out["blocked"], "output_withheld": out["output_withheld"]})
+    return out
 
 
 # ---------- 需求解析（抽象描述 → 可溯源法条 + 案例；「薄 AI」双轨） ----------

@@ -167,3 +167,49 @@ def test_pipl_export_includes_ledger(tmp_db):
     import json as _json
     data = _json.loads(out.body.decode("utf-8"))
     assert "evidence_ledger" in data and data["evidence_ledger"], "PIPL 导出必须包含证据账本"
+
+
+def test_ai_chat_writes_ledger(tmp_db, monkeypatch):
+    """AI 生成链路（第六条）入账：依据条目=服务端证据的 citation 对象。"""
+    from app import ai_governor
+
+    def fake_chat(provider_id, model, messages, *, api_key=None, base_url_override=None,
+                  allowed_refs=None, temperature=0.3, actor=None):
+        cit = main.get_corpus().citation_of("civl-2020", 577)
+        return {
+            "provider_id": provider_id, "model": model,
+            "text": "依据《民法典》第577条……", "output_withheld": False, "blocked": False,
+            "citations": [cit],
+        }
+
+    monkeypatch.setattr(ai_governor, "chat", fake_chat)
+    body = main.AiChatBody(provider_id="deepseek", model="deepseek-chat",
+                           messages=[{"role": "user", "content": "q"}],
+                           allowed_refs=[{"law_title": "中华人民共和国民法典", "article_no": 577}])
+    out = main.ai_chat(body, admin=main.AdminPrincipal(name="ai-x"))
+    rows = [r for r in storage.list_evidence("ai_chat")]
+    assert len(rows) == 1
+    assert rows[0]["entity_id"] == "deepseek/deepseek-chat"
+    payload = json.loads(rows[0]["snapshot_json"])
+    assert payload["evidence_count"] == 1
+    ev = payload["evidence"][0]
+    assert ev["canonical_unit_id"] == "civl-2020#577"
+    assert ev["content_hash"] == hashlib.sha256(out["citations"][0]["text"].encode("utf-8")).hexdigest()
+    assert payload["blocked"] is False
+
+
+def test_ai_chat_blocked_still_records_evidence(tmp_db, monkeypatch):
+    """生成被扣留（blocked）也留痕——「请求依据了哪些证据」与产出无关。"""
+    from app import ai_governor
+
+    def fake_chat(provider_id, model, messages, **kw):
+        cit = main.get_corpus().citation_of("lcl-2012", 19)
+        return {"provider_id": provider_id, "model": model, "text": "",
+                "output_withheld": True, "blocked": True, "citations": [cit]}
+
+    monkeypatch.setattr(ai_governor, "chat", fake_chat)
+    main.ai_chat(main.AiChatBody(provider_id="deepseek", model="deepseek-chat",
+                                 messages=[{"role": "user", "content": "q"}]),
+                 admin=main.AdminPrincipal(name="ai-x"))
+    payload = json.loads(storage.list_evidence("ai_chat")[0]["snapshot_json"])
+    assert payload["blocked"] is True and payload["evidence_count"] == 1
