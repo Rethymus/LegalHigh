@@ -57,7 +57,7 @@ def test_mcp_http_case_parity():
     msgs = [
         {"jsonrpc": "2.0", "id": 1, "method": "tools/call",
          "params": {"name": "search_cases",
-                    "arguments": {"query": "竞业限制", "top_k": 20}}},
+                    "arguments": {"query": "竞业限制", "top_k": 100}}},
     ]
     proc = subprocess.run(
         [sys.executable, str(SERVER)],

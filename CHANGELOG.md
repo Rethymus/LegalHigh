@@ -4,6 +4,10 @@
 
 ### Added / 新增
 
+- Guiding-case batch 84/85/115/159 (R227): patent-infringement theme. No.84 presumptive force of the registered manufacturing process in pharma method-patent cases plus multi-channel technical fact-finding (专利法 2008-ed. 59①/61/68① → 2020-ed. 64/66/74 + 民诉法 art. 79 — four links); No.85 design-feature and functional-feature analysis for design patents (art. 64②); No.115 structural features are not "functional features", and conduct preservation must be reviewed alongside a partial judgment (art. 64); No.159 method patents fixed into products by the accused device, plus the evidence-holding sanction on infringement-scale defenses (arts. 1/11/64 — page self-annotated current edition). **MCP top_k cap raised 20→100**: corpus growth pushed the "竞业限制" query past 20 hits and the MCP search_cases cap silently truncated results below the HTTP channel, breaking the parity test — cap raised on all three search tools with descriptions synced, and the parity test now compares full result sets. Library 223→227 cases; corrected missing pool down to 55.
+
+### Added / 新增
+
 - Guiding-case batch 81/82/113/114 (R226): IP theme. No.81 idea/expression dichotomy and substantive-similarity analysis in copyright (著作权法 art. 2 direct); No.82 bad-faith trademark acquisition and enforcement is right abuse (民诉法 art. 13 + 商标法 2001-ed. 52 → 2013-ed. 57 → corpus 2026-ed. 72, double renumber note); No.113 Jordan name-right case — foreign natural persons' translated names qualify as prior rights, three-condition test, bad-faith registrations cannot invoke settled market order (2013-ed. 32 → 2026-ed. 24; repealed 民法通则/民法总则/侵权责任法 honestly noted); No.114 Madrid-system international registration and the duty to allow cure of formal defects (实施条例 outside corpus — no link). Library 219→223 cases; corrected missing pool down to 59.
 
 ### Added / 新增

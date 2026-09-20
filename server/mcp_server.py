@@ -28,7 +28,7 @@ DISCLAIMER = "（检索工具输出为法条原文与元数据，不构成法律
 
 def tool_search_articles(query: str, top_k: int = 5, law_id: str | None = None) -> dict:
     corpus = get_corpus()
-    hits = corpus.search(query, top_k=max(1, min(int(top_k), 20)), law_id=law_id or None)
+    hits = corpus.search(query, top_k=max(1, min(int(top_k), 100)), law_id=law_id or None)
     items = []
     for h in hits:
         items.append({
@@ -96,7 +96,7 @@ def tool_search_cases(query: str, top_k: int = 5, level: str | None = None) -> d
 
     hits = cases_mod.search_cases(query.strip(), level=level or None)
     items = []
-    for c in hits[: max(1, min(int(top_k), 20))]:
+    for c in hits[: max(1, min(int(top_k), 100))]:
         items.append({
             "case_id": c["id"],
             "name": c["name"],
@@ -117,7 +117,7 @@ def tool_search_history(query: str, top_k: int = 5, law_id: str | None = None,
     """在历史版本文本（非现行）中检索：独立命名空间，仅供对照研究。"""
     from app import history_index
 
-    out = history_index.search(query.strip(), top_k=max(1, min(int(top_k), 20)),
+    out = history_index.search(query.strip(), top_k=max(1, min(int(top_k), 100)),
                                law_id=law_id, version_id=version_id)
     return {
         "query": query,
@@ -145,7 +145,7 @@ TOOLS = [
             "type": "object",
             "properties": {
                 "query": {"type": "string", "description": "检索关键词或自然语言问句"},
-                "top_k": {"type": "integer", "description": "返回条数（默认 5，最大 20）"},
+                "top_k": {"type": "integer", "description": "返回条数（默认 5，最大 100）"},
                 "law_id": {"type": "string", "description": "限定法律 ID（可选，如 civl-2020）"},
             },
             "required": ["query"],
@@ -162,7 +162,7 @@ TOOLS = [
             "type": "object",
             "properties": {
                 "query": {"type": "string", "description": "检索关键词或自然语言问句"},
-                "top_k": {"type": "integer", "description": "返回条数（默认 5，最大 20）"},
+                "top_k": {"type": "integer", "description": "返回条数（默认 5，最大 100）"},
                 "law_id": {"type": "string", "description": "限定法律 ID（可选）"},
                 "version_id": {"type": "string", "description": "限定版本 ID（可选，如 2016-enacted）"},
             },
@@ -198,7 +198,7 @@ TOOLS = [
             "type": "object",
             "properties": {
                 "query": {"type": "string", "description": "检索关键词（案由/法院/争议焦点）"},
-                "top_k": {"type": "integer", "description": "返回条数（默认 5，最大 20）"},
+                "top_k": {"type": "integer", "description": "返回条数（默认 5，最大 100）"},
                 "level": {"type": "string", "description": "限定层级（可选：指导性案例/外国判例）"},
             },
             "required": ["query"],
