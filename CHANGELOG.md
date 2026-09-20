@@ -279,8 +279,6 @@
 
 ### Fixed / 修复
 
-### Fixed / 修复
-
 - Foreign-case verbatim snapshots are source-blocked (R245): the same-structure snapshot verification attempted for the three foreign cases via the approved sources hit source-side anti-automation — BAILII serves an Anubis proof-of-work bot challenge and loc.gov's tile endpoint returns 403 for the US Reports PDFs (with referer retry). Per LEGAL-006 (never bypass access controls) no challenge-solving was attempted; WebFetch's read-only channel can spot-check text (Donoghue's Lord Atkin passage verified) but raw-byte snapshots remain unobtainable, so the verbatim machine gate for foreign cases stays externally gated with the blockage evidence archived under `docs/research/evidence/foreign-source-block-2026-09-21/`. Chinese guiding-case snapshot gating is unaffected.
 
 - /api/evals cold-start latency (R200, a scale regression surfaced by the final-verify timeout): the endpoint ran BM25 three times per gold case (top-5 for hit@5/MRR, top-20 for recall/nDCG, then top-5 again for citation-entity completeness) — at the current gold/corpus scale the cold compute measured 278s, and the quality/datasources pages hit this endpoint on first visit. The three passes now share one top-20 search per case (top-5 figures read its head; BM25 scoring is independent of top_k and the ranking is deterministic, so `res20[:5]` ≡ `search(top_k=5)`): output verified byte-identical against a pre-refactor baseline, cold compute 278s→34s. An opt-in `LH_WARM_EVALS=1` lifespan thread pre-warms the cache at startup (default off — pytest's TestClient shares the lifespan; measured 0.042s response at 45s after start vs 34s cold); `final_verify` gained a per-call timeout (evals step relaxed to 420s with the root cause noted).
