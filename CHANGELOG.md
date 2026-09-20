@@ -4,6 +4,10 @@
 
 ### Added / 新增
 
+- Guiding-case batch 269/270/271/272 (R221): traffic-crimes theme, dated 2026-02-13 — the newest SPC batch. No.269 traffic-accident determination based on fleeing alone does not survive evidence review — acquittal (刑法 art. 133 + 道交法 art. 73 direct links); No.270 pre-filing blood-draw characterization and evidence review for drunk-driving (art. 133①, sub-article linked per the established sub mechanism); No.271 assisted-driving systems cannot replace the driver — circumventing monitoring while away from the wheel still counts (art. 133①); No.272 instigating drunk driving by deception makes an accomplice, mere encouragement does not (arts. 25/29/68/133①). Library 199→203 cases; corrected missing pool down to 79.
+
+### Added / 新增
+
 - Guiding-case batch 256/250/234/154 (R220): execution & remedies continuation. No.256 parcel-by-parcel auction of parking spaces honoring the "owners first" rule (民法典 art. 276); No.250 waiver of the construction-price priority right is void if it harms workers' interests, otherwise only subordinates the claim to the mortgage (art. 807 — page self-annotates the 1999 Contract Law art. 286 origin); No.234 per-incident limitation fund amounts regardless of fund application (海商法 outside corpus — no link); No.154 homebuyer's outsider objection suit does not attack the priority right itself (民诉法 art. 227 → current art. 238). Selection correction: 255 turned out to be already in the library — a batch-selection slip (member check missed), not the earlier regex issue. Library 195→199 cases; corrected missing pool down to 83.
 
 ### Added / 新增
