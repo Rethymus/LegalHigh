@@ -4,6 +4,10 @@
 
 ### Added / 新增
 
+- Guiding-case batch 46/48/49/55 (R206): intellectual-property theme. No.46 regional generic-name defense in trademark infringement (the corpus holds the 2026 trademark-law revision effective 2027 — the provision corresponding to the officially cited art. 59 was verified verbatim at art. 73 and linked with both edition notes); No.48 file-format lockout as non-protected technical measure under software copyright (official art. 48①⑥ of the 2010 edition → current art. 53①⑥); No.49 software-infringement burden of proof via design-defect comparison (cited Software Protection Regulation is a regulation outside the corpus — honestly no deep link); No.55 indefinite claim scope defeats infringement claims (official art. 59① → current art. 64①; art. 26 unchanged). Library 139→143 cases; missing pool down to 139.
+
+### Added / 新增
+
 - Guiding-case batch 61/62/102/103 (R205): criminal/citizen-rights theme. No.61 Prof. Ma Le insider-trading-adjacent case (the Supreme Court's retrial holding that 刑法 art. 180④ incorporates the full penalty range — the "especially serious circumstances" tier applies); No.62 attempt-and-completed-fraud penalty-range selection (art. 23); No.102 DNS hijacking as computer-system sabotage (art. 286); No.103 remote machinery-monitoring systems as protected computer systems (art. 286). All four official citations are current-code article numbers verified verbatim in corpus — direct links, no renumber notes needed. Library 135→139 cases; missing pool down to 143.
 
 ### Added / 新增
