@@ -8,6 +8,10 @@
 
 ### Added / 新增
 
+- Guiding-case batch 147/248/268/39 (R238): criminal and administrative spread. No.147 sanxinfeng rock-nail case — core scenic areas are protected monuments, expert reports usable absent appraisal agencies (刑法 art. 324 direct); No.248 buying drugs to self-report as merit is illegally obtained and disallowed, appellate courts must note first-instance errors under the no-aggravation rule (arts. 68/358① direct; 刑诉法 outside corpus); No.268 drug-driving with continuous collisions constitutes intentional endangerment of public safety, punished severely (arts. 48/114/115①); No.39 university degree-conferral academic-autonomy case (学位条例 replaced by the 2024 Degree Law with non-corresponding numbering — honestly no link). Library 267→271 cases; corrected pool down to 10.
+
+### Added / 新增
+
 - Guiding-case batch 218/219/220/166 (R237): IP finale plus contract spread. No.218 IC layout registrations define scope without disclosure, originality needs explanation not proof (条例 outside corpus — no link); No.219 top-multiple punitive damages for trade-secret infringement "as a business" (反法 2019-ed. 17③ → 2025-ed. art. 22); No.220 the vanillin trade-secret landmark — use of all secrets presumed from complete-process misappropriation, damages by sales profit or price-profit-rate-times-volume (民法典 art. 1168 + 反法 art. 22 per page self-annotation); No.166 settlement-plus-unbonding bad faith bars reduction of agreed penalty (合同法 6/114 → 民法典 7/585, page self-noted). Library 263→267 cases; corrected pool down to 14.
 
 ### Added / 新增
