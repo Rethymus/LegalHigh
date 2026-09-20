@@ -2,8 +2,10 @@
 
 **决策**：服务端 BM25（bigram 分词）为唯一检索引擎（决策2；R83 THUOCL 词典 A/B 回退 -4.16% 数据再确认）。前端禁止重建第二检索路径（C7；api_parity 门钉住）。MCP 与 HTTP 共用同一语料单例（parity 测试钉住）。
 
-**多路形态的现状映射**：Exact/Metadata（law_id 过滤、get_article 精确取条）✅；BM25 ✅；Graph（同章 related、article_links、案例 research_refs）🟡；官方原生检索指针（needs official_entry → flk 入口）🟡；Dense/Sparse **不引入**（ADR-0001：benchmark-gated，语义检索再评估以鸿沟实录数据集为资产）。
+**多路形态的现状映射**：Exact/Metadata（law_id 过滤、get_article 精确取条）✅；BM25 ✅；受控主题组（ADR-0005：劳动解除 `labor-termination` + 条件试用期组，R166）✅；Graph（同章 related、article_links、案例 research_refs、renumber-map 条号重编号映射）🟡；官方原生检索指针（needs official_entry → flk 入口）🟡；Dense/Sparse **不引入**（ADR-0001：benchmark-gated，语义检索再评估以鸿沟实录数据集为资产）。
 
-**评测**：金标 248 组（hit@5 0.9556/MRR 0.7724），拒答正确率 1.0（5 乱码探针），引用四要素 1.0。金标纪律：语料/分词变更前必须先加金标（决策13）；改题保留真实问法形态并把鸿沟写进 note。
+**MCP 工具**（R179）：`search_articles`（BM25 现行语料）、`get_article`、`list_laws`、`search_cases`、`search_history`（历史文本独立检索，R179）——五只读工具，无生成型。
+
+**评测**：金标 541 组（hit@5 0.9612/MRR 0.7811/Recall@20 99.3%/nDCG@10 0.83），拒答正确率 1.0（5 乱码探针），引用四要素 1.0。金标纪律：语料/分词变更前必须先加金标（决策13）；改题保留真实问法形态并把鸿沟写进 note。
 
 **已知白区**：AS_OF_DATE 已实现 fail-closed 形态（见 temporal-model.md）；案例字段加权检索已实现（R146：cases.py 三档 bias，facts↔facts / reasoning 分野）。剩余白区：历史版本全文时点检索。
