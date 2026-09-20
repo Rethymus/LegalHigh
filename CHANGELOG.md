@@ -4,6 +4,10 @@
 
 ### Added / 新增
 
+- Guiding-case batch 108/110/111/112 (R209): maritime/admiralty theme. No.108 shipper's right to vary the carriage contract (Contract Law art. 308 → Civil Code art. 829 successor link); No.110 "employed salvage" contracts paid by horsepower-hour regardless of success (arts. 8/107 → 509/577); No.111 issuing bank's pledge over bills of lading (Property Law art. 224 → Civil Code art. 441; Contract Law art. 80① → 546); No.112 "one incident, one limitation fund" rule (officially cites only 海商法 art. 212, outside the corpus — honestly no deep link). Library 151→155 cases; missing pool down to 127.
+
+### Added / 新增
+
 - Guiding-case batch 182/201/237/240 (R208): labor/employment theme. No.182 year-end bonus approval (procedural approval duty cannot gut a substantive award promise — 劳动法 art. 4 + 劳动合同法 art. 3 links); No.201 foreign athlete's service contract and sports-arbitration clause (cited conflicts-of-law statute and the New York Convention outside the corpus — honestly no deep link); No.237 new-employment-form rider relationships decided by actual management control, not contract labels (labor law art. 16 + 劳动合同法 arts. 7/10); No.240 necessary platform operations management without dominant control does not create a labor relationship (art. 7). One field-search test assertion rewritten to pin the promotion behavior (guidance-40 rank 8→3 under reasoning bias) instead of a top-3-set inequality that legitimately broke when dual-strong new cases entered the corpus. Library 147→151 cases; missing pool down to 131.
 
 ### Added / 新增
