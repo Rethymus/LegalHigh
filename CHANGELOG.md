@@ -4,6 +4,10 @@
 
 ### Added / 新增
 
+- Guiding-case batch 241/242/243/244 (R216): state-compensation theme, all four decided by compensation committees. No.241 post-term nursing and assistive-device costs of a firearms-injury victim may found a fresh claim (国家赔偿法 art. 34); No.242 unlawful occupation of a third party's premises to store seized assets is compensable (art. 18); No.243 necessary and proportional police use of weapons is not "unlawful use" (art. 17); No.244 imprisonment beyond the retrial sentence after partial acquittal is compensable by reference to the joint judicial interpretation (arts. 17/21/33/35 — four direct links). Cited judicial interpretations and the police weapons regulation are outside the corpus — honestly noted. Library 179→183 cases; corrected missing pool down to 98.
+
+### Added / 新增
+
 - Guiding-case batch 230/231/232/233 (R215): maritime continuation. No.230 port-of-discharge uncollected-goods costs fall on the contractual shipper (contracting vs actual shipper distinction); No.231 same-owner vessel salvage still counts as an independent salvor whose reward survives the sister ship's fault; No.232 carrier's bill-of-lading notation duty judged by observable conditions and ordinary standards at issuance; No.233 ship-mast collision with a wharf — liability limitation applies and priority payment covers only direct property damage. All four cite exclusively 海商法 (outside the corpus) — honestly no deep links. Library 175→179 cases; corrected missing pool down to 102.
 
 ### Added / 新增
