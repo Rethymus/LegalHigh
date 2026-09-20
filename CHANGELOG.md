@@ -4,6 +4,10 @@
 
 ### Added / 新增
 
+- Guiding-case batch 59/76/88/101 (R223): administrative-law theme. No.59 fire-acceptance filing notices are administrative confirmations and thus actionable (消防法 arts. 4/13 — the 2021-edition texts verified and linked with edition note); No.76 administrative-organ interpretation of administrative agreements binds the parties (行政诉讼法 art. 12); No.88 failure to disclose a licence term is procedural illegality — confirmed unlawful where reversal would harm public interests (art. 89①②); No.101 "information does not exist" replies require proof of a reasonable search (信息公开条例 outside corpus — honestly no link). Library 207→211 cases; corrected missing pool down to 71.
+
+### Added / 新增
+
 - Guiding-case batch 257/258/259/261 (R222): environment public-interest litigation, dated 2025-05-26. No.257 completed EIA plus targeted protection measures negate major public-interest risk (民法典 art. 1234 + 环保法 arts. 1/4/5/19 — five direct links); No.258 risk-elimination joint liability with injunction and pre-execution (arts. 179/1171 + 民诉法 arts. 58/109); No.259 withdrawal of public-interest suit only after all public-interest claims realized (arts. 1234/1235 + 民诉法 148/153 with 2017-edition renumber notes); No.261 cross-district transfer of restoration funds after illegal-mining attached civil suit (arts. 1168/1234/1235). Library 203→207 cases; corrected missing pool down to 75.
 
 ### Added / 新增
