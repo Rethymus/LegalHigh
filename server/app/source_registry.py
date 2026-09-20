@@ -56,6 +56,14 @@ def validate(data: dict) -> dict:
         approved = (s.get("compliance") or {}).get("approved")
         if not isinstance(approved, bool):
             raise ValueError(f"来源 {sid} compliance.approved 必须为布尔（fail-closed，不允许缺省）")
+        access = s.get("access") or {}
+        robots = access.get("robots_disallow_all")
+        if robots is not None and not isinstance(robots, bool):
+            raise ValueError(f"来源 {sid} access.robots_disallow_all 必须为布尔：{robots!r}")
+        if robots is True and s.get("canary"):
+            raise ValueError(
+                f"来源 {sid} robots_disallow_all=true 却配置 canary——该站点 robots 明文禁止"
+                "一切自动化工具，任何自动探测（含 canary）都不得配置（LEGAL-006）")
     return data
 
 

@@ -51,3 +51,31 @@ def test_canary_targets_are_approved_and_wellformed():
             assert s["compliance"]["approved"] is True, f"{s['id']} 未批准却配置 canary"
             assert s["canary"]["url"].startswith("https://")
             assert isinstance(s["canary"].get("expect"), list) and s["canary"]["expect"]
+
+
+def test_validate_rejects_non_bool_robots_flag():
+    data = source_registry.load_registry()
+    src = {**data["sources"][0], "access": {"robots_disallow_all": "yes"}}
+    with pytest.raises(ValueError, match="robots_disallow_all"):
+        source_registry.validate({**data, "sources": [src]})
+
+
+def test_validate_rejects_canary_on_robots_blocked_source():
+    """loader 层红线：robots_disallow_all=true 的来源配置 canary 即校验失败（LEGAL-006）。"""
+    data = source_registry.load_registry()
+    src = {**data["sources"][0],
+           "access": {"robots_disallow_all": True},
+           "canary": {"url": "https://x.example/", "expect": ["官网"]}}
+    with pytest.raises(ValueError, match="LEGAL-006"):
+        source_registry.validate({**data, "sources": [src]})
+
+
+def test_npc_flk_robots_redline_data_pinned():
+    """数据面 pinning（R181/R198）：flk robots 明文禁止自动化 → canary 必须为 null、标志必须为 true。"""
+    sources = source_registry.load_registry()["sources"]
+    flk = next(s for s in sources if s["id"] == "npc_flk")
+    assert flk["canary"] is None
+    assert flk["access"]["robots_disallow_all"] is True
+    for s in sources:
+        if (s.get("access") or {}).get("robots_disallow_all") is True:
+            assert not s.get("canary"), f"{s['id']} robots 禁探却配置 canary"

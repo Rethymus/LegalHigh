@@ -8,6 +8,8 @@ import importlib.util
 import json
 import pathlib
 
+import pytest
+
 SERVER_DIR = pathlib.Path(__file__).resolve().parent.parent
 _spec = importlib.util.spec_from_file_location(
     "source_canary", SERVER_DIR / "scripts" / "source_canary.py")
@@ -196,3 +198,52 @@ def test_run_article_probes_presence_and_blocks_unapproved():
     assert not by_id["deep-art:law-bad/v1#2"]["healthy"]
     assert "LEGAL-005" in by_id["deep-art:law-bad/v1#2"]["error"]
     assert not ok
+
+
+# ---- robots 红线代码层（R198）：robots_disallow_all 来源禁止一切自动化探测（LEGAL-006）----
+
+ROBOTS_REGISTRY = {
+    "schema_version": 1,
+    "sources": [
+        {"id": "flk_like", "host": "blocked.example", "authority_class": "OFFICIAL_PRIMARY",
+         "compliance": {"approved": True}, "access": {"robots_disallow_all": True},
+         "canary": {"url": "https://blocked.example/", "expect": ["官网"]}},
+        {"id": "plain", "host": "a.example", "authority_class": "OFFICIAL_PRIMARY",
+         "compliance": {"approved": True},
+         "canary": {"url": "https://a.example/", "expect": ["标题在"]}},
+    ],
+}
+
+
+def test_run_checks_refuses_robots_blocked_canary():
+    """robots 禁探来源即使被误配 canary，代码层也必须拒绝而非探测（三层执行之 code 层）。"""
+    with pytest.raises(ValueError, match="LEGAL-006"):
+        canary.run_checks(ROBOTS_REGISTRY, _fake_fetch({}), {})
+
+
+def test_run_deep_refuses_robots_blocked_host():
+    target = {"key": "deep:x/2023", "title": "某法", "url": "https://blocked.example/law",
+              "host": "blocked.example"}
+    results, ok = canary.run_deep([target], ROBOTS_REGISTRY, _fake_fetch({}), {})
+    assert not ok
+    assert "LEGAL-006" in results[0]["error"] and results[0]["healthy"] is False
+
+
+def test_run_article_refuses_robots_blocked_host():
+    target = {"key": "deep-art:x/2023#1", "title": "某法", "url": "https://blocked.example/law",
+              "host": "blocked.example", "law_id": "x", "version_id": "2023",
+              "no": 1, "sub": None, "probe_text": "第一条测试"}
+    results, ok = canary.run_article_targets([target], ROBOTS_REGISTRY, _fake_fetch({}), {})
+    assert not ok and "LEGAL-006" in results[0]["error"]
+
+
+def test_approved_probe_hosts_excludes_robots_blocked():
+    hosts = canary.approved_probe_hosts(ROBOTS_REGISTRY)
+    assert "blocked.example" not in hosts, "robots 禁探 host 不得进入抽样集"
+    assert "a.example" in hosts
+
+
+def test_probe_refusal_priority():
+    assert canary.probe_refusal("a.example", ROBOTS_REGISTRY) is None
+    assert "LEGAL-006" in canary.probe_refusal("blocked.example", ROBOTS_REGISTRY)
+    assert "LEGAL-005" in canary.probe_refusal("unknown.example", ROBOTS_REGISTRY)

@@ -8,6 +8,9 @@
 
 纪律：
 - 只访问 Source Registry 中 approved=true 且配置了 canary 的来源（LEGAL-005）；
+- robots 红线（LEGAL-006，R181/R198）：robots_disallow_all=true 的来源（flk.npc.gov.cn
+  robots.txt 明文「禁止使用任何自动化工具」）禁止一切自动化探测——即使被误配 canary
+  或误入抽样集，也在代码层拒绝（与 loader 校验、注册表 note 三层一致）；
 - 永不绕过访问控制：被拦/超时/改版一律如实记 degraded（LEGAL-006）；
 - 网络走 curl 子进程，Python 侧保持零网络导入（与 ARCH-001 同口径）；
   `--compressed` 为 R49 门户反爬教训（直连壳页先试压缩协商）；
@@ -61,6 +64,32 @@ def fingerprint(html: str, markers: list[str]) -> dict:
     }
 
 
+def robots_blocked_hosts(registry: dict) -> set[str]:
+    """robots_disallow_all=true 的来源 host——站点明文禁止一切自动化工具（LEGAL-006）。
+
+    任何自动化请求（canary/文档级/逐条级探测）都不得触达这些 host；
+    本函数是代码层防线，与 loader 校验（app/source_registry.py）、注册表 note 构成三层执行。
+    """
+    return {s.get("host") for s in registry.get("sources", [])
+            if (s.get("access") or {}).get("robots_disallow_all") is True}
+
+
+def approved_probe_hosts(registry: dict) -> set[str]:
+    """允许抽样的 host = approved 来源 host 减去 robots 禁探来源。"""
+    approved = {s.get("host") for s in registry.get("sources", [])
+                if (s.get("compliance") or {}).get("approved")}
+    return approved - robots_blocked_hosts(registry)
+
+
+def probe_refusal(host: str, registry: dict) -> str | None:
+    """探测前置检查：返回拒绝理由；None=允许探测。robots 红线优先于 approved 判定。"""
+    if host in robots_blocked_hosts(registry):
+        return "host 被 robots.txt 明文禁止一切自动化探测——拒绝（LEGAL-006）"
+    if host not in approved_probe_hosts(registry):
+        return "host 未在 Source Registry approved 列表——拒绝探测（LEGAL-005）"
+    return None
+
+
 def compare_with_previous(previous: dict | None, fp: dict) -> dict:
     drift = None
     if previous and isinstance(previous.get("size_bucket"), int):
@@ -79,6 +108,10 @@ def run_checks(registry: dict, fetch_fn, state: dict) -> tuple[list[dict], bool]
         canary = s.get("canary")
         if not canary or not (s.get("compliance") or {}).get("approved"):
             continue
+        if s.get("host") in robots_blocked_hosts(registry):
+            raise ValueError(
+                f"来源 {s['id']} robots_disallow_all=true 却配置 canary——robots 红线禁止一切"
+                "自动化探测（LEGAL-006），请删除该 canary 配置而非绕过")
         url, markers = canary["url"], canary.get("expect", [])
         try:
             status, html = fetch_fn(url)
@@ -144,17 +177,15 @@ def pick_deep_targets(fulltext_dir, sample: int, approved_hosts: set[str] | None
 
 def run_deep(deep_targets: list[dict], registry: dict, fetch_fn, state: dict) -> tuple[list[dict], bool]:
     """文档级指纹：HTTP 200 + 法条标题标记在位。host 必须是注册表 approved 来源。"""
-    approved_hosts = {s.get("host") for s in registry.get("sources", [])
-                      if (s.get("compliance") or {}).get("approved")}
     results = []
     all_healthy = True
     checked_at = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     for t in deep_targets:
-        if t["host"] not in approved_hosts:
+        refusal = probe_refusal(t["host"], registry)
+        if refusal:
             results.append({"source_id": t["key"], "url": t["url"], "checked_at": checked_at,
                             "status": 0, "markers_ok": {}, "size_bucket": None, "drift": None,
-                            "error": "host 未在 Source Registry approved 列表——拒绝探测（LEGAL-005）",
-                            "healthy": False})
+                            "error": refusal, "healthy": False})
             all_healthy = False
             continue
         try:
@@ -235,18 +266,16 @@ def pick_article_targets(fulltext_dir, sample: int, approved_hosts: set[str] | N
 
 def run_article_targets(targets: list[dict], registry: dict, fetch_fn, state: dict) -> tuple[list[dict], bool]:
     """逐条指纹：同一 URL 只取一次，用本仓解析器清洗页面后探测条文本是否仍在。"""
-    approved_hosts = {s.get("host") for s in registry.get("sources", [])
-                      if (s.get("compliance") or {}).get("approved")}
     results = []
     all_healthy = True
     checked_at = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     pages: dict[str, str] = {}
     for t in targets:
-        if t["host"] not in approved_hosts:
+        refusal = probe_refusal(t["host"], registry)
+        if refusal:
             results.append({"source_id": t["key"], "url": t["url"], "checked_at": checked_at,
                             "status": 0, "markers_ok": {}, "size_bucket": None, "drift": None,
-                            "error": "host 未在 Source Registry approved 列表——拒绝探测（LEGAL-005）",
-                            "healthy": False})
+                            "error": refusal, "healthy": False})
             all_healthy = False
             continue
         if t["url"] not in pages:
@@ -294,6 +323,12 @@ def main(argv: list[str] | None = None) -> int:
     except OSError as exc:
         print(f"注册表不可读：{exc}", file=sys.stderr)
         return 3
+    try:
+        from app.source_registry import validate  # noqa: PLC0415  stdlib-only 服务层，入口 fail-closed
+        registry = validate(registry)
+    except ValueError as exc:
+        print(f"注册表校验失败：{exc}", file=sys.stderr)
+        return 3
     if args.source:
         wanted = set(args.source)
         registry = {**registry, "sources": [s for s in registry["sources"] if s["id"] in wanted]}
@@ -310,16 +345,13 @@ def main(argv: list[str] | None = None) -> int:
 
     results, all_healthy = run_checks(registry, lambda u: fetch(u, args.timeout), state)
     if args.deep > 0:
-        approved = {s.get("host") for s in registry.get("sources", [])
-                    if (s.get("compliance") or {}).get("approved")}
-        deep = pick_deep_targets(DEFAULT_FULLTEXT_DIR, args.deep, approved)
+        deep = pick_deep_targets(DEFAULT_FULLTEXT_DIR, args.deep, approved_probe_hosts(registry))
         deep_results, deep_ok = run_deep(deep, registry, lambda u: fetch(u, args.timeout), state)
         results.extend(deep_results)
         all_healthy = all_healthy and deep_ok
     if args.deep_articles > 0:
-        approved = {s.get("host") for s in registry.get("sources", [])
-                    if (s.get("compliance") or {}).get("approved")}
-        art_targets = pick_article_targets(DEFAULT_FULLTEXT_DIR, args.deep_articles, approved,
+        art_targets = pick_article_targets(DEFAULT_FULLTEXT_DIR, args.deep_articles,
+                                           approved_probe_hosts(registry),
                                            positions=args.article_positions)
         art_results, art_ok = run_article_targets(art_targets, registry, lambda u: fetch(u, args.timeout), state)
         results.extend(art_results)
