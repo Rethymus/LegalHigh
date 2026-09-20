@@ -163,6 +163,13 @@ def historical_for_card(law_id: str, as_of: str, no: int, sub: str | None = None
                 "mapped_from_sub": mapped_entry["from_sub"] or None,
                 "mapped_ratio": mapped_entry["ratio"],
             }
+    # 多跳链式兜底（R196）：一跳映射也未命中时，沿时间线从最新全文版反向追踪
+    if article is None and via is None:
+        from . import version_renumber
+        traced = version_renumber.trace_to_target(law_id, version["version_id"], no, sub)
+        if traced is not None:
+            traced_key = (traced[0], traced[1] or "")
+            article = next((a for a in doc["articles"] if (a["no"], a.get("sub") or "") == traced_key), None)
     shift_note = (f"经重编号映射定位（ratio {mapped_entry['ratio']}）；" if via else "") + _SHIFT_NOTE
     return {
         "version_id": version["version_id"],
