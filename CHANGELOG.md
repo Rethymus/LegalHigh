@@ -4,6 +4,10 @@
 
 ### Added / 新增
 
+- Guiding-case batch 198/199/200/235 (R212): arbitration/recognition theme. No.198 actual constructors are not bound by the employer-contractor arbitration clause (仲裁法 art. 58 → 2025 revision art. 71); No.199 awarding bitcoin-equivalent damages in fiat violates public interest and the award was set aside (same article); No.200 ad-hoc tribunal under a "fast arbitration" clause is not a New York Convention refusal ground (Civil Procedure Law — the deepest cross-edition chain yet: official citation 2017-ed. art. 283, the page's own "current" note 290 is the 2021-ed. number, corpus-verified 2023-ed. art. 304); No.235 reciprocal recognition of foreign judgments without a prior reciprocal precedent (2021-ed. 289 → corpus art. 299, page self-annotated). Library 163→167 cases; missing pool down to 115.
+
+### Added / 新增
+
 - Guiding-case batch 132/133/134/139 (R211): environment continuation. No.132 voluntary pollution-control upgrades may mitigate liability in public-interest suits (环保法 arts. 1/4/5 direct links); No.133 a water body's self-purification capacity is no ground to escape restoration liability (art. 64 direct; repealed Tort Liability Law citations noted per civl-2020@1260); No.134 stop-injunction can compel a fresh environmental-impact assessment before resuming production (cited EIA Law and Water Pollution Law outside corpus — honestly no link); No.139 heavier-penalty statute applies where odor from solid-waste storage exceeds air-emission standards (art. 10 direct; Air Pollution and Solid Waste laws outside corpus noted). Library 159→163 cases; missing pool down to 119.
 
 ### Added / 新增
