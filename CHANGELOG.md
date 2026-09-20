@@ -4,6 +4,10 @@
 
 ### Added / 新增
 
+- Guiding-case batch 149/150/153/171 (R225): construction and third-party-revocation theme. No.149 a corporate branch's independent litigation bars its legal person from third-party revocation (民诉法 56→59 + 民法总则 74②→民法典 74); No.150 mortgagees have standing to challenge priority-right judgments affecting their security (56→59); No.153 the six-month revocation window starts when the debtor's insolvency makes the harm apparent (56→59); No.171 claiming the construction-price priority in enforcement proceedings counts as exercise within the preclusive period (page self-notes 民法典 art. 807 as the current law). Library 215→219 cases; corrected missing pool down to 63.
+
+### Added / 新增
+
 - Guiding-case batch 43/44/116/33 (R224): state-compensation spread plus contract-invalidity. No.43 revocation-plus-reversal in enforcement objection is not "execution error" (国家赔偿法 art. 38); No.44 returning stolen goods per an effective judgment infringes nobody (art. 18); No.116 terminating enforcement for the debtor's insolvency does not bar a compensation claim (art. 30); No.33 gratuitous-looking low-price transfers to a knowing affiliate are malicious collusion — contract void with restitution under the Civil Code successor arts. 154/157 (official citations were the repealed Contract Law). Selection correction: 42 was already in the library (another pre-check slip, same class as 255). Library 211→215 cases; corrected missing pool down to 67.
 
 ### Added / 新增
