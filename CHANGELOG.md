@@ -56,6 +56,10 @@
 
 ### Added / 新增
 
+- Guiding-case batch 75/175/176/215 (R240): environment public-interest finale. No.75 environmental-NGO standing — charter need not literally mention environment if its work protects ecosystems (环保法 art. 58 direct); No.175 knowing buyers of illegally fished fry are jointly liable with fishers, and damages span the whole biodiversity harmed by banned gear (民法典 art. 1168 + 环保法 art. 64); No.176 illegal sand-mining — criminal liability does not displace full ecological civil damages assessed across water quality, riverbed, water retention and biota (art. 64); No.215 shareholders abusing corporate veil are jointly liable for the company's eco-restoration duties (民法典 art. 83 + 公司法 2018-ed. 20 → 2023-ed. 23). Library 275→279 cases; corrected pool down to 2 (124 执行监督 + 156 案外人异议之诉).
+
+### Added / 新增
+
 - Guiding-case batch 73/117/126/155 (R239): enforcement and bankruptcy theme, pool programmatically re-audited to exactly 10. No.73 the priority-right period runs from contract termination upon bankruptcy acceptance (合同法 286 → 民法典 807 + 企业破产法 art. 18 direct); No.117 debt-joinder enforceable within the assumed scope and undeliverable commercial acceptance bills do not discharge the debt (民诉法 225 → 236); No.126 continued acceptance of performance after resumption application means the settlement is fully performed — no revival of the original judgment (official art. 204 citation without edition — honestly no link); No.155 pre-mortgage purchasers may bring outsider objection suits without attacking the mortgage (225 → 238). Library 271→275 cases; corrected pool down to 6.
 
 ### Added / 新增
