@@ -12,7 +12,6 @@
 """
 import hashlib
 import json
-import re
 import pathlib
 from functools import lru_cache
 from urllib.parse import urlparse
