@@ -68,6 +68,15 @@ export default function AuditHistory() {
   const [loading, setLoading] = useState(true)
   const [evEntries, setEvEntries] = useState<Awaited<ReturnType<typeof api.evidenceLedger>>['entries'] | null>(null)
   const [evError, setEvError] = useState<string | null>(null)
+  const [evChainFilter, setEvChainFilter] = useState('')
+  const evChainTypes = useMemo(
+    () => [...new Set((evEntries ?? []).map((e) => e.entity_type))].sort(),
+    [evEntries],
+  )
+  const evFiltered = useMemo(
+    () => (evEntries ?? []).filter((e) => !evChainFilter || e.entity_type === evChainFilter),
+    [evEntries, evChainFilter],
+  )
 
   useEffect(() => {
     let alive = true
@@ -112,12 +121,20 @@ export default function AuditHistory() {
             {!evError && evEntries && evEntries.length === 0 && <div className="card-pad"><div className="tiny">账本为空——六条链路尚无带依据的作答记录。</div></div>}
             {!evError && evEntries && evEntries.length > 0 && (
               <div style={{ overflowX: 'auto' }}>
+                <div className="row-wrap mb-8" style={{ padding: '8px 12px' }}>
+                  <span className="tiny bold">链路筛选</span>
+                  <select className="sel" style={{ maxWidth: 160 }} value={evChainFilter} onChange={(e) => setEvChainFilter(e.target.value)} aria-label="按链路筛选证据账本">
+                    <option value="">全部链路</option>
+                    {evChainTypes.map((t) => <option key={t} value={t}>{ENTITY_LABEL[t] ?? t}</option>)}
+                  </select>
+                  <span className="tiny muted" style={{ marginLeft: 8 }}>共 {evEntries.length} 条 · 筛选后 {evFiltered.length} 条</span>
+                </div>
                 <table className="tbl">
                   <thead>
                     <tr><th>时间</th><th>链路</th><th>依据条数</th><th>涉及文档</th><th>实体</th></tr>
                   </thead>
                   <tbody>
-                    {evEntries.map((l) => {
+                    {evFiltered.map((l) => {
                       let count = '—'
                       let docs = '—'
                       try {
