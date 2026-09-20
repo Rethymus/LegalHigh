@@ -48,12 +48,17 @@ def test_facts_bias_is_section_aware():
 
 def test_reasoning_bias_promotes_holding_matches():
     """裁判理由型查询：reasoning 偏向（Holding×4）相对 facts 偏向（holding 零权）
-    改变排序——「类似案情」与「为什么这么判」两个意图分道。"""
+    提升「理由匹配」案例的排名——「类似案情」与「为什么这么判」两个意图分道。
+    （R208 注：237/238/179 等新入库案例案情与理由双强、同时占据两偏向头部，
+    旧的「头部集合不等」断言对语料增长脆弱，改为直接断言理由匹配案例
+    guidance-40 在 reasoning 偏向下排名提升（实测 8→3）。）"""
     q = "法院认为个体工商户注册不影响劳动关系认定"
+    facts_rank = {h["id"]: i for i, h in enumerate(search_cases(q, bias="facts"))}
+    reasoning_rank = {h["id"]: i for i, h in enumerate(search_cases(q, bias="reasoning"))}
     facts_order = [h["id"] for h in search_cases(q, bias="facts")]
     reasoning_order = [h["id"] for h in search_cases(q, bias="reasoning")]
-    assert facts_order != reasoning_order
-    assert set(facts_order[:3]) != set(reasoning_order[:3])  # 头部集合也变化
+    assert facts_order != reasoning_order  # 偏向确实改变排序
+    assert reasoning_rank["guidance-40"] < facts_rank["guidance-40"]  # 理由匹配案例被提升
 
 
 def test_default_balanced_and_no_query_unchanged():

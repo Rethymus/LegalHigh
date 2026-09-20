@@ -4,6 +4,10 @@
 
 ### Added / 新增
 
+- Guiding-case batch 182/201/237/240 (R208): labor/employment theme. No.182 year-end bonus approval (procedural approval duty cannot gut a substantive award promise — 劳动法 art. 4 + 劳动合同法 art. 3 links); No.201 foreign athlete's service contract and sports-arbitration clause (cited conflicts-of-law statute and the New York Convention outside the corpus — honestly no deep link); No.237 new-employment-form rider relationships decided by actual management control, not contract labels (labor law art. 16 + 劳动合同法 arts. 7/10); No.240 necessary platform operations management without dominant control does not create a labor relationship (art. 7). One field-search test assertion rewritten to pin the promotion behavior (guidance-40 rank 8→3 under reasoning bias) instead of a top-3-set inequality that legitimately broke when dual-strong new cases entered the corpus. Library 147→151 cases; missing pool down to 131.
+
+### Added / 新增
+
 - Guiding-case batch 70/64/51/77 (R207): consumer-rights/food-safety theme. No.70 toxic-non-food-substance conviction where the added substance shares equal attributes with the official blacklists (刑法 art. 144 direct link); No.64 telecom format-contract notice duty (official Contract Law art. 39 repealed — linked to its Civil Code successor art. 496 with the repeal noted per civl-2020@1260); No.51 international air-passenger transfer-notice duty (cited 民法通则 and Warsaw/Hague/Guadalajara conventions outside the corpus — honestly no deep link); No.77举报人 plaintiff standing in price-administration litigation (行政诉讼法 arts. 12/25, same numbers in the in-corpus 2017 edition). Library 143→147 cases; missing pool down to 135.
 
 ### Added / 新增
