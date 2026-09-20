@@ -4,6 +4,10 @@
 
 ### Added / 新增
 
+- Guiding-case batch 135/136/137/138 (R218): environment finale — with R203+R211 the corpus now covers all of guiding cases 127–141. No.135 adverse inference where the defendant refuses to disclose hazardous-waste disposal information (固废法 outside corpus — no link); No.136 civil and administrative environmental public-interest suits tried separately but jointly decided (行政诉讼法 art. 61 direct); No.137 the effectiveness standard for reviewing administrative omission in environmental public-interest suits (arts. 70/74 direct; Forest Law outside corpus noted); No.138 concealed-pipe discharge is punishable even when effluent meets standards (Water Pollution Law outside corpus — no link). Library 187→191 cases; corrected missing pool down to 90.
+
+### Added / 新增
+
 - Guiding-case batch 245/246/247/222 (R217): state-compensation continuation completing the 241–247 range. No.245 a nominee-shareholder's post-enforcement ownership judgment is no ground for erroneous-enforcement compensation (Civil Procedure Law — the second stale "current number" catch: official 2012-ed. art. 244, page-noted 248, corpus-verified 2023-ed. art. 253); No.246 prison failure to timely handle inmate violence is compensable omission (国家赔偿法 art. 17); No.247 the comprehensive reasonableness standard for custodial-duty omissions (art. 17); No.222 a registered patent holder's duty of good-faith maintenance during ownership disputes (民法典 arts. 1165/1173, civil-damages complement to the theme). Library 183→187 cases; corrected missing pool down to 94.
 
 ### Added / 新增
