@@ -32,6 +32,10 @@
 
 ### Added / 新增
 
+- Guiding-case batch 92/100/160/86 (R231): plant-variety theme. No.92 one-locus DNA difference indicates similar varieties, insufficient to deny identity (条例 outside corpus — no link); No.100 DUS field-test reports proving distinctiveness defeat infringement claims; No.160 propagation-material three-element test — live, propagable, offspring identical (种子法 art. 28 direct, seeds-2022 corpus first consumption by the case pipeline); No.86 cross-licensing of parent lines under the fairness principle when parent/holder deadlock threatens food security (合同法 art. 5 → 民法典 art. 6 successor). Library 239→243 cases; corrected missing pool down to 39.
+
+### Added / 新增
+
 - Guiding-case batch 59/76/88/101 (R223): administrative-law theme. No.59 fire-acceptance filing notices are administrative confirmations and thus actionable (消防法 arts. 4/13 — the 2021-edition texts verified and linked with edition note); No.76 administrative-organ interpretation of administrative agreements binds the parties (行政诉讼法 art. 12); No.88 failure to disclose a licence term is procedural illegality — confirmed unlawful where reversal would harm public interests (art. 89①②); No.101 "information does not exist" replies require proof of a reasonable search (信息公开条例 outside corpus — honestly no link). Library 207→211 cases; corrected missing pool down to 71.
 
 ### Added / 新增
