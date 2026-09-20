@@ -4,6 +4,10 @@
 
 ### Added / 新增
 
+- Guiding-case batch 245/246/247/222 (R217): state-compensation continuation completing the 241–247 range. No.245 a nominee-shareholder's post-enforcement ownership judgment is no ground for erroneous-enforcement compensation (Civil Procedure Law — the second stale "current number" catch: official 2012-ed. art. 244, page-noted 248, corpus-verified 2023-ed. art. 253); No.246 prison failure to timely handle inmate violence is compensable omission (国家赔偿法 art. 17); No.247 the comprehensive reasonableness standard for custodial-duty omissions (art. 17); No.222 a registered patent holder's duty of good-faith maintenance during ownership disputes (民法典 arts. 1165/1173, civil-damages complement to the theme). Library 183→187 cases; corrected missing pool down to 94.
+
+### Added / 新增
+
 - Guiding-case batch 241/242/243/244 (R216): state-compensation theme, all four decided by compensation committees. No.241 post-term nursing and assistive-device costs of a firearms-injury victim may found a fresh claim (国家赔偿法 art. 34); No.242 unlawful occupation of a third party's premises to store seized assets is compensable (art. 18); No.243 necessary and proportional police use of weapons is not "unlawful use" (art. 17); No.244 imprisonment beyond the retrial sentence after partial acquittal is compensable by reference to the joint judicial interpretation (arts. 17/21/33/35 — four direct links). Cited judicial interpretations and the police weapons regulation are outside the corpus — honestly noted. Library 179→183 cases; corrected missing pool down to 98.
 
 ### Added / 新增
