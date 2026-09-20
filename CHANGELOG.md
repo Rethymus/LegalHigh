@@ -80,6 +80,10 @@
 
 ### Added / 新增
 
+- Citator citation graph, minimal implementation (R244, narrowing known-gaps #6): `GET /api/citator/graph` aggregates all verified cases' research_refs into a read-only law → article → case view — totals (281 cases / 238 citing / 362 citations / 30 laws cited) plus per-law case and citation counts with per-article case-id lists. The DataSources page gained a "案例-法条引用图谱" card consuming it (totals stat row + top-laws table + the standing no-negative-history disclaimer). Fixed a real counting bug found by the new tests: per-law case counts are deduplicated per case (a case citing several articles of one law counted once), matching `cited_by` exactly. 2 new tests pin totals consistency, sort order, and cross-checks against `cited_by`/`cited_by_article`. 369→371 pytest.
+
+### Added / 新增
+
 - Guiding-case batch 202/203/204/205 (R233): environment public-interest continuation, dated 2022-12-30. No.202 ship illegal-discharge evidence rules incl. residual-bilge sampling (刑法 art. 338 direct); No.203 necessary-and-proportionate disposal costs count as compensable losses, grossly excessive ones do not (art. 338); No.204 eco-technology-upgrade costs may offset part of damages only beyond mandatory compliance duties (环保法 arts. 36/40① direct); No.205 smuggled solid waste — criminal-acquittal defendants still liable civilly and seizure does not shift disposal costs to enforcement (民法典 arts. 179/187 per page self-annotation). Pool recount correction: prior figure 35 overstated by the URL-less No.45; precise count now 30. Library 247→251 cases.
 
 ### Added / 新增

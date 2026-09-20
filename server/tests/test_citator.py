@@ -7,7 +7,7 @@
 """
 import pytest
 
-from app import citator, main
+from app import cases as cases_mod, citator, main
 
 
 def test_cited_by_shape_and_precision():
@@ -70,3 +70,39 @@ def test_endpoint_public_shape():
     for c in out["cases"]:
         if c["kind"] == "foreign":
             assert c["level"] == "外国判例"
+
+
+def test_citator_graph_totals_and_laws():
+    """known-gaps #6 最小图谱（R244）：站点级聚合与逐法计数自洽。"""
+    g = citator.graph()
+    totals = g["totals"]
+    assert totals["cases"] >= 200
+    assert totals["citing_cases"] <= totals["cases"]
+    assert totals["citations"] == sum(x["citation_count"] for x in g["laws"])
+    assert totals["laws_cited"] == len(g["laws"])
+    # 图谱的 laws 子集 = 全部已核实案例 research_refs 中出现过的 law_id
+    refs_laws = {r["law_id"] for c in cases_mod.load_cases()
+                 for r in (c.get("research_refs") or []) if r.get("law_id")}
+    assert {x["law_id"] for x in g["laws"]} <= refs_laws
+    # 排序：按被引案例数降序
+    counts = [x["case_count"] for x in g["laws"]]
+    assert counts == sorted(counts, reverse=True)
+
+
+def test_citator_graph_matches_cited_by():
+    """图谱逐法 case_count 与 cited_by() 一致；条文级 case_ids 与 cited_articles 一致。"""
+    g = citator.graph()
+    by_law = {x["law_id"]: x for x in g["laws"]}
+    for law_id in ("cl-2023", "lcl-2012", "civl-2020"):
+        cb = citator.cited_by(law_id)
+        entry = by_law[law_id]
+        assert entry["case_count"] == cb["case_count"]
+        cb_articles = {(a["no"], a.get("sub") or ""): a["case_count"] for a in cb["articles"]}
+        for art in entry["articles"]:
+            key = (art["no"], art.get("sub") or "")
+            assert len(art["case_ids"]) == cb_articles[key]
+        # 条文级：cited_by_article 的案例都在图谱 case_ids 中
+        first = entry["articles"][0]
+        sub = first.get("sub")
+        cited = citator.cited_by_article(law_id, first["no"], sub)
+        assert {c["id"] for c in cited} <= set(first["case_ids"])

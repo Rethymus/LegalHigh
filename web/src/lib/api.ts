@@ -415,6 +415,21 @@ export const api = {
   citedBy: (lawId: string) =>
     req<CitedBy>(`/laws/${encodeURIComponent(lawId)}/cited-by`),
 
+  // Citator 站点级引用图谱（known-gaps #6 最小实现，公开只读）
+  citatorGraph: () =>
+    req<{
+      totals: { cases: number; citing_cases: number; citations: number; laws_cited: number }
+      laws: {
+        law_id: string
+        title: string
+        case_count: number
+        citation_count: number
+        articles: { no: number; sub: string | null; case_ids: string[] }[]
+      }[]
+      negative_history_note: string
+      scope_note: string
+    }>('/citator/graph'),
+
   // 历史版本全文（known-gaps #1 切片）：仅已采集版本可用；非现行文本对照查阅
   versionFulltext: (lawId: string, versionId: string) =>
     req<VersionFulltext>(`/laws/${encodeURIComponent(lawId)}/versions/${encodeURIComponent(versionId)}/fulltext`),

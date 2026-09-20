@@ -34,6 +34,7 @@ export default function DataSources() {
   const [evals, setEvals] = useState<Awaited<ReturnType<typeof api.evals>> | null>(null)
   const [evalsState, setEvalsState] = useState<'loading' | 'done'>('loading')
   const [registry, setRegistry] = useState<Awaited<ReturnType<typeof api.sources>> | null>(null)
+  const [citGraph, setCitGraph] = useState<Awaited<ReturnType<typeof api.citatorGraph>> | null>(null)
   const [histQ, setHistQ] = useState('')
   const [histOut, setHistOut] = useState<HistorySearch | null>(null)
   const [histBusy, setHistBusy] = useState(false)
@@ -75,6 +76,7 @@ export default function DataSources() {
     let alive = true
     api.corpusCoverage().then((c) => alive && setCoverage(c), () => { /* 覆盖登记册不可用时不伪造替代数据 */ })
     api.evals().then((e) => { if (alive) { setEvals(e); setEvalsState('done') } }, () => { if (alive) setEvalsState('done') /* 评测不可用时不伪造替代数据 */ })
+    api.citatorGraph().then((g) => { if (alive) setCitGraph(g) }, () => { /* 图谱不可用时不伪造替代数据 */ })
     return () => { alive = false }
   }, [])
 
@@ -159,6 +161,37 @@ export default function DataSources() {
         </div>
       </section>
 
+      {citGraph && (
+        <section className="card mb-20">
+          <div className="card-h row-wrap">
+            <b className="card-h-t">案例-法条引用图谱（Citator，known-gaps #6 最小实现）</b>
+            <span className="spacer" />
+            <span className="tiny">{citGraph.totals.citations} 条精确引用 · {citGraph.totals.laws_cited} 部法律被引 · 只统计已核实案例</span>
+          </div>
+          <div className="card-b">
+            <div className="stats">
+              <div className="stat"><b>{citGraph.totals.cases}</b><span>案例总数</span></div>
+              <div className="stat"><b>{citGraph.totals.citing_cases}</b><span>含引用案例</span></div>
+              <div className="stat"><b>{citGraph.totals.citations}</b><span>精确引用</span></div>
+              <div className="stat"><b>{citGraph.totals.laws_cited}</b><span>被引法律</span></div>
+            </div>
+            <table className="plain-list mt-10">
+              <thead><tr><th>法律</th><th>被引案例</th><th>引用次数</th><th>被引条文</th></tr></thead>
+              <tbody>
+                {citGraph.laws.slice(0, 8).map((x) => (
+                  <tr key={x.law_id}>
+                    <td>{x.title}</td>
+                    <td>{x.case_count}</td>
+                    <td>{x.citation_count}</td>
+                    <td>{x.articles.length}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <p className="tiny muted mt-10">{citGraph.scope_note} {citGraph.negative_history_note}</p>
+          </div>
+        </section>
+      )}
       {evalsState === 'loading' && (
         <section className="card mb-20"><div className="card-b tiny muted">检索质量评测复算中…（金标 106 组逐题检索，首次约 3 秒）</div></section>
       )}

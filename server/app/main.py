@@ -436,6 +436,15 @@ def law_cited_by(law_id: str):
     return citator_mod.cited_by(law_id)
 
 
+@app.get("/api/citator/graph")
+def citator_graph():
+    """站点级只读引用图谱（known-gaps #6 最小实现，R244）：
+
+    全部已核实案例 research_refs 的 法→条文→案例 三层聚合视图（公开只读）。
+    """
+    return citator_mod.graph()
+
+
 class ResearchBody(BaseModel):
     question: str = Field(min_length=1, max_length=20_000)
     law_ids: list[str] | None = Field(default=None, max_length=32)
