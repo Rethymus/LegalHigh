@@ -40,6 +40,10 @@
 
 ### Added / 新增
 
+- Guiding-case batch 202/203/204/205 (R233): environment public-interest continuation, dated 2022-12-30. No.202 ship illegal-discharge evidence rules incl. residual-bilge sampling (刑法 art. 338 direct); No.203 necessary-and-proportionate disposal costs count as compensable losses, grossly excessive ones do not (art. 338); No.204 eco-technology-upgrade costs may offset part of damages only beyond mandatory compliance duties (环保法 arts. 36/40① direct); No.205 smuggled solid waste — criminal-acquittal defendants still liable civilly and seizure does not shift disposal costs to enforcement (民法典 arts. 179/187 per page self-annotation). Pool recount correction: prior figure 35 overstated by the URL-less No.45; precise count now 30. Library 247→251 cases.
+
+### Added / 新增
+
 - Guiding-case batch 59/76/88/101 (R223): administrative-law theme. No.59 fire-acceptance filing notices are administrative confirmations and thus actionable (消防法 arts. 4/13 — the 2021-edition texts verified and linked with edition note); No.76 administrative-organ interpretation of administrative agreements binds the parties (行政诉讼法 art. 12); No.88 failure to disclose a licence term is procedural illegality — confirmed unlawful where reversal would harm public interests (art. 89①②); No.101 "information does not exist" replies require proof of a reasonable search (信息公开条例 outside corpus — honestly no link). Library 207→211 cases; corrected missing pool down to 71.
 
 ### Added / 新增
