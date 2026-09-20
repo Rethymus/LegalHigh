@@ -4,6 +4,10 @@
 
 ### Added / 新增
 
+- Guiding-case batch 37/52/74/78 (R229): maritime-insurance and dispute-resolution theme. No.37 foreign-award enforcement jurisdiction and limitation from the discovery of assets in China (民诉法 239/273 → current 250/304); No.52 "all risks" marine cargo cover includes losses from non-excluded external causes (保险法 art. 30 contra proferentem direct); No.74 a breaching third party counts as "third party damaging the insured subject" for subrogation (art. 60①); No.78 the 3Q-v-Tencent antitrust landmark — relevant-market definition is a tool not an end, SSNIP/SSNDQ tests, market share a rough indicator (反垄断法 2008-ed. arts. 17/18/19 → 2022-revision arts. 22/23/24, renumber noted). Library 231→235 cases; corrected missing pool down to 47.
+
+### Added / 新增
+
 - Guiding-case batch 157/158/161/162 (R228): IP spread theme. No.157 applied art as copyrightable fine art (art-vs-utility separability; 实施条例 outside corpus — no link); No.158 departing employee's invention related to former duties belongs to the former employer under a three-way balance test (专利法 art. 6 direct); No.161 Wanglaoji/Jiaduobao false-advertising dispute (反不正当竞争法 2019-ed. art. 8① → 2025-revision art. 9, renumber noted); No.162 Jiangxiaobao agent-registration defense (商标法 2013-ed. art. 15 → 2026-ed. art. 22, renumber noted). Library 227→231 cases; corrected missing pool down to 51.
 
 ### Added / 新增
