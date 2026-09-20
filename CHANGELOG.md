@@ -4,6 +4,10 @@
 
 ### Added / 新增
 
+- Guiding-case batch 43/44/116/33 (R224): state-compensation spread plus contract-invalidity. No.43 revocation-plus-reversal in enforcement objection is not "execution error" (国家赔偿法 art. 38); No.44 returning stolen goods per an effective judgment infringes nobody (art. 18); No.116 terminating enforcement for the debtor's insolvency does not bar a compensation claim (art. 30); No.33 gratuitous-looking low-price transfers to a knowing affiliate are malicious collusion — contract void with restitution under the Civil Code successor arts. 154/157 (official citations were the repealed Contract Law). Selection correction: 42 was already in the library (another pre-check slip, same class as 255). Library 211→215 cases; corrected missing pool down to 67.
+
+### Added / 新增
+
 - Guiding-case batch 59/76/88/101 (R223): administrative-law theme. No.59 fire-acceptance filing notices are administrative confirmations and thus actionable (消防法 arts. 4/13 — the 2021-edition texts verified and linked with edition note); No.76 administrative-organ interpretation of administrative agreements binds the parties (行政诉讼法 art. 12); No.88 failure to disclose a licence term is procedural illegality — confirmed unlawful where reversal would harm public interests (art. 89①②); No.101 "information does not exist" replies require proof of a reasonable search (信息公开条例 outside corpus — honestly no link). Library 207→211 cases; corrected missing pool down to 71.
 
 ### Added / 新增
