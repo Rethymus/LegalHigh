@@ -152,3 +152,38 @@ def lookup(law_id: str, from_version: str, to_version: str, no: int, sub: str | 
                 if m["from_no"] == no and (m["from_sub"] or "") == (sub or ""):
                     return m
     return None
+
+
+def trace_to_target(law_id: str, target_vid: str, no: int, sub: str | None = None) -> tuple[int, str] | None:
+    """从最新全文版沿时间线反查 target_vid 中对应条号（跨多版本链式追踪）。
+
+    从最新全文版开始，逐对逆向追踪条号（每对 maps to→from），直到到达
+    target_vid。途中任一版本对缺少匹配则返回 None（该条在新版中不存在）。
+    """
+    order = _version_order(law_id)
+    if target_vid not in order:
+        return None
+
+    ti = order.index(target_vid)
+    current = (no, sub or "")
+    m = build_map(law_id)
+
+    # 从最新版（末尾）向 target_vid 逐对反向追踪
+    for i in range(len(order) - 1, ti, -1):
+        newer_vid = order[i]
+        older_vid = order[i - 1]
+        pair = next((p for p in m["pairs"]
+                     if p["from_version"] == older_vid and p["to_version"] == newer_vid), None)
+        if pair is None:
+            return None  # 版本对缺失，无法继续追踪
+
+        found = False
+        for match in pair["matches"]:
+            if (match["to_no"], match["to_sub"] or "") == current:
+                current = (match["from_no"], match["from_sub"] or "")
+                found = True
+                break
+        if not found:
+            return None  # 条在旧版中不存在
+
+    return current
