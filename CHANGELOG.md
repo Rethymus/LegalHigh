@@ -4,6 +4,10 @@
 
 ### Added / 新增
 
+- Guiding-case batch 230/231/232/233 (R215): maritime continuation. No.230 port-of-discharge uncollected-goods costs fall on the contractual shipper (contracting vs actual shipper distinction); No.231 same-owner vessel salvage still counts as an independent salvor whose reward survives the sister ship's fault; No.232 carrier's bill-of-lading notation duty judged by observable conditions and ordinary standards at issuance; No.233 ship-mast collision with a wharf — liability limitation applies and priority payment covers only direct property damage. All four cite exclusively 海商法 (outside the corpus) — honestly no deep links. Library 175→179 cases; corrected missing pool down to 102.
+
+### Added / 新增
+
 - Guiding-case batch 186/187/188/146 (R214): organized/serious crime theme. No.186 "soft violence" with realistic escalation to hard violence constitutes a mafia-type organization (刑法 art. 294); No.187 the "bullying the people" hallmark separating evil-force crime groups from ordinary ones (art. 26); No.188 court duty to investigate ownership of seized assets in mafia trials and hear third-party objections (art. 294); No.146 binary-options platforms with payouts decoupled from actual price movement are gambling (art. 303). All four official citations are current-code article numbers verified verbatim. Library 171→175 cases; corrected missing pool down to 106.
 
 ### Added / 新增
