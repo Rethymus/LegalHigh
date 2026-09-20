@@ -216,11 +216,9 @@ node scripts\qa_offline.mjs
 
 `final_verify.py` 默认自行建立临时 SQLite 并清理，不会接触 `server/data/app.db`。视觉巡检默认只读；只有同时传入 `--write-e2e --isolated-db` 才允许创建测试记录。
 
+语料自检（`corpus_selfcheck.py`）覆盖法条与案例双域：每件指导案例的裁判要点与裁判结果逐字对照官方发布页快照，全部法条引用逐条核验在语料内。
+
 锁文件分为运行时 `requirements.lock`、开发验收 `requirements-dev.lock`、桌面构建 `requirements-desktop.lock`，均含版本和下载哈希。前端与桌面端使用提交的 `package-lock.json`，CI 使用 `npm ci`。
-
-后三支为行为探针（headless Chrome）：动效物理、WCAG 2.2 AA 子集、PWA 真断网验收（离线探针需先 `npm run build`）。
-
-`final_verify.py` 默认自行建立临时 SQLite 并清理，不会接触 `server/data/app.db`。视觉巡检默认只读；只有同时传入 `--write-e2e --isolated-db` 才允许创建测试记录。
 
 ## MCP Server · AI 助手接入
 

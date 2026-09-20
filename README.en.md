@@ -198,6 +198,8 @@ node scripts\qa_offline.mjs
 
 The last three are behavior probes (headless Chrome): motion physics, WCAG 2.2 AA subset, and a real-offline PWA acceptance (the offline probe requires `npm run build` first).
 
+The corpus self-check (`corpus_selfcheck.py`) covers both statutes and cases: every guiding case's holding and result are compared character-for-character against the official publication snapshot, and every statute citation is verified to exist in the corpus.
+
 `final_verify.py` creates and cleans up its own temporary SQLite and never touches `server/data/app.db`. Visual sweeps are read-only by default; creating test records requires both `--write-e2e --isolated-db`.
 
 Lock files split into runtime `requirements.lock`, acceptance `requirements-dev.lock` and desktop `requirements-desktop.lock`, all with versions and download hashes. Web and desktop use the committed `package-lock.json`; CI uses `npm ci`.
