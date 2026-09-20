@@ -49,3 +49,33 @@ def test_selfcheck_reports_broken_native_map(tmp_path, monkeypatch):
         data[lid]["bbbs"] = real
         tmp_native.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
     assert "flk native id" in cs.__name__ or True
+
+
+def test_terms_refs_all_in_corpus():
+    """R248 术语卡机器门：每张卡的 art 引用必须指向语料中真实存在的条文。"""
+    import json
+    import re
+
+    from app.corpus import get_corpus
+
+    terms_path = SERVER.parent / "web" / "src" / "data" / "terms.json"
+    assert terms_path.is_file()
+    terms = json.loads(terms_path.read_text(encoding="utf-8"))
+    assert len(terms) >= 60, "术语卡数量回落"
+    corpus = get_corpus()
+    bad = []
+    for card in terms:
+        for r in card.get("refs", []):
+            m = re.fullmatch(r"(\d+)(之.+)?", str(r.get("art", "")))
+            if not m:
+                bad.append((card["term"], r.get("art"), "format"))
+                continue
+            no, sub = int(m.group(1)), m.group(2) or ""
+            found = any(a["law_id"] == r["law_id"] and a["no"] == no and (a.get("sub") or "") == sub
+                        for a in corpus.articles)
+            if not found:
+                bad.append((card["term"], r["law_id"], r["art"], "missing"))
+    assert not bad, f"术语卡引用指向语料外条文: {bad[:5]}"
+    # 帮信罪卡必须指向 287之二（R248 修正的回归钉）
+    bangxin = next(c for c in terms if c["term"] == "帮信罪")
+    assert bangxin["refs"][0]["art"] == "287之二"

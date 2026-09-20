@@ -239,9 +239,31 @@ def main() -> int:
                 cases_report["snapshots_verified"] += 1
     report["cases"] = cases_report
 
+    # 术语卡校验（R248）：每张卡的 art 引用必须指向语料中真实存在的条文
+    # （R238 首跑抓出帮信罪卡误指 287之一——语义正确性需人工，存在性由本门机器核验）。
+    terms_path = ROOT.parent / "web" / "src" / "data" / "terms.json"
+    terms_report = {"cards": 0, "refs_checked": 0}
+    if terms_path.is_file():
+        terms = json.loads(terms_path.read_text(encoding="utf-8"))
+        terms_report["cards"] = len(terms)
+        for card in terms:
+            for r in card.get("refs", []):
+                terms_report["refs_checked"] += 1
+                m2 = re.fullmatch(r"(\d+)(之.+)?", str(r.get("art", "")))
+                lid = r.get("law_id")
+                if not lid or not m2:
+                    problems.append(f"术语卡 {card.get('term')}: 引用格式异常 {r.get('art')!r}")
+                    continue
+                no, sub = int(m2.group(1)), m2.group(2) or ""
+                found = any(a["law_id"] == lid and a["no"] == no and (a.get("sub") or "") == (sub or "")
+                            for a in corpus.articles)
+                if not found:
+                    problems.append(f"术语卡 {card.get('term')}: 引用指向语料外条文 {lid}@{r['art']}")
+    report["terms"] = terms_report
+
     out.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
     total = sum(r["actual_count"] for r in report["laws"].values())
-    print(f"语料自检：{len(report['laws'])} 部 {total} 条，结构/哈希问题 {len(problems)} 项，待核 {len(pending)} 项，版本注册表 {len(version_registries)} 份，历史全文 {fulltext_count} 份，flk native id {native_count} 部；案例库 {cases_report['cases']} 件（指导 {cases_report['guiding']}，快照逐字复验 {cases_report['snapshots_verified']}，法条引用 {cases_report['refs_checked']} 条全部在语料）")
+    print(f"语料自检：{len(report['laws'])} 部 {total} 条，结构/哈希问题 {len(problems)} 项，待核 {len(pending)} 项，版本注册表 {len(version_registries)} 份，历史全文 {fulltext_count} 份，flk native id {native_count} 部；案例库 {cases_report['cases']} 件（指导 {cases_report['guiding']}，快照逐字复验 {cases_report['snapshots_verified']}，法条引用 {cases_report['refs_checked']} 条全部在语料）；术语卡 {terms_report['cards']} 张（引用 {terms_report['refs_checked']} 条全部在语料）")
     for p in problems:
         print("  -", p)
     for p in pending:
