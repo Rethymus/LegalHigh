@@ -76,6 +76,10 @@
 
 ### Added / 新增
 
+- corpus_selfcheck gains a case-library section (R243): the machine-side self-check now re-verifies every guiding case's holding and result character-for-character against its official snapshot (mirroring the R131 test, including the honest placeholder exemption for execution-implementation cases whose pages lack a results section) and validates that all 362 research-ref statute citations point to articles that exist in the corpus. Output reports cases/guiding/snapshots-verified/refs-checked. On the same run: 281 cases, 278 guiding snapshots verified, 0 problems. README quality table gains a case-library row.
+
+### Added / 新增
+
 - Guiding-case batch 202/203/204/205 (R233): environment public-interest continuation, dated 2022-12-30. No.202 ship illegal-discharge evidence rules incl. residual-bilge sampling (刑法 art. 338 direct); No.203 necessary-and-proportionate disposal costs count as compensable losses, grossly excessive ones do not (art. 338); No.204 eco-technology-upgrade costs may offset part of damages only beyond mandatory compliance duties (环保法 arts. 36/40① direct); No.205 smuggled solid waste — criminal-acquittal defendants still liable civilly and seizure does not shift disposal costs to enforcement (民法典 arts. 179/187 per page self-annotation). Pool recount correction: prior figure 35 overstated by the URL-less No.45; precise count now 30. Library 247→251 cases.
 
 ### Added / 新增

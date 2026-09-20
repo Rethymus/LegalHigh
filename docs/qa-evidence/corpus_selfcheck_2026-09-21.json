@@ -1087,5 +1087,11 @@
     "work-safety-2021": 1
   },
   "version_fulltexts": 37,
-  "flk_native_ids": 81
+  "flk_native_ids": 81,
+  "cases": {
+    "cases": 281,
+    "guiding": 278,
+    "snapshots_verified": 278,
+    "refs_checked": 362
+  }
 }

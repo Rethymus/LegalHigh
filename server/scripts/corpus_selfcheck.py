@@ -201,9 +201,47 @@ def main() -> int:
             problems.append(f"flk native id 映射不可解析: {e}")
     report["flk_native_ids"] = native_count
 
+    # 案例库校验（R243）：每件指导案例的官方快照在库且 holding/result 逐字在文中
+    # （R131 钉住逻辑的机器侧复验）；research_refs 一律指向语料中真实存在的条文。
+    cases_report = {"cases": 0, "guiding": 0, "snapshots_verified": 0, "refs_checked": 0}
+    cases_path = ROOT / "data" / "cases.json"
+    if cases_path.is_file():
+        from app import cases as cases_mod  # noqa: E402
+        all_cases = cases_mod.load_cases()
+        cases_report["cases"] = len(all_cases)
+        ws = re.compile(r"[\s　]+")
+        for c in all_cases:
+            cid = c["id"]
+            refs = c.get("research_refs") or []
+            cases_report["refs_checked"] += len(refs)
+            for r in refs:
+                sub = r.get("sub") or ""
+                found = any(a["law_id"] == r["law_id"] and a["no"] == r["no"] and (a.get("sub") or "") == sub
+                            for a in corpus.articles)
+                if not found:
+                    problems.append(f"案例 {cid}: research_refs 指向语料外条文 {r['law_id']}@{r['no']}{sub}")
+            if c["id"].startswith("guidance-"):
+                cases_report["guiding"] += 1
+                n = re.search(r"(\d+)", c["no"]).group(1)
+                snap = EVIDENCE_DIR / f"court_指导案例{n}号.html"
+                if not snap.is_file():
+                    problems.append(f"案例 {cid}: 官方快照缺失 {snap.name}")
+                    continue
+                text = ws.sub("", re.sub(r"<[^>]+>", " ", snap.read_text(encoding="utf-8", errors="replace")))
+                if ws.sub("", c["holding"]) not in text:
+                    problems.append(f"案例 {cid}: 裁判要点与官方快照逐字不一致")
+                result = c.get("result") or ""
+                # 执行实施类指导案例官方页无单列「裁判结果」段——诚实占位豁免（与
+                # test_cases_validation 的 exec_note 口径一致），其余一律逐字比对。
+                exec_note = "未单列「裁判结果」段" in result and "详见官方发布页" in result
+                if not exec_note and ws.sub("", result) not in text:
+                    problems.append(f"案例 {cid}: 裁判结果与官方快照逐字不一致")
+                cases_report["snapshots_verified"] += 1
+    report["cases"] = cases_report
+
     out.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
     total = sum(r["actual_count"] for r in report["laws"].values())
-    print(f"语料自检：{len(report['laws'])} 部 {total} 条，结构/哈希问题 {len(problems)} 项，待核 {len(pending)} 项，版本注册表 {len(version_registries)} 份，历史全文 {fulltext_count} 份，flk native id {native_count} 部")
+    print(f"语料自检：{len(report['laws'])} 部 {total} 条，结构/哈希问题 {len(problems)} 项，待核 {len(pending)} 项，版本注册表 {len(version_registries)} 份，历史全文 {fulltext_count} 份，flk native id {native_count} 部；案例库 {cases_report['cases']} 件（指导 {cases_report['guiding']}，快照逐字复验 {cases_report['snapshots_verified']}，法条引用 {cases_report['refs_checked']} 条全部在语料）")
     for p in problems:
         print("  -", p)
     for p in pending:

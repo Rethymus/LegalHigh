@@ -123,7 +123,8 @@ cd web && npm ci && npm run dev
 
 | 门禁 / Gate | 内容 / What it checks |
 |---|---|
-| 后端测试 / Backend tests | 369 项 pytest（引用绑定、状态机、PIPL 级联、fail-closed、评测单调性、证据账本、重编号映射、robots 红线代码层等；2026-09-20 实测） |
+| 后端测试 / Backend tests | 369 项 pytest（引用绑定、状态机、PIPL 级联、fail-closed、评测单调性、证据账本、重编号映射、robots 红线代码层等；2026-09-21 实测） |
+| 案例库 / Case library | 281 件可公开核验案例（最高人民法院指导案例 278 件 + 域外经典判例 3 件）；裁判要点与裁判结果逐字出自官方发布页快照并由测试钉住，法条引用经语料逐字核验（2026-09-21 实测） |
 | 浏览器巡检 / Route sweeps | 无头 Chrome 逐路由截图 + console/网络零错误门（58 路由，2026-09-19 实测 0 问题） |
 | 对比度 / Contrast | WCAG AA 正文 4.5:1 + UI 指示器 3:1（strict 模式） |
 | 动效探针 / Motion probes | 弹簧位移、Toast/Dialog 卸载、Reduce Motion 双通道等 11 项行为断言（2026-09-19 实测 11/11） |
