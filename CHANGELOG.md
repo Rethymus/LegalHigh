@@ -44,6 +44,10 @@
 
 ### Added / 新增
 
+- Guiding-case batch 210/211/212/216 (R235): environment public-interest continuation (2022/2023 batches). No.210 negotiated eco-damage agreements get judicial confirmation while unresolved obligors are sued, and pending criminal cases do not stay civil adjudication (民法典 art. 1229 direct); No.211 criminal-case transfer does not rescind administrative penalties, forestry authorities must compel restoration, and off-site restoration requires proof on-site is impossible (森林法/行政处罚法 outside corpus — honestly noted); No.212 cross-district illegal sand-mining jurisdiction and integrated mining-sale trials (长江保护法/刑诉法 outside corpus); No.216 hazardous-waste local authority cannot refuse disposal duty citing out-of-jurisdiction origin (环保法 art. 10 direct). Library 255→259 cases; corrected pool down to 22.
+
+### Added / 新增
+
 - Guiding-case batch 202/203/204/205 (R233): environment public-interest continuation, dated 2022-12-30. No.202 ship illegal-discharge evidence rules incl. residual-bilge sampling (刑法 art. 338 direct); No.203 necessary-and-proportionate disposal costs count as compensable losses, grossly excessive ones do not (art. 338); No.204 eco-technology-upgrade costs may offset part of damages only beyond mandatory compliance duties (环保法 arts. 36/40① direct); No.205 smuggled solid waste — criminal-acquittal defendants still liable civilly and seizure does not shift disposal costs to enforcement (民法典 arts. 179/187 per page self-annotation). Pool recount correction: prior figure 35 overstated by the URL-less No.45; precise count now 30. Library 247→251 cases.
 
 ### Added / 新增
