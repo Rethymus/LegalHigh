@@ -4,6 +4,10 @@
 
 ### Added / 新增
 
+- Guiding-case batch 257/258/259/261 (R222): environment public-interest litigation, dated 2025-05-26. No.257 completed EIA plus targeted protection measures negate major public-interest risk (民法典 art. 1234 + 环保法 arts. 1/4/5/19 — five direct links); No.258 risk-elimination joint liability with injunction and pre-execution (arts. 179/1171 + 民诉法 arts. 58/109); No.259 withdrawal of public-interest suit only after all public-interest claims realized (arts. 1234/1235 + 民诉法 148/153 with 2017-edition renumber notes); No.261 cross-district transfer of restoration funds after illegal-mining attached civil suit (arts. 1168/1234/1235). Library 203→207 cases; corrected missing pool down to 75.
+
+### Added / 新增
+
 - Guiding-case batch 269/270/271/272 (R221): traffic-crimes theme, dated 2026-02-13 — the newest SPC batch. No.269 traffic-accident determination based on fleeing alone does not survive evidence review — acquittal (刑法 art. 133 + 道交法 art. 73 direct links); No.270 pre-filing blood-draw characterization and evidence review for drunk-driving (art. 133①, sub-article linked per the established sub mechanism); No.271 assisted-driving systems cannot replace the driver — circumventing monitoring while away from the wheel still counts (art. 133①); No.272 instigating drunk driving by deception makes an accomplice, mere encouragement does not (arts. 25/29/68/133①). Library 199→203 cases; corrected missing pool down to 79.
 
 ### Added / 新增
