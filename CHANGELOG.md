@@ -4,6 +4,10 @@
 
 ### Added / 新增
 
+- Guiding-case batch 157/158/161/162 (R228): IP spread theme. No.157 applied art as copyrightable fine art (art-vs-utility separability; 实施条例 outside corpus — no link); No.158 departing employee's invention related to former duties belongs to the former employer under a three-way balance test (专利法 art. 6 direct); No.161 Wanglaoji/Jiaduobao false-advertising dispute (反不正当竞争法 2019-ed. art. 8① → 2025-revision art. 9, renumber noted); No.162 Jiangxiaobao agent-registration defense (商标法 2013-ed. art. 15 → 2026-ed. art. 22, renumber noted). Library 227→231 cases; corrected missing pool down to 51.
+
+### Added / 新增
+
 - Guiding-case batch 84/85/115/159 (R227): patent-infringement theme. No.84 presumptive force of the registered manufacturing process in pharma method-patent cases plus multi-channel technical fact-finding (专利法 2008-ed. 59①/61/68① → 2020-ed. 64/66/74 + 民诉法 art. 79 — four links); No.85 design-feature and functional-feature analysis for design patents (art. 64②); No.115 structural features are not "functional features", and conduct preservation must be reviewed alongside a partial judgment (art. 64); No.159 method patents fixed into products by the accused device, plus the evidence-holding sanction on infringement-scale defenses (arts. 1/11/64 — page self-annotated current edition). **MCP top_k cap raised 20→100**: corpus growth pushed the "竞业限制" query past 20 hits and the MCP search_cases cap silently truncated results below the HTTP channel, breaking the parity test — cap raised on all three search tools with descriptions synced, and the parity test now compares full result sets. Library 223→227 cases; corrected missing pool down to 55.
 
 ### Added / 新增
