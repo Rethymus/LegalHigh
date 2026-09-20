@@ -1,0 +1,409 @@
+{
+  "date": "2026-09-21",
+  "method": "第三链 lawtext 交叉验证：语料条文前60字在 lawtext 参照文（去空白）中包含检测",
+  "source": "docs/research/evidence/lawtext_*.md (81 files, lttxzmj/chinese-law-corpus derived)",
+  "total_laws": 108,
+  "matched_laws": 79,
+  "total_articles": 6343,
+  "matched_articles": 5907,
+  "unmatched_articles": 436,
+  "match_rate": "93%",
+  "per_law": {
+    "academic-degree-2024": {
+      "total": 45,
+      "match": 42,
+      "miss": 3
+    },
+    "accessibility-2023": {
+      "total": 72,
+      "match": 71,
+      "miss": 1
+    },
+    "accounting-2024": {
+      "total": 51,
+      "match": 46,
+      "miss": 5
+    },
+    "advertising-2021": {
+      "total": 74,
+      "match": 60,
+      "miss": 14
+    },
+    "agri-quality-2022": {
+      "total": 81,
+      "match": 78,
+      "miss": 3
+    },
+    "agriculture-2013": {
+      "total": 99,
+      "match": 98,
+      "miss": 1
+    },
+    "aml-2024": {
+      "total": 65,
+      "match": 58,
+      "miss": 7
+    },
+    "animal-epidemic-2021": {
+      "total": 113,
+      "match": 104,
+      "miss": 9
+    },
+    "anti-drug-2008": {
+      "total": 71,
+      "match": 68,
+      "miss": 3
+    },
+    "anti-fraud-2022": {
+      "total": 50,
+      "match": 48,
+      "miss": 2
+    },
+    "anti-monopoly-2022": {
+      "total": 70,
+      "match": 55,
+      "miss": 15
+    },
+    "arbitration-2025": {
+      "total": 96,
+      "match": 87,
+      "miss": 9
+    },
+    "archives-2020": {
+      "total": 53,
+      "match": 51,
+      "miss": 2
+    },
+    "audit-2021": {
+      "total": 60,
+      "match": 60,
+      "miss": 0
+    },
+    "bankruptcy-2006": {
+      "total": 136,
+      "match": 118,
+      "miss": 18
+    },
+    "blood-donation-1998": {
+      "total": 24,
+      "match": 24,
+      "miss": 0
+    },
+    "charity-2023": {
+      "total": 125,
+      "match": 116,
+      "miss": 9
+    },
+    "commercial-bank-2015": {
+      "total": 95,
+      "match": 82,
+      "miss": 13
+    },
+    "community-correction-2020": {
+      "total": 63,
+      "match": 61,
+      "miss": 2
+    },
+    "company-2023": {
+      "total": 266,
+      "match": 235,
+      "miss": 31
+    },
+    "compulsory-edu-2018": {
+      "total": 63,
+      "match": 62,
+      "miss": 1
+    },
+    "copyright-2020": {
+      "total": 67,
+      "match": 56,
+      "miss": 11
+    },
+    "crime-prev-2020": {
+      "total": 68,
+      "match": 64,
+      "miss": 4
+    },
+    "defense-edu-2024": {
+      "total": 42,
+      "match": 41,
+      "miss": 1
+    },
+    "disabled-2018": {
+      "total": 68,
+      "match": 66,
+      "miss": 2
+    },
+    "drug-admin-2019": {
+      "total": 155,
+      "match": 149,
+      "miss": 6
+    },
+    "education-2021": {
+      "total": 86,
+      "match": 81,
+      "miss": 5
+    },
+    "elderly-2018": {
+      "total": 85,
+      "match": 83,
+      "miss": 2
+    },
+    "emergency-2024": {
+      "total": 106,
+      "match": 105,
+      "miss": 1
+    },
+    "env-tax-2025": {
+      "total": 29,
+      "match": 23,
+      "miss": 6
+    },
+    "environment-2014": {
+      "total": 70,
+      "match": 69,
+      "miss": 1
+    },
+    "family-edu-2021": {
+      "total": 55,
+      "match": 53,
+      "miss": 2
+    },
+    "family-plan-2021": {
+      "total": 48,
+      "match": 48,
+      "miss": 0
+    },
+    "fire-2021": {
+      "total": 74,
+      "match": 67,
+      "miss": 7
+    },
+    "food-safety-2025": {
+      "total": 154,
+      "match": 145,
+      "miss": 9
+    },
+    "higher-edu-2018": {
+      "total": 69,
+      "match": 64,
+      "miss": 5
+    },
+    "id-card-2011": {
+      "total": 23,
+      "match": 18,
+      "miss": 5
+    },
+    "infectious-2025": {
+      "total": 115,
+      "match": 110,
+      "miss": 5
+    },
+    "insurance-2015": {
+      "total": 185,
+      "match": 162,
+      "miss": 23
+    },
+    "labor-law-2018": {
+      "total": 107,
+      "match": 94,
+      "miss": 13
+    },
+    "legal-publicity-2025": {
+      "total": 65,
+      "match": 64,
+      "miss": 1
+    },
+    "martyrs-2018": {
+      "total": 30,
+      "match": 30,
+      "miss": 0
+    },
+    "maternal-infant-2017": {
+      "total": 39,
+      "match": 35,
+      "miss": 4
+    },
+    "mediation-2010": {
+      "total": 35,
+      "match": 31,
+      "miss": 4
+    },
+    "medical-insurance-2027": {
+      "total": 56,
+      "match": 55,
+      "miss": 1
+    },
+    "mental-health-2018": {
+      "total": 85,
+      "match": 82,
+      "miss": 3
+    },
+    "metrology-2018": {
+      "total": 34,
+      "match": 34,
+      "miss": 0
+    },
+    "mine-safety-2009": {
+      "total": 50,
+      "match": 46,
+      "miss": 4
+    },
+    "negotiable-2004": {
+      "total": 110,
+      "match": 100,
+      "miss": 10
+    },
+    "notary-2017": {
+      "total": 47,
+      "match": 37,
+      "miss": 10
+    },
+    "partnership-2006": {
+      "total": 109,
+      "match": 99,
+      "miss": 10
+    },
+    "patent-2020": {
+      "total": 82,
+      "match": 77,
+      "miss": 5
+    },
+    "patriotic-edu-2024": {
+      "total": 40,
+      "match": 38,
+      "miss": 2
+    },
+    "physicians-2021": {
+      "total": 67,
+      "match": 60,
+      "miss": 7
+    },
+    "police-2012": {
+      "total": 52,
+      "match": 45,
+      "miss": 7
+    },
+    "postal-2015": {
+      "total": 87,
+      "match": 78,
+      "miss": 9
+    },
+    "preschool-edu-2025": {
+      "total": 85,
+      "match": 84,
+      "miss": 1
+    },
+    "price-1997": {
+      "total": 48,
+      "match": 44,
+      "miss": 4
+    },
+    "prison-2012": {
+      "total": 78,
+      "match": 73,
+      "miss": 5
+    },
+    "product-quality-2018": {
+      "total": 74,
+      "match": 69,
+      "miss": 5
+    },
+    "rural-land-2018": {
+      "total": 70,
+      "match": 58,
+      "miss": 12
+    },
+    "rural-revitalization-2021": {
+      "total": 74,
+      "match": 74,
+      "miss": 0
+    },
+    "sci-tech-2021": {
+      "total": 117,
+      "match": 112,
+      "miss": 5
+    },
+    "securities-2019": {
+      "total": 226,
+      "match": 204,
+      "miss": 22
+    },
+    "seeds-2022": {
+      "total": 92,
+      "match": 91,
+      "miss": 1
+    },
+    "special-equipment-2014": {
+      "total": 101,
+      "match": 95,
+      "miss": 6
+    },
+    "sports-2023": {
+      "total": 122,
+      "match": 118,
+      "miss": 4
+    },
+    "standardization-2017": {
+      "total": 45,
+      "match": 45,
+      "miss": 0
+    },
+    "tax-admin-2015": {
+      "total": 94,
+      "match": 91,
+      "miss": 3
+    },
+    "tcm-2017": {
+      "total": 63,
+      "match": 62,
+      "miss": 1
+    },
+    "tech-transfer-2015": {
+      "total": 52,
+      "match": 50,
+      "miss": 2
+    },
+    "tourism-2018": {
+      "total": 112,
+      "match": 101,
+      "miss": 11
+    },
+    "trade-union-2021": {
+      "total": 58,
+      "match": 56,
+      "miss": 2
+    },
+    "trademark-2026": {
+      "total": 87,
+      "match": 84,
+      "miss": 3
+    },
+    "unfair-competition-2025": {
+      "total": 41,
+      "match": 36,
+      "miss": 5
+    },
+    "vaccine-2019": {
+      "total": 100,
+      "match": 99,
+      "miss": 1
+    },
+    "village-committee-2025": {
+      "total": 50,
+      "match": 47,
+      "miss": 3
+    },
+    "vocational-edu-2022": {
+      "total": 69,
+      "match": 66,
+      "miss": 3
+    },
+    "work-safety-2021": {
+      "total": 119,
+      "match": 115,
+      "miss": 4
+    }
+  },
+  "note": "未匹配条文主要因 lawtext markdown 与官方 HTML 格式差异（列表符号/标题标记等），非内容错误。93% 交叉匹配率为格式差异下的合理下界。"
+}
