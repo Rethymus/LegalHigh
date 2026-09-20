@@ -4,6 +4,10 @@
 
 ### Added / 新增
 
+- Guiding-case batch 81/82/113/114 (R226): IP theme. No.81 idea/expression dichotomy and substantive-similarity analysis in copyright (著作权法 art. 2 direct); No.82 bad-faith trademark acquisition and enforcement is right abuse (民诉法 art. 13 + 商标法 2001-ed. 52 → 2013-ed. 57 → corpus 2026-ed. 72, double renumber note); No.113 Jordan name-right case — foreign natural persons' translated names qualify as prior rights, three-condition test, bad-faith registrations cannot invoke settled market order (2013-ed. 32 → 2026-ed. 24; repealed 民法通则/民法总则/侵权责任法 honestly noted); No.114 Madrid-system international registration and the duty to allow cure of formal defects (实施条例 outside corpus — no link). Library 219→223 cases; corrected missing pool down to 59.
+
+### Added / 新增
+
 - Guiding-case batch 149/150/153/171 (R225): construction and third-party-revocation theme. No.149 a corporate branch's independent litigation bars its legal person from third-party revocation (民诉法 56→59 + 民法总则 74②→民法典 74); No.150 mortgagees have standing to challenge priority-right judgments affecting their security (56→59); No.153 the six-month revocation window starts when the debtor's insolvency makes the harm apparent (56→59); No.171 claiming the construction-price priority in enforcement proceedings counts as exercise within the preclusive period (page self-notes 民法典 art. 807 as the current law). Library 215→219 cases; corrected missing pool down to 63.
 
 ### Added / 新增
