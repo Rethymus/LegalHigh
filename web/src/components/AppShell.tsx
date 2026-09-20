@@ -51,6 +51,10 @@ const ROUTE_META: { re: RegExp; crumb: string[]; tone: 'light' | 'dark' }[] = [
   { re: /^\/data-sources/, crumb: ['数据洞察', '数据源状态'], tone: 'light' },
   { re: /^\/audit/, crumb: ['历史记录', '操作审计'], tone: 'light' },
   { re: /^\/settings/, crumb: ['设置'], tone: 'light' },
+  { re: /^\/guide/, crumb: ['使用指南'], tone: 'light' },
+  { re: /^\/terms/, crumb: ['术语卡'], tone: 'light' },
+  { re: /^\/quality/, crumb: ['质量透明度'], tone: 'light' },
+  { re: /^\/process/, crumb: ['流程图解'], tone: 'light' },
 ]
 
 type ToneOverride = 'auto' | 'light' | 'dark'
