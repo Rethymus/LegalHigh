@@ -4,6 +4,10 @@
 
 ### Added / 新增
 
+- Guiding-case batch 118/119/121/123 (R204): execution-procedure theme — all four are Supreme-People's-Court execution reconsideration rulings. No.118 enforcement of a rescission-right judgment against both debtor and transferee; No.119 pre-execution settlement does not bar compulsory application; No.121 custody-cost limits in property-preservation enforcement; No.123 mining-right transfer procedures (cited 民诉法 art. 204 without an edition note — honestly no deep link). The first three link Civil Procedure Law art. 236 (the current 2023-edition number for the execution-conduct objection provision the pages cite as art. 225, verified verbatim in corpus). Library 131→135 cases; missing pool down to 147.
+
+### Added / 新增
+
 - Guiding-case batch 127/128/129/131 (R203): environment/public-interest litigation theme. No.127 marine pollution ("pollutant" not limited to standards-listed substances; official citations — repealed Tort Liability Law and Marine Environment Protection Law not in corpus — honestly no deep link), No.128 light-pollution nuisance (comprehensive tolerance standard; 环保法 art. 42 link), No.129 hazardous-waste ecological damage compensation by provincial government (art. 64 link), No.131 air-pollution public-interest suit (社会组织原告资格 art. 58 link, plus Civil Procedure Law public-interest article relinked to current art. 58 with the 2017-edition art. 55 numbering honestly noted). Library 127→131 cases; the missing pool shrinks to 151.
 
 ### Added / 新增
