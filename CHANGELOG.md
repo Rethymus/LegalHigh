@@ -4,6 +4,10 @@
 
 ### Added / 新增
 
+- Guiding-case batch 67/96/90/58 (R230): civil and administrative spread. No.67 instalment-sale rescission rules do not apply to equity-transfer instalments (合同法 94/167 → 民法典 563/634 successor links); No.96 SOE-restructuring articles of association may validly provide share buy-backs (公司法 2018-ed. arts. 11/35/74 → 2023-revision arts. 5/53/89, renumber notes); No.90 failing to stop for pedestrians at crosswalks is lawfully punishable (道交法 art. 47① direct); No.58 "time-honored brand" false-advertising and honest-use boundaries (商标法 57⑦ → 2026-ed. 72; 反法 art. 2 direct, art. 9 renumber noted). Library 235→239 cases; corrected missing pool down to 43.
+
+### Added / 新增
+
 - Guiding-case batch 37/52/74/78 (R229): maritime-insurance and dispute-resolution theme. No.37 foreign-award enforcement jurisdiction and limitation from the discovery of assets in China (民诉法 239/273 → current 250/304); No.52 "all risks" marine cargo cover includes losses from non-excluded external causes (保险法 art. 30 contra proferentem direct); No.74 a breaching third party counts as "third party damaging the insured subject" for subrogation (art. 60①); No.78 the 3Q-v-Tencent antitrust landmark — relevant-market definition is a tool not an end, SSNIP/SSNDQ tests, market share a rough indicator (反垄断法 2008-ed. arts. 17/18/19 → 2022-revision arts. 22/23/24, renumber noted). Library 231→235 cases; corrected missing pool down to 47.
 
 ### Added / 新增
