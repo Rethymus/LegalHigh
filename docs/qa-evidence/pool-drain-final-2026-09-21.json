@@ -1,0 +1,27 @@
+{
+  "checked_at": "2026-09-21",
+  "channel": "https://www.court.gov.cn/shenpan/gengduo/77.html (15 pages, fetched fresh 2026-09-21)",
+  "index_entries": 278,
+  "library_guiding_cases": 278,
+  "library_total_cases": 281,
+  "missing_with_official_url": [],
+  "missing_count": 0,
+  "pool_drained": true,
+  "index_sha256_sources": [
+    "70d0b20d36ac0737",
+    "817eee29433ed631",
+    "b25223fc3c2010b7",
+    "e3ea22093af741a3",
+    "d6239c3a9499d659",
+    "eb6770297644e738",
+    "096ec6f5fdae73e0",
+    "d05a669304e9513b",
+    "cea68adc8a0345de",
+    "d6f1a9a438de0200",
+    "6d22486daefbe543",
+    "ef191de7eb805f4e",
+    "560efa39b0b33813",
+    "f94b8bbe4b1bfc23",
+    "a03633e624697dd5"
+  ]
+}
