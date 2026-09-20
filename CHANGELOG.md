@@ -8,6 +8,10 @@
 
 ### Added / 新增
 
+- Guiding-case batch 218/219/220/166 (R237): IP finale plus contract spread. No.218 IC layout registrations define scope without disclosure, originality needs explanation not proof (条例 outside corpus — no link); No.219 top-multiple punitive damages for trade-secret infringement "as a business" (反法 2019-ed. 17③ → 2025-ed. art. 22); No.220 the vanillin trade-secret landmark — use of all secrets presumed from complete-process misappropriation, damages by sales profit or price-profit-rate-times-volume (民法典 art. 1168 + 反法 art. 22 per page self-annotation); No.166 settlement-plus-unbonding bad faith bars reduction of agreed penalty (合同法 6/114 → 民法典 7/585, page self-noted). Library 263→267 cases; corrected pool down to 14.
+
+### Added / 新增
+
 - Guiding-case batch 67/96/90/58 (R230): civil and administrative spread. No.67 instalment-sale rescission rules do not apply to equity-transfer instalments (合同法 94/167 → 民法典 563/634 successor links); No.96 SOE-restructuring articles of association may validly provide share buy-backs (公司法 2018-ed. arts. 11/35/74 → 2023-revision arts. 5/53/89, renumber notes); No.90 failing to stop for pedestrians at crosswalks is lawfully punishable (道交法 art. 47① direct); No.58 "time-honored brand" false-advertising and honest-use boundaries (商标法 57⑦ → 2026-ed. 72; 反法 art. 2 direct, art. 9 renumber noted). Library 235→239 cases; corrected missing pool down to 43.
 
 ### Added / 新增
