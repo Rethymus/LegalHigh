@@ -4,6 +4,10 @@
 
 ### Added / 新增
 
+- Guiding-case batch 47/71/95/53 (R232): finance and competition spread. No.47 Ferrero known-gettings — domestic recognition required, full imitation of distinctive trade dress unfair (反法 1993-ed. 5② → 2025-ed. art. 7); No.71 refusal-to-enforce criminal liability runs from judgment effectiveness (刑法 art. 313 direct); No.95 pre-existing debts may join a maximum-mortgage scope within the cap without registration change (物权法 art. 203 → 民法典 art. 420; art. 205 unanchored — honestly omitted); No.53 toll-road franchise revenue rights pledgeable as receivables, enforced by directed payment rather than auction (物权法 223/228① → 民法典 440/445). Library 243→247 cases; corrected missing pool down to 35.
+
+### Added / 新增
+
 - Guiding-case batch 67/96/90/58 (R230): civil and administrative spread. No.67 instalment-sale rescission rules do not apply to equity-transfer instalments (合同法 94/167 → 民法典 563/634 successor links); No.96 SOE-restructuring articles of association may validly provide share buy-backs (公司法 2018-ed. arts. 11/35/74 → 2023-revision arts. 5/53/89, renumber notes); No.90 failing to stop for pedestrians at crosswalks is lawfully punishable (道交法 art. 47① direct); No.58 "time-honored brand" false-advertising and honest-use boundaries (商标法 57⑦ → 2026-ed. 72; 反法 art. 2 direct, art. 9 renumber noted). Library 235→239 cases; corrected missing pool down to 43.
 
 ### Added / 新增
