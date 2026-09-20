@@ -56,6 +56,10 @@
 
 ### Added / 新增
 
+- Guiding-case batch 73/117/126/155 (R239): enforcement and bankruptcy theme, pool programmatically re-audited to exactly 10. No.73 the priority-right period runs from contract termination upon bankruptcy acceptance (合同法 286 → 民法典 807 + 企业破产法 art. 18 direct); No.117 debt-joinder enforceable within the assumed scope and undeliverable commercial acceptance bills do not discharge the debt (民诉法 225 → 236); No.126 continued acceptance of performance after resumption application means the settlement is fully performed — no revival of the original judgment (official art. 204 citation without edition — honestly no link); No.155 pre-mortgage purchasers may bring outsider objection suits without attacking the mortgage (225 → 238). Library 271→275 cases; corrected pool down to 6.
+
+### Added / 新增
+
 - Guiding-case batch 210/211/212/216 (R235): environment public-interest continuation (2022/2023 batches). No.210 negotiated eco-damage agreements get judicial confirmation while unresolved obligors are sued, and pending criminal cases do not stay civil adjudication (民法典 art. 1229 direct); No.211 criminal-case transfer does not rescind administrative penalties, forestry authorities must compel restoration, and off-site restoration requires proof on-site is impossible (森林法/行政处罚法 outside corpus — honestly noted); No.212 cross-district illegal sand-mining jurisdiction and integrated mining-sale trials (长江保护法/刑诉法 outside corpus); No.216 hazardous-waste local authority cannot refuse disposal duty citing out-of-jurisdiction origin (环保法 art. 10 direct). Library 255→259 cases; corrected pool down to 22.
 
 ### Added / 新增
