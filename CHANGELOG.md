@@ -44,6 +44,10 @@
 
 ### Added / 新增
 
+- Guiding-case batch 173/174/177/178 (R236): eco-damage and marine administration. No.173 preventive public-interest suit over a hydropower project threatening an endangered fish habitat (环保法 art. 5 direct); No.174 Five-small-leaf-maple preventive measures ordered (art. 5 direct); No.177 CITES-listed coral and giant-clam transport punishable by marine administration (野保法/条例 outside corpus — honestly noted); No.178 sea-reclamation by independent parties without joint intent punished separately (行政处罚法/海域使用管理法 outside corpus). Library 259→263 cases; corrected pool down to 18.
+
+### Added / 新增
+
 - Guiding-case batch 210/211/212/216 (R235): environment public-interest continuation (2022/2023 batches). No.210 negotiated eco-damage agreements get judicial confirmation while unresolved obligors are sued, and pending criminal cases do not stay civil adjudication (民法典 art. 1229 direct); No.211 criminal-case transfer does not rescind administrative penalties, forestry authorities must compel restoration, and off-site restoration requires proof on-site is impossible (森林法/行政处罚法 outside corpus — honestly noted); No.212 cross-district illegal sand-mining jurisdiction and integrated mining-sale trials (长江保护法/刑诉法 outside corpus); No.216 hazardous-waste local authority cannot refuse disposal duty citing out-of-jurisdiction origin (环保法 art. 10 direct). Library 255→259 cases; corrected pool down to 22.
 
 ### Added / 新增
