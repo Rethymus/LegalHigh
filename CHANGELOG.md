@@ -4,6 +4,10 @@
 
 ### Added / 新增
 
+- Guiding-case batch 61/62/102/103 (R205): criminal/citizen-rights theme. No.61 Prof. Ma Le insider-trading-adjacent case (the Supreme Court's retrial holding that 刑法 art. 180④ incorporates the full penalty range — the "especially serious circumstances" tier applies); No.62 attempt-and-completed-fraud penalty-range selection (art. 23); No.102 DNS hijacking as computer-system sabotage (art. 286); No.103 remote machinery-monitoring systems as protected computer systems (art. 286). All four official citations are current-code article numbers verified verbatim in corpus — direct links, no renumber notes needed. Library 135→139 cases; missing pool down to 143.
+
+### Added / 新增
+
 - Guiding-case batch 118/119/121/123 (R204): execution-procedure theme — all four are Supreme-People's-Court execution reconsideration rulings. No.118 enforcement of a rescission-right judgment against both debtor and transferee; No.119 pre-execution settlement does not bar compulsory application; No.121 custody-cost limits in property-preservation enforcement; No.123 mining-right transfer procedures (cited 民诉法 art. 204 without an edition note — honestly no deep link). The first three link Civil Procedure Law art. 236 (the current 2023-edition number for the execution-conduct objection provision the pages cite as art. 225, verified verbatim in corpus). Library 131→135 cases; missing pool down to 147.
 
 ### Added / 新增
