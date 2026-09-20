@@ -40,6 +40,10 @@
 
 ### Added / 新增
 
+- Guiding-case batch 206/207/208/209 (R234): environment finale, dated 2022-12-30. No.206 offsetting service-function damages against remediation costs paid on behalf of co-polluters, plus remediation-effect evaluation (民法典 arts. 1167/1229 per page self-annotation); No.207 holistic assessment of illegal-mining damage across mountain, forest, water, soil and habitats (环保法 art. 64 + 民法典 art. 1165); No.208 Zhang Yongming sanxinfeng case — damage to natural monuments compensated using contingent-value-method expert assessment when no statutory appraiser exists (环保法 art. 2); No.209 replanting orders qualify as urgent pre-execution (民诉法 art. 109, page-annotated 2017-ed. 106). Library 251→255 cases; corrected pool down to 26.
+
+### Added / 新增
+
 - Guiding-case batch 202/203/204/205 (R233): environment public-interest continuation, dated 2022-12-30. No.202 ship illegal-discharge evidence rules incl. residual-bilge sampling (刑法 art. 338 direct); No.203 necessary-and-proportionate disposal costs count as compensable losses, grossly excessive ones do not (art. 338); No.204 eco-technology-upgrade costs may offset part of damages only beyond mandatory compliance duties (环保法 arts. 36/40① direct); No.205 smuggled solid waste — criminal-acquittal defendants still liable civilly and seizure does not shift disposal costs to enforcement (民法典 arts. 179/187 per page self-annotation). Pool recount correction: prior figure 35 overstated by the URL-less No.45; precise count now 30. Library 247→251 cases.
 
 ### Added / 新增
