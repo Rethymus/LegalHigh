@@ -1,12 +1,45 @@
 [
   {
-    "name": "25-audit",
-    "path": "/audit",
+    "name": "24-data-sources",
+    "path": "/data-sources",
     "consoleErrors": [],
     "consoleWarnings": [],
     "pageErrors": [],
     "failedRequests": [],
-    "finalUrl": "http://localhost:5173/audit",
+    "finalUrl": "http://localhost:5173/data-sources",
+    "title": "LegalHigh · 法律智能知识库"
+  },
+  {
+    "name": "44-quality",
+    "path": "/quality",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "step1": "quality-stats-ok",
+    "finalUrl": "http://localhost:5173/quality",
+    "title": "LegalHigh · 法律智能知识库"
+  },
+  {
+    "name": "43-terms",
+    "path": "/terms",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "step1": "term-refs-ok",
+    "finalUrl": "http://localhost:5173/terms",
+    "title": "LegalHigh · 法律智能知识库"
+  },
+  {
+    "name": "42-guide",
+    "path": "/guide",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "step1": "guide-media-missing:5",
+    "finalUrl": "http://localhost:5173/guide",
     "title": "LegalHigh · 法律智能知识库"
   }
 ]
