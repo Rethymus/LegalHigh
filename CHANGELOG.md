@@ -80,7 +80,7 @@
 
 ### Added / 新增
 
-- Citator citation graph, minimal implementation (R244, narrowing known-gaps #6): `GET /api/citator/graph` aggregates all verified cases' research_refs into a read-only law → article → case view — totals (281 cases / 238 citing / 362 citations / 30 laws cited) plus per-law case and citation counts with per-article case-id lists. The DataSources page gained a "案例-法条引用图谱" card consuming it (totals stat row + top-laws table + the standing no-negative-history disclaimer). Fixed a real counting bug found by the new tests: per-law case counts are deduplicated per case (a case citing several articles of one law counted once), matching `cited_by` exactly. 2 new tests pin totals consistency, sort order, and cross-checks against `cited_by`/`cited_by_article`. 369→371 pytest.
+- Citator citation graph, minimal implementation (R244, narrowing known-gaps #6; visual sweep re-shot the data-sources route, 0 issues): `GET /api/citator/graph` aggregates all verified cases' research_refs into a read-only law → article → case view — totals (281 cases / 238 citing / 362 citations / 30 laws cited) plus per-law case and citation counts with per-article case-id lists. The DataSources page gained a "案例-法条引用图谱" card consuming it (totals stat row + top-laws table + the standing no-negative-history disclaimer). Fixed a real counting bug found by the new tests: per-law case counts are deduplicated per case (a case citing several articles of one law counted once), matching `cited_by` exactly. 2 new tests pin totals consistency, sort order, and cross-checks against `cited_by`/`cited_by_article`. 369→371 pytest.
 
 ### Added / 新增
 
