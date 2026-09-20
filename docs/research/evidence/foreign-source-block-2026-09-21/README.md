@@ -16,3 +16,12 @@ WebFetch 只读通道可定点核验文本（Donoghue Lord Atkin 段已核），
 
 影响面：3 件域外判例（brown-v-board / miranda-v-arizona / donoghue-v-stevenson）。
 中文指导案例 278 件的快照逐字机器门不受影响。
+
+## 补充（同日二次探测）
+
+- **www.loc.gov/item/usrep347483/**（Brown 主站条目页）：
+  WebFetch 通道亦返回 HTTP 403——LOC 主站与 tile 端点同样封阻。
+  Brown/Miranda 的定点核验与原始字节快照均不可得。
+- **Donoghue**：WebFetch 定点核验通过（Lord Atkin 段确认），但 Anubis 挑战
+  使原始字节快照不可得——同类限制。
+- **结论维持**：3 件域外判例逐字机器门为源站反自动化措施导致的外部门控。
