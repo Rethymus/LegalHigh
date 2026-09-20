@@ -4,6 +4,10 @@
 
 ### Added / 新增
 
+- Guiding-case batch 70/64/51/77 (R207): consumer-rights/food-safety theme. No.70 toxic-non-food-substance conviction where the added substance shares equal attributes with the official blacklists (刑法 art. 144 direct link); No.64 telecom format-contract notice duty (official Contract Law art. 39 repealed — linked to its Civil Code successor art. 496 with the repeal noted per civl-2020@1260); No.51 international air-passenger transfer-notice duty (cited 民法通则 and Warsaw/Hague/Guadalajara conventions outside the corpus — honestly no deep link); No.77举报人 plaintiff standing in price-administration litigation (行政诉讼法 arts. 12/25, same numbers in the in-corpus 2017 edition). Library 143→147 cases; missing pool down to 135.
+
+### Added / 新增
+
 - Guiding-case batch 46/48/49/55 (R206): intellectual-property theme. No.46 regional generic-name defense in trademark infringement (the corpus holds the 2026 trademark-law revision effective 2027 — the provision corresponding to the officially cited art. 59 was verified verbatim at art. 73 and linked with both edition notes); No.48 file-format lockout as non-protected technical measure under software copyright (official art. 48①⑥ of the 2010 edition → current art. 53①⑥); No.49 software-infringement burden of proof via design-defect comparison (cited Software Protection Regulation is a regulation outside the corpus — honestly no deep link); No.55 indefinite claim scope defeats infringement claims (official art. 59① → current art. 64①; art. 26 unchanged). Library 139→143 cases; missing pool down to 139.
 
 ### Added / 新增
