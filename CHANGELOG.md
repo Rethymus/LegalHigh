@@ -4,6 +4,10 @@
 
 ### Added / 新增
 
+- Guiding-case batch 164/165/151/148 (R210): corporate/bankruptcy theme. No.164 substantial-consolidation reorganisation with investor trial production (企业破产法 arts. 1/2/26/86 — all four in-corpus, direct links); No.165 substantial-consolidation liquidation for affiliated enterprises with personality commingling (arts. 1/2); No.151 acceptance-bill guarantor standing in a third-party revocation suit against individual-repayment avoidance (民诉法 art. 56 → current art. 59); No.148 shareholders lack standing for third-party revocation of their company's external litigation (art. 56 → 59). Library 155→159 cases; missing pool down to 123.
+
+### Added / 新增
+
 - Guiding-case batch 108/110/111/112 (R209): maritime/admiralty theme. No.108 shipper's right to vary the carriage contract (Contract Law art. 308 → Civil Code art. 829 successor link); No.110 "employed salvage" contracts paid by horsepower-hour regardless of success (arts. 8/107 → 509/577); No.111 issuing bank's pledge over bills of lading (Property Law art. 224 → Civil Code art. 441; Contract Law art. 80① → 546); No.112 "one incident, one limitation fund" rule (officially cites only 海商法 art. 212, outside the corpus — honestly no deep link). Library 151→155 cases; missing pool down to 127.
 
 ### Added / 新增
