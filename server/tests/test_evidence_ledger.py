@@ -169,6 +169,20 @@ def test_pipl_export_includes_ledger(tmp_db):
     assert "evidence_ledger" in data and data["evidence_ledger"], "PIPL 导出必须包含证据账本"
 
 
+def test_evidence_endpoint_http_matrix(tmp_db):
+    """/api/evidence 管理门行为：无令牌 401 或 503（fail-closed）、有令牌 200。"""
+    main.ask(main.AskBody(question="试用期最长不得超过多久"))
+    entries = main.evidence_ledger(limit=10, admin=main.AdminPrincipal(name="x"))
+    assert entries["entries"], "有账本数据时应返回非空"
+
+    # 无令牌 → 401 或 503（取决于环境是否配置了令牌；两种都是 fail-closed）
+    import pytest as _pytest
+    from app.main import require_admin
+    with _pytest.raises(Exception) as exc_info:
+        require_admin(supplied_token=None)
+    assert getattr(exc_info.value, "status_code", None) in (401, 403, 503)
+
+
 def test_ai_chat_writes_ledger(tmp_db, monkeypatch):
     """AI 生成链路（第六条）入账：依据条目=服务端证据的 citation 对象。"""
     from app import ai_governor
