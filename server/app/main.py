@@ -10,6 +10,7 @@ import os as _os
 import secrets
 import sys
 import uuid as _uuid
+from contextlib import asynccontextmanager
 from dataclasses import dataclass
 from datetime import date
 from pathlib import Path
@@ -55,7 +56,28 @@ from app import (  # noqa: E402
 )
 from app.corpus import get_corpus  # noqa: E402
 
-app = FastAPI(title="LegalHigh 原型 API", version="0.1.0")
+@asynccontextmanager
+async def _lifespan(app: FastAPI):
+    """启动期后台任务。LH_WARM_EVALS=1 时预热 /api/evals（全量金标冷算实测约 34s，
+    R200 去重后；/quality 与数据源页首访即触发该端点，不应让使用者等它）。
+
+    默认关闭：pytest 的 TestClient 同样走 lifespan，无条件预热会把全量测试拖慢约 34s。
+    预热失败只记日志——评测卡有「不可用」三态兜底，后台任务不得拖垮服务启动。
+    """
+    if _os.environ.get("LH_WARM_EVALS", "").strip() == "1":
+        import threading as _threading
+
+        def _warm():
+            try:
+                evals()
+            except Exception as exc:  # noqa: BLE001 预热失败不致命
+                print(f"[warm] /api/evals 预热失败：{exc}", file=sys.stderr)
+
+        _threading.Thread(target=_warm, name="warm-evals", daemon=True).start()
+    yield
+
+
+app = FastAPI(title="LegalHigh 原型 API", version="0.1.0", lifespan=_lifespan)
 
 # 本机原型没有账号/会话系统。任何会读写用户数据、写审核结果或调用外部模型的
 # 接口必须默认关闭，不能把请求体中的 actor/role 当作身份凭据。启用时由启动环境
@@ -969,14 +991,18 @@ def evals():
     gold_path = Path(__file__).resolve().parent.parent / "tests" / "gold" / "gold_retrieval.json"
     corpus = get_corpus()
     gold = _json.loads(gold_path.read_text(encoding="utf-8"))
+    # 每题只检索一次（top_k=20）；top-5 口径一律取其前 5——BM25 打分独立于 top_k，
+    # search 确定性排序下 res20[:5] ≡ search(top_k=5)。此前三遍扫描（5/20/5）在
+    # 金标/语料双扩张后冷启动实测 278s（R200 记录），去重后约 1/3。
+    res20_by_case = [corpus.search(g["question"], top_k=20) for g in gold["cases"]]
     items = []
     hits = 0
     rr_sum = 0.0
     prec_sum = 0.0
     rank1 = 0
     gap_items = []  # 词法鸿沟子集（S5-T2）：note 带鸿沟/改题实录的金标，量化「口语问法」的真实代价
-    for g in gold["cases"]:
-        res = corpus.search(g["question"], top_k=5)
+    for i, g in enumerate(gold["cases"]):
+        res = res20_by_case[i][:5]
         got = [(r["law_id"], r["no"], r.get("sub") or "") for r in res]
         expected = [(e["law_id"], e["no"], e.get("sub", "")) for e in g["expect"]]
         rank = None
@@ -1011,9 +1037,8 @@ def evals():
 
     recall20 = 0
     ndcg_sum = 0.0
-    for g in gold["cases"]:
-        res20 = corpus.search(g["question"], top_k=20)
-        keys20 = [(r["law_id"], r["no"], r.get("sub") or "") for r in res20]
+    for i, g in enumerate(gold["cases"]):
+        keys20 = [(r["law_id"], r["no"], r.get("sub") or "") for r in res20_by_case[i]]
         expected = [(e["law_id"], e["no"], e.get("sub", "")) for e in g["expect"]]
         if any(k in expected for k in keys20):
             recall20 += 1
@@ -1045,8 +1070,8 @@ def evals():
 
     entity_total = entity_ok = 0
     entity_fields = ("law_status", "effective_date", "source_url", "label")
-    for g in gold["cases"]:
-        for r in corpus.search(g["question"], top_k=5):
+    for i, g in enumerate(gold["cases"]):
+        for r in res20_by_case[i][:5]:
             entity_total += 1
             if all(r.get(f) for f in entity_fields):
                 entity_ok += 1

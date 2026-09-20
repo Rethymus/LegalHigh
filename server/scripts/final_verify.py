@@ -81,7 +81,7 @@ def _cleanup():
 atexit.register(_cleanup)
 
 
-def call(method: str, path: str, body: dict | None = None):
+def call(method: str, path: str, body: dict | None = None, timeout: int = 10):
     if not path.startswith("/"):
         raise ValueError("path 必须以 / 开头")
     if _client is not None:
@@ -95,7 +95,7 @@ def call(method: str, path: str, body: dict | None = None):
                                  headers={"Content-Type": "application/json",
                                           "X-LegalHigh-Admin-Token": _admin_token})
     try:
-        with urllib.request.urlopen(req, timeout=10) as r:
+        with urllib.request.urlopen(req, timeout=timeout) as r:
             return r.status, json.loads(r.read().decode())
     except urllib.error.HTTPError as e:
         return e.code, json.loads(e.read().decode())
@@ -135,7 +135,9 @@ print(f"[premise] 扣证件 → {p['rule_id']} @lcl-2012 ->", "PASS" if c4 else 
 ok &= c4
 
 # --- 评测指标 ---
-st, d = call("GET", "/api/evals")
+# 冷进程首调 /api/evals 需全量金标 BM25 复算（541 组 × 108 部语料，去重后实测约 95s，
+# R200 前为 278s）——10s 默认超时会误杀，此处放宽为 420s。
+st, d = call("GET", "/api/evals", timeout=420)
 c5 = d["case_count"] >= 100 and d["hit_at_5"] >= 0.90
 print(f"[evals] {d['case_count']} 组 hit@5={d['hit_at_5']} MRR={d['mrr']} ->", "PASS" if c5 else "FAIL")
 ok &= c5
