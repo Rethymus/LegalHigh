@@ -4,6 +4,10 @@
 
 ### Added / 新增
 
+- Guiding-case batch 228/229/140/141 (R213): family/minors theme. No.228 custody infringement during separation with reference to post-divorce rules (民法典 arts. 34/1058/1084/1086 + 未成年人保护法 arts. 4/24 — six direct links, the densest entry so far); No.229 grandparents' visitation of grandchildren under the best-interests principle (arts. 10/1043/1045/1086); No.140 fruit-tree picking self-injury beyond the bounds of safety-duty (侵权责任法 art. 37① → Civil Code art. 1198 successor); No.141 a spillway pool is not a "public place" (same successor link). One bookkeeping correction: 227 was found already in the library — its 「指导性案例」 number format had evaded the missing-pool regex, so all prior pool counts were overstated by one; regex now matches both formats and the corrected pool is 110. Library 167→171 cases.
+
+### Added / 新增
+
 - Guiding-case batch 198/199/200/235 (R212): arbitration/recognition theme. No.198 actual constructors are not bound by the employer-contractor arbitration clause (仲裁法 art. 58 → 2025 revision art. 71); No.199 awarding bitcoin-equivalent damages in fiat violates public interest and the award was set aside (same article); No.200 ad-hoc tribunal under a "fast arbitration" clause is not a New York Convention refusal ground (Civil Procedure Law — the deepest cross-edition chain yet: official citation 2017-ed. art. 283, the page's own "current" note 290 is the 2021-ed. number, corpus-verified 2023-ed. art. 304); No.235 reciprocal recognition of foreign judgments without a prior reciprocal precedent (2021-ed. 289 → corpus art. 299, page self-annotated). Library 163→167 cases; missing pool down to 115.
 
 ### Added / 新增
