@@ -4,6 +4,10 @@
 
 ### Added / 新增
 
+- Guiding-case batch 251/252/253/254 (R219): execution-implementation theme — the SPC's newest guiding-case category, with a different page layout (「执行实施要点/执行结果」 sections instead of judgment sections; text taken verbatim from those). No.251 escalated supervision of conduct-obligation enforcement in IP cases with technology-licence-fee settlements (民诉法 art. 237); No.252 centralized designation of same-debtor series cases (art. 38); No.253 designation of the property-locus court when assets are remote (art. 235; page self-annotates the 2021-edition number); No.254 preservation-fund transfer implementation (art. 106). Library 191→195 cases; corrected missing pool down to 86.
+
+### Added / 新增
+
 - Guiding-case batch 135/136/137/138 (R218): environment finale — with R203+R211 the corpus now covers all of guiding cases 127–141. No.135 adverse inference where the defendant refuses to disclose hazardous-waste disposal information (固废法 outside corpus — no link); No.136 civil and administrative environmental public-interest suits tried separately but jointly decided (行政诉讼法 art. 61 direct); No.137 the effectiveness standard for reviewing administrative omission in environmental public-interest suits (arts. 70/74 direct; Forest Law outside corpus noted); No.138 concealed-pipe discharge is punishable even when effluent meets standards (Water Pollution Law outside corpus — no link). Library 187→191 cases; corrected missing pool down to 90.
 
 ### Added / 新增
