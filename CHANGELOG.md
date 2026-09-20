@@ -4,6 +4,10 @@
 
 ### Added / 新增
 
+- Guiding-case batch 132/133/134/139 (R211): environment continuation. No.132 voluntary pollution-control upgrades may mitigate liability in public-interest suits (环保法 arts. 1/4/5 direct links); No.133 a water body's self-purification capacity is no ground to escape restoration liability (art. 64 direct; repealed Tort Liability Law citations noted per civl-2020@1260); No.134 stop-injunction can compel a fresh environmental-impact assessment before resuming production (cited EIA Law and Water Pollution Law outside corpus — honestly no link); No.139 heavier-penalty statute applies where odor from solid-waste storage exceeds air-emission standards (art. 10 direct; Air Pollution and Solid Waste laws outside corpus noted). Library 159→163 cases; missing pool down to 119.
+
+### Added / 新增
+
 - Guiding-case batch 164/165/151/148 (R210): corporate/bankruptcy theme. No.164 substantial-consolidation reorganisation with investor trial production (企业破产法 arts. 1/2/26/86 — all four in-corpus, direct links); No.165 substantial-consolidation liquidation for affiliated enterprises with personality commingling (arts. 1/2); No.151 acceptance-bill guarantor standing in a third-party revocation suit against individual-repayment avoidance (民诉法 art. 56 → current art. 59); No.148 shareholders lack standing for third-party revocation of their company's external litigation (art. 56 → 59). Library 155→159 cases; missing pool down to 123.
 
 ### Added / 新增
