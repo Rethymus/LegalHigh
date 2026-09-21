@@ -3420,5 +3420,173 @@
     "source_title": "",
     "source_url": "",
     "statutes": []
+  },
+  {
+    "cat": "经济法",
+    "term": "种子",
+    "explain": "种子是指农作物和林木的种植材料或繁殖材料。从事品种选育、种子生产经营和管理等活动适用种子法。",
+    "refs": [
+      {
+        "law_id": "seeds-2022",
+        "art": "2",
+        "label": "《种子法》第2条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "经济法",
+    "term": "植物新品种权",
+    "explain": "植物新品种权所有人对其授权品种享有排他的独占权，可将品种权许可他人实施并按约定收取许可使用费。",
+    "refs": [
+      {
+        "law_id": "seeds-2022",
+        "art": "28",
+        "label": "《种子法》第28条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "行政",
+    "term": "爱国主义教育",
+    "explain": "国家在全体人民中开展爱国主义教育，赓续传承中华文明和中华民族精神，增强民族凝聚力和向心力。",
+    "refs": [
+      {
+        "law_id": "patriotic-edu-2024",
+        "art": "2",
+        "label": "《爱国主义教育法》第2条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "行政",
+    "term": "学校爱国主义教育",
+    "explain": "各级各类学校应将爱国主义教育内容融入校园文化和各类主题活动，组织学生参观爱国主义教育基地。",
+    "refs": [
+      {
+        "law_id": "patriotic-edu-2024",
+        "art": "16",
+        "label": "《爱国主义教育法》第16条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "社会法",
+    "term": "母婴保健服务",
+    "explain": "各级政府应领导母婴保健工作，将其纳入国民经济和社会发展计划，为母婴保健事业发展提供保障。",
+    "refs": [
+      {
+        "law_id": "maternal-infant-2017",
+        "art": "3",
+        "label": "《母婴保健法》第3条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "社会法",
+    "term": "孕产期保健",
+    "explain": "医疗保健机构应为育龄妇女和孕产妇提供孕产期保健服务，包括母婴保健指导、孕妇产妇保健、胎儿保健和新生儿保健。",
+    "refs": [
+      {
+        "law_id": "maternal-infant-2017",
+        "art": "14",
+        "label": "《母婴保健法》第14条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "行政",
+    "term": "科技自立自强",
+    "explain": "国家坚持科技创新在国家现代化建设全局中的核心地位，把科技自立自强作为国家发展的战略支撑。",
+    "refs": [
+      {
+        "law_id": "sci-tech-2021",
+        "art": "2",
+        "label": "《科学技术进步法》第2条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "行政",
+    "term": "科技人才尊重",
+    "explain": "科学技术人员是社会主义现代化建设事业的重要人才力量，应受到全社会的尊重。国家坚持人才引领发展的战略地位。",
+    "refs": [
+      {
+        "law_id": "sci-tech-2021",
+        "art": "10",
+        "label": "《科学技术进步法》第10条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
   }
 ]
