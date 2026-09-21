@@ -3268,5 +3268,157 @@
     "source_title": "",
     "source_url": "",
     "statutes": []
+  },
+  {
+    "cat": "社会法",
+    "term": "村民委员会",
+    "explain": "村民委员会是村民自我管理、自我服务、自我教育、自我监督的基层群众性自治组织，实行民主选举、民主协商、民主决策、民主管理、民主监督。",
+    "refs": [
+      {
+        "law_id": "village-committee-2025",
+        "art": "2",
+        "label": "《村民委员会组织法》第2条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "社会法",
+    "term": "村务移交",
+    "explain": "新一届村民委员会产生之日起十日内完成工作移交，由村民选举委员会主持，乡镇政府监督。",
+    "refs": [
+      {
+        "law_id": "village-committee-2025",
+        "art": "24",
+        "label": "《村民委员会组织法》第24条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "刑事",
+    "term": "社区矫正",
+    "explain": "对被判处管制、宣告缓刑、假释和暂予监外执行的罪犯依法实行社区矫正，监督管理与教育帮扶相结合。",
+    "refs": [
+      {
+        "law_id": "community-correction-2020",
+        "art": "2",
+        "label": "《社区矫正法》第2条"
+      },
+      {
+        "law_id": "community-correction-2020",
+        "art": "3",
+        "label": "《社区矫正法》第3条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "经济法",
+    "term": "纳税申报",
+    "explain": "纳税人必须按法定期限和内容如实办理纳税申报，报送纳税申报表、财务会计报表等资料。",
+    "refs": [
+      {
+        "law_id": "tax-admin-2015",
+        "art": "25",
+        "label": "《税收征收管理法》第25条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "经济法",
+    "term": "滞纳金",
+    "explain": "纳税人未按期缴纳税款的，税务机关除责令限期缴纳外，从滞纳税款之日起按日加收滞纳税款万分之五的滞纳金。",
+    "refs": [
+      {
+        "law_id": "tax-admin-2015",
+        "art": "32",
+        "label": "《税收征收管理法》第32条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "经济法",
+    "term": "农产品产地监测",
+    "explain": "国家建立健全农产品产地监测制度，县级以上农业农村主管部门制定农产品产地监测计划，监测产地环境质量。",
+    "refs": [
+      {
+        "law_id": "agri-quality-2022",
+        "art": "20",
+        "label": "《农产品质量安全法》第20条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "经济法",
+    "term": "农业投入品使用记录",
+    "explain": "农产品生产企业、合作社等应建立农产品生产记录，如实记载农业投入品名称、来源、用法用量和使用日期。",
+    "refs": [
+      {
+        "law_id": "agri-quality-2022",
+        "art": "27",
+        "label": "《农产品质量安全法》第27条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
   }
 ]

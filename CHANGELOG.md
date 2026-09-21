@@ -80,6 +80,8 @@
 
 - 8 more term cards for TCM/metrology/standardization/tech-transfer laws (R264): 中医药法 (中医药事业 art.3, 学术传承 art.42), 计量法 (计量器具管理 art.2, 社会公用计量标准 art.9), 标准化法 (标准化要求 art.2, 强制性标准实施 art.25), 促进科技成果转化法 (科技成果转化定义 art.2, 转化方式 art.16). Term card count 149→157, citations 154→162, covering 79 of 108 laws.
 
+- 7 more term cards for village-governance/community-correction/tax/agri-quality laws (R268): 村民委员会组织法 (村民委员会 art.2, 村务移交 art.24), 社区矫正法 (社区矫正 art.2+3, 双引用), 税收征收管理法 (纳税申报 art.25, 滞纳金 art.32), 农产品质量安全法 (产地监测 art.20, 投入品使用记录 art.27). Term card count 180→187, citations 186→194, covering 55 of 108 laws.
+
 - 7 more term cards for martyrs/AML/preschool/agriculture laws (R267): 英雄烈士保护法 (英烈保护 art.2+25, 双引用), 反洗钱法 (反洗钱定义 art.2, 特别预防措施 art.40), 学前教育法 (学前教育定义 art.2, 普及普惠 art.7), 农业法 (农业基本制度 art.2, 科教兴农 art.6). Term card count 173→180, citations 178→186, covering 91 of 108 laws.
 
 - 8 more term cards for disability/family-education/bankruptcy/education laws (R263): 残疾人保障法 (残疾人平等权利 art.3, 福利性单位保护 art.38), 家庭教育促进法 (家庭教育立德树人 art.3, 基本要求 art.5), 企业破产法 (破产原因 art.2, 破产申请 art.7), 教育法 (受教育平等权 art.9, 学前教育普及 art.18). Term card count 141→149, citations 146→154, covering 75 of 108 laws.
