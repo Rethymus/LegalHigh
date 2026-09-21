@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-21T20:09:44.511721",
+  "built_at": "2026-09-21T23:35:55.830326",
   "fetch_date": "2026-09-08",
   "laws": [
     {
@@ -2078,7 +2078,7 @@
       "snapshot": "docs/research/evidence/lawtext_法治宣传教育法2025.md",
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "40cb75685fad75596949c72062b2f6af804aa12775e14a9fdf7344d10e2031c6",
-      "output_sha256": "4b83162b0c225af7d4f62bb54503b9e0a198b3d9b108e3f533548a2bc9361466"
+      "output_sha256": "c970fa5f42c325a727ed83d9ffff062c0706f5b4da8861d7a7f7186e1374f4e2"
     },
     {
       "law_id": "defense-edu-2024",
