@@ -2444,5 +2444,173 @@
     "source_title": "",
     "source_url": "",
     "statutes": []
+  },
+  {
+    "cat": "社会法",
+    "term": "残疾人平等权利",
+    "explain": "残疾人在政治、经济、文化、社会和家庭生活等方面享有同其他公民平等的权利。禁止基于残疾的歧视。",
+    "refs": [
+      {
+        "law_id": "disabled-2018",
+        "art": "3",
+        "label": "《残疾人保障法》第3条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "社会法",
+    "term": "残疾人福利性单位保护",
+    "explain": "国家保护残疾人福利性单位的财产所有权和经营自主权。职工招用、晋级、职称评定等方面不得歧视残疾人。",
+    "refs": [
+      {
+        "law_id": "disabled-2018",
+        "art": "38",
+        "label": "《残疾人保障法》第38条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "社会法",
+    "term": "家庭教育立德树人",
+    "explain": "家庭教育以立德树人为根本任务，弘扬中华民族优秀传统文化，促进未成年人健康成长。",
+    "refs": [
+      {
+        "law_id": "family-edu-2021",
+        "art": "3",
+        "label": "《家庭教育促进法》第3条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "社会法",
+    "term": "家庭教育基本要求",
+    "explain": "家庭教育应尊重未成年人身心发展规律和个体差异，尊重人格尊严，保护隐私权和个人信息。",
+    "refs": [
+      {
+        "law_id": "family-edu-2021",
+        "art": "5",
+        "label": "《家庭教育促进法》第5条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "经济法",
+    "term": "破产原因",
+    "explain": "企业法人不能清偿到期债务且资产不足以清偿全部债务或明显缺乏清偿能力的，可依照企业破产法清理债务或重整。",
+    "refs": [
+      {
+        "law_id": "bankruptcy-2006",
+        "art": "2",
+        "label": "《企业破产法》第2条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "经济法",
+    "term": "破产申请",
+    "explain": "债务人不能清偿到期债务可向法院提出重整、和解或破产清算申请；债权人也可向法院申请对债务人重整或破产清算。",
+    "refs": [
+      {
+        "law_id": "bankruptcy-2006",
+        "art": "7",
+        "label": "《企业破产法》第7条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "行政",
+    "term": "受教育平等权",
+    "explain": "公民不分民族、种族、性别、职业、财产状况、宗教信仰等，依法享有平等的受教育机会。",
+    "refs": [
+      {
+        "law_id": "education-2021",
+        "art": "9",
+        "label": "《教育法》第9条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "行政",
+    "term": "学前教育普及",
+    "explain": "国家制定学前教育标准，加快普及学前教育，构建覆盖城乡特别是农村的学前教育公共服务体系。",
+    "refs": [
+      {
+        "law_id": "education-2021",
+        "art": "18",
+        "label": "《教育法》第18条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
   }
 ]

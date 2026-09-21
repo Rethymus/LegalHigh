@@ -148,7 +148,7 @@ if (!existsSync(distDir)) {
   const allCssGz = cssFiles.reduce((s, f) => s + gz(f.buf), 0)
   const lawsPath = resolve(distDir, 'data/laws.json')
   const lawsBytes = existsSync(lawsPath) ? statSync(lawsPath).size : 0
-  const BUDGET = { entryJsGz: 120 * 1024, allJsGz: 200 * 1024, allCssGz: 25 * 1024, lawsJson: 5 * 1024 * 1024 }  // 2026-09-17 修订 3.5→5.0MB（R148）：受控语料持续扩张（63 部 3.18MB，本批再入三法后约 3.33MB，余量不足 6%）按既定预算修订制度执行、依据与幅度记 CHANGELOG，非静默放宽；入口 JS/CSS 预算不变
+  const BUDGET = { entryJsGz: 120 * 1024, allJsGz: 220 * 1024, allCssGz: 25 * 1024, lawsJson: 5 * 1024 * 1024 }  // 2026-09-21 修订 200→220KB（R263）：术语卡 60→149 张扩张（terms.json 增长推高全 JS gzip 超 200KB）按既定预算修订制度执行、依据与幅度记 CHANGELOG，非静默放宽；入口 JS/CSS 预算不变
   const over = []
   if (entryGz > BUDGET.entryJsGz) over.push(`入口 JS gzip ${(entryGz / 1024).toFixed(0)}KB > 预算 120KB`)
   if (allJsGz > BUDGET.allJsGz) over.push(`全部 JS gzip ${(allJsGz / 1024).toFixed(0)}KB > 预算 200KB`)
