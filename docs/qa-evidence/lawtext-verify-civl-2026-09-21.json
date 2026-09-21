@@ -1,0 +1,12 @@
+{
+  "law": "civl-2020（中华人民共和国民法典）",
+  "third_chain": "lawtext/laws content/法律/ff808081729d1efe01729d50b5c500bf.md（flk DOCX 衍生社区转录，与 Wikisource 语料源上游独立）",
+  "snapshot": "docs/research/evidence/lawtext-civl-2020-ff808081729d1efe01729d50b5c500bf.md",
+  "articles_compared": 1260,
+  "label_mismatches": 0,
+  "body_mismatch_count": 0,
+  "normalization": "空白归一 + 强调标记剥离 + 全局枚举前 bullet 剥离（行中亦含）",
+  "body_mismatches_sample": [],
+  "conclusion": "1260/1260 条号与正文全一致（第三链文本级核验通过）",
+  "checked_at": "2026-09-21"
+}
