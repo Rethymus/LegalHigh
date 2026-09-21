@@ -1,0 +1,110 @@
+[
+  {
+    "law_id": "pipl-2021",
+    "result": "74/74 条号与正文全一致（第三链文本级核验通过）",
+    "report": "F:\\ZCodeData\\LegalHigh\\docs\\qa-evidence\\lawtext-verify-3rd-pipl-2021.json"
+  },
+  {
+    "law_id": "lcar-2007",
+    "result": "54/54 条号与正文全一致（第三链文本级核验通过）",
+    "report": "F:\\ZCodeData\\LegalHigh\\docs\\qa-evidence\\lawtext-verify-3rd-lcar-2007.json"
+  },
+  {
+    "law_id": "lcl-2012",
+    "result": "98/98 条号与正文全一致（第三链文本级核验通过）",
+    "report": "F:\\ZCodeData\\LegalHigh\\docs\\qa-evidence\\lawtext-verify-3rd-lcl-2012.json"
+  },
+  {
+    "law_id": "dv-2015",
+    "result": "38/38 条号与正文全一致（第三链文本级核验通过）",
+    "report": "F:\\ZCodeData\\LegalHigh\\docs\\qa-evidence\\lawtext-verify-3rd-dv-2015.json"
+  },
+  {
+    "law_id": "scl-2012",
+    "result": "存在差异：条号 0、正文 2",
+    "report": "F:\\ZCodeData\\LegalHigh\\docs\\qa-evidence\\lawtext-verify-3rd-scl-2012.json"
+  },
+  {
+    "law_id": "women-2022",
+    "result": "86/86 条号与正文全一致（第三链文本级核验通过）",
+    "report": "F:\\ZCodeData\\LegalHigh\\docs\\qa-evidence\\lawtext-verify-3rd-women-2022.json"
+  },
+  {
+    "law_id": "ll-2017",
+    "result": "60/60 条号与正文全一致（第三链文本级核验通过）",
+    "report": "F:\\ZCodeData\\LegalHigh\\docs\\qa-evidence\\lawtext-verify-3rd-ll-2017.json"
+  },
+  {
+    "law_id": "dsl-2021",
+    "result": "55/55 条号与正文全一致（第三链文本级核验通过）",
+    "report": "F:\\ZCodeData\\LegalHigh\\docs\\qa-evidence\\lawtext-verify-3rd-dsl-2021.json"
+  },
+  {
+    "law_id": "minor-2024",
+    "result": "存在差异：条号 0、正文 1",
+    "report": "F:\\ZCodeData\\LegalHigh\\docs\\qa-evidence\\lawtext-verify-3rd-minor-2024.json"
+  },
+  {
+    "law_id": "psm-2025",
+    "result": "144/144 条号与正文全一致（第三链文本级核验通过）",
+    "report": "F:\\ZCodeData\\LegalHigh\\docs\\qa-evidence\\lawtext-verify-3rd-psm-2025.json"
+  },
+  {
+    "law_id": "legal-aid-2021",
+    "result": "71/71 条号与正文全一致（第三链文本级核验通过）",
+    "report": "F:\\ZCodeData\\LegalHigh\\docs\\qa-evidence\\lawtext-verify-3rd-legal-aid-2021.json"
+  },
+  {
+    "law_id": "cl-2013",
+    "result": "63/63 条号与正文全一致（第三链文本级核验通过）",
+    "report": "F:\\ZCodeData\\LegalHigh\\docs\\qa-evidence\\lawtext-verify-3rd-cl-2013.json"
+  },
+  {
+    "law_id": "ecom-2018",
+    "result": "89/89 条号与正文全一致（第三链文本级核验通过）",
+    "report": "F:\\ZCodeData\\LegalHigh\\docs\\qa-evidence\\lawtext-verify-3rd-ecom-2018.json"
+  },
+  {
+    "law_id": "social-ins-2018",
+    "result": "存在差异：条号 0、正文 3",
+    "report": "F:\\ZCodeData\\LegalHigh\\docs\\qa-evidence\\lawtext-verify-3rd-social-ins-2018.json"
+  },
+  {
+    "law_id": "csl-2025",
+    "result": "条数不一致：语料 81 vs 快照标题 79——位置配对中止",
+    "report": "F:\\ZCodeData\\LegalHigh\\docs\\qa-evidence\\lawtext-verify-3rd-csl-2025.json"
+  },
+  {
+    "law_id": "penal-2021",
+    "result": "86/86 条号与正文全一致（第三链文本级核验通过）",
+    "report": "F:\\ZCodeData\\LegalHigh\\docs\\qa-evidence\\lawtext-verify-3rd-penal-2021.json"
+  },
+  {
+    "law_id": "admin-review-2023",
+    "result": "90/90 条号与正文全一致（第三链文本级核验通过）",
+    "report": "F:\\ZCodeData\\LegalHigh\\docs\\qa-evidence\\lawtext-verify-3rd-admin-review-2023.json"
+  },
+  {
+    "law_id": "admin-litigation-2017",
+    "result": "103/103 条号与正文全一致（第三链文本级核验通过）",
+    "report": "F:\\ZCodeData\\LegalHigh\\docs\\qa-evidence\\lawtext-verify-3rd-admin-litigation-2017.json"
+  },
+  {
+    "law_id": "wlxf-2022",
+    "result": "NOT-LOCATED"
+  },
+  {
+    "law_id": "htjs-2023",
+    "result": "存在差异：条号 0、正文 7",
+    "report": "F:\\ZCodeData\\LegalHigh\\docs\\qa-evidence\\lawtext-verify-3rd-htjs-2023.json"
+  },
+  {
+    "law_id": "crpl-imp-2024",
+    "result": "53/53 条号与正文全一致（第三链文本级核验通过）",
+    "report": "F:\\ZCodeData\\LegalHigh\\docs\\qa-evidence\\lawtext-verify-3rd-crpl-imp-2024.json"
+  },
+  {
+    "law_id": "genai-2023",
+    "result": "NOT-LOCATED"
+  }
+]

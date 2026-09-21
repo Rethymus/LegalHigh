@@ -1,0 +1,13 @@
+{
+  "law": "ecom-2018（中华人民共和国电子商务法）",
+  "third_chain": "lawtext/laws lawtext-ecom-2018-2c909fdd678bf17901678bf8af050b81.md（flk DOCX 衍生社区转录，与语料构建源上游独立）",
+  "snapshot": "docs/research/evidence/lawtext-ecom-2018-2c909fdd678bf17901678bf8af050b81.md",
+  "corpus_articles": 89,
+  "snapshot_headings": 89,
+  "checked_at": "2026-09-21",
+  "label_mismatch_count": 0,
+  "body_mismatch_count": 0,
+  "label_mismatches": [],
+  "body_mismatches": [],
+  "conclusion": "89/89 条号与正文全一致（第三链文本级核验通过）"
+}

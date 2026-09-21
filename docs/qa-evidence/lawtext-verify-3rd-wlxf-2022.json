@@ -1,0 +1,13 @@
+{
+  "law": "wlxf-2022（最高人民法院关于审理网络消费纠纷案件适用法律若干问题的规定（一））",
+  "third_chain": "lawtext/laws lawtext-wlxf-2022-ff80818181cdd7a70181d65a7e48303f.md（flk DOCX 衍生社区转录，与语料构建源上游独立）",
+  "snapshot": "..\\docs\\research\\evidence\\lawtext-wlxf-2022-ff80818181cdd7a70181d65a7e48303f.md",
+  "corpus_articles": 20,
+  "snapshot_headings": 20,
+  "checked_at": "2026-09-21",
+  "label_mismatch_count": 0,
+  "body_mismatch_count": 0,
+  "label_mismatches": [],
+  "body_mismatches": [],
+  "conclusion": "20/20 条号与正文全一致（第三链文本级核验通过）"
+}

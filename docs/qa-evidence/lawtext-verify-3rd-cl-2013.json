@@ -1,0 +1,13 @@
+{
+  "law": "cl-2013（中华人民共和国消费者权益保护法）",
+  "third_chain": "lawtext/laws lawtext-cl-2013-2c909fdd678bf17901678bf7670606ef.md（flk DOCX 衍生社区转录，与语料构建源上游独立）",
+  "snapshot": "docs/research/evidence/lawtext-cl-2013-2c909fdd678bf17901678bf7670606ef.md",
+  "corpus_articles": 63,
+  "snapshot_headings": 63,
+  "checked_at": "2026-09-21",
+  "label_mismatch_count": 0,
+  "body_mismatch_count": 0,
+  "label_mismatches": [],
+  "body_mismatches": [],
+  "conclusion": "63/63 条号与正文全一致（第三链文本级核验通过）"
+}

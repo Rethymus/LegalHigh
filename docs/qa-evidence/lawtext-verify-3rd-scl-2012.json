@@ -1,0 +1,27 @@
+{
+  "law": "scl-2012（中华人民共和国国家赔偿法）",
+  "third_chain": "lawtext/laws lawtext-scl-2012-2c909fdd678bf17901678bf74c26069f.md（flk DOCX 衍生社区转录，与语料构建源上游独立）",
+  "snapshot": "docs/research/evidence/lawtext-scl-2012-2c909fdd678bf17901678bf74c26069f.md",
+  "corpus_articles": 42,
+  "snapshot_headings": 42,
+  "checked_at": "2026-09-21",
+  "label_mismatch_count": 0,
+  "body_mismatch_count": 2,
+  "label_mismatches": [],
+  "body_mismatches": [
+    {
+      "pos": 13,
+      "label": "第十三条",
+      "corpus_head": "赔偿义务机关应当自收到申请之日起两个月内,作出是否赔偿的决定。赔偿义务机关作出赔偿决定,应当充分听取赔偿请求人的意见,并可以与赔偿请求人就赔",
+      "snapshot_head": "赔偿义务机关应当自收到申请之日起两个月内,作出是否赔偿的决定,赔偿义务机关作出赔偿决定,应当充分听取赔偿请求人的意见,并可以与赔偿请求人就赔"
+    },
+    {
+      "pos": 37,
+      "label": "第三十七条",
+      "corpus_head": "赔偿费用列入各级财政预算。赔偿请求人凭生效的判决书、复议决定书、赔偿决定书或者调解书,向赔偿义务机关申请支付赔偿金。赔偿义务机关应当自收到支",
+      "snapshot_head": "赔偿费用列入各级财政预算。赔偿请求人凭生效的判决书、复议决定书、赔偿决定书或者调解书,向赔偿义务机关申请支付赔偿金。赔偿义务机关应当自收到支"
+    }
+  ],
+  "conclusion": "存在差异：条号 0、正文 2",
+  "note": "2 处均为句读标点差异（语料「决定。/申请。」vs 快照「决定,/申请,」）——语义无差、孰为官方原文不确定（快照为 flk DOCX 衍生转录、语料为 Wikisource 源，两谱系各执一词），按「不臆改」注记待 flk 原文终验。"
+}

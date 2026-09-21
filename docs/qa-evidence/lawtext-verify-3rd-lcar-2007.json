@@ -1,0 +1,13 @@
+{
+  "law": "lcar-2007（中华人民共和国劳动争议调解仲裁法）",
+  "third_chain": "lawtext/laws lawtext-lcar-2007-2c909fdd678bf17901678bf64f28039d.md（flk DOCX 衍生社区转录，与语料构建源上游独立）",
+  "snapshot": "docs/research/evidence/lawtext-lcar-2007-2c909fdd678bf17901678bf64f28039d.md",
+  "corpus_articles": 54,
+  "snapshot_headings": 54,
+  "checked_at": "2026-09-21",
+  "label_mismatch_count": 0,
+  "body_mismatch_count": 0,
+  "label_mismatches": [],
+  "body_mismatches": [],
+  "conclusion": "54/54 条号与正文全一致（第三链文本级核验通过）"
+}

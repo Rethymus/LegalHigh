@@ -1,0 +1,13 @@
+{
+  "law": "dv-2015（中华人民共和国反家庭暴力法）",
+  "third_chain": "lawtext/laws lawtext-dv-2015-2c909fdd678bf17901678bf7f9d60889.md（flk DOCX 衍生社区转录，与语料构建源上游独立）",
+  "snapshot": "docs/research/evidence/lawtext-dv-2015-2c909fdd678bf17901678bf7f9d60889.md",
+  "corpus_articles": 38,
+  "snapshot_headings": 38,
+  "checked_at": "2026-09-21",
+  "label_mismatch_count": 0,
+  "body_mismatch_count": 0,
+  "label_mismatches": [],
+  "body_mismatches": [],
+  "conclusion": "38/38 条号与正文全一致（第三链文本级核验通过）"
+}

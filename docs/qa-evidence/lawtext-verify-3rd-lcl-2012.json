@@ -1,0 +1,13 @@
+{
+  "law": "lcl-2012（中华人民共和国劳动合同法）",
+  "third_chain": "lawtext/laws lawtext-lcl-2012-2c909fdd678bf17901678bf74d7106b3.md（flk DOCX 衍生社区转录，与语料构建源上游独立）",
+  "snapshot": "docs/research/evidence/lawtext-lcl-2012-2c909fdd678bf17901678bf74d7106b3.md",
+  "corpus_articles": 98,
+  "snapshot_headings": 98,
+  "checked_at": "2026-09-21",
+  "label_mismatch_count": 0,
+  "body_mismatch_count": 0,
+  "label_mismatches": [],
+  "body_mismatches": [],
+  "conclusion": "98/98 条号与正文全一致（第三链文本级核验通过）"
+}

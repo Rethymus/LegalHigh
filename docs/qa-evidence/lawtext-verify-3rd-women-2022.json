@@ -1,0 +1,13 @@
+{
+  "law": "women-2022（中华人民共和国妇女权益保障法）",
+  "third_chain": "lawtext/laws lawtext-women-2022-ff808181841257210184281512de0eec.md（flk DOCX 衍生社区转录，与语料构建源上游独立）",
+  "snapshot": "docs/research/evidence/lawtext-women-2022-ff808181841257210184281512de0eec.md",
+  "corpus_articles": 86,
+  "snapshot_headings": 86,
+  "checked_at": "2026-09-21",
+  "label_mismatch_count": 0,
+  "body_mismatch_count": 0,
+  "label_mismatches": [],
+  "body_mismatches": [],
+  "conclusion": "86/86 条号与正文全一致（第三链文本级核验通过）"
+}

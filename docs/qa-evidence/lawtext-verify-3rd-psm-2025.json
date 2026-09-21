@@ -1,0 +1,13 @@
+{
+  "law": "psm-2025（中华人民共和国治安管理处罚法）",
+  "third_chain": "lawtext/laws lawtext-psm-2025-ff80818197af9ccc0197b159c38a0408.md（flk DOCX 衍生社区转录，与语料构建源上游独立）",
+  "snapshot": "docs/research/evidence/lawtext-psm-2025-ff80818197af9ccc0197b159c38a0408.md",
+  "corpus_articles": 144,
+  "snapshot_headings": 144,
+  "checked_at": "2026-09-21",
+  "label_mismatch_count": 0,
+  "body_mismatch_count": 0,
+  "label_mismatches": [],
+  "body_mismatches": [],
+  "conclusion": "144/144 条号与正文全一致（第三链文本级核验通过）"
+}

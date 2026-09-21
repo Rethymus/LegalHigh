@@ -1,0 +1,13 @@
+{
+  "law": "admin-litigation-2017（中华人民共和国行政诉讼法）",
+  "third_chain": "lawtext/laws lawtext-admin-litigation-2017-2c909fdd678bf17901678bf858550a0f.md（flk DOCX 衍生社区转录，与语料构建源上游独立）",
+  "snapshot": "docs/research/evidence/lawtext-admin-litigation-2017-2c909fdd678bf17901678bf858550a0f.md",
+  "corpus_articles": 103,
+  "snapshot_headings": 103,
+  "checked_at": "2026-09-21",
+  "label_mismatch_count": 0,
+  "body_mismatch_count": 0,
+  "label_mismatches": [],
+  "body_mismatches": [],
+  "conclusion": "103/103 条号与正文全一致（第三链文本级核验通过）"
+}

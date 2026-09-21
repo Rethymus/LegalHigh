@@ -1,0 +1,21 @@
+{
+  "law": "minor-2024（中华人民共和国未成年人保护法）",
+  "third_chain": "lawtext/laws lawtext-minor-2024-ff80808175265dd401753fb9c458127b.md（flk DOCX 衍生社区转录，与语料构建源上游独立）",
+  "snapshot": "docs/research/evidence/lawtext-minor-2024-ff80808175265dd401753fb9c458127b.md",
+  "corpus_articles": 132,
+  "snapshot_headings": 132,
+  "checked_at": "2026-09-21",
+  "label_mismatch_count": 0,
+  "body_mismatch_count": 1,
+  "label_mismatches": [],
+  "body_mismatches": [
+    {
+      "pos": 9,
+      "label": "第九条",
+      "corpus_head": "各级人民政府应当重视和加强未成年人保护工作。县级以上人民政府负责妇女儿童工作的机构,负责未成年人保护工作的组织、协调、指导、督促,有关部门在",
+      "snapshot_head": "县级以上人民政府应当建立未成年人保护工作协调机制,统筹、协调、督促和指导有关部门在各自职责范围内做好未成年人保护工作。协调机制具体工作由县级"
+    }
+  ],
+  "conclusion": "存在差异：条号 0、正文 1",
+  "note": "快照为 2020 修订版（版本滞后），唯一差异（第九条）为 2024 修正正当演进——非语料缺陷。"
+}

@@ -1,0 +1,13 @@
+{
+  "law": "penal-2021（中华人民共和国行政处罚法）",
+  "third_chain": "lawtext/laws lawtext-penal-2021-ff8080817703add20177373df6a43e33.md（flk DOCX 衍生社区转录，与语料构建源上游独立）",
+  "snapshot": "docs/research/evidence/lawtext-penal-2021-ff8080817703add20177373df6a43e33.md",
+  "corpus_articles": 86,
+  "snapshot_headings": 86,
+  "checked_at": "2026-09-21",
+  "label_mismatch_count": 0,
+  "body_mismatch_count": 0,
+  "label_mismatches": [],
+  "body_mismatches": [],
+  "conclusion": "86/86 条号与正文全一致（第三链文本级核验通过）"
+}
