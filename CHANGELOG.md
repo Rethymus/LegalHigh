@@ -72,6 +72,10 @@
 
 ### Added / 新增
 
+- 8 new term cards for high-citizen-impact zero-coverage laws (R252): 道交法 (礼让行人 art.47, 酒后驾驶 art.91), 产品质量法 (三包义务 art.40, 产品缺陷 art.46), 保险法 (如实告知义务 art.16, 代位求偿权 art.60), 消防法 (消防安全职责 art.16, 火灾报警义务 art.44). Term card count 60→68, covering 31 of 108 laws. All references verified in corpus by the R248 machine gate.
+
+### Added / 新增
+
 - Guiding-case pipeline evidence closure (R242): the 15-page SPC listing channel was re-fetched fresh and re-indexed (278 case-number→URL entries), then diffed against the library — **zero missing**, `pool_drained: true` recorded in `docs/qa-evidence/pool-drain-final-2026-09-21.json` as the independent closure evidence for the candidate pool. All 278 index entries are in the library (278 guiding + 3 foreign = 281 cases). corpus_selfcheck clean (108 instruments / 10,669 provisions / 108 registries / 37 historical fulltexts) and final-verify ten assertions ALL PASS on the same tree.
 
 ### Added / 新增
