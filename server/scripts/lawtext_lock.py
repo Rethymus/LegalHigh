@@ -45,17 +45,18 @@ def main() -> int:
     locked = {}
     for lid in sorted(regrouped):
         paths = regrouped[lid]
-        results = [verify(lid, p) for p in paths]
-        ok = all(r.get('label_mismatch_count') == 0 and r.get('body_mismatch_count') == 0
-                 and '条数不一致' not in r.get('conclusion', '') for r in results)
-        if ok:
-            for p, r in zip(paths, results):
+        # 多快照（历史版存档 + 现行版）时锁定与语料「全一致」的那份——
+        # 锁定语义 = 语料 ↔ 现行版快照逐字锚定；旧版存档不参与判定。
+        for p in paths:
+            r = verify(lid, p)
+            if r.get('label_mismatch_count') == 0 and r.get('body_mismatch_count') == 0 \
+                    and '条数不一致' not in r.get('conclusion', ''):
                 locked[lid] = {
                     'snapshot': f'docs/research/evidence/{p.name}',
                     'sha256': hashlib.sha256(p.read_bytes()).hexdigest(),
                     'articles': r['corpus_articles'],
                 }
-                break  # 一部一条锁定（当前各法仅一份快照）
+                break
     OUT.write_text(json.dumps({
         'generated_at': __import__('datetime').date.today().isoformat(),
         'locked_count': len(locked),

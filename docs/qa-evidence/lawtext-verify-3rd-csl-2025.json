@@ -1,12 +1,13 @@
 {
   "law": "csl-2025（中华人民共和国网络安全法）",
-  "third_chain": "lawtext/laws lawtext-csl-2025-2c909fdd678bf17901678bf8276f093d.md（flk DOCX 衍生社区转录，与语料构建源上游独立）",
-  "snapshot": "docs/research/evidence/lawtext-csl-2025-2c909fdd678bf17901678bf8276f093d.md",
+  "third_chain": "lawtext/laws lawtext-csl-2025-021e7d7684474107b8f3febbb1c4f8b5.md（flk DOCX 衍生社区转录，与语料构建源上游独立）",
+  "snapshot": "..\\docs\\research\\evidence\\lawtext-csl-2025-021e7d7684474107b8f3febbb1c4f8b5.md",
   "corpus_articles": 81,
-  "snapshot_headings": 79,
+  "snapshot_headings": 81,
   "checked_at": "2026-09-21",
-  "conclusion": "条数不一致：语料 81 vs 快照标题 79——位置配对中止",
-  "snapshot_first": "第一条",
-  "snapshot_last": "第七十九条",
-  "note": "快照为 2016 版 79 条（版本滞后，2025 修正新增条款不在其中），位置配对中止——第三链文本级比对不适用，快照存档供历史参考。"
+  "label_mismatch_count": 0,
+  "body_mismatch_count": 0,
+  "label_mismatches": [],
+  "body_mismatches": [],
+  "conclusion": "81/81 条号与正文全一致（第三链文本级核验通过）"
 }
