@@ -1222,5 +1222,173 @@
     "source_title": "",
     "source_url": "",
     "statutes": []
+  },
+  {
+    "cat": "行政",
+    "term": "假药认定",
+    "explain": "药品所含成份与国家标准不符、以非药品冒充药品或以他种药品冒充此种药品的，为假药。禁止生产、销售、使用假药。",
+    "refs": [
+      {
+        "law_id": "drug-admin-2019",
+        "art": "98",
+        "label": "《药品管理法》第98条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "行政",
+    "term": "药品质量赔偿",
+    "explain": "药品上市许可持有人、生产企业、经营企业或医疗机构违反药品管理规定给用药者造成损害的，依法承担赔偿责任。",
+    "refs": [
+      {
+        "law_id": "drug-admin-2019",
+        "art": "144",
+        "label": "《药品管理法》第144条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "民事",
+    "term": "旅游者权利",
+    "explain": "旅游者有权自主选择旅游产品和服务，有权拒绝强制交易，有权知悉真实情况，有权要求旅游经营者依约提供产品和服务。",
+    "refs": [
+      {
+        "law_id": "tourism-2018",
+        "art": "9",
+        "label": "《旅游法》第9条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "民事",
+    "term": "旅行社违约责任",
+    "explain": "旅行社不履行包价旅游合同或履行不符合约定的，应承担继续履行、补救措施或赔偿损失等违约责任；造成人身损害的还应赔偿。",
+    "refs": [
+      {
+        "law_id": "tourism-2018",
+        "art": "70",
+        "label": "《旅游法》第70条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "程序",
+    "term": "传染病分类管理",
+    "explain": "传染病分为甲类、乙类、丙类以及突发原因不明的传染病。甲类传染病（鼠疫、霍乱）实行最严格的预防控制措施。",
+    "refs": [
+      {
+        "law_id": "infectious-2025",
+        "art": "3",
+        "label": "《传染病防治法》第3条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "程序",
+    "term": "传染病应急预案",
+    "explain": "县级以上政府应制定传染病预防控制应急预案，增强科学性、针对性和可操作性，并根据实际需要和形势变化及时修订。",
+    "refs": [
+      {
+        "law_id": "infectious-2025",
+        "art": "30",
+        "label": "《传染病防治法》第30条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "劳动",
+    "term": "从业人员安全权利",
+    "explain": "劳动合同应载明劳动安全和防止职业危害事项以及工伤保险事项。从业人员有权了解危险因素和防范措施，有权拒绝违章指挥。",
+    "refs": [
+      {
+        "law_id": "work-safety-2021",
+        "art": "52",
+        "label": "《安全生产法》第52条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "劳动",
+    "term": "安全生产方针",
+    "explain": "安全生产工作以人为本，坚持人民至上、生命至上，把保护人民生命安全摆在首位，树牢安全发展理念。",
+    "refs": [
+      {
+        "law_id": "work-safety-2021",
+        "art": "3",
+        "label": "《安全生产法》第3条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
   }
 ]

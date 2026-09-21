@@ -72,6 +72,8 @@
 
 ### Added / 新增
 
+- 8 more term cards for public-health/safety/tourism laws (R255): 药品管理法 (假药认定 art.98, 药品质量赔偿 art.144), 旅游法 (旅游者权利 art.9, 旅行社违约 art.70), 传染病防治法 (传染病分类 art.3, 应急预案 art.30), 安全生产法 (从业人员权利 art.52, 安全生产方针 art.3). Term card count 84→92, covering 43 of 108 laws.
+
 - 8 more term cards for IP/advertising laws (R254): 专利法 (专利申请权 art.2, 专利侵权 art.65), 著作权法 (作品定义 art.3, 著作权内容 art.10), 商标法 (商标战略 art.3, 商标使用管理 art.57), 广告法 (商业广告 art.2, 虚假广告 art.28). Term card count 76→84, covering 39 of 108 laws.
 
 - 8 more term cards for zero-coverage laws (R253): 反垄断法 (横向垄断协议 art.17, 滥用市场支配地位 art.22), 证券法 (内幕交易 art.50, 操纵证券市场 art.55), 慈善法 (慈善活动 art.3, 慈善组织信息公开 art.58), 公证法 (公证 art.2, 公证事项 art.11). Term card count 68→76, covering 35 of 108 laws.
