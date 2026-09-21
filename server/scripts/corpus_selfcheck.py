@@ -214,12 +214,16 @@ def main() -> int:
             cid = c["id"]
             refs = c.get("research_refs") or []
             cases_report["refs_checked"] += len(refs)
-            for r in refs:
+            for r in refs + [
+                {"law_id": s.get("law_id"), "no": int(s["no"]), "sub": s.get("sub") or "", "label": s.get("label")}
+                for s in (c.get("statutes") or []) if str(s.get("no", "")).isdigit()
+            ]:
                 sub = r.get("sub") or ""
                 found = any(a["law_id"] == r["law_id"] and a["no"] == r["no"] and (a.get("sub") or "") == sub
                             for a in corpus.articles)
                 if not found:
-                    problems.append(f"案例 {cid}: research_refs 指向语料外条文 {r['law_id']}@{r['no']}{sub}")
+                    # R275：statutes（旧形态字段，如 guidance-01）与 research_refs 一并纳入存在性门
+                    problems.append(f"案例 {cid}: 法条引用指向语料外条文 {r['law_id']}@{r['no']}{sub}")
                 # R274：label 开头的现行法引用必须与存储 (no, sub) 一致——标签漂移会把
                 # 详情页深链指到错误条文（存在性门查不出「条号挂错法」的精度缺陷）。
                 # 形态容差：《名称》(年份…)?第N条(之X)?；非《》开头的形态跳过不判。

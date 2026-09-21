@@ -25,6 +25,15 @@ def _ref_key(r: dict) -> tuple[int, str] | None:
         return None
 
 
+def _case_refs(c: dict) -> list[dict]:
+    """统一收集案例的引用条目：research_refs（现行法承继）+ statutes（旧形态字段，
+    如 guidance-01 的民法典第965条——R275 起一并参与统计，避免图谱漏计）。"""
+    return list(c.get("research_refs") or []) + [
+        {"law_id": s.get("law_id"), "no": s.get("no"), "sub": s.get("sub"), "label": s.get("label")}
+        for s in (c.get("statutes") or [])
+    ]
+
+
 def cited_by(law_id: str) -> dict:
     """law 级聚合：被引案例清单（精确 law_id 匹配）+ 逐条文被引计数。"""
     matches: list[dict] = []
@@ -33,7 +42,7 @@ def cited_by(law_id: str) -> dict:
         if not c.get("verified"):
             continue
         keys = []
-        for r in (c.get("research_refs") or []):
+        for r in _case_refs(c):
             if r.get("law_id") != law_id:
                 continue
             k = _ref_key(r)
@@ -65,7 +74,7 @@ def cited_by(law_id: str) -> dict:
                      for (no, sub), n in sorted(article_counts.items(), key=lambda kv: (-kv[1], kv[0]))],
         "cases": matches,
         "negative_history_note": "负面历史检查（后续案例/修法如何对待本条）暂无数据源，本系统不提供、不推测。",
-        "scope_note": "只统计已核实案例 research_refs 中的精确引用；不冒充全国裁判文书层面的引用全景。",
+        "scope_note": "只统计已核实案例 research_refs 与 statutes 中的精确引用；不冒充全国裁判文书层面的引用全景。",
     }
 
 
@@ -95,7 +104,7 @@ def graph() -> dict:
         if not c.get("verified"):
             continue
         keys = []
-        for r in (c.get("research_refs") or []):
+        for r in _case_refs(c):
             k = _ref_key(r)
             lid = r.get("law_id")
             if not k or not lid:
@@ -136,5 +145,5 @@ def graph() -> dict:
                    "citations": total_citations, "laws_cited": len(out_laws)},
         "laws": out_laws,
         "negative_history_note": "负面历史检查（后续案例/修法如何对待本条）暂无数据源，本系统不提供、不推测。",
-        "scope_note": "只统计已核实案例 research_refs 中的精确引用；不冒充全国裁判文书层面的引用全景。",
+        "scope_note": "只统计已核实案例 research_refs 与 statutes 中的精确引用；不冒充全国裁判文书层面的引用全景。",
     }
