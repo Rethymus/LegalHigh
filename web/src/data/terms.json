@@ -2948,5 +2948,173 @@
     "source_title": "",
     "source_url": "",
     "statutes": []
+  },
+  {
+    "cat": "行政",
+    "term": "学位类型",
+    "explain": "我国学位分为学士、硕士、博士三级，包括学术学位和专业学位等类型，按学科门类和专业学位类别授予。",
+    "refs": [
+      {
+        "law_id": "academic-degree-2024",
+        "art": "2",
+        "label": "《学位法》第2条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "行政",
+    "term": "学位不授予与撤销",
+    "explain": "学位论文存在造假等学术不端情形的，学位授予单位可不授予学位或撤销已授学位。",
+    "refs": [
+      {
+        "law_id": "academic-degree-2024",
+        "art": "37",
+        "label": "《学位法》第37条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "行政",
+    "term": "动物防疫",
+    "explain": "动物防疫适用于我国领域内的动物防疫及其监督管理活动，包括动物疫病的预防、控制、扑灭和动物及动物产品的检疫。",
+    "refs": [
+      {
+        "law_id": "animal-epidemic-2021",
+        "art": "2",
+        "label": "《动物防疫法》第2条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "行政",
+    "term": "动物疫情报告",
+    "explain": "从事动物饲养、屠宰、经营、运输等活动的单位和个人发现动物染疫或疑似染疫的，应立即向所在地农业农村主管部门或动物卫生监督机构报告。",
+    "refs": [
+      {
+        "law_id": "animal-epidemic-2021",
+        "art": "31",
+        "label": "《动物防疫法》第31条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "刑事",
+    "term": "监狱刑罚执行",
+    "explain": "监狱是国家的刑罚执行机关。被判处死刑缓期二年执行、无期徒刑、有期徒刑的罪犯在监狱内执行刑罚。",
+    "refs": [
+      {
+        "law_id": "prison-2012",
+        "art": "2",
+        "label": "《监狱法》第2条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "刑事",
+    "term": "罪犯人格保障",
+    "explain": "罪犯的人格不受侮辱，其人身安全、合法财产和辩护、申诉、控告、检举等未被依法剥夺或限制的权利不受侵犯。",
+    "refs": [
+      {
+        "law_id": "prison-2012",
+        "art": "7",
+        "label": "《监狱法》第7条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "行政",
+    "term": "高等教育权利",
+    "explain": "公民依法享有接受高等教育的权利。国家帮助少数民族学生和经济困难学生接受高等教育。",
+    "refs": [
+      {
+        "law_id": "higher-edu-2018",
+        "art": "9",
+        "label": "《高等教育法》第9条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "行政",
+    "term": "高等教育学生义务",
+    "explain": "高等学校学生应遵守法律法规和学校管理制度，尊敬师长，刻苦学习，增强体质，树立爱国主义、集体主义和社会主义思想。",
+    "refs": [
+      {
+        "law_id": "higher-edu-2018",
+        "art": "53",
+        "label": "《高等教育法》第53条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
   }
 ]
