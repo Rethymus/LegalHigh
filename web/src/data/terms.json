@@ -2780,5 +2780,173 @@
     "source_title": "",
     "source_url": "",
     "statutes": []
+  },
+  {
+    "cat": "社会法",
+    "term": "专门教育",
+    "explain": "专门教育是国民教育体系的组成部分，对有严重不良行为的未成年人进行教育和矫治。",
+    "refs": [
+      {
+        "law_id": "crime-prev-2020",
+        "art": "6",
+        "label": "《预防未成年人犯罪法》第6条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "社会法",
+    "term": "预防犯罪表彰",
+    "explain": "国家对预防未成年人犯罪工作有显著成绩的组织和个人给予表彰和奖励。",
+    "refs": [
+      {
+        "law_id": "crime-prev-2020",
+        "art": "14",
+        "label": "《预防未成年人犯罪法》第14条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "社会法",
+    "term": "医师职业精神",
+    "explain": "医师应坚持人民至上、生命至上，发扬救死扶伤、甘于奉献的崇高职业精神，恪守职业道德，遵守执业规范。",
+    "refs": [
+      {
+        "law_id": "physicians-2021",
+        "art": "3",
+        "label": "《医师法》第3条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "社会法",
+    "term": "医师执业义务",
+    "explain": "医师执业应尽职尽责救治患者，执行疫情防控等公共卫生措施，如实告知病情，保护患者隐私。",
+    "refs": [
+      {
+        "law_id": "physicians-2021",
+        "art": "23",
+        "label": "《医师法》第23条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "经济法",
+    "term": "乡村振兴原则",
+    "explain": "乡村振兴坚持党的领导和新发展理念，促进共同富裕，走中国特色社会主义乡村振兴道路。",
+    "refs": [
+      {
+        "law_id": "rural-revitalization-2021",
+        "art": "4",
+        "label": "《乡村振兴促进法》第4条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "经济法",
+    "term": "乡村产业发展",
+    "explain": "各级政府应加强国有农（林、牧、渔）场规划建设，推进现代农业发展，促进乡村产业振兴。",
+    "refs": [
+      {
+        "law_id": "rural-revitalization-2021",
+        "art": "22",
+        "label": "《乡村振兴促进法》第22条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "行政",
+    "term": "特种设备定期检验",
+    "explain": "特种设备使用单位应在检验合格有效期届满前一个月向特种设备检验机构提出定期检验要求。",
+    "refs": [
+      {
+        "law_id": "special-equipment-2014",
+        "art": "40",
+        "label": "《特种设备安全法》第40条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "行政",
+    "term": "特种设备安全监管",
+    "explain": "各级政府应加强特种设备安全工作领导，督促有关部门依法履行监督管理职责，建立协调机制。",
+    "refs": [
+      {
+        "law_id": "special-equipment-2014",
+        "art": "6",
+        "label": "《特种设备安全法》第6条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
   }
 ]
