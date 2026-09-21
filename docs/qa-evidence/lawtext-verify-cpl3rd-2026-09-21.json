@@ -1,0 +1,27 @@
+{
+  "law": "cpl-2018（中华人民共和国刑事诉讼法）",
+  "third_chain": "lawtext/laws lawtext-cpl-2018-ff8080816f135f46016f1d1b81b01351.md（flk DOCX 衍生社区转录，与语料构建源上游独立）",
+  "snapshot": "..\\docs\\research\\evidence\\lawtext-cpl-2018-ff8080816f135f46016f1d1b81b01351.md",
+  "corpus_articles": 308,
+  "snapshot_headings": 308,
+  "checked_at": "2026-09-21",
+  "label_mismatch_count": 0,
+  "body_mismatch_count": 2,
+  "label_mismatches": [],
+  "body_mismatches": [
+    {
+      "pos": 297,
+      "label": "第二百九十七条",
+      "corpus_head": "【被告人死亡情形下缺席审判的适用】被告人死亡的,人民法院应当裁定终止审理,但有证据证明被告人无罪,人民法院经缺席审理确认无罪的,应当依法作出",
+      "snapshot_head": "被告人死亡的,人民法院应当裁定终止审理,但有证据证明被告人无罪,人民法院经缺席审理确认无罪的,应当依法作出判决。人民法院按照审判监督程序重新"
+    },
+    {
+      "pos": 307,
+      "label": "第三百零七条",
+      "corpus_head": "【强制医疗的检察监督】人民检察院对强制医疗的决定和执行实行监督。附则",
+      "snapshot_head": "人民检察院对强制医疗的决定和执行实行监督。"
+    }
+  ],
+  "conclusion": "存在差异：条号 0、正文 2",
+  "note": "剩余 2 条为快照侧章节标题噪声（297「违法所得的没收程序」/307「附则」为 lawtext 渲染的编章节标题行混入，非条文正文差异）；18 处语料【主旨】编辑标记已按全局剥离归一（源页编辑特征，非法律文本）。归一化=主旨剥离+全/半角标点归一+markdown 标记剥离。"
+}

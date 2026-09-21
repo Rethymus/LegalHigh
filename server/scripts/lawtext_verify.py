@@ -27,12 +27,16 @@ sys.path.insert(0, str(SERVER))
 HEAD = re.compile(r'^- \*\*(第[零一二三四五六七八九十百千]+条(?:之[一二三四五六七八九十]+)?)\*\*(.*)$', re.M)
 
 
+_PUNCT = str.maketrans('，：；（）？！', ',:;()?!')
+
+
 def norm(t: str) -> str:
     t = re.sub(r'[\s　]+', '', t)
     t = t.replace('**', '').replace('*', '')
     t = re.sub(r'-+(?=[（(0-9一二三四五六七八九十])', '', t)
     t = re.sub(r'-{2,}', '', t)  # 快照侧 markdown 长横线分隔（如 452 附则中的行中 ---）
     t = t.replace('帐', '账')  # 异体字归一（R280：162之一/187 实为 帐/账 变体）
+    t = t.translate(_PUNCT)  # 全/半角标点归一（R281：cpl 语料源为半角标点）
     return t
 
 
@@ -60,6 +64,8 @@ def verify(law_id: str, snapshot: pathlib.Path) -> dict:
     label_bad, body_bad = [], []
     for i, m in enumerate(ms):
         a = arts[i]
+        # 语料侧剥离【主旨】编辑标记（cpl-2018 源特征，段间亦有，非法律文本本身；R113/R281）
+        corpus_text = re.sub(r'【[^】]*】', '', a['text'])
         if m.group(1) != norm(a['label']):
             label_bad.append({'pos': i + 1, 'snapshot': m.group(1), 'corpus': norm(a['label'])})
             continue
@@ -67,7 +73,7 @@ def verify(law_id: str, snapshot: pathlib.Path) -> dict:
         seg = s[m.end():end]
         cont = '\n'.join(l for l in seg.split('\n')
                          if l.strip() and not re.match(r'^\s*#', l) and not re.match(r'^\s*-{3,}\s*$', l))
-        if norm(m.group(2)) + norm(cont) != norm(a['text']):
+        if norm(m.group(2)) + norm(cont) != norm(corpus_text):
             body_bad.append({'pos': i + 1, 'label': m.group(1),
                              'corpus_head': norm(a['text'])[:70], 'snapshot_head': norm(m.group(2) + cont)[:70]})
     res['label_mismatch_count'] = len(label_bad)

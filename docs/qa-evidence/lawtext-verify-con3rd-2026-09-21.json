@@ -1,0 +1,13 @@
+{
+  "law": "con-2018（中华人民共和国宪法）",
+  "third_chain": "lawtext/laws lawtext-con-2018-2c909fdd678bf17901678bf5a483004b.md（flk DOCX 衍生社区转录，与语料构建源上游独立）",
+  "snapshot": "..\\docs\\research\\evidence\\lawtext-con-2018-2c909fdd678bf17901678bf5a483004b.md",
+  "corpus_articles": 143,
+  "snapshot_headings": 143,
+  "checked_at": "2026-09-21",
+  "label_mismatch_count": 0,
+  "body_mismatch_count": 0,
+  "label_mismatches": [],
+  "body_mismatches": [],
+  "conclusion": "143/143 条号与正文全一致（第三链文本级核验通过）"
+}
