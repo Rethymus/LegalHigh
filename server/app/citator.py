@@ -131,7 +131,8 @@ def graph() -> dict:
         law_obj = corpus.laws.get(lid) or {}
         out_laws.append({
             "law_id": lid,
-            "title": law_obj.get("law_title") or lid,
+            # R275：语料 meta 的键是 title（law_title 恒不存在→此前全部回落成 law_id 显示）
+            "title": law_obj.get("title") or lid,
             "case_count": e["case_count"],
             "citation_count": e["citation_count"],
             "articles": [{"no": no, "sub": sub or None, "case_ids": ids}
