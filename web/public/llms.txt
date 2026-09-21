@@ -13,7 +13,7 @@
 
 - [使用指南](https://legalhigh.pages.dev/#/guide)：三类视图与四条工作流的图文说明
 - [法规浏览](https://legalhigh.pages.dev/#/laws)：按部浏览受控语料，条文支持子条号（之N）深链
-- [术语卡](https://legalhigh.pages.dev/#/terms)：165 张高频法律术语通俗解释，逐条绑定语料条文
+- [术语卡](https://legalhigh.pages.dev/#/terms)：173 张高频法律术语通俗解释，逐条绑定语料条文
 - [案例检索](https://legalhigh.pages.dev/#/cases)：案例检索页收录 281 件可公开核验案例（最高人民法院指导案例 278 件与域外经典判例 3 件，构建期派生）
 - [质量透明度](https://legalhigh.pages.dev/#/quality)：检索评测数字、覆盖边界、质量门与历史运行记录
 - [数据源清单](https://legalhigh.pages.dev/#/data-sources)：各数据源的接入策略与合规边界
