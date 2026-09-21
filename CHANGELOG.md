@@ -72,6 +72,8 @@
 
 ### Added / 新增
 
+- 8 more term cards for zero-coverage laws (R253): 反垄断法 (横向垄断协议 art.17, 滥用市场支配地位 art.22), 证券法 (内幕交易 art.50, 操纵证券市场 art.55), 慈善法 (慈善活动 art.3, 慈善组织信息公开 art.58), 公证法 (公证 art.2, 公证事项 art.11). Term card count 68→76, covering 35 of 108 laws.
+
 - 8 new term cards for high-citizen-impact zero-coverage laws (R252): 道交法 (礼让行人 art.47, 酒后驾驶 art.91), 产品质量法 (三包义务 art.40, 产品缺陷 art.46), 保险法 (如实告知义务 art.16, 代位求偿权 art.60), 消防法 (消防安全职责 art.16, 火灾报警义务 art.44). Term card count 60→68, covering 31 of 108 laws. All references verified in corpus by the R248 machine gate.
 
 ### Added / 新增

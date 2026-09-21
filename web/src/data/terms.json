@@ -886,5 +886,173 @@
     "source_title": "",
     "source_url": "",
     "statutes": []
+  },
+  {
+    "cat": "经济法",
+    "term": "横向垄断协议",
+    "explain": "具有竞争关系的经营者之间达成固定价格、限制产量、分割市场等协议，属于垄断协议，法律明令禁止。",
+    "refs": [
+      {
+        "law_id": "anti-monopoly-2022",
+        "art": "17",
+        "label": "《反垄断法》第17条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "经济法",
+    "term": "滥用市场支配地位",
+    "explain": "具有市场支配地位的经营者以不公平高价销售、无正当理由拒绝交易、限定交易对象等，构成滥用市场支配地位。",
+    "refs": [
+      {
+        "law_id": "anti-monopoly-2022",
+        "art": "22",
+        "label": "《反垄断法》第22条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "经济法",
+    "term": "内幕交易",
+    "explain": "证券交易内幕信息的知情人和非法获取内幕信息的人，在内幕信息公开前买卖证券或建议他人买卖，属于内幕交易，应承担法律责任。",
+    "refs": [
+      {
+        "law_id": "securities-2019",
+        "art": "50",
+        "label": "《证券法》第50条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "经济法",
+    "term": "操纵证券市场",
+    "explain": "通过合谋、集中资金优势、连续买卖等手段操纵证券市场，影响交易价格或交易量，诱导投资者决策的，属于操纵市场行为。",
+    "refs": [
+      {
+        "law_id": "securities-2019",
+        "art": "55",
+        "label": "《证券法》第55条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "社会法",
+    "term": "慈善活动",
+    "explain": "以捐赠财产或提供服务等方式自愿开展的扶贫、济困、救灾、助残、教育、科学、文化、卫生、体育等公益活动，属于慈善活动。",
+    "refs": [
+      {
+        "law_id": "charity-2023",
+        "art": "3",
+        "label": "《慈善法》第3条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "社会法",
+    "term": "慈善组织信息公开",
+    "explain": "慈善组织应当依法公开信息，接受社会监督，包括募捐情况、接受捐赠、慈善财产管理使用等信息。",
+    "refs": [
+      {
+        "law_id": "charity-2023",
+        "art": "58",
+        "label": "《慈善法》第58条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "程序",
+    "term": "公证",
+    "explain": "公证机构根据申请，依照法定程序对民事法律行为、有法律意义的事实和文书的真实性、合法性予以证明的活动。",
+    "refs": [
+      {
+        "law_id": "notary-2017",
+        "art": "2",
+        "label": "《公证法》第2条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "程序",
+    "term": "公证事项",
+    "explain": "公证机构办理的公证事项包括合同、继承、委托、声明、赠与、遗嘱、财产分割、招标投标、拍卖等。",
+    "refs": [
+      {
+        "law_id": "notary-2017",
+        "art": "11",
+        "label": "《公证法》第11条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
   }
 ]
