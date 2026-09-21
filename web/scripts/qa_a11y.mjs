@@ -167,6 +167,16 @@ async function main() {
       if (!idOk.result?.value) { console.error(`FAIL ${route.name}: 页面身份断言失败`); report.push({ route: route.name, error: 'identity failed' }); ws.close(); continue }
 
       const res = await cdp.send('Runtime.evaluate', { expression: AUDIT_EXPR, returnByValue: true })
+      // R273：审计表达式自身在页面内抛异常时 result.value 为 undefined，此前回退到
+      // 空数组 = 路由静默假绿。异常必须记为该路由的 error 并计入 bad。
+      if (res.exceptionDetails) {
+        const desc = (res.exceptionDetails.exception?.description || res.exceptionDetails.text || '').slice(0, 200)
+        console.error(`FAIL ${route.name}: 审计表达式页面异常：${desc}`)
+        report.push({ route: route.name, error: `audit expression exception: ${desc}` })
+        ws.close()
+        await getJson(`/json/close/${t.id}`).catch(() => {})
+        continue
+      }
       const v = res.result?.value ?? { smallTargets: [], obscuredFocus: [], occluders: [] }
       const entry = { route: route.name, smallTargets: v.smallTargets, obscuredFocus: v.obscuredFocus }
       const ok = !v.smallTargets.length && !v.obscuredFocus.length

@@ -302,6 +302,14 @@ async function main() {
       for (const s of route.steps ?? []) {
         if (s.t === 'eval') {
           const r = await cdp.send('Runtime.evaluate', { expression: s.expr, returnByValue: true })
+          // R273：探针表达式在页面内抛异常时 value 为 undefined，此前整步被静默
+          // 跳过 = 假绿。异常必须按交互失败计。
+          if (r.exceptionDetails) {
+            const desc = (r.exceptionDetails.exception?.description || r.exceptionDetails.text || '').slice(0, 200)
+            entry.pageErrors.push(`interaction step threw: ${desc}`)
+            entry[`step${++sn}`] = `threw: ${desc}`
+            continue
+          }
           const value = r.result?.value
           if (value !== undefined) entry[`step${++sn}`] = value
           if (typeof value === 'string' && /^(no-|error|failed)/i.test(value))
