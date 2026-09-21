@@ -160,6 +160,23 @@ if (!existsSync(distDir)) {
   else console.log(`OK gate6 性能预算：入口 JS ${(entryGz / 1024).toFixed(0)}KB gz / 全 JS ${(allJsGz / 1024).toFixed(0)}KB gz / CSS ${(allCssGz / 1024).toFixed(0)}KB gz / laws.json ${(lawsBytes / 1024).toFixed(0)}KB`)
 }
 
+// ---- gate 7：术语卡分类全渲染（R271：CATS 固定清单漏 4 类 122 张卡的漂移钉住）----
+// terms.json 实际出现的 cat 全集必须 ⊆ Terms.tsx CATS 渲染清单，否则页面静默吞卡。
+const termsData = JSON.parse(readFileSync(resolve(root, 'web/src/data/terms.json'), 'utf-8'))
+const termsTsx = readFileSync(resolve(root, 'web/src/components/pages/Terms.tsx'), 'utf-8')
+const catsBlock = termsTsx.match(/const CATS[\s\S]*?^\]/m)
+const dataCats = [...new Set(termsData.map((t) => t.cat))]
+const renderedCats = catsBlock ? [...catsBlock[0].matchAll(/'([^']+)'/g)].map((m) => m[1]) : []
+const hiddenCats = dataCats.filter((c) => !renderedCats.includes(c))
+const dupCats = renderedCats.filter((c, i) => renderedCats.indexOf(c) !== i)
+checks++
+if (!catsBlock || hiddenCats.length || dupCats.length) {
+  fail.push(
+    `[术语卡全渲染] CATS 清单与 terms.json 分类集漂移：` +
+      `数据分类 ${JSON.stringify(dataCats)}；未渲染 ${JSON.stringify(hiddenCats)}；清单重复 ${JSON.stringify(dupCats)}`,
+  )
+} else console.log(`OK gate7 术语卡全渲染：${termsData.length} 张卡 / ${dataCats.length} 个分类全部在 CATS 渲染清单内`)
+
 if (fail.length) {
   console.error(`\nqa_gates：${fail.length}/${checks} 项失败`)
   for (const f of fail) console.error('\n' + f)

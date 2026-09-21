@@ -4,73 +4,57 @@
 
 ### Added / 新增
 
+- Term-card batch + silent-drop defect fix (R271): twelve new cards for Accounting Law (true-accounting duty art. 9, legislative purpose art. 1), Population and Family Planning Law (purpose art. 1, funding art. 15), Vocational Education Law (definition art. 2, coordination mechanism art. 8), Mine Safety Law (safety assurance art. 3, workers' supervision right art. 22), Urban Residents Committee Organization Law (nature art. 2, establishment scale art. 3) and the Civil Code contract-general interpretation (interpretation rules art. 1, change of circumstance art. 32) — all 12 references machine-verified in-corpus; library now 215 cards / 222 refs. The expansion exposed a real product defect: Terms.tsx's CATS render list had only the original seven categories, silently hiding the 122 cards in the four categories added by later batches (行政/经济法/社会法/知识产权); the list now covers all eleven and qa_gates gains gate7 pinning terms.json's category set against it (negative-tested). The same audit surfaced a runner-wide false-green: qa_shots only flagged step values matching /^(no-|error|failed)/, so failure strings like versions-missing / term-refs-short / guide-media-missing never failed a route — the judgment now also flags -missing/-short, which immediately surfaced three stale probes, all fixed: the 45-law-versions assertion demanded the Civil Procedure Law's "2021 第四次修正" label while pointing at the Criminal Law page (now asserts cl-2023's real 2020/2023 amendment labels), the 42-guide media floor was 6 against the current 5-asset guide media set, and the sweep must run with LH_ADMIN_TOKEN exported or sensitive-endpoint 503s count as failures (R17 rule re-proven). Also fixed the duplicate-key class in CaseSearch/CaseDetail (statute/ref keys used article number alone; guidance-131's two art. 58 refs to different laws collided — keys now law_id-qualified). Full strict sweep 58 routes / 0 problems; pytest 372, tsc+build, qa_gates 7/7 green; CHANGELOG duplicate Added headers (43) merged.
 - Guiding-case batch 47/71/95/53 (R232): finance and competition spread. No.47 Ferrero known-gettings — domestic recognition required, full imitation of distinctive trade dress unfair (反法 1993-ed. 5② → 2025-ed. art. 7); No.71 refusal-to-enforce criminal liability runs from judgment effectiveness (刑法 art. 313 direct); No.95 pre-existing debts may join a maximum-mortgage scope within the cap without registration change (物权法 art. 203 → 民法典 art. 420; art. 205 unanchored — honestly omitted); No.53 toll-road franchise revenue rights pledgeable as receivables, enforced by directed payment rather than auction (物权法 223/228① → 民法典 440/445). Library 243→247 cases; corrected missing pool down to 35.
 
-### Added / 新增
 
 - Guiding-case batch 147/248/268/39 (R238): criminal and administrative spread. No.147 sanxinfeng rock-nail case — core scenic areas are protected monuments, expert reports usable absent appraisal agencies (刑法 art. 324 direct); No.248 buying drugs to self-report as merit is illegally obtained and disallowed, appellate courts must note first-instance errors under the no-aggravation rule (arts. 68/358① direct; 刑诉法 outside corpus); No.268 drug-driving with continuous collisions constitutes intentional endangerment of public safety, punished severely (arts. 48/114/115①); No.39 university degree-conferral academic-autonomy case (学位条例 replaced by the 2024 Degree Law with non-corresponding numbering — honestly no link). Library 267→271 cases; corrected pool down to 10.
 
-### Added / 新增
 
 - Guiding-case batch 218/219/220/166 (R237): IP finale plus contract spread. No.218 IC layout registrations define scope without disclosure, originality needs explanation not proof (条例 outside corpus — no link); No.219 top-multiple punitive damages for trade-secret infringement "as a business" (反法 2019-ed. 17③ → 2025-ed. art. 22); No.220 the vanillin trade-secret landmark — use of all secrets presumed from complete-process misappropriation, damages by sales profit or price-profit-rate-times-volume (民法典 art. 1168 + 反法 art. 22 per page self-annotation); No.166 settlement-plus-unbonding bad faith bars reduction of agreed penalty (合同法 6/114 → 民法典 7/585, page self-noted). Library 263→267 cases; corrected pool down to 14.
 
-### Added / 新增
 
 - Guiding-case batch 67/96/90/58 (R230): civil and administrative spread. No.67 instalment-sale rescission rules do not apply to equity-transfer instalments (合同法 94/167 → 民法典 563/634 successor links); No.96 SOE-restructuring articles of association may validly provide share buy-backs (公司法 2018-ed. arts. 11/35/74 → 2023-revision arts. 5/53/89, renumber notes); No.90 failing to stop for pedestrians at crosswalks is lawfully punishable (道交法 art. 47① direct); No.58 "time-honored brand" false-advertising and honest-use boundaries (商标法 57⑦ → 2026-ed. 72; 反法 art. 2 direct, art. 9 renumber noted). Library 235→239 cases; corrected missing pool down to 43.
 
-### Added / 新增
 
 - Guiding-case batch 37/52/74/78 (R229): maritime-insurance and dispute-resolution theme. No.37 foreign-award enforcement jurisdiction and limitation from the discovery of assets in China (民诉法 239/273 → current 250/304); No.52 "all risks" marine cargo cover includes losses from non-excluded external causes (保险法 art. 30 contra proferentem direct); No.74 a breaching third party counts as "third party damaging the insured subject" for subrogation (art. 60①); No.78 the 3Q-v-Tencent antitrust landmark — relevant-market definition is a tool not an end, SSNIP/SSNDQ tests, market share a rough indicator (反垄断法 2008-ed. arts. 17/18/19 → 2022-revision arts. 22/23/24, renumber noted). Library 231→235 cases; corrected missing pool down to 47.
 
-### Added / 新增
 
 - Guiding-case batch 157/158/161/162 (R228): IP spread theme. No.157 applied art as copyrightable fine art (art-vs-utility separability; 实施条例 outside corpus — no link); No.158 departing employee's invention related to former duties belongs to the former employer under a three-way balance test (专利法 art. 6 direct); No.161 Wanglaoji/Jiaduobao false-advertising dispute (反不正当竞争法 2019-ed. art. 8① → 2025-revision art. 9, renumber noted); No.162 Jiangxiaobao agent-registration defense (商标法 2013-ed. art. 15 → 2026-ed. art. 22, renumber noted). Library 227→231 cases; corrected missing pool down to 51.
 
-### Added / 新增
 
 - Guiding-case batch 84/85/115/159 (R227): patent-infringement theme. No.84 presumptive force of the registered manufacturing process in pharma method-patent cases plus multi-channel technical fact-finding (专利法 2008-ed. 59①/61/68① → 2020-ed. 64/66/74 + 民诉法 art. 79 — four links); No.85 design-feature and functional-feature analysis for design patents (art. 64②); No.115 structural features are not "functional features", and conduct preservation must be reviewed alongside a partial judgment (art. 64); No.159 method patents fixed into products by the accused device, plus the evidence-holding sanction on infringement-scale defenses (arts. 1/11/64 — page self-annotated current edition). **MCP top_k cap raised 20→100**: corpus growth pushed the "竞业限制" query past 20 hits and the MCP search_cases cap silently truncated results below the HTTP channel, breaking the parity test — cap raised on all three search tools with descriptions synced, and the parity test now compares full result sets. Library 223→227 cases; corrected missing pool down to 55.
 
-### Added / 新增
 
 - Guiding-case batch 81/82/113/114 (R226): IP theme. No.81 idea/expression dichotomy and substantive-similarity analysis in copyright (著作权法 art. 2 direct); No.82 bad-faith trademark acquisition and enforcement is right abuse (民诉法 art. 13 + 商标法 2001-ed. 52 → 2013-ed. 57 → corpus 2026-ed. 72, double renumber note); No.113 Jordan name-right case — foreign natural persons' translated names qualify as prior rights, three-condition test, bad-faith registrations cannot invoke settled market order (2013-ed. 32 → 2026-ed. 24; repealed 民法通则/民法总则/侵权责任法 honestly noted); No.114 Madrid-system international registration and the duty to allow cure of formal defects (实施条例 outside corpus — no link). Library 219→223 cases; corrected missing pool down to 59.
 
-### Added / 新增
 
 - Guiding-case batch 149/150/153/171 (R225): construction and third-party-revocation theme. No.149 a corporate branch's independent litigation bars its legal person from third-party revocation (民诉法 56→59 + 民法总则 74②→民法典 74); No.150 mortgagees have standing to challenge priority-right judgments affecting their security (56→59); No.153 the six-month revocation window starts when the debtor's insolvency makes the harm apparent (56→59); No.171 claiming the construction-price priority in enforcement proceedings counts as exercise within the preclusive period (page self-notes 民法典 art. 807 as the current law). Library 215→219 cases; corrected missing pool down to 63.
 
-### Added / 新增
 
 - Guiding-case batch 43/44/116/33 (R224): state-compensation spread plus contract-invalidity. No.43 revocation-plus-reversal in enforcement objection is not "execution error" (国家赔偿法 art. 38); No.44 returning stolen goods per an effective judgment infringes nobody (art. 18); No.116 terminating enforcement for the debtor's insolvency does not bar a compensation claim (art. 30); No.33 gratuitous-looking low-price transfers to a knowing affiliate are malicious collusion — contract void with restitution under the Civil Code successor arts. 154/157 (official citations were the repealed Contract Law). Selection correction: 42 was already in the library (another pre-check slip, same class as 255). Library 211→215 cases; corrected missing pool down to 67.
 
-### Added / 新增
 
 - Guiding-case batch 92/100/160/86 (R231): plant-variety theme. No.92 one-locus DNA difference indicates similar varieties, insufficient to deny identity (条例 outside corpus — no link); No.100 DUS field-test reports proving distinctiveness defeat infringement claims; No.160 propagation-material three-element test — live, propagable, offspring identical (种子法 art. 28 direct, seeds-2022 corpus first consumption by the case pipeline); No.86 cross-licensing of parent lines under the fairness principle when parent/holder deadlock threatens food security (合同法 art. 5 → 民法典 art. 6 successor). Library 239→243 cases; corrected missing pool down to 39.
 
-### Added / 新增
 
 - Guiding-case batch 206/207/208/209 (R234): environment finale, dated 2022-12-30. No.206 offsetting service-function damages against remediation costs paid on behalf of co-polluters, plus remediation-effect evaluation (民法典 arts. 1167/1229 per page self-annotation); No.207 holistic assessment of illegal-mining damage across mountain, forest, water, soil and habitats (环保法 art. 64 + 民法典 art. 1165); No.208 Zhang Yongming sanxinfeng case — damage to natural monuments compensated using contingent-value-method expert assessment when no statutory appraiser exists (环保法 art. 2); No.209 replanting orders qualify as urgent pre-execution (民诉法 art. 109, page-annotated 2017-ed. 106). Library 251→255 cases; corrected pool down to 26.
 
-### Added / 新增
 
 - Guiding-case batch 173/174/177/178 (R236): eco-damage and marine administration. No.173 preventive public-interest suit over a hydropower project threatening an endangered fish habitat (环保法 art. 5 direct); No.174 Five-small-leaf-maple preventive measures ordered (art. 5 direct); No.177 CITES-listed coral and giant-clam transport punishable by marine administration (野保法/条例 outside corpus — honestly noted); No.178 sea-reclamation by independent parties without joint intent punished separately (行政处罚法/海域使用管理法 outside corpus). Library 259→263 cases; corrected pool down to 18.
 
-### Added / 新增
 
 - Guiding-case batch 124/156 (R241): the closing pair — corrected pool fully drained. No.124 execution-supervision where an unperformable settlement agreement revives the original judgment (official citation "民诉法 art. 204" carries no edition — honestly no link, per the art.123 precedent); No.156 outsider objection suit under either clause 28 or 29 of the execution-objection regulation excludes money-claim enforcement (民诉法 art. 227 → current art. 238, verified). Library 279→281 cases; the pool of guiding cases with official URLs is now empty.
 
-### Added / 新增
 
 - Guiding-case batch 75/175/176/215 (R240): environment public-interest finale. No.75 environmental-NGO standing — charter need not literally mention environment if its work protects ecosystems (环保法 art. 58 direct); No.175 knowing buyers of illegally fished fry are jointly liable with fishers, and damages span the whole biodiversity harmed by banned gear (民法典 art. 1168 + 环保法 art. 64); No.176 illegal sand-mining — criminal liability does not displace full ecological civil damages assessed across water quality, riverbed, water retention and biota (art. 64); No.215 shareholders abusing corporate veil are jointly liable for the company's eco-restoration duties (民法典 art. 83 + 公司法 2018-ed. 20 → 2023-ed. 23). Library 275→279 cases; corrected pool down to 2 (124 执行监督 + 156 案外人异议之诉).
 
-### Added / 新增
 
 - Guiding-case batch 73/117/126/155 (R239): enforcement and bankruptcy theme, pool programmatically re-audited to exactly 10. No.73 the priority-right period runs from contract termination upon bankruptcy acceptance (合同法 286 → 民法典 807 + 企业破产法 art. 18 direct); No.117 debt-joinder enforceable within the assumed scope and undeliverable commercial acceptance bills do not discharge the debt (民诉法 225 → 236); No.126 continued acceptance of performance after resumption application means the settlement is fully performed — no revival of the original judgment (official art. 204 citation without edition — honestly no link); No.155 pre-mortgage purchasers may bring outsider objection suits without attacking the mortgage (225 → 238). Library 271→275 cases; corrected pool down to 6.
 
-### Added / 新增
 
 - Guiding-case batch 210/211/212/216 (R235): environment public-interest continuation (2022/2023 batches). No.210 negotiated eco-damage agreements get judicial confirmation while unresolved obligors are sued, and pending criminal cases do not stay civil adjudication (民法典 art. 1229 direct); No.211 criminal-case transfer does not rescind administrative penalties, forestry authorities must compel restoration, and off-site restoration requires proof on-site is impossible (森林法/行政处罚法 outside corpus — honestly noted); No.212 cross-district illegal sand-mining jurisdiction and integrated mining-sale trials (长江保护法/刑诉法 outside corpus); No.216 hazardous-waste local authority cannot refuse disposal duty citing out-of-jurisdiction origin (环保法 art. 10 direct). Library 255→259 cases; corrected pool down to 22.
 
-### Added / 新增
 
 - 8 more term cards for public-health/safety/tourism laws (R255): 药品管理法 (假药认定 art.98, 药品质量赔偿 art.144), 旅游法 (旅游者权利 art.9, 旅行社违约 art.70), 传染病防治法 (传染病分类 art.3, 应急预案 art.30), 安全生产法 (从业人员权利 art.52, 安全生产方针 art.3). Term card count 84→92, covering 43 of 108 laws.
 
@@ -110,107 +94,81 @@
 
 - 8 new term cards for high-citizen-impact zero-coverage laws (R252): 道交法 (礼让行人 art.47, 酒后驾驶 art.91), 产品质量法 (三包义务 art.40, 产品缺陷 art.46), 保险法 (如实告知义务 art.16, 代位求偿权 art.60), 消防法 (消防安全职责 art.16, 火灾报警义务 art.44). Term card count 60→68, covering 31 of 108 laws. All references verified in corpus by the R248 machine gate.
 
-### Added / 新增
 
 - Guiding-case pipeline evidence closure (R242): the 15-page SPC listing channel was re-fetched fresh and re-indexed (278 case-number→URL entries), then diffed against the library — **zero missing**, `pool_drained: true` recorded in `docs/qa-evidence/pool-drain-final-2026-09-21.json` as the independent closure evidence for the candidate pool. All 278 index entries are in the library (278 guiding + 3 foreign = 281 cases). corpus_selfcheck clean (108 instruments / 10,669 provisions / 108 registries / 37 historical fulltexts) and final-verify ten assertions ALL PASS on the same tree.
 
-### Added / 新增
 
 - corpus_selfcheck gains a case-library section (R243): the machine-side self-check now re-verifies every guiding case's holding and result character-for-character against its official snapshot (mirroring the R131 test, including the honest placeholder exemption for execution-implementation cases whose pages lack a results section) and validates that all 362 research-ref statute citations point to articles that exist in the corpus. Output reports cases/guiding/snapshots-verified/refs-checked. On the same run: 281 cases, 278 guiding snapshots verified, 0 problems. README quality table gains a case-library row.
 
-### Added / 新增
 
 - Citator citation graph, minimal implementation (R244, narrowing known-gaps #6; visual sweep re-shot the data-sources route, 0 issues): `GET /api/citator/graph` aggregates all verified cases' research_refs into a read-only law → article → case view — totals (281 cases / 238 citing / 362 citations / 30 laws cited) plus per-law case and citation counts with per-article case-id lists. The DataSources page gained a "案例-法条引用图谱" card consuming it (totals stat row + top-laws table + the standing no-negative-history disclaimer). Fixed a real counting bug found by the new tests: per-law case counts are deduplicated per case (a case citing several articles of one law counted once), matching `cited_by` exactly. 2 new tests pin totals consistency, sort order, and cross-checks against `cited_by`/`cited_by_article`. 369→371 pytest.
 
-### Added / 新增
 
 - Guiding-case batch 202/203/204/205 (R233): environment public-interest continuation, dated 2022-12-30. No.202 ship illegal-discharge evidence rules incl. residual-bilge sampling (刑法 art. 338 direct); No.203 necessary-and-proportionate disposal costs count as compensable losses, grossly excessive ones do not (art. 338); No.204 eco-technology-upgrade costs may offset part of damages only beyond mandatory compliance duties (环保法 arts. 36/40① direct); No.205 smuggled solid waste — criminal-acquittal defendants still liable civilly and seizure does not shift disposal costs to enforcement (民法典 arts. 179/187 per page self-annotation). Pool recount correction: prior figure 35 overstated by the URL-less No.45; precise count now 30. Library 247→251 cases.
 
-### Added / 新增
 
 - Guiding-case batch 59/76/88/101 (R223): administrative-law theme. No.59 fire-acceptance filing notices are administrative confirmations and thus actionable (消防法 arts. 4/13 — the 2021-edition texts verified and linked with edition note); No.76 administrative-organ interpretation of administrative agreements binds the parties (行政诉讼法 art. 12); No.88 failure to disclose a licence term is procedural illegality — confirmed unlawful where reversal would harm public interests (art. 89①②); No.101 "information does not exist" replies require proof of a reasonable search (信息公开条例 outside corpus — honestly no link). Library 207→211 cases; corrected missing pool down to 71.
 
-### Added / 新增
 
 - Guiding-case batch 257/258/259/261 (R222): environment public-interest litigation, dated 2025-05-26. No.257 completed EIA plus targeted protection measures negate major public-interest risk (民法典 art. 1234 + 环保法 arts. 1/4/5/19 — five direct links); No.258 risk-elimination joint liability with injunction and pre-execution (arts. 179/1171 + 民诉法 arts. 58/109); No.259 withdrawal of public-interest suit only after all public-interest claims realized (arts. 1234/1235 + 民诉法 148/153 with 2017-edition renumber notes); No.261 cross-district transfer of restoration funds after illegal-mining attached civil suit (arts. 1168/1234/1235). Library 203→207 cases; corrected missing pool down to 75.
 
-### Added / 新增
 
 - Guiding-case batch 269/270/271/272 (R221): traffic-crimes theme, dated 2026-02-13 — the newest SPC batch. No.269 traffic-accident determination based on fleeing alone does not survive evidence review — acquittal (刑法 art. 133 + 道交法 art. 73 direct links); No.270 pre-filing blood-draw characterization and evidence review for drunk-driving (art. 133①, sub-article linked per the established sub mechanism); No.271 assisted-driving systems cannot replace the driver — circumventing monitoring while away from the wheel still counts (art. 133①); No.272 instigating drunk driving by deception makes an accomplice, mere encouragement does not (arts. 25/29/68/133①). Library 199→203 cases; corrected missing pool down to 79.
 
-### Added / 新增
 
 - Guiding-case batch 256/250/234/154 (R220): execution & remedies continuation. No.256 parcel-by-parcel auction of parking spaces honoring the "owners first" rule (民法典 art. 276); No.250 waiver of the construction-price priority right is void if it harms workers' interests, otherwise only subordinates the claim to the mortgage (art. 807 — page self-annotates the 1999 Contract Law art. 286 origin); No.234 per-incident limitation fund amounts regardless of fund application (海商法 outside corpus — no link); No.154 homebuyer's outsider objection suit does not attack the priority right itself (民诉法 art. 227 → current art. 238). Selection correction: 255 turned out to be already in the library — a batch-selection slip (member check missed), not the earlier regex issue. Library 195→199 cases; corrected missing pool down to 83.
 
-### Added / 新增
 
 - Guiding-case batch 251/252/253/254 (R219): execution-implementation theme — the SPC's newest guiding-case category, with a different page layout (「执行实施要点/执行结果」 sections instead of judgment sections; text taken verbatim from those). No.251 escalated supervision of conduct-obligation enforcement in IP cases with technology-licence-fee settlements (民诉法 art. 237); No.252 centralized designation of same-debtor series cases (art. 38); No.253 designation of the property-locus court when assets are remote (art. 235; page self-annotates the 2021-edition number); No.254 preservation-fund transfer implementation (art. 106). Library 191→195 cases; corrected missing pool down to 86.
 
-### Added / 新增
 
 - Guiding-case batch 135/136/137/138 (R218): environment finale — with R203+R211 the corpus now covers all of guiding cases 127–141. No.135 adverse inference where the defendant refuses to disclose hazardous-waste disposal information (固废法 outside corpus — no link); No.136 civil and administrative environmental public-interest suits tried separately but jointly decided (行政诉讼法 art. 61 direct); No.137 the effectiveness standard for reviewing administrative omission in environmental public-interest suits (arts. 70/74 direct; Forest Law outside corpus noted); No.138 concealed-pipe discharge is punishable even when effluent meets standards (Water Pollution Law outside corpus — no link). Library 187→191 cases; corrected missing pool down to 90.
 
-### Added / 新增
 
 - Guiding-case batch 245/246/247/222 (R217): state-compensation continuation completing the 241–247 range. No.245 a nominee-shareholder's post-enforcement ownership judgment is no ground for erroneous-enforcement compensation (Civil Procedure Law — the second stale "current number" catch: official 2012-ed. art. 244, page-noted 248, corpus-verified 2023-ed. art. 253); No.246 prison failure to timely handle inmate violence is compensable omission (国家赔偿法 art. 17); No.247 the comprehensive reasonableness standard for custodial-duty omissions (art. 17); No.222 a registered patent holder's duty of good-faith maintenance during ownership disputes (民法典 arts. 1165/1173, civil-damages complement to the theme). Library 183→187 cases; corrected missing pool down to 94.
 
-### Added / 新增
 
 - Guiding-case batch 241/242/243/244 (R216): state-compensation theme, all four decided by compensation committees. No.241 post-term nursing and assistive-device costs of a firearms-injury victim may found a fresh claim (国家赔偿法 art. 34); No.242 unlawful occupation of a third party's premises to store seized assets is compensable (art. 18); No.243 necessary and proportional police use of weapons is not "unlawful use" (art. 17); No.244 imprisonment beyond the retrial sentence after partial acquittal is compensable by reference to the joint judicial interpretation (arts. 17/21/33/35 — four direct links). Cited judicial interpretations and the police weapons regulation are outside the corpus — honestly noted. Library 179→183 cases; corrected missing pool down to 98.
 
-### Added / 新增
 
 - Guiding-case batch 230/231/232/233 (R215): maritime continuation. No.230 port-of-discharge uncollected-goods costs fall on the contractual shipper (contracting vs actual shipper distinction); No.231 same-owner vessel salvage still counts as an independent salvor whose reward survives the sister ship's fault; No.232 carrier's bill-of-lading notation duty judged by observable conditions and ordinary standards at issuance; No.233 ship-mast collision with a wharf — liability limitation applies and priority payment covers only direct property damage. All four cite exclusively 海商法 (outside the corpus) — honestly no deep links. Library 175→179 cases; corrected missing pool down to 102.
 
-### Added / 新增
 
 - Guiding-case batch 186/187/188/146 (R214): organized/serious crime theme. No.186 "soft violence" with realistic escalation to hard violence constitutes a mafia-type organization (刑法 art. 294); No.187 the "bullying the people" hallmark separating evil-force crime groups from ordinary ones (art. 26); No.188 court duty to investigate ownership of seized assets in mafia trials and hear third-party objections (art. 294); No.146 binary-options platforms with payouts decoupled from actual price movement are gambling (art. 303). All four official citations are current-code article numbers verified verbatim. Library 171→175 cases; corrected missing pool down to 106.
 
-### Added / 新增
 
 - Guiding-case batch 228/229/140/141 (R213): family/minors theme. No.228 custody infringement during separation with reference to post-divorce rules (民法典 arts. 34/1058/1084/1086 + 未成年人保护法 arts. 4/24 — six direct links, the densest entry so far); No.229 grandparents' visitation of grandchildren under the best-interests principle (arts. 10/1043/1045/1086); No.140 fruit-tree picking self-injury beyond the bounds of safety-duty (侵权责任法 art. 37① → Civil Code art. 1198 successor); No.141 a spillway pool is not a "public place" (same successor link). One bookkeeping correction: 227 was found already in the library — its 「指导性案例」 number format had evaded the missing-pool regex, so all prior pool counts were overstated by one; regex now matches both formats and the corrected pool is 110. Library 167→171 cases.
 
-### Added / 新增
 
 - Guiding-case batch 198/199/200/235 (R212): arbitration/recognition theme. No.198 actual constructors are not bound by the employer-contractor arbitration clause (仲裁法 art. 58 → 2025 revision art. 71); No.199 awarding bitcoin-equivalent damages in fiat violates public interest and the award was set aside (same article); No.200 ad-hoc tribunal under a "fast arbitration" clause is not a New York Convention refusal ground (Civil Procedure Law — the deepest cross-edition chain yet: official citation 2017-ed. art. 283, the page's own "current" note 290 is the 2021-ed. number, corpus-verified 2023-ed. art. 304); No.235 reciprocal recognition of foreign judgments without a prior reciprocal precedent (2021-ed. 289 → corpus art. 299, page self-annotated). Library 163→167 cases; missing pool down to 115.
 
-### Added / 新增
 
 - Guiding-case batch 132/133/134/139 (R211): environment continuation. No.132 voluntary pollution-control upgrades may mitigate liability in public-interest suits (环保法 arts. 1/4/5 direct links); No.133 a water body's self-purification capacity is no ground to escape restoration liability (art. 64 direct; repealed Tort Liability Law citations noted per civl-2020@1260); No.134 stop-injunction can compel a fresh environmental-impact assessment before resuming production (cited EIA Law and Water Pollution Law outside corpus — honestly no link); No.139 heavier-penalty statute applies where odor from solid-waste storage exceeds air-emission standards (art. 10 direct; Air Pollution and Solid Waste laws outside corpus noted). Library 159→163 cases; missing pool down to 119.
 
-### Added / 新增
 
 - Guiding-case batch 164/165/151/148 (R210): corporate/bankruptcy theme. No.164 substantial-consolidation reorganisation with investor trial production (企业破产法 arts. 1/2/26/86 — all four in-corpus, direct links); No.165 substantial-consolidation liquidation for affiliated enterprises with personality commingling (arts. 1/2); No.151 acceptance-bill guarantor standing in a third-party revocation suit against individual-repayment avoidance (民诉法 art. 56 → current art. 59); No.148 shareholders lack standing for third-party revocation of their company's external litigation (art. 56 → 59). Library 155→159 cases; missing pool down to 123.
 
-### Added / 新增
 
 - Guiding-case batch 108/110/111/112 (R209): maritime/admiralty theme. No.108 shipper's right to vary the carriage contract (Contract Law art. 308 → Civil Code art. 829 successor link); No.110 "employed salvage" contracts paid by horsepower-hour regardless of success (arts. 8/107 → 509/577); No.111 issuing bank's pledge over bills of lading (Property Law art. 224 → Civil Code art. 441; Contract Law art. 80① → 546); No.112 "one incident, one limitation fund" rule (officially cites only 海商法 art. 212, outside the corpus — honestly no deep link). Library 151→155 cases; missing pool down to 127.
 
-### Added / 新增
 
 - Guiding-case batch 182/201/237/240 (R208): labor/employment theme. No.182 year-end bonus approval (procedural approval duty cannot gut a substantive award promise — 劳动法 art. 4 + 劳动合同法 art. 3 links); No.201 foreign athlete's service contract and sports-arbitration clause (cited conflicts-of-law statute and the New York Convention outside the corpus — honestly no deep link); No.237 new-employment-form rider relationships decided by actual management control, not contract labels (labor law art. 16 + 劳动合同法 arts. 7/10); No.240 necessary platform operations management without dominant control does not create a labor relationship (art. 7). One field-search test assertion rewritten to pin the promotion behavior (guidance-40 rank 8→3 under reasoning bias) instead of a top-3-set inequality that legitimately broke when dual-strong new cases entered the corpus. Library 147→151 cases; missing pool down to 131.
 
-### Added / 新增
 
 - Guiding-case batch 70/64/51/77 (R207): consumer-rights/food-safety theme. No.70 toxic-non-food-substance conviction where the added substance shares equal attributes with the official blacklists (刑法 art. 144 direct link); No.64 telecom format-contract notice duty (official Contract Law art. 39 repealed — linked to its Civil Code successor art. 496 with the repeal noted per civl-2020@1260); No.51 international air-passenger transfer-notice duty (cited 民法通则 and Warsaw/Hague/Guadalajara conventions outside the corpus — honestly no deep link); No.77举报人 plaintiff standing in price-administration litigation (行政诉讼法 arts. 12/25, same numbers in the in-corpus 2017 edition). Library 143→147 cases; missing pool down to 135.
 
-### Added / 新增
 
 - Guiding-case batch 46/48/49/55 (R206): intellectual-property theme. No.46 regional generic-name defense in trademark infringement (the corpus holds the 2026 trademark-law revision effective 2027 — the provision corresponding to the officially cited art. 59 was verified verbatim at art. 73 and linked with both edition notes); No.48 file-format lockout as non-protected technical measure under software copyright (official art. 48①⑥ of the 2010 edition → current art. 53①⑥); No.49 software-infringement burden of proof via design-defect comparison (cited Software Protection Regulation is a regulation outside the corpus — honestly no deep link); No.55 indefinite claim scope defeats infringement claims (official art. 59① → current art. 64①; art. 26 unchanged). Library 139→143 cases; missing pool down to 139.
 
-### Added / 新增
 
 - Guiding-case batch 61/62/102/103 (R205): criminal/citizen-rights theme. No.61 Prof. Ma Le insider-trading-adjacent case (the Supreme Court's retrial holding that 刑法 art. 180④ incorporates the full penalty range — the "especially serious circumstances" tier applies); No.62 attempt-and-completed-fraud penalty-range selection (art. 23); No.102 DNS hijacking as computer-system sabotage (art. 286); No.103 remote machinery-monitoring systems as protected computer systems (art. 286). All four official citations are current-code article numbers verified verbatim in corpus — direct links, no renumber notes needed. Library 135→139 cases; missing pool down to 143.
 
-### Added / 新增
 
 - Guiding-case batch 118/119/121/123 (R204): execution-procedure theme — all four are Supreme-People's-Court execution reconsideration rulings. No.118 enforcement of a rescission-right judgment against both debtor and transferee; No.119 pre-execution settlement does not bar compulsory application; No.121 custody-cost limits in property-preservation enforcement; No.123 mining-right transfer procedures (cited 民诉法 art. 204 without an edition note — honestly no deep link). The first three link Civil Procedure Law art. 236 (the current 2023-edition number for the execution-conduct objection provision the pages cite as art. 225, verified verbatim in corpus). Library 131→135 cases; missing pool down to 147.
 
-### Added / 新增
 
 - Guiding-case batch 127/128/129/131 (R203): environment/public-interest litigation theme. No.127 marine pollution ("pollutant" not limited to standards-listed substances; official citations — repealed Tort Liability Law and Marine Environment Protection Law not in corpus — honestly no deep link), No.128 light-pollution nuisance (comprehensive tolerance standard; 环保法 art. 42 link), No.129 hazardous-waste ecological damage compensation by provincial government (art. 64 link), No.131 air-pollution public-interest suit (社会组织原告资格 art. 58 link, plus Civil Procedure Law public-interest article relinked to current art. 58 with the 2017-edition art. 55 numbering honestly noted). Library 127→131 cases; the missing pool shrinks to 151.
 
-### Added / 新增
 
 - Guiding-case batch 144/97/98/89 (R202): the Supreme People's Court listing channel (`court.gov.cn/shenpan/gengduo/77.html`, 15 pages) is now fully indexed — 278 case-number→URL pairs discovered against the library's 119 in-library guiding cases, yielding a 159-entry missing pool with official URLs. Four citizen-facing cases entered with verbatim official text (holding + result character-for-character in the new `court_` snapshots, pinned by the existing R131 test): No.144 justified defense (statute link 刑法 art. 20), No.97 illegal-business-operation acquittal on retrial (art. 225), No.98 good-samaritan life-rights dispute (official citations include the Tort Liability Law, repealed — the in-corpus Road Traffic Safety Law art. 70 link is kept and the repeal is noted per 民法典 art. 1260), No.89 surname-selection administrative case (cited 民法通则/婚姻法 not in corpus — honestly no deep link, continuation noted). Library 123→127 cases.
 

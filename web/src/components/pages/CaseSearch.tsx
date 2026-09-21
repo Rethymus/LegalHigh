@@ -55,8 +55,8 @@ function CaseRow({ c }: { c: CaseRecord }) {
       </div>
       <p className="res-snip clamp2">{c.summary}</p>
       <div className="res-acts">
-        {(c.statutes ?? []).map((s) => <Link key={s.no} className="res-act" to={`/laws/${s.law_id}?art=${s.no}`}><Icon name="link" size={12} />{s.label}</Link>)}
-        {(c.research_refs ?? []).map((s) => <CitationChip key={`r${s.no}`} label={s.label} to={`/laws/${s.law_id}?art=${s.no}`} />)}
+        {(c.statutes ?? []).map((s) => <Link key={`${s.law_id}-${s.no}`} className="res-act" to={`/laws/${s.law_id}?art=${s.no}`}><Icon name="link" size={12} />{s.label}</Link>)}
+        {(c.research_refs ?? []).map((s) => <CitationChip key={`r-${s.law_id}-${s.no}`} label={s.label} to={`/laws/${s.law_id}?art=${s.no}`} />)}
         <a className="res-act" href={c.source_url} target="_blank" rel="noreferrer"><Icon name="external" size={12} />{c.source_title}</a>
         <span className="spacer" />
         <Link className="res-act" to={`/cases/${c.id}`}><Icon name="external" size={12} />查看详情</Link>

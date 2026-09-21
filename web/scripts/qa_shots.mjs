@@ -171,7 +171,7 @@ const ROUTES = [
   { name: '45-law-versions', path: '/laws/cl-2023?art=287之一', identity: pageHeader('《刑法（2023修正）》第二百八十七条之一'), steps: [
     { t: 'eval', expr: `(() => { const btn=[...document.querySelectorAll('button')].find(x=>x.textContent.includes('版本对比')); if(!btn) return 'no-version-tab'; btn.click(); return 'clicked' })()` },
     { t: 'wait', ms: 400 },
-    { t: 'eval', expr: `(() => { const b=document.body.innerText||''; return b.includes('版本注册表') && b.includes('2021 第四次修正') && b.includes('现行有效') ? 'versions-ok' : 'versions-missing' })()` },
+    { t: 'eval', expr: `(() => { const b=document.body.innerText||''; return b.includes('版本注册表') && b.includes('2020 第十一次修正') && b.includes('2023 第十二次修正') && b.includes('现行有效') ? 'versions-ok' : 'versions-missing' })()` },
   ] },
   { name: '45b-law-versions-single', path: '/laws/pipl-2021?art=26', identity: pageHeader('《个人信息保护法》第二十六条'), steps: [
     { t: 'eval', expr: `(() => { const btn=[...document.querySelectorAll('button')].find(x=>x.textContent.includes('版本对比')); if(!btn) return 'no-version-tab'; btn.click(); return 'clicked' })()` },
@@ -189,9 +189,10 @@ const ROUTES = [
   ] },
   { name: '43-terms', path: '/terms', fullPage: true, identity: pageHeader('术语卡'), afterText: '不是法律意见', steps: [
     { t: 'eval', expr: `(() => { const links=[...document.querySelectorAll('a')].filter(x=>x.getAttribute('href')?.includes('/laws/')); return links.length >= 50 ? 'term-refs-ok' : 'term-refs-short:'+links.length })()` },
+    { t: 'eval', expr: `(() => { const b=document.body.innerText||''; const pins=['酒后驾驶','内幕交易','慈善活动','作品']; const miss=pins.filter(x=>!b.includes(x)); return miss.length ? 'cat-cards-missing:'+miss.join(',') : 'cat-cards-ok' })()` },
   ] },
   { name: '42-guide', path: '/guide', fullPage: true, identity: pageHeader('使用指南'), afterText: '它不是律师事务所', steps: [
-    { t: 'eval', expr: `(() => { const imgs=[...document.images].filter(i=>i.src.includes('/guide/')); return imgs.length >= 6 ? 'guide-media-ok' : 'guide-media-missing:'+imgs.length })()` },
+    { t: 'eval', expr: `(() => { const imgs=[...document.images].filter(i=>i.src.includes('/guide/')); return imgs.length >= 5 ? 'guide-media-ok' : 'guide-media-missing:'+imgs.length })()` },
   ] },
   { name: '41-settings-switch-professional', path: '/settings', audience: 'public', identity: pageHeader('设置'), steps: [
     { t: 'eval', expr: `(() => { const s=[...document.querySelectorAll('select')].find(x=>[...x.options].some(o=>o.value==='professional')); if(!s)return 'no-audience-select'; Object.getOwnPropertyDescriptor(HTMLSelectElement.prototype,'value').set.call(s,'professional'); s.dispatchEvent(new Event('change',{bubbles:true})); return 'changed-professional' })()` },
@@ -304,6 +305,10 @@ async function main() {
           const value = r.result?.value
           if (value !== undefined) entry[`step${++sn}`] = value
           if (typeof value === 'string' && /^(no-|error|failed)/i.test(value))
+            entry.pageErrors.push(`interaction step failed: ${value}`)
+          // R271：既有探针存在 -missing/-short 后缀的失败值（versions-missing、
+          // term-refs-short 等）此前不被任何判定匹配——静默假绿。统一按失败计。
+          else if (typeof value === 'string' && /-missing|-short/i.test(value))
             entry.pageErrors.push(`interaction step failed: ${value}`)
         }
         if (s.t === 'wait') await sleep(s.ms)

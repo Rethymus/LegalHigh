@@ -188,7 +188,7 @@ export default function CaseDetail() {
             <div className="card-b" style={{ paddingTop: 10 }}>
               {c.statutes.length > 0 ? (
                 <div className="citations">
-                  {c.statutes.map((s, i) => <CitationCard key={s.no} n={i + 1} title={s.label} lawId={s.law_id} articleNo={s.no} />)}
+                  {c.statutes.map((s, i) => <CitationCard key={`${s.law_id}-${s.no}`} n={i + 1} title={s.label} lawId={s.law_id} articleNo={s.no} />)}
                 </div>
               ) : (
                 <div className="tiny" style={{ lineHeight: 1.8 }}>

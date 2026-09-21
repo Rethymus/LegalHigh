@@ -12,10 +12,36 @@ interface TermCard {
   term: string
   explain: string
   refs: { law_id: string; art: string; label: string }[]
-  cat: '民事' | '劳动' | '刑事' | '程序' | '网络与数据' | '治安' | '宪法'
+  cat:
+    | '民事'
+    | '劳动'
+    | '刑事'
+    | '程序'
+    | '网络与数据'
+    | '治安'
+    | '宪法'
+    | '行政'
+    | '经济法'
+    | '社会法'
+    | '知识产权'
 }
 
-const CATS: TermCard['cat'][] = ['治安', '民事', '劳动', '刑事', '程序', '网络与数据', '宪法']
+/* 分类清单必须与 terms.json 实际出现的 cat 全集对齐（R271 教训：扩张批次引入
+   行政/经济法/社会法/知识产权 四类共 122 张卡未同步进此列表，页面静默吞掉）——
+   test 自检：corpus_selfcheck 术语卡计数 ≥ 本列表渲染计数。 */
+const CATS: TermCard['cat'][] = [
+  '治安',
+  '民事',
+  '劳动',
+  '刑事',
+  '程序',
+  '网络与数据',
+  '宪法',
+  '行政',
+  '经济法',
+  '社会法',
+  '知识产权',
+]
 
 export default function Terms() {
   return (
@@ -43,7 +69,7 @@ export default function Terms() {
                   <div className="tiny mt-8" style={{ lineHeight: 1.7 }}>{t.explain}</div>
                   <div className="tiny mt-8">
                     {t.refs.map((r) => (
-                      <Link key={r.art} to={`/laws/${r.law_id}?art=${r.art}`} className="tiny bold" style={{ color: 'var(--accent-text)', marginRight: 10 }}>
+                      <Link key={`${r.law_id}@${r.art}`} to={`/laws/${r.law_id}?art=${r.art}`} className="tiny bold" style={{ color: 'var(--accent-text)', marginRight: 10 }}>
                         {r.label} →
                       </Link>
                     ))}
