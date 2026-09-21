@@ -2276,5 +2276,173 @@
     "source_title": "",
     "source_url": "",
     "statutes": []
+  },
+  {
+    "cat": "劳动",
+    "term": "劳动者权利",
+    "explain": "劳动者享有平等就业和选择职业的权利、取得劳动报酬的权利、休息休假的权利、获得劳动安全卫生保护的权利等。",
+    "refs": [
+      {
+        "law_id": "labor-law-2018",
+        "art": "3",
+        "label": "《劳动法》第3条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "劳动",
+    "term": "工资支付保障",
+    "explain": "工资应当以货币形式按月支付给劳动者本人，不得克扣或者无故拖欠劳动者的工资。",
+    "refs": [
+      {
+        "law_id": "labor-law-2018",
+        "art": "50",
+        "label": "《劳动法》第50条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "行政",
+    "term": "环境保护义务",
+    "explain": "一切单位和个人都有保护环境的义务。企业事业单位和其他生产经营者应防止、减少环境污染和生态破坏，对所造成的损害依法承担责任。",
+    "refs": [
+      {
+        "law_id": "environment-2014",
+        "art": "6",
+        "label": "《环境保护法》第6条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "行政",
+    "term": "按日连续处罚",
+    "explain": "违法排放污染物受到罚款处罚被责令改正后拒不改正的，行政机关可自责令改正之日的次日起按原处罚数额按日连续处罚。",
+    "refs": [
+      {
+        "law_id": "environment-2014",
+        "art": "59",
+        "label": "《环境保护法》第59条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "经济法",
+    "term": "市场价格机制",
+    "explain": "国家实行主要由市场形成价格的机制。大多数商品和服务价格实行市场调节价，极少数商品和服务价格实行政府指导价或政府定价。",
+    "refs": [
+      {
+        "law_id": "price-1997",
+        "art": "3",
+        "label": "《价格法》第3条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "经济法",
+    "term": "不正当价格行为",
+    "explain": "经营者不得相互串通操纵市场价格，不得捏造散布涨价信息哄抬价格，不得对具有同等交易条件的其他经营者实行价格歧视。",
+    "refs": [
+      {
+        "law_id": "price-1997",
+        "art": "14",
+        "label": "《价格法》第14条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "行政",
+    "term": "人民警察任务",
+    "explain": "人民警察的任务是维护国家安全、社会治安秩序，保护公民人身安全和合法财产，预防、制止和惩治违法犯罪活动。",
+    "refs": [
+      {
+        "law_id": "police-2012",
+        "art": "2",
+        "label": "《人民警察法》第2条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "行政",
+    "term": "人民警察禁止行为",
+    "explain": "人民警察不得散布损害国家声誉的言论、参加非法组织、参加罢工、泄露国家秘密、玩忽职守、刑讯逼供、非法剥夺限制他人人身自由等。",
+    "refs": [
+      {
+        "law_id": "police-2012",
+        "art": "22",
+        "label": "《人民警察法》第22条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
   }
 ]
