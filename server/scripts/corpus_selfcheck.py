@@ -220,6 +220,15 @@ def main() -> int:
                             for a in corpus.articles)
                 if not found:
                     problems.append(f"案例 {cid}: research_refs 指向语料外条文 {r['law_id']}@{r['no']}{sub}")
+                # R274：label 开头的现行法引用必须与存储 (no, sub) 一致——标签漂移会把
+                # 详情页深链指到错误条文（存在性门查不出「条号挂错法」的精度缺陷）。
+                # 形态容差：《名称》(年份…)?第N条(之X)?；非《》开头的形态跳过不判。
+                lm = re.match(r"《[^》]+》(?:\([0-9]{4}[^)]*\))?第(\d+)条(之[一二三四五六七八九十]+)?",
+                              r.get("label") or "")
+                if lm and (int(lm.group(1)) != int(r["no"]) or (lm.group(2) or "") != sub):
+                    problems.append(
+                        f"案例 {cid}: research_refs 标签条号 {lm.group(1)}{lm.group(2) or ''} "
+                        f"与存储 {r['no']}{sub} 不一致：{(r.get('label') or '')[:40]}")
             if c["id"].startswith("guidance-"):
                 cases_report["guiding"] += 1
                 n = re.search(r"(\d+)", c["no"]).group(1)
@@ -259,6 +268,13 @@ def main() -> int:
                             for a in corpus.articles)
                 if not found:
                     problems.append(f"术语卡 {card.get('term')}: 引用指向语料外条文 {lid}@{r['art']}")
+                # R274：同案例域——label 开头引用必须与存储 art 一致（含子条号）。
+                lm2 = re.match(r"《[^》]+》(?:\([0-9]{4}[^)]*\))?第(\d+)条(之[一二三四五六七八九十]+)?",
+                               r.get("label") or "")
+                if lm2 and lm2.group(1) + (lm2.group(2) or "") != str(r.get("art", "")):
+                    problems.append(
+                        f"术语卡 {card.get('term')}: 标签条号 {lm2.group(1)}{lm2.group(2) or ''} "
+                        f"与存储 art {r.get('art')!r} 不一致")
     report["terms"] = terms_report
 
     out.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
