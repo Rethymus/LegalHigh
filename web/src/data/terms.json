@@ -1054,5 +1054,173 @@
     "source_title": "",
     "source_url": "",
     "statutes": []
+  },
+  {
+    "cat": "知识产权",
+    "term": "专利申请权",
+    "explain": "专利分为发明、实用新型和外观设计三种类型。完成发明创造后，可以就产品、方法或其改进提出新的技术方案申请专利保护。",
+    "refs": [
+      {
+        "law_id": "patent-2020",
+        "art": "2",
+        "label": "《专利法》第2条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "知识产权",
+    "term": "专利侵权",
+    "explain": "未经专利权人许可实施其专利（制造、使用、销售、进口等）即构成侵权。发生纠纷可协商、请求管理部门处理或向法院起诉。",
+    "refs": [
+      {
+        "law_id": "patent-2020",
+        "art": "65",
+        "label": "《专利法》第65条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "知识产权",
+    "term": "作品",
+    "explain": "著作权法保护的作品是指文学、艺术和科学领域内具有独创性并能以一定形式表现的智力成果，包括文字作品、口述作品、音乐、美术、视听作品等。",
+    "refs": [
+      {
+        "law_id": "copyright-2020",
+        "art": "3",
+        "label": "《著作权法》第3条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "知识产权",
+    "term": "著作权内容",
+    "explain": "著作权包括人身权（发表权、署名权、修改权、保护作品完整权）和财产权（复制权、发行权、信息网络传播权等）。",
+    "refs": [
+      {
+        "law_id": "copyright-2020",
+        "art": "10",
+        "label": "《著作权法》第10条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "知识产权",
+    "term": "商标战略",
+    "explain": "国家实施知识产权战略，提升商标保护、运用、管理和服务水平，促进商标的创造和运用。",
+    "refs": [
+      {
+        "law_id": "trademark-2026",
+        "art": "3",
+        "label": "《商标法》第3条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "知识产权",
+    "term": "商标使用管理",
+    "explain": "商标注册人应规范使用注册商标。自行改变注册商标内容、注册人名义地址等注册事项且逾期不改正的，可能面临处罚。",
+    "refs": [
+      {
+        "law_id": "trademark-2026",
+        "art": "57",
+        "label": "《商标法》第57条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "经济法",
+    "term": "商业广告",
+    "explain": "商品经营者或服务提供者通过媒介和形式直接或间接介绍自己商品或服务的商业广告活动，受广告法调整。",
+    "refs": [
+      {
+        "law_id": "advertising-2021",
+        "art": "2",
+        "label": "《广告法》第2条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "经济法",
+    "term": "虚假广告",
+    "explain": "广告以虚假或引人误解的内容欺骗、误导消费者的，构成虚假广告。发布虚假广告应承担法律责任。",
+    "refs": [
+      {
+        "law_id": "advertising-2021",
+        "art": "28",
+        "label": "《广告法》第28条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
   }
 ]
