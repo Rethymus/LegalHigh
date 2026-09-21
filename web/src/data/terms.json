@@ -1710,5 +1710,157 @@
     "source_title": "",
     "source_url": "",
     "statutes": []
+  },
+  {
+    "cat": "民事",
+    "term": "土地承包经营权",
+    "explain": "承包方承包土地后享有土地承包经营权，可自己经营也可流转土地经营权由他人经营。国家保护进城农户的土地承包经营权。",
+    "refs": [
+      {
+        "law_id": "rural-land-2018",
+        "art": "9",
+        "label": "《农村土地承包法》第9条"
+      },
+      {
+        "law_id": "rural-land-2018",
+        "art": "27",
+        "label": "《农村土地承包法》第27条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "行政",
+    "term": "义务教育",
+    "explain": "国家实行九年义务教育制度，所有适龄儿童、少年必须接受，是国家必须予以保障的公益性事业。",
+    "refs": [
+      {
+        "law_id": "compulsory-edu-2018",
+        "art": "2",
+        "label": "《义务教育法》第2条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "行政",
+    "term": "免试入学",
+    "explain": "义务教育学校实行免试就近入学，不得以面试、评测等名义选拔学生。适龄儿童、少年在户籍所在地学校就近入学。",
+    "refs": [
+      {
+        "law_id": "compulsory-edu-2018",
+        "art": "7",
+        "label": "《义务教育法》第7条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "经济法",
+    "term": "混淆行为",
+    "explain": "经营者不得擅自使用与他人有一定影响的商品名称、包装、装潢等相同或近似的标识，引人误认为他人商品或与他人存在特定联系。",
+    "refs": [
+      {
+        "law_id": "unfair-competition-2025",
+        "art": "7",
+        "label": "《反不正当竞争法》第7条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "经济法",
+    "term": "虚假宣传",
+    "explain": "经营者不得对商品的性能、功能、质量、销售状况、用户评价等作虚假或引人误解的商业宣传，欺骗误导消费者。",
+    "refs": [
+      {
+        "law_id": "unfair-competition-2025",
+        "art": "9",
+        "label": "《反不正当竞争法》第9条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "劳动",
+    "term": "工会基本职责",
+    "explain": "维护职工合法权益、竭诚服务职工群众是工会的基本职责。工会通过平等协商和集体合同制度等维护职工劳动权益。",
+    "refs": [
+      {
+        "law_id": "trade-union-2021",
+        "art": "6",
+        "label": "《工会法》第6条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "劳动",
+    "term": "工会劳动保护监督",
+    "explain": "用人单位处分职工或单方面解除劳动合同时应事先通知工会，工会认为不适当的有权提出意见。",
+    "refs": [
+      {
+        "law_id": "trade-union-2021",
+        "art": "22",
+        "label": "《工会法》第22条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
   }
 ]
