@@ -1097,5 +1097,9 @@
   "terms": {
     "cards": 215,
     "refs_checked": 222
+  },
+  "third_chain": {
+    "locked": 21,
+    "reverified": 21
   }
 }

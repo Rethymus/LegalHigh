@@ -281,9 +281,38 @@ def main() -> int:
                         f"与存储 art {r.get('art')!r} 不一致")
     report["terms"] = terms_report
 
+    # 第三链锁定门（R284）：lawtext 快照（flk DOCX 衍生社区转录，与语料构建源上游独立）
+    # 的「全一致」法律逐部锁定——每次自检复验语料 ↔ 快照逐字一致 + 快照 SHA-256 未变。
+    # 语料文本漂移或快照被改都在此显式报问题（清单由 scripts/lawtext_lock.py 生成）。
+    lock_path = ROOT.parent / "docs" / "qa-evidence" / "lawtext-3rd-lock.json"
+    third_chain = {"locked": 0, "reverified": 0}
+    if lock_path.is_file():
+        import importlib.util
+        spec = importlib.util.spec_from_file_location("lawtext_verify", ROOT / "scripts" / "lawtext_verify.py")
+        lv = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(lv)
+        lock = json.loads(lock_path.read_text(encoding="utf-8"))
+        for lid, ent in lock.get("locked", {}).items():
+            snap = EVIDENCE_DIR / Path(ent["snapshot"]).name
+            if not snap.is_file():
+                problems.append(f"第三链锁定 {lid}: 快照缺失 {ent['snapshot']}")
+                continue
+            sha = hashlib.sha256(snap.read_bytes()).hexdigest()
+            if sha != ent["sha256"]:
+                problems.append(f"第三链锁定 {lid}: 快照被改动（SHA-256 与锁定清单不符）")
+                continue
+            res = lv.verify(lid, snap)
+            third_chain["reverified"] += 1
+            if res.get("label_mismatch_count") or res.get("body_mismatch_count") \
+                    or "条数不一致" in res.get("conclusion", ""):
+                problems.append(f"第三链锁定 {lid}: 与快照复验不一致（{res.get('conclusion', '')}）——语料文本漂移")
+            else:
+                third_chain["locked"] += 1
+    report["third_chain"] = third_chain
+
     out.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
     total = sum(r["actual_count"] for r in report["laws"].values())
-    print(f"语料自检：{len(report['laws'])} 部 {total} 条，结构/哈希问题 {len(problems)} 项，待核 {len(pending)} 项，版本注册表 {len(version_registries)} 份，历史全文 {fulltext_count} 份，flk native id {native_count} 部；案例库 {cases_report['cases']} 件（指导 {cases_report['guiding']}，快照逐字复验 {cases_report['snapshots_verified']}，法条引用 {cases_report['refs_checked']} 条全部在语料）；术语卡 {terms_report['cards']} 张（引用 {terms_report['refs_checked']} 条全部在语料）")
+    print(f"语料自检：{len(report['laws'])} 部 {total} 条，结构/哈希问题 {len(problems)} 项，待核 {len(pending)} 项，版本注册表 {len(version_registries)} 份，历史全文 {fulltext_count} 份，flk native id {native_count} 部；案例库 {cases_report['cases']} 件（指导 {cases_report['guiding']}，快照逐字复验 {cases_report['snapshots_verified']}，法条引用 {cases_report['refs_checked']} 条全部在语料）；术语卡 {terms_report['cards']} 张（引用 {terms_report['refs_checked']} 条全部在语料）；第三链锁定 {third_chain['locked']} 部逐字复验（快照 {third_chain['reverified']} 份）")
     for p in problems:
         print("  -", p)
     for p in pending:

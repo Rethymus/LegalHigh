@@ -13,6 +13,19 @@ SERVER = pathlib.Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(SERVER))
 
 NATIVE = SERVER / "data" / "flk_native_ids.json"
+LOCK = SERVER.parent / "docs" / "qa-evidence" / "lawtext-3rd-lock.json"
+
+
+def test_third_chain_lock_manifest():
+    """R284：第三链锁定清单在库且形态完整——20+ 部法律受快照逐字锁定。"""
+    assert LOCK.is_file(), "lawtext-3rd-lock.json 缺失（第三链锁定门不可运行）"
+    data = json.loads(LOCK.read_text(encoding="utf-8"))
+    locked = data.get("locked", {})
+    assert len(locked) >= 20, f"锁定数回落：{len(locked)} 部（应 ≥20）"
+    assert "civl-2020" in locked and "con-2018" in locked and "pcl-2023" in locked
+    for lid, ent in locked.items():
+        assert ent.get("snapshot") and ent.get("sha256") and ent.get("articles"), f"{lid} 锁定条目形态异常"
+        assert (SERVER.parent / ent["snapshot"]).is_file(), f"{lid} 快照文件缺失"
 
 
 def test_native_map_exists_and_shape():

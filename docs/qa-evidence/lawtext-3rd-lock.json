@@ -1,0 +1,111 @@
+{
+  "generated_at": "2026-09-21",
+  "locked_count": 21,
+  "locked": {
+    "admin-litigation-2017": {
+      "snapshot": "docs/research/evidence/lawtext-admin-litigation-2017-2c909fdd678bf17901678bf858550a0f.md",
+      "sha256": "1c3d6dc528047a95e3218612a26c98f1a0d646971df79756c0433b89a927171b",
+      "articles": 103
+    },
+    "admin-review-2023": {
+      "snapshot": "docs/research/evidence/lawtext-admin-review-2023-ff8081818a21e6c3018a508d491a0c98.md",
+      "sha256": "a303b715f61190b30ea848ffd76ddad021c02acbea21edd99b0372926f198175",
+      "articles": 90
+    },
+    "civl-2020": {
+      "snapshot": "docs/research/evidence/lawtext-civl-2020-ff808081729d1efe01729d50b5c500bf.md",
+      "sha256": "3de0f344bd0804f463594cae734ef5eacbbb41aad04b15d865b99920d56fe57c",
+      "articles": 1260
+    },
+    "cl-2013": {
+      "snapshot": "docs/research/evidence/lawtext-cl-2013-2c909fdd678bf17901678bf7670606ef.md",
+      "sha256": "59fbb5855bb8709a78f585e4f218df8802f1f7554c196d1f4c428e0b596cbf6f",
+      "articles": 63
+    },
+    "con-2018": {
+      "snapshot": "docs/research/evidence/lawtext-con-2018-2c909fdd678bf17901678bf5a483004b.md",
+      "sha256": "47927c20eaa45b8eb74d4a889b1bd305dc78696f567e9bed4ef0879002f0e8de",
+      "articles": 143
+    },
+    "crpl-imp-2024": {
+      "snapshot": "docs/research/evidence/lawtext-crpl-imp-2024-ff808181927f09310192c2f4cd777281.md",
+      "sha256": "fb8ff411cbfceb18941210dce7cb5b37e6ca5d3354c32cac6a4d8f532b64afc6",
+      "articles": 53
+    },
+    "dsl-2021": {
+      "snapshot": "docs/research/evidence/lawtext-dsl-2021-ff80818179f5e0800179f885c7e70392.md",
+      "sha256": "88c50e68cd34a1c001f48377235fdc7978264624f40249a4e994e025036caefb",
+      "articles": 55
+    },
+    "dv-2015": {
+      "snapshot": "docs/research/evidence/lawtext-dv-2015-2c909fdd678bf17901678bf7f9d60889.md",
+      "sha256": "053a265682389b6de0276da8a5e1d912f157b72fc956bfcaf0c9777256bc41b2",
+      "articles": 38
+    },
+    "ecom-2018": {
+      "snapshot": "docs/research/evidence/lawtext-ecom-2018-2c909fdd678bf17901678bf8af050b81.md",
+      "sha256": "b6e08ad8527a6c20fd0dbf3a9170c98bfefbd2e5c9081fa921c14985a9ca887c",
+      "articles": 89
+    },
+    "lcar-2007": {
+      "snapshot": "docs/research/evidence/lawtext-lcar-2007-2c909fdd678bf17901678bf64f28039d.md",
+      "sha256": "fe940f4c2aae4161ec3992b17b3ee8f4cc4efa80e07b2b42b838a63eb925b330",
+      "articles": 54
+    },
+    "lcl-2012": {
+      "snapshot": "docs/research/evidence/lawtext-lcl-2012-2c909fdd678bf17901678bf74d7106b3.md",
+      "sha256": "1da356e131216c6841fe1d3b47c45f72f14e6e935b3e2322ace87e9fa9ea0a0a",
+      "articles": 98
+    },
+    "legal-aid-2021": {
+      "snapshot": "docs/research/evidence/lawtext-legal-aid-2021-ff8081817b6472a3017b6577820f0061.md",
+      "sha256": "a959945a053a2cff6bdf6d5c7a3e477c19c40757b2b6cfa9a3671cc14fbf9c03",
+      "articles": 71
+    },
+    "ll-2017": {
+      "snapshot": "docs/research/evidence/lawtext-ll-2017-2c909fdd678bf17901678bf867e80a55.md",
+      "sha256": "c3f797dde6cc9a72a9c0e581466c24243b6fdc69d63f2d3a7cc89c2bb365c3fe",
+      "articles": 60
+    },
+    "pcl-2023": {
+      "snapshot": "docs/research/evidence/lawtext-pcl-2023-ff8081818a21dc13018b425303b7086d.md",
+      "sha256": "f7ebadc6efbf0dc0f54aabed3015042c66f690495512a6d1c34abfab8839d8ea",
+      "articles": 306
+    },
+    "penal-2021": {
+      "snapshot": "docs/research/evidence/lawtext-penal-2021-ff8080817703add20177373df6a43e33.md",
+      "sha256": "d2d819eb1bdd74786a47e62d4827a533d1ebb2788d222864cfdd89058a39b6c0",
+      "articles": 86
+    },
+    "pipl-2021": {
+      "snapshot": "docs/research/evidence/lawtext-pipl-2021-ff8081817b6472a3017b656cc2040044.md",
+      "sha256": "9e44ba60a9639153ba9fda9b3cf0787af1488dff5d5ffb7f83f72e16fb7c3997",
+      "articles": 74
+    },
+    "psm-2025": {
+      "snapshot": "docs/research/evidence/lawtext-psm-2025-ff80818197af9ccc0197b159c38a0408.md",
+      "sha256": "cca36d6fa87111908b14a36ab85fb7813a45b777c10efafa90a5cee4ac9bac0e",
+      "articles": 144
+    },
+    "residents-committee-2025": {
+      "snapshot": "docs/research/evidence/lawtext-residents-committee-2025-5d9b0a64413e4a80b060a0bd742f5fb6.md",
+      "sha256": "b4f2578ef27d50345210d4168d01d845b0d6c29ee4ff5fe7ebbbd920655e7abb",
+      "articles": 50
+    },
+    "road-safety-2021": {
+      "snapshot": "docs/research/evidence/lawtext-road-safety-2021-ff8081817ab231eb017abd617ef70519.md",
+      "sha256": "36b438bfd416b724d668aa654dd0b3c423814c8a67215e4bd8bf759bbf85e299",
+      "articles": 124
+    },
+    "wlxf-2022": {
+      "snapshot": "docs/research/evidence/lawtext-wlxf-2022-ff80818181cdd7a70181d65a7e48303f.md",
+      "sha256": "6afed9e09c07b6ec4fedba671299cf85deb8c4041300b152b2322ff179517c80",
+      "articles": 20
+    },
+    "women-2022": {
+      "snapshot": "docs/research/evidence/lawtext-women-2022-ff808181841257210184281512de0eec.md",
+      "sha256": "9294fe5e8f38c1d5026fcab0f46ae258148ca19262e7ffb58fe8dfdff4080120",
+      "articles": 86
+    }
+  }
+}
