@@ -2145,5 +2145,136 @@
     "source_title": "",
     "source_url": "",
     "statutes": []
+  },
+  {
+    "cat": "程序",
+    "term": "审计监督制度",
+    "explain": "国家实行审计监督制度，构建集中统一、全面覆盖、权威高效的审计监督体系，对财政收支和财务收支进行审计监督。",
+    "refs": [
+      {
+        "law_id": "audit-2021",
+        "art": "2",
+        "label": "《审计法》第2条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "程序",
+    "term": "审计权限（国际项目）",
+    "explain": "审计机关对国际组织和外国政府援助、贷款项目的财务收支进行审计监督。",
+    "refs": [
+      {
+        "law_id": "audit-2021",
+        "art": "25",
+        "label": "《审计法》第25条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "程序",
+    "term": "档案开放",
+    "explain": "档案馆应定期公布开放档案目录，创新服务形式，积极为档案利用创造条件。档案一般自形成之日起满二十五年向社会开放。",
+    "refs": [
+      {
+        "law_id": "archives-2020",
+        "art": "28",
+        "label": "《档案法》第28条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "经济法",
+    "term": "票据",
+    "explain": "票据分为汇票、本票和支票。票据活动适用票据法，票据的签发、取得和转让应遵循诚实信用原则，具有真实的交易关系和债权债务关系。",
+    "refs": [
+      {
+        "law_id": "negotiable-2004",
+        "art": "2",
+        "label": "《票据法》第2条"
+      },
+      {
+        "law_id": "negotiable-2004",
+        "art": "10",
+        "label": "《票据法》第10条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "经济法",
+    "term": "邮政普遍服务",
+    "explain": "国务院规定范围内的信件寄递业务由邮政企业专营。邮政企业应提供邮政普遍服务。",
+    "refs": [
+      {
+        "law_id": "postal-2015",
+        "art": "5",
+        "label": "《邮政法》第5条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "民事",
+    "term": "通信自由保护",
+    "explain": "任何单位和个人不得私自开拆、隐匿、毁弃他人邮件。邮政企业及其从业人员不得泄露用户使用邮政服务的信息。",
+    "refs": [
+      {
+        "law_id": "postal-2015",
+        "art": "35",
+        "label": "《邮政法》第35条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
   }
 ]
