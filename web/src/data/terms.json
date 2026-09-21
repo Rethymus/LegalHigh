@@ -2612,5 +2612,173 @@
     "source_title": "",
     "source_url": "",
     "statutes": []
+  },
+  {
+    "cat": "行政",
+    "term": "中医药事业",
+    "explain": "中医药事业是我国医药卫生事业的重要组成部分。国家大力发展中医药事业，实行中西医并重的方针，充分发挥中医药特色和优势。",
+    "refs": [
+      {
+        "law_id": "tcm-2017",
+        "art": "3",
+        "label": "《中医药法》第3条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "行政",
+    "term": "中医药学术传承",
+    "explain": "具有重要学术价值的中医药理论和技术方法，省级以上政府中医药主管部门应组织遴选传承项目和传承人。",
+    "refs": [
+      {
+        "law_id": "tcm-2017",
+        "art": "42",
+        "label": "《中医药法》第42条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "经济法",
+    "term": "计量器具管理",
+    "explain": "建立计量基准器具、计量标准器具，进行计量检定，制造、修理、销售、使用计量器具，必须遵守计量法规定。",
+    "refs": [
+      {
+        "law_id": "metrology-2018",
+        "art": "2",
+        "label": "《计量法》第2条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "经济法",
+    "term": "社会公用计量标准",
+    "explain": "县级以上政府计量行政部门对社会公用计量标准器具及部门、企事业使用的最高计量标准器具实行强制检定。",
+    "refs": [
+      {
+        "law_id": "metrology-2018",
+        "art": "9",
+        "label": "《计量法》第9条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "经济法",
+    "term": "标准化要求",
+    "explain": "标准是农业、工业、服务业以及社会事业等领域需要统一的技术要求，包括国家标准、行业标准、地方标准和团体标准、企业标准。",
+    "refs": [
+      {
+        "law_id": "standardization-2017",
+        "art": "2",
+        "label": "《标准化法》第2条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "经济法",
+    "term": "强制性标准实施",
+    "explain": "不符合强制性标准的产品、服务，不得生产、销售、进口或者提供——强制性标准具有法律强制力。",
+    "refs": [
+      {
+        "law_id": "standardization-2017",
+        "art": "25",
+        "label": "《标准化法》第25条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "经济法",
+    "term": "科技成果转化",
+    "explain": "科技成果是通过科学研究与技术开发产生的具有实用价值的成果。职务科技成果的权利归属由法律规定或合同约定。",
+    "refs": [
+      {
+        "law_id": "tech-transfer-2015",
+        "art": "2",
+        "label": "《促进科技成果转化法》第2条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "经济法",
+    "term": "科技成果转化方式",
+    "explain": "科技成果持有者可自行投资转化、向他人转让、许可他人使用、以科技成果作价投资等方式实施转化。",
+    "refs": [
+      {
+        "law_id": "tech-transfer-2015",
+        "art": "16",
+        "label": "《促进科技成果转化法》第16条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
   }
 ]
