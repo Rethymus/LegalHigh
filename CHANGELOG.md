@@ -74,6 +74,8 @@
 
 - 8 more term cards for public-health/safety/tourism laws (R255): 药品管理法 (假药认定 art.98, 药品质量赔偿 art.144), 旅游法 (旅游者权利 art.9, 旅行社违约 art.70), 传染病防治法 (传染病分类 art.3, 应急预案 art.30), 安全生产法 (从业人员权利 art.52, 安全生产方针 art.3). Term card count 84→92, covering 43 of 108 laws.
 
+- 5 more term cards for anti-money-laundering/emergency/blood-donation/partnership laws (R260): 反洗钱法 (客户尽职调查 art.30), 突发事件应对法 (突发事件定义 art.2, 应对原则 art.5), 献血法 (无偿献血 art.2+7 双引用), 合伙企业法 (合伙企业定义 art.2+14). Term card count 122→127, citations 124→131, covering 63 of 108 laws.
+
 - 8 more term cards for accessibility/vaccine/medical-insurance/sports laws (R259): 无障碍环境建设法 (无障碍设施建设 art.14, 无障碍信息交流 art.30), 疫苗管理法 (疫苗战略公益性 art.4, 疫苗储存运输 art.25), 医疗保障法 (多层次医保体系 art.8, 医保基金参保机制 art.12), 体育法 (体育管理体制 art.4, 学校体育督导 art.35). Term card count 114→122, citations 116→124, covering 59 of 108 laws.
 
 - 7 more term cards for land/education/competition/union laws (R258): 农村土地承包法 (土地承包经营权 art.9+27, 双引用), 义务教育法 (义务教育 art.2, 免试入学 art.7), 反不正当竞争法 (混淆行为 art.7, 虚假宣传 art.9), 工会法 (工会基本职责 art.6, 劳动保护监督 art.22). Term card count 107→114, citations 108→116, covering 55 of 108 laws.

@@ -2030,5 +2030,120 @@
     "source_title": "",
     "source_url": "",
     "statutes": []
+  },
+  {
+    "cat": "经济法",
+    "term": "反洗钱客户尽职调查",
+    "explain": "金融机构应持续关注并评估客户整体状况及交易情况，了解客户的洗钱风险。发现客户交易异常时应按规定处理。",
+    "refs": [
+      {
+        "law_id": "aml-2024",
+        "art": "30",
+        "label": "《反洗钱法》第30条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "行政",
+    "term": "突发事件",
+    "explain": "突发事件是指突然发生、造成或可能造成严重社会危害的自然灾害、事故灾难、公共卫生事件和社会安全事件，需要采取应急处置措施应对。",
+    "refs": [
+      {
+        "law_id": "emergency-2024",
+        "art": "2",
+        "label": "《突发事件应对法》第2条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "行政",
+    "term": "突发事件应对原则",
+    "explain": "突发事件应对坚持总体国家安全观，人民至上生命至上，依法科学应对，预防为主、预防与应急相结合。",
+    "refs": [
+      {
+        "law_id": "emergency-2024",
+        "art": "5",
+        "label": "《突发事件应对法》第5条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "行政",
+    "term": "无偿献血制度",
+    "explain": "国家实行无偿献血制度，提倡十八至五十五周岁健康公民自愿献血。国家鼓励国家工作人员、现役军人和高校学生率先献血。",
+    "refs": [
+      {
+        "law_id": "blood-donation-1998",
+        "art": "2",
+        "label": "《献血法》第2条（无偿献血制度）"
+      },
+      {
+        "law_id": "blood-donation-1998",
+        "art": "7",
+        "label": "《献血法》第7条（鼓励率先献血）"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "经济法",
+    "term": "合伙企业",
+    "explain": "合伙企业分为普通合伙企业和有限合伙企业。普通合伙企业由普通合伙人组成，合伙人对合伙企业债务承担无限连带责任。",
+    "refs": [
+      {
+        "law_id": "partnership-2006",
+        "art": "2",
+        "label": "《合伙企业法》第2条"
+      },
+      {
+        "law_id": "partnership-2006",
+        "art": "14",
+        "label": "《合伙企业法》第14条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
   }
 ]
