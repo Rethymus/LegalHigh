@@ -74,6 +74,8 @@
 
 - 8 more term cards for public-health/safety/tourism laws (R255): 药品管理法 (假药认定 art.98, 药品质量赔偿 art.144), 旅游法 (旅游者权利 art.9, 旅行社违约 art.70), 传染病防治法 (传染病分类 art.3, 应急预案 art.30), 安全生产法 (从业人员权利 art.52, 安全生产方针 art.3). Term card count 84→92, covering 43 of 108 laws.
 
+- 7 more term cards for mediation/ID/mental-health/anti-drug laws (R257): 人民调解法 (人民调解 art.2+31, 双引用), 居民身份证法 (身份证查验 art.15, 违法行为 art.16), 精神卫生法 (精神障碍患者权益 art.4, 自愿住院原则 art.30), 禁毒法 (毒品定义 art.3, 容留吸毒 art.59). Term card count 100→107, covering 51 of 108 laws.
+
 - 8 more term cards for corporate/dispute/elderly/fraud laws (R256): 公司法 (股东有限责任 art.4, 法人人格否认 art.23), 仲裁法 (仲裁协议效力 art.7, 一裁终局 art.9), 老年人权益保障法 (赡养义务 art.14, 老年人优待 art.58), 反电信网络诈骗法 (电信网络诈骗 art.2, 两卡管理 art.31). Term card count 92→100 (milestone: 100 term cards), covering 47 of 108 laws.
 
 - 8 more term cards for IP/advertising laws (R254): 专利法 (专利申请权 art.2, 专利侵权 art.65), 著作权法 (作品定义 art.3, 著作权内容 art.10), 商标法 (商标战略 art.3, 商标使用管理 art.57), 广告法 (商业广告 art.2, 虚假广告 art.28). Term card count 76→84, covering 39 of 108 laws.

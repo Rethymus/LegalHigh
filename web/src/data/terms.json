@@ -1558,5 +1558,157 @@
     "source_title": "",
     "source_url": "",
     "statutes": []
+  },
+  {
+    "cat": "程序",
+    "term": "人民调解",
+    "explain": "人民调解委员会通过说服、疏导等方法促使当事人自愿达成调解协议、解决民间纠纷的活动。调解协议具有法律约束力。",
+    "refs": [
+      {
+        "law_id": "mediation-2010",
+        "art": "2",
+        "label": "《人民调解法》第2条"
+      },
+      {
+        "law_id": "mediation-2010",
+        "art": "31",
+        "label": "《人民调解法》第31条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "行政",
+    "term": "身份证查验",
+    "explain": "人民警察遇有违法犯罪嫌疑等法定情形，经出示执法证件可以查验居民身份证；但不得随意扣押居民身份证。",
+    "refs": [
+      {
+        "law_id": "id-card-2011",
+        "art": "15",
+        "label": "《居民身份证法》第15条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "行政",
+    "term": "身份证违法行为",
+    "explain": "使用虚假证明材料骗领身份证、出租出借转让身份证、购买出售使用伪造变造身份证的，由公安机关处罚。",
+    "refs": [
+      {
+        "law_id": "id-card-2011",
+        "art": "16",
+        "label": "《居民身份证法》第16条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "社会法",
+    "term": "精神障碍患者权益",
+    "explain": "精神障碍患者的人格尊严、人身和财产安全不受侵犯，其教育、劳动、医疗等合法权益受法律保护。",
+    "refs": [
+      {
+        "law_id": "mental-health-2018",
+        "art": "4",
+        "label": "《精神卫生法》第4条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "社会法",
+    "term": "自愿住院原则",
+    "explain": "精神障碍的住院治疗实行自愿原则。除法律规定情形外，不得强制精神障碍患者住院治疗。",
+    "refs": [
+      {
+        "law_id": "mental-health-2018",
+        "art": "30",
+        "label": "《精神卫生法》第30条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "刑事",
+    "term": "毒品",
+    "explain": "毒品是指鸦片、海洛因、甲基苯丙胺、吗啡、大麻、可卡因以及国家规定管制的其他能够使人形成瘾癖的麻醉药品和精神药品。",
+    "refs": [
+      {
+        "law_id": "anti-drug-2008",
+        "art": "3",
+        "label": "《禁毒法》第3条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "刑事",
+    "term": "容留吸毒",
+    "explain": "容留他人吸食、注射毒品构成犯罪的，依法追究刑事责任；尚不构成犯罪的，依法给予治安管理处罚。",
+    "refs": [
+      {
+        "law_id": "anti-drug-2008",
+        "art": "59",
+        "label": "《禁毒法》第59条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
   }
 ]
