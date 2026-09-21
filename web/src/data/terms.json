@@ -3588,5 +3588,173 @@
     "source_title": "",
     "source_url": "",
     "statutes": []
+  },
+  {
+    "cat": "经济法",
+    "term": "商业银行",
+    "explain": "商业银行是依照公司法和商业银行法设立的吸收公众存款、发放贷款、办理结算等业务的企业法人。",
+    "refs": [
+      {
+        "law_id": "commercial-bank-2015",
+        "art": "2",
+        "label": "《商业银行法》第2条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "经济法",
+    "term": "个人储蓄存款原则",
+    "explain": "商业银行办理个人储蓄存款业务应遵循存款自愿、取款自由、存款有息、为存款人保密的原则。",
+    "refs": [
+      {
+        "law_id": "commercial-bank-2015",
+        "art": "29",
+        "label": "《商业银行法》第29条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "行政",
+    "term": "法治宣传教育",
+    "explain": "法治宣传教育坚持党的领导，以习近平法治思想为指导，向社会普及法律知识、弘扬法治精神、建设法治文化。",
+    "refs": [
+      {
+        "law_id": "legal-publicity-2025",
+        "art": "2",
+        "label": "《法治宣传教育法》第2条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "行政",
+    "term": "法治宣传教育规划",
+    "explain": "国家编制全国法治宣传教育规划，省级政府依据全国规划结合实际制定本行政区域相关规划。",
+    "refs": [
+      {
+        "law_id": "legal-publicity-2025",
+        "art": "6",
+        "label": "《法治宣传教育法》第6条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "行政",
+    "term": "国防教育",
+    "explain": "国防教育以爱国主义为核心，以履行国防义务为目的，涵盖国防理论、知识、技能以及科技、法律、心理等方面。",
+    "refs": [
+      {
+        "law_id": "defense-edu-2024",
+        "art": "2",
+        "label": "《国防教育法》第2条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "行政",
+    "term": "学校国防教育",
+    "explain": "国防教育实行经常教育与集中教育相结合、普及教育与重点教育相结合、理论教育与行为教育相结合的原则。",
+    "refs": [
+      {
+        "law_id": "defense-edu-2024",
+        "art": "6",
+        "label": "《国防教育法》第6条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "经济法",
+    "term": "环境保护税纳税人",
+    "explain": "直接向环境排放应税污染物的企业事业单位和其他生产经营者为环境保护税纳税人，应依法缴纳环保税。",
+    "refs": [
+      {
+        "law_id": "env-tax-2025",
+        "art": "2",
+        "label": "《环境保护税法》第2条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
+  },
+  {
+    "cat": "经济法",
+    "term": "环保税免税情形",
+    "explain": "向依法设立的污水集中处理场所排放污染物等情形不属于直接向环境排放污染物，不缴纳环保税。",
+    "refs": [
+      {
+        "law_id": "env-tax-2025",
+        "art": "4",
+        "label": "《环境保护税法》第4条"
+      }
+    ],
+    "level": "",
+    "kind": "law",
+    "grade": "强",
+    "verified": true,
+    "sample": false,
+    "source_note": "术语解释基于语料受控规范文件条文，引用经 corpus_selfcheck 机器门核验在语料内。",
+    "source_title": "",
+    "source_url": "",
+    "statutes": []
   }
 ]

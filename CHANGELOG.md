@@ -92,6 +92,8 @@
 
 - 6 more term cards for audit/archives/negotiable/postal laws (R261): 审计法 (审计监督制度 art.2, 国际项目审计权限 art.25), 档案法 (档案开放 art.28), 票据法 (票据定义 art.2, 票据取得 art.10), 邮政法 (邮政普遍服务 art.5, 通信自由保护 art.35). Term card count 127→133, citations 131→138, covering 67 of 108 laws.
 
+- 8 more term cards for commercial-banking/legal-publicity/defense-edu/environmental-tax laws (R270): 商业银行法 (商业银行定义 art.2, 存款原则 art.29), 法治宣传教育法 (法治宣传教育定义 art.2, 普法规划 art.6), 国防教育法 (国防教育定义 art.2, 学校国防教育 art.6), 环保税法 (纳税人定义 art.2, 免税情形 art.4). Term card count 203, citations 210, covering 71 of 108 laws.
+
 - 5 more term cards for anti-money-laundering/emergency/blood-donation/partnership laws (R260): 反洗钱法 (客户尽职调查 art.30), 突发事件应对法 (突发事件定义 art.2, 应对原则 art.5), 献血法 (无偿献血 art.2+7 双引用), 合伙企业法 (合伙企业定义 art.2+14). Term card count 122→127, citations 124→131, covering 63 of 108 laws.
 
 - 8 more term cards for accessibility/vaccine/medical-insurance/sports laws (R259): 无障碍环境建设法 (无障碍设施建设 art.14, 无障碍信息交流 art.30), 疫苗管理法 (疫苗战略公益性 art.4, 疫苗储存运输 art.25), 医疗保障法 (多层次医保体系 art.8, 医保基金参保机制 art.12), 体育法 (体育管理体制 art.4, 学校体育督导 art.35). Term card count 114→122, citations 116→124, covering 59 of 108 laws.
