@@ -1,6 +1,6 @@
 {
   "generated_at": "2026-09-21",
-  "locked_count": 21,
+  "locked_count": 22,
   "locked": {
     "admin-litigation-2017": {
       "snapshot": "docs/research/evidence/lawtext-admin-litigation-2017-2c909fdd678bf17901678bf858550a0f.md",
@@ -96,6 +96,11 @@
       "snapshot": "docs/research/evidence/lawtext-road-safety-2021-ff8081817ab231eb017abd617ef70519.md",
       "sha256": "36b438bfd416b724d668aa654dd0b3c423814c8a67215e4bd8bf759bbf85e299",
       "articles": 124
+    },
+    "scl-2012": {
+      "snapshot": "docs/research/evidence/lawtext-scl-2012-2c909fdd678bf17901678bf74c26069f.md",
+      "sha256": "f9ad0a34d18afadc2dfb5dafad079ff288c20b8742c50af79a4a0c64ac0d8e6e",
+      "articles": 42
     },
     "wlxf-2022": {
       "snapshot": "docs/research/evidence/lawtext-wlxf-2022-ff80818181cdd7a70181d65a7e48303f.md",

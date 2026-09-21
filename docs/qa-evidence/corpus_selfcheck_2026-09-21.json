@@ -975,9 +975,7 @@
     }
   },
   "pending": [],
-  "problems": [
-    "flk native id pcl-2023: 证据文件缺失 docs/research/evidence/flk-pcl-2023-structure-2026-09-15.json（flfgDetails 只读、业主授权抽查 2026-09-15：totalArticles=306、末条第三百零六条）"
-  ],
+  "problems": [],
   "version_registries": {
     "academic-degree-2024": 1,
     "accessibility-2023": 1,
@@ -1101,7 +1099,7 @@
     "refs_checked": 222
   },
   "third_chain": {
-    "locked": 21,
-    "reverified": 21
+    "locked": 22,
+    "reverified": 22
   }
 }

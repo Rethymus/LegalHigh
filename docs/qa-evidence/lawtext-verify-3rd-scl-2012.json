@@ -1,28 +1,14 @@
 {
   "law": "scl-2012（中华人民共和国国家赔偿法）",
   "third_chain": "lawtext/laws lawtext-scl-2012-2c909fdd678bf17901678bf74c26069f.md（flk DOCX 衍生社区转录，与语料构建源上游独立）",
-  "snapshot": "docs/research/evidence/lawtext-scl-2012-2c909fdd678bf17901678bf74c26069f.md",
+  "snapshot": "..\\docs\\research\\evidence\\lawtext-scl-2012-2c909fdd678bf17901678bf74c26069f.md",
   "corpus_articles": 42,
   "snapshot_headings": 42,
   "checked_at": "2026-09-21",
   "label_mismatch_count": 0,
-  "body_mismatch_count": 2,
+  "body_mismatch_count": 0,
   "label_mismatches": [],
-  "body_mismatches": [
-    {
-      "pos": 13,
-      "label": "第十三条",
-      "corpus_head": "赔偿义务机关应当自收到申请之日起两个月内,作出是否赔偿的决定。赔偿义务机关作出赔偿决定,应当充分听取赔偿请求人的意见,并可以与赔偿请求人就赔",
-      "snapshot_head": "赔偿义务机关应当自收到申请之日起两个月内,作出是否赔偿的决定,赔偿义务机关作出赔偿决定,应当充分听取赔偿请求人的意见,并可以与赔偿请求人就赔"
-    },
-    {
-      "pos": 37,
-      "label": "第三十七条",
-      "corpus_head": "赔偿费用列入各级财政预算。赔偿请求人凭生效的判决书、复议决定书、赔偿决定书或者调解书,向赔偿义务机关申请支付赔偿金。赔偿义务机关应当自收到支",
-      "snapshot_head": "赔偿费用列入各级财政预算。赔偿请求人凭生效的判决书、复议决定书、赔偿决定书或者调解书,向赔偿义务机关申请支付赔偿金。赔偿义务机关应当自收到支"
-    }
-  ],
-  "conclusion": "存在差异：条号 0、正文 2",
-  "note": "2 处均为句读标点差异（语料「决定。/申请。」vs 快照「决定,/申请,」）——语义无差、孰为官方原文不确定（快照为 flk DOCX 衍生转录、语料为 Wikisource 源，两谱系各执一词），按「不臆改」注记待 flk 原文终验。",
-  "settlement_attempts": "R284 定案尝试记录（2026-09-21）：句读差异需第三方原文仲裁，本轮四条外部路径均不可达——①WebSearch 限流（配额至 2026-10-03）；②两处猜测的 gov.cn 全文页 404；③搜索引擎结果页被机器人过滤；④lttxzmj 参照库查找遇 GitHub API 网络中断。下次定案路径：flk 原文（业主人工）或 WebSearch 配额恢复后检索 gov.cn/npc.gov.cn 官方转载页核对第 13/37 条句读。两读法语义无差，不阻塞任何使用。"
+  "body_mismatches": [],
+  "conclusion": "42/42 条号与正文全一致（第三链文本级核验通过）",
+  "note": "R287 定案：两处句读差异经 lttxzmj 第三读者仲裁——其第 13/37 条均作逗号，与 lawtext（flk DOCX 衍生）一致，2:1 判定语料 Wikisource 源的句号为转录错误。已按 TEXT_CORRECTIONS 修正（构建层），复验 42/42 全一致并纳入第三链锁定清单（22 部）。（先前的定案尝试轨迹——搜索限流/404/网络中断——保留于 git 历史。）"
 }
