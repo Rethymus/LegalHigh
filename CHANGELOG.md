@@ -4,7 +4,8 @@
 
 ### Added / 新增
 
-### Added / 新增
+
+>>>>>>> 8a84a8b (removal(kline): 按业主定案彻底移除 K 线功能——演化图表/立法脉动页/pulse 端点/依赖/预算回退/台账与 quality 行清理（K 线非本项目范围）)
 
 ### Added / 新增
 

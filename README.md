@@ -123,14 +123,14 @@ cd web && npm ci && npm run dev
 
 | 门禁 / Gate | 内容 / What it checks |
 |---|---|
-| 后端测试 / Backend tests | 372 项 pytest（引用绑定、状态机、PIPL 级联、fail-closed、评测单调性、证据账本、重编号映射、robots 红线代码层等；2026-09-21 实测） |
+| 后端测试 / Backend tests | 374 项 pytest（引用绑定、状态机、PIPL 级联、fail-closed、评测单调性、证据账本、重编号映射、robots 红线代码层等；2026-09-21 实测） |
 | 案例库 / Case library | 281 件可公开核验案例（最高人民法院指导案例 278 件 + 域外经典判例 3 件）；裁判要点与裁判结果逐字出自官方发布页快照并由测试钉住，法条引用经语料逐字核验（2026-09-21 实测） |
-| 浏览器巡检 / Route sweeps | 无头 Chrome 逐路由截图 + console/网络零错误门（58 路由，2026-09-21 实测 0 问题） |
+| 浏览器巡检 / Route sweeps | 无头 Chrome 逐路由截图 + console/网络零错误门（58 路由，2026-09-22 实测 0 问题） |
 | 对比度 / Contrast | WCAG AA 正文 4.5:1 + UI 指示器 3:1（strict 模式） |
-| 动效探针 / Motion probes | 弹簧位移、Toast/Dialog 卸载、Reduce Motion 双通道等 11 项行为断言（2026-09-21 实测 11/11） |
-| 可访问性探针 / A11y probes | WCAG 2.2 AA 子集（24px 目标尺寸 / 焦点不被遮挡；14 路由，2026-09-21 实测 0 违规） |
-| 离线探针 / Offline probes | PWA service worker 真断网验收：离线导航/法条/术语可读、恢复在线（7 断言，2026-09-21 实测 7/7） |
-| 第三链文本核验 / Third-chain texts | lawtext（flk DOCX 衍生）快照逐字比对：22 部全一致并锁定复验（corpus_selfcheck 常驻自检，2026-09-21 实测） |
+| 动效探针 / Motion probes | 弹簧位移、Toast/Dialog 卸载、Reduce Motion 双通道等 11 项行为断言（2026-09-22 实测 11/11） |
+| 可访问性探针 / A11y probes | WCAG 2.2 AA 子集（24px 目标尺寸 / 焦点不被遮挡；14 路由，2026-09-22 实测 0 违规） |
+| 离线探针 / Offline probes | PWA service worker 真断网验收：离线导航/法条/术语可读、恢复在线（7 断言，2026-09-22 实测 7/7） |
+| 第三链文本核验 / Third-chain texts | lawtext（flk DOCX 衍生）快照逐字比对：22 部全一致并锁定复验（corpus_selfcheck 常驻自检，2026-09-22 实测 26 部锁定） |
 | 发布前核验 / Final verify | `server/scripts/final_verify.py` 对运行中实例做十项 API 真值断言 |
 
 应用内 [质量透明度页](/quality) 只读公示实时派生指标与带日期历史记录。自动化测试只能证明被覆盖的断言，不能证明系统「绝不出错」；检索评测（金标 541 组，hit@5 96.1%、rank-1 66.5%、MRR 78.1%；2026-09-19 实测；指标随金标扩容与真实难例自然浮动）衡量的是语料命中率，不是法律正确率。

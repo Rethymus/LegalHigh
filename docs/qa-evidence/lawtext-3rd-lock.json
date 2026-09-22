@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-21",
-  "locked_count": 25,
+  "generated_at": "2026-09-22",
+  "locked_count": 26,
   "locked": {
     "admin-litigation-2017": {
       "snapshot": "docs/research/evidence/lawtext-admin-litigation-2017-2c909fdd678bf17901678bf858550a0f.md",
@@ -66,6 +66,11 @@
       "snapshot": "docs/research/evidence/lawtext-legal-aid-2021-ff8081817b6472a3017b6577820f0061.md",
       "sha256": "a959945a053a2cff6bdf6d5c7a3e477c19c40757b2b6cfa9a3671cc14fbf9c03",
       "articles": 71
+    },
+    "legal-publicity-2025": {
+      "snapshot": "docs/research/evidence/lawtext-legal-publicity-2025-189021012184442fa2ecd6b4c26dcba0.md",
+      "sha256": "40cb75685fad75596949c72062b2f6af804aa12775e14a9fdf7344d10e2031c6",
+      "articles": 65
     },
     "ll-2017": {
       "snapshot": "docs/research/evidence/lawtext-ll-2017-2c909fdd678bf17901678bf867e80a55.md",

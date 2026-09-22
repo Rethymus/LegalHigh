@@ -3,8 +3,8 @@
   "provenance": "lawtext/laws 快照 front matter id 字段 = flk 文档 bbbs（flk DOCX 衍生转录沿用官方文档 id）",
   "usage": "业主一次性授权后运行 scripts/flk_verify_candidates.py（LH_FLK_VERIFY_AUTHORIZED=1），逐条经 flfgDetails 只读核验标题/施行日期后写入 flk_native_ids.json",
   "counts": {
-    "current": 21,
-    "superseded_edition": 4,
+    "current": 24,
+    "superseded_edition": 1,
     "not_located": 2,
     "already_mapped": 3
   },
@@ -134,30 +134,30 @@
       "bbbs": "ff808181841257210184281512de0eec",
       "linktitle": "中华人民共和国妇女权益保障法（2022）",
       "snapshot": "docs/research/evidence/lawtext-women-2022-ff808181841257210184281512de0eec.md"
-    }
-  ],
-  "superseded_edition": [
-    {
-      "law_id": "csl-2025",
-      "bbbs": "2c909fdd678bf17901678bf8276f093d",
-      "linktitle": "中华人民共和国网络安全法（2016）",
-      "snapshot": "docs/research/evidence/lawtext-csl-2025-2c909fdd678bf17901678bf8276f093d.md",
-      "note": "快照为 2016 版文档（语料现行=2025 修正）"
     },
     {
       "law_id": "minor-2024",
-      "bbbs": "ff80808175265dd401753fb9c458127b",
-      "linktitle": "中华人民共和国未成年人保护法（2020）",
-      "snapshot": "docs/research/evidence/lawtext-minor-2024-ff80808175265dd401753fb9c458127b.md",
-      "note": "快照为 2020 版文档（语料现行=2024 修正）"
+      "bbbs": "ff8081818f197cf001905e567af635a0",
+      "linktitle": "未成年人保护法（2024）",
+      "snapshot": "docs/research/evidence/lawtext-minor-2024-ff8081818f197cf001905e567af635a0.md",
+      "note": "R288 升格：现行版快照（132/98/81 条全文与语料逐字一致）证实该 id 即现行版文档 bbbs。"
     },
     {
       "law_id": "social-ins-2018",
-      "bbbs": "2c909fdd678bf17901678bf713d305b9",
-      "linktitle": "中华人民共和国社会保险法（2010）",
-      "snapshot": "docs/research/evidence/lawtext-social-ins-2018-2c909fdd678bf17901678bf713d305b9.md",
-      "note": "快照为 2010 版文档（语料现行=2018 修正）"
+      "bbbs": "ff8080816f135f46016f210989b9179a",
+      "linktitle": "社会保险法（2018）",
+      "snapshot": "docs/research/evidence/lawtext-social-ins-2018-ff8080816f135f46016f210989b9179a.md",
+      "note": "R288 升格：现行版快照（132/98/81 条全文与语料逐字一致）证实该 id 即现行版文档 bbbs。"
     },
+    {
+      "law_id": "csl-2025",
+      "bbbs": "021e7d7684474107b8f3febbb1c4f8b5",
+      "linktitle": "网络安全法（2025）",
+      "snapshot": "docs/research/evidence/lawtext-csl-2025-021e7d7684474107b8f3febbb1c4f8b5.md",
+      "note": "R288 升格：现行版快照（132/98/81 条全文与语料逐字一致）证实该 id 即现行版文档 bbbs。"
+    }
+  ],
+  "superseded_edition": [
     {
       "law_id": "cl-2023",
       "bbbs": "ff808181796a636a0179822a19640c92",
@@ -189,5 +189,6 @@
       "linktitle": "中华人民共和国道路交通安全法（2021）",
       "snapshot": "docs/research/evidence/lawtext-road-safety-2021-ff8081817ab231eb017abd617ef70519.md"
     }
-  ]
+  ],
+  "upgrade_note": "R294/R288 后升格 3 部（minor/social/csl）现行版候选：lawtext 上游实有现行版文档，全文比对一致。"
 }

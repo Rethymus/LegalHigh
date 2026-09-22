@@ -152,6 +152,7 @@ if (!existsSync(distDir)) {
   const over = []
   if (entryGz > BUDGET.entryJsGz) over.push(`入口 JS gzip ${(entryGz / 1024).toFixed(0)}KB > 预算 120KB`)
   if (allJsGz > BUDGET.allJsGz) over.push(`全部 JS gzip ${(allJsGz / 1024).toFixed(0)}KB > 预算 200KB`)
+
   if (allCssGz > BUDGET.allCssGz) over.push(`全部 CSS gzip ${(allCssGz / 1024).toFixed(0)}KB > 预算 25KB`)
   if (!lawsBytes) over.push('dist/data/laws.json 缺失（语料导出链路断裂）')
   else if (lawsBytes > BUDGET.lawsJson) over.push(`laws.json ${(lawsBytes / 1048576).toFixed(2)}MB > 预算 5.0MB`)

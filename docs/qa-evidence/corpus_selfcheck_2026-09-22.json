@@ -1,0 +1,1105 @@
+{
+  "date": "2026-09-22",
+  "laws": {
+    "civl-2020": {
+      "manifest_count": 1260,
+      "actual_count": 1260,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "cl-2013": {
+      "manifest_count": 63,
+      "actual_count": 63,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "lcl-2012": {
+      "manifest_count": 98,
+      "actual_count": 98,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "ll-2017": {
+      "manifest_count": 60,
+      "actual_count": 60,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "ecom-2018": {
+      "manifest_count": 89,
+      "actual_count": 89,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "pcl-2023": {
+      "manifest_count": 306,
+      "actual_count": 306,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "htjs-2023": {
+      "manifest_count": 69,
+      "actual_count": 69,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "wlxf-2022": {
+      "manifest_count": 20,
+      "actual_count": 20,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "crpl-imp-2024": {
+      "manifest_count": 53,
+      "actual_count": 53,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "genai-2023": {
+      "manifest_count": 24,
+      "actual_count": 24,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "scl-2012": {
+      "manifest_count": 42,
+      "actual_count": 42,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "cl-2023": {
+      "manifest_count": 505,
+      "actual_count": 505,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "dv-2015": {
+      "manifest_count": 38,
+      "actual_count": 38,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "social-ins-2018": {
+      "manifest_count": 98,
+      "actual_count": 98,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "food-safety-2025": {
+      "manifest_count": 154,
+      "actual_count": 154,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "road-safety-2021": {
+      "manifest_count": 124,
+      "actual_count": 124,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "labor-law-2018": {
+      "manifest_count": 107,
+      "actual_count": 107,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "product-quality-2018": {
+      "manifest_count": 74,
+      "actual_count": 74,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "crime-prev-2020": {
+      "manifest_count": 68,
+      "actual_count": 68,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "elderly-2018": {
+      "manifest_count": 85,
+      "actual_count": 85,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "mediation-2010": {
+      "manifest_count": 35,
+      "actual_count": 35,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "advertising-2021": {
+      "manifest_count": 74,
+      "actual_count": 74,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "fire-2021": {
+      "manifest_count": 74,
+      "actual_count": 74,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "drug-admin-2019": {
+      "manifest_count": 155,
+      "actual_count": 155,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "copyright-2020": {
+      "manifest_count": 67,
+      "actual_count": 67,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "patent-2020": {
+      "manifest_count": 82,
+      "actual_count": 82,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "trademark-2026": {
+      "manifest_count": 87,
+      "actual_count": 87,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "family-edu-2021": {
+      "manifest_count": 55,
+      "actual_count": 55,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "tourism-2018": {
+      "manifest_count": 112,
+      "actual_count": 112,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "disabled-2018": {
+      "manifest_count": 68,
+      "actual_count": 68,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "unfair-competition-2025": {
+      "manifest_count": 41,
+      "actual_count": 41,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "environment-2014": {
+      "manifest_count": 70,
+      "actual_count": 70,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "id-card-2011": {
+      "manifest_count": 23,
+      "actual_count": 23,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "price-1997": {
+      "manifest_count": 48,
+      "actual_count": 48,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "notary-2017": {
+      "manifest_count": 47,
+      "actual_count": 47,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "agri-quality-2022": {
+      "manifest_count": 81,
+      "actual_count": 81,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "anti-fraud-2022": {
+      "manifest_count": 50,
+      "actual_count": 50,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "compulsory-edu-2018": {
+      "manifest_count": 63,
+      "actual_count": 63,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "arbitration-2025": {
+      "manifest_count": 96,
+      "actual_count": 96,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "company-2023": {
+      "manifest_count": 266,
+      "actual_count": 266,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "police-2012": {
+      "manifest_count": 52,
+      "actual_count": 52,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "anti-monopoly-2022": {
+      "manifest_count": 70,
+      "actual_count": 70,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "bankruptcy-2006": {
+      "manifest_count": 136,
+      "actual_count": 136,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "insurance-2015": {
+      "manifest_count": 185,
+      "actual_count": 185,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "infectious-2025": {
+      "manifest_count": 115,
+      "actual_count": 115,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "partnership-2006": {
+      "manifest_count": 109,
+      "actual_count": 109,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "tax-admin-2015": {
+      "manifest_count": 94,
+      "actual_count": 94,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "commercial-bank-2015": {
+      "manifest_count": 95,
+      "actual_count": 95,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "negotiable-2004": {
+      "manifest_count": 110,
+      "actual_count": 110,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "emergency-2024": {
+      "manifest_count": 106,
+      "actual_count": 106,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "work-safety-2021": {
+      "manifest_count": 119,
+      "actual_count": 119,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "securities-2019": {
+      "manifest_count": 226,
+      "actual_count": 226,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "accounting-2024": {
+      "manifest_count": 51,
+      "actual_count": 51,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "audit-2021": {
+      "manifest_count": 60,
+      "actual_count": 60,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "aml-2024": {
+      "manifest_count": 65,
+      "actual_count": 65,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "academic-degree-2024": {
+      "manifest_count": 45,
+      "actual_count": 45,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "vaccine-2019": {
+      "manifest_count": 100,
+      "actual_count": 100,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "martyrs-2018": {
+      "manifest_count": 30,
+      "actual_count": 30,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "family-plan-2021": {
+      "manifest_count": 48,
+      "actual_count": 48,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "mental-health-2018": {
+      "manifest_count": 85,
+      "actual_count": 85,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "anti-drug-2008": {
+      "manifest_count": 71,
+      "actual_count": 71,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "rural-land-2018": {
+      "manifest_count": 70,
+      "actual_count": 70,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "education-2021": {
+      "manifest_count": 86,
+      "actual_count": 86,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "community-correction-2020": {
+      "manifest_count": 63,
+      "actual_count": 63,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "postal-2015": {
+      "manifest_count": 87,
+      "actual_count": 87,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "trade-union-2021": {
+      "manifest_count": 58,
+      "actual_count": 58,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "blood-donation-1998": {
+      "manifest_count": 24,
+      "actual_count": 24,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "tcm-2017": {
+      "manifest_count": 63,
+      "actual_count": 63,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "higher-edu-2018": {
+      "manifest_count": 69,
+      "actual_count": 69,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "charity-2023": {
+      "manifest_count": 125,
+      "actual_count": 125,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "special-equipment-2014": {
+      "manifest_count": 101,
+      "actual_count": 101,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "vocational-edu-2022": {
+      "manifest_count": 69,
+      "actual_count": 69,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "maternal-infant-2017": {
+      "manifest_count": 39,
+      "actual_count": 39,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "prison-2012": {
+      "manifest_count": 78,
+      "actual_count": 78,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "mine-safety-2009": {
+      "manifest_count": 50,
+      "actual_count": 50,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "rural-revitalization-2021": {
+      "manifest_count": 74,
+      "actual_count": 74,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "physicians-2021": {
+      "manifest_count": 67,
+      "actual_count": 67,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "archives-2020": {
+      "manifest_count": 53,
+      "actual_count": 53,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "animal-epidemic-2021": {
+      "manifest_count": 113,
+      "actual_count": 113,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "sci-tech-2021": {
+      "manifest_count": 117,
+      "actual_count": 117,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "metrology-2018": {
+      "manifest_count": 34,
+      "actual_count": 34,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "standardization-2017": {
+      "manifest_count": 45,
+      "actual_count": 45,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "tech-transfer-2015": {
+      "manifest_count": 52,
+      "actual_count": 52,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "accessibility-2023": {
+      "manifest_count": 72,
+      "actual_count": 72,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "medical-insurance-2027": {
+      "manifest_count": 56,
+      "actual_count": 56,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "env-tax-2025": {
+      "manifest_count": 29,
+      "actual_count": 29,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "preschool-edu-2025": {
+      "manifest_count": 85,
+      "actual_count": 85,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "seeds-2022": {
+      "manifest_count": 92,
+      "actual_count": 92,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "patriotic-edu-2024": {
+      "manifest_count": 40,
+      "actual_count": 40,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "legal-publicity-2025": {
+      "manifest_count": 65,
+      "actual_count": 65,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "defense-edu-2024": {
+      "manifest_count": 42,
+      "actual_count": 42,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "agriculture-2013": {
+      "manifest_count": 99,
+      "actual_count": 99,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "village-committee-2025": {
+      "manifest_count": 50,
+      "actual_count": 50,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "residents-committee-2025": {
+      "manifest_count": 50,
+      "actual_count": 50,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "sports-2023": {
+      "manifest_count": 122,
+      "actual_count": 122,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "con-2018": {
+      "manifest_count": 143,
+      "actual_count": 143,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "cpl-2018": {
+      "manifest_count": 308,
+      "actual_count": 308,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "lcar-2007": {
+      "manifest_count": 54,
+      "actual_count": 54,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "dsl-2021": {
+      "manifest_count": 55,
+      "actual_count": 55,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "csl-2025": {
+      "manifest_count": 81,
+      "actual_count": 81,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "penal-2021": {
+      "manifest_count": 86,
+      "actual_count": 86,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "women-2022": {
+      "manifest_count": 86,
+      "actual_count": 86,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "minor-2024": {
+      "manifest_count": 132,
+      "actual_count": 132,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "psm-2025": {
+      "manifest_count": 144,
+      "actual_count": 144,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "pipl-2021": {
+      "manifest_count": 74,
+      "actual_count": 74,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "legal-aid-2021": {
+      "manifest_count": 71,
+      "actual_count": 71,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "admin-review-2023": {
+      "manifest_count": 90,
+      "actual_count": 90,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
+    "admin-litigation-2017": {
+      "manifest_count": 103,
+      "actual_count": 103,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    }
+  },
+  "pending": [],
+  "problems": [],
+  "version_registries": {
+    "academic-degree-2024": 1,
+    "accessibility-2023": 1,
+    "accounting-2024": 1,
+    "admin-litigation-2017": 2,
+    "admin-review-2023": 4,
+    "advertising-2021": 1,
+    "agri-quality-2022": 1,
+    "agriculture-2013": 1,
+    "aml-2024": 1,
+    "animal-epidemic-2021": 1,
+    "anti-drug-2008": 1,
+    "anti-fraud-2022": 1,
+    "anti-monopoly-2022": 1,
+    "arbitration-2025": 1,
+    "archives-2020": 1,
+    "audit-2021": 1,
+    "bankruptcy-2006": 1,
+    "blood-donation-1998": 1,
+    "charity-2023": 1,
+    "civl-2020": 1,
+    "cl-2013": 1,
+    "cl-2023": 4,
+    "commercial-bank-2015": 1,
+    "community-correction-2020": 1,
+    "company-2023": 1,
+    "compulsory-edu-2018": 1,
+    "con-2018": 5,
+    "copyright-2020": 1,
+    "cpl-2018": 1,
+    "crime-prev-2020": 1,
+    "crpl-imp-2024": 1,
+    "csl-2025": 2,
+    "defense-edu-2024": 1,
+    "disabled-2018": 1,
+    "drug-admin-2019": 1,
+    "dsl-2021": 1,
+    "dv-2015": 1,
+    "ecom-2018": 1,
+    "education-2021": 1,
+    "elderly-2018": 1,
+    "emergency-2024": 1,
+    "env-tax-2025": 1,
+    "environment-2014": 1,
+    "family-edu-2021": 1,
+    "family-plan-2021": 1,
+    "fire-2021": 1,
+    "food-safety-2025": 2,
+    "genai-2023": 1,
+    "higher-edu-2018": 1,
+    "htjs-2023": 1,
+    "id-card-2011": 1,
+    "infectious-2025": 1,
+    "insurance-2015": 1,
+    "labor-law-2018": 1,
+    "lcar-2007": 1,
+    "lcl-2012": 2,
+    "legal-aid-2021": 1,
+    "legal-publicity-2025": 1,
+    "ll-2017": 5,
+    "martyrs-2018": 1,
+    "maternal-infant-2017": 1,
+    "mediation-2010": 1,
+    "medical-insurance-2027": 1,
+    "mental-health-2018": 1,
+    "metrology-2018": 1,
+    "mine-safety-2009": 1,
+    "minor-2024": 5,
+    "negotiable-2004": 1,
+    "notary-2017": 1,
+    "partnership-2006": 1,
+    "patent-2020": 1,
+    "patriotic-edu-2024": 1,
+    "pcl-2023": 6,
+    "penal-2021": 4,
+    "physicians-2021": 1,
+    "pipl-2021": 1,
+    "police-2012": 1,
+    "postal-2015": 1,
+    "preschool-edu-2025": 1,
+    "price-1997": 1,
+    "prison-2012": 1,
+    "product-quality-2018": 1,
+    "psm-2025": 3,
+    "residents-committee-2025": 1,
+    "road-safety-2021": 1,
+    "rural-land-2018": 1,
+    "rural-revitalization-2021": 1,
+    "sci-tech-2021": 1,
+    "scl-2012": 3,
+    "securities-2019": 1,
+    "seeds-2022": 1,
+    "social-ins-2018": 1,
+    "special-equipment-2014": 1,
+    "sports-2023": 1,
+    "standardization-2017": 1,
+    "tax-admin-2015": 1,
+    "tcm-2017": 1,
+    "tech-transfer-2015": 1,
+    "tourism-2018": 1,
+    "trade-union-2021": 1,
+    "trademark-2026": 1,
+    "unfair-competition-2025": 1,
+    "vaccine-2019": 1,
+    "village-committee-2025": 1,
+    "vocational-edu-2022": 1,
+    "wlxf-2022": 1,
+    "women-2022": 4,
+    "work-safety-2021": 1
+  },
+  "version_fulltexts": 37,
+  "flk_native_ids": 82,
+  "cases": {
+    "cases": 281,
+    "guiding": 278,
+    "snapshots_verified": 278,
+    "refs_checked": 369
+  },
+  "terms": {
+    "cards": 215,
+    "refs_checked": 222
+  },
+  "third_chain": {
+    "locked": 26,
+    "reverified": 26
+  }
+}

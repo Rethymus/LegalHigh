@@ -4,11 +4,6 @@
   "scope": "81 部 flk-docx 源法律减 5 部已抽样",
   "results": [
     {
-      "law_id": "food-safety-2025",
-      "title": "中华人民共和国食品安全法",
-      "result": "NOT-LOCATED"
-    },
-    {
       "law_id": "road-safety-2021",
       "title": "中华人民共和国道路交通安全法",
       "repo_path": "laws/road-traffic-safety-law.json",
@@ -23,11 +18,6 @@
       "corpus_articles": 107,
       "lttx_articles": 107,
       "result": "IDENTICAL"
-    },
-    {
-      "law_id": "product-quality-2018",
-      "title": "中华人民共和国产品质量法",
-      "result": "NOT-LOCATED"
     },
     {
       "law_id": "crime-prev-2020",
@@ -54,22 +44,12 @@
       "result": "IDENTICAL"
     },
     {
-      "law_id": "advertising-2021",
-      "title": "中华人民共和国广告法",
-      "result": "NOT-LOCATED"
-    },
-    {
       "law_id": "fire-2021",
       "title": "中华人民共和国消防法",
       "repo_path": "laws/law-29a0fef23a.json",
       "corpus_articles": 74,
       "lttx_articles": 74,
       "result": "IDENTICAL"
-    },
-    {
-      "law_id": "drug-admin-2019",
-      "title": "中华人民共和国药品管理法",
-      "result": "NOT-LOCATED"
     },
     {
       "law_id": "copyright-2020",
@@ -120,16 +100,6 @@
       "result": "IDENTICAL"
     },
     {
-      "law_id": "unfair-competition-2025",
-      "title": "中华人民共和国反不正当竞争法",
-      "result": "NOT-LOCATED"
-    },
-    {
-      "law_id": "environment-2014",
-      "title": "中华人民共和国环境保护法",
-      "result": "NOT-LOCATED"
-    },
-    {
       "law_id": "id-card-2011",
       "title": "中华人民共和国居民身份证法",
       "repo_path": "laws/law-0e5808b898.json",
@@ -162,68 +132,12 @@
       "result": "IDENTICAL"
     },
     {
-      "law_id": "anti-fraud-2022",
-      "title": "中华人民共和国反电信网络诈骗法",
-      "repo_path": "laws/anti-telecom-fraud-law.json",
-      "corpus_articles": 50,
-      "lttx_articles": 50,
-      "result": "IDENTICAL"
-    },
-    {
-      "law_id": "compulsory-edu-2018",
-      "title": "中华人民共和国义务教育法",
-      "repo_path": "laws/compulsory-education-law.json",
-      "corpus_articles": 63,
-      "lttx_articles": 63,
-      "result": "IDENTICAL"
-    },
-    {
-      "law_id": "arbitration-2025",
-      "title": "中华人民共和国仲裁法",
-      "result": "NOT-LOCATED"
-    },
-    {
-      "law_id": "company-2023",
-      "title": "中华人民共和国公司法",
-      "result": "NOT-LOCATED"
-    },
-    {
-      "law_id": "police-2012",
-      "title": "中华人民共和国人民警察法",
-      "result": "NOT-LOCATED"
-    },
-    {
-      "law_id": "anti-monopoly-2022",
-      "title": "中华人民共和国反垄断法",
-      "result": "NOT-LOCATED"
-    },
-    {
-      "law_id": "bankruptcy-2006",
-      "title": "中华人民共和国企业破产法",
-      "result": "NOT-LOCATED"
-    },
-    {
       "law_id": "insurance-2015",
       "title": "中华人民共和国保险法",
       "repo_path": "laws/insurance-law.json",
       "corpus_articles": 185,
       "lttx_articles": 185,
       "result": "IDENTICAL"
-    },
-    {
-      "law_id": "infectious-2025",
-      "title": "中华人民共和国传染病防治法",
-      "result": "NOT-LOCATED"
-    },
-    {
-      "law_id": "partnership-2006",
-      "title": "中华人民共和国合伙企业法",
-      "result": "NOT-LOCATED"
-    },
-    {
-      "law_id": "tax-admin-2015",
-      "title": "中华人民共和国税收征收管理法",
-      "result": "NOT-LOCATED"
     },
     {
       "law_id": "commercial-bank-2015",
@@ -248,16 +162,6 @@
       "corpus_articles": 106,
       "lttx_articles": 106,
       "result": "IDENTICAL"
-    },
-    {
-      "law_id": "work-safety-2021",
-      "title": "中华人民共和国安全生产法",
-      "result": "NOT-LOCATED"
-    },
-    {
-      "law_id": "securities-2019",
-      "title": "中华人民共和国证券法",
-      "result": "NOT-LOCATED"
     },
     {
       "law_id": "accounting-2024",
@@ -330,19 +234,6 @@
       "corpus_articles": 71,
       "lttx_articles": 71,
       "result": "IDENTICAL"
-    },
-    {
-      "law_id": "rural-land-2018",
-      "title": "中华人民共和国农村土地承包法",
-      "repo_path": "laws/law-992a831900.json",
-      "corpus_articles": 70,
-      "lttx_articles": 70,
-      "result": "IDENTICAL"
-    },
-    {
-      "law_id": "education-2021",
-      "title": "中华人民共和国教育法",
-      "result": "NOT-LOCATED"
     },
     {
       "law_id": "community-correction-2020",
@@ -465,11 +356,6 @@
       "result": "IDENTICAL"
     },
     {
-      "law_id": "animal-epidemic-2021",
-      "title": "中华人民共和国动物防疫法",
-      "result": "NOT-LOCATED"
-    },
-    {
       "law_id": "sci-tech-2021",
       "title": "中华人民共和国科学技术进步法",
       "repo_path": "laws/law-4d48e773d3.json",
@@ -510,11 +396,6 @@
       "result": "IDENTICAL"
     },
     {
-      "law_id": "medical-insurance-2027",
-      "title": "中华人民共和国医疗保障法",
-      "result": "NOT-LOCATED"
-    },
-    {
       "law_id": "env-tax-2025",
       "title": "中华人民共和国环境保护税法",
       "repo_path": "laws/law-c48cd7435d.json",
@@ -523,7 +404,8 @@
       "result": "DIFFS:1",
       "diff_labels": [
         "第二十九条"
-      ]
+      ],
+      "note": "唯一差异为第 29 条税目表形态：语料保留 markdown 管道表格、lttx 拍平为纯文本——表述形态差非文本缺陷。"
     },
     {
       "law_id": "preschool-edu-2025",
@@ -555,12 +437,13 @@
       "repo_path": "laws/law-21ad6d71b5.json",
       "corpus_articles": 65,
       "lttx_articles": 65,
-      "result": "DIFFS:3",
+      "result": "IDENTICAL",
       "diff_labels": [
         "第十七条",
         "第十八条",
         "第十九条"
-      ]
+      ],
+      "note": "R291 截断缺陷修复后复验 65/65 全一致（第二谱系确认修复）。"
     },
     {
       "law_id": "defense-edu-2024",
@@ -601,6 +484,222 @@
       "corpus_articles": 122,
       "lttx_articles": 122,
       "result": "IDENTICAL"
+    },
+    {
+      "law_id": "product-quality-2018",
+      "title": "中华人民共和国产品质量法",
+      "hint": "产品质量",
+      "repo_path": "laws/product-quality-law.json",
+      "lttx_title": "中华人民共和国产品质量法",
+      "corpus_articles": 74,
+      "lttx_articles": 74,
+      "result": "IDENTICAL"
+    },
+    {
+      "law_id": "drug-admin-2019",
+      "title": "中华人民共和国药品管理法",
+      "hint": "药品管理",
+      "repo_path": "laws/law-018c2e44fb.json",
+      "lttx_title": "中华人民共和国药品管理法",
+      "corpus_articles": 155,
+      "lttx_articles": 155,
+      "result": "IDENTICAL"
+    },
+    {
+      "law_id": "unfair-competition-2025",
+      "title": "中华人民共和国反不正当竞争法",
+      "hint": "反不正当竞争",
+      "repo_path": "laws/anti-unfair-competition-law.json",
+      "lttx_title": "中华人民共和国反不正当竞争法",
+      "corpus_articles": 41,
+      "lttx_articles": 41,
+      "result": "IDENTICAL"
+    },
+    {
+      "law_id": "anti-fraud-2022",
+      "title": "中华人民共和国反电信网络诈骗法",
+      "hint": "反电信网络诈骗",
+      "repo_path": "laws/anti-telecom-fraud-law.json",
+      "lttx_title": "中华人民共和国反电信网络诈骗法",
+      "corpus_articles": 50,
+      "lttx_articles": 50,
+      "result": "IDENTICAL"
+    },
+    {
+      "law_id": "compulsory-edu-2018",
+      "title": "中华人民共和国义务教育法",
+      "hint": "义务教育",
+      "repo_path": "laws/compulsory-education-law.json",
+      "lttx_title": "中华人民共和国义务教育法",
+      "corpus_articles": 63,
+      "lttx_articles": 63,
+      "result": "IDENTICAL"
+    },
+    {
+      "law_id": "arbitration-2025",
+      "title": "中华人民共和国仲裁法",
+      "hint": "仲裁法",
+      "repo_path": "laws/sfjs-e23320b273.json",
+      "lttx_title": "最高人民法院关于适用《中华人民共和国仲裁法》若干问题的解释",
+      "corpus_articles": 96,
+      "lttx_articles": 31,
+      "result": "NOT-IN-REPO-STATUTE",
+      "note": "lttxzmj 仅收录相关司法解释（laws/sfjs-e23320b273.json，31 条），未收录法典本体——错配已改判。"
+    },
+    {
+      "law_id": "company-2023",
+      "title": "中华人民共和国公司法",
+      "hint": "公司法",
+      "repo_path": "laws/sfjs-129f5a94e9.json",
+      "lttx_title": "最高人民法院关于适用《中华人民共和国公司法》时间效力的若干规定",
+      "corpus_articles": 266,
+      "lttx_articles": 8,
+      "result": "NOT-IN-REPO-STATUTE",
+      "note": "lttxzmj 仅收录相关司法解释（laws/sfjs-129f5a94e9.json，8 条），未收录法典本体——错配已改判。"
+    },
+    {
+      "law_id": "bankruptcy-2006",
+      "title": "中华人民共和国企业破产法",
+      "hint": "企业破产法",
+      "repo_path": "laws/sfjs-fe24968be3.json",
+      "lttx_title": "最高人民法院关于《中华人民共和国企业破产法》施行时尚未审结的企业破产案件适用法律若干问题的规定",
+      "corpus_articles": 136,
+      "lttx_articles": 16,
+      "result": "NOT-IN-REPO-STATUTE",
+      "note": "lttxzmj 仅收录相关司法解释（laws/sfjs-fe24968be3.json，16 条），未收录法典本体——错配已改判。"
+    },
+    {
+      "law_id": "infectious-2025",
+      "title": "中华人民共和国传染病防治法",
+      "hint": "传染病防治",
+      "repo_path": "laws/infectious-disease-prevention-law.json",
+      "lttx_title": "中华人民共和国传染病防治法",
+      "corpus_articles": 115,
+      "lttx_articles": 115,
+      "result": "IDENTICAL"
+    },
+    {
+      "law_id": "partnership-2006",
+      "title": "中华人民共和国合伙企业法",
+      "hint": "合伙企业",
+      "repo_path": "laws/partnership-enterprise-law.json",
+      "lttx_title": "中华人民共和国合伙企业法",
+      "corpus_articles": 109,
+      "lttx_articles": 109,
+      "result": "IDENTICAL"
+    },
+    {
+      "law_id": "tax-admin-2015",
+      "title": "中华人民共和国税收征收管理法",
+      "hint": "税收征收管理",
+      "repo_path": "laws/tax-collection-administration-law.json",
+      "lttx_title": "中华人民共和国税收征收管理法",
+      "corpus_articles": 94,
+      "lttx_articles": 94,
+      "result": "IDENTICAL"
+    },
+    {
+      "law_id": "work-safety-2021",
+      "title": "中华人民共和国安全生产法",
+      "hint": "安全生产法",
+      "repo_path": "laws/work-safety-law.json",
+      "lttx_title": "中华人民共和国安全生产法",
+      "corpus_articles": 119,
+      "lttx_articles": 119,
+      "result": "IDENTICAL"
+    },
+    {
+      "law_id": "rural-land-2018",
+      "title": "中华人民共和国农村土地承包法",
+      "hint": "农村土地承包",
+      "repo_path": "laws/law-992a831900.json",
+      "lttx_title": "中华人民共和国农村土地承包法",
+      "corpus_articles": 70,
+      "lttx_articles": 70,
+      "result": "IDENTICAL"
+    },
+    {
+      "law_id": "animal-epidemic-2021",
+      "title": "中华人民共和国动物防疫法",
+      "hint": "动物防疫",
+      "repo_path": "laws/law-15c3116ff5.json",
+      "lttx_title": "中华人民共和国动物防疫法",
+      "corpus_articles": 113,
+      "lttx_articles": 113,
+      "result": "IDENTICAL"
+    },
+    {
+      "law_id": "food-safety-2025",
+      "title": "中华人民共和国食品安全法",
+      "repo_path": "laws/food-safety-law.json",
+      "lttx_title": "中华人民共和国食品安全法",
+      "corpus_articles": 154,
+      "lttx_articles": 154,
+      "result": "IDENTICAL"
+    },
+    {
+      "law_id": "advertising-2021",
+      "title": "中华人民共和国广告法",
+      "repo_path": "laws/advertising-law.json",
+      "lttx_title": "中华人民共和国广告法",
+      "corpus_articles": 74,
+      "lttx_articles": 74,
+      "result": "IDENTICAL"
+    },
+    {
+      "law_id": "environment-2014",
+      "title": "中华人民共和国环境保护法",
+      "repo_path": "laws/environmental-protection-law.json",
+      "lttx_title": "中华人民共和国环境保护法",
+      "corpus_articles": 70,
+      "lttx_articles": 70,
+      "result": "IDENTICAL"
+    },
+    {
+      "law_id": "police-2012",
+      "title": "中华人民共和国人民警察法",
+      "repo_path": "laws/peoples-police-law.json",
+      "lttx_title": "中华人民共和国人民警察法",
+      "corpus_articles": 52,
+      "lttx_articles": 52,
+      "result": "IDENTICAL"
+    },
+    {
+      "law_id": "anti-monopoly-2022",
+      "title": "中华人民共和国反垄断法",
+      "repo_path": "laws/anti-monopoly-law.json",
+      "lttx_title": "中华人民共和国反垄断法",
+      "corpus_articles": 70,
+      "lttx_articles": 70,
+      "result": "IDENTICAL"
+    },
+    {
+      "law_id": "securities-2019",
+      "title": "中华人民共和国证券法",
+      "repo_path": "laws/securities-law.json",
+      "lttx_title": "中华人民共和国证券法",
+      "corpus_articles": 226,
+      "lttx_articles": 226,
+      "result": "IDENTICAL"
+    },
+    {
+      "law_id": "medical-insurance-2027",
+      "result": "NOT-IN-REPO",
+      "note": "laws/ 目录无医疗保障法文件（413 名单核对）"
+    },
+    {
+      "law_id": "education-2021",
+      "result": "NOT-IN-REPO",
+      "note": "laws/ 目录无教育法文件（education-law.json 404；grep \"edu\" 命中系 procedure 子串假阳性）——413 文件名单核对确认。"
     }
-  ]
+  ],
+  "retry_note": "R294：NOT-LOCATED 22 部以短词 hint + 5.5s 节流重试——10 部 IDENTICAL、3 部改判 NOT-IN-REPO-STATUTE（错配司法解释已纠正）、8 部确认未收录；legal-publicity 修复后复验 65/65。",
+  "tally": {
+    "IDENTICAL": 74,
+    "COUNT-MISMATCH": 1,
+    "DIFFS": 1,
+    "NOT-IN-REPO-STATUTE": 3,
+    "NOT-IN-REPO": 2
+  },
+  "final_note": "R295 收官：最后 8 部文件名直配定性——7 部比对（6 部 IDENTICAL + 医疗保障法确认未收录）、教育法确认未收录。第二独立谱系验证终账（81 部 flk-docx 源）：74 全一致 + 1 版本滞后（商标法）+ 1 表形态注记（环保税）+ 3 司法解释错配改判 + 2 未收录（医疗保障法/教育法）。零语料缺陷在第二谱系比对中残留。"
 }
