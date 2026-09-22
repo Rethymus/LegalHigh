@@ -5,23 +5,14 @@
 ### Added / 新增
 
 
->>>>>>> 8a84a8b (removal(kline): 按业主定案彻底移除 K 线功能——演化图表/立法脉动页/pulse 端点/依赖/预算回退/台账与 quality 行清理（K 线非本项目范围）)
 
-### Added / 新增
 
-### Added / 新增
 
-### Added / 新增
 
-### Added / 新增
 
-### Added / 新增
 
-### Added / 新增
 
-### Added / 新增
 
-### Added / 新增
 
 - Edition-lag laws re-verified against upstream current editions (R288): the lawtext upstream does carry current editions for all three previously lagging laws — Minors Protection (2024) verified 132/132, Social Insurance (2018) 98/98, Cybersecurity (2025) 81/81 including the amendment's new articles — so all three join the third-chain lock, now 25 laws (~3,200 provisions) cross-upstream anchored with corpus_selfcheck re-verification. The lock generator now locks the current-edition snapshot when an old-edition archive coexists. Remaining unlocked laws are all classified non-defects (Amendment XII evolution, snapshot-side chapter-title noise) or upstream-missing.
 - State Compensation Law punctuation settled (R287): with the network restored, the lttxzmj reference corpus supplied a third independent reading of the two contested sentence breaks — both commas, agreeing with the lawtext snapshot 2:1 against the corpus's Wikisource-sourced periods. Two TEXT_CORRECTIONS entries fix the build; scl verifies 42/42 and joins the third-chain lock, raising the locked set to 22 laws. Also synced known-gaps #8 to the new bbbs state (82/108 mapped, 21-candidate manifest + authorization script), refreshed the hub README quality table (372 pytest, today's probe measurements, a third-chain row), and fixed the pcl evidence field to a bare path for selfcheck's existence check.
