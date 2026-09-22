@@ -151,7 +151,6 @@ def _add_tracked_insert(paragraph, text: str, author: str, date: str, doc):
 def generate_review_docx(review: dict) -> bytes:
     """审查记录导出：合同条款原文 + 每条 AI 建议以「修订插入」写入（作者=LegalHigh AI）。
     修订版式由结构化数据（findings.suggestion）决定，不让自由生成决定版式。"""
-    import re
     from datetime import datetime, timezone
     from docx import Document
     doc = Document()
