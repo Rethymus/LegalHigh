@@ -4,7 +4,9 @@ import { Icon } from '../icons'
 import { lawEvidenceGrade, useLaws } from '../../data/model'
 import { SourceBadge } from '../domain'
 import { PageHeader, SkeletonLines, ValidityBadge } from '../ui'
+import { useNavigate } from 'react-router-dom'
 import { api, type CaseRecord, type HistorySearch } from '../../lib/api'
+import CitationNetwork from '../CitationNetwork'
 
 function lawSourceLabel(sourceUrl: string): string {
   try {
@@ -26,6 +28,7 @@ const AUTHORITY_LABEL: Record<string, string> = {
 }
 
 export default function DataSources() {
+  const navigate = useNavigate()
   const { data, error: lawsError } = useLaws()
   const [cases, setCases] = useState<CaseRecord[] | null>(null)
   const [casesError, setCasesError] = useState<string | null>(null)
@@ -175,6 +178,7 @@ export default function DataSources() {
               <div className="stat"><b>{citGraph.totals.citations}</b><span>精确引用</span></div>
               <div className="stat"><b>{citGraph.totals.laws_cited}</b><span>被引法律</span></div>
             </div>
+            <CitationNetwork laws={citGraph.laws} onPick={(id) => navigate(`/laws/${id}`)} />
             <table className="plain-list mt-10">
               <thead><tr><th>法律</th><th>被引案例</th><th>引用次数</th><th>被引条文</th></tr></thead>
               <tbody>
