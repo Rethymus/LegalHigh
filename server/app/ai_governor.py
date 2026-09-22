@@ -681,7 +681,7 @@ def test_connection(provider_id: str, model: str, *, api_key: str | None = None,
     key = _resolve_key(provider, api_key)
     if not key:
         raise PermissionError(f"未配置密钥（环境变量 {provider.get('env_key')} 或请求提供）。")
-    check_quota(actor)
+    # 连接测试是诊断操作，不消耗日配额（不调 check_quota）
     client = _client(provider, endpoint, key)
     try:
         resp = client.chat.completions.create(
