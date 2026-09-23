@@ -7,8 +7,8 @@
  *  - /data/laws.json 等公开数据：先回缓存再后台更新（stale-while-revalidate）。
  * 缓存以版本号命名（CACHE 常量），activate 时清理旧版本——语料更新后 SW 字节变化即触发全量刷新。
  */
-const CACHE = 'lh-shell-v1';
-const PRECACHE = ['/data/laws.json'];
+const CACHE = 'lh-shell-v2';
+const PRECACHE = ['/data/laws.json', '/data/xrefs.json'];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
