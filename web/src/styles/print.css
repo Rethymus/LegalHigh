@@ -1,0 +1,133 @@
+/* ============================================================
+   LegalHigh · 打印友好样式
+   场景：法援工作者/公民打印法条、案例给当事人查阅
+   设计原则：隐藏 UI chrome，保留证据链与引用，黑白高对比
+   ============================================================ */
+
+@media print {
+  /* --- 全局重置 --- */
+  * {
+    background: transparent !important;
+    color: #000 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    transition: none !important;
+    animation: none !important;
+  }
+
+  body {
+    font-size: 12pt !important;
+    line-height: 1.8 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* --- 隐藏 UI chrome --- */
+  .sb, .sb-nav, .sb-brand, .sb-user,
+  .tb, .tb-left, .tb-right, .tb-crumbs,
+  .bottom-tab-bar,
+  button, .btn, .chip-btn,
+  .banner, .banner-warm, .banner-info,
+  .toast-host, .dialog-overlay,
+  .copilot-panel, .ai-panel,
+  nav, footer,
+  [data-testid='sidebar'],
+  [data-testid='navbar'] {
+    display: none !important;
+  }
+
+  /* --- 布局重置：全宽单栏 --- */
+  .main, .content, .page {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+  }
+
+  /* --- 卡片：去阴影去圆角去边框背景 --- */
+  .card, .card-b, .card-h {
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    padding: 8px 0 !important;
+    margin: 4px 0 !important;
+    break-inside: avoid;
+  }
+
+  /* --- 法条正文 --- */
+  .law-text, .article-text, .res-snip {
+    font-size: 12pt !important;
+    line-height: 2 !important;
+    text-align: justify !important;
+    white-space: pre-wrap !important;
+  }
+
+  /* --- 证据链：保留引用来源 --- */
+  .citation-chip, .evidence-chip, .source-badge {
+    border: 1px solid #000 !important;
+    background: transparent !important;
+    color: #000 !important;
+    font-size: 9pt !important;
+    padding: 1px 4px !important;
+  }
+
+  /* --- 术语卡 / 标签 --- */
+  .chips .chip {
+    border: 1px solid #000 !important;
+    background: transparent !important;
+    color: #000 !important;
+    font-size: 9pt !important;
+  }
+
+  /* --- 表格：保留边框 --- */
+  table {
+    border-collapse: collapse !important;
+    width: 100% !important;
+  }
+  th, td {
+    border: 1px solid #000 !important;
+    padding: 4px 8px !important;
+    font-size: 10pt !important;
+  }
+
+  /* --- 标题层级 --- */
+  h1, h2, h3, .ph-t, .card-h-t {
+    font-size: inherit !important;
+    font-weight: bold !important;
+    break-after: avoid;
+  }
+
+  /* --- 分页控制 --- */
+  .card, .section, table, .law-article {
+    break-inside: avoid !important;
+  }
+  h1, h2, h3 {
+    break-after: avoid !important;
+  }
+
+  /* --- 链接：打印时显示 URL --- */
+  a[href^='http']::after {
+    content: ' (' attr(href) ')';
+    font-size: 9pt;
+    color: #555;
+  }
+  a[href^='/']::after {
+    content: '';
+  }
+
+  /* --- 隐藏交互提示 --- */
+  .evo-readout, .tiny[aria-live],
+  [aria-hidden='true'] {
+    display: none !important;
+  }
+
+  /* --- 引用网络 SVG：打印时缩小并居中 --- */
+  svg[role='img'] {
+    max-width: 100% !important;
+    height: auto !important;
+    page-break-inside: avoid !important;
+  }
+}

@@ -163,6 +163,7 @@ export default function LawDetail() {
             <SourceBadge kind="law" grade={lawEvidenceGrade(law.sourceUrl)} />
             <button className="btn btn-ghost btn-sm" onClick={() => copy(`${law.title} ${article.label}：${article.text}`, '已复制法条原文')}><Icon name="copy" size={13} />复制原文</button>
             <button className="btn btn-ghost btn-sm" onClick={() => copy(`《${law.title.replace(/^中华人民共和国/, '')}》${article.label}（${law.status}，${law.effectiveDate} 施行）来源：${law.sourceUrl}`, '已复制规范引用（含官方来源）')}><Icon name="quote" size={13} />复制规范引用</button>
+            <button className="btn btn-ghost btn-sm" onClick={() => window.print()} title="打印法条（自动隐藏导航，仅保留条文与引用）"><Icon name="docpen" size={13} />打印</button>
             <button className="btn btn-secondary btn-sm" onClick={() => {
               const now = toggleFav({ key: `law:${lawId}#${artParam(no, art.sub)}`, type: '法条', title: `《${law.title.replace(/^中华人民共和国/, '')}》${article.label}`, meta: `${law.status} · ${law.effectiveDate} 施行`, to: `/laws/${lawId}?art=${artParam(no, art.sub)}` })
               setFavState(now)

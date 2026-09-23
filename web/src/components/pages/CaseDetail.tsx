@@ -107,6 +107,7 @@ export default function CaseDetail() {
           {audience !== 'public' && <Link to={`/research?q=${encodeURIComponent(`${c.name}所涉争议焦点与相关现行法条`)}`} className="btn btn-ghost btn-sm"><Icon name="sparkle" size={13} />基于本案研究</Link>}
           <a className="btn btn-ghost btn-sm" href={c.source_url} target="_blank" rel="noreferrer" title={`${c.source_title}（核验于 ${c.source_accessed_at}）`}><Icon name="external" size={13} />核验原始来源</a>
           <button className="btn btn-ghost btn-sm" onClick={() => copy(`${c.name}（核验于 ${c.source_accessed_at}，证据等级【${c.grade}】）来源：${c.source_url}`, '已复制规范引用（含官方来源）')}><Icon name="quote" size={13} />复制规范引用</button>
+          <button className="btn btn-ghost btn-sm" onClick={() => window.print()} title="打印案例（自动隐藏导航，保留全文与引用）"><Icon name="docpen" size={13} />打印</button>
         </div>
       </div>
 

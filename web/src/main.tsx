@@ -5,6 +5,7 @@ import App from './App'
 import { ToastProvider } from './components/ui'
 import AppErrorBoundary from './components/AppErrorBoundary'
 import './styles/global.css'
+import './styles/print.css'
 
 // Pages cannot serve arbitrary SPA paths with HTTP 200. Hash routes keep direct
 // links and refreshes on its real index document; local builds keep clean URLs.
