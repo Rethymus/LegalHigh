@@ -6,6 +6,7 @@ import { Icon } from '../icons'
 import { WARM_TIPS, artParam, findArticle, findLaw, lawChapters, lawDisplayTitle, lawEvidenceGrade, parseArtParam, useLaws } from '../../data/model'
 import { EmptyState, PageHeader, SkeletonLines, Tabs, useCopy, useToast, ValidityBadge } from '../ui'
 import { AIContentBadge, AIWarning, CitationChip, OfficialArticle, SourceBadge } from '../domain'
+import XRefBlock from '../XRefBlock'
 import { api, isFav as isFavKey, toggleFav, type ArticleExplain, type ArticleLink, type LawAnalysisContext } from '../../lib/api'
 import type { AppOutletContext } from '../AppShell'
 import TERMS from '../../data/terms.json'
@@ -178,6 +179,7 @@ export default function LawDetail() {
         {/* 官方原文 */}
         <div style={{ minWidth: 0 }}>
           <OfficialArticle law={law} article={article} />
+          <XRefBlock lawId={lawId} articleKey={artParam(no, art.sub) ?? ''} />
 
           {/* 章内导航 */}
           <div className="card mt-16" style={{ padding: '12px 18px' }}>

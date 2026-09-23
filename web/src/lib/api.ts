@@ -411,6 +411,9 @@ export const api = {
       pending_note: string
     }>(`/laws/${encodeURIComponent(lawId)}/versions`),
 
+  // 法内交叉引用（R308）：从语料文本自动提取的「本法第X条」内部引用（公开只读静态数据）
+  xrefs: () => req<Record<string, { from: string; to: string; ctx: string }[]>>('/data/xrefs.json'),
+
   // Citator「被引用于」（FLERF §26）：已核实案例对本法的精确引用反查（公开只读）
   citedBy: (lawId: string) =>
     req<CitedBy>(`/laws/${encodeURIComponent(lawId)}/cited-by`),
