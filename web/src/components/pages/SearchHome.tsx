@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { Icon } from '../icons'
 import { EmptyState, PageHeader } from '../ui'
 import { HOT_SEARCHES, WARM_TIPS } from '../../data/model'
+import SearchSuggest from '../SearchSuggest'
 
 const SCOPES = ['全部', '法规', '司法解释', '案例']
 
@@ -35,11 +36,13 @@ export default function SearchHome() {
       <div className="card card-pad" style={{ maxWidth: 980, margin: '0 auto', paddingBlock: 28 }}>
         <form
           className="searchbar"
+          style={{ position: 'relative' }}
           onSubmit={(e) => { e.preventDefault(); if (q.trim()) nav(`/search/results?q=${encodeURIComponent(q.trim())}&scope=${encodeURIComponent(scope)}`) }}
         >
           <Icon name="search" size={18} className="muted" />
           <input ref={inputRef} className="inp" style={{ fontSize: 15.5 }} placeholder="输入法律问题开始检索：条文关键词、案由、争议焦点……" value={q} onChange={(e) => setQ(e.target.value)} aria-label="检索词" />
           <button className="btn btn-primary btn-lg">检索</button>
+          {q.trim() && <SearchSuggest query={q} onPick={() => setQ('')} />}
         </form>
 
         <div className="row-wrap mt-16" style={{ justifyContent: 'center' }}>
