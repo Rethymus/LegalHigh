@@ -41,7 +41,7 @@ def main() -> int:
         lid, bbbs = cand['law_id'], cand['bbbs']
         url = DETAIL + urllib.parse.quote(bbbs)
         try:
-            with urllib.request.urlopen(url, timeout=20) as resp:
+            with urllib.request.urlopen(url, timeout=35) as resp:
                 detail = json.loads(resp.read().decode('utf-8'))
         except Exception as e:  # noqa: BLE001 网络失败如实跳过
             skipped.append({'law_id': lid, 'reason': f'fetch: {e}'})
@@ -49,7 +49,9 @@ def main() -> int:
         data = detail.get('data') or detail
         title = (data.get('title') or data.get('name') or '').strip()
         expect = laws.get(lid, {}).get('title', '')
-        if title and title.replace(' ', '') == expect.replace(' ', ''):
+        # 标题匹配容忍 flk 侧的版本括注后缀（如「（2018年修正文本）」）：去空格后互相包含即可
+        t, e = title.replace(' ', ''), expect.replace(' ', '')
+        if t and e and (t == e or t.startswith(e) or e in t):
             native[lid] = {
                 'bbbs': bbbs,
                 'evidence': (f"docs/qa-evidence/flk-bbbs-candidates.json#{lid}"

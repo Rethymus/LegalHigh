@@ -29,16 +29,17 @@ def test_third_chain_lock_manifest():
 
 
 def test_flk_bbbs_candidates_manifest():
-    """R286：bbbs 候选清单在库——21 部现行版候选待业主授权批量核验。"""
+    """R286/R309：bbbs 候选清单在库。R309 批量核验完成后 current=0 是终态；
+    清单保留供溯源（superseded/not_located 分类仍在）。"""
     cand = SERVER.parent / "docs" / "qa-evidence" / "flk-bbbs-candidates.json"
     assert cand.is_file(), "flk-bbbs-candidates.json 缺失（bbbs 补齐管线断档）"
     data = json.loads(cand.read_text(encoding="utf-8"))
-    assert len(data["current"]) >= 21, f"现行版候选回落：{len(data['current'])}"
+    native = json.loads(NATIVE.read_text(encoding="utf-8"))
+    # 核验完成态：映射应覆盖候选曾经的全集（≥103 部）
+    assert len(native) >= 103, f"映射覆盖回落：{len(native)}（批量核验后应 ≥103）"
     for e in data["current"]:
         assert e.get("law_id") and e.get("bbbs") and e.get("snapshot"), f"{e.get('law_id')} 条目形态异常"
-    # 已入映射的法律不得同时出现在候选 current 里
-    native = json.loads(NATIVE.read_text(encoding="utf-8"))
-    for e in data["current"]:
+        # 已入映射的法律不得同时出现在候选 current 里
         assert e["law_id"] not in native, f"{e['law_id']} 已映射却仍在候选 current"
 
 

@@ -326,5 +326,101 @@
  "pcl-2023": {
   "bbbs": "ff8081818a21dc13018b425303b7086d",
   "evidence": "docs/research/evidence/flk-pcl-2023-structure-2026-09-15.json"
+ },
+ "admin-litigation-2017": {
+  "bbbs": "2c909fdd678bf17901678bf858550a0f",
+  "evidence": "docs/qa-evidence/flk-bbbs-candidates.json"
+ },
+ "admin-review-2023": {
+  "bbbs": "ff8081818a21e6c3018a508d491a0c98",
+  "evidence": "docs/qa-evidence/flk-bbbs-candidates.json"
+ },
+ "civl-2020": {
+  "bbbs": "ff808081729d1efe01729d50b5c500bf",
+  "evidence": "docs/qa-evidence/flk-bbbs-candidates.json"
+ },
+ "cl-2013": {
+  "bbbs": "2c909fdd678bf17901678bf7670606ef",
+  "evidence": "docs/qa-evidence/flk-bbbs-candidates.json"
+ },
+ "cpl-2018": {
+  "bbbs": "ff8080816f135f46016f1d1b81b01351",
+  "evidence": "docs/qa-evidence/flk-bbbs-candidates.json"
+ },
+ "crpl-imp-2024": {
+  "bbbs": "ff808181927f09310192c2f4cd777281",
+  "evidence": "docs/qa-evidence/flk-bbbs-candidates.json"
+ },
+ "dsl-2021": {
+  "bbbs": "ff80818179f5e0800179f885c7e70392",
+  "evidence": "docs/qa-evidence/flk-bbbs-candidates.json"
+ },
+ "dv-2015": {
+  "bbbs": "2c909fdd678bf17901678bf7f9d60889",
+  "evidence": "docs/qa-evidence/flk-bbbs-candidates.json"
+ },
+ "ecom-2018": {
+  "bbbs": "2c909fdd678bf17901678bf8af050b81",
+  "evidence": "docs/qa-evidence/flk-bbbs-candidates.json"
+ },
+ "htjs-2023": {
+  "bbbs": "ff8081818c24e05b018c814e6de45ab5",
+  "evidence": "docs/qa-evidence/flk-bbbs-candidates.json"
+ },
+ "lcar-2007": {
+  "bbbs": "2c909fdd678bf17901678bf64f28039d",
+  "evidence": "docs/qa-evidence/flk-bbbs-candidates.json"
+ },
+ "legal-aid-2021": {
+  "bbbs": "ff8081817b6472a3017b6577820f0061",
+  "evidence": "docs/qa-evidence/flk-bbbs-candidates.json"
+ },
+ "ll-2017": {
+  "bbbs": "2c909fdd678bf17901678bf867e80a55",
+  "evidence": "docs/qa-evidence/flk-bbbs-candidates.json"
+ },
+ "penal-2021": {
+  "bbbs": "ff8080817703add20177373df6a43e33",
+  "evidence": "docs/qa-evidence/flk-bbbs-candidates.json"
+ },
+ "pipl-2021": {
+  "bbbs": "ff8081817b6472a3017b656cc2040044",
+  "evidence": "docs/qa-evidence/flk-bbbs-candidates.json"
+ },
+ "psm-2025": {
+  "bbbs": "ff80818197af9ccc0197b159c38a0408",
+  "evidence": "docs/qa-evidence/flk-bbbs-candidates.json"
+ },
+ "scl-2012": {
+  "bbbs": "2c909fdd678bf17901678bf74c26069f",
+  "evidence": "docs/qa-evidence/flk-bbbs-candidates.json"
+ },
+ "wlxf-2022": {
+  "bbbs": "ff80818181cdd7a70181d65a7e48303f",
+  "evidence": "docs/qa-evidence/flk-bbbs-candidates.json"
+ },
+ "minor-2024": {
+  "bbbs": "ff8081818f197cf001905e567af635a0",
+  "evidence": "docs/qa-evidence/flk-bbbs-candidates.json"
+ },
+ "social-ins-2018": {
+  "bbbs": "ff8080816f135f46016f210989b9179a",
+  "evidence": "docs/qa-evidence/flk-bbbs-candidates.json"
+ },
+ "csl-2025": {
+  "bbbs": "021e7d7684474107b8f3febbb1c4f8b5",
+  "evidence": "docs/qa-evidence/flk-bbbs-candidates.json"
+ },
+ "con-2018": {
+  "bbbs": "2c909fdd678bf17901678bf5a483004b",
+  "evidence": "docs/qa-evidence/flk-bbbs-candidates.json"
+ },
+ "lcl-2012": {
+  "bbbs": "2c909fdd678bf17901678bf74d7106b3",
+  "evidence": "docs/qa-evidence/flk-bbbs-candidates.json"
+ },
+ "women-2022": {
+  "bbbs": "ff808181841257210184281512de0eec",
+  "evidence": "docs/qa-evidence/flk-bbbs-candidates.json"
  }
 }
