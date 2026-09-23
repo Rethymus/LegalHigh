@@ -42,7 +42,7 @@ def test_tools_list_red_line_audit():
     ])
     tools = [m for m in out if m.get("id") == 2][0]["result"]["tools"]
     names = sorted(t["name"] for t in tools)
-    assert names == ["get_article", "list_laws", "search_articles", "search_cases", "search_history"], names
+    assert names == ["get_article", "get_xrefs", "list_laws", "search_articles", "search_cases", "search_history"], names
     # 每个工具描述都带「不构成法律意见」声明
     for t in tools:
         assert "不构成法律意见" in t["description"], t["name"]

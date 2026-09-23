@@ -112,6 +112,36 @@ def tool_search_cases(query: str, top_k: int = 5, level: str | None = None) -> d
     return {"query": query, "count": len(items), "cases": items, "disclaimer": DISCLAIMER}
 
 
+def tool_get_xrefs(law_id: str, article: str = "") -> dict:
+    """获取某法条的法内交叉引用（双向导航，R312）。数据源 xrefs.json 构建产物。"""
+    import json
+    import pathlib
+
+    xrefs_path = pathlib.Path(__file__).resolve().parent.parent / "web" / "public" / "data" / "xrefs.json"
+    if not xrefs_path.is_file():
+        return {"law_id": law_id, "error": "xrefs.json 不存在（需先构建语料）", "disclaimer": DISCLAIMER}
+    data = json.loads(xrefs_path.read_text(encoding="utf-8"))
+    all_refs = data.get(law_id, [])
+    if not all_refs:
+        return {"law_id": law_id, "outgoing": [], "incoming": [], "total": 0,
+                "note": "该法无已提取的法内交叉引用", "disclaimer": DISCLAIMER}
+    if article:
+        outgoing = [x for x in all_refs if x["from"] == article]
+        incoming = [x for x in all_refs if x["to"] == article]
+    else:
+        outgoing = all_refs
+        incoming = []
+    return {
+        "law_id": law_id,
+        "article": article or "(全部)",
+        "outgoing": [{"to": x["to"], "context": x["ctx"]} for x in outgoing],
+        "incoming": [{"from": x["from"], "context": x["ctx"]} for x in incoming],
+        "total_outgoing": len(outgoing),
+        "total_incoming": len(incoming),
+        "disclaimer": DISCLAIMER,
+    }
+
+
 def tool_search_history(query: str, top_k: int = 5, law_id: str | None = None,
                         version_id: str | None = None) -> dict:
     """在历史版本文本（非现行）中检索：独立命名空间，仅供对照研究。"""
@@ -204,6 +234,22 @@ TOOLS = [
             "required": ["query"],
         },
     },
+    {
+        "name": "get_xrefs",
+        "description": (
+            "获取某法条的法内交叉引用（双向：本文引用→其他条文 / 其他条文→引用本文）。"
+            "数据从条文文本自动提取并验证目标存在（R308）。"
+            "输出为结构化引用关系，不构成法律意见。"
+        ),
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "law_id": {"type": "string", "description": "法律 ID（如 civl-2020）"},
+                "article": {"type": "string", "description": "条号（如 188 或 287之一；留空返回该法全部交叉引用）"},
+            },
+            "required": ["law_id"],
+        },
+    },
 ]
 
 
@@ -220,6 +266,8 @@ def dispatch(name: str, args: dict):
         return tool_search_cases(
             args.get("query", ""), args.get("top_k", 5), args.get("level")
         )
+    if name == "get_xrefs":
+        return tool_get_xrefs(args.get("law_id", ""), args.get("article", ""))
     if name == "search_history":
         return tool_search_history(
             args.get("query", ""), args.get("top_k", 5),
