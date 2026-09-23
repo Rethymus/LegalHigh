@@ -4,6 +4,14 @@
 
 ### Added / 新增
 
+- Bidirectional cross-references (R308/R312): 660 intra-law references extracted from statute text and rendered as clickable links on LawDetail — both outgoing ("this article cites →") and incoming ("→ cited by") navigation. Data 100% machine-verified (targets must exist in corpus), zero fabrication. MCP `get_xrefs` tool (R313) exposes the same data programmatically for AI assistants.
+- Search suggestions (R310): real-time term-card matching in the search box — typing colloquial phrases ("定金能退吗") surfaces matching term cards ("定金与订金") that bridge to formal statute language ("定金罚则"). Zero new dependencies (pure JS substring matching over 215 verified cards).
+- Citation network visualization (R304): interactive force-directed graph on DataSources — 31 cited-law nodes sized by case count, co-citation edges weighted by shared cases. d3-force (ISC) physics engine + SVG rendering, lazy-loaded.
+- Print-friendly styles (R307): print.css + print buttons on LawDetail/CaseDetail — hides UI chrome, preserves evidence chain and citations, high-contrast black-on-white for legal aid workers printing statutes for clients.
+- bbbs mapping 82→106/108 (R309): owner-authorized batch verification via flfgDetails read-only API — 24 candidates verified and mapped. Only genai-2023 and cl-2023 remain (not in lawtext upstream).
+- PWA offline xrefs (R316): service worker precache now includes xrefs.json — cross-reference navigation works offline.
+- llms.txt MCP section (R317): MCP six-tool interface and cross-reference capability now discoverable by LLM clients via llms.txt.
+- Query expansion A/B experiment (R311): naive term-card expansion tested and rejected (miss@5 21→46, far exceeding the 1% rollback threshold) — bigram BM25 confirmed optimal; 21 residual misses are multi-law same-concept ambiguities, not retrieval defects.
 
 
 
