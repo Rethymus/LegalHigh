@@ -236,8 +236,32 @@ export default function AppShell() {
         {narrow && audience !== null && (
           <Link to="/settings?feedback=mobile" className="mobile-feedback" title="反馈移动端体验问题">
             <Icon name="send" size={14} />
-        </Link>
-      )}
+          </Link>
+        )}
+
+        {/* 移动端底部标签栏（R333）：iOS 原生 App 导航范式——5 个高频入口 + 毛玻璃材质 + 安全区适配 */}
+        {narrow && (
+          <nav className="btab" aria-label="主导航">
+            {[
+              { to: '/', icon: 'home' as IconName, label: '首页' },
+              { to: '/search', icon: 'lawSearch' as IconName, label: '检索' },
+              { to: '/laws', icon: 'article' as IconName, label: '法条' },
+              { to: '/cases', icon: 'caseSearch' as IconName, label: '案例' },
+              { to: '/terms', icon: 'bulb' as IconName, label: '术语' },
+            ].map((tab) => (
+              <NavLink
+                key={tab.to}
+                to={tab.to}
+                end={tab.to === '/'}
+                className={({ isActive }) => 'btab-item' + (isActive ? ' is-active' : '')}
+                aria-label={tab.label}
+              >
+                <Icon name={tab.icon} size={20} strokeWidth={1.7} />
+                <span className="btab-label">{tab.label}</span>
+              </NavLink>
+            ))}
+          </nav>
+        )}
 
       {/* Pages 仅作静态说明与法规快照浏览，不在浏览器内伪造任何后端接口。 */}
       {import.meta.env.VITE_STATIC_PREVIEW === '1' && (

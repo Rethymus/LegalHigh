@@ -1267,3 +1267,118 @@ a.mini-t { padding-block: 2.5px; }
 .reduce-motion .ht:active, .reduce-motion .seg-btn:active, .reduce-motion .sw:active::after { transform: none !important; }
 .reduce-motion .sw.is-on:active::after { transform: translateX(18px) !important; }
 .reduce-motion .hoverable:hover, .reduce-motion .ac-card:hover, .reduce-motion .subj-card:hover { transform: none !important; }
+
+/* ============================================================
+   R333 · 移动端底部标签栏（iOS 原生导航范式）
+   材质：毛玻璃 backdrop-filter + 半透明叠色 + 发丝线边框 + 顶部内高光
+   安全区：env(safe-area-inset-bottom) 兼容刘海屏/手势条
+   布局：仅 <768px 显示（桌面端保持侧栏范式——真正差异化而非响应式缩放）
+   ============================================================ */
+.btab {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  z-index: 60;
+  display: flex;
+  justify-content: space-around;
+  align-items: stretch;
+  height: calc(56px + env(safe-area-inset-bottom, 0px));
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  background: rgba(var(--mat-tint), var(--mat-dialog-a));
+  -webkit-backdrop-filter: blur(var(--blur-chrome)) saturate(var(--mat-sat));
+  backdrop-filter: blur(var(--blur-chrome)) saturate(var(--mat-sat));
+  border-top: 1px solid var(--mat-hairline);
+  box-shadow: inset 0 1px 0 var(--mat-edge), 0 -2px 12px rgba(0,0,0,0.08);
+}
+.btab-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 4px 0;
+  color: var(--tx-3);
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: color var(--dur-fast) var(--ease), transform var(--dur-press) ease-out;
+}
+.btab-item:active { transform: scale(0.92); }
+.btab-item.is-active { color: var(--accent-text); }
+.btab-item.is-active svg { filter: drop-shadow(0 1px 3px rgba(0,105,217,0.25)); }
+.btab-label {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+}
+
+/* 移动端内容底部留出标签栏空间（避免遮挡） */
+@media (max-width: 767.98px) {
+  .content { padding-bottom: calc(56px + env(safe-area-inset-bottom, 0px) + 16px) !important; }
+  .btab { display: flex; }
+}
+@media (min-width: 768px) {
+  .btab { display: none !important; }
+}
+/* Reduce Motion 兼容 */
+@media (prefers-reduced-motion: reduce) {
+  .btab-item { transition: none !important; }
+  .btab-item:active { transform: none !important; }
+}
+.reduce-motion .btab-item { transition: none !important; }
+.reduce-motion .btab-item:active { transform: none !important; }
+
+/* ============================================================
+   R333 · 材质层增强——卡片玻璃质感升级
+   借鉴 macOS Sequoia/Tahoe 窗口材质：半透明叠色 + 多层内高光 + 边缘光反射
+   不改变既有 Token 值，仅在 .card 上叠加更细腻的层次
+   ============================================================ */
+.card {
+  box-shadow:
+    var(--mat-inset),
+    var(--shadow-1),
+    inset 0 0 0 0.5px rgba(255,255,255,0.06);  /* 微弱内边光（反射近似） */
+}
+.tone-dark .card {
+  box-shadow:
+    var(--mat-inset),
+    var(--shadow-1),
+    inset 0 0 0 0.5px rgba(255,255,255,0.03);  /* 深色模式降低反射强度 */
+}
+
+/* 卡片 hover 时边缘光微妙增强（Apple 窗口聚焦行为） */
+.card.hoverable {
+  transition: transform var(--t-snappy) var(--spring-snappy),
+              box-shadow var(--dur-slow) var(--ease),
+              border-color var(--dur-slow) var(--ease);
+}
+.card.hoverable:hover {
+  border-color: rgba(255,255,255,0.12);
+  box-shadow:
+    var(--mat-inset),
+    var(--shadow-2),
+    inset 0 0 0 0.5px rgba(255,255,255,0.09);
+}
+.tone-dark .card.hoverable:hover {
+  border-color: rgba(255,255,255,0.06);
+}
+
+/* 移动端卡片全宽（去除独立卡片的边距——更接近原生 App 列表组） */
+@media (max-width: 767.98px) {
+  .card { border-radius: var(--r-m); }
+}
+
+/* ============================================================
+   R333 · 滚动行为增强——iOS 弹性滚动近似
+   overscroll-behavior 含链已在 R23 设置；这里补充视觉弹性暗示
+   ============================================================ */
+@media (max-width: 767.98px) {
+  /* 移动端 .content 已有 overscroll-behavior: contain（R23）；
+     补充 -webkit-overflow-scrolling 加速（iOS 惯性滚动） */
+  .content { -webkit-overflow-scrolling: touch; }
+  
+  /* 移动端列表行增大触摸目标（WCAG 2.5.8 对齐 iOS HIG 44pt） */
+  .lrow { min-height: 44px; }
+  .res-act { min-height: 44px; padding-block: 10px; }
+  .btn { min-height: 44px; }
+}
