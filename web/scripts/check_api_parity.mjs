@@ -17,8 +17,10 @@ for (const m of mainPy.matchAll(/@app\.(get|post|patch|delete|put)\("([^"]+)"/g)
 }
 
 // 前端：req<...>(`/...`) 或 req<...>('/...') 的路径（${...} 插值段以 ${ 记录）
+// 注意：/data/ 开头的是静态数据文件（vite public/），不是后端 API 路由，跳过
 const frontend = new Set()
 for (const m of apiTs.matchAll(/req<[\s\S]*?>\(\s*([`'"])(\/[^`'"]+)\1/g)) {
+  if (m[2].startsWith('/data/')) continue // 静态数据文件（xrefs.json 等），非 API
   frontend.add(('/api' + m[2]).split('?')[0])
 }
 
