@@ -1060,6 +1060,17 @@ def evals():
     recall_at_20 = round(recall20 / n, 4)
     ndcg_at_10 = round(ndcg_sum / n, 4)
 
+    # 引用精度分解（R327，SG-LegalCite 启发）：法律级 vs 条文级命中率分离度量。
+    # 法律级=找到了正确的法律（无论哪条）；条文级=既有实现（具体条文）。
+    # 差值 =「法律对但条文错」的组数比例（条文级定位偏差，非检索引擎缺陷）。
+    law_level_hits = 0
+    for i, g in enumerate(gold["cases"]):
+        expected_laws = {e["law_id"] for e in g["expect"]}
+        hit_laws = {r["law_id"] for r in res20_by_case[i][:5]}
+        if expected_laws & hit_laws:
+            law_level_hits += 1
+    law_level_hit_at_5 = round(law_level_hits / n, 4)
+
     # 评测 2.0（S2-T2，全部确定性、随金标实时复算）：
     # ① 拒答正确率——固定乱码探针集必须全部低于拒答阈值（与 qa.ask 同一 6.0 分界），
     #    即「语料外问题不得输出法条卡片」；②引用实体完整率——金标检索命中引用卡
@@ -1089,6 +1100,8 @@ def evals():
         "metric_note": "条文级口径（以条为检索单元）；金标集由人工依据语料标注，评测实时可复现。",
         "case_count": n,
         "hit_at_5": round(hits / n, 4),
+        "law_level_hit_at_5": law_level_hit_at_5,
+        "law_level_note": "法律级命中@5（找到正确法律无论哪条）；与条文级 hit@5 的差值 = 条文定位偏差率",
         "abstention_probes": len(adversarial_probes),
         "abstention_correct_rate": round(abstain_correct / len(adversarial_probes), 4),
         "abstention_note": "语料外乱码探针全部低于拒答阈值（score<6.0）的比例；1.0=语料外问题一律不输出",
