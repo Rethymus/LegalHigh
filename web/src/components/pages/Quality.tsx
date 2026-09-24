@@ -13,6 +13,7 @@ import { api, type CaseRecord } from '../../lib/api'
 interface EvalsData {
   case_count: number
   hit_at_5: number
+  law_level_hit_at_5?: number | null
   mrr: number
   abstention_correct_rate: number
   abstention_probes: number
@@ -125,6 +126,7 @@ export default function Quality() {
             <>
               <div className="stats mb-12">
                 <div className="stat"><b>{(evals.hit_at_5 * 100).toFixed(1)}%</b><span>hit@5（{evals.case_count} 组金标）</span></div>
+                <div className="stat"><b>{evals.law_level_hit_at_5 != null ? `${(evals.law_level_hit_at_5 * 100).toFixed(1)}%` : '—'}</b><span>法律级命中@5（找对法律）</span></div>
                 <div className="stat"><b>{evals.rank1_rate != null ? `${(evals.rank1_rate * 100).toFixed(1)}%` : '—'}</b><span>rank-1 命中率（更严口径）</span></div>
                 <div className="stat"><b>{evals.mrr.toFixed(2)}</b><span>MRR</span></div>
                 <div className="stat"><b>{evals.recall_at_20 != null ? `${(evals.recall_at_20 * 100).toFixed(1)}%` : '—'}</b><span>Recall@20（宽截断召回）</span></div>
