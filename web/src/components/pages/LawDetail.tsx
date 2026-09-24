@@ -86,10 +86,27 @@ export default function LawDetail() {
   useEffect(() => { setFavState(lawId ? isFavKey(`law:${lawId}#${no}`) : false) }, [lawId, no])
 
   const chapters = useMemo(() => (law ? lawChapters(law) : []), [law])
-  const sibling = useMemo(
-    () => (law && article ? law.articles.filter((a) => a.chapter === article.chapter) : []),
-    [law, article],
-  )
+  // 同章条文按词面相似度排序（R331：bigram 重合度，当前条文排首位，其余按相关度递减）
+  const sibling = useMemo(() => {
+    if (!law || !article) return []
+    const same = law.articles.filter((a) => a.chapter === article.chapter)
+    const bg = (t: string) => {
+      const clean = [...t].filter((ch) => /\w/.test(ch) || ch >= '\u4e00').join('')
+      return new Set(Array.from({ length: Math.max(0, clean.length - 1) }, (_, i) => clean.slice(i, i + 2)))
+    }
+    const curBg = bg(article.text)
+    const curKey = `${article.no}-${article.sub ?? ''}`
+    return same
+      .filter((a) => `${a.no}-${a.sub ?? ''}` !== curKey)
+      .map((a) => {
+        const b = bg(a.text)
+        let inter = 0
+        for (const g of b) if (curBg.has(g)) inter++
+        return { a, score: inter / Math.max(1, Math.min(curBg.size, b.size)) }
+      })
+      .sort((x, y) => y.score - x.score || x.a.no - y.a.no)
+      .map((x) => x.a)
+  }, [law, article])
   const [cited, setCited] = useState<Awaited<ReturnType<typeof api.citedBy>> | null>(null)
   const [ftVid, setFtVid] = useState<string | null>(null)
   const [fulltext, setFulltext] = useState<Awaited<ReturnType<typeof api.versionFulltext>> | null>(null)
