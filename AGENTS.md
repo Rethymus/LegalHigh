@@ -102,6 +102,12 @@
   - **第三百零一轮（2026-09-22，证据快照索引生成器——610 份快照可溯源导航）**：新增 `server/scripts/evidence_index.py`（可重跑，全量重建）为 docs/research/evidence/（**610 份快照**）生成 INDEX.md：按类型分组登记文件名/大小——指导案例官方快照 278 / flk 官方接口证据 85 / lawtext 第三链快照 113 / Wikisource 转录 85 / 官方公报转载 4 / 其他 45。用途=备案材料溯源与人工导航（每份快照的核验口径见其引用方：语料构建/案例库 source_note/版本注册表）。
   - **第三百零六轮（2026-09-22，依赖安全审计——npm 0 漏洞/Python 无安全更新/过时依赖清单登记）**：系统性审计前后端依赖安全与版本状态。**npm audit**：0 漏洞（registry.npmjs.org 官方源核验）。**Python 过时包**：anyio/build/httpx2/idna/jiter/numpy/pydantic_core 等 13 个 minor 版本更新可用，无已知安全通告；openai 2.54→3.17 为大版本跳跃（不自动升级）。**npm 过时包**：React 19.2→19.3、TypeScript 6.0→7.0（大版本跳跃不自动升级）、vite 8.2→8.3、oxlint 1.81→1.85 等 minor 更新可用，无安全通告。**依赖树清洁确认**：lightweight-charts 零残留（package.json/lock 0 命中）、d3-force + @types/d3-force 在位。**结论**：依赖安全态势良好，无紧急修复项；大版本升级（TypeScript 7/openai 3.x）留待业主决策。
   - **第三百二十五轮（2026-09-24，GLM 非高峰窗口实测——429 仍复现，免费额度硬限制定案）**：在北京时间 02:43（非高峰窗口 02-06 内）重试 llm_eval，首次调用即 429 RateLimitError。**结论：GLM-4.7-Flash 免费额度限制与时段无关**（不是高峰期挤占，而是免费 tier 的硬性 RPM/TPM 上限），批量评测需要付费额度密钥。known-gaps #2 NLI 评测的解锁条件从「非高峰时段」更正为「付费 API 密钥」。
+  - **第三百二十七至三百三十一轮（2026-09-24，评测维度扩展与产品导航精化——五项改进全部落地推送）**：
+  - **R327 法律级命中@5 新指标**：SG-LegalCite benchmark（R326 发现）启发的引用精度分解——`law_level_hit_at_5` 新增到 /api/evals，实测 98.34% vs 条文级 96.12%（条文定位偏差 2.22%=12 组法律对条文错）（a923d3c）。
+  - **R328 /quality 页八卡**：前端消费 law_level_hit_at_5 新指标，七卡→八卡（233e21d）。
+  - **R329 README 同步**：检索评测段补充法律级 98.3%（a1d7b11）。
+  - **R330 开源生态增量调研第二轮**：六维度检索（法规变更监测/法条版本diff/法条相似度/文档生成/可访问性/AI伦理），四个方向搜索零命中确认识别先创位置；新发现 houki-hub（日本法令 MCP 同理念）、mcp-legal-it（200+工具）、sg-legal-corpus（point-in-time corpus）（b05556a）。
+  - **R331 同章条文相似度排序**：LawDetail 同章条文从条号排序改为 bigram 词面重合度排序——查看民法典188条（诉讼时效三年）时第193条「法院不得主动适用诉讼时效」（重合度0.50）排首位（6198172）。
   - **第三百二十一轮（2026-09-23，GLM-4.7-Flash 推理模型行为定案——NLI 评测仍受免费额度限制）**：GLM API 短暂恢复后实测三个关键发现：①**GLM-4.7-Flash 是推理模型**——输出走 reasoning_content（model_extra 字段）而非 content，max_tokens=8/50 时全部 token 耗在推理链上 content 为空（test_connection 的空响应根因），max_tokens≥1000 时正常产出（reasoning ~1549 tokens + content 答案）；②**ai_governor 的 MAX_OUTPUT_TOKENS=4096 已兼容**推理模型——正式 chat 调用无问题；③**免费额度限制批量评测**——单次调用可通过但 llm_eval 连续查询即触发 429（免费 tier RPM 极低），NLI 全量评测（541 组×多次调用）需付费额度或等待非高峰时段。技术发现登记供后续 NLI 评测执行时参考。
   - **第三百一十至三百一十八轮（2026-09-23，产品导航与生态层密集迭代——九个功能特性全部落地推送）**：
   - **R310 搜索建议下拉**：SearchSuggest.tsx——实时匹配 215 张术语卡引导从口语到法条词面（纯 JS 零依赖，词面 startsWith/includes 评分排序，↓↑ 键盘导航+Enter 跳转），直接解决金标集实录的词法鸿沟 UX 问题（ac825e3）。
