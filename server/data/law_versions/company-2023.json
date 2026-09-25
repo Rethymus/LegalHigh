@@ -1,26 +1,135 @@
 {
-  "law_id": "company-2023",
-  "title": "中华人民共和国公司法",
-  "schema_version": 1,
-  "note": "R142（2026-09-17）续批：经 lawtext（flk DOCX 转录）链入库。",
-  "versions": [
-    {
-      "version_id": "current",
-      "label": "2023 修订",
-      "status": "现行有效（2023修订）",
-      "promulgation_date": "2023-12-29",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "effective_date": "2024-07-01",
-      "article_count": 266,
-      "current": true,
-      "evidence": {
-        "kind": "flk-docx-transcription",
-        "grade": "中",
-        "url": "https://flk.npc.gov.cn/detail?id=ff8081818c9108eb018cb6922f750c07",
-        "accessed_at": "2026-09-17",
-        "snapshot": "docs/research/evidence/lawtext_公司法2023.md"
-      }
-    }
-  ],
-  "pending_note": "1993 通过原版与 1999/2004/2013/2018 历次修正修订版全文未采集。2023 全面修订（266 条大修）施行日 2024-07-01（附则自载与 flk sxrq 一致）。R142 lawtext 链入库。"
+ "law_id": "company-2023",
+ "title": "中华人民共和国公司法",
+ "schema_version": 1,
+ "note": "R142（2026-09-17）续批：经 lawtext（flk DOCX 转录）链入库。",
+ "versions": [
+  {
+   "version_id": "current",
+   "label": "2023 修订",
+   "status": "现行有效（2023修订）",
+   "promulgation_date": "2023-12-29",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "effective_date": "2024-07-01",
+   "article_count": 266,
+   "current": true,
+   "evidence": {
+    "kind": "flk-docx-transcription",
+    "grade": "中",
+    "url": "https://flk.npc.gov.cn/detail?id=ff8081818c9108eb018cb6922f750c07",
+    "accessed_at": "2026-09-17",
+    "snapshot": "docs/research/evidence/lawtext_公司法2023.md"
+   }
+  },
+  {
+   "version_id": "1993-enacted",
+   "label": "1993 原版",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "1993-12-29",
+   "promulgation_organ": "第八届全国人民代表大会常务委员会第五次会议",
+   "promulgation_instrument": "中华人民共和国主席令第十六号（1993-12-29 公布）",
+   "effective_date": "1994-07-01",
+   "article_count": 230,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%85%AC%E5%8F%B8%E6%B3%95_(1993%E5%B9%B4)",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_公司法_1993.html"
+   },
+   "note": "快照头部括注自证：1993-12-29 八届人大常委会五次会议通过、主席令第十六号公布、自 1994-07-01 施行（末条附则同证）。"
+  },
+  {
+   "version_id": "1999-amendment",
+   "label": "1999 修正",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "1999-12-25",
+   "promulgation_organ": "第九届全国人民代表大会常务委员会第十三次会议",
+   "effective_date": "1994-07-01",
+   "article_count": 230,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%85%AC%E5%8F%B8%E6%B3%95_(1999%E5%B9%B4)",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_公司法_1999.html"
+   },
+   "note": "快照自证：根据 1999-12-25 九届人大常委会十三次会议《关于修改〈中华人民共和国公司法〉的决定》修正；施行日 1994-07-01 由末条附则自证跨修正延续。后续版本页头追认本次为「第一次修正」。"
+  },
+  {
+   "version_id": "2004-amendment",
+   "label": "2004 第二次修正",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "2004-08-28",
+   "promulgation_organ": "第十届全国人民代表大会常务委员会第十一次会议",
+   "effective_date": "1994-07-01",
+   "article_count": 230,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%85%AC%E5%8F%B8%E6%B3%95_(2004%E5%B9%B4)",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_公司法_2004.html"
+   },
+   "note": "快照自证：根据 2004-08-28 十届人大常委会十一次会议决定第二次修正；施行日 1994-07-01 跨修正延续（末条自证）。"
+  },
+  {
+   "version_id": "2005-revision",
+   "label": "2005 修订",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "2005-10-27",
+   "promulgation_organ": "第十届全国人民代表大会常务委员会第十八次会议",
+   "effective_date": "2006-01-01",
+   "article_count": 219,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%85%AC%E5%8F%B8%E6%B3%95_(2005%E5%B9%B4)",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_公司法_2005.html"
+   },
+   "note": "快照自证：2005-10-27 十届人大常委会十八次会议修订（全面修订，230→219 条重编）；末条附则自载自 2006-01-01 施行。"
+  },
+  {
+   "version_id": "2013-amendment",
+   "label": "2013 第三次修正",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "2013-12-28",
+   "promulgation_organ": "第十二届全国人民代表大会常务委员会第六次会议",
+   "effective_date": "2006-01-01",
+   "article_count": 218,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%85%AC%E5%8F%B8%E6%B3%95_(2013%E5%B9%B4)",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_公司法_2013.html"
+   },
+   "note": "快照自证：根据 2013-12-28 十二届人大常委会六次会议《关于修改〈中华人民共和国海洋环境保护法〉等七部法律的决定》第三次修正（注册资本认缴制改革，219→218 条）；施行日 2006-01-01 跨修正延续（末条自证）。"
+  },
+  {
+   "version_id": "2018-amendment",
+   "label": "2018 第四次修正",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "2018-10-26",
+   "promulgation_organ": "第十三届全国人民代表大会常务委员会第六次会议",
+   "effective_date": "2006-01-01",
+   "article_count": 218,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%85%AC%E5%8F%B8%E6%B3%95_(2018%E5%B9%B4)",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_公司法_2018.html"
+   },
+   "note": "快照自证：根据 2018-10-26 十三届人大常委会六次会议《关于修改〈中华人民共和国公司法〉的决定》第四次修正；施行日 2006-01-01 跨修正延续（末条自证）。"
+  }
+ ],
+ "pending_note": "1993 通过原版与 1999/2004/2013/2018 历次修正修订版全文未采集。2023 全面修订（266 条大修）施行日 2024-07-01（附则自载与 flk sxrq 一致）。R142 lawtext 链入库。"
 }

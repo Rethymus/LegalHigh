@@ -1,26 +1,100 @@
 {
-  "law_id": "tax-admin-2015",
-  "title": "中华人民共和国税收征收管理法",
-  "schema_version": 1,
-  "note": "R145（2026-09-17）续批：经 lawtext（flk DOCX 转录）链入库。",
-  "versions": [
-    {
-      "version_id": "current",
-      "label": "2015 修正",
-      "status": "现行有效（2015修正）",
-      "promulgation_date": "2015-04-24",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "effective_date": "2001-05-01",
-      "article_count": 94,
-      "current": true,
-      "evidence": {
-        "kind": "flk-docx-transcription",
-        "grade": "中",
-        "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf78cff0785",
-        "accessed_at": "2026-09-17",
-        "snapshot": "docs/research/evidence/lawtext_税收征收管理法2015.md"
-      }
-    }
-  ],
-  "pending_note": "1992 通过原版（税收征收管理）与 1995/2001 修订/2013 修正版全文未采集。附则自载施行日 2001-05-01（2001 修订改定跨修正沿用）；2015 修正决定施行日 2015-04-24（flk sxrq，公布即施行）存档注记。R145 lawtext 链入库。"
+ "law_id": "tax-admin-2015",
+ "title": "中华人民共和国税收征收管理法",
+ "schema_version": 1,
+ "note": "R145（2026-09-17）续批：经 lawtext（flk DOCX 转录）链入库。",
+ "versions": [
+  {
+   "version_id": "current",
+   "label": "2015 修正",
+   "status": "现行有效（2015修正）",
+   "promulgation_date": "2015-04-24",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "effective_date": "2001-05-01",
+   "article_count": 94,
+   "current": true,
+   "evidence": {
+    "kind": "flk-docx-transcription",
+    "grade": "中",
+    "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf78cff0785",
+    "accessed_at": "2026-09-17",
+    "snapshot": "docs/research/evidence/lawtext_税收征收管理法2015.md"
+   }
+  },
+  {
+   "version_id": "1992-enacted",
+   "label": "1992 原版",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "1992-09-04",
+   "promulgation_organ": "第七届全国人民代表大会常务委员会第二十七次会议",
+   "promulgation_instrument": "中华人民共和国主席令第六十号（1992-09-04 公布）",
+   "effective_date": "1993-01-01",
+   "article_count": 62,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E7%A8%8E%E6%94%B6%E5%BE%81%E6%94%B6%E7%AE%A1%E7%90%86%E6%B3%95_(1992%E5%B9%B4)",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_税收征收管理法_1992.html"
+   },
+   "note": "快照头部括注自证：1992-09-04 七届人大常委会二十七次会议通过、主席令第六十号公布、自 1993-01-01 施行（末条附则同证）。"
+  },
+  {
+   "version_id": "1995-amendment",
+   "label": "1995 修正",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "1995-02-28",
+   "promulgation_organ": "第八届全国人民代表大会常务委员会第十二次会议",
+   "effective_date": "1993-01-01",
+   "article_count": 62,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E7%A8%8E%E6%94%B6%E5%BE%81%E6%94%B6%E7%AE%A1%E7%90%86%E6%B3%95_(1995%E5%B9%B4)",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_税收征收管理法_1995.html"
+   },
+   "note": "快照自证：根据 1995-02-28 八届人大常委会十二次会议《关于修改〈中华人民共和国税收征收管理法〉的决定》修正；施行日 1993-01-01 由末条附则自证跨修正延续。"
+  },
+  {
+   "version_id": "2001-revision",
+   "label": "2001 修订",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "2001-04-28",
+   "promulgation_organ": "第九届全国人民代表大会常务委员会第二十一次会议",
+   "promulgation_instrument": "中华人民共和国主席令第四十九号（2001-04-28 公布）",
+   "effective_date": "2001-05-01",
+   "article_count": 94,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E7%A8%8E%E6%94%B6%E5%BE%81%E6%94%B6%E7%AE%A1%E7%90%86%E6%B3%95_(2001%E5%B9%B4)",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_税收征收管理法_2001.html"
+   },
+   "note": "快照头部括注自证：2001-04-28 九届人大常委会二十一次会议修订、主席令第四十九号公布、自 2001-05-01 施行（62→94 条重编）。"
+  },
+  {
+   "version_id": "2013-amendment",
+   "label": "2013 第二次修正",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "2013-06-29",
+   "promulgation_organ": "第十二届全国人民代表大会常务委员会第三次会议",
+   "effective_date": "2001-05-01",
+   "article_count": 94,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E7%A8%8E%E6%94%B6%E5%BE%81%E6%94%B6%E7%AE%A1%E7%90%86%E6%B3%95_(2013%E5%B9%B4)",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_税收征收管理法_2013.html"
+   },
+   "note": "快照自证：根据 2013-06-29 十二届人大常委会三次会议《关于修改〈中华人民共和国文物保护法〉等十二部法律的决定》第二次修正；施行日 2001-05-01 跨修正延续（末条自证）。"
+  }
+ ],
+ "pending_note": "1992 通过原版（税收征收管理）与 1995/2001 修订/2013 修正版全文未采集。附则自载施行日 2001-05-01（2001 修订改定跨修正沿用）；2015 修正决定施行日 2015-04-24（flk sxrq，公布即施行）存档注记。R145 lawtext 链入库。"
 }
