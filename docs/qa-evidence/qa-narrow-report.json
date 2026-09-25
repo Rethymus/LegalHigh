@@ -1,0 +1,275 @@
+{
+  "generatedAt": "2026-09-25T04:50:20.911Z",
+  "viewport": "390x844",
+  "routes": [
+    {
+      "name": "dashboard",
+      "path": "/",
+      "violations": [],
+      "viewportW": 390,
+      "overflowX": 0,
+      "culprit": null,
+      "headerActions": []
+    },
+    {
+      "name": "needs",
+      "path": "/needs",
+      "violations": [],
+      "viewportW": 390,
+      "overflowX": 0,
+      "culprit": null,
+      "headerActions": [
+        "直接检索"
+      ]
+    },
+    {
+      "name": "search-home",
+      "path": "/search",
+      "violations": [],
+      "viewportW": 390,
+      "overflowX": 0,
+      "culprit": null,
+      "headerActions": []
+    },
+    {
+      "name": "search-results",
+      "path": "/search/results?q=%E8%AF%95%E7%94%A8%E6%9C%9F",
+      "violations": [],
+      "viewportW": 390,
+      "overflowX": 0,
+      "culprit": null,
+      "headerActions": []
+    },
+    {
+      "name": "laws-browse",
+      "path": "/laws",
+      "violations": [],
+      "viewportW": 390,
+      "overflowX": 0,
+      "culprit": null,
+      "headerActions": []
+    },
+    {
+      "name": "law-detail",
+      "path": "/laws/civl-2020?art=25",
+      "violations": [],
+      "viewportW": 390,
+      "overflowX": 0,
+      "culprit": null,
+      "headerActions": [
+        "更多法条操作"
+      ]
+    },
+    {
+      "name": "case-search",
+      "path": "/cases",
+      "violations": [],
+      "viewportW": 390,
+      "overflowX": 0,
+      "culprit": null,
+      "headerActions": [
+        "转法条检索"
+      ]
+    },
+    {
+      "name": "case-detail",
+      "path": "/cases/guidance-24",
+      "violations": [],
+      "viewportW": 390,
+      "overflowX": 0,
+      "culprit": null,
+      "headerActions": []
+    },
+    {
+      "name": "case-detail-migrated",
+      "path": "/cases/guidance-01",
+      "violations": [],
+      "viewportW": 390,
+      "overflowX": 0,
+      "culprit": null,
+      "headerActions": []
+    },
+    {
+      "name": "case-analysis",
+      "path": "/case-analysis",
+      "violations": [],
+      "viewportW": 390,
+      "overflowX": 0,
+      "culprit": null,
+      "headerActions": [
+        "返回事实梳理"
+      ]
+    },
+    {
+      "name": "research",
+      "path": "/research",
+      "violations": [],
+      "viewportW": 390,
+      "overflowX": 0,
+      "culprit": null,
+      "headerActions": []
+    },
+    {
+      "name": "contract-library",
+      "path": "/contracts",
+      "violations": [],
+      "viewportW": 390,
+      "overflowX": 0,
+      "culprit": null,
+      "headerActions": [
+        "粘贴合同文本",
+        "版本对比"
+      ]
+    },
+    {
+      "name": "contract-review",
+      "path": "/contracts/new",
+      "violations": [],
+      "viewportW": 390,
+      "overflowX": 0,
+      "culprit": null,
+      "headerActions": [
+        "发起审查"
+      ]
+    },
+    {
+      "name": "compare",
+      "path": "/compare",
+      "violations": [],
+      "viewportW": 390,
+      "overflowX": 0,
+      "culprit": null,
+      "headerActions": [
+        "开始对比"
+      ]
+    },
+    {
+      "name": "draft",
+      "path": "/draft",
+      "violations": [],
+      "viewportW": 390,
+      "overflowX": 0,
+      "culprit": null,
+      "headerActions": [
+        "更多文书操作",
+        "生成"
+      ]
+    },
+    {
+      "name": "draft-validation",
+      "path": "/draft/validation",
+      "violations": [],
+      "viewportW": 390,
+      "overflowX": 0,
+      "culprit": null,
+      "headerActions": []
+    },
+    {
+      "name": "comparative",
+      "path": "/comparative",
+      "violations": [],
+      "viewportW": 390,
+      "overflowX": 0,
+      "culprit": null,
+      "headerActions": []
+    },
+    {
+      "name": "learning",
+      "path": "/learning",
+      "violations": [],
+      "viewportW": 390,
+      "overflowX": 0,
+      "culprit": null,
+      "headerActions": [
+        "去检索法条"
+      ]
+    },
+    {
+      "name": "workspace",
+      "path": "/workspace",
+      "violations": [],
+      "viewportW": 390,
+      "overflowX": 0,
+      "culprit": null,
+      "headerActions": [
+        "发起合同审查"
+      ]
+    },
+    {
+      "name": "collections",
+      "path": "/collections",
+      "violations": [],
+      "viewportW": 390,
+      "overflowX": 0,
+      "culprit": null,
+      "headerActions": [
+        "导出（JSON）"
+      ]
+    },
+    {
+      "name": "data-sources",
+      "path": "/data-sources",
+      "violations": [],
+      "viewportW": 390,
+      "overflowX": 0,
+      "culprit": null,
+      "headerActions": []
+    },
+    {
+      "name": "audit",
+      "path": "/audit",
+      "violations": [],
+      "viewportW": 390,
+      "overflowX": 0,
+      "culprit": null,
+      "headerActions": [
+        "刷新"
+      ]
+    },
+    {
+      "name": "settings",
+      "path": "/settings",
+      "violations": [],
+      "viewportW": 390,
+      "overflowX": 0,
+      "culprit": null,
+      "headerActions": []
+    },
+    {
+      "name": "guide",
+      "path": "/guide",
+      "violations": [],
+      "viewportW": 390,
+      "overflowX": 0,
+      "culprit": null,
+      "headerActions": []
+    },
+    {
+      "name": "terms",
+      "path": "/terms",
+      "violations": [],
+      "viewportW": 390,
+      "overflowX": 0,
+      "culprit": null,
+      "headerActions": []
+    },
+    {
+      "name": "quality",
+      "path": "/quality",
+      "violations": [],
+      "viewportW": 390,
+      "overflowX": 0,
+      "culprit": null,
+      "headerActions": []
+    },
+    {
+      "name": "process",
+      "path": "/process",
+      "violations": [],
+      "viewportW": 390,
+      "overflowX": 0,
+      "culprit": null,
+      "headerActions": []
+    }
+  ]
+}
