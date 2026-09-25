@@ -1,10 +1,10 @@
 // FRAME 04 · Law Detail —— 法条详情（规格 §9）
 // 证据快照文本不可被 AI 改写；已审核解读与项目阅读方法必须明确分层。
 import { useEffect, useMemo, useState } from 'react'
-import { Link, useOutletContext, useParams, useSearchParams } from 'react-router-dom'
+import { Link, useNavigate, useOutletContext, useParams, useSearchParams } from 'react-router-dom'
 import { Icon } from '../icons'
 import { WARM_TIPS, artParam, findArticle, findLaw, lawChapters, lawDisplayTitle, lawEvidenceGrade, parseArtParam, useLaws } from '../../data/model'
-import { EmptyState, PageHeader, SkeletonLines, Tabs, useCopy, useToast, ValidityBadge } from '../ui'
+import { ActionSheet, EmptyState, PageHeader, SkeletonLines, Tabs, useCopy, useMediaQuery, useToast, ValidityBadge, type SheetAction } from '../ui'
 import { AIContentBadge, AIWarning, CitationChip, OfficialArticle, SourceBadge } from '../domain'
 import XRefBlock from '../XRefBlock'
 import { api, isFav as isFavKey, toggleFav, type ArticleExplain, type ArticleLink, type LawAnalysisContext } from '../../lib/api'
@@ -27,6 +27,9 @@ export default function LawDetail() {
   const { data, error } = useLaws()
   const copy = useCopy()
   const toast = useToast()
+  const nav = useNavigate()
+  const isNarrow = useMediaQuery('(max-width: 767.98px)')
+  const [sheetOpen, setSheetOpen] = useState(false)
   const [tab, setTab] = useState('rel-case')
 
   const law = findLaw(data, lawId)
@@ -169,6 +172,22 @@ export default function LawDetail() {
     )
   }
 
+  // 窄屏（R335）：7 件操作 flex-wrap 会占 3-4 行把正文挤出首屏——折叠为「更多」
+  // 底部动作面板（iOS ActionSheet 范式）；桌面端保持完整按钮行，两形态互不影响。
+  const researchTo = `/research?q=${encodeURIComponent(`《${law.title}》${article.label}的适用条件、例外与待确认事实`)}`
+  const favNow = () => {
+    const now = toggleFav({ key: `law:${lawId}#${artParam(no, art.sub)}`, type: '法条', title: `《${law.title.replace(/^中华人民共和国/, '')}》${article.label}`, meta: `${law.status} · ${law.effectiveDate} 施行`, to: `/laws/${lawId}?art=${artParam(no, art.sub)}` })
+    setFavState(now)
+    toast(now ? '已收藏（仅存本机）' : '已取消收藏', 'ok')
+  }
+  const sheetActions: SheetAction[] = [
+    { label: '复制原文', icon: 'copy', onClick: () => copy(`${law.title} ${article.label}：${article.text}`, '已复制法条原文') },
+    { label: '复制规范引用（含官方来源）', icon: 'quote', onClick: () => copy(`《${law.title.replace(/^中华人民共和国/, '')}》${article.label}（${law.status}，${law.effectiveDate} 施行）来源：${law.sourceUrl}`, '已复制规范引用（含官方来源）') },
+    { label: '打印（仅条文与引用）', icon: 'docpen', onClick: () => window.print() },
+    { label: favState ? '取消收藏' : '收藏（仅存本机）', icon: 'star', onClick: favNow },
+    ...(audience !== 'public' ? [{ label: '基于本条研究', icon: 'sparkle' as const, onClick: () => nav(researchTo) }] : []),
+  ]
+
   return (
     <div className="page">
       <PageHeader
@@ -176,19 +195,24 @@ export default function LawDetail() {
         title={<>《{lawDisplayTitle(law.title, law.status).replace(/^中华人民共和国/, '')}》{article.label}</>}
         sub={article.chapter}
         actions={
-          <>
-            <ValidityBadge v={law.status} />
-            <SourceBadge kind="law" grade={lawEvidenceGrade(law.sourceUrl)} />
-            <button className="btn btn-ghost btn-sm" onClick={() => copy(`${law.title} ${article.label}：${article.text}`, '已复制法条原文')}><Icon name="copy" size={13} />复制原文</button>
-            <button className="btn btn-ghost btn-sm" onClick={() => copy(`《${law.title.replace(/^中华人民共和国/, '')}》${article.label}（${law.status}，${law.effectiveDate} 施行）来源：${law.sourceUrl}`, '已复制规范引用（含官方来源）')}><Icon name="quote" size={13} />复制规范引用</button>
-            <button className="btn btn-ghost btn-sm" onClick={() => window.print()} title="打印法条（自动隐藏导航，仅保留条文与引用）"><Icon name="docpen" size={13} />打印</button>
-            <button className="btn btn-secondary btn-sm" onClick={() => {
-              const now = toggleFav({ key: `law:${lawId}#${artParam(no, art.sub)}`, type: '法条', title: `《${law.title.replace(/^中华人民共和国/, '')}》${article.label}`, meta: `${law.status} · ${law.effectiveDate} 施行`, to: `/laws/${lawId}?art=${artParam(no, art.sub)}` })
-              setFavState(now)
-              toast(now ? '已收藏（仅存本机）' : '已取消收藏', 'ok')
-            }}><Icon name="star" size={13} />{favState ? '已收藏' : '收藏'}</button>
-            {audience !== 'public' && <Link to={`/research?q=${encodeURIComponent(`《${law.title}》${article.label}的适用条件、例外与待确认事实`)}`} className="btn btn-primary btn-sm"><Icon name="sparkle" size={13} />基于本条研究</Link>}
-          </>
+          isNarrow ? (
+            <>
+              <ValidityBadge v={law.status} />
+              <SourceBadge kind="law" grade={lawEvidenceGrade(law.sourceUrl)} />
+              <button className="btn btn-ghost btn-sm" aria-label="更多法条操作" onClick={() => setSheetOpen(true)}><Icon name="dots" size={14} />更多</button>
+              <ActionSheet open={sheetOpen} onClose={() => setSheetOpen(false)} title={`${lawDisplayTitle(law.title, law.status).replace(/^中华人民共和国/, '')} ${article.label}`} actions={sheetActions} />
+            </>
+          ) : (
+            <>
+              <ValidityBadge v={law.status} />
+              <SourceBadge kind="law" grade={lawEvidenceGrade(law.sourceUrl)} />
+              <button className="btn btn-ghost btn-sm" onClick={() => copy(`${law.title} ${article.label}：${article.text}`, '已复制法条原文')}><Icon name="copy" size={13} />复制原文</button>
+              <button className="btn btn-ghost btn-sm" onClick={() => copy(`《${law.title.replace(/^中华人民共和国/, '')}》${article.label}（${law.status}，${law.effectiveDate} 施行）来源：${law.sourceUrl}`, '已复制规范引用（含官方来源）')}><Icon name="quote" size={13} />复制规范引用</button>
+              <button className="btn btn-ghost btn-sm" onClick={() => window.print()} title="打印法条（自动隐藏导航，仅保留条文与引用）"><Icon name="docpen" size={13} />打印</button>
+              <button className="btn btn-secondary btn-sm" onClick={favNow}><Icon name="star" size={13} />{favState ? '已收藏' : '收藏'}</button>
+              {audience !== 'public' && <Link to={researchTo} className="btn btn-primary btn-sm"><Icon name="sparkle" size={13} />基于本条研究</Link>}
+            </>
+          )
         }
       />
 

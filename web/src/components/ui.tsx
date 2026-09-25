@@ -58,30 +58,102 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   )
 }
 
+/* ---------- 窄屏媒体查询 ----------
+   桌面/移动差异化形态的渲染分叉点（R335）：CSS 断点 767.98px 与此处查询保持一致。 */
+export function useMediaQuery(query: string): boolean {
+  const [match, setMatch] = useState(() => typeof window !== 'undefined' && window.matchMedia(query).matches)
+  useEffect(() => {
+    const mq = window.matchMedia(query)
+    const onChange = () => setMatch(mq.matches)
+    onChange()
+    mq.addEventListener('change', onChange)
+    return () => mq.removeEventListener('change', onChange)
+  }, [query])
+  return match
+}
+
 /* ---------- Dialog（声明式确认）----------
-   弹簧开合：open 翻转为 false 时先播退场动画（dlg-out/fade-out）再卸载，API 不变。 */
-export function Dialog({ open, title, children, actions }: {
-  open: boolean; title: string; children?: ReactNode; actions?: ReactNode
+   弹簧开合：open 翻转为 false 时先播退场动画（dlg-out/fade-out）再卸载，API 不变。
+   onClose（可选）：提供后 scrim 点击 / Escape 关闭；窄屏由 CSS 转底部抽屉形态。 */
+export function Dialog({ open, title, children, actions, onClose }: {
+  open: boolean; title: string; children?: ReactNode; actions?: ReactNode; onClose?: () => void
 }) {
   const [phase, setPhase] = useState<'hidden' | 'in' | 'out'>(open ? 'in' : 'hidden')
   useEffect(() => {
     if (open) { setPhase('in'); return }
     setPhase((p) => (p === 'in' ? 'out' : p))
   }, [open])
+  useEffect(() => {
+    if (!open || !onClose) return
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose() }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [open, onClose])
   if (phase === 'hidden') return null
   return (
     <div
       className={'dlg-mask' + (phase === 'out' ? ' is-out' : '')}
       role="dialog"
       aria-modal="true"
+      onClick={(event) => { if (event.target === event.currentTarget) onClose?.() }}
       onAnimationEnd={(event) => {
         if (phase === 'out' && event.currentTarget === event.target && event.animationName === 'fade-out') setPhase('hidden')
       }}
     >
       <div className="dlg">
+        <span className="dlg-grab" aria-hidden />
         <div className="dlg-t">{title}</div>
         {children && <div className="dlg-b">{children}</div>}
         <div className="dlg-acts">{actions ?? <button className="btn btn-primary btn-sm" onClick={() => { /* closed by parent */ }}>知道了</button>}</div>
+      </div>
+    </div>
+  )
+}
+
+/* ---------- ActionSheet（移动端底部动作面板，R335）----------
+   iOS 原生范式：页头操作行在窄屏折叠为「更多」入口，动作以底部面板呈现
+   （拖拽把手视觉 + 44pt 行 + scrim 点击/Escape 关闭）。桌面端不使用该形态。 */
+export interface SheetAction { label: string; icon?: IconName; danger?: boolean; onClick: () => void }
+
+export function ActionSheet({ open, title, actions, onClose }: {
+  open: boolean; title?: string; actions: SheetAction[]; onClose: () => void
+}) {
+  const [phase, setPhase] = useState<'hidden' | 'in' | 'out'>(open ? 'in' : 'hidden')
+  useEffect(() => {
+    if (open) { setPhase('in'); return }
+    setPhase((p) => (p === 'in' ? 'out' : p))
+  }, [open])
+  useEffect(() => {
+    if (!open) return
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose() }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [open, onClose])
+  if (phase === 'hidden') return null
+  const run = (a: SheetAction) => { onClose(); a.onClick() }
+  return (
+    <div
+      className={'sheet-mask' + (phase === 'out' ? ' is-out' : '')}
+      role="dialog"
+      aria-modal="true"
+      aria-label={title ?? '更多操作'}
+      onClick={(event) => { if (event.target === event.currentTarget) onClose() }}
+      onAnimationEnd={(event) => {
+        if (phase === 'out' && event.currentTarget === event.target && event.animationName === 'fade-out') setPhase('hidden')
+      }}
+    >
+      <div className="sheet">
+        <span className="sheet-grab" aria-hidden />
+        {title && <div className="sheet-t">{title}</div>}
+        <div className="sheet-list">
+          {actions.map((a) => (
+            <button key={a.label} type="button" className={'sheet-row' + (a.danger ? ' is-danger' : '')} onClick={() => run(a)}>
+              {a.icon && <Icon name={a.icon} size={17} strokeWidth={1.7} />}
+              <span>{a.label}</span>
+            </button>
+          ))}
+        </div>
+        <button type="button" className="sheet-cancel" onClick={onClose}>取消</button>
       </div>
     </div>
   )

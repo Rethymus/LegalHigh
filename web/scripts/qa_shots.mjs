@@ -143,6 +143,11 @@ const ROUTES = [
   ] },
   { name: '31-narrow-search-results', path: '/search/results?q=' + encodeURIComponent('试用期'), viewport: { width: 390, height: 844 }, fullPage: true, identity: searchResultsIdentity },
   { name: '32-narrow-law-detail', path: '/laws/civl-2020?art=25', viewport: { width: 390, height: 844 }, fullPage: true, identity: lawDetailIdentity },
+  // R335：窄屏页头操作行折叠为「更多」→ 底部动作面板（ActionSheet 形态证据）
+  { name: '32b-narrow-law-actionsheet', path: '/laws/civl-2020?art=25', viewport: { width: 390, height: 844 }, identity: lawDetailIdentity, afterSelector: '.sheet-mask .sheet-row', steps: [
+    { t: 'eval', expr: `(() => { const b = [...document.querySelectorAll('.ph-actions button')].find(x => /更多/.test(x.textContent || '')); if (!b) return 'no-more-btn'; b.click(); return 'clicked' })()` },
+    { t: 'wait', ms: 700 },
+  ] },
   { name: '33-narrow-contract-review', path: '/contracts/new', viewport: { width: 390, height: 844 }, fullPage: true, identity: contractIdentity },
   // 暗色回归组（D7 后文本色/语义色调整的重点验证面）
   { name: '34-dark-search-results', path: '/search/results?q=' + encodeURIComponent('试用期'), dark: true, fullPage: true, identity: searchResultsIdentity },

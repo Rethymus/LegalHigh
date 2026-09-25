@@ -105,6 +105,16 @@ async function main() {
     const ready = await waitFor(cdp, `document.readyState === 'complete' && !!document.querySelector('.st-layout')`)
     if (!ready) throw new Error('设置页未就绪')
 
+    // R335：页面入场动画结束后 .content>div 的 computed transform 必须归 none。
+    // fill=both 会把关键帧终态 translateY(0)（恒等矩阵）常驻，构成 fixed 后代的
+    // containing block——页内 Dialog 的 fixed 蒙层被锚到滚动内容而非视口（R334 引入、
+    // R335 修复为 backwards）。此断言钉住该回归不得复发。
+    const pageTransform = await waitFor(cdp, `(() => {
+      const el = document.querySelector('.content > div'); if (!el) return false
+      return getComputedStyle(el).transform === 'none' ? 'ok' : false
+    })()`)
+    check('页面入场动画不残留 transform（fixed 锚定保障）', pageTransform === 'ok', `computed=${pageTransform === 'ok' ? 'none' : '非 none（回归！）'}`)
+
     // 真实 TopBar 材质必须从主题 Token 取模糊与透明度。
     const material = await evalAsync(cdp, `(() => {
       const main=document.querySelector('.main'); const bar=document.querySelector('.tb')

@@ -394,6 +394,17 @@
     "title": "LegalHigh · 法律智能知识库"
   },
   {
+    "name": "32b-narrow-law-actionsheet",
+    "path": "/laws/civl-2020?art=25",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "step1": "clicked",
+    "finalUrl": "http://localhost:5173/laws/civl-2020?art=25",
+    "title": "LegalHigh · 法律智能知识库"
+  },
+  {
     "name": "33-narrow-contract-review",
     "path": "/contracts/new",
     "consoleErrors": [],

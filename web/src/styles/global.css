@@ -1120,7 +1120,7 @@ a.mini-t { padding-block: 2.5px; }
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   .sb { background: rgba(15, 24, 42, 0.97); }
   .tb { background: rgba(var(--mat-tint), var(--mat-fallback-a)); }
-  .card, .panel, .searchbar, .toast, .dlg { background: var(--surface-solid); }
+  .card, .panel, .searchbar, .toast, .dlg, .sheet { background: var(--surface-solid); }
   .content { background: var(--bg); }
 }
 /* 系统级 Reduce Motion：环境极光静止 */
@@ -1389,7 +1389,10 @@ a.mini-t { padding-block: 2.5px; }
    自动播放 rise-in（R24 已有关键帧，这里应用到 .content 直接子元素）
    ============================================================ */
 .content > div {
-  animation: page-in var(--t-snappy) var(--spring-snappy) both;
+  /* fill=both 会把终态 transform:translateY(0) 常驻（恒等矩阵也构成 fixed 后代的
+     containing block——R24 DOMMatrix 教训），页内 Dialog 的 fixed 蒙层被锚到滚动
+     内容而非视口（R335 修复）；backwards 只在起播前应用起始帧，结束后回归 none。 */
+  animation: page-in var(--t-snappy) var(--spring-snappy) backwards;
 }
 @keyframes page-in {
   from {
@@ -1443,3 +1446,93 @@ a.mini-t { padding-block: 2.5px; }
     inset 0 -1px 0 rgba(255,255,255,0.04),
     var(--shadow-2);
 }
+
+/* ============================================================
+   R335 · 移动端产品形态收口——ActionSheet / Dialog 底部抽屉 / chips 横向流
+   v3 计划「完整自适应形态」清单最后一项（BottomSheet）落地：
+   桌面端形态零改动，全部规则限定在 <768px 或专用组件类。
+   ============================================================ */
+
+/* ① ActionSheet：底部动作面板（iOS 原生范式——拖拽把手 + 动作列表 + 取消） */
+.sheet-mask {
+  position: fixed; inset: 0; z-index: 82;
+  background: rgba(8, 10, 18, 0.5);
+  -webkit-backdrop-filter: blur(var(--blur-veil)); backdrop-filter: blur(var(--blur-veil));
+  display: flex; align-items: flex-end; justify-content: center;
+  animation: fade-in var(--dur-slow) var(--ease) both;
+}
+.sheet-mask.is-out { animation: fade-out var(--dur-fast) var(--ease) both; }
+.sheet {
+  width: 100%; max-width: 480px;
+  padding: 8px 16px calc(14px + env(safe-area-inset-bottom, 0px));
+  border-radius: var(--r-x) var(--r-x) 0 0;
+  background: rgba(var(--mat-tint), var(--mat-dialog-a));
+  -webkit-backdrop-filter: blur(var(--blur-float)) saturate(var(--mat-sat)); backdrop-filter: blur(var(--blur-float)) saturate(var(--mat-sat));
+  border: 1px solid var(--mat-hairline); border-bottom: none;
+  box-shadow: var(--mat-inset), var(--shadow-3);
+  animation: sheet-in var(--t-snappy) var(--spring-snappy) both;
+}
+.sheet-mask.is-out .sheet { animation: sheet-out var(--dur-fast) var(--ease) both; }
+@keyframes sheet-in { from { transform: translateY(100%); } to { transform: translateY(0); } }
+@keyframes sheet-out { from { transform: translateY(0); } to { transform: translateY(100%); } }
+.sheet-grab, .dlg-grab { display: none; }
+.sheet .sheet-grab {
+  display: block; width: 36px; height: 5px; border-radius: var(--r-pill);
+  margin: 6px auto 4px; background: var(--tx-3); opacity: 0.35;
+}
+.sheet-t { text-align: center; font-size: 12.5px; color: var(--tx-2); padding: 4px 0 8px; }
+.sheet-list { display: flex; flex-direction: column; overflow-y: auto; max-height: min(56vh, 460px); }
+.sheet-row {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 50px; border: none; background: none; cursor: pointer;
+  font-size: 15.5px; font-weight: 600; color: var(--accent-text);
+  border-bottom: 1px solid var(--mat-hairline);
+  transition: background-color var(--dur-fast) var(--ease);
+}
+.sheet-row:last-child { border-bottom: none; }
+.sheet-row:active { background: rgba(var(--mat-tint), var(--mat-card-a)); }
+.sheet-row.is-danger { color: var(--danger); }
+.sheet-cancel {
+  margin-top: 10px; width: 100%; min-height: 50px; cursor: pointer;
+  border: 1px solid var(--mat-hairline); border-radius: var(--r-m);
+  font-size: 15.5px; font-weight: 700; color: var(--tx);
+  background: rgba(var(--mat-tint), var(--mat-card-a));
+  transition: background-color var(--dur-fast) var(--ease);
+}
+.sheet-cancel:active { background: rgba(var(--mat-tint), var(--mat-dialog-a)); }
+
+/* ② Dialog 窄屏转底部抽屉（iOS AlertActionSheet 形态；桌面居中弹窗不变） */
+@media (max-width: 767.98px) {
+  .dlg-mask { display: flex; align-items: flex-end; justify-content: center; padding: 0; }
+  .dlg {
+    width: 100%; max-width: 100%;
+    border-radius: var(--r-x) var(--r-x) 0 0;
+    padding: 10px 20px calc(16px + env(safe-area-inset-bottom, 0px));
+    animation-name: sheet-in;
+  }
+  .dlg-mask.is-out .dlg { animation-name: sheet-out; }
+  .dlg-grab {
+    display: block; width: 36px; height: 5px; border-radius: var(--r-pill);
+    margin: 4px auto 14px; background: var(--tx-3); opacity: 0.35;
+  }
+  .dlg-acts .btn { flex: 1; }
+}
+
+/* ③ chips 窄屏横向流（iOS 惯例：横向滑动代替多行 wrap——同章条文几十条时
+   wrap 会占据数屏纵向空间，把正文挤出视口） */
+@media (max-width: 767.98px) {
+  .chips {
+    flex-wrap: nowrap; overflow-x: auto;
+    -webkit-overflow-scrolling: touch; scrollbar-width: none;
+  }
+  .chips::-webkit-scrollbar { display: none; }
+  .chips .chip { flex: none; }
+}
+
+/* Reduce Motion：sheet 位移改道纯 opacity（与 Toast/Dialog 同一规则集） */
+@media (prefers-reduced-motion: reduce) {
+  .sheet { animation-name: fade-in !important; }
+  .sheet-mask.is-out .sheet { animation-name: fade-out !important; }
+}
+.reduce-motion .sheet { animation-name: fade-in !important; }
+.reduce-motion .sheet-mask.is-out .sheet { animation-name: fade-out !important; }
