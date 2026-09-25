@@ -1,95 +1,111 @@
 {
-  "law_id": "minor-2024",
-  "title": "中华人民共和国未成年人保护法",
-  "schema_version": 1,
-  "note": "S2-T1 第二部批量扩张法律（2026-09-14）：2024 修正版全文自政府官网转载页入库（official-gazette-republication，等级【强】）；2020 第二次修订版全文已于 2026-09-14 自新华网受权发布页采集存证并登记为历史版本（等级【强】）。",
-  "versions": [
-    {
-      "version_id": "1991-enacted",
-      "label": "1991 通过",
-      "status": "已取代（1991 原版，仅作历史对照）",
-      "promulgation_date": "1991-09-04",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "effective_date": "1992-01-01",
-      "article_count": 56,
-      "current": false,
-      "evidence": {
-        "kind": "wikisource-transcription",
-        "grade": "中",
-        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E6%9C%AA%E6%88%90%E5%B9%B4%E4%BA%BA%E4%BF%9D%E6%8A%A4%E6%B3%95_(1991%E5%B9%B4)",
-        "accessed_at": "2026-09-14",
-        "snapshot": "docs/research/evidence/ws_未成年人保护法1991.html"
-      }
-    },
-    {
-      "version_id": "2006-revision",
-      "label": "2006 第一次修订",
-      "status": "已取代（2006 修订版，仅作历史对照）",
-      "promulgation_date": "2006-12-29",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "effective_date": "2007-06-01",
-      "article_count": 72,
-      "current": false,
-      "evidence": {
-        "kind": "wikisource-transcription",
-        "grade": "中",
-        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E6%9C%AA%E6%88%90%E5%B9%B4%E4%BA%BA%E4%BF%9D%E6%8A%A4%E6%B3%95_(2006%E5%B9%B4)",
-        "accessed_at": "2026-09-14",
-        "snapshot": "docs/research/evidence/ws_未成年人保护法2006.html"
-      }
-    },
-    {
-      "version_id": "2012-amendment",
-      "label": "2012 修正",
-      "status": "已取代（2012 修正版，仅作历史对照）",
-      "promulgation_date": "2012-10-26",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "effective_date": "2007-06-01",
-      "article_count": 72,
-      "current": false,
-      "evidence": {
-        "kind": "wikisource-transcription",
-        "grade": "中",
-        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E6%9C%AA%E6%88%90%E5%B9%B4%E4%BA%BA%E4%BF%9D%E6%8A%A4%E6%B3%95_(2012%E5%B9%B4)",
-        "accessed_at": "2026-09-14",
-        "snapshot": "docs/research/evidence/ws_未成年人保护法2012.html"
-      }
-    },
-    {
-      "version_id": "2020-revision",
-      "label": "2020 第二次修订",
-      "status": "已取代（2024 修正前文本，仅作历史对照）",
-      "promulgation_date": "2020-10-17",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "effective_date": "2021-06-01",
-      "article_count": 132,
-      "current": false,
-      "evidence": {
-        "kind": "official-gazette-republication",
-        "grade": "强",
-        "url": "https://www.xinhuanet.com/politics/2020-10/18/c_1126624505.htm",
-        "accessed_at": "2026-09-14",
-        "snapshot": "docs/research/evidence/xinhuanet_未成年人保护法2020.html"
-      }
-    },
-    {
-      "version_id": "2024-amendment",
-      "label": "2024 修正",
-      "status": "现行有效（2024修正）",
-      "promulgation_date": "2024-04-26",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "promulgation_instrument": "中华人民共和国主席令第二十四号",
-      "effective_date": "2024-04-26",
-      "article_count": 132,
-      "current": true,
-      "evidence": {
-        "kind": "official-gazette-republication",
-        "grade": "强",
-        "url": "https://www.yantian.gov.cn/YTQSF/gkmlpt/content/12/12011/post_12011375.html",
-        "accessed_at": "2026-09-13",
-        "snapshot": "docs/research/evidence/gov_未成年人保护法2024.html"
-      }
-    }
-  ],
-  "pending_note": "未保法时间线补全：1991 原版（56 条）→ 2006 修订（72 条）→ 2012 修正（72 条）→ 2020 修订（132 条）→ 2024 修正（132 条，现行）；施行日 1992-01-01 / 2007-06-01 / 2021-06-01 / 公布施行，全部附则自证。"
+ "law_id": "minor-2024",
+ "title": "中华人民共和国未成年人保护法",
+ "schema_version": 1,
+ "note": "S2-T1 第二部批量扩张法律（2026-09-14）：2024 修正版全文自政府官网转载页入库（official-gazette-republication，等级【强】）；2020 第二次修订版全文已于 2026-09-14 自新华网受权发布页采集存证并登记为历史版本（等级【强】）。",
+ "versions": [
+  {
+   "version_id": "1991-enacted",
+   "label": "1991 通过",
+   "status": "已取代（1991 原版，仅作历史对照）",
+   "promulgation_date": "1991-09-04",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "effective_date": "1992-01-01",
+   "article_count": 56,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E6%9C%AA%E6%88%90%E5%B9%B4%E4%BA%BA%E4%BF%9D%E6%8A%A4%E6%B3%95_(1991%E5%B9%B4)",
+    "accessed_at": "2026-09-14",
+    "snapshot": "docs/research/evidence/ws_未成年人保护法1991.html"
+   }
+  },
+  {
+   "version_id": "2006-revision",
+   "label": "2006 第一次修订",
+   "status": "已取代（2006 修订版，仅作历史对照）",
+   "promulgation_date": "2006-12-29",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "effective_date": "2007-06-01",
+   "article_count": 72,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E6%9C%AA%E6%88%90%E5%B9%B4%E4%BA%BA%E4%BF%9D%E6%8A%A4%E6%B3%95_(2006%E5%B9%B4)",
+    "accessed_at": "2026-09-14",
+    "snapshot": "docs/research/evidence/ws_未成年人保护法2006.html"
+   }
+  },
+  {
+   "version_id": "2012-amendment",
+   "label": "2012 修正",
+   "status": "已取代（2012 修正版，仅作历史对照）",
+   "promulgation_date": "2012-10-26",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "effective_date": "2007-06-01",
+   "article_count": 72,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E6%9C%AA%E6%88%90%E5%B9%B4%E4%BA%BA%E4%BF%9D%E6%8A%A4%E6%B3%95_(2012%E5%B9%B4)",
+    "accessed_at": "2026-09-14",
+    "snapshot": "docs/research/evidence/ws_未成年人保护法2012.html"
+   }
+  },
+  {
+   "version_id": "2020-revision",
+   "label": "2020 第二次修订",
+   "status": "已取代（2024 修正前文本，仅作历史对照）",
+   "promulgation_date": "2020-10-17",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "effective_date": "2021-06-01",
+   "article_count": 132,
+   "current": false,
+   "evidence": {
+    "kind": "official-gazette-republication",
+    "grade": "强",
+    "url": "https://www.xinhuanet.com/politics/2020-10/18/c_1126624505.htm",
+    "accessed_at": "2026-09-14",
+    "snapshot": "docs/research/evidence/xinhuanet_未成年人保护法2020.html"
+   }
+  },
+  {
+   "version_id": "2024-amendment",
+   "label": "2024 修正",
+   "status": "现行有效（2024修正）",
+   "promulgation_date": "2024-04-26",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "promulgation_instrument": "中华人民共和国主席令第二十四号",
+   "effective_date": "2024-04-26",
+   "article_count": 132,
+   "current": true,
+   "evidence": {
+    "kind": "official-gazette-republication",
+    "grade": "强",
+    "url": "https://www.yantian.gov.cn/YTQSF/gkmlpt/content/12/12011/post_12011375.html",
+    "accessed_at": "2026-09-13",
+    "snapshot": "docs/research/evidence/gov_未成年人保护法2024.html"
+   }
+  }
+ ],
+ "pending_note": "未保法时间线补全：1991 原版（56 条）→ 2006 修订（72 条）→ 2012 修正（72 条）→ 2020 修订（132 条）→ 2024 修正（132 条，现行）；施行日 1992-01-01 / 2007-06-01 / 2021-06-01 / 公布施行，全部附则自证。",
+ "amendments": [
+  {
+   "no": 1,
+   "title": "关于修改《中华人民共和国未成年人保护法》的决定（2012 修正）",
+   "passed_date": "2012-10-26",
+   "effective": "2013-01-01",
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E5%85%A8%E5%9B%BD%E4%BA%BA%E6%B0%91%E4%BB%A3%E8%A1%A8%E5%A4%A7%E4%BC%9A%E5%B8%B8%E5%8A%A1%E5%A7%94%E5%91%98%E4%BC%9A%E5%85%B3%E4%BA%8E%E4%BF%AE%E6%94%B9%E3%80%8A%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E6%9C%AA%E6%88%90%E5%B9%B4%E4%BA%BA%E4%BF%9D%E6%8A%A4%E6%B3%95%E3%80%8B%E7%9A%84%E5%86%B3%E5%AE%9A",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_未成年人保护法修正决定_2012.html"
+   },
+   "note": "快照头部括注自证：2012-10-26 十一届人大常委会二十九次会议通过；本决定自 2013-01-01 起施行——2012-10-26 同日批次第四部法律（律师/国赔/治安/未保）。"
+  }
+ ]
 }

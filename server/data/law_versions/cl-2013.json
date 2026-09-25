@@ -74,6 +74,20 @@
     "snapshot": "docs/research/evidence/ws_打包决定_修改部分法律2009.html"
    },
    "note": "大打包决定快照自证：2009-08-27 通过、自公布之日起施行；正文含消费者权益保护法修改部分（R340 版本页沿革互证——同日同决定修正批次）。"
+  },
+  {
+   "no": 2,
+   "title": "关于修改《中华人民共和国消费者权益保护法》的决定（2013 修正——现行版来源）",
+   "passed_date": "2013-10-25",
+   "effective": "2014-03-15",
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E5%85%A8%E5%9B%BD%E4%BA%BA%E6%B0%91%E4%BB%A3%E8%A1%A8%E5%A4%A7%E4%BC%9A%E5%B8%B8%E5%8A%A1%E5%A7%94%E5%91%98%E4%BC%9A%E5%85%B3%E4%BA%8E%E4%BF%AE%E6%94%B9%E3%80%8A%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E6%B6%88%E8%B4%B9%E8%80%85%E6%9D%83%E7%9B%8A%E4%BF%9D%E6%8A%A4%E6%B3%95%E3%80%8B%E7%9A%84%E5%86%B3%E5%AE%9A",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_消费者权益保护法修正决定_2013.html"
+   },
+   "note": "快照头部括注自证：2013-10-25 十二届人大常委会五次会议通过；本决定自 2014-03-15 起施行（3·15 施行日——消费者保护立法的仪式性日期）。现行 cl-2013 语料的修正来源即本决定。"
   }
  ]
 }
