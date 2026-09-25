@@ -1,45 +1,61 @@
 {
-  "law_id": "admin-litigation-2017",
-  "title": "中华人民共和国行政诉讼法",
-  "schema_version": 1,
-  "note": "S2-T1/历史版本长尾（2026-09-14）：现行版事实取自语料元数据（快照背书）；历史版自维基文库同渠道采集存证，等级【中】。",
-  "versions": [
-    {
-      "version_id": "1989-enacted",
-      "label": "1989 通过",
-      "status": "已取代（2017 修正前文本，仅作历史对照）",
-      "promulgation_date": "1989-04-04",
-      "promulgation_organ": "全国人民代表大会",
-      "promulgation_instrument": "中华人民共和国主席令第十六号",
-      "effective_date": "1990-10-01",
-      "article_count": 75,
-      "current": false,
-      "evidence": {
-        "kind": "wikisource-transcription",
-        "grade": "中",
-        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E8%A1%8C%E6%94%BF%E8%A8%B4%E8%A8%9F%E6%B3%95_(1989%E5%B9%B4)",
-        "accessed_at": "2026-09-14",
-        "snapshot": "docs/research/evidence/ws_行政诉讼法1989.html"
-      }
-    },
-    {
-      "version_id": "2017-amendment",
-      "label": "2017 修正",
-      "status": "现行有效（2017修正）",
-      "promulgation_date": "2017-06-27",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "promulgation_instrument": "中华人民共和国主席令第七十一号",
-      "effective_date": "2017-07-01",
-      "article_count": 103,
-      "current": true,
-      "evidence": {
-        "kind": "wikisource-transcription",
-        "grade": "中",
-        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E8%A1%8C%E6%94%BF%E8%A8%B4%E8%A8%9F%E6%B3%95_(2017%E5%B9%B4)",
-        "accessed_at": "2026-09-14",
-        "snapshot": "docs/research/evidence/ws_行政诉讼法1989.html"
-      }
-    }
-  ],
-  "pending_note": "2014 修正版全文未采集，不预填。"
+ "law_id": "admin-litigation-2017",
+ "title": "中华人民共和国行政诉讼法",
+ "schema_version": 1,
+ "note": "S2-T1/历史版本长尾（2026-09-14）：现行版事实取自语料元数据（快照背书）；历史版自维基文库同渠道采集存证，等级【中】。",
+ "versions": [
+  {
+   "version_id": "1989-enacted",
+   "label": "1989 通过",
+   "status": "已取代（2017 修正前文本，仅作历史对照）",
+   "promulgation_date": "1989-04-04",
+   "promulgation_organ": "全国人民代表大会",
+   "promulgation_instrument": "中华人民共和国主席令第十六号",
+   "effective_date": "1990-10-01",
+   "article_count": 75,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E8%A1%8C%E6%94%BF%E8%A8%B4%E8%A8%9F%E6%B3%95_(1989%E5%B9%B4)",
+    "accessed_at": "2026-09-14",
+    "snapshot": "docs/research/evidence/ws_行政诉讼法1989.html"
+   }
+  },
+  {
+   "version_id": "2017-amendment",
+   "label": "2017 修正",
+   "status": "现行有效（2017修正）",
+   "promulgation_date": "2017-06-27",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "promulgation_instrument": "中华人民共和国主席令第七十一号",
+   "effective_date": "2017-07-01",
+   "article_count": 103,
+   "current": true,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E8%A1%8C%E6%94%BF%E8%A8%B4%E8%A8%9F%E6%B3%95_(2017%E5%B9%B4)",
+    "accessed_at": "2026-09-14",
+    "snapshot": "docs/research/evidence/ws_行政诉讼法1989.html"
+   }
+  }
+ ],
+ "pending_note": "2014 修正版全文未采集，不预填。",
+ "amendments": [
+  {
+   "no": 1,
+   "title": "关于修改《中华人民共和国民事诉讼法》和《中华人民共和国行政诉讼法》的决定（行政诉讼法 2017 修正所在双法打包决定）",
+   "passed_date": "2017-06-27",
+   "effective": "2017-07-01",
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E5%85%A8%E5%9B%BD%E4%BA%BA%E6%B0%91%E4%BB%A3%E8%A1%A8%E5%A4%A7%E4%BC%9A%E5%B8%B8%E5%8A%A1%E5%A7%94%E5%91%98%E4%BC%9A%E5%85%B3%E4%BA%8E%E4%BF%AE%E6%94%B9%E3%80%8A%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E6%B0%91%E4%BA%8B%E8%AF%89%E8%AE%BC%E6%B3%95%E3%80%8B%E5%92%8C%E3%80%8A%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E8%A1%8C%E6%94%BF%E8%AF%89%E8%AE%BC%E6%B3%95%E3%80%8B%E7%9A%84%E5%86%B3%E5%AE%9A",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_打包决定_民诉行诉2017.html"
+   },
+   "note": "打包决定快照自证：2017-06-27 通过、自 2017-07-01 施行；行政诉讼法部分为本决定第二项（与民诉法同批修正——一决定两法）。"
+  }
+ ]
 }
