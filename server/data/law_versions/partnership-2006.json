@@ -1,26 +1,45 @@
 {
-  "law_id": "partnership-2006",
-  "title": "中华人民共和国合伙企业法",
-  "schema_version": 1,
-  "note": "R145（2026-09-17）续批：经 lawtext（flk DOCX 转录）链入库。",
-  "versions": [
-    {
-      "version_id": "current",
-      "label": "2006 修订",
-      "status": "现行有效（2006修订）",
-      "promulgation_date": "2006-08-27",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "effective_date": "2007-06-01",
-      "article_count": 109,
-      "current": true,
-      "evidence": {
-        "kind": "flk-docx-transcription",
-        "grade": "中",
-        "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf63dce034d",
-        "accessed_at": "2026-09-17",
-        "snapshot": "docs/research/evidence/lawtext_合伙企业法2006.md"
-      }
-    }
-  ],
-  "pending_note": "1997 通过原版全文未采集。2006 全面修订施行日 2007-06-01（附则自载与 flk sxrq 一致）；flk 单版本。R145 lawtext 链入库。"
+ "law_id": "partnership-2006",
+ "title": "中华人民共和国合伙企业法",
+ "schema_version": 1,
+ "note": "R145（2026-09-17）续批：经 lawtext（flk DOCX 转录）链入库。",
+ "versions": [
+  {
+   "version_id": "current",
+   "label": "2006 修订",
+   "status": "现行有效（2006修订）",
+   "promulgation_date": "2006-08-27",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "effective_date": "2007-06-01",
+   "article_count": 109,
+   "current": true,
+   "evidence": {
+    "kind": "flk-docx-transcription",
+    "grade": "中",
+    "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf63dce034d",
+    "accessed_at": "2026-09-17",
+    "snapshot": "docs/research/evidence/lawtext_合伙企业法2006.md"
+   }
+  },
+  {
+   "version_id": "1997-enacted",
+   "label": "1997 原版",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "1997-02-23",
+   "promulgation_organ": "第八届全国人民代表大会常务委员会第二十四次会议",
+   "effective_date": "1997-08-01",
+   "article_count": 78,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%90%88%E4%BC%99%E4%BC%81%E4%B8%9A%E6%B3%95_(1997%E5%B9%B4)",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_合伙企业法_1997.html"
+   },
+   "note": "快照头部括注自证：1997-02-23 八届人大常委会二十四次会议通过、主席令第八十二号公布、自 1997-08-01 施行（末条附则同证）。",
+   "promulgation_instrument": "中华人民共和国主席令第八十二号（1997-02-23 公布）"
+  }
+ ],
+ "pending_note": "1997 通过原版全文未采集。2006 全面修订施行日 2007-06-01（附则自载与 flk sxrq 一致）；flk 单版本。R145 lawtext 链入库。"
 }
