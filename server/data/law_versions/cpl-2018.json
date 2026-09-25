@@ -1,27 +1,82 @@
 {
-  "law_id": "cpl-2018",
-  "title": "中华人民共和国刑事诉讼法",
-  "schema_version": 1,
-  "note": "S2-T1 第八部批量扩张法律（2026-09-14）：2018 第三次修正版全文自深圳南山区政府转载页入库（utf-8 单页，等级【强】）。1979 通过、1996/2012/2018 三次修正；历史版本全文待官方快照采集后按同一 schema 登记，未采集前不预填。",
-  "versions": [
-    {
-      "version_id": "2018-amendment",
-      "label": "2018 第三次修正",
-      "status": "现行有效（2018修正）",
-      "promulgation_date": "2018-10-26",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "promulgation_instrument": "中华人民共和国主席令第十号",
-      "effective_date": "2018-10-26",
-      "article_count": 308,
-      "current": true,
-      "evidence": {
-        "kind": "official-gazette-republication",
-        "grade": "强",
-        "url": "https://www.szns.gov.cn/xxgk/bmxxgk/nsgafj/xxgk_99908/zcfg_99917/zcfgjgfxwj_99918/content/post_11403805.html",
-        "accessed_at": "2026-09-14",
-        "snapshot": "docs/research/evidence/gov_刑事诉讼法2018.html"
-      }
-    }
-  ],
-  "pending_note": "1979 原版与 1996/2012 修正版全文未采集；未采集前不展示、不预填任何事实。"
+ "law_id": "cpl-2018",
+ "title": "中华人民共和国刑事诉讼法",
+ "schema_version": 1,
+ "note": "S2-T1 第八部批量扩张法律（2026-09-14）：2018 第三次修正版全文自深圳南山区政府转载页入库（utf-8 单页，等级【强】）。1979 通过、1996/2012/2018 三次修正；R340（2026-09-25）1979 原版与 1996/2012 修正版全文自维基文库转录页采集（等级【中】），切分断言 164/225/290 连续。",
+ "versions": [
+  {
+   "version_id": "2018-amendment",
+   "label": "2018 第三次修正",
+   "status": "现行有效（2018修正）",
+   "promulgation_date": "2018-10-26",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "promulgation_instrument": "中华人民共和国主席令第十号",
+   "effective_date": "2018-10-26",
+   "article_count": 308,
+   "current": true,
+   "evidence": {
+    "kind": "official-gazette-republication",
+    "grade": "强",
+    "url": "https://www.szns.gov.cn/xxgk/bmxxgk/nsgafj/xxgk_99908/zcfg_99917/zcfgjgfxwj_99918/content/post_11403805.html",
+    "accessed_at": "2026-09-14",
+    "snapshot": "docs/research/evidence/gov_刑事诉讼法2018.html"
+   }
+  },
+  {
+   "version_id": "1979-enacted",
+   "label": "1979 原版",
+   "status": "已废止（历史文本）",
+   "promulgation_date": "1979-07-01",
+   "promulgation_organ": "第五届全国人民代表大会第二次会议",
+   "promulgation_instrument": "全国人民代表大会常务委员会委员长令第六号（1979-07-07 公布）",
+   "effective_date": "1980-01-01",
+   "article_count": 164,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%88%91%E4%BA%8B%E8%AF%89%E8%AE%BC%E6%B3%95_(1979%E5%B9%B4)",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_刑事诉讼法_1979.html"
+   },
+   "note": "快照头部括注自证：1979-07-01 五届人大二次会议通过、1979-07-07 委员长令第六号公布、自 1980-01-01 施行。"
+  },
+  {
+   "version_id": "1996-amendment",
+   "label": "1996 第一次修正",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "1996-03-17",
+   "promulgation_organ": "第八届全国人民代表大会第四次会议",
+   "effective_date": "",
+   "article_count": 225,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%88%91%E4%BA%8B%E8%AF%89%E8%AE%BC%E6%B3%95_(1996%E5%B9%B4)",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_刑事诉讼法_1996.html"
+   },
+   "note": "快照头部括注自证修正会议与决定；未载施行日与令号——如实留空（不推定），待 flk 核对。"
+  },
+  {
+   "version_id": "2012-amendment",
+   "label": "2012 第二次修正",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "2012-03-14",
+   "promulgation_organ": "第十一届全国人民代表大会第五次会议",
+   "effective_date": "",
+   "article_count": 290,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%88%91%E4%BA%8B%E8%AF%89%E8%AE%BC%E6%B3%95_(2012%E5%B9%B4)",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_刑事诉讼法_2012.html"
+   },
+   "note": "快照头部括注自证修正会议与决定；未载施行日与令号——如实留空（不推定）。第 108 条条号标签系上游转录讹误（漏「第」字），构建层 HISTORY_LABEL_FIXUPS 修复（快照保持原始）。"
+  }
+ ],
+ "pending_note": "1996/2012 修正版的施行日与主席令号快照未载，如实留空，待 flk 人工核对后补登。"
 }

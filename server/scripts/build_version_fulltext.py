@@ -42,10 +42,20 @@ EXTRA_TARGETS: dict[tuple[str, str], str] = {}
 # 尾注污染标记（只作用于末条；出现>1 次或 0 次均拒绝静默处理——R113 先例：标记先核验再上线）
 FOOTER_MARKERS = [
     re.compile(r"^[ \t\u3000\xa0]*（新华社北京[^）]*电）.*$", re.M),
-    re.compile(r"^[ \t\u3000\xa0]*《[ \xa0]?人民日报[ \xa0]?》[ \xa0]*（[^）]*版）[ \t\u3000\xa0]*$", re.M),
+    re.compile(r"^[ \t\u3000\xa0]*《[ \xa0]?人民日报[ \xa0]?》[ \t\u3000\xa0]*（[^）]*版）[ \t\u3000\xa0]*$", re.M),
     re.compile(r"^[ \t\u3000\xa0]*责任编辑：[^ \t\u3000][^\n]*$", re.M),
     re.compile(r"^[ \t\u3000\xa0]*\[?[纠错打印分享收藏关闭]*\]?[ \t\u3000\xa0]*$", re.M),
 ]
+
+# 历史版快照条号标签修复（R340）——快照保持原始，修复住构建层（R280 TEXT_CORRECTIONS 同款纪律）。
+# 仅限「条号标签」级修复（如上游转录漏「第」字），不做内容级改动。
+# 值 = (正则模式, 替换串)；模式必须恰好命中 1 次，否则拒绝构建（fail-closed，零缓冲）。
+# 漏「第」字类修复用负向后行断言 (?<!第)，避免把正确形态「第一百零八条」误替换成「第第一百零八条」。
+# 证据：ws_刑事诉讼法_2012.html 第 108 条标签被上游转录为「一百零八条」——前邻 107/后邻 109
+# 均带「第」且其余 288 个条号格式统一，官方文本条号必带「第」；实测修复后切分 290 条连续。
+HISTORY_LABEL_FIXUPS = {
+    ("cpl-2018", "2012-amendment"): [(r"(?<!第)一百零八条", "第一百零八条")],
+}
 
 
 def _read_snapshot(name: str) -> bytes:
@@ -87,7 +97,16 @@ def build(law_id: str, version_id: str, snapshot_name: str) -> pathlib.Path:
         text = raw.decode("utf-8")
     except UnicodeDecodeError:
         text = raw.decode("gbk", errors="ignore")
-    articles, _expected = split_articles(clean_html_to_text(text))
+    # 条号标签修复（切分之前作用于清洗后全文）：讹误标签若留到切分后会被基条正文吞并
+    # （漏「第」字的标签不再是标签），故必须先修再切。模式必须恰好命中 1 次，否则拒绝构建。
+    for pattern_src, right in HISTORY_LABEL_FIXUPS.get((law_id, version_id), []):
+        pattern = re.compile(pattern_src)
+        hits = pattern.findall(text)
+        if len(hits) != 1:
+            raise ValueError(f"{law_id}/{version_id} 条号修复模式 {pattern_src!r} 命中 {len(hits)} 次（要求恰 1 次），拒绝构建")
+        text = pattern.sub(right, text)
+
+    articles, _expected = split_articles(text)
     articles = _strip_footers(articles)
 
     expected_count = version.get("article_count")
