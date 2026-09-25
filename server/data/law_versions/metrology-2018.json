@@ -1,26 +1,61 @@
 {
-  "law_id": "metrology-2018",
-  "title": "中华人民共和国计量法",
-  "schema_version": 1,
-  "note": "R159（2026-09-18）计量标准与成果批次：经 lawtext（flk DOCX 转录）链入库。",
-  "versions": [
-    {
-      "version_id": "current",
-      "label": "2018 修正",
-      "status": "现行有效（2018修正）",
-      "promulgation_date": "2018-10-26",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "effective_date": "2018-10-26",
-      "article_count": 34,
-      "current": true,
-      "evidence": {
-        "kind": "flk-docx-transcription",
-        "grade": "中",
-        "url": "https://flk.npc.gov.cn/detail?id=ff8080816f135f46016f1cf499ff11eb",
-        "accessed_at": "2026-09-18",
-        "snapshot": "docs/research/evidence/lawtext_计量法2018.md"
-      }
-    }
-  ],
-  "pending_note": "1985 原版与 2009/2013/2015/2017 修正版全文未采集（2017 修正条目已修改弃用）。民生计量/强制检定。"
+ "law_id": "metrology-2018",
+ "title": "中华人民共和国计量法",
+ "schema_version": 1,
+ "note": "R159（2026-09-18）计量标准与成果批次：经 lawtext（flk DOCX 转录）链入库。",
+ "versions": [
+  {
+   "version_id": "current",
+   "label": "2018 修正",
+   "status": "现行有效（2018修正）",
+   "promulgation_date": "2018-10-26",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "effective_date": "2018-10-26",
+   "article_count": 34,
+   "current": true,
+   "evidence": {
+    "kind": "flk-docx-transcription",
+    "grade": "中",
+    "url": "https://flk.npc.gov.cn/detail?id=ff8080816f135f46016f1cf499ff11eb",
+    "accessed_at": "2026-09-18",
+    "snapshot": "docs/research/evidence/lawtext_计量法2018.md"
+   }
+  },
+  {
+   "version_id": "1985-enacted",
+   "label": "1985 原版",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "1985-09-06",
+   "promulgation_organ": "第六届全国人民代表大会常务委员会第十二次会议",
+   "effective_date": "1986-07-01",
+   "article_count": 35,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E8%AE%A1%E9%87%8F%E6%B3%95_(1985%E5%B9%B4)",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_计量法_1985.html"
+   },
+   "note": "快照头部括注自证：1985-09-06 六届人大常委会十二次会议通过、主席令第二十八号公布、自 1986-07-01 起施行（末条附则同证）。",
+   "promulgation_instrument": "中华人民共和国主席令第二十八号（1985-09-06 公布）"
+  }
+ ],
+ "pending_note": "1985 原版与 2009/2013/2015/2017 修正版全文未采集（2017 修正条目已修改弃用）。民生计量/强制检定。",
+ "amendments": [
+  {
+   "no": 1,
+   "title": "关于修改《中华人民共和国野生动物保护法》等十五部法律的决定（计量法 2018 修正所在打包决定——现行版来源）",
+   "passed_date": "2018-10-26",
+   "effective": "2018-10-26",
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E5%85%A8%E5%9B%BD%E4%BA%BA%E6%B0%91%E4%BB%A3%E8%A1%A8%E5%A4%A7%E4%BC%9A%E5%B8%B8%E5%8A%A1%E5%A7%94%E5%91%98%E4%BC%9A%E5%85%B3%E4%BA%8E%E4%BF%AE%E6%94%B9%E3%80%8A%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E9%87%8E%E7%94%9F%E5%8A%A8%E7%89%A9%E4%BF%9D%E6%8A%A4%E6%B3%95%E3%80%8B%E7%AD%89%E5%8D%81%E4%BA%94%E9%83%A8%E6%B3%95%E5%BE%8B%E7%9A%84%E5%86%B3%E5%AE%9A",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_打包决定_野生动物十五部2018.html"
+   },
+   "note": "打包决定快照自证：2018-10-26 十三届人大常委会六次会议通过、自公布之日起施行。计量法为十五部之一（附文第 2 部）——现行 metrology-2018 语料的 2018 修正来源即本决定。"
+  }
+ ]
 }
