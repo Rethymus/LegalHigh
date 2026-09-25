@@ -1,0 +1,419 @@
+{
+ "schema_version": 1,
+ "law_id": "agriculture-2013",
+ "law_title": "中华人民共和国农业法",
+ "version_id": "1993-enacted",
+ "label": "1993 原版",
+ "status_note": "已被修订（历史文本）",
+ "promulgation_date": "1993-07-02",
+ "promulgation_organ": "第八届全国人民代表大会常务委员会第二次会议",
+ "effective_date": "1993-07-02",
+ "article_count": 66,
+ "scope_note": "非现行历史文本，仅供对照查阅；不进入现行检索语料，不构成「当时是否合法」的断言依据。",
+ "source": {
+  "kind": "wikisource-transcription",
+  "grade": "中",
+  "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%86%9C%E4%B8%9A%E6%B3%95_(1993%E5%B9%B4)",
+  "snapshot": "docs/research/evidence/ws_农业法_1993.html",
+  "accessed_at": "2026-09-25",
+  "sha256": "2663cc619f363ebd42cbe4f8a72fc65ee58f13caf63ce9e29bd63ccc370da6a4"
+ },
+ "articles": [
+  {
+   "no": 1,
+   "label": "第一条",
+   "chapter": null,
+   "text": "为了保障农业在国民经济中的基础地位，发展农村社会主义市场经济，维护农业生产经营组织和农业劳动者的合法权益，促进农业的持续、稳定、协调发展，制定本法。\n</p><p>"
+  },
+  {
+   "no": 2,
+   "label": "第二条",
+   "chapter": null,
+   "text": "国家坚持以农业为基础发展国民经济的方针。\n</p><p>　　国家采取措施，保障农业的稳定发展。\n</p><p>　　农业发展的基本目标是：努力发展农村社会主义市场经济，进一步解放和发展农村的生产力，开发、利用农村劳动力、土地和各种资源，增加农产品的有效供应，满足人民生活和社会经济发展的需要；在发展生产的基础上增加农业劳动者的收入，提高其生活水平，建设共同富裕的文明的新农村，逐步实现农业现代化。\n</p><p>　　本法所称农业，是指种植业、林业、畜牧业和渔业。\n</p><p>　　本法所称农业生产经营组织，是指农业集体经济组织、国有农业企业和其他农业企业。\n</p><p>"
+  },
+  {
+   "no": 3,
+   "label": "第三条",
+   "chapter": null,
+   "text": "农村和城市郊区的土地，除由法律规定属于国家所有即全民所有的以外，属于集体所有。\n</p><p>　　森林、山岭、草原、荒地、滩涂、水流等自然资源都属于国家所有；由法律规定属于集体所有的森林和山岭、草原、荒地、滩涂除外。\n</p><p>"
+  },
+  {
+   "no": 4,
+   "label": "第四条",
+   "chapter": null,
+   "text": "国有土地和集体所有的土地的使用权可以依法转让。任何组织或者个人不得侵占、买卖或者以其他形式非法转让土地。\n</p><p>　　各级人民政府必须珍惜和合理利用土地，切实保护耕地。禁止乱占耕地和滥用土地的行为。\n</p><p>"
+  },
+  {
+   "no": 5,
+   "label": "第五条",
+   "chapter": null,
+   "text": "在农村以社会主义公有制经济为主体，多种经济成分共同发展，振兴农村经济。\n</p><p>"
+  },
+  {
+   "no": 6,
+   "label": "第六条",
+   "chapter": null,
+   "text": "国家稳定农村以家庭联产承包为主的责任制，完善统分结合的双层经营体制，发展社会化服务体系，壮大集体经济实力，引导农民走共同富裕的道路。\n</p><p>"
+  },
+  {
+   "no": 7,
+   "label": "第七条",
+   "chapter": null,
+   "text": "国家依靠科学技术进步和发展教育振兴农业。\n</p><p>"
+  },
+  {
+   "no": 8,
+   "label": "第八条",
+   "chapter": null,
+   "text": "国家发展水利事业和农用生产资料工业，为农业生产的稳定增长提供物质保障。\n</p><p>"
+  },
+  {
+   "no": 9,
+   "label": "第九条",
+   "chapter": null,
+   "text": "国家对发展农业有显著成绩的单位和个人，给予奖励。\n</p><p>"
+  },
+  {
+   "no": 10,
+   "label": "第十条",
+   "chapter": null,
+   "text": "各级人民政府必须把农业工作放在重要地位，统一负责、组织各有关部门和全社会支持农业，做好发展农业和为发展农业服务的各项工作。\n</p><p>　　国务院主管农业的部门按照各自的职责，负责全国有关的农业工作。国务院其他有关部门在各自的职责范围内，负责全国有关的为农业生产经营服务的工作。\n</p><p>　　县级以上地方人民政府主管农业的部门按照各自的职责，负责本行政区域内有关的农业工作。县级以上地方人民政府其他有关部门在各自的职责范围内，负责本行政区域内有关的为农业生产经营服务的工作。\n</p>\n<div class=\"mw-heading mw-heading2\"><h2 id=\"第二章_农业生产经营体制\"><span id=\".E7.AC.AC.E4.BA.8C.E7.AB.A0_.E5.86.9C.E4.B8.9A.E7.94.9F.E4.BA.A7.E7.BB.8F.E8.90.A5.E4.BD.93.E5.88.B6\"></span>第二章　农业生产经营体制</h2><span class=\"mw-editsection\"><span class=\"mw-editsection-bracket\">[</span><a href=\"/w/index.php?title=%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%86%9C%E4%B8%9A%E6%B3%95_(1993%E5%B9%B4)&amp;action=edit&amp;section=2\" title=\"编辑章节：第二章　农业生产经营体制\"><span>编辑</span></a><span class=\"mw-editsection-bracket\">]</span></span></div>\n<p>"
+  },
+  {
+   "no": 11,
+   "label": "第十一条",
+   "chapter": null,
+   "text": "集体所有的土地依照法律属于村农民集体所有，由村农业集体经济组织或者村民委员会经营、管理。已经属于乡（镇）农民集体经济组织所有的，可以属于乡（镇）农民集体所有。\n</p><p>　　村农民集体所有的土地已经分别属于村内两个以上农业集体经济组织所有的，可以属于各该农业集体经济组织的农民集体所有。\n</p><p>"
+  },
+  {
+   "no": 12,
+   "label": "第十二条",
+   "chapter": null,
+   "text": "集体所有的或者国家所有由农业集体经济组织使用的土地、山岭、草原、荒地、滩涂、水面可以由个人或者集体承包从事农业生产。国有和集体所有的宜林荒山荒地可以由个人或者集体承包造林。个人或者集体的承包经营权，受法律保护。发包方和承包方应当订立农业承包合同，约定双方的权利和义务。\n</p><p>"
+  },
+  {
+   "no": 13,
+   "label": "第十三条",
+   "chapter": null,
+   "text": "除农业承包合同另有约定外，承包方享有生产经营决策权、产品处分权和收益权，同时必须履行合同约定的义务。承包方承包宜林荒山荒地造林的，按照森林法的规定办理。\n</p><p>　　在承包期内，经发包方同意，承包方可以转包所承包的土地、山岭、草原、荒地、滩涂、水面，也可以将农业承包合同的权利和义务转让给第三者。\n</p><p>　　承包期满，承包人对原承包的土地、山岭、草原、荒地、滩涂、水面享有优先承包权。\n</p><p>　　承包人在承包期内死亡的，该承包人的继承人可以继续承包。\n</p><p>"
+  },
+  {
+   "no": 14,
+   "label": "第十四条",
+   "chapter": null,
+   "text": "农业集体经济组织或者村民委员会应当向承包土地、山岭、草原、荒地、滩涂、水面的个人或者集体提供生产服务。\n</p><p>"
+  },
+  {
+   "no": 15,
+   "label": "第十五条",
+   "chapter": null,
+   "text": "国家鼓励个人或者集体对荒山、荒地、荒滩进行承包开发、治理，并保护承包人的合法权益。\n</p><p>"
+  },
+  {
+   "no": 16,
+   "label": "第十六条",
+   "chapter": null,
+   "text": "农民依法缴纳税款，依法缴纳村集体提留和乡统筹费，依法承担农村义务工和劳动积累工。\n</p><p>"
+  },
+  {
+   "no": 17,
+   "label": "第十七条",
+   "chapter": null,
+   "text": "国家保护农民和农业生产经营组织的合法财产不受侵犯。\n</p><p>"
+  },
+  {
+   "no": 18,
+   "label": "第十八条",
+   "chapter": null,
+   "text": "任何机关为办理公务向农民或者农业生产经营组织收费必须依据法律、法规、国务院授权的部门的决定或者省级人民政府制定的规章的规定，省级人民政府制定的规章必须报国务院备案。收费的范围和标准应当公布，并根据情况做必要的检查、清理。没有法律、法规、国务院授权的部门的决定或者省级人民政府规章规定的依据，任何机关因办理公务而收费的，农民和农业生产经营组织有权拒绝。\n</p><p>　　任何机关对农民或者农业生产经营组织进行罚款处罚必须依据法律、法规的规定。没有法律、法规规定的依据，任何机关对农民或者农业生产经营组织罚款的，农民和农业生产经营组织有权拒绝。\n</p><p>　　任何机关或者单位不得以任何方式向农民或者农业生产经营组织进行摊派。除法律、法规另有规定外，任何机关和单位以任何方式要求农民或者农业生产经营组织提供人力、财力、物力的，属于摊派。农民和农业生产经营组织有权拒绝任何方式的摊派。\n</p><p>"
+  },
+  {
+   "no": 19,
+   "label": "第十九条",
+   "chapter": null,
+   "text": "向农民或者农业生产经营组织集资必须实行自愿原则，不得强制集资。任何机关和单位向农民或者农业生产经营组织强制集资的，农民和农业生产经营组织有权拒绝。\n</p><p>"
+  },
+  {
+   "no": 20,
+   "label": "第二十条",
+   "chapter": null,
+   "text": "国家鼓励农业集体经济组织和其他有关组织发展多种形式的农业生产产前、产中、产后的社会化服务事业。财政、金融、科学技术、物资等部门，应当对农业生产社会化服务事业给予支持。\n</p>\n<div class=\"mw-heading mw-heading2\"><h2 id=\"第三章_农业生产\"><span id=\".E7.AC.AC.E4.B8.89.E7.AB.A0_.E5.86.9C.E4.B8.9A.E7.94.9F.E4.BA.A7\"></span>第三章　农业生产</h2><span class=\"mw-editsection\"><span class=\"mw-editsection-bracket\">[</span><a href=\"/w/index.php?title=%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%86%9C%E4%B8%9A%E6%B3%95_(1993%E5%B9%B4)&amp;action=edit&amp;section=3\" title=\"编辑章节：第三章　农业生产\"><span>编辑</span></a><span class=\"mw-editsection-bracket\">]</span></span></div>\n<p>"
+  },
+  {
+   "no": 21,
+   "label": "第二十一条",
+   "chapter": null,
+   "text": "国家采取措施，从资金、农业生产资料、技术、市场信息等方面扶持农业生产经营组织和农业劳动者发展农业生产。\n</p><p>"
+  },
+  {
+   "no": 22,
+   "label": "第二十二条",
+   "chapter": null,
+   "text": "国家引导农业生产经营组织和农业劳动者按照市场的需求，调整农业生产结构，保持粮棉生产稳定增长，全面发展种植业、林业、畜牧业和渔业，发展高产、优质、高效益的农业。\n</p><p>　　国家有计划地建设商品粮、商品棉等生产基地。\n</p><p>"
+  },
+  {
+   "no": 23,
+   "label": "第二十三条",
+   "chapter": null,
+   "text": "各级人民政府应当制定农业综合开发规划，向农业的广度和深度开发，并组织实施。\n</p><p>"
+  },
+  {
+   "no": 24,
+   "label": "第二十四条",
+   "chapter": null,
+   "text": "各级人民政府和农业集体经济组织应当采取措施，发展乡镇企业，发展第三产业，支持农业的发展，转移富余的农业劳动力。\n</p><p>"
+  },
+  {
+   "no": 25,
+   "label": "第二十五条",
+   "chapter": null,
+   "text": "各级人民政府和农业生产经营组织应当制定规划，采取措施，组织农田水利和防护林的建设，保证旱涝保收农田面积的稳定增长。\n</p><p>"
+  },
+  {
+   "no": 26,
+   "label": "第二十六条",
+   "chapter": null,
+   "text": "各级人民政府和农业生产经营组织应当建立、健全农田水利设施的管理制度，发展节水型的灌溉设施，严格控制非农业建设占用灌溉水源，禁止任何组织和个人非法占用或者毁损农田水利设施。\n</p><p>"
+  },
+  {
+   "no": 27,
+   "label": "第二十七条",
+   "chapter": null,
+   "text": "国家鼓励和支持农业生产经营组织和农业劳动者使用先进、适用的农业机械，提高农业机械化水平。\n</p><p>"
+  },
+  {
+   "no": 28,
+   "label": "第二十八条",
+   "chapter": null,
+   "text": "国家鼓励和支持粮食的加工和综合开发利用，增加粮食的附加值，改善人民的食物营养结构。\n</p><p>"
+  },
+  {
+   "no": 29,
+   "label": "第二十九条",
+   "chapter": null,
+   "text": "各级人民政府应当采取措施，提高农业防御自然灾害的能力，做好防灾、抗灾和救灾工作，帮助灾民恢复生产，开展社会互助互济；对生活没有保障的灾民，组织生产自救，给予救济和扶持。\n</p><p>　　国家扶持贫困地区，帮助进行经济开发，改善经济发展条件。\n</p><p>"
+  },
+  {
+   "no": 30,
+   "label": "第三十条",
+   "chapter": null,
+   "text": "各级人民政府应当支持为农业服务的气象事业的发展，提高对气象灾害的预报水平。\n</p><p>"
+  },
+  {
+   "no": 31,
+   "label": "第三十一条",
+   "chapter": null,
+   "text": "国家鼓励和扶持对农业的保险事业的发展。\n</p><p>　　农业保险实行自愿原则。任何组织和个人不得强制农业劳动者和农业生产经营组织参加农业保险。\n</p><p>"
+  },
+  {
+   "no": 32,
+   "label": "第三十二条",
+   "chapter": null,
+   "text": "国家实行动植物防疫、检疫制度。任何组织和个人都必须遵守有关动植物防疫、检疫的法律、行政法规。\n</p><p>"
+  },
+  {
+   "no": 33,
+   "label": "第三十三条",
+   "chapter": null,
+   "text": "国家采取宏观调控措施，使化肥、农药、农用薄膜、农业机械和农用柴油等主要农业生产资料和农产品之间保持合理的比价。\n</p><p>"
+  },
+  {
+   "no": 34,
+   "label": "第三十四条",
+   "chapter": null,
+   "text": "各级人民政府和农业生产经营组织应当建立和健全农药、兽药、农业机械等可能危害人畜安全的农业生产资料的安全使用制度，教育农业劳动者安全生产。\n</p><p>　　农药、兽药、化肥、种子、农业机械、农用薄膜和其他农业生产资料的生产者、销售者应当对其生产、销售的产品的质量负责，禁止以次充好、以假充真、以不合格的产品冒充合格的产品。禁止生产国家明令淘汰的农药、兽药、农业机械等农业生产资料。\n</p>\n<div class=\"mw-heading mw-heading2\"><h2 id=\"第四章_农产品流通\"><span id=\".E7.AC.AC.E5.9B.9B.E7.AB.A0_.E5.86.9C.E4.BA.A7.E5.93.81.E6.B5.81.E9.80.9A\"></span>第四章　农产品流通</h2><span class=\"mw-editsection\"><span class=\"mw-editsection-bracket\">[</span><a href=\"/w/index.php?title=%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%86%9C%E4%B8%9A%E6%B3%95_(1993%E5%B9%B4)&amp;action=edit&amp;section=4\" title=\"编辑章节：第四章　农产品流通\"><span>编辑</span></a><span class=\"mw-editsection-bracket\">]</span></span></div>\n<p>"
+  },
+  {
+   "no": 35,
+   "label": "第三十五条",
+   "chapter": null,
+   "text": "农产品的购销逐步实行市场调节，国家对关系国计民生的重要农产品的购销活动实行必要的宏观调控。\n</p><p>　　国务院和国务院授权的省、自治区、直辖市人民政府对关系国计民生的重要农产品可以委托有关经营组织收购。委托收购的农产品的品种和数量，由国务院或者由国务院授权省、自治区、直辖市人民政府规定。\n</p><p>　　国务院在必要时可以对特定的农产品规定委托收购的价格。\n</p><p>"
+  },
+  {
+   "no": 36,
+   "label": "第三十六条",
+   "chapter": null,
+   "text": "国家对粮食等关系国计民生的重要农产品实行保护价收购制度，设立风险基金。\n</p><p>　　国家对粮食等关系国计民生的重要农产品实行中央和地方多级储备调节制度，设立储备基金，建立、健全仓储运输体系，做到保证供应，平稳市场。\n</p><p>"
+  },
+  {
+   "no": 37,
+   "label": "第三十七条",
+   "chapter": null,
+   "text": "国有商业组织和供销合作经济等集体商业组织应当加强仓储设施建设、提供市场信息、改进收购工作，发挥主渠道作用，为农民销售农产品服务。\n</p><p>　　国家鼓励和引导农民从事多种形式的农产品流通活动。农业生产经营组织和农业劳动者，可以按照国家有关规定从事农产品收购、加工、批发、贩运和零售活动。\n</p><p>"
+  },
+  {
+   "no": 38,
+   "label": "第三十八条",
+   "chapter": null,
+   "text": "国家鼓励和支持企业事业单位和个人依法从事跨地区、跨行业的农产品生产、加工、销售联合经营活动。\n</p><p>"
+  },
+  {
+   "no": 39,
+   "label": "第三十九条",
+   "chapter": null,
+   "text": "国家支持农产品集贸市场和农产品批发市场的建立和发展。\n</p><p>　　农产品批发市场应当制定交易规则。农产品批发市场的管理者不得参与农产品批发市场的交易。\n</p><p>"
+  },
+  {
+   "no": 40,
+   "label": "第四十条",
+   "chapter": null,
+   "text": "具备条件的农业生产经营组织和其他经济组织可以按照国务院规定经批准取得对外贸易经营权，进行农产品进出口贸易。\n</p><p>"
+  },
+  {
+   "no": 41,
+   "label": "第四十一条",
+   "chapter": null,
+   "text": "县级以上人民政府应当组织财政、金融、粮食、供销等有关部门和单位及时筹足农产品收购资金，任何单位或者个人不得截留或者挪用。\n</p><p>　　农产品的收购单位必须在收购时向出售农产品的农业生产经营组织或者农民付清价款。\n</p><p>　　农产品的收购单位在收购农产品时，不得压级压价，不得在支付的价款中扣缴任何费用。法律、行政法规规定代扣、代收税款的，依照法律、行政法规的规定办理。\n</p>\n<div class=\"mw-heading mw-heading2\"><h2 id=\"第五章_农业投入\"><span id=\".E7.AC.AC.E4.BA.94.E7.AB.A0_.E5.86.9C.E4.B8.9A.E6.8A.95.E5.85.A5\"></span>第五章　农业投入</h2><span class=\"mw-editsection\"><span class=\"mw-editsection-bracket\">[</span><a href=\"/w/index.php?title=%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%86%9C%E4%B8%9A%E6%B3%95_(1993%E5%B9%B4)&amp;action=edit&amp;section=5\" title=\"编辑章节：第五章　农业投入\"><span>编辑</span></a><span class=\"mw-editsection-bracket\">]</span></span></div>\n<p>"
+  },
+  {
+   "no": 42,
+   "label": "第四十二条",
+   "chapter": null,
+   "text": "国家逐步提高农业投入的总体水平。国家财政每年对农业总投入的增长幅度应当高于国家财政经常性收入的增长幅度。\n</p><p>　　国家采取措施，促进农业扩大利用外资。\n</p><p>"
+  },
+  {
+   "no": 43,
+   "label": "第四十三条",
+   "chapter": null,
+   "text": "县级以上各级人民政府应当按照国家有关规定设立农业发展、育林、水利专项建设等各项农业专项基金。\n</p><p>"
+  },
+  {
+   "no": 44,
+   "label": "第四十四条",
+   "chapter": null,
+   "text": "国家运用税收、价格、信贷等手段，鼓励和引导农业生产经营组织和农业劳动者增加农业投入。\n</p><p>　　国家鼓励和支持农业生产经营组织和农业劳动者在自愿的基础上采取多种形式，筹集农业资金。\n</p><p>"
+  },
+  {
+   "no": 45,
+   "label": "第四十五条",
+   "chapter": null,
+   "text": "国家对农业的投入用于下列基础设施和工程建设：治理大江大河大湖的骨干工程，防洪、治涝、引水、灌溉等大型水利工程，农业生产和农产品流通重点基础设施，商品粮棉生产基地，用材林生产基地和防护林工程，农业教育、农业科研、技术推广和气象基础设施等。\n</p><p>　　农业的生产投入和农田水利等基本建设，应当由农业生产经营组织和农业劳动者投入资金和劳动积累，国家应当给予扶持。\n</p><p>"
+  },
+  {
+   "no": 46,
+   "label": "第四十六条",
+   "chapter": null,
+   "text": "国家采取税收、信贷等手段鼓励和扶持农用生产资料工业的发展，适应农业生产对化肥、农药、兽药、农用薄膜和农业机械等农业生产资料的需求。\n</p><p>"
+  },
+  {
+   "no": 47,
+   "label": "第四十七条",
+   "chapter": null,
+   "text": "各级人民政府应当加强对国家农业资金使用的管理，引导农业集体经济组织合理使用集体资金。\n</p><p>　　任何单位不得截留、挪用各级人民政府拨付用于农业的资金和银行的农业贷款。\n</p>\n<div class=\"mw-heading mw-heading2\"><h2 id=\"第六章_农业科技与农业教育\"><span id=\".E7.AC.AC.E5.85.AD.E7.AB.A0_.E5.86.9C.E4.B8.9A.E7.A7.91.E6.8A.80.E4.B8.8E.E5.86.9C.E4.B8.9A.E6.95.99.E8.82.B2\"></span>第六章　农业科技与农业教育</h2><span class=\"mw-editsection\"><span class=\"mw-editsection-bracket\">[</span><a href=\"/w/index.php?title=%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%86%9C%E4%B8%9A%E6%B3%95_(1993%E5%B9%B4)&amp;action=edit&amp;section=6\" title=\"编辑章节：第六章　农业科技与农业教育\"><span>编辑</span></a><span class=\"mw-editsection-bracket\">]</span></span></div>\n<p>"
+  },
+  {
+   "no": 48,
+   "label": "第四十八条",
+   "chapter": null,
+   "text": "各级人民政府应当逐步增加农业科技经费和农业教育经费，发展农业科技、教育事业。\n</p><p>　　国家鼓励集体经济组织、国有企业事业单位和其他社会力量举办农业科技、教育事业。\n</p><p>　　国务院有关部门应当对农业科技基础研究、应用研究和高技术研究统筹规划，组织重大项目的联合攻关，促进国际农业科技合作与交流。\n</p><p>"
+  },
+  {
+   "no": 49,
+   "label": "第四十九条",
+   "chapter": null,
+   "text": "国家在农村实施义务教育，发展农业职业教育，提高农业劳动者的文化、技术素质。\n</p><p>"
+  },
+  {
+   "no": 50,
+   "label": "第五十条",
+   "chapter": null,
+   "text": "国家扶持农业技术推广事业，促使先进的农业技术尽快应用于农业生产。\n</p><p>　　农业技术推广机构应当与农业科研、教育单位相互协作，推广先进的农业技术。\n</p><p>"
+  },
+  {
+   "no": 51,
+   "label": "第五十一条",
+   "chapter": null,
+   "text": "对于农业技术推广机构、农业科研单位和有关学校举办的为农业服务的企业，国家在税收、信贷等方面给予优惠。\n</p><p>"
+  },
+  {
+   "no": 52,
+   "label": "第五十二条",
+   "chapter": null,
+   "text": "各级人民政府应当采取措施，充实加强农业科技、教育和农业技术推广队伍。对从事农业技术推广工作的专业科技人员，应当保障和改善他们的工作条件和生活条件，改善他们的待遇，并依照国家规定给予补贴，鼓励他们为农业服务。\n</p><p>"
+  },
+  {
+   "no": 53,
+   "label": "第五十三条",
+   "chapter": null,
+   "text": "国家鼓励农民采用先进的农业技术，支持农民举办各种科技组织。\n</p>\n<div class=\"mw-heading mw-heading2\"><h2 id=\"第七章_农业资源与农业环境保护\"><span id=\".E7.AC.AC.E4.B8.83.E7.AB.A0_.E5.86.9C.E4.B8.9A.E8.B5.84.E6.BA.90.E4.B8.8E.E5.86.9C.E4.B8.9A.E7.8E.AF.E5.A2.83.E4.BF.9D.E6.8A.A4\"></span>第七章　农业资源与农业环境保护</h2><span class=\"mw-editsection\"><span class=\"mw-editsection-bracket\">[</span><a href=\"/w/index.php?title=%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%86%9C%E4%B8%9A%E6%B3%95_(1993%E5%B9%B4)&amp;action=edit&amp;section=7\" title=\"编辑章节：第七章　农业资源与农业环境保护\"><span>编辑</span></a><span class=\"mw-editsection-bracket\">]</span></span></div>\n<p>"
+  },
+  {
+   "no": 54,
+   "label": "第五十四条",
+   "chapter": null,
+   "text": "发展农业必须合理利用资源，保护和改善生态环境。\n</p><p>　　各级人民政府应当制订农业资源区划、农业环境保护规划和农村能源发展计划，组织农业生态环境治理。\n</p><p>"
+  },
+  {
+   "no": 55,
+   "label": "第五十五条",
+   "chapter": null,
+   "text": "县级以上各级地方人民政府应当划定基本农田保护区，对基本农田保护区内的耕地实行特殊保护，具体办法由国务院规定。\n</p><p>　　县级以上各级人民政府应当采取措施，加强对荒山、荒地、荒滩的开发与治理。\n</p><p>　　农业生产经营组织和农业劳动者应当保养土地，合理使用化肥、农药，增加使用有机肥料，提高地力，防止土地的污染、破坏和地力衰退。\n</p><p>"
+  },
+  {
+   "no": 56,
+   "label": "第五十六条",
+   "chapter": null,
+   "text": "国家对水土保持工作实行预防为主，全面规划，综合防治，因地制宜，加强管理，注重效益的方针。各级人民政府应当采取措施，加强对小流域治理，控制风沙危害，预防和治理水土流失、土地沙化。\n</p><p>　　禁止毁林开荒、烧山开荒、围湖造田以及开垦国家禁止开垦的陡坡地。\n</p><p>"
+  },
+  {
+   "no": 57,
+   "label": "第五十七条",
+   "chapter": null,
+   "text": "国家实行全民义务植树制度。各级人民政府应当采取措施，组织群众植树造林，护林防火，防治森林病虫害，保护林地，制止滥伐、盗伐森林，提高森林覆盖率。\n</p><p>"
+  },
+  {
+   "no": 58,
+   "label": "第五十八条",
+   "chapter": null,
+   "text": "国家保护和合理利用水、森林、草原、野生动植物等自然资源，防止其被污染或者被破坏。\n</p>\n<div class=\"mw-heading mw-heading2\"><h2 id=\"第八章_法律责任\"><span id=\".E7.AC.AC.E5.85.AB.E7.AB.A0_.E6.B3.95.E5.BE.8B.E8.B4.A3.E4.BB.BB\"></span>第八章　法律责任</h2><span class=\"mw-editsection\"><span class=\"mw-editsection-bracket\">[</span><a href=\"/w/index.php?title=%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%86%9C%E4%B8%9A%E6%B3%95_(1993%E5%B9%B4)&amp;action=edit&amp;section=8\" title=\"编辑章节：第八章　法律责任\"><span>编辑</span></a><span class=\"mw-editsection-bracket\">]</span></span></div>\n<p>"
+  },
+  {
+   "no": 59,
+   "label": "第五十九条",
+   "chapter": null,
+   "text": "违反本法第十八条、第十九条的规定，向农民或者农业生产经营组织收费、罚款、摊派或者强制集资的，上级机关应当予以制止，并予公告；已经收取钱款或者已经使用了人力、物力的，由上级机关责令限期归还已经收取的钱款或者折价偿还已经使用的人力、物力；情节严重的，由上级机关或者所在单位给予直接责任人员行政处分。\n</p><p>"
+  },
+  {
+   "no": 60,
+   "label": "第六十条",
+   "chapter": null,
+   "text": "违反本法第四十一条第一款、第四十七条第二款的规定，任何单位将农产品收购资金截留、挪用于单位非农产品收购用途的，或者将各级人民政府拨付用于农业的资金截留、挪用于单位非农业开支的，或者将银行的农业贷款截留、挪用于单位非农业用途的，由上级机关责令限期归还被截留、挪用的资金；情节严重的，由上级机关或者所在单位给予直接责任人员行政处分。\n</p><p>"
+  },
+  {
+   "no": 61,
+   "label": "第六十一条",
+   "chapter": null,
+   "text": "违反本法第四条的规定，买卖或者以其他形式非法转让土地的，非法占用土地的，依照土地管理法的规定追究法律责任。\n</p><p>"
+  },
+  {
+   "no": 62,
+   "label": "第六十二条",
+   "chapter": null,
+   "text": "违反本法第三十四条第二款的规定，生产假农药、假兽药、假化肥的，销售明知是假的或者是失去使用效能的农药、兽药、化肥、种子，或者生产者、销售者以不合格的农药、兽药、化肥、种子冒充合格的农药、兽药、化肥、种子的，责令停止生产、销售，没收违法生产、销售的产品和违法所得，并处违法所得一倍以上五倍以下的罚款，可以吊销营业执照。构成犯罪的，依法追究刑事责任。\n</p><p>　　前款规定的行政处罚由法律、行政法规规定的机关决定。\n</p><p>"
+  },
+  {
+   "no": 63,
+   "label": "第六十三条",
+   "chapter": null,
+   "text": "违反本法规定，侵犯农业生产经营组织或者农业劳动者的合法权益，造成损失、损害的，依法承担民事赔偿责任。\n</p><p>"
+  },
+  {
+   "no": 64,
+   "label": "第六十四条",
+   "chapter": null,
+   "text": "违反本法规定，依法应当给予行政处罚的，除本法另有规定外，依照有关法律、法规的规定执行。\n</p><p>"
+  },
+  {
+   "no": 65,
+   "label": "第六十五条",
+   "chapter": null,
+   "text": "违反本法规定，依照法律应当追究刑事责任的，依照有关法律的规定追究刑事责任。\n</p>\n<div class=\"mw-heading mw-heading2\"><h2 id=\"第九章_附则\"><span id=\".E7.AC.AC.E4.B9.9D.E7.AB.A0_.E9.99.84.E5.88.99\"></span>第九章　附则</h2><span class=\"mw-editsection\"><span class=\"mw-editsection-bracket\">[</span><a href=\"/w/index.php?title=%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%86%9C%E4%B8%9A%E6%B3%95_(1993%E5%B9%B4)&amp;action=edit&amp;section=9\" title=\"编辑章节：第九章　附则\"><span>编辑</span></a><span class=\"mw-editsection-bracket\">]</span></span></div>\n<p>"
+  },
+  {
+   "no": 66,
+   "label": "第六十六条",
+   "chapter": null,
+   "text": "本法自公布之日起施行。\n</p>\n<style data-mw-deduplicate=\"TemplateStyles:r4375040\">.mw-parser-output .licenseContainer{box-sizing:border-box;margin-top:1em;margin-bottom:0.25em;clear:both;width:auto;page-break-before:always;break-before:page}.mw-parser-output .licenseContainer>div:first-of-type{display:table;border:2px solid var(--border-subtle,#8888aa);border-collapse:collapse;border-spacing:0 0;empty-cells:hide;box-sizing:border-box;margin:0 auto 0 auto;width:100%;background-color:var(--background-color-neutral-subtle,#f7f8ff);color:var(--color-base,#202122)}.mw-parser-output .licenseContainer>div:first-of-type>div:first-child{display:table-row-group}.mw-parser-output .licenseContainer>div:first-of-type>div:first-child>div:first-child{display:table-row}.mw-parser-output .licenseContainer>div:first-of-type>div:first-child>div:first-child>div{display:table-cell;padding:5px;vertical-align:middle;width:auto}.mw-parser-output .licenseContainer>div:first-of-type>div:first-child>div:first-child>div:first-child{text-align:left}.mw-parser-output .licenseContainer>div:first-of-type>div:first-child>div:first-child>div:nth-child(2){text-align:center}.mw-parser-output .licenseContainer>div:first-of-type>div:first-child>div:first-child>div:nth-child(2)>div{width:100%}.mw-parser-output .licenseContainer>div:first-of-type>div:first-child>div:first-child>div:nth-child(2)>div:first-child{display:block;margin:0 auto 0 auto;text-align:left}.mw-parser-output .licenseContainer>div:first-of-type>div:first-child>div:first-child>div:nth-child(2)>div:nth-child(2){display:table;border-top:1px solid var(--border-subtle,#8888aa)}.mw-parser-output .licenseContainer>div:first-of-type>div:first-child>div:first-child>div:nth-child(2)>div:nth-child(2)>div{display:table-cell;vertical-align:middle}.mw-parser-output .licenseContainer>div:first-of-type>div:first-child>div:first-child>div:nth-child(2)>div:nth-child(2)>div:first-child{text-align:center;padding:5px 0;width:40px}.mw-parser-output .licenseContainer>div:first-of-type>div:first-child>div:first-child>div:nth-child(2)>div:nth-child(2)>div:nth-child(2){text-align:left;padding:5px;font-size:92%}.mw-parser-output .licenseContainer>div:first-of-type>div:first-child>div:first-child>div:nth-child(3){text-align:right}.mw-parser-output .licensetpl{display:none}.mw-parser-output .licenseContainer.wst-collapsible-box{clear:both;margin:0.25em 0 0.25em 0;font-size:95%;background-color:var(--background-color-neutral-subtle,#f7f8ff);color:var(--color-base,#202122);border:2px solid var(--border-subtle,#8888aa);text-align:left;line-height:1.6}.mw-parser-output .wst-license-container-title{display:inline-block;padding:0.5em}.mw-parser-output .wst-license-container-content{background:transparent;color:inherit;margin:0;padding:3px;text-align:left}.mw-parser-output .licenseContainer.warningLicenseContainer>div:first-child{border:2px solid var(--border-color-error,#b22222);background-color:var(--background-color-error-subtle,#ffeeee);color:var(--color-base,#202122)}.mw-parser-output .licenseContainer.warningLicenseContainer>div:first-child>div:first-child>div:first-child>div:nth-child(2)>div:nth-child(2){border:2px solid var(--border-color-error,#b22222);color:var(--color-base,#202122)}</style><div class=\"licenseContainer licenseBanner dynlayout-exempt\">\n<div><div><div><div>\n<p><span class=\"imageLeft\"><span typeof=\"mw:File\"><span><img alt=\"\" src=\"//thumb.wikimedia.org/wikipedia/commons/thumb/6/62/PD-icon.svg/60px-PD-icon.svg.png?utm_source=zh.wikisource.org&amp;utm_campaign=parser&amp;utm_content=thumbnail\" decoding=\"async\" loading=\"lazy\" width=\"48\" height=\"48\" class=\"mw-file-element\" srcset=\"//thumb.wikimedia.org/wikipedia/commons/thumb/6/62/PD-icon.svg/120px-PD-icon.svg.png?utm_source=zh.wikisource.org&amp;utm_campaign=parser&amp;utm_content=thumbnail 2x\" data-file-width=\"196\" data-file-height=\"196\" /></span></span></span>\n</p>\n</div><div>\n<div>\n<p>"
+  }
+ ]
+}
