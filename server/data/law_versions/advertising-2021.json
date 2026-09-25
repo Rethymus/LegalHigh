@@ -1,26 +1,81 @@
 {
-  "law_id": "advertising-2021",
-  "title": "中华人民共和国广告法",
-  "schema_version": 1,
-  "note": "R135（2026-09-16）领域扩张续批：经 lawtext（flk DOCX 转录）链入库。",
-  "versions": [
-    {
-      "version_id": "current",
-      "label": "2021 修正",
-      "status": "现行有效（2021修正）",
-      "promulgation_date": "2021-04-29",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "effective_date": "2015-09-01",
-      "article_count": 74,
-      "current": true,
-      "evidence": {
-        "kind": "flk-docx-transcription",
-        "grade": "中",
-        "url": "https://flk.npc.gov.cn/detail?id=ff8081817ab231eb017abd6bd860052d",
-        "accessed_at": "2026-09-16",
-        "snapshot": "docs/research/evidence/lawtext_广告法2021.md"
-      }
-    }
-  ],
-  "pending_note": "1994 通过原版与 2015 修订/2018 修正版全文未采集；附则自载施行日 2015-09-01（跨修正延续）。R135 lawtext 链入库，bbbs 经 flk 官方 API 核验（pub/eff 2021-04-29/有效）。"
+ "law_id": "advertising-2021",
+ "title": "中华人民共和国广告法",
+ "schema_version": 1,
+ "note": "R135（2026-09-16）领域扩张续批：经 lawtext（flk DOCX 转录）链入库。",
+ "versions": [
+  {
+   "version_id": "current",
+   "label": "2021 修正",
+   "status": "现行有效（2021修正）",
+   "promulgation_date": "2021-04-29",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "effective_date": "2015-09-01",
+   "article_count": 74,
+   "current": true,
+   "evidence": {
+    "kind": "flk-docx-transcription",
+    "grade": "中",
+    "url": "https://flk.npc.gov.cn/detail?id=ff8081817ab231eb017abd6bd860052d",
+    "accessed_at": "2026-09-16",
+    "snapshot": "docs/research/evidence/lawtext_广告法2021.md"
+   }
+  },
+  {
+   "version_id": "1994-enacted",
+   "label": "1994 原版",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "1994-10-27",
+   "promulgation_organ": "第八届全国人民代表大会常务委员会第十次会议",
+   "effective_date": "1995-02-01",
+   "article_count": 49,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%B9%BF%E5%91%8A%E6%B3%95_(1994%E5%B9%B4)",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_广告法_1994.html"
+   },
+   "note": "快照头部括注自证：1994-10-27 八届人大常委会十次会议通过、主席令第三十四号公布、自 1995-02-01 施行（末条附则同证）。",
+   "promulgation_instrument": "中华人民共和国主席令第三十四号（1994-10-27 公布）"
+  },
+  {
+   "version_id": "2015-revision",
+   "label": "2015 修订",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "2015-04-24",
+   "promulgation_organ": "第十二届全国人民代表大会常务委员会第十四次会议",
+   "effective_date": "2015-09-01",
+   "article_count": 75,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%B9%BF%E5%91%8A%E6%B3%95_(2015%E5%B9%B4)",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_广告法_2015.html"
+   },
+   "note": "快照自证：2015-04-24 十二届人大常委会十四次会议修订（49→75 条大修）；末条附则自载自 2015-09-01 施行。"
+  },
+  {
+   "version_id": "2018-amendment",
+   "label": "2018 修正",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "2018-10-26",
+   "promulgation_organ": "第十三届全国人民代表大会常务委员会第六次会议",
+   "effective_date": "2015-09-01",
+   "article_count": 75,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%B9%BF%E5%91%8A%E6%B3%95_(2018%E5%B9%B4)",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_广告法_2018.html"
+   },
+   "note": "快照自证：根据 2018-10-26 十三届人大常委会六次会议《关于修改〈中华人民共和国野生动物保护法〉等十五部法律的决定》修正；施行日 2015-09-01 跨修正延续（末条自证）。"
+  }
+ ],
+ "pending_note": "1994 通过原版与 2015 修订/2018 修正版全文未采集；附则自载施行日 2015-09-01（跨修正延续）。R135 lawtext 链入库，bbbs 经 flk 官方 API 核验（pub/eff 2021-04-29/有效）。"
 }

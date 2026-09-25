@@ -1,26 +1,99 @@
 {
-  "law_id": "patent-2020",
-  "title": "中华人民共和国专利法",
-  "schema_version": 1,
-  "note": "R136（2026-09-16）知识产权三法批次：经 lawtext（flk DOCX 转录）链入库。",
-  "versions": [
-    {
-      "version_id": "current",
-      "label": "2020 修正",
-      "status": "现行有效（2020修正）",
-      "promulgation_date": "2020-10-17",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "effective_date": "2021-06-01",
-      "article_count": 82,
-      "current": true,
-      "evidence": {
-        "kind": "flk-docx-transcription",
-        "grade": "中",
-        "url": "https://flk.npc.gov.cn/detail?id=ff808081752b7d430175e4651cbd1547",
-        "accessed_at": "2026-09-16",
-        "snapshot": "docs/research/evidence/lawtext_专利法2020.md"
-      }
-    }
-  ],
-  "pending_note": "1984 通过原版与 1992/2000/2008 修正版全文未采集。effective_date 取 2020 修正决定施行日 2021-06-01（flk sxrq 自证）；附则自载原版施行日 1985-04-01，跨四十一年沿用、对本版语义误导性大，注记存档。R136 lawtext 链入库。"
+ "law_id": "patent-2020",
+ "title": "中华人民共和国专利法",
+ "schema_version": 1,
+ "note": "R136（2026-09-16）知识产权三法批次：经 lawtext（flk DOCX 转录）链入库。",
+ "versions": [
+  {
+   "version_id": "current",
+   "label": "2020 修正",
+   "status": "现行有效（2020修正）",
+   "promulgation_date": "2020-10-17",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "effective_date": "2021-06-01",
+   "article_count": 82,
+   "current": true,
+   "evidence": {
+    "kind": "flk-docx-transcription",
+    "grade": "中",
+    "url": "https://flk.npc.gov.cn/detail?id=ff808081752b7d430175e4651cbd1547",
+    "accessed_at": "2026-09-16",
+    "snapshot": "docs/research/evidence/lawtext_专利法2020.md"
+   }
+  },
+  {
+   "version_id": "1984-enacted",
+   "label": "1984 原版",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "1984-03-12",
+   "promulgation_organ": "第六届全国人民代表大会常务委员会第四次会议",
+   "effective_date": "1985-04-01",
+   "article_count": 69,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E4%B8%93%E5%88%A9%E6%B3%95_(1984%E5%B9%B4)",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_专利法_1984.html"
+   },
+   "note": "快照头部括注自证：1984-03-12 六届人大常委会四次会议通过、主席令第十一号公布、自 1985-04-01 施行（末条附则同证）。",
+   "promulgation_instrument": "中华人民共和国主席令第十一号（1984-03-12 公布）"
+  },
+  {
+   "version_id": "1992-amendment",
+   "label": "1992 修正",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "1992-09-04",
+   "promulgation_organ": "第七届全国人民代表大会常务委员会第二十七次会议",
+   "effective_date": "1985-04-01",
+   "article_count": 69,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E4%B8%93%E5%88%A9%E6%B3%95_(1992%E5%B9%B4)",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_专利法_1992.html"
+   },
+   "note": "快照自证：根据 1992-09-04 七届人大常委会二十七次会议决定修正；施行日 1985-04-01 由末条附则自证跨修正延续。"
+  },
+  {
+   "version_id": "2000-amendment",
+   "label": "2000 第二次修正",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "2000-08-25",
+   "promulgation_organ": "第九届全国人民代表大会常务委员会第十七次会议",
+   "effective_date": "1985-04-01",
+   "article_count": 69,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E4%B8%93%E5%88%A9%E6%B3%95_(2000%E5%B9%B4)",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_专利法_2000.html"
+   },
+   "note": "快照自证：根据 2000-08-25 九届人大常委会十七次会议决定第二次修正；施行日 1985-04-01 跨修正延续（末条自证）。"
+  },
+  {
+   "version_id": "2008-amendment",
+   "label": "2008 第三次修正",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "2008-12-27",
+   "promulgation_organ": "第十一届全国人民代表大会常务委员会第六次会议",
+   "effective_date": "1985-04-01",
+   "article_count": 76,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E4%B8%93%E5%88%A9%E6%B3%95_(2008%E5%B9%B4)",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_专利法_2008.html"
+   },
+   "note": "快照自证：根据 2008-12-27 十一届人大常委会六次会议决定第三次修正（69→76 条）；施行日 1985-04-01 跨修正延续（末条自证）。"
+  }
+ ],
+ "pending_note": "1984 通过原版与 1992/2000/2008 修正版全文未采集。effective_date 取 2020 修正决定施行日 2021-06-01（flk sxrq 自证）；附则自载原版施行日 1985-04-01，跨四十一年沿用、对本版语义误导性大，注记存档。R136 lawtext 链入库。"
 }
