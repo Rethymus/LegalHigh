@@ -1,117 +1,175 @@
 {
-  "law_id": "pcl-2023",
-  "title": "中华人民共和国民事诉讼法",
-  "schema_version": 1,
-  "note": "S2-T4 历史版本库 PoC（2026-09-13）：只登记有仓库内证据的版本；无证据的历史修正版本一律不入表、不标日期（不编造）。current 版本字段必须与 server/data/laws/ 语料元数据一致（corpus_selfcheck 钉住）。",
-  "versions": [
-    {
-      "version_id": "2017-amendment",
-      "label": "2017 第三次修正",
-      "status": "已取代（仅作历史对照）",
-      "promulgation_date": "2017-06-27",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "promulgation_instrument": "",
-      "effective_date": "2017-06-27",
-      "article_count": 284,
-      "current": false,
-      "evidence": {
-        "kind": "wikisource-transcription",
-        "grade": "中",
-        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E6%B0%91%E4%BA%8B%E8%A8%B4%E8%A8%9F%E6%B3%95_(2017%E5%B9%B4)",
-        "accessed_at": "2026-09-14",
-        "snapshot": "docs/research/evidence/ws_民事诉讼法2017.html"
-      }
-    },
-    {
-      "version_id": "2012-amendment",
-      "label": "2012 第二次修正",
-      "status": "已取代（仅作历史对照）",
-      "promulgation_date": "2012-08-31",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "promulgation_instrument": "",
-      "effective_date": "2012-08-31",
-      "article_count": 284,
-      "current": false,
-      "evidence": {
-        "kind": "wikisource-transcription",
-        "grade": "中",
-        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E6%B0%91%E4%BA%8B%E8%A8%B4%E8%A8%9F%E6%B3%95_(2012%E5%B9%B4)",
-        "accessed_at": "2026-09-14",
-        "snapshot": "docs/research/evidence/ws_民事诉讼法2012.html"
-      }
-    },
-    {
-      "version_id": "2007-amendment",
-      "label": "2007 第一次修正",
-      "status": "已取代（仅作历史对照）",
-      "promulgation_date": "2007-10-28",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "promulgation_instrument": "",
-      "effective_date": "2007-10-28",
-      "article_count": 268,
-      "current": false,
-      "evidence": {
-        "kind": "wikisource-transcription",
-        "grade": "中",
-        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E6%B0%91%E4%BA%8B%E8%A8%B4%E8%A8%9F%E6%B3%95_(2007%E5%B9%B4)",
-        "accessed_at": "2026-09-14",
-        "snapshot": "docs/research/evidence/ws_民事诉讼法2007.html"
-      }
-    },
-    {
-      "version_id": "1991-enacted",
-      "label": "1991 通过",
-      "status": "已取代（仅作历史对照）",
-      "promulgation_date": "1991-04-09",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "promulgation_instrument": "中华人民共和国主席令第四十四号",
-      "effective_date": "1991-04-09",
-      "article_count": 270,
-      "current": false,
-      "evidence": {
-        "kind": "wikisource-transcription",
-        "grade": "中",
-        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E6%B0%91%E4%BA%8B%E8%A8%B4%E8%A8%9F%E6%B3%95_(1991%E5%B9%B4)",
-        "accessed_at": "2026-09-14",
-        "snapshot": "docs/research/evidence/ws_民事诉讼法1991.html"
-      }
-    },
-    {
-      "version_id": "2021-amendment",
-      "label": "2021 第四次修正",
-      "status": "已取代（2023 修正前文本，仅作历史对照）",
-      "promulgation_date": "2021-12-24",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "effective_date": "2022-01-01",
-      "article_count": 291,
-      "current": false,
-      "evidence": {
-        "kind": "wikisource-transcription",
-        "grade": "中",
-        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E6%B0%91%E4%BA%8B%E8%A8%B4%E8%A8%9F%E6%B3%95_(2021%E5%B9%B4)",
-        "accessed_at": "2026-09-14",
-        "snapshot": "docs/research/evidence/ws_民事诉讼法2021.html"
-      }
-    },
-    {
-      "version_id": "2023-revision",
-      "label": "2023 修正",
-      "status": "现行有效（2023修正）",
-      "promulgation_date": "2023-09-01",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "promulgation_instrument": "中华人民共和国主席令第十一号",
-      "effective_date": "2024-01-01",
-      "article_count": 306,
-      "article_count_note": "末条已定案：flk 官方结构树 totalArticles=306、第一条→第三百零六条连续无缺（2026-09-15 业主授权只读抽查，见 docs/qa-evidence/flk-pcl-2023-末条复核-2026-09-13.md 定案附记）；第306条附则从句经双转录谱系收敛确认保留（2026-09-21 lawtext 第三链 306 条且第306条逐字同文，见同文件二次附记）",
-      "current": true,
-      "evidence": {
-        "kind": "wikisource-transcription",
-        "grade": "中",
-        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E6%B0%91%E4%BA%8B%E8%AF%89%E8%AE%BC%E6%B3%95_(2023%E5%B9%B4)",
-        "accessed_at": "2026-08-29",
-        "snapshot": "docs/research/evidence/ws_民事诉讼法2023.json"
-      }
-    }
-  ],
-  "pending_note": "**已定案（2026-09-15 flk 官方结构树 + 2026-09-21 lawtext 第三链收敛）**：条号序列 306 条连续无缺【强】（flfgDetails totalArticles/last=第三百零六条，业主授权只读抽查）；第306条「试行废止」附则为跨修正保留的原附则（保留说成立）——两条独立转录谱系（Wikisource 语料源与 flk DOCX 衍生 lawtext）306 条逐字一致、第306条同文【中】，且 1991/2007/2012/2017/2021 五历史版附则同款自洽。残余限制：flk 文本层为 OFD 版式，从句的原文级【强】终验留人工阅读器目验（非阻塞，处置已定：维持306条）。历史争议记录见 docs/qa-evidence/flk-pcl-2023-末条复核-2026-09-13.md 两则附记。"
+ "law_id": "pcl-2023",
+ "title": "中华人民共和国民事诉讼法",
+ "schema_version": 1,
+ "note": "S2-T4 历史版本库 PoC（2026-09-13）：只登记有仓库内证据的版本；无证据的历史修正版本一律不入表、不标日期（不编造）。current 版本字段必须与 server/data/laws/ 语料元数据一致（corpus_selfcheck 钉住）。",
+ "versions": [
+  {
+   "version_id": "2017-amendment",
+   "label": "2017 第三次修正",
+   "status": "已取代（仅作历史对照）",
+   "promulgation_date": "2017-06-27",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "promulgation_instrument": "",
+   "effective_date": "2017-06-27",
+   "article_count": 284,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E6%B0%91%E4%BA%8B%E8%A8%B4%E8%A8%9F%E6%B3%95_(2017%E5%B9%B4)",
+    "accessed_at": "2026-09-14",
+    "snapshot": "docs/research/evidence/ws_民事诉讼法2017.html"
+   }
+  },
+  {
+   "version_id": "2012-amendment",
+   "label": "2012 第二次修正",
+   "status": "已取代（仅作历史对照）",
+   "promulgation_date": "2012-08-31",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "promulgation_instrument": "",
+   "effective_date": "2012-08-31",
+   "article_count": 284,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E6%B0%91%E4%BA%8B%E8%A8%B4%E8%A8%9F%E6%B3%95_(2012%E5%B9%B4)",
+    "accessed_at": "2026-09-14",
+    "snapshot": "docs/research/evidence/ws_民事诉讼法2012.html"
+   }
+  },
+  {
+   "version_id": "2007-amendment",
+   "label": "2007 第一次修正",
+   "status": "已取代（仅作历史对照）",
+   "promulgation_date": "2007-10-28",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "promulgation_instrument": "",
+   "effective_date": "2007-10-28",
+   "article_count": 268,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E6%B0%91%E4%BA%8B%E8%A8%B4%E8%A8%9F%E6%B3%95_(2007%E5%B9%B4)",
+    "accessed_at": "2026-09-14",
+    "snapshot": "docs/research/evidence/ws_民事诉讼法2007.html"
+   }
+  },
+  {
+   "version_id": "1991-enacted",
+   "label": "1991 通过",
+   "status": "已取代（仅作历史对照）",
+   "promulgation_date": "1991-04-09",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "promulgation_instrument": "中华人民共和国主席令第四十四号",
+   "effective_date": "1991-04-09",
+   "article_count": 270,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E6%B0%91%E4%BA%8B%E8%A8%B4%E8%A8%9F%E6%B3%95_(1991%E5%B9%B4)",
+    "accessed_at": "2026-09-14",
+    "snapshot": "docs/research/evidence/ws_民事诉讼法1991.html"
+   }
+  },
+  {
+   "version_id": "2021-amendment",
+   "label": "2021 第四次修正",
+   "status": "已取代（2023 修正前文本，仅作历史对照）",
+   "promulgation_date": "2021-12-24",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "effective_date": "2022-01-01",
+   "article_count": 291,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E6%B0%91%E4%BA%8B%E8%A8%B4%E8%A8%9F%E6%B3%95_(2021%E5%B9%B4)",
+    "accessed_at": "2026-09-14",
+    "snapshot": "docs/research/evidence/ws_民事诉讼法2021.html"
+   }
+  },
+  {
+   "version_id": "2023-revision",
+   "label": "2023 修正",
+   "status": "现行有效（2023修正）",
+   "promulgation_date": "2023-09-01",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "promulgation_instrument": "中华人民共和国主席令第十一号",
+   "effective_date": "2024-01-01",
+   "article_count": 306,
+   "article_count_note": "末条已定案：flk 官方结构树 totalArticles=306、第一条→第三百零六条连续无缺（2026-09-15 业主授权只读抽查，见 docs/qa-evidence/flk-pcl-2023-末条复核-2026-09-13.md 定案附记）；第306条附则从句经双转录谱系收敛确认保留（2026-09-21 lawtext 第三链 306 条且第306条逐字同文，见同文件二次附记）",
+   "current": true,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E6%B0%91%E4%BA%8B%E8%AF%89%E8%AE%BC%E6%B3%95_(2023%E5%B9%B4)",
+    "accessed_at": "2026-08-29",
+    "snapshot": "docs/research/evidence/ws_民事诉讼法2023.json"
+   }
+  }
+ ],
+ "pending_note": "**已定案（2026-09-15 flk 官方结构树 + 2026-09-21 lawtext 第三链收敛）**：条号序列 306 条连续无缺【强】（flfgDetails totalArticles/last=第三百零六条，业主授权只读抽查）；第306条「试行废止」附则为跨修正保留的原附则（保留说成立）——两条独立转录谱系（Wikisource 语料源与 flk DOCX 衍生 lawtext）306 条逐字一致、第306条同文【中】，且 1991/2007/2012/2017/2021 五历史版附则同款自洽。残余限制：flk 文本层为 OFD 版式，从句的原文级【强】终验留人工阅读器目验（非阻塞，处置已定：维持306条）。历史争议记录见 docs/qa-evidence/flk-pcl-2023-末条复核-2026-09-13.md 两则附记。 R350：2017 第三次修正决定单项文本维基文库未检索到独立页（同名无年份页为空壳，无决定正文）——如实待采。",
+ "amendments": [
+  {
+   "no": 1,
+   "title": "全国人民代表大会常务委员会关于修改《中华人民共和国民事诉讼法》的决定（2007 第一次修正）",
+   "passed_date": "2007-10-28",
+   "effective": "2008-04-01",
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E5%85%A8%E5%9B%BD%E4%BA%BA%E6%B0%91%E4%BB%A3%E8%A1%A8%E5%A4%A7%E4%BC%9A%E5%B8%B8%E5%8A%A1%E5%A7%94%E5%91%98%E4%BC%9A%E5%85%B3%E4%BA%8E%E4%BF%AE%E6%94%B9%E3%80%8A%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E6%B0%91%E4%BA%8B%E8%AF%89%E8%AE%BC%E6%B3%95%E3%80%8B%E7%9A%84%E5%86%B3%E5%AE%9A%20(2007%E5%B9%B4)",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_民诉法修正决定_2007.html"
+   },
+   "note": "快照头部括注自证：2007-10-28 十届人大常委会三十次会议通过；决定尾部自证「本决定自2008年4月1日起施行」；修改条目 19 项（一、…、十九、计）。"
+  },
+  {
+   "no": 2,
+   "title": "全国人民代表大会常务委员会关于修改《中华人民共和国民事诉讼法》的决定（2012 第二次修正）",
+   "passed_date": "2012-08-31",
+   "effective": "2013-01-01",
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E5%85%A8%E5%9B%BD%E4%BA%BA%E6%B0%91%E4%BB%A3%E8%A1%A8%E5%A4%A7%E4%BC%9A%E5%B8%B8%E5%8A%A1%E5%A7%94%E5%91%98%E4%BC%9A%E5%85%B3%E4%BA%8E%E4%BF%AE%E6%94%B9%E3%80%8A%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E6%B0%91%E4%BA%8B%E8%AF%89%E8%AE%BC%E6%B3%95%E3%80%8B%E7%9A%84%E5%86%B3%E5%AE%9A%20(2012%E5%B9%B4)",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_民诉法修正决定_2012.html"
+   },
+   "note": "快照头部括注自证：2012-08-31 十一届人大常委会二十八次会议通过；尾部自证 2013-01-01 施行；修改条目 60 项。"
+  },
+  {
+   "no": 4,
+   "title": "全国人民代表大会常务委员会关于修改《中华人民共和国民事诉讼法》的决定（2021 第四次修正）",
+   "passed_date": "2021-12-24",
+   "effective": "2022-01-01",
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E5%85%A8%E5%9B%BD%E4%BA%BA%E6%B0%91%E4%BB%A3%E8%A1%A8%E5%A4%A7%E4%BC%9A%E5%B8%B8%E5%8A%A1%E5%A7%94%E5%91%98%E4%BC%9A%E5%85%B3%E4%BA%8E%E4%BF%AE%E6%94%B9%E3%80%8A%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E6%B0%91%E4%BA%8B%E8%AF%89%E8%AE%BC%E6%B3%95%E3%80%8B%E7%9A%84%E5%86%B3%E5%AE%9A%20(2021%E5%B9%B4)",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_民诉法修正决定_2021.html"
+   },
+   "note": "快照头部括注自证：2021-12-24 十三届人大常委会三十二次会议通过；尾部自证 2022-01-01 施行；修改条目 16 项（在线诉讼效力入法）。"
+  },
+  {
+   "no": 5,
+   "title": "全国人民代表大会常务委员会关于修改《中华人民共和国民事诉讼法》的决定（2023 第五次修正）",
+   "passed_date": "2023-09-01",
+   "effective": "2024-01-01",
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E5%85%A8%E5%9B%BD%E4%BA%BA%E6%B0%91%E4%BB%A3%E8%A1%A8%E5%A4%A7%E4%BC%9A%E5%B8%B8%E5%8A%A1%E5%A7%94%E5%91%98%E4%BC%9A%E5%85%B3%E4%BA%8E%E4%BF%AE%E6%94%B9%E3%80%8A%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E6%B0%91%E4%BA%8B%E8%AF%89%E8%AE%BC%E6%B3%95%E3%80%8B%E7%9A%84%E5%86%B3%E5%AE%9A%20(2023%E5%B9%B4)",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_民诉法修正决定_2023.html"
+   },
+   "note": "快照头部括注自证：2023-09-01 十四届人大常委会五次会议通过；尾部自证 2024-01-01 施行；修改条目 26 项。"
+  }
+ ]
 }
