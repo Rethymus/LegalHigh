@@ -1,26 +1,42 @@
 {
-  "law_id": "higher-edu-2018",
-  "title": "中华人民共和国高等教育法",
-  "schema_version": 1,
-  "note": "R155（2026-09-18）教育慈善与安全批次：经 lawtext（flk DOCX 转录）链入库。",
-  "versions": [
-    {
-      "version_id": "current",
-      "label": "2018 修正",
-      "status": "现行有效（2018修正）",
-      "promulgation_date": "2018-12-29",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "effective_date": "2018-12-29",
-      "article_count": 69,
-      "current": true,
-      "evidence": {
-        "kind": "flk-docx-transcription",
-        "grade": "中",
-        "url": "https://flk.npc.gov.cn/detail?id=ff8080816f135f46016f20df64ec16c5",
-        "accessed_at": "2026-09-18",
-        "snapshot": "docs/research/evidence/lawtext_高等教育法2018.md"
-      }
-    }
-  ],
-  "pending_note": "1998 原版与 2015 修正版全文未采集。双 bbbs 候选按 status 定案 2018 版。"
+ "law_id": "higher-edu-2018",
+ "title": "中华人民共和国高等教育法",
+ "schema_version": 1,
+ "note": "R155（2026-09-18）教育慈善与安全批次：经 lawtext（flk DOCX 转录）链入库。",
+ "versions": [
+  {
+   "version_id": "current",
+   "label": "2018 修正",
+   "status": "现行有效（2018修正）",
+   "promulgation_date": "2018-12-29",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "effective_date": "2018-12-29",
+   "article_count": 69,
+   "current": true,
+   "evidence": {
+    "kind": "flk-docx-transcription",
+    "grade": "中",
+    "url": "https://flk.npc.gov.cn/detail?id=ff8080816f135f46016f20df64ec16c5",
+    "accessed_at": "2026-09-18",
+    "snapshot": "docs/research/evidence/lawtext_高等教育法2018.md"
+   }
+  }
+ ],
+ "pending_note": "1998 原版与 2015 修正版全文未采集。双 bbbs 候选按 status 定案 2018 版。",
+ "amendments": [
+  {
+   "no": 1,
+   "title": "关于修改《中华人民共和国高等教育法》的决定（2015 修正）",
+   "passed_date": "2015-12-27",
+   "effective": "2016-06-01",
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E5%85%A8%E5%9B%BD%E4%BA%BA%E6%B0%91%E4%BB%A3%E8%A1%A8%E5%A4%A7%E4%BC%9A%E5%B8%B8%E5%8A%A1%E5%A7%94%E5%91%98%E4%BC%9A%E5%85%B3%E4%BA%8E%E4%BF%AE%E6%94%B9%E3%80%8A%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E9%AB%98%E7%AD%89%E6%95%99%E8%82%B2%E6%B3%95%E3%80%8B%E7%9A%84%E5%86%B3%E5%AE%9A",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_高等教育法修正决定_2015.html"
+   },
+   "note": "快照头部括注自证：2015-12-27 十二届人大常委会十八次会议通过（与教育法 2015 修正同日同会——2015-12-27 教育立法批次）；本决定自 2016-06-01 起施行。"
+  }
+ ]
 }
