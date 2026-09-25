@@ -99,6 +99,14 @@ const ROUTES = [
   { name: '10-case-detail-cn', path: '/cases/guidance-24', fullPage: true, identity: { selector: '.case-t', text: '荣宝英诉王阳' } },
   { name: '10b-case-detail-defense', path: '/cases/guidance-93', fullPage: true, identity: { selector: '.case-t', text: '于欢故意伤害案' } },
   { name: '10c-case-detail-labor', path: '/cases/guidance-18', fullPage: true, identity: { selector: '.case-t', text: '中兴通讯（杭州）' } },
+  // R336：窄屏案例页头折叠（收藏+更多）与长文阅读排版
+  { name: '10d-narrow-case-detail', path: '/cases/guidance-24', viewport: { width: 390, height: 844 }, fullPage: true, identity: { selector: '.case-t', text: '荣宝英诉王阳' } },
+  { name: '10e-narrow-case-actionsheet', path: '/cases/guidance-24', viewport: { width: 390, height: 844 }, identity: { selector: '.case-t', text: '荣宝英诉王阳' }, afterSelector: '.sheet-mask .sheet-row', steps: [
+    { t: 'eval', expr: `(() => { const b = [...document.querySelectorAll('.case-h button')].find(x => /更多/.test(x.textContent || '')); if (!b) return 'no-more-btn'; b.click(); return 'clicked' })()` },
+    { t: 'wait', ms: 700 },
+  ] },
+  // R336：R277 迁移后无 statutes 键的案例（曾致错误边界——.length 无守卫），钉住修复
+  { name: '10f-case-detail-migrated', path: '/cases/guidance-01', fullPage: true, identity: { selector: '.case-t', text: '上海中原物业' }, afterText: '研究性参照' },
   { name: '11-case-detail-foreign', path: '/cases/brown-v-board', fullPage: true, identity: { selector: '.case-t', text: '布朗诉教育委员会案' } },
   { name: '12-research', path: '/research', fullPage: true, identity: pageHeader('法律研究') },
   { name: '13-research-run', path: '/research?q=' + encodeURIComponent('网购到假货可以核对哪些现行法条'), fullPage: true, identity: { selector: '.ph-t' }, afterText: 'Research Question', steps: [
@@ -124,9 +132,32 @@ const ROUTES = [
     })()` },
     { t: 'eval', expr: `(() => { const btn = [...document.querySelectorAll('button')].find(b => /发起规则审查/.test(b.textContent)); if (!btn) return 'no-btn'; btn.click(); return 'clicked' })()` },
     { t: 'wait', ms: 3000 },
+  ] },
+  { name: '16b-narrow-contract-wizard', path: '/contracts/new', viewport: { width: 390, height: 844 }, identity: { selector: '.ph-t' }, afterText: '风险说明', steps: [
+    // R336：窄屏三栏转分步向导——发起审查后切「风险」pane，innerText 只有可见 pane 才计入，
+    // afterText「风险说明」（risk-card 内字段）即向导切换真实生效的证据。
+    { t: 'eval', expr: `(() => {
+      const title = document.querySelector('input[aria-label="合同名称"]');
+      const body = document.querySelector('textarea[aria-label="合同文本"]');
+      if (!title || !body) return 'no-contract-fields';
+      const inputSet = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set;
+      const textSet = Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype, 'value').set;
+      if (!(title instanceof HTMLInputElement) || !(body instanceof HTMLTextAreaElement)) return 'bad-element-types';
+      inputSet.call(title, 'QA 隔离数据库窄屏向导审查');
+      title.dispatchEvent(new Event('input', { bubbles: true }));
+      textSet.call(body, '合同测试输入（仅写入本次唯一临时数据库）。第一条 服务费用由双方另行约定。第二条 任何情况下服务方赔偿责任不超过已收费用的百分之十。第三条 收款账户以书面通知为准。');
+      body.dispatchEvent(new Event('input', { bubbles: true }));
+      return title.value && body.value.length > 30 ? 'ok' : 'set-did-not-stick';
+    })()` },
+    { t: 'eval', expr: `(() => { const btn = [...document.querySelectorAll('button')].find(b => /发起(规则)?审查/.test(b.textContent)); if (!btn) return 'no-btn'; btn.click(); return 'clicked' })()` },
+    { t: 'wait', ms: 3000 },
+    { t: 'eval', expr: `(() => { const seg = [...document.querySelectorAll('.seg-btn')].find(b => /风险/.test(b.textContent)); if (!seg) return 'no-seg-risk'; seg.click(); return 'switched' })()` },
+    { t: 'wait', ms: 600 },
   ] }] : []),
   { name: '17-compare', path: '/compare', identity: pageHeader('合同版本对比') },
   { name: '18-draft', path: '/draft', fullPage: true, identity: { selector: '.ph-t' } },
+  // R336：窄屏起草页头折叠（更多+生成）
+  { name: '18b-narrow-draft', path: '/draft', viewport: { width: 390, height: 844 }, fullPage: true, identity: { selector: '.ph-t' } },
   { name: '19-draft-validation', path: '/draft/validation', fullPage: true, identity: pageHeader('交付前校验') },
   { name: '20-comparative', path: '/comparative', fullPage: true, identity: pageHeader('跨法域对比') },
   { name: '21-learning', path: '/learning', audience: 'student', fullPage: true, identity: pageHeader('学习中心') },

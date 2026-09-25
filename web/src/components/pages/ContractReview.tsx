@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { Icon } from '../icons'
-import { EmptyState, PageHeader, useToast, fmtTime } from '../ui'
+import { ActionSheet, EmptyState, PageHeader, Segmented, useMediaQuery, useToast, fmtTime, type SheetAction } from '../ui'
 import { CitationChip } from '../domain'
 import { api, ApiError, type Annotation, type AuditEntry, type Finding, type Review } from '../../lib/api'
 
@@ -35,6 +35,10 @@ export default function ContractReview() {
   const returnFileRef = useRef<HTMLInputElement>(null)
   const [reviewTitle, setReviewTitle] = useState('')
   const [reviewText, setReviewText] = useState('')
+  // 窄屏（R336）：三栏工作台转分步向导（目录/正文/风险 单选切换）；桌面三栏不变
+  const isNarrow = useMediaQuery('(max-width: 767.98px)')
+  const [pane, setPane] = useState<'toc' | 'doc' | 'risk'>('doc')
+  const [sheetOpen, setSheetOpen] = useState(false)
 
   const load = useCallback(async (id: string) => {
     setBusy(true); setError(null)
@@ -115,25 +119,44 @@ export default function ContractReview() {
           : '粘贴你有权处理的合同文本；发起后由本地费用、账户与责任规则引擎逐条扫描'}
         actions={
           <>
-            {review && <button className="btn btn-ghost btn-sm" disabled={busy} onClick={() => review && load(review.id)}><Icon name="refresh" size={13} />刷新</button>}
-            {review && <button className="btn btn-secondary btn-sm" onClick={() => api.reviewDocxDownload(review.id).catch((e) => toast(e instanceof Error ? e.message : String(e), 'err'))}><Icon name="download" size={13} />下载修订稿（Word）</button>}
-            {review && (
-              <>
-                <input ref={returnFileRef} type="file" accept=".docx" style={{ display: 'none' }}
-                  onChange={async (e) => {
-                    const f = e.target.files?.[0]
-                    e.target.value = ''
-                    if (!f || !review) return
-                    try {
-                      const r = await api.reviewDocxReturn(review.id, f)
-                      toast(`回传完成：采纳 ${r.accepted_n} · 拒绝 ${r.rejected_n} · 未处理 ${r.pending}${r.skipped.length ? ` · 跳过 ${r.skipped.length}` : ''}`, r.skipped.length ? 'err' : 'ok')
-                      if (review) load(review.id)
-                    } catch (er) { toast(er instanceof ApiError ? er.message : String(er), 'err') }
-                  }} />
+            {/* 回传文件输入常驻（display:none），窄屏 ActionSheet 与桌面按钮共用同一 ref */}
+            <input ref={returnFileRef} type="file" accept=".docx" style={{ display: 'none' }}
+              onChange={async (e) => {
+                const f = e.target.files?.[0]
+                e.target.value = ''
+                if (!f || !review) return
+                try {
+                  const r = await api.reviewDocxReturn(review.id, f)
+                  toast(`回传完成：采纳 ${r.accepted_n} · 拒绝 ${r.rejected_n} · 未处理 ${r.pending}${r.skipped.length ? ` · 跳过 ${r.skipped.length}` : ''}`, r.skipped.length ? 'err' : 'ok')
+                  if (review) load(review.id)
+                } catch (er) { toast(er instanceof ApiError ? er.message : String(er), 'err') }
+              }} />
+            {isNarrow ? (
+            /* 窄屏（R336）：审查后 3 操作折叠「更多」；发起主按钮保持可见；桌面完整行不变 */
+            <>
+              {review && <button className="btn btn-ghost btn-sm" aria-label="更多审查操作" onClick={() => setSheetOpen(true)}><Icon name="dots" size={14} />更多</button>}
+              {!rid && <button className="btn btn-primary btn-sm" disabled={busy} onClick={createReview}><Icon name="zap" size={14} />{busy ? '审查中…' : '发起审查'}</button>}
+              <ActionSheet
+                open={sheetOpen}
+                onClose={() => setSheetOpen(false)}
+                title="审查操作"
+                actions={[
+                  { label: '刷新审查结果', icon: 'refresh', onClick: () => { if (review) load(review.id) } },
+                  { label: '下载修订稿（Word）', icon: 'download', onClick: () => { if (review) api.reviewDocxDownload(review.id).catch((e) => toast(e instanceof Error ? e.message : String(e), 'err')) } },
+                  { label: '回传修订稿（Word）', icon: 'refresh', onClick: () => returnFileRef.current?.click() },
+                ] satisfies SheetAction[]}
+              />
+            </>
+          ) : (
+            <>
+              {review && <button className="btn btn-ghost btn-sm" disabled={busy} onClick={() => review && load(review.id)}><Icon name="refresh" size={13} />刷新</button>}
+              {review && <button className="btn btn-secondary btn-sm" onClick={() => api.reviewDocxDownload(review.id).catch((e) => toast(e instanceof Error ? e.message : String(e), 'err'))}><Icon name="download" size={13} />下载修订稿（Word）</button>}
+              {review && (
                 <button className="btn btn-ghost btn-sm" disabled={busy} onClick={() => returnFileRef.current?.click()} title="律师在 Word 中接受/拒绝修订后回传，批注状态机将同步"><Icon name="refresh" size={13} />回传修订稿</button>
-              </>
-            )}
-            {!rid && <button className="btn btn-primary" disabled={busy} onClick={createReview}><Icon name="zap" size={14} />{busy ? '审查中…' : '发起规则审查'}</button>}
+              )}
+              {!rid && <button className="btn btn-primary" disabled={busy} onClick={createReview}><Icon name="zap" size={14} />{busy ? '审查中…' : '发起规则审查'}</button>}
+            </>
+          )}
           </>
         }
       />
@@ -167,16 +190,26 @@ export default function ContractReview() {
         </div>
       )}
 
+      {review && isNarrow && (
+        /* 窄屏（R336）：三栏工作台转分步向导——目录/正文/风险 单选切换（iOS Segmented） */
+        <div className="mb-12">
+          <Segmented ariaLabel="审查视图切换" value={pane} onChange={(k) => setPane(k as typeof pane)} options={[
+            { key: 'toc', label: `目录 ${review.result.clauses.length}` },
+            { key: 'doc', label: '合同正文' },
+            { key: 'risk', label: `风险 ${shownFindings.length}` },
+          ]} />
+        </div>
+      )}
       {review && (
         <div className="cols cols-3w">
-          {/* LEFT · 条款目录 + 审计 */}
-          <aside className="panel" style={{ maxHeight: 'calc(100vh - 300px)' }}>
+          {/* LEFT · 条款目录 + 审计（窄屏向导：未选中即隐藏） */}
+          <aside className="panel" style={{ maxHeight: 'calc(100vh - 300px)', ...(isNarrow && pane !== 'toc' ? { display: 'none' } : {}) }}>
             <div className="panel-h"><Icon name="filter" size={14} />条款目录<span className="spacer" /><span className="tiny">{review.result.clauses.length} 条</span></div>
             <div className="panel-b">
               {review.result.clauses.map((c) => {
                 const fs = findingsByClause.get(c.id) ?? []
                 return (
-                  <button key={c.id} className={'lrow' + (section === c.id ? ' is-on' : '')} style={{ width: '100%', textAlign: 'left' }} onClick={() => setSection(c.id)}>
+                  <button key={c.id} className={'lrow' + (section === c.id ? ' is-on' : '')} style={{ width: '100%', textAlign: 'left' }} onClick={() => { setSection(c.id); if (isNarrow) setPane('doc') }}>
                     <Icon name="file" size={13} className="muted" />
                     <span className="lrow-t">{c.heading || c.label}</span>
                     {fs.length > 0 && <span className={`bdg ${RISK_BDG[fs[0].risk]}`}>{fs.length}</span>}
@@ -202,8 +235,8 @@ export default function ContractReview() {
             </div>
           </aside>
 
-          {/* CENTER · 条款正文 */}
-          <section className="panel" style={{ minHeight: 520 }}>
+          {/* CENTER · 条款正文（窄屏向导：未选中即隐藏） */}
+          <section className="panel" style={{ minHeight: 520, ...(isNarrow && pane !== 'doc' ? { display: 'none' } : {}) }}>
             <div className="panel-h"><Icon name="eye" size={14} />合同正文<span className="spacer" /><span className="tiny">{review.title}</span></div>
             <div className="panel-b" style={{ background: 'var(--bg-2)', padding: 0 }}>
               <div className="doc-paper">
@@ -244,8 +277,8 @@ export default function ContractReview() {
             </div>
           </section>
 
-          {/* RIGHT · 风险检查器（真实 findings + 批注状态机） */}
-          <aside className="panel" style={{ maxHeight: 'calc(100vh - 300px)' }}>
+          {/* RIGHT · 风险检查器（真实 findings + 批注状态机；窄屏向导：未选中即隐藏） */}
+          <aside className="panel" style={{ maxHeight: 'calc(100vh - 300px)', ...(isNarrow && pane !== 'risk' ? { display: 'none' } : {}) }}>
             <div className="panel-h"><Icon name="alert" size={14} />Risk Inspector<span className="spacer" /><span className="tiny">{shownFindings.length} 项</span></div>
             <div className="panel-b">
               {shownFindings.map((f) => {

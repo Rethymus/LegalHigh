@@ -865,7 +865,7 @@ export interface CaseRecord {
   facts: string
   holding: string
   result?: string
-  statutes: CaseStatute[]
+  statutes?: CaseStatute[]  // R277 迁移后个别旧字段案例无此键（guidance-01），消费点须 ?? [] 兜底
   research_refs?: CaseStatute[]
   court_level?: string
   procedure_type?: string

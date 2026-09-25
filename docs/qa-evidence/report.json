@@ -193,6 +193,37 @@
     "title": "LegalHigh · 法律智能知识库"
   },
   {
+    "name": "10d-narrow-case-detail",
+    "path": "/cases/guidance-24",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "finalUrl": "http://localhost:5173/cases/guidance-24",
+    "title": "LegalHigh · 法律智能知识库"
+  },
+  {
+    "name": "10e-narrow-case-actionsheet",
+    "path": "/cases/guidance-24",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "step1": "clicked",
+    "finalUrl": "http://localhost:5173/cases/guidance-24",
+    "title": "LegalHigh · 法律智能知识库"
+  },
+  {
+    "name": "10f-case-detail-migrated",
+    "path": "/cases/guidance-01",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "finalUrl": "http://localhost:5173/cases/guidance-01",
+    "title": "LegalHigh · 法律智能知识库"
+  },
+  {
     "name": "11-case-detail-foreign",
     "path": "/cases/brown-v-board",
     "consoleErrors": [],
@@ -254,6 +285,16 @@
   },
   {
     "name": "18-draft",
+    "path": "/draft",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "finalUrl": "http://localhost:5173/draft",
+    "title": "LegalHigh · 法律智能知识库"
+  },
+  {
+    "name": "18b-narrow-draft",
     "path": "/draft",
     "consoleErrors": [],
     "consoleWarnings": [],

@@ -4,9 +4,9 @@
 // 视觉与图示对齐：左＝模板库（搜索+分类+常用模板）；中＝文档纸面（工具栏+状态栏，生成后）；
 // 右＝确定性校验辅助（风险提示[真实审查点]/相关法条[真实语料引用]）。
 import { useEffect, useMemo, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Icon, type IconName } from '../icons'
-import { PageHeader, useToast, EmptyState } from '../ui'
+import { ActionSheet, PageHeader, useMediaQuery, useToast, EmptyState, type SheetAction } from '../ui'
 import { CitationChip } from '../domain'
 import { api, ApiError, type Citation, type DocTemplate, type Draft, type DraftBlock, type Finding } from '../../lib/api'
 
@@ -43,6 +43,9 @@ export default function Drafting() {
   const [busy, setBusy] = useState(false)
   const [pickerLaw, setPickerLaw] = useState('')
   const [libQuery, setLibQuery] = useState('')
+  const isNarrow = useMediaQuery('(max-width: 767.98px)')
+  const nav = useNavigate()
+  const [sheetOpen, setSheetOpen] = useState(false)
 
   const tpl = templates.find((t) => t.template_id === tplId) ?? null
 
@@ -172,21 +175,43 @@ export default function Drafting() {
         title={tpl ? `${tpl.name}` : '文书起草'}
         sub="结构化模板引擎（非自由生成）：版式由模板决定，引用来自本地语料。平台不核验律师身份、不签发文书；专业使用者在线下独立复核并负责。"
         actions={
-          <>
-            {draft && <span className={'bdg ' + (draft.status === 'finalized' ? 'bdg-green' : draft.status === 'reviewed' ? 'bdg-blue' : 'bdg-orange')} style={{ height: 32, fontSize: 13 }}>
-              {draft.status === 'finalized' ? '使用者已确认定稿' : draft.status === 'reviewed' ? '已复核 · 待定稿' : '工具草稿 · 待复核'}
-            </span>}
-            <Link to="/draft/validation" className="btn btn-ghost"><Icon name="shieldCheck" size={14} />校验</Link>
-            {draft && <button className="btn btn-ghost" onClick={() => api.draftDocxDownload(draft.id, draft.template_id).catch((e) => toast(e instanceof Error ? e.message : String(e), 'err'))}><Icon name="download" size={14} />下载{draft.status !== 'finalized' ? '（草稿标识）' : ''}</button>}
-            {draft && (
+          isNarrow ? (
+            /* 窄屏（R336）：保留状态徽章 + 生成主按钮，其余折叠「更多」（iOS ActionSheet）；桌面完整行不变 */
+            <>
+              {draft && <span className={'bdg ' + (draft.status === 'finalized' ? 'bdg-green' : draft.status === 'reviewed' ? 'bdg-blue' : 'bdg-orange')}>
+                {draft.status === 'finalized' ? '已定稿' : draft.status === 'reviewed' ? '已复核' : '草稿'}
+              </span>}
+              <button className="btn btn-ghost btn-sm" aria-label="更多文书操作" onClick={() => setSheetOpen(true)}><Icon name="dots" size={14} />更多</button>
+              <button className="btn btn-primary btn-sm" disabled={!tpl || busy} onClick={generate}><Icon name="zap" size={14} />生成</button>
+              <ActionSheet
+                open={sheetOpen}
+                onClose={() => setSheetOpen(false)}
+                title={tpl ? tpl.name : '文书操作'}
+                actions={[
+                  { label: '交付前校验', icon: 'shieldCheck', onClick: () => { nav('/draft/validation') } },
+                  ...(draft ? [{ label: draft.status !== 'finalized' ? `下载 DOCX（草稿标识）` : '下载 DOCX', icon: 'download' as const, onClick: () => api.draftDocxDownload(draft.id, draft.template_id).catch((e) => toast(e instanceof Error ? e.message : String(e), 'err')) }] : []),
+                  ...(draft && draft.status === 'draft' ? [{ label: tpl?.gate.review_label ?? '完成内容复核', icon: 'verify' as const, onClick: () => gate('review') }] : []),
+                  ...(draft && draft.status === 'reviewed' ? [{ label: tpl?.gate.finalize_label ?? '使用者确认定稿', icon: 'stamp' as const, onClick: () => gate('finalize') }] : []),
+                ] satisfies SheetAction[]}
+              />
+            </>
+          ) : (
+            <>
+              {draft && <span className={'bdg ' + (draft.status === 'finalized' ? 'bdg-green' : draft.status === 'reviewed' ? 'bdg-blue' : 'bdg-orange')} style={{ height: 32, fontSize: 13 }}>
+                {draft.status === 'finalized' ? '使用者已确认定稿' : draft.status === 'reviewed' ? '已复核 · 待定稿' : '工具草稿 · 待复核'}
+              </span>}
+              <Link to="/draft/validation" className="btn btn-ghost"><Icon name="shieldCheck" size={14} />校验</Link>
+              {draft && <button className="btn btn-ghost" onClick={() => api.draftDocxDownload(draft.id, draft.template_id).catch((e) => toast(e instanceof Error ? e.message : String(e), 'err'))}><Icon name="download" size={14} />下载{draft.status !== 'finalized' ? '（草稿标识）' : ''}</button>}
+              {draft && (
               draft.status === 'draft'
                 ? <button className="btn btn-secondary" disabled={busy} title="记录本机使用者已逐项复核；不代表平台认证" onClick={() => gate('review')}><Icon name="verify" size={14} />{tpl?.gate.review_label ?? '完成内容复核'}</button>
                 : draft.status === 'reviewed'
                   ? <button className="btn btn-secondary" disabled={busy} title="确认已核对事实、引用与格式并自行承担使用责任" onClick={() => gate('finalize')}><Icon name="stamp" size={14} />{tpl?.gate.finalize_label ?? '使用者确认定稿'}</button>
                   : null
-            )}
-            <button className="btn btn-primary" disabled={!tpl || busy} onClick={generate}><Icon name="zap" size={14} />生成</button>
-          </>
+              )}
+              <button className="btn btn-primary" disabled={!tpl || busy} onClick={generate}><Icon name="zap" size={14} />生成</button>
+            </>
+          )
         }
       />
 

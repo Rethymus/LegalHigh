@@ -1536,3 +1536,21 @@ a.mini-t { padding-block: 2.5px; }
 }
 .reduce-motion .sheet { animation-name: fade-in !important; }
 .reduce-motion .sheet-mask.is-out .sheet { animation-name: fade-out !important; }
+
+/* ============================================================
+   R336 · 移动端排版第二批——案例长文阅读 / 检索口径卡后置 / 向导留白
+   ============================================================ */
+
+/* ① 案例长文阅读（CaseDetail 结构化摘要）：窄屏提字号加行距，正文优先于信息密度 */
+@media (max-width: 767.98px) {
+  .case-t { font-size: 20px; line-height: 1.4; }
+  .case-doc-b { padding: 20px 16px; }
+  .case-doc-b h4 { font-size: 15.5px; }
+  .case-doc-b p { font-size: 15px; line-height: 2.05; margin-bottom: 11px; }
+}
+
+/* ② 检索结果页：窄屏把「当前检索口径」说明卡移到结果列表之后——
+   内容优先（结果卡是用户来此的目的），口径说明作为页尾诚实披露 */
+@media (max-width: 767.98px) {
+  .cols-2l > aside { order: 2; }
+}
