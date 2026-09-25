@@ -59,5 +59,21 @@
    "note": "快照自证：根据 2009-08-27 十一届人大常委会十次会议《关于修改部分法律的决定》修正；末条附则自载施行日 1995-01-01 跨修正延续（与消保法 2009 同日同决定修正批次）。"
   }
  ],
- "pending_note": "1994 通过原版与 2009 修正版全文未采集。R133 由 lawtext 链入库，bbbs 经 flk 官方 API 核验（pub/eff 2018-12-29/有效）。"
+ "pending_note": "1994 通过原版与 2009 修正版全文未采集。R133 由 lawtext 链入库，bbbs 经 flk 官方 API 核验（pub/eff 2018-12-29/有效）。",
+ "amendments": [
+  {
+   "no": 1,
+   "title": "关于修改部分法律的决定（劳动法 2009 修正所在大打包决定）",
+   "passed_date": "2009-08-27",
+   "effective": "2009-08-27",
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E5%85%A8%E5%9B%BD%E4%BA%BA%E6%B0%91%E4%BB%A3%E8%A1%A8%E5%A4%A7%E4%BC%9A%E5%B8%B8%E5%8A%A1%E5%A7%94%E5%91%98%E4%BC%9A%E5%85%B3%E4%BA%8E%E4%BF%AE%E6%94%B9%E9%83%A8%E5%88%86%E6%B3%95%E5%BE%8B%E7%9A%84%E5%86%B3%E5%AE%9A",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_打包决定_修改部分法律2009.html"
+   },
+   "note": "大打包决定快照自证：2009-08-27 十一届人大常委会十次会议通过、自公布之日起施行；正文含劳动法修改部分（R341 版本页沿革互证）。本决定一次修改数十部法律——同一快照被多法复用。"
+  }
+ ]
 }
