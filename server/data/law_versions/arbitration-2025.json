@@ -1,26 +1,45 @@
 {
-  "law_id": "arbitration-2025",
-  "title": "中华人民共和国仲裁法",
-  "schema_version": 1,
-  "note": "R141（2026-09-17）续批：经 lawtext（flk DOCX 转录）链入库。",
-  "versions": [
-    {
-      "version_id": "current",
-      "label": "2025 修订",
-      "status": "现行有效（2025修订）",
-      "promulgation_date": "2025-09-12",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "effective_date": "2026-03-01",
-      "article_count": 96,
-      "current": true,
-      "evidence": {
-        "kind": "flk-docx-transcription",
-        "grade": "中",
-        "url": "https://flk.npc.gov.cn/detail?id=58d7569a322b4eca9b22feaa4f5d7d4f",
-        "accessed_at": "2026-09-17",
-        "snapshot": "docs/research/evidence/lawtext_仲裁法2025.md"
-      }
-    }
-  ],
-  "pending_note": "1994 通过原版与 2009/2017 修正版全文未采集。2025 全面修订施行日 2026-03-01（附则自载与 flk sxrq 一致，采集日已施行）。R141 lawtext 链入库——时效跟进（与食品安全法 2025/反法 2025 同型）。"
+ "law_id": "arbitration-2025",
+ "title": "中华人民共和国仲裁法",
+ "schema_version": 1,
+ "note": "R141（2026-09-17）续批：经 lawtext（flk DOCX 转录）链入库。",
+ "versions": [
+  {
+   "version_id": "current",
+   "label": "2025 修订",
+   "status": "现行有效（2025修订）",
+   "promulgation_date": "2025-09-12",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "effective_date": "2026-03-01",
+   "article_count": 96,
+   "current": true,
+   "evidence": {
+    "kind": "flk-docx-transcription",
+    "grade": "中",
+    "url": "https://flk.npc.gov.cn/detail?id=58d7569a322b4eca9b22feaa4f5d7d4f",
+    "accessed_at": "2026-09-17",
+    "snapshot": "docs/research/evidence/lawtext_仲裁法2025.md"
+   }
+  },
+  {
+   "version_id": "1994-enacted",
+   "label": "1994 原版",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "1994-08-31",
+   "promulgation_organ": "第八届全国人民代表大会常务委员会第九次会议",
+   "effective_date": "1995-09-01",
+   "article_count": 80,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E4%BB%B2%E8%A3%81%E6%B3%95_(1994%E5%B9%B4)",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_仲裁法_1994.html"
+   },
+   "note": "快照头部括注自证：1994-08-31 八届人大常委会九次会议通过、主席令第三十一号公布、自 1995-09-01 施行（末条附则同证）。【转录瑕疵登记】括注「1994年8月31日日」多一个「日」字（上游讹误，头部区不进条文正文，快照保持原始）。",
+   "promulgation_instrument": "中华人民共和国主席令第三十一号（1994-08-31 公布）"
+  }
+ ],
+ "pending_note": "1994 通过原版与 2009/2017 修正版全文未采集。2025 全面修订施行日 2026-03-01（附则自载与 flk sxrq 一致，采集日已施行）。R141 lawtext 链入库——时效跟进（与食品安全法 2025/反法 2025 同型）。"
 }
