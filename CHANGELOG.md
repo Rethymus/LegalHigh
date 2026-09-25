@@ -339,6 +339,7 @@
 
 ### Fixed / 修复
 
+- Historical-fulltext builder lost its HTML cleaning (R364, self-caught): when the HISTORY_LABEL_FIXUPS loop was inserted in R340, the `clean_html_to_text()` call was accidentally dropped from the splitter input — every fulltext built since then was split from raw HTML. The article-count gate could not catch it (most pages happened to split continuously anyway), but the built texts carried `</p><p>` residue in article bodies and lost all chapter attributions (null). Surfaced when this batch's fresh pre-registration assertion for the Work Safety Law's 2014 page (114 articles) contradicted the builder's output (95) — the same input producing different results only by code path. Fixed the call and rebuilt all 115 fulltexts in one pass (work-safety 2014 now builds at 114); git diff confirms clean texts and restored chapter fields. Also this batch: six new version pages (Education Law 1995/2015, Work Safety 2002/2014, Elderly Rights 1996, Notary 2005 — the Education and Work Safety 2015/2014 pages' own parentheticals pinning their 2009 first amendments to the mega-package, cross-verified) and the Work Safety 2009 amendment registered via exhaustive-position audit (criminal-liability list item 78 — the third list-format blind-spot recovery). corpus_selfcheck 0 problems (115 fulltexts); pytest 377 green.
 - Foreign-case verbatim snapshots are source-blocked (R245):
 
 - zh README quality-gates section had a duplicated probe/final-verify paragraph pair (R246 find);

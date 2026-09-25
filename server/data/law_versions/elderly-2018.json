@@ -20,6 +20,25 @@
     "accessed_at": "2026-09-16",
     "snapshot": "docs/research/evidence/lawtext_老年人权益保障法2018.md"
    }
+  },
+  {
+   "version_id": "1996-enacted",
+   "label": "1996 原版",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "1996-08-29",
+   "promulgation_organ": "第八届全国人民代表大会常务委员会第二十一次会议",
+   "effective_date": "1996-10-01",
+   "article_count": 50,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E8%80%81%E5%B9%B4%E4%BA%BA%E6%9D%83%E7%9B%8A%E4%BF%9D%E9%9A%9C%E6%B3%95_(1996%E5%B9%B4)",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_老年人权益保障法_1996.html"
+   },
+   "note": "快照头部括注自证：1996-08-29 八届人大常委会二十一次会议通过、主席令第七十三号公布、自 1996-10-01 起施行（末条附则同证）。",
+   "promulgation_instrument": "中华人民共和国主席令第七十三号（1996-08-29 公布）"
   }
  ],
  "pending_note": "1996 通过原版与 2009/2012/2015 修正版全文未采集。R134 由 lawtext 链入库，bbbs 经 flk 官方 API 核验（pub/eff 2018-12-29/有效）。附则自载施行日 2013-07-01（2012 修订改定，2015/2018 修正延续；1996 原版施行日 1996-10-01 不再适用于现行文本）。",

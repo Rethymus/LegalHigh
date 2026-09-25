@@ -106,7 +106,10 @@ def build(law_id: str, version_id: str, snapshot_name: str) -> pathlib.Path:
             raise ValueError(f"{law_id}/{version_id} 条号修复模式 {pattern_src!r} 命中 {len(hits)} 次（要求恰 1 次），拒绝构建")
         text = pattern.sub(right, text)
 
-    articles, _expected = split_articles(text)
+    # R364 修复：R340 引入 LABEL_FIXUPS 时误将 clean_html_to_text 丢失（切分输入成了原始
+    # HTML——多数页面碰巧仍连续故未被条数校验拦住，但条文文本可能混入 HTML 残留）。
+    # 修复后全部历史全文必须重建并复核。
+    articles, _expected = split_articles(clean_html_to_text(text))
     articles = _strip_footers(articles)
 
     expected_count = version.get("article_count")

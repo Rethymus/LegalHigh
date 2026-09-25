@@ -1015,8 +1015,8 @@
     "dsl-2021": 1,
     "dv-2015": 1,
     "ecom-2018": 1,
-    "education-2021": 1,
-    "elderly-2018": 1,
+    "education-2021": 3,
+    "elderly-2018": 2,
     "emergency-2024": 1,
     "env-tax-2025": 1,
     "environment-2014": 2,
@@ -1045,7 +1045,7 @@
     "mine-safety-2009": 2,
     "minor-2024": 5,
     "negotiable-2004": 2,
-    "notary-2017": 1,
+    "notary-2017": 2,
     "partnership-2006": 2,
     "patent-2020": 5,
     "patriotic-edu-2024": 1,
@@ -1084,9 +1084,9 @@
     "vocational-edu-2022": 1,
     "wlxf-2022": 1,
     "women-2022": 4,
-    "work-safety-2021": 1
+    "work-safety-2021": 3
   },
-  "version_fulltexts": 109,
+  "version_fulltexts": 115,
   "flk_native_ids": 106,
   "cases": {
     "cases": 281,
