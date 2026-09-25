@@ -47,7 +47,7 @@
    "status": "已被修订（历史文本）",
    "promulgation_date": "1996-03-17",
    "promulgation_organ": "第八届全国人民代表大会第四次会议",
-   "effective_date": "",
+   "effective_date": "1997-01-01",
    "article_count": 225,
    "current": false,
    "evidence": {
@@ -57,7 +57,7 @@
     "accessed_at": "2026-09-25",
     "snapshot": "docs/research/evidence/ws_刑事诉讼法_1996.html"
    },
-   "note": "快照头部括注自证修正会议与决定；未载施行日与令号——如实留空（不推定），待 flk 核对。"
+   "note": "快照头部括注自证修正会议与决定；未载施行日与令号——如实留空（不推定），待 flk 核对。 R361 有据补：施行日依 1996 大会修正决定尾部「本决定自1997年1月1日起施行」补登（原空串待 flk——决定文本即权威证据，闭环）。"
   },
   {
    "version_id": "2012-amendment",
@@ -65,7 +65,7 @@
    "status": "已被修订（历史文本）",
    "promulgation_date": "2012-03-14",
    "promulgation_organ": "第十一届全国人民代表大会第五次会议",
-   "effective_date": "",
+   "effective_date": "2013-01-01",
    "article_count": 290,
    "current": false,
    "evidence": {
@@ -75,8 +75,52 @@
     "accessed_at": "2026-09-25",
     "snapshot": "docs/research/evidence/ws_刑事诉讼法_2012.html"
    },
-   "note": "快照头部括注自证修正会议与决定；未载施行日与令号——如实留空（不推定）。第 108 条条号标签系上游转录讹误（漏「第」字），构建层 HISTORY_LABEL_FIXUPS 修复（快照保持原始）。"
+   "note": "快照头部括注自证修正会议与决定；未载施行日与令号——如实留空（不推定）。第 108 条条号标签系上游转录讹误（漏「第」字），构建层 HISTORY_LABEL_FIXUPS 修复（快照保持原始）。 R361 有据补：施行日依 2012 大会修正决定尾部「本决定自2013年1月1日起施行」补登（原空串待 flk——闭环）。"
   }
  ],
- "pending_note": "1996/2012 修正版的施行日与主席令号快照未载，如实留空，待 flk 人工核对后补登。"
+ "pending_note": "1996/2012 施行日已由 R361 经修正决定文本有据补登（1997-01-01/2013-01-01）；令号仍未见载（大会修正的公布形态），维持省略。",
+ "amendments": [
+  {
+   "no": 1,
+   "title": "全国人民代表大会关于修改《中华人民共和国刑事诉讼法》的决定（1996 第一次修正）",
+   "passed_date": "1996-03-17",
+   "effective": "1997-01-01",
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E5%85%A8%E5%9B%BD%E4%BA%BA%E6%B0%91%E4%BB%A3%E8%A1%A8%E5%A4%A7%E4%BC%9A%E5%85%B3%E4%BA%8E%E4%BF%AE%E6%94%B9%E3%80%8A%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%88%91%E4%BA%8B%E8%AF%89%E8%AE%BC%E6%B3%95%E3%80%8B%E7%9A%84%E5%86%B3%E5%AE%9A%20(1996%E5%B9%B4)",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_刑诉法修正决定_1996.html"
+   },
+   "note": "快照头部括注自证：1996-03-17 八届全国人大四次会议通过（大会修正——由全国人民代表大会而非常委会通过）；决定尾部自证「本决定自1997年1月1日起施行」；修改 101 项。"
+  },
+  {
+   "no": 2,
+   "title": "全国人民代表大会关于修改《中华人民共和国刑事诉讼法》的决定（2012 第二次修正）",
+   "passed_date": "2012-03-14",
+   "effective": "2013-01-01",
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E5%85%A8%E5%9B%BD%E4%BA%BA%E6%B0%91%E4%BB%A3%E8%A1%A8%E5%A4%A7%E4%BC%9A%E5%85%B3%E4%BA%8E%E4%BF%AE%E6%94%B9%E3%80%8A%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%88%91%E4%BA%8B%E8%AF%89%E8%AE%BC%E6%B3%95%E3%80%8B%E7%9A%84%E5%86%B3%E5%AE%9A%20(2012%E5%B9%B4)",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_刑诉法修正决定_2012.html"
+   },
+   "note": "快照头部括注自证：2012-03-14 十一届全国人大五次会议通过（大会修正）；决定尾部自证 2013-01-01 施行；修改 102 项（尊重和保障人权入法）。"
+  },
+  {
+   "no": 3,
+   "title": "全国人民代表大会常务委员会关于修改《中华人民共和国刑事诉讼法》的决定（2018 第三次修正——现行版来源）",
+   "passed_date": "2018-10-26",
+   "effective": "2018-10-26",
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E5%85%A8%E5%9B%BD%E4%BA%BA%E6%B0%91%E4%BB%A3%E8%A1%A8%E5%A4%A7%E4%BC%9A%E5%B8%B8%E5%8A%A1%E5%A7%94%E5%91%98%E4%BC%9A%E5%85%B3%E4%BA%8E%E4%BF%AE%E6%94%B9%E3%80%8A%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%88%91%E4%BA%8B%E8%AF%89%E8%AE%BC%E6%B3%95%E3%80%8B%E7%9A%84%E5%86%B3%E5%AE%9A",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_刑诉法修正决定_2018.html"
+   },
+   "note": "快照头部括注自证：2018-10-26 十三届人大常委会六次会议通过、自公布之日起施行（与公司法 2018/野生动物十五部同日同会——2018-10-26 批次）；修改 26 项（认罪认罚从宽入法）。现行 cpl-2018 语料的修正来源即本决定。"
+  }
+ ]
 }
