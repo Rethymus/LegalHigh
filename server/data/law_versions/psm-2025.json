@@ -1,61 +1,77 @@
 {
-  "law_id": "psm-2025",
-  "title": "中华人民共和国治安管理处罚法",
-  "schema_version": 1,
-  "note": "S2-T1 首部批量扩张法律（2026-09-13）：2025 修订版全文自人民网受权发布转载页入库；历史版本（1990 公布及 2006/2012 历次修订）待官方快照采集后按同一 schema 登记，未采集前不预填任何日期。",
-  "versions": [
-    {
-      "version_id": "2005-enacted",
-      "label": "2005 通过",
-      "status": "已取代（2005 原版，仅作历史对照）",
-      "promulgation_date": "2005-08-28",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "effective_date": "2006-03-01",
-      "article_count": 119,
-      "current": false,
-      "evidence": {
-        "kind": "wikisource-transcription",
-        "grade": "中",
-        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E6%B2%BB%E5%AE%89%E7%AE%A1%E7%90%86%E5%A4%84%E7%BD%9A%E6%B3%95_(2005%E5%B9%B4)",
-        "accessed_at": "2026-09-14",
-        "snapshot": "docs/research/evidence/ws_治安管理处罚法2005.html"
-      }
-    },
-    {
-      "version_id": "2012-amendment",
-      "label": "2012 修正",
-      "status": "已取代（2012 修正版，仅作历史对照）",
-      "promulgation_date": "2012-10-26",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "effective_date": "2006-03-01",
-      "article_count": 119,
-      "current": false,
-      "evidence": {
-        "kind": "wikisource-transcription",
-        "grade": "中",
-        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E6%B2%BB%E5%AE%89%E7%AE%A1%E7%90%86%E5%A4%84%E7%BD%9A%E6%B3%95_(2012%E5%B9%B4)",
-        "accessed_at": "2026-09-14",
-        "snapshot": "docs/research/evidence/ws_治安管理处罚法2012.html"
-      }
-    },
-    {
-      "version_id": "2025-revision",
-      "label": "2025 修订",
-      "status": "现行有效（2025修订）",
-      "promulgation_date": "2025-06-27",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "promulgation_instrument": "中华人民共和国主席令第四十九号",
-      "effective_date": "2026-01-01",
-      "article_count": 144,
-      "current": true,
-      "evidence": {
-        "kind": "official-gazette-republication",
-        "grade": "强",
-        "url": "https://politics.people.com.cn/n1/2025/0627/c1001-40510468.html",
-        "accessed_at": "2026-09-13",
-        "snapshot": "docs/research/evidence/people_治安管理处罚法2025.html"
-      }
-    }
-  ],
-  "pending_note": "1990 条例（本法前身）与 2005/2012 两版快照中均未出现主席令号，promulgation_instrument 如实省略；2025 修正决定全文（人民网）已入 amendments。"
+ "law_id": "psm-2025",
+ "title": "中华人民共和国治安管理处罚法",
+ "schema_version": 1,
+ "note": "S2-T1 首部批量扩张法律（2026-09-13）：2025 修订版全文自人民网受权发布转载页入库；历史版本（1990 公布及 2006/2012 历次修订）待官方快照采集后按同一 schema 登记，未采集前不预填任何日期。",
+ "versions": [
+  {
+   "version_id": "2005-enacted",
+   "label": "2005 通过",
+   "status": "已取代（2005 原版，仅作历史对照）",
+   "promulgation_date": "2005-08-28",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "effective_date": "2006-03-01",
+   "article_count": 119,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E6%B2%BB%E5%AE%89%E7%AE%A1%E7%90%86%E5%A4%84%E7%BD%9A%E6%B3%95_(2005%E5%B9%B4)",
+    "accessed_at": "2026-09-14",
+    "snapshot": "docs/research/evidence/ws_治安管理处罚法2005.html"
+   }
+  },
+  {
+   "version_id": "2012-amendment",
+   "label": "2012 修正",
+   "status": "已取代（2012 修正版，仅作历史对照）",
+   "promulgation_date": "2012-10-26",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "effective_date": "2006-03-01",
+   "article_count": 119,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E6%B2%BB%E5%AE%89%E7%AE%A1%E7%90%86%E5%A4%84%E7%BD%9A%E6%B3%95_(2012%E5%B9%B4)",
+    "accessed_at": "2026-09-14",
+    "snapshot": "docs/research/evidence/ws_治安管理处罚法2012.html"
+   }
+  },
+  {
+   "version_id": "2025-revision",
+   "label": "2025 修订",
+   "status": "现行有效（2025修订）",
+   "promulgation_date": "2025-06-27",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "promulgation_instrument": "中华人民共和国主席令第四十九号",
+   "effective_date": "2026-01-01",
+   "article_count": 144,
+   "current": true,
+   "evidence": {
+    "kind": "official-gazette-republication",
+    "grade": "强",
+    "url": "https://politics.people.com.cn/n1/2025/0627/c1001-40510468.html",
+    "accessed_at": "2026-09-13",
+    "snapshot": "docs/research/evidence/people_治安管理处罚法2025.html"
+   }
+  }
+ ],
+ "pending_note": "1990 条例（本法前身）与 2005/2012 两版快照中均未出现主席令号，promulgation_instrument 如实省略；2025 修正决定全文（人民网）已入 amendments。",
+ "amendments": [
+  {
+   "no": 1,
+   "title": "关于修改《中华人民共和国治安管理处罚法》的决定（2012 修正）",
+   "passed_date": "2012-10-26",
+   "effective": "2013-01-01",
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E5%85%A8%E5%9B%BD%E4%BA%BA%E6%B0%91%E4%BB%A3%E8%A1%A8%E5%A4%A7%E4%BC%9A%E5%B8%B8%E5%8A%A1%E5%A7%94%E5%91%98%E4%BC%9A%E5%85%B3%E4%BA%8E%E4%BF%AE%E6%94%B9%E3%80%8A%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E6%B2%BB%E5%AE%89%E7%AE%A1%E7%90%86%E5%A4%84%E7%BD%9A%E6%B3%95%E3%80%8B%E7%9A%84%E5%86%B3%E5%AE%9A",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_治安管理处罚法修正决定_2012.html"
+   },
+   "note": "快照头部括注自证：2012-10-26 十一届人大常委会二十九次会议通过；本决定自 2013-01-01 起施行（R64 版本页 2012 修正沿革互证）。"
+  }
+ ]
 }

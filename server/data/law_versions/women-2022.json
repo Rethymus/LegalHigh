@@ -1,79 +1,95 @@
 {
-  "law_id": "women-2022",
-  "title": "中华人民共和国妇女权益保障法",
-  "schema_version": 1,
-  "note": "S2-T1 第三部批量扩张法律（2026-09-13）：2022 修订版全文自人民网受权发布转载页入库（GB18030 编码页，read_evidence_text 的 gbk 回退路径覆盖）；历史版本（1992 通过/2005、2018 修正）待官方快照采集后按同一 schema 登记，未采集前不预填。",
-  "versions": [
-    {
-      "version_id": "1992-enacted",
-      "label": "1992 通过",
-      "status": "已取代（1992 原版，仅作历史对照）",
-      "promulgation_date": "1992-04-03",
-      "promulgation_organ": "全国人民代表大会",
-      "promulgation_instrument": "中华人民共和国主席令第五号",
-      "effective_date": "1992-10-01",
-      "article_count": 54,
-      "current": false,
-      "evidence": {
-        "kind": "wikisource-transcription",
-        "grade": "中",
-        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E5%A9%A6%E5%A5%B3%E6%AC%8A%E7%9B%8A%E4%BF%9D%E9%9A%9C%E6%B3%95_(1992%E5%B9%B4)",
-        "accessed_at": "2026-09-14",
-        "snapshot": "docs/research/evidence/ws_妇女权益保障法1992.html"
-      }
-    },
-    {
-      "version_id": "2018-amendment",
-      "label": "2018 修正",
-      "status": "已取代（2022 修订前文本，仅作历史对照）",
-      "promulgation_date": "2018-10-26",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "effective_date": "1992-10-01",
-      "article_count": 61,
-      "current": false,
-      "evidence": {
-        "kind": "wikisource-transcription",
-        "grade": "中",
-        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E5%A9%A6%E5%A5%B3%E6%AC%8A%E7%9B%8A%E4%BF%9D%E9%9A%9C%E6%B3%95_(2018%E5%B9%B4)",
-        "accessed_at": "2026-09-14",
-        "snapshot": "docs/research/evidence/ws_妇女权益保障法2018.html"
-      }
-    },
-    {
-      "version_id": "2005-amendment",
-      "label": "2005 修正",
-      "status": "已取代（2022 修订前文本，仅作历史对照）",
-      "promulgation_date": "2005-08-28",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "effective_date": "1992-10-01",
-      "article_count": 61,
-      "current": false,
-      "evidence": {
-        "kind": "wikisource-transcription",
-        "grade": "中",
-        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E5%A9%A6%E5%A5%B3%E6%AC%8A%E7%9B%8A%E4%BF%9D%E9%9A%9C%E6%B3%95_(2005%E5%B9%B4)",
-        "accessed_at": "2026-09-14",
-        "snapshot": "docs/research/evidence/ws_妇女权益保障法2005.html"
-      }
-    },
-    {
-      "version_id": "2022-revision",
-      "label": "2022 修订",
-      "status": "现行有效（2022修订）",
-      "promulgation_date": "2022-10-30",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "promulgation_instrument": "中华人民共和国主席令第一二二号",
-      "effective_date": "2023-01-01",
-      "article_count": 86,
-      "current": true,
-      "evidence": {
-        "kind": "official-gazette-republication",
-        "grade": "强",
-        "url": "https://politics.people.com.cn/n1/2022/1030/c1001-32554934.html",
-        "accessed_at": "2026-09-13",
-        "snapshot": "docs/research/evidence/people_妇女权益保障法2022.html"
-      }
-    }
-  ],
-  "pending_note": "妇女法时间线补全：1992 原版（54 条，主席令第五号，1992-10-01 施行）→ 2005 修正（61 条）→ 2018 修正（61 条）→ 2022 修订（86 条，现行）——四版施行日衔接全部附则自证。"
+ "law_id": "women-2022",
+ "title": "中华人民共和国妇女权益保障法",
+ "schema_version": 1,
+ "note": "S2-T1 第三部批量扩张法律（2026-09-13）：2022 修订版全文自人民网受权发布转载页入库（GB18030 编码页，read_evidence_text 的 gbk 回退路径覆盖）；历史版本（1992 通过/2005、2018 修正）待官方快照采集后按同一 schema 登记，未采集前不预填。",
+ "versions": [
+  {
+   "version_id": "1992-enacted",
+   "label": "1992 通过",
+   "status": "已取代（1992 原版，仅作历史对照）",
+   "promulgation_date": "1992-04-03",
+   "promulgation_organ": "全国人民代表大会",
+   "promulgation_instrument": "中华人民共和国主席令第五号",
+   "effective_date": "1992-10-01",
+   "article_count": 54,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E5%A9%A6%E5%A5%B3%E6%AC%8A%E7%9B%8A%E4%BF%9D%E9%9A%9C%E6%B3%95_(1992%E5%B9%B4)",
+    "accessed_at": "2026-09-14",
+    "snapshot": "docs/research/evidence/ws_妇女权益保障法1992.html"
+   }
+  },
+  {
+   "version_id": "2018-amendment",
+   "label": "2018 修正",
+   "status": "已取代（2022 修订前文本，仅作历史对照）",
+   "promulgation_date": "2018-10-26",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "effective_date": "1992-10-01",
+   "article_count": 61,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E5%A9%A6%E5%A5%B3%E6%AC%8A%E7%9B%8A%E4%BF%9D%E9%9A%9C%E6%B3%95_(2018%E5%B9%B4)",
+    "accessed_at": "2026-09-14",
+    "snapshot": "docs/research/evidence/ws_妇女权益保障法2018.html"
+   }
+  },
+  {
+   "version_id": "2005-amendment",
+   "label": "2005 修正",
+   "status": "已取代（2022 修订前文本，仅作历史对照）",
+   "promulgation_date": "2005-08-28",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "effective_date": "1992-10-01",
+   "article_count": 61,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E5%A9%A6%E5%A5%B3%E6%AC%8A%E7%9B%8A%E4%BF%9D%E9%9A%9C%E6%B3%95_(2005%E5%B9%B4)",
+    "accessed_at": "2026-09-14",
+    "snapshot": "docs/research/evidence/ws_妇女权益保障法2005.html"
+   }
+  },
+  {
+   "version_id": "2022-revision",
+   "label": "2022 修订",
+   "status": "现行有效（2022修订）",
+   "promulgation_date": "2022-10-30",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "promulgation_instrument": "中华人民共和国主席令第一二二号",
+   "effective_date": "2023-01-01",
+   "article_count": 86,
+   "current": true,
+   "evidence": {
+    "kind": "official-gazette-republication",
+    "grade": "强",
+    "url": "https://politics.people.com.cn/n1/2022/1030/c1001-32554934.html",
+    "accessed_at": "2026-09-13",
+    "snapshot": "docs/research/evidence/people_妇女权益保障法2022.html"
+   }
+  }
+ ],
+ "pending_note": "妇女法时间线补全：1992 原版（54 条，主席令第五号，1992-10-01 施行）→ 2005 修正（61 条）→ 2018 修正（61 条）→ 2022 修订（86 条，现行）——四版施行日衔接全部附则自证。 R356：妇女法 2018 修正决定待下批采集。",
+ "amendments": [
+  {
+   "no": 1,
+   "title": "关于修改《中华人民共和国妇女权益保障法》的决定（2005 修正）",
+   "passed_date": "2005-08-28",
+   "effective": "2005-12-01",
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E5%85%A8%E5%9B%BD%E4%BA%BA%E6%B0%91%E4%BB%A3%E8%A1%A8%E5%A4%A7%E4%BC%9A%E5%B8%B8%E5%8A%A1%E5%A7%94%E5%91%98%E4%BC%9A%E5%85%B3%E4%BA%8E%E4%BF%AE%E6%94%B9%E3%80%8A%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%A6%87%E5%A5%B3%E6%9D%83%E7%9B%8A%E4%BF%9D%E9%9A%9C%E6%B3%95%E3%80%8B%E7%9A%84%E5%86%B3%E5%AE%9A",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_妇女法修正决定_2005.html"
+   },
+   "note": "快照头部括注自证：2005-08-28 十届人大常委会十七次会议通过；本决定自 2005-12-01 起施行（R62 版本页沿革互证）。"
+  }
+ ]
 }

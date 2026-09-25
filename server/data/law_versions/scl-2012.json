@@ -1,61 +1,91 @@
 {
-  "law_id": "scl-2012",
-  "title": "中华人民共和国国家赔偿法",
-  "schema_version": 1,
-  "note": "S2-T1 第九部批量扩张法律（2026-09-14）：2012 第二次修正后全文自维基文库转录页入库（pcl-2023 同款 wikisource-transcription 渠道，等级【中】）。快照序言自载「1994-05-12 通过 → 2010-04-29 第一次修正 → 2012-10-26 第二次修正」，现行文本附则第 42 条自载施行日 1995-01-01；修正决定主席令号与生效方式快照未载，promulgation_instrument 如实省略，待 flk/官方数据库核对。",
-  "versions": [
-    {
-      "version_id": "1994-enacted",
-      "label": "1994 通过",
-      "status": "已取代（1994 原版，仅作历史对照）",
-      "promulgation_date": "1994-05-12",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "promulgation_instrument": "中华人民共和国主席令第二十三号",
-      "effective_date": "1995-01-01",
-      "article_count": 35,
-      "current": false,
-      "evidence": {
-        "kind": "wikisource-transcription",
-        "grade": "中",
-        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E5%9C%8B%E5%AE%B6%E8%B3%A0%E5%84%9F%E6%B3%95_(1994%E5%B9%B4)",
-        "accessed_at": "2026-09-14",
-        "snapshot": "docs/research/evidence/ws_国家赔偿法1994.html"
-      }
-    },
-    {
-      "version_id": "2010-amendment",
-      "label": "2010 第一次修正",
-      "status": "已取代（2010 修正版，仅作历史对照）",
-      "promulgation_date": "2010-04-29",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "effective_date": "1995-01-01",
-      "article_count": 42,
-      "current": false,
-      "evidence": {
-        "kind": "wikisource-transcription",
-        "grade": "中",
-        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E5%9C%8B%E5%AE%B6%E8%B3%A0%E5%84%9F%E6%B3%95_(2010%E5%B9%B4)",
-        "accessed_at": "2026-09-14",
-        "snapshot": "docs/research/evidence/ws_国家赔偿法2010.html"
-      }
-    },
-    {
-      "version_id": "2012-amendment",
-      "label": "2012 第二次修正",
-      "status": "现行有效（2012第二次修正）",
-      "promulgation_date": "2012-10-26",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "effective_date": "1995-01-01",
-      "article_count": 42,
-      "current": true,
-      "evidence": {
-        "kind": "wikisource-transcription",
-        "grade": "中",
-        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E5%9C%8B%E5%AE%B6%E8%B3%A0%E5%84%9F%E6%B3%95_(2012%E5%B9%B4)",
-        "accessed_at": "2026-09-14",
-        "snapshot": "docs/research/evidence/ws_国家赔偿法2012.json"
-      }
-    }
-  ],
-  "pending_note": "时间线四版本：1994（35 条，主席令第二十三号）→ 2010（42 条）→ 2012（42 条，现行）；修正决定主席令号快照未载之项维持省略口径。"
+ "law_id": "scl-2012",
+ "title": "中华人民共和国国家赔偿法",
+ "schema_version": 1,
+ "note": "S2-T1 第九部批量扩张法律（2026-09-14）：2012 第二次修正后全文自维基文库转录页入库（pcl-2023 同款 wikisource-transcription 渠道，等级【中】）。快照序言自载「1994-05-12 通过 → 2010-04-29 第一次修正 → 2012-10-26 第二次修正」，现行文本附则第 42 条自载施行日 1995-01-01；修正决定主席令号与生效方式快照未载，promulgation_instrument 如实省略，待 flk/官方数据库核对。",
+ "versions": [
+  {
+   "version_id": "1994-enacted",
+   "label": "1994 通过",
+   "status": "已取代（1994 原版，仅作历史对照）",
+   "promulgation_date": "1994-05-12",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "promulgation_instrument": "中华人民共和国主席令第二十三号",
+   "effective_date": "1995-01-01",
+   "article_count": 35,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E5%9C%8B%E5%AE%B6%E8%B3%A0%E5%84%9F%E6%B3%95_(1994%E5%B9%B4)",
+    "accessed_at": "2026-09-14",
+    "snapshot": "docs/research/evidence/ws_国家赔偿法1994.html"
+   }
+  },
+  {
+   "version_id": "2010-amendment",
+   "label": "2010 第一次修正",
+   "status": "已取代（2010 修正版，仅作历史对照）",
+   "promulgation_date": "2010-04-29",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "effective_date": "1995-01-01",
+   "article_count": 42,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E5%9C%8B%E5%AE%B6%E8%B3%A0%E5%84%9F%E6%B3%95_(2010%E5%B9%B4)",
+    "accessed_at": "2026-09-14",
+    "snapshot": "docs/research/evidence/ws_国家赔偿法2010.html"
+   }
+  },
+  {
+   "version_id": "2012-amendment",
+   "label": "2012 第二次修正",
+   "status": "现行有效（2012第二次修正）",
+   "promulgation_date": "2012-10-26",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "effective_date": "1995-01-01",
+   "article_count": 42,
+   "current": true,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E5%9C%8B%E5%AE%B6%E8%B3%A0%E5%84%9F%E6%B3%95_(2012%E5%B9%B4)",
+    "accessed_at": "2026-09-14",
+    "snapshot": "docs/research/evidence/ws_国家赔偿法2012.json"
+   }
+  }
+ ],
+ "pending_note": "时间线四版本：1994（35 条，主席令第二十三号）→ 2010（42 条）→ 2012（42 条，现行）；修正决定主席令号快照未载之项维持省略口径。",
+ "amendments": [
+  {
+   "no": 1,
+   "title": "关于修改《中华人民共和国国家赔偿法》的决定（2010 第一次修正）",
+   "passed_date": "2010-04-29",
+   "effective": "2010-12-01",
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E5%85%A8%E5%9B%BD%E4%BA%BA%E6%B0%91%E4%BB%A3%E8%A1%A8%E5%A4%A7%E4%BC%9A%E5%B8%B8%E5%8A%A1%E5%A7%94%E5%91%98%E4%BC%9A%E5%85%B3%E4%BA%8E%E4%BF%AE%E6%94%B9%E3%80%8A%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%9B%BD%E5%AE%B6%E8%B5%94%E5%81%BF%E6%B3%95%E3%80%8B%E7%9A%84%E5%86%B3%E5%AE%9A%20(2010%E5%B9%B4)",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_国家赔偿法修正决定_2010.html"
+   },
+   "note": "快照头部括注自证：2010-04-29 十一届人大常委会十四次会议通过；本决定自 2010-12-01 起施行（R65 版本页沿革互证）。"
+  },
+  {
+   "no": 2,
+   "title": "关于修改《中华人民共和国国家赔偿法》的决定（2012 第二次修正——现行版来源）",
+   "passed_date": "2012-10-26",
+   "effective": "2013-01-01",
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E5%85%A8%E5%9B%BD%E4%BA%BA%E6%B0%91%E4%BB%A3%E8%A1%A8%E5%A4%A7%E4%BC%9A%E5%B8%B8%E5%8A%A1%E5%A7%94%E5%91%98%E4%BC%9A%E5%85%B3%E4%BA%8E%E4%BF%AE%E6%94%B9%E3%80%8A%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%9B%BD%E5%AE%B6%E8%B5%94%E5%81%BF%E6%B3%95%E3%80%8B%E7%9A%84%E5%86%B3%E5%AE%9A%20(2012%E5%B9%B4)",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_国家赔偿法修正决定_2012.html"
+   },
+   "note": "快照头部括注自证：2012-10-26 十一届人大常委会二十九次会议通过；本决定自 2013-01-01 起施行。现行 scl-2012 语料的修正来源即本决定。"
+  }
+ ]
 }

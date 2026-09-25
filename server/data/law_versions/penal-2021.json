@@ -1,78 +1,94 @@
 {
-  "law_id": "penal-2021",
-  "title": "中华人民共和国行政处罚法",
-  "schema_version": 1,
-  "note": "S2-T1 第四部批量扩张法律（2026-09-13）：2021 修订版全文自人民网受权发布转载页入库（GB18030 编码，gbk 回退路径）；历史版本（1996 通过/2009、2017 修正）待官方快照采集后按同一 schema 登记，未采集前不预填。",
-  "versions": [
-    {
-      "version_id": "2017-amendment",
-      "label": "2017 修正",
-      "status": "已取代（仅作历史对照）",
-      "promulgation_date": "2017-09-01",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "effective_date": "1996-10-01",
-      "article_count": 64,
-      "current": false,
-      "evidence": {
-        "kind": "wikisource-transcription",
-        "grade": "中",
-        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E8%A1%8C%E6%94%BF%E8%99%95%E7%BD%B0%E6%B3%95_(2017%E5%B9%B4)",
-        "accessed_at": "2026-09-14",
-        "snapshot": "docs/research/evidence/ws_行政处罚法2017.html"
-      }
-    },
-    {
-      "version_id": "2009-amendment",
-      "label": "2009 修正",
-      "status": "已取代（仅作历史对照）",
-      "promulgation_date": "2009-08-27",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "effective_date": "1996-10-01",
-      "article_count": 64,
-      "current": false,
-      "evidence": {
-        "kind": "wikisource-transcription",
-        "grade": "中",
-        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E8%A1%8C%E6%94%BF%E8%99%95%E7%BD%B0%E6%B3%95_(2009%E5%B9%B4)",
-        "accessed_at": "2026-09-14",
-        "snapshot": "docs/research/evidence/ws_行政处罚法2009.html"
-      }
-    },
-    {
-      "version_id": "1996-enacted",
-      "label": "1996 通过",
-      "status": "已取代（仅作历史对照）",
-      "promulgation_date": "1996-03-17",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "effective_date": "1996-10-01",
-      "article_count": 64,
-      "current": false,
-      "evidence": {
-        "kind": "wikisource-transcription",
-        "grade": "中",
-        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E8%A1%8C%E6%94%BF%E8%99%95%E7%BD%B0%E6%B3%95_(1996%E5%B9%B4)",
-        "accessed_at": "2026-09-14",
-        "snapshot": "docs/research/evidence/ws_行政处罚法1996.html"
-      }
-    },
-    {
-      "version_id": "2021-revision",
-      "label": "2021 修订",
-      "status": "现行有效（2021修订）",
-      "promulgation_date": "2021-01-22",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "promulgation_instrument": "中华人民共和国主席令第七十号",
-      "effective_date": "2021-07-15",
-      "article_count": 86,
-      "current": true,
-      "evidence": {
-        "kind": "official-gazette-republication",
-        "grade": "强",
-        "url": "https://politics.people.com.cn/n1/2021/0209/c1001-32026746.html",
-        "accessed_at": "2026-09-13",
-        "snapshot": "docs/research/evidence/people_行政处罚法2021.html"
-      }
-    }
-  ],
-  "pending_note": "1996/2009/2017/2021 四版全文均已采集（wikisource 渠道，等级【中】），时间线完整；更早历史文本不存在（1996 为该法首次立法）。"
+ "law_id": "penal-2021",
+ "title": "中华人民共和国行政处罚法",
+ "schema_version": 1,
+ "note": "S2-T1 第四部批量扩张法律（2026-09-13）：2021 修订版全文自人民网受权发布转载页入库（GB18030 编码，gbk 回退路径）；历史版本（1996 通过/2009、2017 修正）待官方快照采集后按同一 schema 登记，未采集前不预填。",
+ "versions": [
+  {
+   "version_id": "2017-amendment",
+   "label": "2017 修正",
+   "status": "已取代（仅作历史对照）",
+   "promulgation_date": "2017-09-01",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "effective_date": "1996-10-01",
+   "article_count": 64,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E8%A1%8C%E6%94%BF%E8%99%95%E7%BD%B0%E6%B3%95_(2017%E5%B9%B4)",
+    "accessed_at": "2026-09-14",
+    "snapshot": "docs/research/evidence/ws_行政处罚法2017.html"
+   }
+  },
+  {
+   "version_id": "2009-amendment",
+   "label": "2009 修正",
+   "status": "已取代（仅作历史对照）",
+   "promulgation_date": "2009-08-27",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "effective_date": "1996-10-01",
+   "article_count": 64,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E8%A1%8C%E6%94%BF%E8%99%95%E7%BD%B0%E6%B3%95_(2009%E5%B9%B4)",
+    "accessed_at": "2026-09-14",
+    "snapshot": "docs/research/evidence/ws_行政处罚法2009.html"
+   }
+  },
+  {
+   "version_id": "1996-enacted",
+   "label": "1996 通过",
+   "status": "已取代（仅作历史对照）",
+   "promulgation_date": "1996-03-17",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "effective_date": "1996-10-01",
+   "article_count": 64,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E8%A1%8C%E6%94%BF%E8%99%95%E7%BD%B0%E6%B3%95_(1996%E5%B9%B4)",
+    "accessed_at": "2026-09-14",
+    "snapshot": "docs/research/evidence/ws_行政处罚法1996.html"
+   }
+  },
+  {
+   "version_id": "2021-revision",
+   "label": "2021 修订",
+   "status": "现行有效（2021修订）",
+   "promulgation_date": "2021-01-22",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "promulgation_instrument": "中华人民共和国主席令第七十号",
+   "effective_date": "2021-07-15",
+   "article_count": 86,
+   "current": true,
+   "evidence": {
+    "kind": "official-gazette-republication",
+    "grade": "强",
+    "url": "https://politics.people.com.cn/n1/2021/0209/c1001-32026746.html",
+    "accessed_at": "2026-09-13",
+    "snapshot": "docs/research/evidence/people_行政处罚法2021.html"
+   }
+  }
+ ],
+ "pending_note": "1996/2009/2017/2021 四版全文均已采集（wikisource 渠道，等级【中】），时间线完整；更早历史文本不存在（1996 为该法首次立法）。",
+ "amendments": [
+  {
+   "no": 1,
+   "title": "关于修改部分法律的决定（行政处罚法 2009 修正所在大打包决定）",
+   "passed_date": "2009-08-27",
+   "effective": "2009-08-27",
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E5%85%A8%E5%9B%BD%E4%BA%BA%E6%B0%91%E4%BB%A3%E8%A1%A8%E5%A4%A7%E4%BC%9A%E5%B8%B8%E5%8A%A1%E5%A7%94%E5%91%98%E4%BC%9A%E5%85%B3%E4%BA%8E%E4%BF%AE%E6%94%B9%E9%83%A8%E5%88%86%E6%B3%95%E5%BE%8B%E7%9A%84%E5%86%B3%E5%AE%9A",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_打包决定_修改部分法律2009.html"
+   },
+   "note": "2009 大打包决定第三节「对下列法律中关于刑事责任的规定作出修改」清单成员——刑责转致条款因刑法修订批量更新（决定快照自证：2009-08-27 通过、自公布之日起施行）。R62 版本页 2009 修正沿革与此互证。"
+  }
+ ]
 }

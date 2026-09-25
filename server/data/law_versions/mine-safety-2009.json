@@ -41,5 +41,21 @@
    "promulgation_instrument": "中华人民共和国主席令第六十五号（1992-11-07 公布）"
   }
  ],
- "pending_note": "1992 原版全文未采集（2009 修正公布即施行，flk sxrq 自证）。矿山安全生产基础法。"
+ "pending_note": "1992 原版全文未采集（2009 修正公布即施行，flk sxrq 自证）。矿山安全生产基础法。",
+ "amendments": [
+  {
+   "no": 1,
+   "title": "关于修改部分法律的决定（矿山安全法 2009 修正所在大打包决定——现行版来源）",
+   "passed_date": "2009-08-27",
+   "effective": "2009-08-27",
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E5%85%A8%E5%9B%BD%E4%BA%BA%E6%B0%91%E4%BB%A3%E8%A1%A8%E5%A4%A7%E4%BC%9A%E5%B8%B8%E5%8A%A1%E5%A7%94%E5%91%98%E4%BC%9A%E5%85%B3%E4%BA%8E%E4%BF%AE%E6%94%B9%E9%83%A8%E5%88%86%E6%B3%95%E5%BE%8B%E7%9A%84%E5%86%B3%E5%AE%9A",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_打包决定_修改部分法律2009.html"
+   },
+   "note": "2009 大打包决定第三节「对下列法律中关于刑事责任的规定作出修改」清单成员——刑责转致条款因刑法修订批量更新（决定快照自证：2009-08-27 通过、自公布之日起施行）。现行 mine-safety-2009 语料的修正来源即本决定（1992 原版经此修正为现行文本）。"
+  }
+ ]
 }

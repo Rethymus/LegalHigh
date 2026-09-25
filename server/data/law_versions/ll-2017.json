@@ -1,94 +1,124 @@
 {
-  "law_id": "ll-2017",
-  "title": "中华人民共和国律师法",
-  "schema_version": 1,
-  "note": "S2-T1/历史版本长尾（2026-09-14）：现行版事实取自语料元数据（快照背书）；历史版自维基文库同渠道采集存证，等级【中】。",
-  "versions": [
-    {
-      "version_id": "1996-enacted",
-      "label": "1996 通过",
-      "status": "已取代（2007 修订前文本，仅作历史对照）",
-      "promulgation_date": "1996-05-15",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "effective_date": "1997-01-01",
-      "article_count": 53,
-      "current": false,
-      "evidence": {
-        "kind": "wikisource-transcription",
-        "grade": "中",
-        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E5%BE%8B%E5%B8%AB%E6%B3%95_(1996%E5%B9%B4)",
-        "accessed_at": "2026-09-14",
-        "snapshot": "docs/research/evidence/ws_律师法1996.html"
-      }
-    },
-    {
-      "version_id": "2001-amendment",
-      "label": "2001 修正",
-      "status": "已取代（2001 修正版，仅作历史对照）",
-      "promulgation_date": "2001-12-29",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "effective_date": "1997-01-01",
-      "article_count": 53,
-      "current": false,
-      "evidence": {
-        "kind": "wikisource-transcription",
-        "grade": "中",
-        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E5%BE%8B%E5%B8%AB%E6%B3%95_(2001%E5%B9%B4)",
-        "accessed_at": "2026-09-14",
-        "snapshot": "docs/research/evidence/ws_律师法2001.html"
-      }
-    },
-    {
-      "version_id": "2007-revision",
-      "label": "2007 修订",
-      "status": "已取代（2017 修正前文本，仅作历史对照）",
-      "promulgation_date": "2007-10-28",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "effective_date": "2008-06-01",
-      "article_count": 60,
-      "current": false,
-      "evidence": {
-        "kind": "wikisource-transcription",
-        "grade": "中",
-        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E5%BE%8B%E5%B8%AB%E6%B3%95_(2007%E5%B9%B4)",
-        "accessed_at": "2026-09-14",
-        "snapshot": "docs/research/evidence/ws_律师法2007.html"
-      }
-    },
-    {
-      "version_id": "2012-amendment",
-      "label": "2012 修正",
-      "status": "已取代（2017 修正前文本，仅作历史对照）",
-      "promulgation_date": "2012-09-28",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "effective_date": "2008-06-01",
-      "article_count": 60,
-      "current": false,
-      "evidence": {
-        "kind": "wikisource-transcription",
-        "grade": "中",
-        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E5%BE%8B%E5%B8%AB%E6%B3%95_(2012%E5%B9%B4)",
-        "accessed_at": "2026-09-14",
-        "snapshot": "docs/research/evidence/ws_律师法2012.html"
-      }
-    },
-    {
-      "version_id": "2017-amendment",
-      "label": "2017 修正",
-      "status": "现行有效（2017修正）",
-      "promulgation_date": "2017-09-01",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "effective_date": "2018-01-01",
-      "article_count": 60,
-      "current": true,
-      "evidence": {
-        "kind": "wikisource-transcription",
-        "grade": "中",
-        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E5%BE%8B%E5%B8%AB%E6%B3%95_(2017%E5%B9%B4)",
-        "accessed_at": "2026-09-14",
-        "snapshot": "docs/research/evidence/ws_律师法2007.html"
-      }
-    }
-  ],
-  "pending_note": "律师法时间线：1996 原版（53 条）→ 2001 修正（53 条）→ 2007 修订（60 条）→ 2012 修正（60 条）→ 2017 修正（60 条，现行）——施行日衔接全部附则自证；主席令号各版快照未载，省略。"
+ "law_id": "ll-2017",
+ "title": "中华人民共和国律师法",
+ "schema_version": 1,
+ "note": "S2-T1/历史版本长尾（2026-09-14）：现行版事实取自语料元数据（快照背书）；历史版自维基文库同渠道采集存证，等级【中】。",
+ "versions": [
+  {
+   "version_id": "1996-enacted",
+   "label": "1996 通过",
+   "status": "已取代（2007 修订前文本，仅作历史对照）",
+   "promulgation_date": "1996-05-15",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "effective_date": "1997-01-01",
+   "article_count": 53,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E5%BE%8B%E5%B8%AB%E6%B3%95_(1996%E5%B9%B4)",
+    "accessed_at": "2026-09-14",
+    "snapshot": "docs/research/evidence/ws_律师法1996.html"
+   }
+  },
+  {
+   "version_id": "2001-amendment",
+   "label": "2001 修正",
+   "status": "已取代（2001 修正版，仅作历史对照）",
+   "promulgation_date": "2001-12-29",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "effective_date": "1997-01-01",
+   "article_count": 53,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E5%BE%8B%E5%B8%AB%E6%B3%95_(2001%E5%B9%B4)",
+    "accessed_at": "2026-09-14",
+    "snapshot": "docs/research/evidence/ws_律师法2001.html"
+   }
+  },
+  {
+   "version_id": "2007-revision",
+   "label": "2007 修订",
+   "status": "已取代（2017 修正前文本，仅作历史对照）",
+   "promulgation_date": "2007-10-28",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "effective_date": "2008-06-01",
+   "article_count": 60,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E5%BE%8B%E5%B8%AB%E6%B3%95_(2007%E5%B9%B4)",
+    "accessed_at": "2026-09-14",
+    "snapshot": "docs/research/evidence/ws_律师法2007.html"
+   }
+  },
+  {
+   "version_id": "2012-amendment",
+   "label": "2012 修正",
+   "status": "已取代（2017 修正前文本，仅作历史对照）",
+   "promulgation_date": "2012-09-28",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "effective_date": "2008-06-01",
+   "article_count": 60,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E5%BE%8B%E5%B8%AB%E6%B3%95_(2012%E5%B9%B4)",
+    "accessed_at": "2026-09-14",
+    "snapshot": "docs/research/evidence/ws_律师法2012.html"
+   }
+  },
+  {
+   "version_id": "2017-amendment",
+   "label": "2017 修正",
+   "status": "现行有效（2017修正）",
+   "promulgation_date": "2017-09-01",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "effective_date": "2018-01-01",
+   "article_count": 60,
+   "current": true,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E5%BE%8B%E5%B8%AB%E6%B3%95_(2017%E5%B9%B4)",
+    "accessed_at": "2026-09-14",
+    "snapshot": "docs/research/evidence/ws_律师法2007.html"
+   }
+  }
+ ],
+ "pending_note": "律师法时间线：1996 原版（53 条）→ 2001 修正（53 条）→ 2007 修订（60 条）→ 2012 修正（60 条）→ 2017 修正（60 条，现行）——施行日衔接全部附则自证；主席令号各版快照未载，省略。",
+ "amendments": [
+  {
+   "no": 1,
+   "title": "关于修改《中华人民共和国律师法》的决定（2001 修正）",
+   "passed_date": "2001-12-29",
+   "effective": "2002-01-01",
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E5%85%A8%E5%9B%BD%E4%BA%BA%E6%B0%91%E4%BB%A3%E8%A1%A8%E5%A4%A7%E4%BC%9A%E5%B8%B8%E5%8A%A1%E5%A7%94%E5%91%98%E4%BC%9A%E5%85%B3%E4%BA%8E%E4%BF%AE%E6%94%B9%E3%80%8A%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%BE%8B%E5%B8%88%E6%B3%95%E3%80%8B%E7%9A%84%E5%86%B3%E5%AE%9A%20(2001%E5%B9%B4)",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_律师法修正决定_2001.html"
+   },
+   "note": "快照头部括注自证：2001-12-29 九届人大常委会二十五次会议通过；本决定自 2002-01-01 起施行（R75 版本页沿革互证）。"
+  },
+  {
+   "no": 2,
+   "title": "关于修改《中华人民共和国律师法》的决定（2012 修正）",
+   "passed_date": "2012-10-26",
+   "effective": "2013-01-01",
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E5%85%A8%E5%9B%BD%E4%BA%BA%E6%B0%91%E4%BB%A3%E8%A1%A8%E5%A4%A7%E4%BC%9A%E5%B8%B8%E5%8A%A1%E5%A7%94%E5%91%98%E4%BC%9A%E5%85%B3%E4%BA%8E%E4%BF%AE%E6%94%B9%E3%80%8A%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%BE%8B%E5%B8%88%E6%B3%95%E3%80%8B%E7%9A%84%E5%86%B3%E5%AE%9A%20(2012%E5%B9%B4)",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_律师法修正决定_2012.html"
+   },
+   "note": "快照头部括注自证：2012-10-26 十一届人大常委会二十九次会议通过；本决定自 2013-01-01 起施行——与国赔法/治安法 2012 修正同日同次会议批次。"
+  }
+ ]
 }
