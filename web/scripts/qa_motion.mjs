@@ -207,6 +207,51 @@ async function main() {
     await cdp.send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: '' }] })
     check('Reduce Motion 移除位移过渡', !/transform/.test(reduced.seg) && !/transform/.test(reduced.sw), `seg=${reduced.seg} · switch=${reduced.sw}`)
 
+    // R337：ActionSheet 拖拽物理——真实鼠标拖拽（非程序调用）：跟手位移/上越阻尼橡皮筋/
+    // 松手阈值关闭/小幅拖拽弹簧回位 四段证据。窄屏法条页「更多」打开 sheet。
+    await cdp.send('Emulation.setDeviceMetricsOverride', { width: 390, height: 844, deviceScaleFactor: 2, mobile: true })
+    await cdp.send('Page.navigate', { url: BASE + '/laws/civl-2020?art=25' })
+    await waitFor(cdp, `document.readyState === 'complete' && !!document.querySelector('.ph-t')`)
+    await sleep(600)
+    await evalAsync(cdp, `([...document.querySelectorAll('.ph-actions button')].find(b=>/更多/.test(b.textContent||''))).click(); 'opened'`)
+    await waitFor(cdp, `!!document.querySelector('.sheet-mask .sheet-row')`)
+    await sleep(400)  // 入场动画结束后（fill=backwards，transform 回归内联控制）
+    const grab = await evalAsync(cdp, `(() => { const r=document.querySelector('.sheet-grab').getBoundingClientRect(); return {x:r.x+r.width/2, y:r.y+r.height/2} })()`)
+    const m42 = () => evalAsync(cdp, `(() => { const s=new DOMMatrix(getComputedStyle(document.querySelector('.sheet')).transform); return s.m42 })()`)
+    // 段1：向下拖 140px——跟手（无过渡）中程采样
+    await cdp.send('Input.dispatchMouseEvent', { type: 'mousePressed', x: grab.x, y: grab.y, button: 'left', clickCount: 1 })
+    await cdp.send('Input.dispatchMouseEvent', { type: 'mouseMoved', x: grab.x, y: grab.y + 70, button: 'left', buttons: 1 })
+    await sleep(250)  // CDP 输入事件管道+React commit 实测 >60ms（插桩定案：200ms 时 m42 精确=位移）
+    const followMid = await m42()
+    await cdp.send('Input.dispatchMouseEvent', { type: 'mouseMoved', x: grab.x, y: grab.y + 140, button: 'left', buttons: 1 })
+    await sleep(250)
+    const followFar = await m42()
+    // 段2：松手（140 > 阈值 90）→ 关闭 → 退场后卸载
+    await cdp.send('Input.dispatchMouseEvent', { type: 'mouseReleased', x: grab.x, y: grab.y + 140, button: 'left', clickCount: 1 })
+    const dismissed = await waitFor(cdp, `!document.querySelector('.sheet-mask') ? 'gone' : false`)
+    // 段3：重开，向上拖 60px——阻尼橡皮筋（位移 ≈ -60×0.3）
+    await evalAsync(cdp, `([...document.querySelectorAll('.ph-actions button')].find(b=>/更多/.test(b.textContent||''))).click(); 'reopened'`)
+    await waitFor(cdp, `!!document.querySelector('.sheet-mask .sheet-row')`)
+    await sleep(400)
+    const grab2 = await evalAsync(cdp, `(() => { const r=document.querySelector('.sheet-grab').getBoundingClientRect(); return {x:r.x+r.width/2, y:r.y+r.height/2} })()`)
+    await cdp.send('Input.dispatchMouseEvent', { type: 'mousePressed', x: grab2.x, y: grab2.y, button: 'left', clickCount: 1 })
+    await cdp.send('Input.dispatchMouseEvent', { type: 'mouseMoved', x: grab2.x, y: grab2.y - 60, button: 'left', buttons: 1 })
+    await sleep(250)
+    const rubber = await m42()
+    // 段4：接段3 继续向下小幅拖 40px 松手——回位（m42 归 0），sheet 仍在
+    await cdp.send('Input.dispatchMouseEvent', { type: 'mouseMoved', x: grab2.x, y: grab2.y + 40, button: 'left', buttons: 1 })
+    await sleep(250)
+    await cdp.send('Input.dispatchMouseEvent', { type: 'mouseReleased', x: grab2.x, y: grab2.y + 40, button: 'left', clickCount: 1 })
+    await sleep(800)  // 弹簧回位（--t-smooth）
+    const settled = await m42()
+    const stillOpen = await evalAsync(cdp, `!!document.querySelector('.sheet-mask .sheet-row')`)
+    await evalAsync(cdp, `document.querySelector('.sheet-cancel')?.click(); 'closed'`)
+    await cdp.send('Emulation.setDeviceMetricsOverride', { width: 1440, height: 900, deviceScaleFactor: 1, mobile: false })
+    const dragOk = Math.abs(followMid - 70) < 6 && Math.abs(followFar - 140) < 6 && dismissed === 'gone'
+      && Math.abs(rubber + 18) < 5 && Math.abs(settled) < 2 && stillOpen
+    check('ActionSheet 拖拽跟手·阻尼·阈值关闭·回位', dragOk,
+      `跟手 ${followMid.toFixed(0)}/${followFar.toFixed(0)} · 橡皮筋 ${rubber.toFixed(1)}（≈-18） · 回位 ${settled.toFixed(1)} · 关闭=${dismissed === 'gone'} 回位后仍开=${stillOpen}`)
+
     check('运行时控制台无错误', runtimeErrors.length === 0, runtimeErrors.length ? runtimeErrors.join(' | ') : '0 console/page exception')
   } finally {
     chrome.kill()

@@ -634,7 +634,7 @@ svg { display: block; flex: none; }
 /* Dialog（声明式）：遮罩淡入 + 面板弹簧缩放入场；关闭时播放退场再卸载 */
 .dlg-mask { position: fixed; inset: 0; z-index: 80; background: rgba(8, 10, 18, 0.5); -webkit-backdrop-filter: blur(var(--blur-veil)); backdrop-filter: blur(var(--blur-veil)); display: grid; place-items: center; padding: 24px; animation: fade-in var(--dur-slow) var(--ease) both; }
 .dlg-mask.is-out { animation: fade-out var(--dur-fast) var(--ease) both; }
-.dlg { width: 460px; max-width: 100%; color: var(--tx); border-radius: var(--r-x); padding: 24px; animation: dlg-in var(--t-bouncy) var(--spring-bouncy) both; }
+.dlg { width: 460px; max-width: 100%; color: var(--tx); border-radius: var(--r-x); padding: 24px; --sheet-y: 0px; animation: dlg-in var(--t-bouncy) var(--spring-bouncy) backwards; }
 .dlg-mask.is-out .dlg { animation: dlg-out var(--dur-fast) var(--ease) both; }
 .dlg-t { font-size: 16.5px; font-weight: 700; margin-bottom: 8px; }
 .dlg-b { font-size: 13.5px; color: var(--tx-2, #6e6e73); line-height: 1.7; margin-bottom: 20px; }
@@ -1470,15 +1470,26 @@ a.mini-t { padding-block: 2.5px; }
   -webkit-backdrop-filter: blur(var(--blur-float)) saturate(var(--mat-sat)); backdrop-filter: blur(var(--blur-float)) saturate(var(--mat-sat));
   border: 1px solid var(--mat-hairline); border-bottom: none;
   box-shadow: var(--mat-inset), var(--shadow-3);
-  animation: sheet-in var(--t-snappy) var(--spring-snappy) both;
+  /* fill=backwards：入场终态不常驻（both 会钉死 transform 压制拖拽跟手——R335 教训同源） */
+  --sheet-y: 0px;
+  animation: sheet-in var(--t-snappy) var(--spring-snappy) backwards;
 }
 .sheet-mask.is-out .sheet { animation: sheet-out var(--dur-fast) var(--ease) both; }
 @keyframes sheet-in { from { transform: translateY(100%); } to { transform: translateY(0); } }
-@keyframes sheet-out { from { transform: translateY(0); } to { transform: translateY(100%); } }
+/* 退场从拖拽当前位移继续（--sheet-y 由 useSheetDrag 注入），无跳变 */
+@keyframes sheet-out { from { transform: translateY(var(--sheet-y, 0px)); } to { transform: translateY(100%); } }
 .sheet-grab, .dlg-grab { display: none; }
+/* R337：把手=整行触摸区（宽 100%/高 26px，含上下余量），视觉条由 ::before 绘制；
+   touch-action:none 锁定触摸滚动，pointer 拖拽 1:1 跟手 */
 .sheet .sheet-grab {
-  display: block; width: 36px; height: 5px; border-radius: var(--r-pill);
-  margin: 6px auto 4px; background: var(--tx-3); opacity: 0.35;
+  display: flex; align-items: center; justify-content: center;
+  width: 100%; height: 26px; margin: 2px 0;
+  touch-action: none; cursor: grab;
+}
+.sheet .sheet-grab:active { cursor: grabbing; }
+.sheet .sheet-grab::before {
+  content: ''; width: 36px; height: 5px; border-radius: var(--r-pill);
+  background: var(--tx-3); opacity: 0.35;
 }
 .sheet-t { text-align: center; font-size: 12.5px; color: var(--tx-2); padding: 4px 0 8px; }
 .sheet-list { display: flex; flex-direction: column; overflow-y: auto; max-height: min(56vh, 460px); }
@@ -1510,10 +1521,15 @@ a.mini-t { padding-block: 2.5px; }
     padding: 10px 20px calc(16px + env(safe-area-inset-bottom, 0px));
     animation-name: sheet-in;
   }
-  .dlg-mask.is-out .dlg { animation-name: sheet-out; }
+  .dlg-mask.is-out .dlg { animation-name: sheet-out; }  /* sheet-out 读 --sheet-y，拖拽关闭无跳变 */
   .dlg-grab {
-    display: block; width: 36px; height: 5px; border-radius: var(--r-pill);
-    margin: 4px auto 14px; background: var(--tx-3); opacity: 0.35;
+    display: flex; align-items: center; justify-content: center;
+    width: 100%; height: 26px; margin: 0 0 8px;
+    touch-action: none; cursor: grab;
+  }
+  .dlg-grab::before {
+    content: ''; width: 36px; height: 5px; border-radius: var(--r-pill);
+    background: var(--tx-3); opacity: 0.35;
   }
   .dlg-acts .btn { flex: 1; }
 }
