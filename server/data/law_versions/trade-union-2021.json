@@ -1,26 +1,81 @@
 {
-  "law_id": "trade-union-2021",
-  "title": "中华人民共和国工会法",
-  "schema_version": 1,
-  "note": "R154（2026-09-18）劳动与健康批次：经 lawtext（flk DOCX 转录）链入库。",
-  "versions": [
-    {
-      "version_id": "current",
-      "label": "2021 修正",
-      "status": "现行有效（2021修正）",
-      "promulgation_date": "2021-12-24",
-      "promulgation_organ": "全国人民代表大会",
-      "effective_date": "2022-01-01",
-      "article_count": 58,
-      "current": true,
-      "evidence": {
-        "kind": "flk-docx-transcription",
-        "grade": "中",
-        "url": "https://flk.npc.gov.cn/detail?id=ff8081817f072a2e017f0ae1a7f600f0",
-        "accessed_at": "2026-09-18",
-        "snapshot": "docs/research/evidence/lawtext_工会法2021.md"
-      }
-    }
-  ],
-  "pending_note": "1992 原版与 2001/2009 修正版全文未采集。公布机关依 flk zdjg 与 lawtext author 双源一致登记为全国人民代表大会（1992 制定机关）。"
+ "law_id": "trade-union-2021",
+ "title": "中华人民共和国工会法",
+ "schema_version": 1,
+ "note": "R154（2026-09-18）劳动与健康批次：经 lawtext（flk DOCX 转录）链入库。",
+ "versions": [
+  {
+   "version_id": "current",
+   "label": "2021 修正",
+   "status": "现行有效（2021修正）",
+   "promulgation_date": "2021-12-24",
+   "promulgation_organ": "全国人民代表大会",
+   "effective_date": "2022-01-01",
+   "article_count": 58,
+   "current": true,
+   "evidence": {
+    "kind": "flk-docx-transcription",
+    "grade": "中",
+    "url": "https://flk.npc.gov.cn/detail?id=ff8081817f072a2e017f0ae1a7f600f0",
+    "accessed_at": "2026-09-18",
+    "snapshot": "docs/research/evidence/lawtext_工会法2021.md"
+   }
+  },
+  {
+   "version_id": "1992-enacted",
+   "label": "1992 原版",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "1992-04-03",
+   "promulgation_organ": "第七届全国人民代表大会第五次会议",
+   "effective_date": "1992-04-03",
+   "article_count": 42,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%B7%A5%E4%BC%9A%E6%B3%95_(1992%E5%B9%B4)",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_工会法_1992.html"
+   },
+   "note": "快照头部括注自证：1992-04-03 七届人大五次会议通过、主席令第五十七号公布、自公布之日起施行（末条附则同句——公布即施行形态，施行日=公布日；附则并自证废止 1950 年工会法）。",
+   "promulgation_instrument": "中华人民共和国主席令第五十七号（1992-04-03 公布）"
+  },
+  {
+   "version_id": "2001-amendment",
+   "label": "2001 修正",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "2001-10-27",
+   "promulgation_organ": "第九届全国人民代表大会常务委员会第二十四次会议",
+   "effective_date": "",
+   "article_count": 57,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%B7%A5%E4%BC%9A%E6%B3%95_(2001%E5%B9%B4)",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_工会法_2001.html"
+   },
+   "note": "快照自证：根据 2001-10-27 九届人大常委会二十四次会议《关于修改〈中华人民共和国工会法〉的决定》修正（42→57 条）。末条附则保留 1992 原句「自公布之日起施行」——修正决定自身施行日快照未载，如实留空待 flk 核对（R56 不推定）。"
+  },
+  {
+   "version_id": "2009-amendment",
+   "label": "2009 第二次修正",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "2009-08-27",
+   "promulgation_organ": "第十一届全国人民代表大会常务委员会第十次会议",
+   "effective_date": "",
+   "article_count": 57,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%B7%A5%E4%BC%9A%E6%B3%95_(2009%E5%B9%B4)",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_工会法_2009.html"
+   },
+   "note": "快照自证：根据 2009-08-27 十一届人大常委会十次会议《关于修改部分法律的决定》第二次修正。末条附则同句保留——修正决定自身施行日快照未载，如实留空待 flk 核对。"
+  }
+ ],
+ "pending_note": "工会法 2001/2009 修正版的修正决定施行日快照未载（末条附则保留 1992 原句），待 flk 人工核对后补登。"
 }

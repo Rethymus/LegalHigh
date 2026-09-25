@@ -1,26 +1,45 @@
 {
-  "law_id": "mine-safety-2009",
-  "title": "中华人民共和国矿山安全法",
-  "schema_version": 1,
-  "note": "R157（2026-09-18）安全三农与医疗批次：经 lawtext（flk DOCX 转录）链入库。",
-  "versions": [
-    {
-      "version_id": "current",
-      "label": "2009 修正",
-      "status": "现行有效（2009修正）",
-      "promulgation_date": "2009-08-27",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "effective_date": "2009-08-27",
-      "article_count": 50,
-      "current": true,
-      "evidence": {
-        "kind": "flk-docx-transcription",
-        "grade": "中",
-        "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf6b19e04f1",
-        "accessed_at": "2026-09-18",
-        "snapshot": "docs/research/evidence/lawtext_矿山安全法2009.md"
-      }
-    }
-  ],
-  "pending_note": "1992 原版全文未采集（2009 修正公布即施行，flk sxrq 自证）。矿山安全生产基础法。"
+ "law_id": "mine-safety-2009",
+ "title": "中华人民共和国矿山安全法",
+ "schema_version": 1,
+ "note": "R157（2026-09-18）安全三农与医疗批次：经 lawtext（flk DOCX 转录）链入库。",
+ "versions": [
+  {
+   "version_id": "current",
+   "label": "2009 修正",
+   "status": "现行有效（2009修正）",
+   "promulgation_date": "2009-08-27",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "effective_date": "2009-08-27",
+   "article_count": 50,
+   "current": true,
+   "evidence": {
+    "kind": "flk-docx-transcription",
+    "grade": "中",
+    "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf6b19e04f1",
+    "accessed_at": "2026-09-18",
+    "snapshot": "docs/research/evidence/lawtext_矿山安全法2009.md"
+   }
+  },
+  {
+   "version_id": "1992-enacted",
+   "label": "1992 原版",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "1992-11-07",
+   "promulgation_organ": "第七届全国人民代表大会常务委员会第二十八次会议",
+   "effective_date": "1993-05-01",
+   "article_count": 50,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E7%9F%BF%E5%B1%B1%E5%AE%89%E5%85%A8%E6%B3%95_(1992%E5%B9%B4)",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_矿山安全法_1992.html"
+   },
+   "note": "快照头部括注自证：1992-11-07 七届人大常委会二十八次会议通过、主席令第六十五号公布、自 1993-05-01 施行（末条附则同证）。",
+   "promulgation_instrument": "中华人民共和国主席令第六十五号（1992-11-07 公布）"
+  }
+ ],
+ "pending_note": "1992 原版全文未采集（2009 修正公布即施行，flk sxrq 自证）。矿山安全生产基础法。"
 }
