@@ -41,5 +41,21 @@
    "promulgation_instrument": "中华人民共和国主席令第三十一号（1994-08-31 公布）"
   }
  ],
- "pending_note": "1994 通过原版与 2009/2017 修正版全文未采集。2025 全面修订施行日 2026-03-01（附则自载与 flk sxrq 一致，采集日已施行）。R141 lawtext 链入库——时效跟进（与食品安全法 2025/反法 2025 同型）。"
+ "pending_note": "1994 通过原版与 2009/2017 修正版全文未采集。2025 全面修订施行日 2026-03-01（附则自载与 flk sxrq 一致，采集日已施行）。R141 lawtext 链入库——时效跟进（与食品安全法 2025/反法 2025 同型）。",
+ "amendments": [
+  {
+   "no": 1,
+   "title": "关于修改《中华人民共和国法官法》等八部法律的决定（仲裁法 2017 修正所在打包决定）",
+   "passed_date": "2017-09-01",
+   "effective": "2018-01-01",
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E5%85%A8%E5%9B%BD%E4%BA%BA%E6%B0%91%E4%BB%A3%E8%A1%A8%E5%A4%A7%E4%BC%9A%E5%B8%B8%E5%8A%A1%E5%A7%94%E5%91%98%E4%BC%9A%E5%85%B3%E4%BA%8E%E4%BF%AE%E6%94%B9%E3%80%8A%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E6%B3%95%E5%AE%98%E6%B3%95%E3%80%8B%E7%AD%89%E5%85%AB%E9%83%A8%E6%B3%95%E5%BE%8B%E7%9A%84%E5%86%B3%E5%AE%9A",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_打包决定_法官八部2017.html"
+   },
+   "note": "打包决定快照自证：2017-09-01 通过、2018-01-01 施行；仲裁法为八部之一（2025 修订前史）。"
+  }
+ ]
 }

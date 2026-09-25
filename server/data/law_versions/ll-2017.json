@@ -119,6 +119,20 @@
     "snapshot": "docs/research/evidence/ws_律师法修正决定_2012.html"
    },
    "note": "快照头部括注自证：2012-10-26 十一届人大常委会二十九次会议通过；本决定自 2013-01-01 起施行——与国赔法/治安法 2012 修正同日同次会议批次。"
+  },
+  {
+   "no": 3,
+   "title": "关于修改《中华人民共和国法官法》等八部法律的决定（律师法 2017 修正所在打包决定——现行版来源）",
+   "passed_date": "2017-09-01",
+   "effective": "2018-01-01",
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E5%85%A8%E5%9B%BD%E4%BA%BA%E6%B0%91%E4%BB%A3%E8%A1%A8%E5%A4%A7%E4%BC%9A%E5%B8%B8%E5%8A%A1%E5%A7%94%E5%91%98%E4%BC%9A%E5%85%B3%E4%BA%8E%E4%BF%AE%E6%94%B9%E3%80%8A%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E6%B3%95%E5%AE%98%E6%B3%95%E3%80%8B%E7%AD%89%E5%85%AB%E9%83%A8%E6%B3%95%E5%BE%8B%E7%9A%84%E5%86%B3%E5%AE%9A",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_打包决定_法官八部2017.html"
+   },
+   "note": "打包决定快照自证：2017-09-01 通过、2018-01-01 施行；律师法为八部之一。现行 ll-2017 语料的修正来源即本决定。"
   }
  ]
 }
