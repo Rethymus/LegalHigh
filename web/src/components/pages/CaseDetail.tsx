@@ -76,7 +76,7 @@ export default function CaseDetail() {
     <div className="case-wrap">
       {/* 头部（设计板视觉：返回行 + 标题 + 中英文名 + 标签 chips + 收藏/搜索） */}
       <div className="tiny row mb-8" style={{ gap: 6 }}>
-        <Link to="/cases" className="row" style={{ gap: 4, color: 'var(--tx-2)' }}><Icon name="arrowL" size={13} />案例详情</Link>
+        <Link to="/cases" className="row tiny" style={{ gap: 4, color: 'var(--tx-2)' }}><Icon name="arrowL" size={13} />案例详情</Link>
         <span className="spacer" />
         <Link to="/cases" className="tb-icon" title="在案例检索中搜索"><Icon name="search" size={14} /></Link>
       </div>

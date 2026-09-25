@@ -1067,6 +1067,7 @@ del.diff-del { text-decoration: line-through; background: var(--danger-soft); bo
 .tiny { font-size: 11.5px; color: var(--tx-2); }  /* 2.64→5.07:1（D7）；tx-3 留给装饰性图形 */
 /* WCAG 2.5.8（S2-T3）：独立小链接的目标命中区 ≥24px（正文行内 span.tiny 不受影响） */
 a.tiny, a.mini-t, a.res-t { display: inline-block; min-inline-size: 24px; padding-block: 3.5px; }
+a.bdg { height: auto; min-height: 24px; padding-block: 1px; }  /* 链接形态徽章达 2.5.8 最小目标（R339：案例标签 chip 链接 22px 违规修复） */
 a.hero-hot { padding-block: 3px; }  /* WCAG 2.5.8：hero 次链接目标 ≥24px */
 a.mini-t { padding-block: 2.5px; }
 .bold { font-weight: 600; }

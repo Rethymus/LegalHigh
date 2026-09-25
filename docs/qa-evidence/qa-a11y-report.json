@@ -20,6 +20,31 @@
     "obscuredFocus": []
   },
   {
+    "route": "laws-browse",
+    "smallTargets": [],
+    "obscuredFocus": []
+  },
+  {
+    "route": "case-search",
+    "smallTargets": [],
+    "obscuredFocus": []
+  },
+  {
+    "route": "case-detail",
+    "smallTargets": [],
+    "obscuredFocus": []
+  },
+  {
+    "route": "case-detail-migrated",
+    "smallTargets": [],
+    "obscuredFocus": []
+  },
+  {
+    "route": "case-detail-foreign",
+    "smallTargets": [],
+    "obscuredFocus": []
+  },
+  {
     "route": "needs",
     "smallTargets": [],
     "obscuredFocus": []
@@ -30,7 +55,37 @@
     "obscuredFocus": []
   },
   {
+    "route": "research",
+    "smallTargets": [],
+    "obscuredFocus": []
+  },
+  {
+    "route": "contract-library",
+    "smallTargets": [],
+    "obscuredFocus": []
+  },
+  {
     "route": "contract-review",
+    "smallTargets": [],
+    "obscuredFocus": []
+  },
+  {
+    "route": "compare",
+    "smallTargets": [],
+    "obscuredFocus": []
+  },
+  {
+    "route": "draft",
+    "smallTargets": [],
+    "obscuredFocus": []
+  },
+  {
+    "route": "draft-validation",
+    "smallTargets": [],
+    "obscuredFocus": []
+  },
+  {
+    "route": "comparative",
     "smallTargets": [],
     "obscuredFocus": []
   },
@@ -41,6 +96,21 @@
   },
   {
     "route": "workspace",
+    "smallTargets": [],
+    "obscuredFocus": []
+  },
+  {
+    "route": "collections",
+    "smallTargets": [],
+    "obscuredFocus": []
+  },
+  {
+    "route": "data-sources",
+    "smallTargets": [],
+    "obscuredFocus": []
+  },
+  {
+    "route": "audit",
     "smallTargets": [],
     "obscuredFocus": []
   },

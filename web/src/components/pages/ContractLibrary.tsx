@@ -74,7 +74,7 @@ export default function ContractLibrary() {
               <tbody>
                 {list.map((r) => (
                   <tr key={r.id}>
-                    <td><Link to={`/contracts/${r.id}`} className="row" style={{ fontWeight: 600, color: 'var(--tx)' }}><Icon name="docShield" size={15} className="muted" />{r.title}</Link></td>
+                    <td><Link to={`/contracts/${r.id}`} className="row tiny" style={{ fontWeight: 600, color: 'var(--tx)' }}><Icon name="docShield" size={15} className="muted" />{r.title}</Link></td>
                     <td>{r.findings} 项</td>
                     <td>{riskSummary(r)}</td>
                     <td className="tiny">{fmtTime(r.created_at)}</td>
