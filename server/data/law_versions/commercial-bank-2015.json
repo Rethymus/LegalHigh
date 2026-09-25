@@ -1,26 +1,63 @@
 {
-  "law_id": "commercial-bank-2015",
-  "title": "中华人民共和国商业银行法",
-  "schema_version": 1,
-  "note": "R147（2026-09-17）金融与应急批次：经 lawtext（flk DOCX 转录）链入库。",
-  "versions": [
-    {
-      "version_id": "current",
-      "label": "2015 修正",
-      "status": "现行有效（2015修正）",
-      "promulgation_date": "2015-08-29",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "effective_date": "2015-10-01",
-      "article_count": 95,
-      "current": true,
-      "evidence": {
-        "kind": "flk-docx-transcription",
-        "grade": "中",
-        "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf7eba9086b",
-        "accessed_at": "2026-09-17",
-        "snapshot": "docs/research/evidence/lawtext_商业银行法2015.md"
-      }
-    }
-  ],
-  "pending_note": "1995 通过原版与 2003/2004 修正版全文未采集。2015 修正施行日 2015-10-01（flk sxrq；附则自载同日）。R147 lawtext 链入库。"
+ "law_id": "commercial-bank-2015",
+ "title": "中华人民共和国商业银行法",
+ "schema_version": 1,
+ "note": "R147（2026-09-17）金融与应急批次：经 lawtext（flk DOCX 转录）链入库。",
+ "versions": [
+  {
+   "version_id": "current",
+   "label": "2015 修正",
+   "status": "现行有效（2015修正）",
+   "promulgation_date": "2015-08-29",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "effective_date": "2015-10-01",
+   "article_count": 95,
+   "current": true,
+   "evidence": {
+    "kind": "flk-docx-transcription",
+    "grade": "中",
+    "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf7eba9086b",
+    "accessed_at": "2026-09-17",
+    "snapshot": "docs/research/evidence/lawtext_商业银行法2015.md"
+   }
+  },
+  {
+   "version_id": "1995-enacted",
+   "label": "1995 原版",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "1995-05-10",
+   "promulgation_organ": "第八届全国人民代表大会常务委员会第十三次会议",
+   "promulgation_instrument": "中华人民共和国主席令第四十七号（1995-05-10 公布）",
+   "effective_date": "1995-07-01",
+   "article_count": 91,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%95%86%E4%B8%9A%E9%93%B6%E8%A1%8C%E6%B3%95_(1995%E5%B9%B4)",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_商业银行法_1995.html"
+   },
+   "note": "快照头部括注自证：1995-05-10 八届人大常委会十三次会议通过、主席令第四十七号公布、自 1995-07-01 施行（末条附则同证）。"
+  },
+  {
+   "version_id": "2003-amendment",
+   "label": "2003 修正",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "2003-12-27",
+   "promulgation_organ": "第十届全国人民代表大会常务委员会第六次会议",
+   "effective_date": "1995-07-01",
+   "article_count": 95,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%95%86%E4%B8%9A%E9%93%B6%E8%A1%8C%E6%B3%95_(2003%E5%B9%B4)",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_商业银行法_2003.html"
+   },
+   "note": "快照自证：根据 2003-12-27 十届人大常委会六次会议《关于修改〈中华人民共和国商业银行法〉的决定》修正（91→95 条）；施行日 1995-07-01 由末条附则自证跨修正延续。"
+  }
+ ],
+ "pending_note": "2011 修正版：维基文库未收录独立页（搜索 API 全量核对仅 1995/2003/2015 三页）——如实待采，待有文本来源渠道（官方公报/受权转载）后按同构管线补登，不以其他版本文本冒充。"
 }
