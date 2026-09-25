@@ -1,26 +1,45 @@
 {
-  "law_id": "environment-2014",
-  "title": "中华人民共和国环境保护法",
-  "schema_version": 1,
-  "note": "R139（2026-09-16）续批：经 lawtext（flk DOCX 转录）链入库。",
-  "versions": [
-    {
-      "version_id": "current",
-      "label": "2014 修订",
-      "status": "现行有效（2014修订）",
-      "promulgation_date": "2014-04-24",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "effective_date": "2015-01-01",
-      "article_count": 70,
-      "current": true,
-      "evidence": {
-        "kind": "flk-docx-transcription",
-        "grade": "中",
-        "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf76c1d0717",
-        "accessed_at": "2026-09-16",
-        "snapshot": "docs/research/evidence/lawtext_环境保护法2014.md"
-      }
-    }
-  ],
-  "pending_note": "1989 通过原版全文未采集。2014 全面修订（「史上最严」）施行日 2015-01-01（附则自载）。flk sxx=1 语义未核实（其他法律 sxx=3），现行地位由 lawtext 单版本覆盖佐证（2026-09-14 更新的 flk DOCX 转录库仅载 2014 版）。R139 入库时修复 lawtext 源缺陷：第五章标题行粘附第五十三条（快照保留原样，builder 层归一化拆分）。"
+ "law_id": "environment-2014",
+ "title": "中华人民共和国环境保护法",
+ "schema_version": 1,
+ "note": "R139（2026-09-16）续批：经 lawtext（flk DOCX 转录）链入库。",
+ "versions": [
+  {
+   "version_id": "current",
+   "label": "2014 修订",
+   "status": "现行有效（2014修订）",
+   "promulgation_date": "2014-04-24",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "effective_date": "2015-01-01",
+   "article_count": 70,
+   "current": true,
+   "evidence": {
+    "kind": "flk-docx-transcription",
+    "grade": "中",
+    "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf76c1d0717",
+    "accessed_at": "2026-09-16",
+    "snapshot": "docs/research/evidence/lawtext_环境保护法2014.md"
+   }
+  },
+  {
+   "version_id": "1989-enacted",
+   "label": "1989 原版",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "1989-12-26",
+   "promulgation_organ": "第七届全国人民代表大会常务委员会第十一次会议",
+   "promulgation_instrument": "中华人民共和国主席令第二十二号（1989-12-26 公布）",
+   "effective_date": "1989-12-26",
+   "article_count": 47,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E7%8E%AF%E5%A2%83%E4%BF%9D%E6%8A%A4%E6%B3%95_(1989%E5%B9%B4)",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_环境保护法_1989.html"
+   },
+   "note": "快照头部括注自证：1989-12-26 七届人大常委会十一次会议通过、主席令第二十二号公布、自公布之日起施行（故施行日=公布日；附则无另载施行句——公布即施行形态）。"
+  }
+ ],
+ "pending_note": "1989 通过原版全文未采集。2014 全面修订（「史上最严」）施行日 2015-01-01（附则自载）。flk sxx=1 语义未核实（其他法律 sxx=3），现行地位由 lawtext 单版本覆盖佐证（2026-09-14 更新的 flk DOCX 转录库仅载 2014 版）。R139 入库时修复 lawtext 源缺陷：第五章标题行粘附第五十三条（快照保留原样，builder 层归一化拆分）。"
 }

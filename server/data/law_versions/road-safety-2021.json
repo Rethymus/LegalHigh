@@ -1,26 +1,80 @@
 {
-  "law_id": "road-safety-2021",
-  "title": "中华人民共和国道路交通安全法",
-  "schema_version": 1,
-  "note": "R133（2026-09-16）第三轮领域扩张：高频普法法律经 lawtext（flk DOCX 转录）链入库。",
-  "versions": [
-    {
-      "version_id": "current",
-      "label": "2021 修正",
-      "status": "现行有效（2021修正）",
-      "promulgation_date": "2021-04-29",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "effective_date": "2004-05-01",
-      "article_count": 124,
-      "current": true,
-      "evidence": {
-        "kind": "flk-docx-transcription",
-        "grade": "中",
-        "url": "https://flk.npc.gov.cn/detail?id=ff8081817ab231eb017abd617ef70519",
-        "accessed_at": "2026-09-16",
-        "snapshot": "docs/research/evidence/lawtext_道交法2021.md"
-      }
-    }
-  ],
-  "pending_note": "2003 通过原版与 2007/2011 修正版全文未采集；2021 修正决定主席令号快照未载，省略。R133 由 lawtext（flk DOCX 转录）链入库，bbbs 经 flk 官方 API 核验（pub 2021-04-29/eff 2021-04-29/有效）。"
+ "law_id": "road-safety-2021",
+ "title": "中华人民共和国道路交通安全法",
+ "schema_version": 1,
+ "note": "R133（2026-09-16）第三轮领域扩张：高频普法法律经 lawtext（flk DOCX 转录）链入库。",
+ "versions": [
+  {
+   "version_id": "current",
+   "label": "2021 修正",
+   "status": "现行有效（2021修正）",
+   "promulgation_date": "2021-04-29",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "effective_date": "2004-05-01",
+   "article_count": 124,
+   "current": true,
+   "evidence": {
+    "kind": "flk-docx-transcription",
+    "grade": "中",
+    "url": "https://flk.npc.gov.cn/detail?id=ff8081817ab231eb017abd617ef70519",
+    "accessed_at": "2026-09-16",
+    "snapshot": "docs/research/evidence/lawtext_道交法2021.md"
+   }
+  },
+  {
+   "version_id": "2003-enacted",
+   "label": "2003 原版",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "2003-10-28",
+   "promulgation_organ": "第十届全国人民代表大会常务委员会第五次会议",
+   "effective_date": "2004-05-01",
+   "article_count": 124,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E9%81%93%E8%B7%AF%E4%BA%A4%E9%80%9A%E5%AE%89%E5%85%A8%E6%B3%95_(2003%E5%B9%B4)",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_道路交通安全法_2003.html"
+   },
+   "note": "快照自证：2003-10-28 十届人大常委会五次会议通过；末条附则自载自 2004-05-01 施行。快照未载主席令号，如实省略。"
+  },
+  {
+   "version_id": "2007-amendment",
+   "label": "2007 第一次修正",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "2007-12-29",
+   "promulgation_organ": "第十届全国人民代表大会常务委员会第三十一次会议",
+   "effective_date": "2004-05-01",
+   "article_count": 124,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E9%81%93%E8%B7%AF%E4%BA%A4%E9%80%9A%E5%AE%89%E5%85%A8%E6%B3%95_(2007%E5%B9%B4)",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_道路交通安全法_2007.html"
+   },
+   "note": "快照自证：根据 2007-12-29 十届人大常委会三十一次会议《关于修改〈中华人民共和国道路交通安全法〉的决定》修正；施行日 2004-05-01 跨修正延续（末条自证）。"
+  },
+  {
+   "version_id": "2011-amendment",
+   "label": "2011 第二次修正",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "2011-04-22",
+   "promulgation_organ": "第十一届全国人民代表大会常务委员会第二十次会议",
+   "effective_date": "2004-05-01",
+   "article_count": 124,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E9%81%93%E8%B7%AF%E4%BA%A4%E9%80%9A%E5%AE%89%E5%85%A8%E6%B3%95_(2011%E5%B9%B4)",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_道路交通安全法_2011.html"
+   },
+   "note": "快照自证：根据 2011-04-22 十一届人大常委会二十次会议《关于修改〈中华人民共和国道路交通安全法〉的决定》修正；施行日 2004-05-01 跨修正延续（末条自证）。"
+  }
+ ],
+ "pending_note": "2003 通过原版与 2007/2011 修正版全文未采集；2021 修正决定主席令号快照未载，省略。R133 由 lawtext（flk DOCX 转录）链入库，bbbs 经 flk 官方 API 核验（pub 2021-04-29/eff 2021-04-29/有效）。"
 }

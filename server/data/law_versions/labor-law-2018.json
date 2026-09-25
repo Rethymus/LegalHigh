@@ -1,26 +1,63 @@
 {
-  "law_id": "labor-law-2018",
-  "title": "中华人民共和国劳动法",
-  "schema_version": 1,
-  "note": "R133（2026-09-16）第三轮领域扩张：高频普法法律经 lawtext（flk DOCX 转录）链入库。",
-  "versions": [
-    {
-      "version_id": "current",
-      "label": "2018 修正",
-      "status": "现行有效（2018修正）",
-      "promulgation_date": "2018-12-29",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "effective_date": "1995-01-01",
-      "article_count": 107,
-      "current": true,
-      "evidence": {
-        "kind": "flk-docx-transcription",
-        "grade": "中",
-        "url": "https://flk.npc.gov.cn/detail?id=ff8080816f135f46016f20f16ee11737",
-        "accessed_at": "2026-09-16",
-        "snapshot": "docs/research/evidence/lawtext_劳动法2018.md"
-      }
-    }
-  ],
-  "pending_note": "1994 通过原版与 2009 修正版全文未采集。R133 由 lawtext 链入库，bbbs 经 flk 官方 API 核验（pub/eff 2018-12-29/有效）。"
+ "law_id": "labor-law-2018",
+ "title": "中华人民共和国劳动法",
+ "schema_version": 1,
+ "note": "R133（2026-09-16）第三轮领域扩张：高频普法法律经 lawtext（flk DOCX 转录）链入库。",
+ "versions": [
+  {
+   "version_id": "current",
+   "label": "2018 修正",
+   "status": "现行有效（2018修正）",
+   "promulgation_date": "2018-12-29",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "effective_date": "1995-01-01",
+   "article_count": 107,
+   "current": true,
+   "evidence": {
+    "kind": "flk-docx-transcription",
+    "grade": "中",
+    "url": "https://flk.npc.gov.cn/detail?id=ff8080816f135f46016f20f16ee11737",
+    "accessed_at": "2026-09-16",
+    "snapshot": "docs/research/evidence/lawtext_劳动法2018.md"
+   }
+  },
+  {
+   "version_id": "1994-enacted",
+   "label": "1994 原版",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "1994-07-05",
+   "promulgation_organ": "第八届全国人民代表大会常务委员会第八次会议",
+   "promulgation_instrument": "中华人民共和国主席令第二十八号（1994-07-05 公布）",
+   "effective_date": "1995-01-01",
+   "article_count": 107,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%8A%B3%E5%8A%A8%E6%B3%95_(1994%E5%B9%B4)",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_劳动法_1994.html"
+   },
+   "note": "快照头部括注自证：1994-07-05 八届人大常委会八次会议通过、主席令第二十八号公布、自 1995-01-01 施行（末条附则同证）。"
+  },
+  {
+   "version_id": "2009-amendment",
+   "label": "2009 修正",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "2009-08-27",
+   "promulgation_organ": "第十一届全国人民代表大会常务委员会第十次会议",
+   "effective_date": "1995-01-01",
+   "article_count": 107,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%8A%B3%E5%8A%A8%E6%B3%95_(2009%E5%B9%B4)",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_劳动法_2009.html"
+   },
+   "note": "快照自证：根据 2009-08-27 十一届人大常委会十次会议《关于修改部分法律的决定》修正；末条附则自载施行日 1995-01-01 跨修正延续（与消保法 2009 同日同决定修正批次）。"
+  }
+ ],
+ "pending_note": "1994 通过原版与 2009 修正版全文未采集。R133 由 lawtext 链入库，bbbs 经 flk 官方 API 核验（pub/eff 2018-12-29/有效）。"
 }
