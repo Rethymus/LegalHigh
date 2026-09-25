@@ -95,5 +95,63 @@
    "note": "快照自证：根据 2013-08-30 十二届人大常委会四次会议决定第三次修正（64→73 条）；施行日 1983-03-01 跨修正延续（末条自证）。"
   }
  ],
- "pending_note": "1982 通过以来历次修正版全文未采集。2026-06-26 修订通过、2027-01-01 施行（附则自载与 flk sxrq 一致）——截至采集日为尚未施行的最新通过文本，status 如实标注「已公布」；2019 版等既往版本在施行日届至前仍为实际施行文本，用户引用时须核对时间效力。R136 lawtext 链入库。"
+ "pending_note": "1982 通过以来历次修正版全文未采集。2026-06-26 修订通过、2027-01-01 施行（附则自载与 flk sxrq 一致）——截至采集日为尚未施行的最新通过文本，status 如实标注「已公布」；2019 版等既往版本在施行日届至前仍为实际施行文本，用户引用时须核对时间效力。R136 lawtext 链入库。 R352：商标法 2019 第四次修正的版本页（维基文库有独立页）待采集登记（amendments 已入打包决定）。",
+ "amendments": [
+  {
+   "no": 1,
+   "title": "关于修改《中华人民共和国商标法》的决定（1993 修正）",
+   "passed_date": "1993-02-22",
+   "effective": "1993-07-01",
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E5%85%A8%E5%9B%BD%E4%BA%BA%E6%B0%91%E4%BB%A3%E8%A1%A8%E5%A4%A7%E4%BC%9A%E5%B8%B8%E5%8A%A1%E5%A7%94%E5%91%98%E4%BC%9A%E5%85%B3%E4%BA%8E%E4%BF%AE%E6%94%B9%E3%80%8A%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%95%86%E6%A0%87%E6%B3%95%E3%80%8B%E7%9A%84%E5%86%B3%E5%AE%9A%20(1993%E5%B9%B4)",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_商标法修正决定_1993.html"
+   },
+   "note": "快照头部括注自证：1993-02-22 七届人大常委会三十次会议通过、主席令第六十九号公布、自 1993-07-01 施行；修改 9 项。"
+  },
+  {
+   "no": 2,
+   "title": "关于修改《中华人民共和国商标法》的决定（2001 第二次修正）",
+   "passed_date": "2001-10-27",
+   "effective": "2001-12-01",
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E5%85%A8%E5%9B%BD%E4%BA%BA%E6%B0%91%E4%BB%A3%E8%A1%A8%E5%A4%A7%E4%BC%9A%E5%B8%B8%E5%8A%A1%E5%A7%94%E5%91%98%E4%BC%9A%E5%85%B3%E4%BA%8E%E4%BF%AE%E6%94%B9%E3%80%8A%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%95%86%E6%A0%87%E6%B3%95%E3%80%8B%E7%9A%84%E5%86%B3%E5%AE%9A%20(2001%E5%B9%B4)",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_商标法修正决定_2001.html"
+   },
+   "note": "快照头部括注自证：2001-10-27 九届人大常委会二十四次会议通过、主席令第五十九号公布、自 2001-12-01 施行；修改 47 项（入世修法）。"
+  },
+  {
+   "no": 3,
+   "title": "关于修改《中华人民共和国商标法》的决定（2013 第三次修正）",
+   "passed_date": "2013-08-30",
+   "effective": "2014-05-01",
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E5%85%A8%E5%9B%BD%E4%BA%BA%E6%B0%91%E4%BB%A3%E8%A1%A8%E5%A4%A7%E4%BC%9A%E5%B8%B8%E5%8A%A1%E5%A7%94%E5%91%98%E4%BC%9A%E5%85%B3%E4%BA%8E%E4%BF%AE%E6%94%B9%E3%80%8A%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%95%86%E6%A0%87%E6%B3%95%E3%80%8B%E7%9A%84%E5%86%B3%E5%AE%9A%20(2013%E5%B9%B4)",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_商标法修正决定_2013.html"
+   },
+   "note": "快照头部括注自证：2013-08-30 十二届人大常委会四次会议通过、自 2014-05-01 施行；修改 53 项；快照未载主席令号，如实省略。"
+  },
+  {
+   "no": 4,
+   "title": "关于修改《中华人民共和国建筑法》等八部法律的决定（商标法 2019 第四次修正所在打包决定）",
+   "passed_date": "2019-04-23",
+   "effective": "2019-11-01",
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E5%85%A8%E5%9B%BD%E4%BA%BA%E6%B0%91%E4%BB%A3%E8%A1%A8%E5%A4%A7%E4%BC%9A%E5%B8%B8%E5%8A%A1%E5%A7%94%E5%91%98%E4%BC%9A%E5%85%B3%E4%BA%8E%E4%BF%AE%E6%94%B9%E3%80%8A%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%BB%BA%E7%AD%91%E6%B3%95%E3%80%8B%E7%AD%89%E5%85%AB%E9%83%A8%E6%B3%95%E5%BE%8B%E7%9A%84%E5%86%B3%E5%AE%9A",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_打包决定_建筑八部2019.html"
+   },
+   "note": "打包决定快照自证：2019-04-23 十三届人大常委会十次会议通过。**施行日分档明文**：决定尾部载「《中华人民共和国商标法》的修改条款自2019年11月1日起施行，其他法律的修改条款自本决定公布之日起施行」——商标法按 2019-11-01 登记（打包决定内分法差异化施行的首例）。"
+  }
+ ]
 }
