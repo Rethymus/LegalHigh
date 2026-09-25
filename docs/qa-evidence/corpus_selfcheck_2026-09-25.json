@@ -1011,7 +1011,7 @@
     "csl-2025": 2,
     "defense-edu-2024": 1,
     "disabled-2018": 1,
-    "drug-admin-2019": 1,
+    "drug-admin-2019": 4,
     "dsl-2021": 1,
     "dv-2015": 1,
     "ecom-2018": 1,
@@ -1028,7 +1028,7 @@
     "higher-edu-2018": 1,
     "htjs-2023": 1,
     "id-card-2011": 1,
-    "infectious-2025": 1,
+    "infectious-2025": 4,
     "insurance-2015": 5,
     "labor-law-2018": 3,
     "lcar-2007": 1,
@@ -1086,7 +1086,7 @@
     "women-2022": 4,
     "work-safety-2021": 1
   },
-  "version_fulltexts": 87,
+  "version_fulltexts": 93,
   "flk_native_ids": 106,
   "cases": {
     "cases": 281,
