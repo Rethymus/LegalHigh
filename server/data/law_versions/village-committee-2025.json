@@ -1,26 +1,45 @@
 {
-  "law_id": "village-committee-2025",
-  "title": "中华人民共和国村民委员会组织法",
-  "schema_version": 1,
-  "note": "R163（2026-09-18）基层自治与体育批次：经 lawtext（flk DOCX 转录）链入库。",
-  "versions": [
-    {
-      "version_id": "current",
-      "label": "2025 修正",
-      "status": "现行有效（2025修正）",
-      "promulgation_date": "2025-10-28",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "effective_date": "2026-01-01",
-      "article_count": 50,
-      "current": true,
-      "evidence": {
-        "kind": "flk-docx-transcription",
-        "grade": "中",
-        "url": "https://flk.npc.gov.cn/detail?id=090f4cc550f84241941e1109c8772e76",
-        "accessed_at": "2026-09-18",
-        "snapshot": "docs/research/evidence/lawtext_村民委员会组织法2025.md"
-      }
-    }
-  ],
-  "pending_note": "1998 原版与 2010 修订版全文未采集。2025 修正（2026-01-01 施行）——基层群众自治制度。"
+ "law_id": "village-committee-2025",
+ "title": "中华人民共和国村民委员会组织法",
+ "schema_version": 1,
+ "note": "R163（2026-09-18）基层自治与体育批次：经 lawtext（flk DOCX 转录）链入库。",
+ "versions": [
+  {
+   "version_id": "current",
+   "label": "2025 修正",
+   "status": "现行有效（2025修正）",
+   "promulgation_date": "2025-10-28",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "effective_date": "2026-01-01",
+   "article_count": 50,
+   "current": true,
+   "evidence": {
+    "kind": "flk-docx-transcription",
+    "grade": "中",
+    "url": "https://flk.npc.gov.cn/detail?id=090f4cc550f84241941e1109c8772e76",
+    "accessed_at": "2026-09-18",
+    "snapshot": "docs/research/evidence/lawtext_村民委员会组织法2025.md"
+   }
+  },
+  {
+   "version_id": "1998-enacted",
+   "label": "1998 修订版",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "1998-11-04",
+   "promulgation_organ": "第九届全国人民代表大会常务委员会第五次会议",
+   "effective_date": "1998-11-04",
+   "article_count": 30,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E6%9D%91%E6%B0%91%E5%A7%94%E5%91%98%E4%BC%9A%E7%BB%84%E7%BB%87%E6%B3%95_(1998%E5%B9%B4)",
+    "accessed_at": "2026-09-26",
+    "snapshot": "docs/research/evidence/ws_村民委员会组织法_1998.html"
+   },
+   "note": "快照头部括注自证：1998-11-04 九届人大常委会五次会议通过（修订 1987 年试行法为正式法）、主席令第九号公布、自公布之日起施行（公布即施行形态）。1998 页按修订后正式法登记；1987 试行法（「村民委员会组织法（试行）」）为前身试行形态，见 note。",
+   "promulgation_instrument": "中华人民共和国主席令第九号（1998-11-04 公布）"
+  }
+ ],
+ "pending_note": "1998 原版与 2010 修订版全文未采集。2025 修正（2026-01-01 施行）——基层群众自治制度。"
 }
