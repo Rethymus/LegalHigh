@@ -448,6 +448,11 @@ export const api = {
     return req<HistorySearch>(`/history/search?${p}`)
   },
 
+  // 修正决定快照原文（R384）：第 no 次决定清洗全文（只读；「改了什么」一手文本）
+  amendmentFulltext: (lawId: string, no: number) =>
+    req<{ law_id: string; no: number; title: string; passed_date: string; effective: string; text: string; scope_note: string; source: { kind: string; grade?: string; url: string; accessed_at?: string; snapshot: string } }>(
+      `/laws/${encodeURIComponent(lawId)}/amendments/${no}/fulltext`),
+
   // 跨版本条号重编号映射（known-gaps #1）：difflib 确定性对齐（公开只读；少两个版本 404）
   renumberMap: (lawId: string) =>
     req<RenumberMap>(`/laws/${encodeURIComponent(lawId)}/renumber-map`),

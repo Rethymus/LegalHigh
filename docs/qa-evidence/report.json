@@ -1,32 +1,14 @@
 [
   {
-    "name": "05-search-home",
-    "path": "/search",
+    "name": "45-law-versions",
+    "path": "/laws/cl-2023?art=287之一",
     "consoleErrors": [],
     "consoleWarnings": [],
     "pageErrors": [],
     "failedRequests": [],
-    "finalUrl": "http://localhost:5173/search",
-    "title": "LegalHigh · 法律智能知识库"
-  },
-  {
-    "name": "06-search-results",
-    "path": "/search/results?q=%E8%AF%95%E7%94%A8%E6%9C%9F%20%E4%B8%80%E5%B9%B4",
-    "consoleErrors": [],
-    "consoleWarnings": [],
-    "pageErrors": [],
-    "failedRequests": [],
-    "finalUrl": "http://localhost:5173/search/results?q=%E8%AF%95%E7%94%A8%E6%9C%9F%20%E4%B8%80%E5%B9%B4",
-    "title": "LegalHigh · 法律智能知识库"
-  },
-  {
-    "name": "31-narrow-search-results",
-    "path": "/search/results?q=%E8%AF%95%E7%94%A8%E6%9C%9F",
-    "consoleErrors": [],
-    "consoleWarnings": [],
-    "pageErrors": [],
-    "failedRequests": [],
-    "finalUrl": "http://localhost:5173/search/results?q=%E8%AF%95%E7%94%A8%E6%9C%9F",
+    "step1": "clicked",
+    "step2": "versions-ok",
+    "finalUrl": "http://localhost:5173/laws/cl-2023?art=287%E4%B9%8B%E4%B8%80",
     "title": "LegalHigh · 法律智能知识库"
   }
 ]

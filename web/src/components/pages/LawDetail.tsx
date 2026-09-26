@@ -115,6 +115,9 @@ export default function LawDetail() {
   const [cited, setCited] = useState<Awaited<ReturnType<typeof api.citedBy>> | null>(null)
   const [ftVid, setFtVid] = useState<string | null>(null)
   const [fulltext, setFulltext] = useState<Awaited<ReturnType<typeof api.versionFulltext>> | null>(null)
+  // 修正决定全文（R384）：amNo=展开中的决定次序；amText=加载的决定正文
+  const [amNo, setAmNo] = useState<number | null>(null)
+  const [amText, setAmText] = useState<Awaited<ReturnType<typeof api.amendmentFulltext>> | null>(null)
   const [renumber, setRenumber] = useState<Awaited<ReturnType<typeof api.renumberMap>> | null>(null)
   useEffect(() => {
     let alive = true
@@ -139,6 +142,17 @@ export default function LawDetail() {
     return () => { alive = false }
   }, [lawId, ftVid])
   useEffect(() => { setFtVid(null) }, [lawId])
+  // 修正决定全文（R384）：与版本全文同款加载纪律（不可用诚实报错不伪造）
+  useEffect(() => {
+    let alive = true
+    if (amNo === null) { setAmText(null); return () => { alive = false } }
+    api.amendmentFulltext(lawId ?? '', amNo).then(
+      (d) => alive && setAmText(d),
+      () => alive && setAmText(null),
+    )
+    return () => { alive = false }
+  }, [lawId, amNo])
+  useEffect(() => { setAmNo(null) }, [lawId])
 
   const runHistSearch = () => {
     const q = histQ.trim()
@@ -433,17 +447,37 @@ export default function LawDetail() {
                           <div className="tiny bold mb-8">修正决定（{versions.amendments.length} 件）——每次修法「改了什么」的原始决定文本</div>
                           <div className="list-divided">
                             {versions.amendments.map((a) => (
-                              <div key={a.no} className="lrow" style={{ alignItems: 'flex-start' }}>
-                                <span className="bdg bdg-teal">第{a.no}次</span>
-                                <div style={{ flex: 1, minWidth: 0 }}>
-                                  <b style={{ fontSize: 12.5 }}>{a.title}</b>
-                                  <div className="tiny" style={{ lineHeight: 1.8 }}>
-                                    {a.passed_date} 通过 · {a.effective} 施行
-                                    {a.evidence?.grade && ` · 证据等级【${a.evidence.grade}】`}
-                                    {a.note && ` · ${a.note.length > 90 ? a.note.slice(0, 90) + '…' : a.note}`}
+                              <div key={a.no} className="lrow" style={{ alignItems: 'flex-start', flexDirection: 'column' }}>
+                                <div className="row" style={{ alignSelf: 'stretch', alignItems: 'flex-start' }}>
+                                  <span className="bdg bdg-teal">第{a.no}次</span>
+                                  <div style={{ flex: 1, minWidth: 0 }}>
+                                    <b style={{ fontSize: 12.5 }}>{a.title}</b>
+                                    <div className="tiny" style={{ lineHeight: 1.8 }}>
+                                      {a.passed_date} 通过 · {a.effective} 施行
+                                      {a.evidence?.grade && ` · 证据等级【${a.evidence.grade}】`}
+                                      {a.note && ` · ${a.note.length > 90 ? a.note.slice(0, 90) + '…' : a.note}`}
+                                    </div>
+                                  </div>
+                                  <div className="row" style={{ gap: 6, flexShrink: 0 }}>
+                                    {a.evidence?.snapshot && (
+                                      <button className="btn btn-ghost btn-sm" onClick={() => setAmNo(amNo === a.no ? null : a.no)}>
+                                        {amNo === a.no ? '收起决定全文' : '决定全文'}
+                                      </button>
+                                    )}
+                                    {a.evidence?.url && <a className="tiny" href={a.evidence.url} target="_blank" rel="noreferrer">原文</a>}
                                   </div>
                                 </div>
-                                {a.evidence?.url && <a className="tiny" href={a.evidence.url} target="_blank" rel="noreferrer" style={{ flexShrink: 0 }}>决定原文</a>}
+                                {amNo === a.no && (
+                                  amText ? (
+                                    <div className="card mt-8" style={{ alignSelf: 'stretch', padding: 14 }}>
+                                      <div className="tiny mb-8">{amText.title} · {amText.passed_date} 通过 · {amText.effective} 施行 · 快照 {amText.source.snapshot}（{amText.source.grade ? `等级【${amText.source.grade}】` : ''}查阅于 {amText.source.accessed_at}）</div>
+                                      <div className="banner banner-warn mb-12"><Icon name="alert" size={15} /><span className="banner-tx">{amText.scope_note}</span></div>
+                                      <pre style={{ whiteSpace: 'pre-wrap', fontFamily: 'inherit', fontSize: 12.5, lineHeight: 2, margin: 0, color: 'var(--tx)' }}>{amText.text}</pre>
+                                    </div>
+                                  ) : (
+                                    <div className="tiny muted mt-8">决定全文加载中…（若长期为空说明该决定快照暂不可用）</div>
+                                  )
+                                )}
                               </div>
                             ))}
                           </div>

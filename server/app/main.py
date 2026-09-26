@@ -279,6 +279,24 @@ def law_version_fulltext(law_id: str, version_id: str):
         raise HTTPException(500, str(e))
 
 
+@app.get("/api/laws/{law_id}/amendments/{no}/fulltext")
+def law_amendment_fulltext(law_id: str, no: int):
+    """修正决定快照原文查阅（R384）：第 no 次修正决定的清洗全文。
+
+    只读、fail-closed：law 不在语料/决定条目未登记/快照不在库 → 404；
+    schema 问题 → 500。响应携带「改了什么」一手文本与快照来源；不进检索语料。
+    """
+    if law_id not in get_corpus().laws:
+        raise HTTPException(404, "law not found")
+    try:
+        from . import amendment_fulltext as amendment_fulltext_mod
+        return amendment_fulltext_mod.amendment_fulltext(law_id, no)
+    except KeyError as e:
+        raise HTTPException(404, str(e))
+    except (ValueError, FileNotFoundError) as e:
+        raise HTTPException(500, str(e))
+
+
 @app.get("/api/laws/{law_id}/renumber-map")
 def law_renumber_map(law_id: str):
     """跨版本条号重编号映射（known-gaps #1，R170→R180 语义对齐 versions 端点）：
