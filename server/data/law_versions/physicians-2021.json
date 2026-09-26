@@ -1,26 +1,26 @@
 {
-  "law_id": "physicians-2021",
-  "title": "中华人民共和国医师法",
-  "schema_version": 1,
-  "note": "R157（2026-09-18）安全三农与医疗批次：经 lawtext（flk DOCX 转录）链入库。",
-  "versions": [
-    {
-      "version_id": "current",
-      "label": "2021 制定",
-      "status": "现行有效",
-      "promulgation_date": "2021-08-20",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "effective_date": "2022-03-01",
-      "article_count": 67,
-      "current": true,
-      "evidence": {
-        "kind": "flk-docx-transcription",
-        "grade": "中",
-        "url": "https://flk.npc.gov.cn/detail?id=ff8081817b6450e6017b657ba9500116",
-        "accessed_at": "2026-09-18",
-        "snapshot": "docs/research/evidence/lawtext_医师法2021.md"
-      }
-    }
-  ],
-  "pending_note": "承继 1998 执业医师法（lawtext 该条目 status=已废止，本库不收废止法）。执业规则/多点执业/紧急救治义务。"
+ "law_id": "physicians-2021",
+ "title": "中华人民共和国医师法",
+ "schema_version": 1,
+ "note": "R157（2026-09-18）安全三农与医疗批次：经 lawtext（flk DOCX 转录）链入库。 R373 前身关系定案（更名边界）：现行《医师法》(2021-08-20 通过、2022-03-01 施行) 明文废止 1998《执业医师法》——系「新法取代旧法」而非同法修正，法名不同故不入 versions 时间线（同法版本语义）。前身《执业医师法》1998 原版全文（48 条，主席令第五号，1999-05-01 施行）已存证 docs/research/evidence/ws_执业医师法_1998.html 供对照查阅与后续产品化引用（如「旧法条文去向」）。医师法本身 2021 首次制定——单版本即完整沿革（终态口径）。",
+ "versions": [
+  {
+   "version_id": "current",
+   "label": "2021 制定",
+   "status": "现行有效",
+   "promulgation_date": "2021-08-20",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "effective_date": "2022-03-01",
+   "article_count": 67,
+   "current": true,
+   "evidence": {
+    "kind": "flk-docx-transcription",
+    "grade": "中",
+    "url": "https://flk.npc.gov.cn/detail?id=ff8081817b6450e6017b657ba9500116",
+    "accessed_at": "2026-09-18",
+    "snapshot": "docs/research/evidence/lawtext_医师法2021.md"
+   }
+  }
+ ],
+ "pending_note": "承继 1998 执业医师法（lawtext 该条目 status=已废止，本库不收废止法）。执业规则/多点执业/紧急救治义务。"
 }

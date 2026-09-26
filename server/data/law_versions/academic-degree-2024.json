@@ -1,26 +1,26 @@
 {
-  "law_id": "academic-degree-2024",
-  "title": "中华人民共和国学位法",
-  "schema_version": 1,
-  "note": "R149（2026-09-17）监督与教育批次：经 lawtext（flk DOCX 转录）链入库。",
-  "versions": [
-    {
-      "version_id": "current",
-      "label": "2024 通过",
-      "status": "现行有效",
-      "promulgation_date": "2024-04-26",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "effective_date": "2025-01-01",
-      "article_count": 45,
-      "current": true,
-      "evidence": {
-        "kind": "flk-docx-transcription",
-        "grade": "中",
-        "url": "https://flk.npc.gov.cn/detail?id=ff8081818d6a424b018f1a63b49a796a",
-        "accessed_at": "2026-09-17",
-        "snapshot": "docs/research/evidence/lawtext_学位法2024.md"
-      }
-    }
-  ],
-  "pending_note": "本法律为 2024 新制定（承继 1980 学位条例制度），施行日 2025-01-01（附则自载与 flk sxrq 一致）；1980 学位条例全文未采集。R149 lawtext 链入库。"
+ "law_id": "academic-degree-2024",
+ "title": "中华人民共和国学位法",
+ "schema_version": 1,
+ "note": "R149（2026-09-17）监督与教育批次：经 lawtext（flk DOCX 转录）链入库。 R373 前身关系定案（更名边界）：现行《学位法》(2024-04-26 通过、2025-01-01 施行) 明文废止 1980《学位条例》——「新法取代旧法」关系，不入 versions。前身《学位条例》1980 原版全文（20 条，全国人大常委会令第四号，1981-01-01 施行——施行 44 年的改革开放早期立法）已存证 docs/research/evidence/ws_学位条例_1980.html 供对照。学位法 2024 首次制定——单版本即完整沿革（终态口径）。",
+ "versions": [
+  {
+   "version_id": "current",
+   "label": "2024 通过",
+   "status": "现行有效",
+   "promulgation_date": "2024-04-26",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "effective_date": "2025-01-01",
+   "article_count": 45,
+   "current": true,
+   "evidence": {
+    "kind": "flk-docx-transcription",
+    "grade": "中",
+    "url": "https://flk.npc.gov.cn/detail?id=ff8081818d6a424b018f1a63b49a796a",
+    "accessed_at": "2026-09-17",
+    "snapshot": "docs/research/evidence/lawtext_学位法2024.md"
+   }
+  }
+ ],
+ "pending_note": "本法律为 2024 新制定（承继 1980 学位条例制度），施行日 2025-01-01（附则自载与 flk sxrq 一致）；1980 学位条例全文未采集。R149 lawtext 链入库。"
 }
