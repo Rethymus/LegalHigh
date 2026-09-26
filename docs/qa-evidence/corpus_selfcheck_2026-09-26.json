@@ -979,7 +979,7 @@
   "version_registries": {
     "academic-degree-2024": 1,
     "accessibility-2023": 1,
-    "accounting-2024": 2,
+    "accounting-2024": 4,
     "admin-litigation-2017": 2,
     "admin-review-2023": 4,
     "advertising-2021": 4,
@@ -1086,7 +1086,7 @@
     "women-2022": 4,
     "work-safety-2021": 3
   },
-  "version_fulltexts": 149,
+  "version_fulltexts": 151,
   "flk_native_ids": 106,
   "cases": {
     "cases": 281,
