@@ -1,26 +1,45 @@
 {
-  "law_id": "seeds-2022",
-  "title": "中华人民共和国种子法",
-  "schema_version": 1,
-  "note": "R161（2026-09-18）学前种子与爱国批次：经 lawtext（flk DOCX 转录）链入库。",
-  "versions": [
-    {
-      "version_id": "current",
-      "label": "2021 修订",
-      "status": "现行有效（2021修订）",
-      "promulgation_date": "2021-12-24",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "effective_date": "2022-03-01",
-      "article_count": 92,
-      "current": true,
-      "evidence": {
-        "kind": "flk-docx-transcription",
-        "grade": "中",
-        "url": "https://flk.npc.gov.cn/detail?id=ff8081817f072a2e017f0b66fb640166",
-        "accessed_at": "2026-09-18",
-        "snapshot": "docs/research/evidence/lawtext_种子法2022.md"
-      }
-    }
-  ],
-  "pending_note": "2000 原版与 2004/2013/2015 修正版全文未采集（双 bbbs 按 status 定案 2021 修订版）。**与指导案例 275 号（植物新品种）呼应——可回补深链**。"
+ "law_id": "seeds-2022",
+ "title": "中华人民共和国种子法",
+ "schema_version": 1,
+ "note": "R161（2026-09-18）学前种子与爱国批次：经 lawtext（flk DOCX 转录）链入库。",
+ "versions": [
+  {
+   "version_id": "current",
+   "label": "2021 修订",
+   "status": "现行有效（2021修订）",
+   "promulgation_date": "2021-12-24",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "effective_date": "2022-03-01",
+   "article_count": 92,
+   "current": true,
+   "evidence": {
+    "kind": "flk-docx-transcription",
+    "grade": "中",
+    "url": "https://flk.npc.gov.cn/detail?id=ff8081817f072a2e017f0b66fb640166",
+    "accessed_at": "2026-09-18",
+    "snapshot": "docs/research/evidence/lawtext_种子法2022.md"
+   }
+  },
+  {
+   "version_id": "2000-enacted",
+   "label": "2000 原版",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "2000-07-08",
+   "promulgation_organ": "第九届全国人民代表大会常务委员会第十六次会议",
+   "effective_date": "2000-12-01",
+   "article_count": 78,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E7%A7%8D%E5%AD%90%E6%B3%95_(2000%E5%B9%B4)",
+    "accessed_at": "2026-09-26",
+    "snapshot": "docs/research/evidence/ws_种子法_2000.html"
+   },
+   "note": "快照头部括注自证：2000-07-08 九届人大常委会十六次会议通过、主席令第三十四号公布、自 2000-12-01 起施行（末条附则同证）。",
+   "promulgation_instrument": "中华人民共和国主席令第三十四号（2000-07-08 公布）"
+  }
+ ],
+ "pending_note": "2000 原版与 2004/2013/2015 修正版全文未采集（双 bbbs 按 status 定案 2021 修订版）。**与指导案例 275 号（植物新品种）呼应——可回补深链**。"
 }

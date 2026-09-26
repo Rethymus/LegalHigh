@@ -1,26 +1,45 @@
 {
-  "law_id": "standardization-2017",
-  "title": "中华人民共和国标准化法",
-  "schema_version": 1,
-  "note": "R159（2026-09-18）计量标准与成果批次：经 lawtext（flk DOCX 转录）链入库。",
-  "versions": [
-    {
-      "version_id": "current",
-      "label": "2017 修订",
-      "status": "现行有效（2017修订）",
-      "promulgation_date": "2017-11-04",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "effective_date": "2018-01-01",
-      "article_count": 45,
-      "current": true,
-      "evidence": {
-        "kind": "flk-docx-transcription",
-        "grade": "中",
-        "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf876430a91",
-        "accessed_at": "2026-09-18",
-        "snapshot": "docs/research/evidence/lawtext_标准化法2017.md"
-      }
-    }
-  ],
-  "pending_note": "1988 原版全文未采集。强制性标准/团体标准/企业标准自我声明公开。"
+ "law_id": "standardization-2017",
+ "title": "中华人民共和国标准化法",
+ "schema_version": 1,
+ "note": "R159（2026-09-18）计量标准与成果批次：经 lawtext（flk DOCX 转录）链入库。",
+ "versions": [
+  {
+   "version_id": "current",
+   "label": "2017 修订",
+   "status": "现行有效（2017修订）",
+   "promulgation_date": "2017-11-04",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "effective_date": "2018-01-01",
+   "article_count": 45,
+   "current": true,
+   "evidence": {
+    "kind": "flk-docx-transcription",
+    "grade": "中",
+    "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf876430a91",
+    "accessed_at": "2026-09-18",
+    "snapshot": "docs/research/evidence/lawtext_标准化法2017.md"
+   }
+  },
+  {
+   "version_id": "1988-enacted",
+   "label": "1988 原版",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "1988-12-29",
+   "promulgation_organ": "第七届全国人民代表大会常务委员会第五次会议",
+   "effective_date": "1989-04-01",
+   "article_count": 26,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E6%A0%87%E5%87%86%E5%8C%96%E6%B3%95_(1988%E5%B9%B4)",
+    "accessed_at": "2026-09-26",
+    "snapshot": "docs/research/evidence/ws_标准化法_1988.html"
+   },
+   "note": "快照头部括注自证：1988-12-29 七届人大常委会五次会议通过、主席令第十一号公布、自 1989-04-01 起施行（末条附则同证）。",
+   "promulgation_instrument": "中华人民共和国主席令第十一号（1988-12-29 公布）"
+  }
+ ],
+ "pending_note": "1988 原版全文未采集。强制性标准/团体标准/企业标准自我声明公开。"
 }

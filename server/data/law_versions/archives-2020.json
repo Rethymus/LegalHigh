@@ -1,26 +1,45 @@
 {
-  "law_id": "archives-2020",
-  "title": "中华人民共和国档案法",
-  "schema_version": 1,
-  "note": "R158（2026-09-18）档案动物与科技批次：经 lawtext（flk DOCX 转录）链入库。",
-  "versions": [
-    {
-      "version_id": "current",
-      "label": "2020 修订",
-      "status": "现行有效（2020修订）",
-      "promulgation_date": "2020-06-20",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "effective_date": "2021-01-01",
-      "article_count": 53,
-      "current": true,
-      "evidence": {
-        "kind": "flk-docx-transcription",
-        "grade": "中",
-        "url": "https://flk.npc.gov.cn/detail?id=ff80808172b5f24f0172e4ef05e218d4",
-        "accessed_at": "2026-09-18",
-        "snapshot": "docs/research/evidence/lawtext_档案法2020.md"
-      }
-    }
-  ],
-  "pending_note": "1987 原版与 2016 修正版全文未采集（双 bbbs 候选按 status 定案 2020 修订版）。档案开放利用与电子档案制度。"
+ "law_id": "archives-2020",
+ "title": "中华人民共和国档案法",
+ "schema_version": 1,
+ "note": "R158（2026-09-18）档案动物与科技批次：经 lawtext（flk DOCX 转录）链入库。",
+ "versions": [
+  {
+   "version_id": "current",
+   "label": "2020 修订",
+   "status": "现行有效（2020修订）",
+   "promulgation_date": "2020-06-20",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "effective_date": "2021-01-01",
+   "article_count": 53,
+   "current": true,
+   "evidence": {
+    "kind": "flk-docx-transcription",
+    "grade": "中",
+    "url": "https://flk.npc.gov.cn/detail?id=ff80808172b5f24f0172e4ef05e218d4",
+    "accessed_at": "2026-09-18",
+    "snapshot": "docs/research/evidence/lawtext_档案法2020.md"
+   }
+  },
+  {
+   "version_id": "1987-enacted",
+   "label": "1987 原版",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "1987-09-05",
+   "promulgation_organ": "第六届全国人民代表大会常务委员会第二十二次会议",
+   "effective_date": "1988-01-01",
+   "article_count": 26,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E6%A1%A3%E6%A1%88%E6%B3%95_(1987%E5%B9%B4)",
+    "accessed_at": "2026-09-26",
+    "snapshot": "docs/research/evidence/ws_档案法_1987.html"
+   },
+   "note": "快照头部括注自证：1987-09-05 六届人大常委会二十二次会议通过、主席令第五十八号公布、自 1988-01-01 起施行（末条附则同证）。",
+   "promulgation_instrument": "中华人民共和国主席令第五十八号（1987-09-05 公布）"
+  }
+ ],
+ "pending_note": "1987 原版与 2016 修正版全文未采集（双 bbbs 候选按 status 定案 2020 修订版）。档案开放利用与电子档案制度。"
 }
