@@ -41,5 +41,35 @@
    "promulgation_instrument": "中华人民共和国主席令第六十三号（2001-12-29 公布）"
   }
  ],
- "pending_note": "2001 原版与 2015 第一次修正版全文未采集（flk lsyg 载 2015-12-27 版）。2021 修正公布即施行（flk sxrq 2021-08-20），附则施行日两说并存以修正决定为准。"
+ "pending_note": "2001 原版与 2015 第一次修正版全文未采集（flk lsyg 载 2015-12-27 版）。2021 修正公布即施行（flk sxrq 2021-08-20），附则施行日两说并存以修正决定为准。",
+ "amendments": [
+  {
+   "no": 1,
+   "title": "关于修改《中华人民共和国人口与计划生育法》的决定（2015 修正——全面两孩）",
+   "passed_date": "2015-12-27",
+   "effective": "2016-01-01",
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E5%85%A8%E5%9B%BD%E4%BA%BA%E6%B0%91%E4%BB%A3%E8%A1%A8%E5%A4%A7%E4%BC%9A%E5%B8%B8%E5%8A%A1%E5%A7%94%E5%91%98%E4%BC%9A%E5%85%B3%E4%BA%8E%E4%BF%AE%E6%94%B9%E3%80%8A%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E4%BA%BA%E5%8F%A3%E4%B8%8E%E8%AE%A1%E5%88%92%E7%94%9F%E8%82%B2%E6%B3%95%E3%80%8B%E7%9A%84%E5%86%B3%E5%AE%9A%20(2015%E5%B9%B4)",
+    "accessed_at": "2026-09-26",
+    "snapshot": "docs/research/evidence/ws_计生法修正决定_2015.html"
+   },
+   "note": "快照头部括注自证：2015-12-27 十二届人大常委会十八次会议通过（与教育法/高教法 2015 决定同日同会——2015-12-27 教育立法批次扩展）；本决定自 2016-01-01 起施行；修改 5 项（全面两孩政策入法）。"
+  },
+  {
+   "no": 2,
+   "title": "关于修改《中华人民共和国人口与计划生育法》的决定（2021 修正——三孩政策，现行版来源）",
+   "passed_date": "2021-08-20",
+   "effective": "2021-08-20",
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E5%85%A8%E5%9B%BD%E4%BA%BA%E6%B0%91%E4%BB%A3%E8%A1%A8%E5%A4%A7%E4%BC%9A%E5%B8%B8%E5%8A%A1%E5%A7%94%E5%91%98%E4%BC%9A%E5%85%B3%E4%BA%8E%E4%BF%AE%E6%94%B9%E3%80%8A%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E4%BA%BA%E5%8F%A3%E4%B8%8E%E8%AE%A1%E5%88%92%E7%94%9F%E8%82%B2%E6%B3%95%E3%80%8B%E7%9A%84%E5%86%B3%E5%AE%9A%20(2021%E5%B9%B4)",
+    "accessed_at": "2026-09-26",
+    "snapshot": "docs/research/evidence/ws_计生法修正决定_2021.html"
+   },
+   "note": "快照头部括注自证：2021-08-20 十三届人大常委会三十次会议通过、自公布之日起施行；修改 21 项（三孩政策与配套支持措施入法）。现行 family-plan-2021 语料的修正来源即本决定。"
+  }
+ ]
 }

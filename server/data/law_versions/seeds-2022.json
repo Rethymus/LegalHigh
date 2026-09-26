@@ -41,5 +41,49 @@
    "promulgation_instrument": "中华人民共和国主席令第三十四号（2000-07-08 公布）"
   }
  ],
- "pending_note": "2000 原版与 2004/2013/2015 修正版全文未采集（双 bbbs 按 status 定案 2021 修订版）。**与指导案例 275 号（植物新品种）呼应——可回补深链**。"
+ "pending_note": "2000 原版与 2004/2013/2015 修正版全文未采集（双 bbbs 按 status 定案 2021 修订版）。**与指导案例 275 号（植物新品种）呼应——可回补深链**。 种子法 2015 为修订（2015-11-04，非修正决定）——版本页已证沿革。",
+ "amendments": [
+  {
+   "no": 1,
+   "title": "关于修改《中华人民共和国种子法》的决定（2004 修正）",
+   "passed_date": "2004-08-28",
+   "effective": "2004-08-28",
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E5%85%A8%E5%9B%BD%E4%BA%BA%E6%B0%91%E4%BB%A3%E8%A1%A8%E5%A4%A7%E4%BC%9A%E5%B8%B8%E5%8A%A1%E5%A7%94%E5%91%98%E4%BC%9A%E5%85%B3%E4%BA%8E%E4%BF%AE%E6%94%B9%E3%80%8A%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E7%A7%8D%E5%AD%90%E6%B3%95%E3%80%8B%E7%9A%84%E5%86%B3%E5%AE%9A%20(2004%E5%B9%B4)",
+    "accessed_at": "2026-09-26",
+    "snapshot": "docs/research/evidence/ws_种子法修正决定_2004.html"
+   },
+   "note": "快照头部括注自证：2004-08-28 十届人大常委会十一次会议通过、自公布之日起施行（2004-08-28 同日批次）；修改 2 项。"
+  },
+  {
+   "no": 2,
+   "title": "关于修改《中华人民共和国文物（保护法）等十二部法律的决定》条目（种子法 2013 修正所在打包决定）",
+   "passed_date": "2013-06-29",
+   "effective": "2013-06-29",
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E5%85%A8%E5%9B%BD%E4%BA%BA%E6%B0%91%E4%BB%A3%E8%A1%A8%E5%A4%A7%E4%BC%9A%E5%B8%B8%E5%8A%A1%E5%A7%94%E5%91%98%E4%BC%9A%E5%85%B3%E4%BA%8E%E4%BF%AE%E6%94%B9%E3%80%8A%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E6%96%87%E7%89%A9%E4%BF%9D%E6%8A%A4%E6%B3%95%E3%80%8B%E7%AD%89%E5%8D%81%E4%BA%8C%E9%83%A8%E6%B3%95%E5%BE%8B%E7%9A%84%E5%86%B3%E5%AE%9A",
+    "accessed_at": "2026-09-26",
+    "snapshot": "docs/research/evidence/ws_打包决定_文物十二部2013.html"
+   },
+   "note": "打包决定快照复用：2013-06-29 十二届人大常委会三次会议、自公布之日起施行；种子法为十二部之一（R374 版本页沿革互证）。"
+  },
+  {
+   "no": 4,
+   "title": "关于修改《中华人民共和国种子法》的决定（2021 修正——现行版来源）",
+   "passed_date": "2021-12-24",
+   "effective": "2022-03-01",
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E5%85%A8%E5%9B%BD%E4%BA%BA%E6%B0%91%E4%BB%A3%E8%A1%A8%E5%A4%A7%E4%BC%9A%E5%B8%B8%E5%8A%A1%E5%A7%94%E5%91%98%E4%BC%9A%E5%85%B3%E4%BA%8E%E4%BF%AE%E6%94%B9%E3%80%8A%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E7%A7%8D%E5%AD%90%E6%B3%95%E3%80%8B%E7%9A%84%E5%86%B3%E5%AE%9A%20(2021%E5%B9%B4)",
+    "accessed_at": "2026-09-26",
+    "snapshot": "docs/research/evidence/ws_种子法修正决定_2021.html"
+   },
+   "note": "快照头部括注自证：2021-12-24 十三届人大常委会三十二次会议通过；本决定自 2022-03-01 起施行；修改 19 项（植物新品种权保护强化——与工会法 2021 同日同会）。现行 seeds-2022 语料的修正来源即本决定。"
+  }
+ ]
 }
