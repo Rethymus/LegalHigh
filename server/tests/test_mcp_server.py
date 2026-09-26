@@ -34,7 +34,7 @@ def test_initialize_handshake():
 
 
 def test_tools_list_red_line_audit():
-    """红线审计：MCP 只暴露检索四工具——无任何生成型/AI/文书/审查工具。"""
+    """红线审计：MCP 只暴露检索类工具——无任何生成型/AI/文书/审查工具。"""
     out = _roundtrip([
         {"jsonrpc": "2.0", "id": 1, "method": "initialize",
          "params": {"protocolVersion": "2024-11-05"}},
@@ -42,10 +42,28 @@ def test_tools_list_red_line_audit():
     ])
     tools = [m for m in out if m.get("id") == 2][0]["result"]["tools"]
     names = sorted(t["name"] for t in tools)
-    assert names == ["get_article", "get_xrefs", "list_laws", "search_articles", "search_cases", "search_history"], names
+    assert names == ["get_amendments", "get_article", "get_xrefs", "list_laws",
+                     "search_articles", "search_cases", "search_history"], names
     # 每个工具描述都带「不构成法律意见」声明
     for t in tools:
         assert "不构成法律意见" in t["description"], t["name"]
+
+
+def test_tools_call_get_amendments():
+    """get_amendments（R385）：清单形态 + 决定全文形态（与版本注册表/快照管线一致）。"""
+    out = _roundtrip([
+        {"jsonrpc": "2.0", "id": 1, "method": "initialize",
+         "params": {"protocolVersion": "2024-11-05"}},
+        {"jsonrpc": "2.0", "id": 2, "method": "tools/call",
+         "params": {"name": "get_amendments", "arguments": {"law_id": "pcl-2023"}}},
+        {"jsonrpc": "2.0", "id": 3, "method": "tools/call",
+         "params": {"name": "get_amendments", "arguments": {"law_id": "pcl-2023", "no": 1}}},
+    ])
+    by_id = {m.get("id"): m for m in out}
+    listing = by_id[2]["result"]["content"][0]["text"]
+    assert '"count": 5' in listing and "usage" in listing
+    full = by_id[3]["result"]["content"][0]["text"]
+    assert "作如下修改" in full and "一手文本" in full
 
 
 def test_tools_call_search_history():

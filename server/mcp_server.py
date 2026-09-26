@@ -142,6 +142,59 @@ def tool_get_xrefs(law_id: str, article: str = "") -> dict:
     }
 
 
+def tool_get_amendments(law_id: str, no: int = 0) -> dict:
+    """获取某法的修正决定清单与决定全文（R385）。
+
+    no=0 返回全部决定条目（次序/标题/通过与施行日期/证据）；
+    no>0 返回该次决定的快照清洗全文（「改了什么」的一手文本）。
+    数据源：版本注册表 amendments 数组 + 证据快照（app/amendment_fulltext）。
+    """
+    from app import law_versions
+
+    try:
+        registry = law_versions.load_registry(law_id)
+    except FileNotFoundError:
+        return {"law_id": law_id, "error": "该法无版本注册表", "disclaimer": DISCLAIMER}
+    except ValueError as e:
+        return {"law_id": law_id, "error": f"注册表加载失败：{e}", "disclaimer": DISCLAIMER}
+
+    amendments = registry.get("amendments", [])
+    if not amendments:
+        return {"law_id": law_id, "count": 0,
+                "note": "该法无已登记的修正决定（可能从未修正、或为修订/终态形态）",
+                "disclaimer": DISCLAIMER}
+
+    if no > 0:
+        from app import amendment_fulltext
+        try:
+            d = amendment_fulltext.amendment_fulltext(law_id, no)
+        except KeyError:
+            return {"law_id": law_id, "no": no, "error": f"无第 {no} 次修正决定",
+                    "available": [a["no"] for a in amendments], "disclaimer": DISCLAIMER}
+        except (ValueError, FileNotFoundError) as e:
+            return {"law_id": law_id, "no": no, "error": f"决定全文不可用：{e}",
+                    "disclaimer": DISCLAIMER}
+        return {
+            "law_id": law_id, "no": d["no"], "title": d["title"],
+            "passed_date": d["passed_date"], "effective": d["effective"],
+            "text": d["text"], "scope_note": d["scope_note"],
+            "source": d["source"], "disclaimer": DISCLAIMER,
+        }
+
+    return {
+        "law_id": law_id,
+        "count": len(amendments),
+        "amendments": [{
+            "no": a["no"], "title": a["title"],
+            "passed_date": a["passed_date"], "effective": a["effective"],
+            "note": (a.get("note") or "")[:200],
+        } for a in amendments],
+        "usage": "传 no=N 获取第 N 次决定的快照清洗全文",
+        "pending_note": registry.get("pending_note", ""),
+        "disclaimer": DISCLAIMER,
+    }
+
+
 def tool_search_history(query: str, top_k: int = 5, law_id: str | None = None,
                         version_id: str | None = None) -> dict:
     """在历史版本文本（非现行）中检索：独立命名空间，仅供对照研究。"""
@@ -235,6 +288,23 @@ TOOLS = [
         },
     },
     {
+        "name": "get_amendments",
+        "description": (
+            "获取某法的修正决定清单（次序/标题/通过与施行日期）与决定快照全文。"
+            "决定文本记录「每次修法改了什么」的一手内容（修改项序号原样），"
+            "与版本页「改后结果」对照阅读（R384/R385）。数据源：版本注册表+证据快照。"
+            "输出为立法史料，不构成法律意见。"
+        ),
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "law_id": {"type": "string", "description": "法律 ID（如 pcl-2023）"},
+                "no": {"type": "integer", "description": "决定次序（0=清单；N=第 N 次决定全文）"},
+            },
+            "required": ["law_id"],
+        },
+    },
+    {
         "name": "get_xrefs",
         "description": (
             "获取某法条的法内交叉引用（双向：本文引用→其他条文 / 其他条文→引用本文）。"
@@ -268,6 +338,8 @@ def dispatch(name: str, args: dict):
         )
     if name == "get_xrefs":
         return tool_get_xrefs(args.get("law_id", ""), args.get("article", ""))
+    if name == "get_amendments":
+        return tool_get_amendments(args.get("law_id", ""), args.get("no", 0))
     if name == "search_history":
         return tool_search_history(
             args.get("query", ""), args.get("top_k", 5),
