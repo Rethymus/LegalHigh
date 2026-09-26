@@ -39,12 +39,44 @@
    },
    "note": "快照头部括注自证：1994-08-31 八届人大常委会九次会议通过、主席令第三十一号公布、自 1995-09-01 施行（末条附则同证）。【转录瑕疵登记】括注「1994年8月31日日」多一个「日」字（上游讹误，头部区不进条文正文，快照保持原始）。",
    "promulgation_instrument": "中华人民共和国主席令第三十一号（1994-08-31 公布）"
+  },
+  {
+   "version_id": "2017-amendment",
+   "label": "2017 第二次修正",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "2017-09-01",
+   "promulgation_organ": "第十二届全国人民代表大会常务委员会第二十九次会议",
+   "effective_date": "1995-09-01",
+   "article_count": 80,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%BB%B2%E8%A3%81%E6%B3%95_(2017%E5%B9%B4)",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_仲裁法_2017.html"
+   },
+   "note": "快照头部括注自证：根据 2009 大打包第一次修正 + 2017 法官八部打包第二次修正（双修正来源均与 amendments 互证）；施行日 1995-09-01 跨两次修正延续（末条附则自证）。"
   }
  ],
  "pending_note": "1994 通过原版与 2009/2017 修正版全文未采集。2025 全面修订施行日 2026-03-01（附则自载与 flk sxrq 一致，采集日已施行）。R141 lawtext 链入库——时效跟进（与食品安全法 2025/反法 2025 同型）。",
  "amendments": [
   {
    "no": 1,
+   "title": "关于修改部分法律的决定（仲裁法 2009 第一次修正所在大打包决定）",
+   "passed_date": "2009-08-27",
+   "effective": "2009-08-27",
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E5%85%A8%E5%9B%BD%E4%BA%BA%E6%B0%91%E4%BB%A3%E8%A1%A8%E5%A4%A7%E4%BC%9A%E5%B8%B8%E5%8A%A1%E5%A7%94%E5%91%98%E4%BC%9A%E5%85%B3%E4%BA%8E%E4%BF%AE%E6%94%B9%E9%83%A8%E5%88%86%E6%B3%95%E5%BE%8B%E7%9A%84%E5%86%B3%E5%AE%9A",
+    "accessed_at": "2026-09-25",
+    "snapshot": "docs/research/evidence/ws_打包决定_修改部分法律2009.html"
+   },
+   "note": "2017 版本页括注明指本决定为第一次修正（版本层指认 + 大打包快照在库——R363 已登记 no.2=2017 法官八部，序列重排为 1/2）。"
+  },
+  {
+   "no": 2,
    "title": "关于修改《中华人民共和国法官法》等八部法律的决定（仲裁法 2017 修正所在打包决定）",
    "passed_date": "2017-09-01",
    "effective": "2018-01-01",
