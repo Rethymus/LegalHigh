@@ -407,7 +407,7 @@ export const api = {
     req<{
       law_id: string; title: string
       versions: { version_id: string; label: string; status: string; promulgation_date: string; promulgation_organ?: string; promulgation_instrument?: string; effective_date: string; article_count: number | null; article_count_note?: string; current: boolean; has_fulltext?: boolean }[]
-      amendments?: { no: string; title: string; passed_date: string; effective: string }[]
+      amendments?: { no: number; title: string; passed_date: string; effective: string; note?: string; evidence: { url: string; snapshot: string; grade?: string; accessed_at?: string } }[]
       pending_note: string
     }>(`/laws/${encodeURIComponent(lawId)}/versions`),
 

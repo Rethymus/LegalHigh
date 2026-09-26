@@ -425,6 +425,28 @@ export default function LawDetail() {
                           </div>
                         ))}
                       </div>
+                      {/* 修正决定（R381）：版本页记录「改后结果」，决定记录「改了什么」——双层证据 */}
+                      {versions.amendments && versions.amendments.length > 0 && (
+                        <div className="card mb-12" style={{ padding: 14 }}>
+                          <div className="tiny bold mb-8">修正决定（{versions.amendments.length} 件）——每次修法「改了什么」的原始决定文本</div>
+                          <div className="list-divided">
+                            {versions.amendments.map((a) => (
+                              <div key={a.no} className="lrow" style={{ alignItems: 'flex-start' }}>
+                                <span className="bdg bdg-teal">第{a.no}次</span>
+                                <div style={{ flex: 1, minWidth: 0 }}>
+                                  <b style={{ fontSize: 12.5 }}>{a.title}</b>
+                                  <div className="tiny" style={{ lineHeight: 1.8 }}>
+                                    {a.passed_date} 通过 · {a.effective} 施行
+                                    {a.evidence?.grade && ` · 证据等级【${a.evidence.grade}】`}
+                                    {a.note && ` · ${a.note.length > 90 ? a.note.slice(0, 90) + '…' : a.note}`}
+                                  </div>
+                                </div>
+                                {a.evidence?.url && <a className="tiny" href={a.evidence.url} target="_blank" rel="noreferrer" style={{ flexShrink: 0 }}>决定原文</a>}
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                       {versions.pending_note && <div className="tiny muted">{versions.pending_note}</div>}
                     </>
                   ) : (
