@@ -1,26 +1,44 @@
 {
-  "law_id": "emergency-2024",
-  "title": "中华人民共和国突发事件应对法",
-  "schema_version": 1,
-  "note": "R147（2026-09-17）金融与应急批次：经 lawtext（flk DOCX 转录）链入库。",
-  "versions": [
-    {
-      "version_id": "current",
-      "label": "2024 修订",
-      "status": "现行有效（2024修订）",
-      "promulgation_date": "2024-06-28",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "effective_date": "2024-11-01",
-      "article_count": 106,
-      "current": true,
-      "evidence": {
-        "kind": "flk-docx-transcription",
-        "grade": "中",
-        "url": "https://flk.npc.gov.cn/detail?id=ff8081818d6a424b01905f13edba2efb",
-        "accessed_at": "2026-09-17",
-        "snapshot": "docs/research/evidence/lawtext_突发事件应对法2024.md"
-      }
-    }
-  ],
-  "pending_note": "2007 通过原版全文未采集。2024 全面修订（70→106 条）施行日 2024-11-01（附则自载与 flk sxrq 一致）。R147 lawtext 链入库。"
+ "law_id": "emergency-2024",
+ "title": "中华人民共和国突发事件应对法",
+ "schema_version": 1,
+ "note": "R147（2026-09-17）金融与应急批次：经 lawtext（flk DOCX 转录）链入库。",
+ "versions": [
+  {
+   "version_id": "current",
+   "label": "2024 修订",
+   "status": "现行有效（2024修订）",
+   "promulgation_date": "2024-06-28",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "effective_date": "2024-11-01",
+   "article_count": 106,
+   "current": true,
+   "evidence": {
+    "kind": "flk-docx-transcription",
+    "grade": "中",
+    "url": "https://flk.npc.gov.cn/detail?id=ff8081818d6a424b01905f13edba2efb",
+    "accessed_at": "2026-09-17",
+    "snapshot": "docs/research/evidence/lawtext_突发事件应对法2024.md"
+   }
+  },
+  {
+   "version_id": "2007-enacted",
+   "label": "2007 原版",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "2007-08-30",
+   "promulgation_organ": "第十届全国人民代表大会常务委员会第二十九次会议",
+   "effective_date": "2007-11-01",
+   "article_count": 70,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E7%AA%81%E5%8F%91%E4%BA%8B%E4%BB%B6%E5%BA%94%E5%AF%B9%E6%B3%95_(2007%E5%B9%B4)",
+    "accessed_at": "2026-09-26",
+    "snapshot": "docs/research/evidence/ws_突发事件应对法_2007.html"
+   },
+   "note": "快照头部括注自证：2007-08-30 十届人大常委会二十九次会议通过（SARS 后应急管理立法）；末条附则自载自 2007-11-01 起施行。快照未载主席令号，如实省略。"
+  }
+ ],
+ "pending_note": "2007 通过原版全文未采集。2024 全面修订（70→106 条）施行日 2024-11-01（附则自载与 flk sxrq 一致）。R147 lawtext 链入库。"
 }

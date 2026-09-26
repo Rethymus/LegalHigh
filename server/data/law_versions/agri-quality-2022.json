@@ -1,26 +1,44 @@
 {
-  "law_id": "agri-quality-2022",
-  "title": "中华人民共和国农产品质量安全法",
-  "schema_version": 1,
-  "note": "R140（2026-09-17）续批：经 lawtext（flk DOCX 转录）链入库。",
-  "versions": [
-    {
-      "version_id": "current",
-      "label": "2022 修订",
-      "status": "现行有效（2022修订）",
-      "promulgation_date": "2022-09-02",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "effective_date": "2023-01-01",
-      "article_count": 81,
-      "current": true,
-      "evidence": {
-        "kind": "flk-docx-transcription",
-        "grade": "中",
-        "url": "https://flk.npc.gov.cn/detail?id=ff80818182cf5d600182fd5d77dd23cf",
-        "accessed_at": "2026-09-17",
-        "snapshot": "docs/research/evidence/lawtext_农产品质量安全法2022.md"
-      }
-    }
-  ],
-  "pending_note": "2006 通过原版与 2018 修正版全文未采集。2022 全面修订施行日 2023-01-01（附则自载与 flk sxrq 一致）。R140 lawtext 链入库。"
+ "law_id": "agri-quality-2022",
+ "title": "中华人民共和国农产品质量安全法",
+ "schema_version": 1,
+ "note": "R140（2026-09-17）续批：经 lawtext（flk DOCX 转录）链入库。",
+ "versions": [
+  {
+   "version_id": "current",
+   "label": "2022 修订",
+   "status": "现行有效（2022修订）",
+   "promulgation_date": "2022-09-02",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "effective_date": "2023-01-01",
+   "article_count": 81,
+   "current": true,
+   "evidence": {
+    "kind": "flk-docx-transcription",
+    "grade": "中",
+    "url": "https://flk.npc.gov.cn/detail?id=ff80818182cf5d600182fd5d77dd23cf",
+    "accessed_at": "2026-09-17",
+    "snapshot": "docs/research/evidence/lawtext_农产品质量安全法2022.md"
+   }
+  },
+  {
+   "version_id": "2006-enacted",
+   "label": "2006 原版",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "2006-04-29",
+   "promulgation_organ": "第十届全国人民代表大会常务委员会第二十一次会议",
+   "effective_date": "2006-11-01",
+   "article_count": 56,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%86%9C%E4%BA%A7%E5%93%81%E8%B4%A8%E9%87%8F%E5%AE%89%E5%85%A8%E6%B3%95_(2006%E5%B9%B4)",
+    "accessed_at": "2026-09-26",
+    "snapshot": "docs/research/evidence/ws_农产品质量安全法_2006.html"
+   },
+   "note": "快照头部括注自证：2006-04-29 十届人大常委会二十一次会议通过；末条附则自载自 2006-11-01 起施行。快照未载主席令号，如实省略。"
+  }
+ ],
+ "pending_note": "2006 通过原版与 2018 修正版全文未采集。2022 全面修订施行日 2023-01-01（附则自载与 flk sxrq 一致）。R140 lawtext 链入库。"
 }
