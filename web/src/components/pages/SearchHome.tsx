@@ -16,6 +16,8 @@ export default function SearchHome() {
   const [q, setQ] = useState('')
   const [scope, setScope] = useState('全部')
   const [showScope, setShowScope] = useState(false)
+  // 时间视角 as_of（R383）：结果页已有该能力但首页不可发现——入口前置（可选，留空=现行视角）
+  const [asOf, setAsOf] = useState('')
 
   // TopBar「/」快捷键跨页跳转时由 AppShell 带 state 标记，挂载后自聚焦（一次性，用后即清）
   useEffect(() => {
@@ -37,10 +39,23 @@ export default function SearchHome() {
         <form
           className="searchbar"
           style={{ position: 'relative' }}
-          onSubmit={(e) => { e.preventDefault(); if (q.trim()) nav(`/search/results?q=${encodeURIComponent(q.trim())}&scope=${encodeURIComponent(scope)}`) }}
+          onSubmit={(e) => {
+            e.preventDefault()
+            if (!q.trim()) return
+            const asOfQ = asOf.trim() ? `&as_of=${encodeURIComponent(asOf.trim())}` : ''
+            nav(`/search/results?q=${encodeURIComponent(q.trim())}&scope=${encodeURIComponent(scope)}${asOfQ}`)
+          }}
         >
           <Icon name="search" size={18} className="muted" />
           <input ref={inputRef} className="inp" style={{ fontSize: 15.5 }} placeholder="输入法律问题开始检索：条文关键词、案由、争议焦点……" value={q} onChange={(e) => setQ(e.target.value)} aria-label="检索词" />
+          <input
+            className="inp"
+            style={{ maxWidth: 165, fontSize: 12.5 }}
+            aria-label="时间视角 as_of（可选，格式 YYYY-MM-DD）"
+            placeholder="时间视角：如 2019-12-31"
+            value={asOf}
+            onChange={(e) => setAsOf(e.target.value)}
+          />
           <button className="btn btn-primary btn-lg">检索</button>
           {q.trim() && <SearchSuggest query={q} onPick={() => setQ('')} />}
         </form>
