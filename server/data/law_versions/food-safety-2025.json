@@ -5,6 +5,24 @@
  "note": "R130（2026-09-16）第三链校验暴露时效缺口：2025 第三次修正（2025-09-12 公布、2025-12-01 施行）已施行近 10 个月而语料仍持 2021 版，本轮升级为 2025 现行版。",
  "versions": [
   {
+   "version_id": "2018-amendment",
+   "label": "2018 修正",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "2018-12-29",
+   "promulgation_organ": "第十三届全国人民代表大会常务委员会第七次会议",
+   "effective_date": "2009-06-01",
+   "article_count": 154,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E9%A3%9F%E5%93%81%E5%AE%89%E5%85%A8%E6%B3%95_(2018%E5%B9%B4)",
+    "accessed_at": "2026-09-26",
+    "snapshot": "docs/research/evidence/ws_食品安全法_2018.html"
+   },
+   "note": "快照头部括注自证：2009 制定、2015 修订后根据 2018-12-29 产品质量五部打包决定修正（与 amendments no.1 互证——R359 载体闭环补版本层）；施行日 2009-06-01 跨修订/修正延续（2015 修订版末条附则自证，本页同载）。"
+  },
+  {
    "version_id": "2021-amendment",
    "label": "2021 修正",
    "status": "被修正",

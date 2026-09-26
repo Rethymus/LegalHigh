@@ -1023,9 +1023,9 @@
     "family-edu-2021": 1,
     "family-plan-2021": 2,
     "fire-2021": 4,
-    "food-safety-2025": 2,
+    "food-safety-2025": 3,
     "genai-2023": 1,
-    "higher-edu-2018": 1,
+    "higher-edu-2018": 2,
     "htjs-2023": 1,
     "id-card-2011": 2,
     "infectious-2025": 4,
@@ -1086,7 +1086,7 @@
     "women-2022": 4,
     "work-safety-2021": 3
   },
-  "version_fulltexts": 147,
+  "version_fulltexts": 149,
   "flk_native_ids": 106,
   "cases": {
     "cases": 281,
