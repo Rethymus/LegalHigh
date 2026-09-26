@@ -1,26 +1,45 @@
 {
-  "law_id": "vocational-edu-2022",
-  "title": "中华人民共和国职业教育法",
-  "schema_version": 1,
-  "note": "R156（2026-09-18）职业健康与执行批次：经 lawtext（flk DOCX 转录）链入库。",
-  "versions": [
-    {
-      "version_id": "current",
-      "label": "2022 修订",
-      "status": "现行有效（2022修订）",
-      "promulgation_date": "2022-04-20",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "effective_date": "2022-05-01",
-      "article_count": 69,
-      "current": true,
-      "evidence": {
-        "kind": "flk-docx-transcription",
-        "grade": "中",
-        "url": "https://flk.npc.gov.cn/detail?id=ff808181802d2853018044c7370108c6",
-        "accessed_at": "2026-09-18",
-        "snapshot": "docs/research/evidence/lawtext_职业教育法2022.md"
-      }
-    }
-  ],
-  "pending_note": "1996 原版全文未采集。2022 全面修订（40→69 条）：职教高考/产教融合/普职协调发展。"
+ "law_id": "vocational-edu-2022",
+ "title": "中华人民共和国职业教育法",
+ "schema_version": 1,
+ "note": "R156（2026-09-18）职业健康与执行批次：经 lawtext（flk DOCX 转录）链入库。",
+ "versions": [
+  {
+   "version_id": "current",
+   "label": "2022 修订",
+   "status": "现行有效（2022修订）",
+   "promulgation_date": "2022-04-20",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "effective_date": "2022-05-01",
+   "article_count": 69,
+   "current": true,
+   "evidence": {
+    "kind": "flk-docx-transcription",
+    "grade": "中",
+    "url": "https://flk.npc.gov.cn/detail?id=ff808181802d2853018044c7370108c6",
+    "accessed_at": "2026-09-18",
+    "snapshot": "docs/research/evidence/lawtext_职业教育法2022.md"
+   }
+  },
+  {
+   "version_id": "1996-enacted",
+   "label": "1996 原版",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "1996-05-15",
+   "promulgation_organ": "第八届全国人民代表大会常务委员会第十九次会议",
+   "effective_date": "1996-09-01",
+   "article_count": 40,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E8%81%8C%E4%B8%9A%E6%95%99%E8%82%B2%E6%B3%95_(1996%E5%B9%B4)",
+    "accessed_at": "2026-09-26",
+    "snapshot": "docs/research/evidence/ws_职业教育法_1996.html"
+   },
+   "note": "快照头部括注自证：1996-05-15 八届人大常委会十九次会议通过、主席令第六十九号公布、自 1996-09-01 起施行（末条附则同证）。",
+   "promulgation_instrument": "中华人民共和国主席令第六十九号（1996-05-15 公布）"
+  }
+ ],
+ "pending_note": "1996 原版全文未采集。2022 全面修订（40→69 条）：职教高考/产教融合/普职协调发展。"
 }

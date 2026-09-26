@@ -1021,7 +1021,7 @@
     "env-tax-2025": 1,
     "environment-2014": 2,
     "family-edu-2021": 1,
-    "family-plan-2021": 1,
+    "family-plan-2021": 2,
     "fire-2021": 4,
     "food-safety-2025": 2,
     "genai-2023": 1,
@@ -1081,12 +1081,12 @@
     "unfair-competition-2025": 1,
     "vaccine-2019": 1,
     "village-committee-2025": 1,
-    "vocational-edu-2022": 1,
+    "vocational-edu-2022": 2,
     "wlxf-2022": 1,
     "women-2022": 4,
     "work-safety-2021": 3
   },
-  "version_fulltexts": 130,
+  "version_fulltexts": 132,
   "flk_native_ids": 106,
   "cases": {
     "cases": 281,
