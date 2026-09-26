@@ -1,26 +1,44 @@
 {
-  "law_id": "id-card-2011",
-  "title": "中华人民共和国居民身份证法",
-  "schema_version": 1,
-  "note": "R139（2026-09-16）续批：经 lawtext（flk DOCX 转录）链入库。",
-  "versions": [
-    {
-      "version_id": "current",
-      "label": "2011 修正",
-      "status": "现行有效（2011修正）",
-      "promulgation_date": "2011-10-29",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "effective_date": "2004-01-01",
-      "article_count": 23,
-      "current": true,
-      "evidence": {
-        "kind": "flk-docx-transcription",
-        "grade": "中",
-        "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf736e30627",
-        "accessed_at": "2026-09-16",
-        "snapshot": "docs/research/evidence/lawtext_居民身份证法2011.md"
-      }
-    }
-  ],
-  "pending_note": "2003 通过原版全文未采集。附则自载施行日 2004-01-01（原版施行日跨修正沿用）；2011 修正决定施行日 2012-01-01（flk sxrq）存档注记。R139 lawtext 链入库。"
+ "law_id": "id-card-2011",
+ "title": "中华人民共和国居民身份证法",
+ "schema_version": 1,
+ "note": "R139（2026-09-16）续批：经 lawtext（flk DOCX 转录）链入库。",
+ "versions": [
+  {
+   "version_id": "current",
+   "label": "2011 修正",
+   "status": "现行有效（2011修正）",
+   "promulgation_date": "2011-10-29",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "effective_date": "2004-01-01",
+   "article_count": 23,
+   "current": true,
+   "evidence": {
+    "kind": "flk-docx-transcription",
+    "grade": "中",
+    "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf736e30627",
+    "accessed_at": "2026-09-16",
+    "snapshot": "docs/research/evidence/lawtext_居民身份证法2011.md"
+   }
+  },
+  {
+   "version_id": "2003-enacted",
+   "label": "2003 原版",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "2003-06-28",
+   "promulgation_organ": "第十届全国人民代表大会常务委员会第三次会议",
+   "effective_date": "2004-01-01",
+   "article_count": 22,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%B1%85%E6%B0%91%E8%BA%AB%E4%BB%BD%E8%AF%81%E6%B3%95_(2003%E5%B9%B4)",
+    "accessed_at": "2026-09-26",
+    "snapshot": "docs/research/evidence/ws_居民身份证法_2003.html"
+   },
+   "note": "快照头部括注自证：2003-06-28 十届人大常委会三次会议通过（取代 1985 年居民身份证条例）；末条附则自载自 2004-01-01 起施行。快照未载主席令号，如实省略。"
+  }
+ ],
+ "pending_note": "2003 通过原版全文未采集。附则自载施行日 2004-01-01（原版施行日跨修正沿用）；2011 修正决定施行日 2012-01-01（flk sxrq）存档注记。R139 lawtext 链入库。"
 }

@@ -20,6 +20,24 @@
     "accessed_at": "2026-09-14",
     "snapshot": "docs/research/evidence/ws_社会保险法.html"
    }
+  },
+  {
+   "version_id": "2010-enacted",
+   "label": "2010 原版",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "2010-10-28",
+   "promulgation_organ": "第十一届全国人民代表大会常务委员会第十七次会议",
+   "effective_date": "2011-07-01",
+   "article_count": 98,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E7%A4%BE%E4%BC%9A%E4%BF%9D%E9%99%A9%E6%B3%95_(2010%E5%B9%B4)",
+    "accessed_at": "2026-09-26",
+    "snapshot": "docs/research/evidence/ws_社会保险法_2010.html"
+   },
+   "note": "快照头部括注自证：2010-10-28 十一届人大常委会十七次会议通过（社会保险基本法）；末条附则自载自 2011-07-01 起施行。快照未载主席令号，如实省略。"
   }
  ],
  "pending_note": "2010 原版全文未采集；2018 修正决定主席令号快照未载，省略。",

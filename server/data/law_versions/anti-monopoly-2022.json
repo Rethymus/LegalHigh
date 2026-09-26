@@ -1,26 +1,44 @@
 {
-  "law_id": "anti-monopoly-2022",
-  "title": "中华人民共和国反垄断法",
-  "schema_version": 1,
-  "note": "R143（2026-09-17）商法批次：经 lawtext（flk DOCX 转录）链入库。",
-  "versions": [
-    {
-      "version_id": "current",
-      "label": "2022 修正",
-      "status": "现行有效（2022修正）",
-      "promulgation_date": "2022-06-24",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "effective_date": "2022-08-01",
-      "article_count": 70,
-      "current": true,
-      "evidence": {
-        "kind": "flk-docx-transcription",
-        "grade": "中",
-        "url": "https://flk.npc.gov.cn/detail?id=ff8081818234ccb501829f46c6ac2a5a",
-        "accessed_at": "2026-09-17",
-        "snapshot": "docs/research/evidence/lawtext_反垄断法2022.md"
-      }
-    }
-  ],
-  "pending_note": "2007 通过原版全文未采集。2022 修正决定施行日 2022-08-01（flk sxrq）；附则自载 2008-08-01 原版施行日跨修正沿用、对本版语义误导，两说存档（R136 著作权/专利先例）。R143 lawtext 链入库。"
+ "law_id": "anti-monopoly-2022",
+ "title": "中华人民共和国反垄断法",
+ "schema_version": 1,
+ "note": "R143（2026-09-17）商法批次：经 lawtext（flk DOCX 转录）链入库。",
+ "versions": [
+  {
+   "version_id": "current",
+   "label": "2022 修正",
+   "status": "现行有效（2022修正）",
+   "promulgation_date": "2022-06-24",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "effective_date": "2022-08-01",
+   "article_count": 70,
+   "current": true,
+   "evidence": {
+    "kind": "flk-docx-transcription",
+    "grade": "中",
+    "url": "https://flk.npc.gov.cn/detail?id=ff8081818234ccb501829f46c6ac2a5a",
+    "accessed_at": "2026-09-17",
+    "snapshot": "docs/research/evidence/lawtext_反垄断法2022.md"
+   }
+  },
+  {
+   "version_id": "2007-enacted",
+   "label": "2007 原版",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "2007-08-30",
+   "promulgation_organ": "第十届全国人民代表大会常务委员会第二十九次会议",
+   "effective_date": "2008-08-01",
+   "article_count": 57,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%8F%8D%E5%9E%84%E6%96%AD%E6%B3%95_(2007%E5%B9%B4)",
+    "accessed_at": "2026-09-26",
+    "snapshot": "docs/research/evidence/ws_反垄断法_2007.html"
+   },
+   "note": "快照头部括注自证：2007-08-30 十届人大常委会二十九次会议通过（反垄断三部曲收官立法）；末条附则自载自 2008-08-01 起施行（《反垄断法》与北京奥运开幕同日施行）。快照未载主席令号，如实省略。"
+  }
+ ],
+ "pending_note": "2007 通过原版全文未采集。2022 修正决定施行日 2022-08-01（flk sxrq）；附则自载 2008-08-01 原版施行日跨修正沿用、对本版语义误导，两说存档（R136 著作权/专利先例）。R143 lawtext 链入库。"
 }
