@@ -30,7 +30,11 @@ export default function LawDetail() {
   const nav = useNavigate()
   const isNarrow = useMediaQuery('(max-width: 767.98px)')
   const [sheetOpen, setSheetOpen] = useState(false)
-  const [tab, setTab] = useState('rel-case')
+  // tab 初始值支持 ?tab= 深链（R386：as_of 检索命中「在版本时间线中查证」入口直达）
+  const [tab, setTab] = useState(() => {
+    const t = sp.get('tab')
+    return TABS.some(x => x.key === t) ? t! : 'rel-case'
+  })
 
   const law = findLaw(data, lawId)
   // 人工通俗解读（决策项4 双轨：仅 approved 对外；无审核条目时保持 AI 通用指引）

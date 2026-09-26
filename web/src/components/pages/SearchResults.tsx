@@ -55,10 +55,14 @@ function FavButton({ favKey, item }: { favKey: string; item: Parameters<typeof t
   )
 }
 
-function LawResultCard({ r, q, si }: { r: ResolvedHit; q: string; si?: number }) {
+function LawResultCard({ r, q, si, asOf }: { r: ResolvedHit; q: string; si?: number; asOf?: string }) {
   const { hit, law } = r
   const title = lawDisplayTitle((law?.title ?? hit.law_title).replace(/^中华人民共和国/, ''), law?.status)
   const to = `/laws/${hit.law_id}?art=${hit.no}${hit.sub ?? ''}`
+  // as_of × 版本 Tab 联动（R386）：时间视角下命中带版本对照时，深链直达版本 Tab 继续查证
+  const toVersion = asOf && (hit.historical_version || hit.in_force_at_as_of === false)
+    ? `/laws/${hit.law_id}?art=${hit.no}${hit.sub ?? ''}&tab=version`
+    : null
   return (
     <article className="res-card" style={si === undefined ? undefined : { '--si': si } as React.CSSProperties}>
       <div className="res-h">
@@ -86,6 +90,7 @@ function LawResultCard({ r, q, si }: { r: ResolvedHit; q: string; si?: number })
       {hit.historical_version && (
         <div className="tiny mt-8" style={{ background: 'var(--warn-soft, rgba(0,0,0,0.04))', padding: '8px 10px', borderRadius: 8 }}>
           <b>as_of 对照 · {hit.historical_version.label}（{hit.historical_version.effective_date} 施行）</b>
+          {toVersion && <Link className="tiny" to={toVersion} style={{ marginLeft: 8, color: 'var(--accent-text)' }}>在版本时间线中查证 →</Link>}
           {hit.historical_version.located_via === 'renumber-map' && hit.historical_version.mapped_from_no != null && (
             <span> · 经重编号映射定位（自第{hit.historical_version.mapped_from_no}条，ratio {hit.historical_version.mapped_ratio}）</span>
           )}
@@ -383,9 +388,9 @@ export default function SearchResults() {
               {/* 列表级联入场（W5-2）：骨架屏→内容切换时 20ms 步长级联，序号封顶 12（.stagger 规则） */}
               <div className="mt-16 stagger">
                 {(tab === 'all' || tab === 'case') && caseHits.map((c, i) => <CaseResultCard key={c.id} c={c} q={q} si={i} />)}
-                {tab === 'all' && resolved.map((r, i) => <LawResultCard key={`${r.hit.law_id}-${r.hit.no}`} r={r} q={q} si={i + Math.min(caseHits.length, 6)} />)}
-                {tab === 'law' && lawHits.map((r, i) => <LawResultCard key={`${r.hit.law_id}-${r.hit.no}`} r={r} q={q} si={i} />)}
-                {tab === 'js' && judicialHits.map((r, i) => <LawResultCard key={`${r.hit.law_id}-${r.hit.no}`} r={r} q={q} si={i} />)}
+                {tab === 'all' && resolved.map((r, i) => <LawResultCard key={`${r.hit.law_id}-${r.hit.no}`} r={r} q={q} asOf={asOf} si={i + Math.min(caseHits.length, 6)} />)}
+                {tab === 'law' && lawHits.map((r, i) => <LawResultCard key={`${r.hit.law_id}-${r.hit.no}`} r={r} q={q} asOf={asOf} si={i} />)}
+                {tab === 'js' && judicialHits.map((r, i) => <LawResultCard key={`${r.hit.law_id}-${r.hit.no}`} r={r} q={q} asOf={asOf} si={i} />)}
 
                 {tab === 'js' && q && judicialHits.length === 0 && (
                   <div className="card">
