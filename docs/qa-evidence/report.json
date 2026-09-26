@@ -1,15 +1,5 @@
 [
   {
-    "name": "06-search-results",
-    "path": "/search/results?q=%E8%AF%95%E7%94%A8%E6%9C%9F%20%E4%B8%80%E5%B9%B4",
-    "consoleErrors": [],
-    "consoleWarnings": [],
-    "pageErrors": [],
-    "failedRequests": [],
-    "finalUrl": "http://localhost:5173/search/results?q=%E8%AF%95%E7%94%A8%E6%9C%9F%20%E4%B8%80%E5%B9%B4",
-    "title": "LegalHigh · 法律智能知识库"
-  },
-  {
     "name": "07-law-detail",
     "path": "/laws/civl-2020?art=25",
     "consoleErrors": [],
@@ -20,13 +10,13 @@
     "title": "LegalHigh · 法律智能知识库"
   },
   {
-    "name": "31-narrow-search-results",
-    "path": "/search/results?q=%E8%AF%95%E7%94%A8%E6%9C%9F",
+    "name": "07b-law-detail-professional-evidence",
+    "path": "/laws/pipl-2021?art=13",
     "consoleErrors": [],
     "consoleWarnings": [],
     "pageErrors": [],
     "failedRequests": [],
-    "finalUrl": "http://localhost:5173/search/results?q=%E8%AF%95%E7%94%A8%E6%9C%9F",
+    "finalUrl": "http://localhost:5173/laws/pipl-2021?art=13",
     "title": "LegalHigh · 法律智能知识库"
   },
   {

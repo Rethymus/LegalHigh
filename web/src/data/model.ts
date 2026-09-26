@@ -6,7 +6,7 @@ import type { IconName } from '../components/icons'
 import type { AudienceMode } from '../lib/audience'
 
 /* ================= 法条语料（运行时加载，构建自 server/data/laws） ================= */
-export interface LawArticle { no: number; sub?: string; label: string; chapter: string; text: string }
+export interface LawArticle { no: number; sub?: string; label: string; chapter: string | null; text: string }  // R387：4 部 lawtext 链法律 chapter 为 null（无章形态）
 export interface Law {
   id: string; title: string; status: string; organ: string
   promulgationDate: string; instrument: string; effectiveDate: string
@@ -66,7 +66,9 @@ export function artParam(no: number, sub?: string): string {
 export function lawChapters(law: Law): string[] {
   const seen: string[] = []
   for (const a of law.articles) {
-    const top = a.chapter.split('>')[0]?.trim()
+    // R387 修复：4 部 lawtext 链法律（献血/htjs/英烈/网络消费）chapter 为 null——
+    // 切分器未提取到章名的合法形态（无章法律/解释类），守卫后跳过而非抛错致整页故障
+    const top = (a.chapter ?? '').split('>')[0]?.trim()
     if (top && !seen.includes(top)) seen.push(top)
   }
   return seen

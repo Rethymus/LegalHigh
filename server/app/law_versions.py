@@ -107,6 +107,7 @@ def describe(law_id: str) -> dict:
             "evidence": {f: v["evidence"][f] for f in _REQUIRED_EVIDENCE_FIELDS},
         } for v in data["versions"]],
         "amendments": data.get("amendments", []),
+        "note": data.get("note", ""),
         "pending_note": data.get("pending_note", ""),
         "scope_note": "版本注册表只登记已入证据库的版本；历史版本全文按证据快照管线滚动采集（build_version_fulltext）。",
     }

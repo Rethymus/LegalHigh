@@ -98,7 +98,7 @@ export default function LawDetail() {
   // 同章条文按词面相似度排序（R331：bigram 重合度，当前条文排首位，其余按相关度递减）
   const sibling = useMemo(() => {
     if (!law || !article) return []
-    const same = law.articles.filter((a) => a.chapter === article.chapter)
+    const same = law.articles.filter((a) => a.chapter != null && a.chapter === article.chapter)
     const bg = (t: string) => {
       const clean = [...t].filter((ch) => /\w/.test(ch) || ch >= '\u4e00').join('')
       return new Set(Array.from({ length: Math.max(0, clean.length - 1) }, (_, i) => clean.slice(i, i + 2)))
@@ -498,6 +498,8 @@ export default function LawDetail() {
                         <button className="btn btn-primary btn-sm" disabled>对比</button>
                       </div>
                       <div className="banner banner-info"><Icon name="info" size={15} /><span className="banner-tx">{versions ? '该法版本注册表仅登记现行有效版本，尚无已采集的历史版本全文（历史版本按证据快照管线滚动采集入册）。' : '版本注册表信息暂不可用。'}引用不变量：法条引用必须附版本/生效/效力字段；本页禁用跨版本对比以避免误引。</span></div>
+                      {/* R387：单版本法的定性说明消费——终态（从未修正）/前身（新法取代）/待采，登记册定性直达读者 */}
+                      {versions?.note && <div className="tiny mt-8" style={{ lineHeight: 1.9, color: 'var(--tx-2)' }}>{versions.note.replace(/\s*R\d+ /g, ' ').trim()}</div>}
                     </>
                   )}
                 </div>
@@ -569,7 +571,7 @@ export default function LawDetail() {
           )}
           <section className="card" style={{ padding: 16 }}>
             <div className="tiny bold mb-8">通用阅读方法（项目整理，非逐条解读）</div>
-            <p className="tiny" style={{ lineHeight: 1.9 }}>本条位于「{article.chapter.split('>').slice(-1)[0]?.trim()}」。具体含义请先以左侧证据快照文本为线索，并在正式使用前核对官方现行文本；上方专业观点仅在登记册有可回溯来源时展示。</p>
+            <p className="tiny" style={{ lineHeight: 1.9 }}>本条位于「{(article.chapter ?? '').split('>').slice(-1)[0]?.trim() || '（无章）'}」。具体含义请先以左侧证据快照文本为线索，并在正式使用前核对官方现行文本；上方专业观点仅在登记册有可回溯来源时展示。</p>
             <ul className="tiny" style={{ lineHeight: 1.9 }}>
               <li>先区分行为规范：条文要求、禁止或允许什么。</li>
               <li>再核对适用条件、例外与法律后果，并结合具体事实和证据。</li>
@@ -580,7 +582,7 @@ export default function LawDetail() {
             <div className="tiny bold mb-8">本法分编（{chapters.length}）</div>
             <div style={{ display: 'flex', flexDirection: 'column' }}>
               {chapters.map((ch) => {
-                const first = law.articles.find((a) => a.chapter.split('>')[0]?.trim() === ch)
+                const first = law.articles.find((a) => (a.chapter ?? '').split('>')[0]?.trim() === ch)
                 return first
                   ? <Link key={ch} className="ol-item" to={`/laws/${law.id}?art=${first.no}`} title={`跳到 ${ch} 第一条`}>{ch}</Link>
                   : <span key={ch} className="ol-item">{ch}</span>
