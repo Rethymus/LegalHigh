@@ -55,7 +55,9 @@ export default function LawDetail() {
     )
     return () => { alive = false }
   }, [lawId])
-  const art = parseArtParam(sp.get('art')) ?? { no: 496 }
+  // R382 修复：无 ?art 参数时默认展示该法第一条（原默认 496 系民法典特化假设——
+  // 对条数不足 496 的法律直接落入「未找到」空态，误导为页面故障）。任何法律必有第一条。
+  const art = parseArtParam(sp.get('art')) ?? { no: 1 }
   const no = art.no
   const article = law ? findArticle(law, art.no, art.sub) : undefined
   const articleNo = article?.no
