@@ -24,6 +24,7 @@ const ROUTES = [
   { name: 'search-home', path: '/search', identity: { selector: '.ph-t', text: '法律检索' } },
   { name: 'search-results', path: '/search/results?q=' + encodeURIComponent('试用期'), identity: { selector: 'input[aria-label="修改检索词"]' } },
   { name: 'law-detail', path: '/laws/civl-2020?art=25', identity: { selector: '.ph-t', text: '《民法典》第二十五条' } },
+  { name: 'law-detail-null-chapter', path: '/laws/blood-donation-1998?art=1', identity: { selector: '.ph-t', text: '《献血法》第一条' } },
   { name: 'laws-browse', path: '/laws', identity: { selector: '.ph-t', text: '法规条文' } },
   { name: 'case-search', path: '/cases', identity: { selector: '.ph-t', text: '案例检索' } },
   { name: 'case-detail', path: '/cases/guidance-24', identity: { selector: '.case-t', text: '荣宝英诉王阳' } },

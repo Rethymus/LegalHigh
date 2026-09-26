@@ -20,6 +20,11 @@
     "obscuredFocus": []
   },
   {
+    "route": "law-detail-null-chapter",
+    "smallTargets": [],
+    "obscuredFocus": []
+  },
+  {
     "route": "laws-browse",
     "smallTargets": [],
     "obscuredFocus": []

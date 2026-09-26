@@ -91,6 +91,8 @@ const ROUTES = [
   { name: '05-search-home', path: '/search', identity: pageHeader('法律检索') },
   { name: '06-search-results', path: '/search/results?q=' + encodeURIComponent('试用期 一年'), fullPage: true, identity: searchResultsIdentity },
   { name: '07-law-detail', path: '/laws/civl-2020?art=25', fullPage: true, identity: lawDetailIdentity },
+  // R388：null-chapter 四法盲区收口（R387 修复的四法详情页曾整页崩溃而巡检从未访问）
+  { name: '07c-law-detail-null-chapter', path: '/laws/blood-donation-1998?art=1&tab=version', fullPage: true, identity: { selector: '.ph-t', text: '《献血法》第一条' }, afterText: '仅登记现行有效版本' },
   { name: '07b-law-detail-professional-evidence', path: '/laws/pipl-2021?art=13', fullPage: true, identity: pageHeader('《个人信息保护法》第十三条'), afterText: '校准正确率：暂无' },
   { name: '08-laws-browse', path: '/laws', identity: pageHeader('法规条文') },
   { name: '09-case-search', path: '/cases', fullPage: true, identity: pageHeader('案例检索'), steps: [
