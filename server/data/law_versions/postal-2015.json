@@ -5,23 +5,6 @@
  "note": "R153（2026-09-18）教育与民生批次：经 lawtext（flk DOCX 转录）链入库。",
  "versions": [
   {
-   "version_id": "current",
-   "label": "2015 修正",
-   "status": "现行有效（2015修正）",
-   "promulgation_date": "2015-04-24",
-   "promulgation_organ": "全国人民代表大会常务委员会",
-   "effective_date": "2015-04-24",
-   "article_count": 87,
-   "current": true,
-   "evidence": {
-    "kind": "flk-docx-transcription",
-    "grade": "中",
-    "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf7bb6307f3",
-    "accessed_at": "2026-09-18",
-    "snapshot": "docs/research/evidence/lawtext_邮政法2015.md"
-   }
-  },
-  {
    "version_id": "1986-enacted",
    "label": "1986 原版",
    "status": "已被修订（历史文本）",
@@ -39,6 +22,59 @@
    },
    "note": "快照头部括注自证：1986-12-02 六届人大常委会十八次会议通过、主席令第四十七号公布、自 1987-01-01 起施行（末条附则同证）。",
    "promulgation_instrument": "中华人民共和国主席令第四十七号（1986-12-02 公布）"
+  },
+  {
+   "version_id": "2009-revision",
+   "label": "2009 修订",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "2009-04-24",
+   "promulgation_organ": "第十一届全国人民代表大会常务委员会第八次会议",
+   "effective_date": "2009-10-01",
+   "article_count": 87,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E9%82%AE%E6%94%BF%E6%B3%95_(2009%E5%B9%B4)",
+    "accessed_at": "2026-09-27",
+    "snapshot": "docs/research/evidence/ws_邮政法_2009.html"
+   },
+   "note": "快照头部括注自证：2009-04-24 十一届人大常委会八次会议修订（44→87 条重编——2009 修订与新法施行同年）；末条附则自载自 2009-10-01 起施行。"
+  },
+  {
+   "version_id": "2012-amendment",
+   "label": "2012 修正",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "2012-10-26",
+   "promulgation_organ": "第十一届全国人民代表大会常务委员会第二十九次会议",
+   "effective_date": "2009-10-01",
+   "article_count": 87,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E9%82%AE%E6%94%BF%E6%B3%95_(2012%E5%B9%B4)",
+    "accessed_at": "2026-09-27",
+    "snapshot": "docs/research/evidence/ws_邮政法_2012.html"
+   },
+   "note": "快照头部括注自证：根据 2012-10-26 十一届人大常委会二十九次会议《关于修改〈中华人民共和国邮政法〉的决定》修正（2012-10-26 同日批次第八部法律）；施行日 2009-10-01 跨修正延续（末条同证）。"
+  },
+  {
+   "version_id": "current",
+   "label": "2015 修正",
+   "status": "现行有效（2015修正）",
+   "promulgation_date": "2015-04-24",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "effective_date": "2015-04-24",
+   "article_count": 87,
+   "current": true,
+   "evidence": {
+    "kind": "flk-docx-transcription",
+    "grade": "中",
+    "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf7bb6307f3",
+    "accessed_at": "2026-09-18",
+    "snapshot": "docs/research/evidence/lawtext_邮政法2015.md"
+   }
   }
  ],
  "pending_note": "1986 原版与 2009 修订版全文未采集。快递业务经营许可与用户权益条款为民生高频。 R398 对账（2026-09-27）：下述「未采集」为入库时历史口径——当前已采集 1 份历史全文（见 versions 时间线），最新状态以 versions/amendments 为准。"

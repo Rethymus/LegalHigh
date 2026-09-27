@@ -1,26 +1,26 @@
 {
-  "law_id": "bankruptcy-2006",
-  "title": "中华人民共和国企业破产法",
-  "schema_version": 1,
-  "note": "R143（2026-09-17）商法批次：经 lawtext（flk DOCX 转录）链入库。",
-  "versions": [
-    {
-      "version_id": "current",
-      "label": "2006 通过",
-      "status": "现行有效",
-      "promulgation_date": "2006-08-27",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "effective_date": "2007-06-01",
-      "article_count": 136,
-      "current": true,
-      "evidence": {
-        "kind": "flk-docx-transcription",
-        "grade": "中",
-        "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf63c7c0343",
-        "accessed_at": "2026-09-17",
-        "snapshot": "docs/research/evidence/lawtext_企业破产法2006.md"
-      }
-    }
-  ],
-  "pending_note": "1986 企业破产法（试行）全文未采集。2006 全面制定施行日 2007-06-01（附则自载与 flk sxrq 一致）；flk 单版本（未见修正记录）。R143 lawtext 链入库。"
+ "law_id": "bankruptcy-2006",
+ "title": "中华人民共和国企业破产法",
+ "schema_version": 1,
+ "note": "R143（2026-09-17）商法批次：经 lawtext（flk DOCX 转录）链入库。 R399 前身关系定案（试行法形态）：《企业破产法（试行）》（1986-12-02 六届人大常委会十八次会议通过、主席令第四十五号公布，43 条）系 2006 企业破产法明文废止的前法——「新法取代旧法」关系，不入 versions。前身全文（43 条连续）已存证 docs/research/evidence/ws_企业破产法试行_1986.html 供对照。施行形态特殊：快照自载「自全民所有制工业企业法实施满三个月之日起试行」（条件式起算，非固定日期）——如实不换算 ISO，登记为条件式原文。",
+ "versions": [
+  {
+   "version_id": "current",
+   "label": "2006 通过",
+   "status": "现行有效",
+   "promulgation_date": "2006-08-27",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "effective_date": "2007-06-01",
+   "article_count": 136,
+   "current": true,
+   "evidence": {
+    "kind": "flk-docx-transcription",
+    "grade": "中",
+    "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf63c7c0343",
+    "accessed_at": "2026-09-17",
+    "snapshot": "docs/research/evidence/lawtext_企业破产法2006.md"
+   }
+  }
+ ],
+ "pending_note": "1986 企业破产法（试行）全文未采集。2006 全面制定施行日 2007-06-01（附则自载与 flk sxrq 一致）；flk 单版本（未见修正记录）。R143 lawtext 链入库。"
 }

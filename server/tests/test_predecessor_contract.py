@@ -12,7 +12,7 @@ from app import predecessor_fulltext
 
 REG_DIR = Path(__file__).resolve().parents[1] / "data" / "law_versions"
 EVIDENCE = REG_DIR.parents[2] / "docs" / "research" / "evidence"  # data/law_versions 上三级=仓库根（tests 侧对齐 test_predecessor_fulltext 的写法）
-KNOWN = {"physicians-2021", "academic-degree-2024"}
+KNOWN = {"physicians-2021", "academic-degree-2024", "bankruptcy-2006"}
 
 
 def test_predecessor_registrations_complete_and_snapshots_present():
