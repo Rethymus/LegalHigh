@@ -125,12 +125,12 @@ cd web && npm ci && npm run dev
 
 | 门禁 / Gate | 内容 / What it checks |
 |---|---|
-| 后端测试 / Backend tests | 377 项 pytest（引用绑定、状态机、PIPL 级联、fail-closed、评测单调性、证据账本、重编号映射、robots 红线代码层等；2026-09-24 实测） |
-| 案例库 / Case library | 281 件可公开核验案例（最高人民法院指导案例 278 件 + 域外经典判例 3 件）；裁判要点与裁判结果逐字出自官方发布页快照并由测试钉住，法条引用经语料逐字核验（2026-09-24 实测） |
-| 浏览器巡检 / Route sweeps | 无头 Chrome 逐路由截图 + console/网络零错误门（63 路由，2026-09-25 实测 0 问题） |
+| 后端测试 / Backend tests | 408 项 pytest（引用绑定、状态机、PIPL 级联、fail-closed、评测单调性、证据账本、重编号映射、robots 红线代码层等；2026-09-27 实测） |
+| 案例库 / Case library | 281 件可公开核验案例（最高人民法院指导案例 278 件 + 域外经典判例 3 件）；裁判要点与裁判结果逐字出自官方发布页快照并由测试钉住，法条引用经语料逐字核验（2026-09-27 实测） |
+| 浏览器巡检 / Route sweeps | 无头 Chrome 逐路由截图 + console/网络零错误门（64 路由，2026-09-27 实测 0 问题） |
 | 对比度 / Contrast | WCAG AA 正文 4.5:1 + UI 指示器 3:1（strict 模式） |
 | 动效探针 / Motion probes | 弹簧位移、Toast/Dialog 卸载、Reduce Motion 双通道、入场动画不残留 transform（fixed 锚定）、ActionSheet 拖拽跟手·阻尼橡皮筋·阈值关闭·回位等 13 项行为断言（2026-09-25 实测 13/13） |
-| 可访问性探针 / A11y probes | WCAG 2.2 AA 子集（24px 目标尺寸 / 焦点不被遮挡；28 路由，2026-09-25 实测 0 违规） |
+| 可访问性探针 / A11y probes | WCAG 2.2 AA 子集（24px 目标尺寸 / 焦点不被遮挡；29 路由，2026-09-27 实测 0 违规） |
 | 离线探针 / Offline probes | PWA service worker 真断网验收：离线导航/法条/术语可读、恢复在线（7 断言，2026-09-24 实测 7/7） |
 | 窄屏扫描 / Narrow sweeps | 390px 逐路由：横向溢出 ≤2px + 页头操作件 ≤3 + 视口自检防假绿（27 路由，2026-09-25 实测 27/27） |
 | 第三链文本核验 / Third-chain texts | lawtext（flk DOCX 衍生）快照逐字比对：22 部全一致并锁定复验（corpus_selfcheck 常驻自检，2026-09-24 实测 26 部锁定） |
@@ -146,7 +146,7 @@ LegalHigh 的引用绑定法条检索可作为 **Model Context Protocol 服务�
 python server/mcp_server.py
 ```
 
-八工具：`search_articles`（BM25 全文检索法条原文）、`get_article`（按 ID+条号取原文与元数据）、`list_laws`（语料清单）、`search_cases`（指导案例与域外判例检索）、`search_history`（历史版本文本独立检索，非现行仅供对照）、`get_xrefs`（法条双向交叉引用导航，660 条已验证引用关系）、`get_amendments`（修正决定清单与快照全文——123 条决定「改了什么」的一手文本）、`get_predecessor`（前身法全文——更名边界法明文废止的前法文本）。**只暴露检索，无任何生成型工具**；输出永远为法条原文+元数据+官方来源 URL，并声明「不构成法律意见」。详见 [v7 路线图](docs/plan/开发计划-v7-生态就绪路线图-2026-09.md) S2。
+八工具：`search_articles`（BM25 全文检索法条原文）、`get_article`（按 ID+条号取原文与元数据）、`list_laws`（语料清单）、`search_cases`（指导案例与域外判例检索）、`search_history`（历史版本文本独立检索，非现行仅供对照）、`get_xrefs`（法条双向交叉引用导航，660 条已验证引用关系）、`get_amendments`（修正决定清单与快照全文——125 条决定「改了什么」的一手文本）、`get_predecessor`（前身法全文——更名边界法明文废止的前法文本）。**只暴露检索，无任何生成型工具**；输出永远为法条原文+元数据+官方来源 URL，并声明「不构成法律意见」。详见 [v7 路线图](docs/plan/开发计划-v7-生态就绪路线图-2026-09.md) S2。
 
 REST API：运行 `server` 后 [openapi.json](http://localhost:8000/openapi.json) 与 [交互文档](http://localhost:8000/docs) 自动可用（FastAPI 生成，49 路径）；检索响应与 MCP 同源（引用绑定+免责声明）。
 
