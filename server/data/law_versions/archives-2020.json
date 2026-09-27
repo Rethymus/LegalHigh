@@ -5,23 +5,6 @@
  "note": "R158（2026-09-18）档案动物与科技批次：经 lawtext（flk DOCX 转录）链入库。",
  "versions": [
   {
-   "version_id": "current",
-   "label": "2020 修订",
-   "status": "现行有效（2020修订）",
-   "promulgation_date": "2020-06-20",
-   "promulgation_organ": "全国人民代表大会常务委员会",
-   "effective_date": "2021-01-01",
-   "article_count": 53,
-   "current": true,
-   "evidence": {
-    "kind": "flk-docx-transcription",
-    "grade": "中",
-    "url": "https://flk.npc.gov.cn/detail?id=ff80808172b5f24f0172e4ef05e218d4",
-    "accessed_at": "2026-09-18",
-    "snapshot": "docs/research/evidence/lawtext_档案法2020.md"
-   }
-  },
-  {
    "version_id": "1987-enacted",
    "label": "1987 原版",
    "status": "已被修订（历史文本）",
@@ -39,6 +22,41 @@
    },
    "note": "快照头部括注自证：1987-09-05 六届人大常委会二十二次会议通过、主席令第五十八号公布、自 1988-01-01 起施行（末条附则同证）。",
    "promulgation_instrument": "中华人民共和国主席令第五十八号（1987-09-05 公布）"
+  },
+  {
+   "version_id": "2016-amendment",
+   "label": "2016 第二次修正",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "2016-11-07",
+   "promulgation_organ": "第十二届全国人民代表大会常务委员会第二十四次会议",
+   "effective_date": "1988-01-01",
+   "article_count": 27,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E6%A1%A3%E6%A1%88%E6%B3%95_(2016%E5%B9%B4)",
+    "accessed_at": "2026-09-27",
+    "snapshot": "docs/research/evidence/ws_档案法_2016.html"
+   },
+   "note": "快照头部括注自证：1996 第一次修正 + 2016-11-07 外贸十二部打包第二次修正（体育 2016 同载体）；施行日 1988-01-01 跨修正延续（末条附则同证）。1996 修正版页未采（1996 决定页也未采——待后续）。"
+  },
+  {
+   "version_id": "current",
+   "label": "2020 修订",
+   "status": "现行有效（2020修订）",
+   "promulgation_date": "2020-06-20",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "effective_date": "2021-01-01",
+   "article_count": 53,
+   "current": true,
+   "evidence": {
+    "kind": "flk-docx-transcription",
+    "grade": "中",
+    "url": "https://flk.npc.gov.cn/detail?id=ff80808172b5f24f0172e4ef05e218d4",
+    "accessed_at": "2026-09-18",
+    "snapshot": "docs/research/evidence/lawtext_档案法2020.md"
+   }
   }
  ],
  "pending_note": "1987 原版与 2016 修正版全文未采集（双 bbbs 候选按 status 定案 2020 修订版）。档案开放利用与电子档案制度。 R398 对账（2026-09-27）：下述「未采集」为入库时历史口径——当前已采集 1 份历史全文（见 versions 时间线），最新状态以 versions/amendments 为准。"
