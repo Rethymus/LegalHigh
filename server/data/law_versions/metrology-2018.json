@@ -5,23 +5,6 @@
  "note": "R159（2026-09-18）计量标准与成果批次：经 lawtext（flk DOCX 转录）链入库。",
  "versions": [
   {
-   "version_id": "current",
-   "label": "2018 修正",
-   "status": "现行有效（2018修正）",
-   "promulgation_date": "2018-10-26",
-   "promulgation_organ": "全国人民代表大会常务委员会",
-   "effective_date": "2018-10-26",
-   "article_count": 34,
-   "current": true,
-   "evidence": {
-    "kind": "flk-docx-transcription",
-    "grade": "中",
-    "url": "https://flk.npc.gov.cn/detail?id=ff8080816f135f46016f1cf499ff11eb",
-    "accessed_at": "2026-09-18",
-    "snapshot": "docs/research/evidence/lawtext_计量法2018.md"
-   }
-  },
-  {
    "version_id": "1985-enacted",
    "label": "1985 原版",
    "status": "已被修订（历史文本）",
@@ -39,6 +22,41 @@
    },
    "note": "快照头部括注自证：1985-09-06 六届人大常委会十二次会议通过、主席令第二十八号公布、自 1986-07-01 起施行（末条附则同证）。",
    "promulgation_instrument": "中华人民共和国主席令第二十八号（1985-09-06 公布）"
+  },
+  {
+   "version_id": "2017-amendment",
+   "label": "2017 修正",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "2017-03-15",
+   "promulgation_organ": "第十二届全国人民代表大会常务委员会第五次会议",
+   "effective_date": "1986-07-01",
+   "article_count": 34,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E8%AE%A1%E9%87%8F%E6%B3%95_(2017%E5%B9%B4)",
+    "accessed_at": "2026-09-27",
+    "snapshot": "docs/research/evidence/ws_计量法_2017.html"
+   },
+   "note": "快照头部括注自证：历经 2009 大打包/2013 海洋七部/2015 计量五部/2017 四次修正后文本（34 条）；施行日 1986-07-01 跨全部修正延续（末条附则同证）。"
+  },
+  {
+   "version_id": "current",
+   "label": "2018 修正",
+   "status": "现行有效（2018修正）",
+   "promulgation_date": "2018-10-26",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "effective_date": "2018-10-26",
+   "article_count": 34,
+   "current": true,
+   "evidence": {
+    "kind": "flk-docx-transcription",
+    "grade": "中",
+    "url": "https://flk.npc.gov.cn/detail?id=ff8080816f135f46016f1cf499ff11eb",
+    "accessed_at": "2026-09-18",
+    "snapshot": "docs/research/evidence/lawtext_计量法2018.md"
+   }
   }
  ],
  "pending_note": "1985 原版与 2009/2013/2015/2017 修正版全文未采集（2017 修正条目已修改弃用）。民生计量/强制检定。 R398 对账（2026-09-27）：下述「未采集」为入库时历史口径——当前已采集 1 份历史全文（见 versions 时间线），最新状态以 versions/amendments 为准。",

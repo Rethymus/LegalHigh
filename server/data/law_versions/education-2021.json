@@ -5,23 +5,6 @@
  "note": "R153（2026-09-18）教育与民生批次：经 lawtext（flk DOCX 转录）链入库。",
  "versions": [
   {
-   "version_id": "current",
-   "label": "2021 修正",
-   "status": "现行有效（2021修正）",
-   "promulgation_date": "2021-04-29",
-   "promulgation_organ": "全国人民代表大会",
-   "effective_date": "2021-04-30",
-   "article_count": 86,
-   "current": true,
-   "evidence": {
-    "kind": "flk-docx-transcription",
-    "grade": "中",
-    "url": "https://flk.npc.gov.cn/detail?id=ff8081817ab22b8a017abd777cdc05d8",
-    "accessed_at": "2026-09-18",
-    "snapshot": "docs/research/evidence/lawtext_教育法2021.md"
-   }
-  },
-  {
    "version_id": "1995-enacted",
    "label": "1995 原版",
    "status": "已被修订（历史文本）",
@@ -41,6 +24,24 @@
    "promulgation_instrument": "中华人民共和国主席令第四十五号（1995-03-18 公布）"
   },
   {
+   "version_id": "2009-amendment",
+   "label": "2009 修正",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "2009-08-27",
+   "promulgation_organ": "第十一届全国人民代表大会常务委员会第十次会议",
+   "effective_date": "1995-09-01",
+   "article_count": 84,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E6%95%99%E8%82%B2%E6%B3%95_(2009%E5%B9%B4)",
+    "accessed_at": "2026-09-27",
+    "snapshot": "docs/research/evidence/ws_教育法_2009.html"
+   },
+   "note": "快照头部括注自证：根据 2009-08-27 十一届人大常委会十次会议《关于修改部分法律的决定》修正（2009 大打包成员——与 amendments no.1 互证）；施行日 1995-09-01 跨修正延续（末条附则同证）。"
+  },
+  {
    "version_id": "2015-amendment",
    "label": "2015 第二次修正",
    "status": "已被修订（历史文本）",
@@ -57,6 +58,23 @@
     "snapshot": "docs/research/evidence/ws_教育法_2015.html"
    },
    "note": "快照自证：根据 2015-12-27 十二届人大常委会十八次会议决定第二次修正（84→86 条）；施行日 1995-09-01 由末条附则自证跨修正延续（括注并自证 2009 大打包第一次修正——R356 amendments no.1 互证）。"
+  },
+  {
+   "version_id": "current",
+   "label": "2021 修正",
+   "status": "现行有效（2021修正）",
+   "promulgation_date": "2021-04-29",
+   "promulgation_organ": "全国人民代表大会",
+   "effective_date": "2021-04-30",
+   "article_count": 86,
+   "current": true,
+   "evidence": {
+    "kind": "flk-docx-transcription",
+    "grade": "中",
+    "url": "https://flk.npc.gov.cn/detail?id=ff8081817ab22b8a017abd777cdc05d8",
+    "accessed_at": "2026-09-18",
+    "snapshot": "docs/research/evidence/lawtext_教育法2021.md"
+   }
   }
  ],
  "pending_note": "1995 原版与 2015 修正版全文未采集。公布机关依 flk zdjg 与 lawtext author 双源一致登记为全国人民代表大会（1995 制定机关）。 R398 对账（2026-09-27）：下述「未采集」为入库时历史口径——当前已采集 2 份历史全文（见 versions 时间线），最新状态以 versions/amendments 为准。",

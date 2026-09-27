@@ -5,23 +5,6 @@
  "note": "R163（2026-09-18）基层自治与体育批次：经 lawtext（flk DOCX 转录）链入库。",
  "versions": [
   {
-   "version_id": "current",
-   "label": "2022 修订",
-   "status": "现行有效（2022修订）",
-   "promulgation_date": "2022-06-24",
-   "promulgation_organ": "全国人民代表大会常务委员会",
-   "effective_date": "2023-01-01",
-   "article_count": 122,
-   "current": true,
-   "evidence": {
-    "kind": "flk-docx-transcription",
-    "grade": "中",
-    "url": "https://flk.npc.gov.cn/detail?id=ff808181818e90e701819485a96c0192",
-    "accessed_at": "2026-09-18",
-    "snapshot": "docs/research/evidence/lawtext_体育法2023.md"
-   }
-  },
-  {
    "version_id": "1995-enacted",
    "label": "1995 原版",
    "status": "已被修订（历史文本）",
@@ -39,6 +22,41 @@
    },
    "note": "快照头部括注自证：1995-08-29 八届人大常委会十五次会议通过、主席令第五十五号公布、自 1995-10-01 起施行（末条附则同证）。",
    "promulgation_instrument": "中华人民共和国主席令第五十五号（1995-08-29 公布）"
+  },
+  {
+   "version_id": "2016-amendment",
+   "label": "2016 第二次修正",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "2016-11-07",
+   "promulgation_organ": "第十二届全国人民代表大会常务委员会第二十四次会议",
+   "effective_date": "1995-10-01",
+   "article_count": 54,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E4%BD%93%E8%82%B2%E6%B3%95_(2016%E5%B9%B4)",
+    "accessed_at": "2026-09-27",
+    "snapshot": "docs/research/evidence/ws_体育法_2016.html"
+   },
+   "note": "快照头部括注自证：根据 2016-11-07 十二届人大常委会二十四次会议《关于修改〈中华人民共和国对外贸易法〉等十二部法律的决定》第二次修正（外贸十二部打包成员——新打包载体发现）；施行日 1995-10-01 跨修正延续（末条附则同证）。"
+  },
+  {
+   "version_id": "current",
+   "label": "2022 修订",
+   "status": "现行有效（2022修订）",
+   "promulgation_date": "2022-06-24",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "effective_date": "2023-01-01",
+   "article_count": 122,
+   "current": true,
+   "evidence": {
+    "kind": "flk-docx-transcription",
+    "grade": "中",
+    "url": "https://flk.npc.gov.cn/detail?id=ff808181818e90e701819485a96c0192",
+    "accessed_at": "2026-09-18",
+    "snapshot": "docs/research/evidence/lawtext_体育法2023.md"
+   }
   }
  ],
  "pending_note": "1995 原版与 2009/2016 修正版全文未采集。2022 全面修订：体育仲裁/全民健身/青少年体育。 R398 对账（2026-09-27）：下述「未采集」为入库时历史口径——当前已采集 1 份历史全文（见 versions 时间线），最新状态以 versions/amendments 为准。",

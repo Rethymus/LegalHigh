@@ -5,23 +5,6 @@
  "note": "R158（2026-09-18）档案动物与科技批次：经 lawtext（flk DOCX 转录）链入库。",
  "versions": [
   {
-   "version_id": "current",
-   "label": "2021 修订",
-   "status": "现行有效（2021修订）",
-   "promulgation_date": "2021-01-22",
-   "promulgation_organ": "全国人民代表大会常务委员会",
-   "effective_date": "2021-05-01",
-   "article_count": 113,
-   "current": true,
-   "evidence": {
-    "kind": "flk-docx-transcription",
-    "grade": "中",
-    "url": "https://flk.npc.gov.cn/detail?id=ff8080817703add2017737395a973e31",
-    "accessed_at": "2026-09-18",
-    "snapshot": "docs/research/evidence/lawtext_动物防疫法2021.md"
-   }
-  },
-  {
    "version_id": "1997-enacted",
    "label": "1997 原版",
    "status": "已被修订（历史文本）",
@@ -75,6 +58,41 @@
     "snapshot": "docs/research/evidence/ws_动物防疫法_2013.html"
    },
    "note": "快照自证：根据 2013-06-29 十二届人大常委会三次会议《关于修改〈中华人民共和国文物保护法〉等十二部法律的决定》修正（文物十二部成员——与 amendments 互证）；施行日 2008-01-01 跨修正延续（末条自证）。"
+  },
+  {
+   "version_id": "2015-amendment",
+   "label": "2015 第二次修正",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "2015-04-24",
+   "promulgation_organ": "第十二届全国人民代表大会常务委员会第十四次会议",
+   "effective_date": "2008-01-01",
+   "article_count": 85,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%8A%A8%E7%89%A9%E9%98%B2%E7%96%AB%E6%B3%95_(2015%E5%B9%B4)",
+    "accessed_at": "2026-09-27",
+    "snapshot": "docs/research/evidence/ws_动物防疫法_2015.html"
+   },
+   "note": "快照头部括注自证：根据 2015-04-24 十二届人大常委会十四次会议《关于修改〈中华人民共和国电力法〉等六部法律的决定》第二次修正（电力六部打包成员——新打包载体发现）；施行日 2008-01-01 跨修正延续（末条附则同证）。"
+  },
+  {
+   "version_id": "current",
+   "label": "2021 修订",
+   "status": "现行有效（2021修订）",
+   "promulgation_date": "2021-01-22",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "effective_date": "2021-05-01",
+   "article_count": 113,
+   "current": true,
+   "evidence": {
+    "kind": "flk-docx-transcription",
+    "grade": "中",
+    "url": "https://flk.npc.gov.cn/detail?id=ff8080817703add2017737395a973e31",
+    "accessed_at": "2026-09-18",
+    "snapshot": "docs/research/evidence/lawtext_动物防疫法2021.md"
+   }
   }
  ],
  "pending_note": "1997 原版与 2007/2013/2015 修正版全文未采集。犬只登记/人畜共患防控/检疫电子出证。 R398 对账（2026-09-27）：下述「未采集」为入库时历史口径——当前已采集 3 份历史全文（见 versions 时间线），最新状态以 versions/amendments 为准。",

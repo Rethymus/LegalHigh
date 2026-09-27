@@ -5,23 +5,6 @@
  "note": "R158（2026-09-18）档案动物与科技批次：经 lawtext（flk DOCX 转录）链入库。",
  "versions": [
   {
-   "version_id": "current",
-   "label": "2021 修订",
-   "status": "现行有效（2021修订）",
-   "promulgation_date": "2021-12-24",
-   "promulgation_organ": "全国人民代表大会常务委员会",
-   "effective_date": "2022-01-01",
-   "article_count": 117,
-   "current": true,
-   "evidence": {
-    "kind": "flk-docx-transcription",
-    "grade": "中",
-    "url": "https://flk.npc.gov.cn/detail?id=ff8081817d99a39f017dec555db834da",
-    "accessed_at": "2026-09-18",
-    "snapshot": "docs/research/evidence/lawtext_科学技术进步法2021.md"
-   }
-  },
-  {
    "version_id": "1993-enacted",
    "label": "1993 原版",
    "status": "已被修订（历史文本）",
@@ -39,6 +22,41 @@
    },
    "note": "快照头部括注自证：1993-07-02 八届人大常委会二次会议通过、主席令第四号公布、自 1993-10-01 起施行（末条附则同证）。",
    "promulgation_instrument": "中华人民共和国主席令第四号（1993-07-02 公布）"
+  },
+  {
+   "version_id": "2007-revision",
+   "label": "2007 修订",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "2007-12-29",
+   "promulgation_organ": "第十届全国人民代表大会常务委员会第三十一次会议",
+   "effective_date": "2008-07-01",
+   "article_count": 75,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E7%A7%91%E5%AD%A6%E6%8A%80%E6%9C%AF%E8%BF%9B%E6%AD%A5%E6%B3%95_(2007%E5%B9%B4)",
+    "accessed_at": "2026-09-27",
+    "snapshot": "docs/research/evidence/ws_科学技术进步法_2007.html"
+   },
+   "note": "快照头部括注自证：2007-12-29 十届人大常委会三十一次会议修订（62→75 条重编）；末条附则自载自 2008-07-01 起施行。"
+  },
+  {
+   "version_id": "current",
+   "label": "2021 修订",
+   "status": "现行有效（2021修订）",
+   "promulgation_date": "2021-12-24",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "effective_date": "2022-01-01",
+   "article_count": 117,
+   "current": true,
+   "evidence": {
+    "kind": "flk-docx-transcription",
+    "grade": "中",
+    "url": "https://flk.npc.gov.cn/detail?id=ff8081817d99a39f017dec555db834da",
+    "accessed_at": "2026-09-18",
+    "snapshot": "docs/research/evidence/lawtext_科学技术进步法2021.md"
+   }
   }
  ],
  "pending_note": "1993 原版与 2007 修订版全文未采集。科研诚信/科普责任/企业创新主体。 R398 对账（2026-09-27）：下述「未采集」为入库时历史口径——当前已采集 1 份历史全文（见 versions 时间线），最新状态以 versions/amendments 为准。"
