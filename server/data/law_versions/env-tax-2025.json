@@ -5,6 +5,24 @@
  "note": "R160（2026-09-18）无障碍医保与绿税批次：经 lawtext（flk DOCX 转录）链入库。 R371 终态核验：环境保护税法 2016-12-25 通过（2018-01-01 施行）后从未修正——单版本即完整沿革。",
  "versions": [
   {
+   "version_id": "2016-enacted",
+   "label": "2016 制定",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "2016-12-25",
+   "promulgation_organ": "第十二届全国人民代表大会常务委员会第二十五次会议",
+   "effective_date": "2018-01-01",
+   "article_count": 28,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E7%8E%AF%E5%A2%83%E4%BF%9D%E6%8A%A4%E7%A8%8E%E6%B3%95_(2016%E5%B9%B4)",
+    "accessed_at": "2026-09-27",
+    "snapshot": "docs/research/evidence/ws_环境保护税法_2016.html"
+   },
+   "note": "快照括注自证：2016-12-25 十二届人大常委会二十五次会议通过；第 28 条自载自 2018-01-01 起施行（费改税首法——排污费改环保税）；附应税污染物当量值表完整在文。"
+  },
+  {
    "version_id": "current",
    "label": "2025 修正",
    "status": "现行有效（2025修正）",
@@ -22,5 +40,5 @@
    }
   }
  ],
- "pending_note": "2016 原版全文未采集（2025 修正公布即施行，flk sxrq 自证）。绿色税制。"
+ "pending_note": "2016 原版全文未采集（2025 修正公布即施行，flk sxrq 自证）。绿色税制。 R409 对账（2026-09-27）：前句「未采集」为入库时历史口径——2016 原版全文已采集入册（见 versions 时间线），最新状态以 versions/amendments 为准。"
 }
