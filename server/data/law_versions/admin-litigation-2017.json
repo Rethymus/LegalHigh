@@ -23,6 +23,24 @@
    }
   },
   {
+   "version_id": "2014-amendment",
+   "label": "2014 修正",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "2014-11-01",
+   "promulgation_organ": "第十二届全国人民代表大会常务委员会第十一次会议",
+   "effective_date": "1990-10-01",
+   "article_count": 103,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E8%A1%8C%E6%94%BF%E8%AF%89%E8%AE%BC%E6%B3%95_(2014%E5%B9%B4)",
+    "accessed_at": "2026-09-27",
+    "snapshot": "docs/research/evidence/ws_行政诉讼法_2014.html"
+   },
+   "note": "快照头部括注自证：根据 2014-11-01 十二届人大常委会十一次会议决定修正（75→103 条大修——民告官制度重大改革）；施行日 1990-10-01 跨修正延续（末条附则同证）。"
+  },
+  {
    "version_id": "2017-amendment",
    "label": "2017 修正",
    "status": "现行有效（2017修正）",
@@ -41,7 +59,7 @@
    }
   }
  ],
- "pending_note": "2014 修正版全文未采集，不预填。 R398 对账（2026-09-27）：下述「未采集」为入库时历史口径——当前已采集 1 份历史全文（见 versions 时间线），最新状态以 versions/amendments 为准。",
+ "pending_note": "2014 修正版全文未采集，不预填。 R398 对账（2026-09-27）：下述「未采集」为入库时历史口径——当前已采集 2 份历史全文（见 versions 时间线），最新状态以 versions/amendments 为准。",
  "amendments": [
   {
    "no": 1,

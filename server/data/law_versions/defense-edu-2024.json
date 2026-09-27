@@ -5,23 +5,6 @@
  "note": "R162（2026-09-18）普法国防与农业批次：经 lawtext（flk DOCX 转录）链入库。",
  "versions": [
   {
-   "version_id": "current",
-   "label": "2024 修正",
-   "status": "现行有效（2024修正）",
-   "promulgation_date": "2024-09-13",
-   "promulgation_organ": "全国人民代表大会常务委员会",
-   "effective_date": "2024-09-21",
-   "article_count": 42,
-   "current": true,
-   "evidence": {
-    "kind": "flk-docx-transcription",
-    "grade": "中",
-    "url": "https://flk.npc.gov.cn/detail?id=ff80818191db55220191eba9396a08f4",
-    "accessed_at": "2026-09-18",
-    "snapshot": "docs/research/evidence/lawtext_国防教育法2024.md"
-   }
-  },
-  {
    "version_id": "2001-enacted",
    "label": "2001 原版",
    "status": "已被修订（历史文本）",
@@ -39,7 +22,42 @@
    },
    "note": "快照头部括注自证：2001-04-28 九届人大常委会二十一次会议通过、主席令第五十二号公布、自公布之日起施行（公布即施行形态，施行日=公布日）。",
    "promulgation_instrument": "中华人民共和国主席令第五十二号（2001-04-28 公布）"
+  },
+  {
+   "version_id": "2018-amendment",
+   "label": "2018 修正",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "2018-04-27",
+   "promulgation_organ": "第十三届全国人民代表大会常务委员会第二次会议",
+   "effective_date": "2001-04-28",
+   "article_count": 38,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%9B%BD%E9%98%B2%E6%95%99%E8%82%B2%E6%B3%95_(2018%E5%B9%B4)",
+    "accessed_at": "2026-09-27",
+    "snapshot": "docs/research/evidence/ws_国防教育法_2018.html"
+   },
+   "note": "快照头部括注自证：根据 2018-04-27 十三届人大常委会二次会议《关于修改〈中华人民共和国国境卫生检疫法〉等六部法律的决定》修正（国境卫生六部打包——新载体）；国防教育法施行形态=公布即施行（2001 版注记），施行日沿用 2001-04-28。"
+  },
+  {
+   "version_id": "current",
+   "label": "2024 修正",
+   "status": "现行有效（2024修正）",
+   "promulgation_date": "2024-09-13",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "effective_date": "2024-09-21",
+   "article_count": 42,
+   "current": true,
+   "evidence": {
+    "kind": "flk-docx-transcription",
+    "grade": "中",
+    "url": "https://flk.npc.gov.cn/detail?id=ff80818191db55220191eba9396a08f4",
+    "accessed_at": "2026-09-18",
+    "snapshot": "docs/research/evidence/lawtext_国防教育法2024.md"
+   }
   }
  ],
- "pending_note": "2001 原版与 2018 修正版全文未采集（双 bbbs 按 status 定案 2024 修正版）。 R398 对账（2026-09-27）：下述「未采集」为入库时历史口径——当前已采集 1 份历史全文（见 versions 时间线），最新状态以 versions/amendments 为准。"
+ "pending_note": "2001 原版与 2018 修正版全文未采集（双 bbbs 按 status 定案 2024 修正版）。 R398 对账（2026-09-27）：下述「未采集」为入库时历史口径——当前已采集 2 份历史全文（见 versions 时间线），最新状态以 versions/amendments 为准。"
 }

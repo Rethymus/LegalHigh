@@ -5,23 +5,6 @@
  "note": "R140（2026-09-17）续批：经 lawtext（flk DOCX 转录）链入库。",
  "versions": [
   {
-   "version_id": "current",
-   "label": "2017 修正",
-   "status": "现行有效（2017修正）",
-   "promulgation_date": "2017-09-01",
-   "promulgation_organ": "全国人民代表大会常务委员会",
-   "effective_date": "2006-03-01",
-   "article_count": 47,
-   "current": true,
-   "evidence": {
-    "kind": "flk-docx-transcription",
-    "grade": "中",
-    "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf8688a0a5f",
-    "accessed_at": "2026-09-17",
-    "snapshot": "docs/research/evidence/lawtext_公证法2017.md"
-   }
-  },
-  {
    "version_id": "2005-enacted",
    "label": "2005 原版",
    "status": "已被修订（历史文本）",
@@ -38,9 +21,44 @@
     "snapshot": "docs/research/evidence/ws_公证法_2005.html"
    },
    "note": "快照头部括注自证：2005-08-28 十届人大常委会十七次会议通过；末条附则自载自 2006-03-01 起施行。快照未载主席令号，如实省略。"
+  },
+  {
+   "version_id": "2015-amendment",
+   "label": "2015 修正",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "2015-04-24",
+   "promulgation_organ": "第十二届全国人民代表大会常务委员会第十四次会议",
+   "effective_date": "2006-03-01",
+   "article_count": 47,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%85%AC%E8%AF%81%E6%B3%95_(2015%E5%B9%B4)",
+    "accessed_at": "2026-09-27",
+    "snapshot": "docs/research/evidence/ws_公证法_2015.html"
+   },
+   "note": "快照头部括注自证：义教五部打包修正（2015-04-24 同会批次）；施行日 2006-03-01 跨修正延续（末条附则同证）。与 amendments no.1 互证。"
+  },
+  {
+   "version_id": "current",
+   "label": "2017 修正",
+   "status": "现行有效（2017修正）",
+   "promulgation_date": "2017-09-01",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "effective_date": "2006-03-01",
+   "article_count": 47,
+   "current": true,
+   "evidence": {
+    "kind": "flk-docx-transcription",
+    "grade": "中",
+    "url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf8688a0a5f",
+    "accessed_at": "2026-09-17",
+    "snapshot": "docs/research/evidence/lawtext_公证法2017.md"
+   }
   }
  ],
- "pending_note": "2005 通过原版与 2015 修正版全文未采集。附则自载施行日 2006-03-01（原版施行日跨修正沿用）；2017 修正决定施行日 2018-01-01（flk sxrq）存档注记。R140 lawtext 链入库。 R398 对账（2026-09-27）：下述「未采集」为入库时历史口径——当前已采集 1 份历史全文（见 versions 时间线），最新状态以 versions/amendments 为准。",
+ "pending_note": "2005 通过原版与 2015 修正版全文未采集。附则自载施行日 2006-03-01（原版施行日跨修正沿用）；2017 修正决定施行日 2018-01-01（flk sxrq）存档注记。R140 lawtext 链入库。 R398 对账（2026-09-27）：下述「未采集」为入库时历史口径——当前已采集 2 份历史全文（见 versions 时间线），最新状态以 versions/amendments 为准。",
  "amendments": [
   {
    "no": 1,

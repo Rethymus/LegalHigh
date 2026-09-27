@@ -5,23 +5,6 @@
  "note": "R134（2026-09-16）领域扩张续批：经 lawtext（flk DOCX 转录）链入库。",
  "versions": [
   {
-   "version_id": "current",
-   "label": "2020 修订",
-   "status": "现行有效（2020修订）",
-   "promulgation_date": "2020-12-26",
-   "promulgation_organ": "全国人民代表大会常务委员会",
-   "effective_date": "2021-06-01",
-   "article_count": 68,
-   "current": true,
-   "evidence": {
-    "kind": "flk-docx-transcription",
-    "grade": "中",
-    "url": "https://flk.npc.gov.cn/detail?id=ff80808175265dd40176a88c218f2853",
-    "accessed_at": "2026-09-16",
-    "snapshot": "docs/research/evidence/lawtext_预防未成年人犯罪法2020.md"
-   }
-  },
-  {
    "version_id": "1999-enacted",
    "label": "1999 原版",
    "status": "已被修订（历史文本）",
@@ -39,7 +22,42 @@
    },
    "note": "快照头部括注自证：1999-06-28 九届人大常委会十次会议通过、主席令第十七号公布、自 1999-11-01 起施行（末条附则同证）。",
    "promulgation_instrument": "中华人民共和国主席令第十七号（1999-06-28 公布）"
+  },
+  {
+   "version_id": "2012-amendment",
+   "label": "2012 修正",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "2012-10-26",
+   "promulgation_organ": "第十一届全国人民代表大会常务委员会第二十九次会议",
+   "effective_date": "1999-11-01",
+   "article_count": 57,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E9%A2%84%E9%98%B2%E6%9C%AA%E6%88%90%E5%B9%B4%E4%BA%BA%E7%8A%AF%E7%BD%AA%E6%B3%95_(2012%E5%B9%B4)",
+    "accessed_at": "2026-09-27",
+    "snapshot": "docs/research/evidence/ws_预防未成年人犯罪法_2012.html"
+   },
+   "note": "快照头部括注自证：根据 2012-10-26 十一届人大常委会二十九次会议决定修正（2012-10-26 同日批次第九部法律）；施行日 1999-11-01 跨修正延续（末条附则同证）。"
+  },
+  {
+   "version_id": "current",
+   "label": "2020 修订",
+   "status": "现行有效（2020修订）",
+   "promulgation_date": "2020-12-26",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "effective_date": "2021-06-01",
+   "article_count": 68,
+   "current": true,
+   "evidence": {
+    "kind": "flk-docx-transcription",
+    "grade": "中",
+    "url": "https://flk.npc.gov.cn/detail?id=ff80808175265dd40176a88c218f2853",
+    "accessed_at": "2026-09-16",
+    "snapshot": "docs/research/evidence/lawtext_预防未成年人犯罪法2020.md"
+   }
   }
  ],
- "pending_note": "1999 通过原版与 2012 修正版全文未采集。R134 由 lawtext 链入库，bbbs 经 flk 官方 API 核验（pub 2020-12-26/eff 2021-06-01/有效）。附则自载施行日 2021-06-01（2020 全面修订新定施行日，快照自证；1999 原版施行日 1999-11-01 不再适用于现行文本）。 R398 对账（2026-09-27）：下述「未采集」为入库时历史口径——当前已采集 1 份历史全文（见 versions 时间线），最新状态以 versions/amendments 为准。"
+ "pending_note": "1999 通过原版与 2012 修正版全文未采集。R134 由 lawtext 链入库，bbbs 经 flk 官方 API 核验（pub 2020-12-26/eff 2021-06-01/有效）。附则自载施行日 2021-06-01（2020 全面修订新定施行日，快照自证；1999 原版施行日 1999-11-01 不再适用于现行文本）。 R398 对账（2026-09-27）：下述「未采集」为入库时历史口径——当前已采集 2 份历史全文（见 versions 时间线），最新状态以 versions/amendments 为准。"
 }
