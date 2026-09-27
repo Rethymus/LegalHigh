@@ -1,236 +1,248 @@
 {
-  "law_id": "cl-2023",
-  "title": "中华人民共和国刑法",
-  "schema_version": 1,
-  "note": "S2-T1 第十部批量扩张法律（2026-09-14）：2023 第十二次修正后全文自维基文库渲染页入库（等级【中】）。沿革：1979 通过（委员长令第五号公布，1980-01-01 施行）、1997 全面修订（1997-10-01 施行）、十二次修正（快照头部自载）；现行文本附则（第 452 条）自载施行日 1997-10-01。条目数 505 = 452 基条 + 53 子条号条目。2020 版与 1979 原版历史全文已采集存证并登记；12 部修正案单独文本（1999-2023）已全部采集存证并登记于 amendments 数组（R55）。已知限制：切分器整数条号模型不含「之一/之二」子条号——已支持（R47）；citation_of 整数语义不变（同号先返回基条）。",
-  "versions": [
-    {
-      "version_id": "1979-enacted",
-      "label": "1979 通过",
-      "status": "已废止（1997 修订后不再适用，仅作历史对照）",
-      "promulgation_date": "1979-07-06",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "promulgation_instrument": "全国人民代表大会常务委员会委员长令第五号",
-      "effective_date": "1980-01-01",
-      "article_count": 192,
-      "current": false,
-      "evidence": {
-        "kind": "wikisource-transcription",
-        "grade": "中",
-        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E5%88%91%E6%B3%95_(1979%E5%B9%B4)",
-        "accessed_at": "2026-09-14",
-        "snapshot": "docs/research/evidence/ws_刑法1979.html"
-      }
-    },
-    {
-      "version_id": "1997-revision",
-      "label": "1997 修订",
-      "status": "已取代（现行文本母本，仅作历史对照）",
-      "promulgation_date": "1997-03-14",
-      "promulgation_organ": "全国人民代表大会",
-      "effective_date": "1997-10-01",
-      "article_count": 452,
-      "current": false,
-      "evidence": {
-        "kind": "wikisource-transcription",
-        "grade": "中",
-        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E5%88%91%E6%B3%95_(1997%E5%B9%B4)",
-        "accessed_at": "2026-09-14",
-        "snapshot": "docs/research/evidence/ws_刑法1997.html"
-      }
-    },
-    {
-      "version_id": "2020-amendment",
-      "label": "2020 第十一次修正",
-      "status": "已取代（2023 修正前文本，仅作历史对照）",
-      "promulgation_date": "2020-12-26",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "effective_date": "1997-10-01",
-      "article_count": 505,
-      "current": false,
-      "evidence": {
-        "kind": "wikisource-transcription",
-        "grade": "中",
-        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E5%88%91%E6%B3%95_(2020%E5%B9%B4)",
-        "accessed_at": "2026-09-14",
-        "snapshot": "docs/research/evidence/ws_刑法2020.html"
-      }
-    },
-    {
-      "version_id": "2023-amendment",
-      "label": "2023 第十二次修正",
-      "status": "现行有效（2023修正）",
-      "promulgation_date": "2023-12-29",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "effective_date": "1997-10-01",
-      "article_count": 505,
-      "current": true,
-      "evidence": {
-        "kind": "wikisource-transcription",
-        "grade": "中",
-        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E5%88%91%E6%B3%95_(2023%E5%B9%B4)",
-        "accessed_at": "2026-09-14",
-        "snapshot": "docs/research/evidence/ws_刑法2023.html"
-      }
-    }
-  ],
-  "pending_note": "1998-2022 各单项修正案单独文本未采集，不预填。",
-  "amendments": [
-    {
-      "no": "一",
-      "title": "中华人民共和国刑法修正案",
-      "passed_date": "1999年12月25日第九届全国人民代表大会常务委员会第十三次会议通过",
-      "effective": "自公布之日起施行",
-      "evidence": {
-        "kind": "wikisource-transcription",
-        "grade": "中",
-        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E5%88%91%E6%B3%95%E4%BF%AE%E6%AD%A3%E6%A1%88",
-        "accessed_at": "2026-09-14",
-        "snapshot": "docs/research/evidence/ws_刑法修正案（一）.html"
-      }
-    },
-    {
-      "no": "二",
-      "title": "中华人民共和国刑法修正案（二）",
-      "passed_date": "2001年8月31日第九届全国人民代表大会常务委员会第二十三次会议通过",
-      "effective": "自公布之日起施行",
-      "evidence": {
-        "kind": "wikisource-transcription",
-        "grade": "中",
-        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%88%91%E6%B3%95%E4%BF%AE%E6%AD%A3%E6%A1%88%EF%BC%88%E4%BA%8C%EF%BC%89",
-        "accessed_at": "2026-09-14",
-        "snapshot": "docs/research/evidence/ws_刑法修正案（二）.html"
-      }
-    },
-    {
-      "no": "三",
-      "title": "中华人民共和国刑法修正案（三）",
-      "passed_date": "2001年12月29日第九届全国人民代表大会常务委员会第二十五次会议通过",
-      "effective": "自公布之日起施行",
-      "evidence": {
-        "kind": "wikisource-transcription",
-        "grade": "中",
-        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%88%91%E6%B3%95%E4%BF%AE%E6%AD%A3%E6%A1%88%EF%BC%88%E4%B8%89%EF%BC%89",
-        "accessed_at": "2026-09-14",
-        "snapshot": "docs/research/evidence/ws_刑法修正案（三）.html"
-      }
-    },
-    {
-      "no": "四",
-      "title": "中华人民共和国刑法修正案（四）",
-      "passed_date": "2002年12月28日第九届全国人民代表大会常务委员会第三十一次会议通过",
-      "effective": "自公布之日起施行",
-      "evidence": {
-        "kind": "wikisource-transcription",
-        "grade": "中",
-        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%88%91%E6%B3%95%E4%BF%AE%E6%AD%A3%E6%A1%88%EF%BC%88%E5%9B%9B%EF%BC%89",
-        "accessed_at": "2026-09-14",
-        "snapshot": "docs/research/evidence/ws_刑法修正案（四）.html"
-      }
-    },
-    {
-      "no": "五",
-      "title": "中华人民共和国刑法修正案（五）",
-      "passed_date": "2005年2月28日第十届全国人民代表大会常务委员会第十四次会议通过",
-      "effective": "自公布之日起施行",
-      "evidence": {
-        "kind": "wikisource-transcription",
-        "grade": "中",
-        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%88%91%E6%B3%95%E4%BF%AE%E6%AD%A3%E6%A1%88%EF%BC%88%E4%BA%94%EF%BC%89",
-        "accessed_at": "2026-09-14",
-        "snapshot": "docs/research/evidence/ws_刑法修正案（五）.html"
-      }
-    },
-    {
-      "no": "六",
-      "title": "中华人民共和国刑法修正案（六）",
-      "passed_date": "2006年6月29日第十届全国人民代表大会常务委员会第二十二次会议通过",
-      "effective": "自公布之日起施行",
-      "evidence": {
-        "kind": "wikisource-transcription",
-        "grade": "中",
-        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%88%91%E6%B3%95%E4%BF%AE%E6%AD%A3%E6%A1%88%EF%BC%88%E5%85%AD%EF%BC%89",
-        "accessed_at": "2026-09-14",
-        "snapshot": "docs/research/evidence/ws_刑法修正案（六）.html"
-      }
-    },
-    {
-      "no": "七",
-      "title": "中华人民共和国刑法修正案（七）",
-      "passed_date": "2009年2月28日第十一届全国人民代表大会常务委员会第七次会议通过",
-      "effective": "自公布之日起施行",
-      "evidence": {
-        "kind": "wikisource-transcription",
-        "grade": "中",
-        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%88%91%E6%B3%95%E4%BF%AE%E6%AD%A3%E6%A1%88%EF%BC%88%E4%B8%83%EF%BC%89",
-        "accessed_at": "2026-09-14",
-        "snapshot": "docs/research/evidence/ws_刑法修正案（七）.html"
-      }
-    },
-    {
-      "no": "八",
-      "title": "中华人民共和国刑法修正案（八）",
-      "passed_date": "2011年2月25日第十一届全国人民代表大会常务委员会第十九次会议通过",
-      "effective": "2011年5月1日",
-      "evidence": {
-        "kind": "wikisource-transcription",
-        "grade": "中",
-        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%88%91%E6%B3%95%E4%BF%AE%E6%AD%A3%E6%A1%88%EF%BC%88%E5%85%AB%EF%BC%89",
-        "accessed_at": "2026-09-14",
-        "snapshot": "docs/research/evidence/ws_刑法修正案（八）.html"
-      }
-    },
-    {
-      "no": "九",
-      "title": "中华人民共和国刑法修正案（九）",
-      "passed_date": "2015年8月29日第十二届全国人民代表大会常务委员会第十六次会议通过",
-      "effective": "2015年11月1日",
-      "evidence": {
-        "kind": "wikisource-transcription",
-        "grade": "中",
-        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%88%91%E6%B3%95%E4%BF%AE%E6%AD%A3%E6%A1%88%EF%BC%88%E4%B9%9D%EF%BC%89",
-        "accessed_at": "2026-09-14",
-        "snapshot": "docs/research/evidence/ws_刑法修正案（九）.html"
-      }
-    },
-    {
-      "no": "十",
-      "title": "中华人民共和国刑法修正案（十）",
-      "passed_date": "2017年11月4日第十二届全国人民代表大会常务委员会第三十次会议通过",
-      "effective": "自公布之日起施行",
-      "evidence": {
-        "kind": "wikisource-transcription",
-        "grade": "中",
-        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%88%91%E6%B3%95%E4%BF%AE%E6%AD%A3%E6%A1%88%EF%BC%88%E5%8D%81%EF%BC%89",
-        "accessed_at": "2026-09-14",
-        "snapshot": "docs/research/evidence/ws_刑法修正案（十）.html"
-      }
-    },
-    {
-      "no": "十一",
-      "title": "中华人民共和国刑法修正案（十一）",
-      "passed_date": "2020年12月26日第十三届全国人民代表大会常务委员会第二十四次会议通过",
-      "effective": "2021年3月1日",
-      "evidence": {
-        "kind": "wikisource-transcription",
-        "grade": "中",
-        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%88%91%E6%B3%95%E4%BF%AE%E6%AD%A3%E6%A1%88%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89",
-        "accessed_at": "2026-09-14",
-        "snapshot": "docs/research/evidence/ws_刑法修正案（十一）.html"
-      }
-    },
-    {
-      "no": "十二",
-      "title": "中华人民共和国刑法修正案（十二）",
-      "passed_date": "2023年12月29日第十四届全国人民代表大会常务委员会第七次会议通过",
-      "effective": "2024年3月1日",
-      "evidence": {
-        "kind": "wikisource-transcription",
-        "grade": "中",
-        "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%88%91%E6%B3%95%E4%BF%AE%E6%AD%A3%E6%A1%88%EF%BC%88%E5%8D%81%E4%BA%8C%EF%BC%89",
-        "accessed_at": "2026-09-14",
-        "snapshot": "docs/research/evidence/ws_刑法修正案（十二）.html"
-      }
-    }
-  ]
+ "law_id": "cl-2023",
+ "title": "中华人民共和国刑法",
+ "schema_version": 1,
+ "note": "S2-T1 第十部批量扩张法律（2026-09-14）：2023 第十二次修正后全文自维基文库渲染页入库（等级【中】）。沿革：1979 通过（委员长令第五号公布，1980-01-01 施行）、1997 全面修订（1997-10-01 施行）、十二次修正（快照头部自载）；现行文本附则（第 452 条）自载施行日 1997-10-01。条目数 505 = 452 基条 + 53 子条号条目。2020 版与 1979 原版历史全文已采集存证并登记；12 部修正案单独文本（1999-2023）已全部采集存证并登记于 amendments 数组（R55）。已知限制：切分器整数条号模型不含「之一/之二」子条号——已支持（R47）；citation_of 整数语义不变（同号先返回基条）。 R393 schema 归一：修正案 no 中文数字→整数、日期→ISO（与 R384 决定全文端点/R385 MCP 工具契约对齐；原中文全句移入 note 保留）。",
+ "versions": [
+  {
+   "version_id": "1979-enacted",
+   "label": "1979 通过",
+   "status": "已废止（1997 修订后不再适用，仅作历史对照）",
+   "promulgation_date": "1979-07-06",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "promulgation_instrument": "全国人民代表大会常务委员会委员长令第五号",
+   "effective_date": "1980-01-01",
+   "article_count": 192,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E5%88%91%E6%B3%95_(1979%E5%B9%B4)",
+    "accessed_at": "2026-09-14",
+    "snapshot": "docs/research/evidence/ws_刑法1979.html"
+   }
+  },
+  {
+   "version_id": "1997-revision",
+   "label": "1997 修订",
+   "status": "已取代（现行文本母本，仅作历史对照）",
+   "promulgation_date": "1997-03-14",
+   "promulgation_organ": "全国人民代表大会",
+   "effective_date": "1997-10-01",
+   "article_count": 452,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E5%88%91%E6%B3%95_(1997%E5%B9%B4)",
+    "accessed_at": "2026-09-14",
+    "snapshot": "docs/research/evidence/ws_刑法1997.html"
+   }
+  },
+  {
+   "version_id": "2020-amendment",
+   "label": "2020 第十一次修正",
+   "status": "已取代（2023 修正前文本，仅作历史对照）",
+   "promulgation_date": "2020-12-26",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "effective_date": "1997-10-01",
+   "article_count": 505,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E5%88%91%E6%B3%95_(2020%E5%B9%B4)",
+    "accessed_at": "2026-09-14",
+    "snapshot": "docs/research/evidence/ws_刑法2020.html"
+   }
+  },
+  {
+   "version_id": "2023-amendment",
+   "label": "2023 第十二次修正",
+   "status": "现行有效（2023修正）",
+   "promulgation_date": "2023-12-29",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "effective_date": "1997-10-01",
+   "article_count": 505,
+   "current": true,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E5%88%91%E6%B3%95_(2023%E5%B9%B4)",
+    "accessed_at": "2026-09-14",
+    "snapshot": "docs/research/evidence/ws_刑法2023.html"
+   }
+  }
+ ],
+ "pending_note": "1998-2022 各单项修正案单独文本未采集，不预填。",
+ "amendments": [
+  {
+   "no": 1,
+   "title": "中华人民共和国刑法修正案",
+   "passed_date": "1999-12-25",
+   "effective": "1999-12-25",
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E8%8F%AF%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9C%8B%E5%88%91%E6%B3%95%E4%BF%AE%E6%AD%A3%E6%A1%88",
+    "accessed_at": "2026-09-14",
+    "snapshot": "docs/research/evidence/ws_刑法修正案（一）.html"
+   },
+   "note": "原登记：1999年12月25日第九届全国人民代表大会常务委员会第十三次会议通过；公布即施行"
+  },
+  {
+   "no": 2,
+   "title": "中华人民共和国刑法修正案（二）",
+   "passed_date": "2001-08-31",
+   "effective": "2001-08-31",
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%88%91%E6%B3%95%E4%BF%AE%E6%AD%A3%E6%A1%88%EF%BC%88%E4%BA%8C%EF%BC%89",
+    "accessed_at": "2026-09-14",
+    "snapshot": "docs/research/evidence/ws_刑法修正案（二）.html"
+   },
+   "note": "原登记：2001年8月31日第九届全国人民代表大会常务委员会第二十三次会议通过；公布即施行"
+  },
+  {
+   "no": 3,
+   "title": "中华人民共和国刑法修正案（三）",
+   "passed_date": "2001-12-29",
+   "effective": "2001-12-29",
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%88%91%E6%B3%95%E4%BF%AE%E6%AD%A3%E6%A1%88%EF%BC%88%E4%B8%89%EF%BC%89",
+    "accessed_at": "2026-09-14",
+    "snapshot": "docs/research/evidence/ws_刑法修正案（三）.html"
+   },
+   "note": "原登记：2001年12月29日第九届全国人民代表大会常务委员会第二十五次会议通过；公布即施行"
+  },
+  {
+   "no": 4,
+   "title": "中华人民共和国刑法修正案（四）",
+   "passed_date": "2002-12-28",
+   "effective": "2002-12-28",
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%88%91%E6%B3%95%E4%BF%AE%E6%AD%A3%E6%A1%88%EF%BC%88%E5%9B%9B%EF%BC%89",
+    "accessed_at": "2026-09-14",
+    "snapshot": "docs/research/evidence/ws_刑法修正案（四）.html"
+   },
+   "note": "原登记：2002年12月28日第九届全国人民代表大会常务委员会第三十一次会议通过；公布即施行"
+  },
+  {
+   "no": 5,
+   "title": "中华人民共和国刑法修正案（五）",
+   "passed_date": "2005-02-28",
+   "effective": "2005-02-28",
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%88%91%E6%B3%95%E4%BF%AE%E6%AD%A3%E6%A1%88%EF%BC%88%E4%BA%94%EF%BC%89",
+    "accessed_at": "2026-09-14",
+    "snapshot": "docs/research/evidence/ws_刑法修正案（五）.html"
+   },
+   "note": "原登记：2005年2月28日第十届全国人民代表大会常务委员会第十四次会议通过；公布即施行"
+  },
+  {
+   "no": 6,
+   "title": "中华人民共和国刑法修正案（六）",
+   "passed_date": "2006-06-29",
+   "effective": "2006-06-29",
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%88%91%E6%B3%95%E4%BF%AE%E6%AD%A3%E6%A1%88%EF%BC%88%E5%85%AD%EF%BC%89",
+    "accessed_at": "2026-09-14",
+    "snapshot": "docs/research/evidence/ws_刑法修正案（六）.html"
+   },
+   "note": "原登记：2006年6月29日第十届全国人民代表大会常务委员会第二十二次会议通过；公布即施行"
+  },
+  {
+   "no": 7,
+   "title": "中华人民共和国刑法修正案（七）",
+   "passed_date": "2009-02-28",
+   "effective": "2009-02-28",
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%88%91%E6%B3%95%E4%BF%AE%E6%AD%A3%E6%A1%88%EF%BC%88%E4%B8%83%EF%BC%89",
+    "accessed_at": "2026-09-14",
+    "snapshot": "docs/research/evidence/ws_刑法修正案（七）.html"
+   },
+   "note": "原登记：2009年2月28日第十一届全国人民代表大会常务委员会第七次会议通过；公布即施行"
+  },
+  {
+   "no": 8,
+   "title": "中华人民共和国刑法修正案（八）",
+   "passed_date": "2011-02-25",
+   "effective": "2011-05-01",
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%88%91%E6%B3%95%E4%BF%AE%E6%AD%A3%E6%A1%88%EF%BC%88%E5%85%AB%EF%BC%89",
+    "accessed_at": "2026-09-14",
+    "snapshot": "docs/research/evidence/ws_刑法修正案（八）.html"
+   },
+   "note": "原登记：2011年2月25日第十一届全国人民代表大会常务委员会第十九次会议通过；"
+  },
+  {
+   "no": 9,
+   "title": "中华人民共和国刑法修正案（九）",
+   "passed_date": "2015-08-29",
+   "effective": "2015-11-01",
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%88%91%E6%B3%95%E4%BF%AE%E6%AD%A3%E6%A1%88%EF%BC%88%E4%B9%9D%EF%BC%89",
+    "accessed_at": "2026-09-14",
+    "snapshot": "docs/research/evidence/ws_刑法修正案（九）.html"
+   },
+   "note": "原登记：2015年8月29日第十二届全国人民代表大会常务委员会第十六次会议通过；"
+  },
+  {
+   "no": 10,
+   "title": "中华人民共和国刑法修正案（十）",
+   "passed_date": "2017-11-04",
+   "effective": "2017-11-04",
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%88%91%E6%B3%95%E4%BF%AE%E6%AD%A3%E6%A1%88%EF%BC%88%E5%8D%81%EF%BC%89",
+    "accessed_at": "2026-09-14",
+    "snapshot": "docs/research/evidence/ws_刑法修正案（十）.html"
+   },
+   "note": "原登记：2017年11月4日第十二届全国人民代表大会常务委员会第三十次会议通过；公布即施行"
+  },
+  {
+   "no": 11,
+   "title": "中华人民共和国刑法修正案（十一）",
+   "passed_date": "2020-12-26",
+   "effective": "2021-03-01",
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%88%91%E6%B3%95%E4%BF%AE%E6%AD%A3%E6%A1%88%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89",
+    "accessed_at": "2026-09-14",
+    "snapshot": "docs/research/evidence/ws_刑法修正案（十一）.html"
+   },
+   "note": "原登记：2020年12月26日第十三届全国人民代表大会常务委员会第二十四次会议通过；"
+  },
+  {
+   "no": 12,
+   "title": "中华人民共和国刑法修正案（十二）",
+   "passed_date": "2023-12-29",
+   "effective": "2024-03-01",
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%88%91%E6%B3%95%E4%BF%AE%E6%AD%A3%E6%A1%88%EF%BC%88%E5%8D%81%E4%BA%8C%EF%BC%89",
+    "accessed_at": "2026-09-14",
+    "snapshot": "docs/research/evidence/ws_刑法修正案（十二）.html"
+   },
+   "note": "原登记：2023年12月29日第十四届全国人民代表大会常务委员会第七次会议通过；"
+  }
+ ]
 }

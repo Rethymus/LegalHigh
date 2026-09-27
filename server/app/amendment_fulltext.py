@@ -51,7 +51,9 @@ def amendment_fulltext(law_id: str, no: int) -> dict:
     if not snap:
         raise ValueError(f"{law_id}#{no} 决定条目缺 evidence.snapshot")
     raw = _read_snapshot(snap)
-    text = _clean_decree_text(raw.decode("utf-8", errors="replace"))
+    # R393 修复：R390 重构时丢失 _clean_html_text——原始 HTML 直传 _clean_decree_text
+    # 产出 3.2 万字符含标签残渣（既有断言在原始 HTML 上也通过，测试太弱未拦住）
+    text = _clean_decree_text(_clean_html_text(raw.decode("utf-8", errors="replace")))
 
     return {
         "law_id": law_id,
