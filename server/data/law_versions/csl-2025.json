@@ -1,58 +1,59 @@
 {
-  "law_id": "csl-2025",
-  "title": "中华人民共和国网络安全法",
-  "schema_version": 1,
-  "note": "S2-T1 第五部批量扩张法律（2026-09-13）：2025 修正后全文自国家网信办官网重新公布页入库（utf-8，等级【强】）。2016 原版全文已于 2026-09-14 自人民网人大新闻频道采集存证并登记为历史版本（等级【强】）。",
-  "versions": [
-    {
-      "version_id": "2016-enacted",
-      "label": "2016 通过",
-      "status": "已取代（2025 修正前文本，仅作历史对照）",
-      "promulgation_date": "2016-11-07",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "effective_date": "2017-06-01",
-      "article_count": 79,
-      "current": false,
-      "evidence": {
-        "kind": "official-gazette-republication",
-        "grade": "强",
-        "url": "http://npc.people.com.cn/n1/2016/1124/c14576-28892612.html",
-        "accessed_at": "2026-09-14",
-        "snapshot": "docs/research/evidence/people_网络安全法2016.html"
-      }
-    },
-    {
-      "version_id": "2025-amendment",
-      "label": "2025 修正",
-      "status": "现行有效（2025修正）",
-      "promulgation_date": "2025-10-28",
-      "promulgation_organ": "全国人民代表大会常务委员会",
-      "effective_date": "2026-01-01",
-      "article_count": 81,
-      "current": true,
-      "evidence": {
-        "kind": "official-gazette-republication",
-        "grade": "强",
-        "url": "https://www.cac.gov.cn/2025-12/29/c_1768735112911946.htm",
-        "accessed_at": "2026-09-13",
-        "snapshot": "docs/research/evidence/cac_网络安全法2025.html"
-      }
-    }
-  ],
-  "pending_note": "两版全文均已采集（2016 原版 79 条 / 2025 修正 81 条）；修正决定的主席令号在两份快照中均未出现，promulgation_instrument 如实省略，待 flk 核对。",
-  "amendments": [
-    {
-      "no": "2025",
-      "title": "全国人民代表大会常务委员会关于修改《中华人民共和国网络安全法》的决定",
-      "passed_date": "2025年10月28日第十四届全国人民代表大会常务委员会第十八次会议通过",
-      "effective": "2026-01-01",
-      "evidence": {
-        "kind": "official-gazette-republication",
-        "grade": "强",
-        "url": "http://politics.people.com.cn/n1/2025/1222/c1001-40628978.html",
-        "accessed_at": "2026-09-14",
-        "snapshot": "docs/research/evidence/people_网安法修正决定2025.html"
-      }
-    }
-  ]
+ "law_id": "csl-2025",
+ "title": "中华人民共和国网络安全法",
+ "schema_version": 1,
+ "note": "S2-T1 第五部批量扩张法律（2026-09-13）：2025 修正后全文自国家网信办官网重新公布页入库（utf-8，等级【强】）。2016 原版全文已于 2026-09-14 自人民网人大新闻频道采集存证并登记为历史版本（等级【强】）。 R394 schema 归一：2025 修正决定 no 年份字符串→整数、中文日期→ISO。",
+ "versions": [
+  {
+   "version_id": "2016-enacted",
+   "label": "2016 通过",
+   "status": "已取代（2025 修正前文本，仅作历史对照）",
+   "promulgation_date": "2016-11-07",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "effective_date": "2017-06-01",
+   "article_count": 79,
+   "current": false,
+   "evidence": {
+    "kind": "official-gazette-republication",
+    "grade": "强",
+    "url": "http://npc.people.com.cn/n1/2016/1124/c14576-28892612.html",
+    "accessed_at": "2026-09-14",
+    "snapshot": "docs/research/evidence/people_网络安全法2016.html"
+   }
+  },
+  {
+   "version_id": "2025-amendment",
+   "label": "2025 修正",
+   "status": "现行有效（2025修正）",
+   "promulgation_date": "2025-10-28",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "effective_date": "2026-01-01",
+   "article_count": 81,
+   "current": true,
+   "evidence": {
+    "kind": "official-gazette-republication",
+    "grade": "强",
+    "url": "https://www.cac.gov.cn/2025-12/29/c_1768735112911946.htm",
+    "accessed_at": "2026-09-13",
+    "snapshot": "docs/research/evidence/cac_网络安全法2025.html"
+   }
+  }
+ ],
+ "pending_note": "两版全文均已采集（2016 原版 79 条 / 2025 修正 81 条）；修正决定的主席令号在两份快照中均未出现，promulgation_instrument 如实省略，待 flk 核对。",
+ "amendments": [
+  {
+   "no": 1,
+   "title": "全国人民代表大会常务委员会关于修改《中华人民共和国网络安全法》的决定",
+   "passed_date": "2025-10-28",
+   "effective": "2026-01-01",
+   "evidence": {
+    "kind": "official-gazette-republication",
+    "grade": "强",
+    "url": "http://politics.people.com.cn/n1/2025/1222/c1001-40628978.html",
+    "accessed_at": "2026-09-14",
+    "snapshot": "docs/research/evidence/people_网安法修正决定2025.html"
+   },
+   "note": " 原登记：no=\"2025\"、passed_date 含会议全句（R394 归一为整数次序+ISO，与决定全文端点/MCP 契约对齐；会议信息原文保留于此）。"
+  }
+ ]
 }
