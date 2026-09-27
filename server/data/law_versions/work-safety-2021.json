@@ -5,23 +5,6 @@
  "note": "R148（2026-09-17）安全与金融批次：经 lawtext（flk DOCX 转录）链入库。",
  "versions": [
   {
-   "version_id": "current",
-   "label": "2021 修正",
-   "status": "现行有效（2021修正）",
-   "promulgation_date": "2021-06-10",
-   "promulgation_organ": "全国人民代表大会常务委员会",
-   "effective_date": "2021-09-01",
-   "article_count": 119,
-   "current": true,
-   "evidence": {
-    "kind": "flk-docx-transcription",
-    "grade": "中",
-    "url": "https://flk.npc.gov.cn/detail?id=ff8081817a66b816017a7956b7db0ad4",
-    "accessed_at": "2026-09-17",
-    "snapshot": "docs/research/evidence/lawtext_安全生产法2021.md"
-   }
-  },
-  {
    "version_id": "2002-enacted",
    "label": "2002 原版",
    "status": "已被修订（历史文本）",
@@ -40,6 +23,24 @@
    "note": "快照头部括注自证：2002-06-29 九届人大常委会二十八次会议通过；末条附则自载自 2002-11-01 起施行。快照未载主席令号，如实省略。"
   },
   {
+   "version_id": "2009-amendment",
+   "label": "2009 修正",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "2009-08-27",
+   "promulgation_organ": "第十一届全国人民代表大会常务委员会第十次会议",
+   "effective_date": "2002-11-01",
+   "article_count": 97,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%AE%89%E5%85%A8%E7%94%9F%E4%BA%A7%E6%B3%95_(2009%E5%B9%B4)",
+    "accessed_at": "2026-09-27",
+    "snapshot": "docs/research/evidence/ws_安全生产法_2009.html"
+   },
+   "note": "快照头部括注自证：2009 大打包修正（与 amendments no.1 互证——刑责转致清单第 78 项版本层补齐）；施行日 2002-11-01 跨修正延续（末条附则同证）。"
+  },
+  {
    "version_id": "2014-amendment",
    "label": "2014 第二次修正",
    "status": "已被修订（历史文本）",
@@ -56,6 +57,23 @@
     "snapshot": "docs/research/evidence/ws_安全生产法_2014.html"
    },
    "note": "快照自证：根据 2014-08-31 十二届人大常委会十次会议决定第二次修正（97→114 条）；施行日 2002-11-01 跨修正延续（末条自证；括注并自证 2009 大打包第一次修正）。"
+  },
+  {
+   "version_id": "current",
+   "label": "2021 修正",
+   "status": "现行有效（2021修正）",
+   "promulgation_date": "2021-06-10",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "effective_date": "2021-09-01",
+   "article_count": 119,
+   "current": true,
+   "evidence": {
+    "kind": "flk-docx-transcription",
+    "grade": "中",
+    "url": "https://flk.npc.gov.cn/detail?id=ff8081817a66b816017a7956b7db0ad4",
+    "accessed_at": "2026-09-17",
+    "snapshot": "docs/research/evidence/lawtext_安全生产法2021.md"
+   }
   }
  ],
  "pending_note": "2002 通过原版与 2009/2014 修正版全文未采集。2021 修正决定施行日 2021-09-01（flk sxrq）；附则自载 2002-11-01 原版施行日跨修正沿用、对本版语义误导，两说存档（R136 先例）。R148 lawtext 链入库。 R398 对账（2026-09-27）：下述「未采集」为入库时历史口径——当前已采集 2 份历史全文（见 versions 时间线），最新状态以 versions/amendments 为准。",

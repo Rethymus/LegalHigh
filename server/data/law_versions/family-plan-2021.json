@@ -5,23 +5,6 @@
  "note": "R151（2026-09-18）民生保护批次：经 lawtext（flk DOCX 转录）链入库。",
  "versions": [
   {
-   "version_id": "current",
-   "label": "2021 修正",
-   "status": "现行有效（2021修正）",
-   "promulgation_date": "2021-08-20",
-   "promulgation_organ": "全国人民代表大会常务委员会",
-   "effective_date": "2021-08-20",
-   "article_count": 48,
-   "current": true,
-   "evidence": {
-    "kind": "flk-docx-transcription",
-    "grade": "中",
-    "url": "https://flk.npc.gov.cn/detail?id=ff8081817ba965c4017bb8921d13077a",
-    "accessed_at": "2026-09-18",
-    "snapshot": "docs/research/evidence/lawtext_人口与计划生育法2021.md"
-   }
-  },
-  {
    "version_id": "2001-enacted",
    "label": "2001 原版",
    "status": "已被修订（历史文本）",
@@ -39,6 +22,41 @@
    },
    "note": "快照头部括注自证：2001-12-29 九届人大常委会二十五次会议通过、主席令第六十三号公布、自 2002-09-01 起施行（末条附则同证）。",
    "promulgation_instrument": "中华人民共和国主席令第六十三号（2001-12-29 公布）"
+  },
+  {
+   "version_id": "2015-amendment",
+   "label": "2015 修正",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "2015-12-27",
+   "promulgation_organ": "第十二届全国人民代表大会常务委员会第十八次会议",
+   "effective_date": "2002-09-01",
+   "article_count": 47,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E4%BA%BA%E5%8F%A3%E4%B8%8E%E8%AE%A1%E5%88%92%E7%94%9F%E8%82%B2%E6%B3%95_(2015%E5%B9%B4)",
+    "accessed_at": "2026-09-27",
+    "snapshot": "docs/research/evidence/ws_人口与计划生育法_2015.html"
+   },
+   "note": "快照头部括注自证：与教育法 2015 同日同会决定修正（与 amendments no.1 互证——全面两孩）；施行日 2002-09-01 跨修正延续（末条附则同证）。"
+  },
+  {
+   "version_id": "current",
+   "label": "2021 修正",
+   "status": "现行有效（2021修正）",
+   "promulgation_date": "2021-08-20",
+   "promulgation_organ": "全国人民代表大会常务委员会",
+   "effective_date": "2021-08-20",
+   "article_count": 48,
+   "current": true,
+   "evidence": {
+    "kind": "flk-docx-transcription",
+    "grade": "中",
+    "url": "https://flk.npc.gov.cn/detail?id=ff8081817ba965c4017bb8921d13077a",
+    "accessed_at": "2026-09-18",
+    "snapshot": "docs/research/evidence/lawtext_人口与计划生育法2021.md"
+   }
   }
  ],
  "pending_note": "2001 原版与 2015 第一次修正版全文未采集（flk lsyg 载 2015-12-27 版）。2021 修正公布即施行（flk sxrq 2021-08-20），附则施行日两说并存以修正决定为准。 R398 对账（2026-09-27）：下述「未采集」为入库时历史口径——当前已采集 1 份历史全文（见 versions 时间线），最新状态以 versions/amendments 为准。",
