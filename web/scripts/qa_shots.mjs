@@ -225,6 +225,14 @@ const ROUTES = [
     { t: 'wait', ms: 700 },
     { t: 'eval', expr: `(() => { const b=document.body.innerText||''; return b.includes('1986年9月5日') && b.includes('第四十五条') ? 'pred-fulltext-ok' : 'pred-fulltext-missing' })()` },
   ] },
+  // R411：单版本法的前身区块（身份证条例→身份证法）——R390 单版本空态分支的前身路径首次获得专路由
+  { name: '45d-law-predecessor-single', path: '/laws/id-card-2011?art=1&tab=version', identity: pageHeader('《居民身份证法（2011修正）》第一条'), steps: [
+    { t: 'wait', ms: 700 },
+    { t: 'eval', expr: `(() => { const b=document.body.innerText||''; return b.includes('查看前身法全文') ? 'pred-entry-ok' : 'pred-entry-missing' })()` },
+    { t: 'eval', expr: `(() => { const btn=[...document.querySelectorAll('button')].find(x=>x.textContent.includes('前身法全文')); if(!btn) return 'no-pred-btn'; btn.click(); return 'clicked' })()` },
+    { t: 'wait', ms: 700 },
+    { t: 'eval', expr: `(() => { const b=document.body.innerText||''; return b.includes('1985年9月6日') && b.includes('主席令第二十九号') ? 'pred-fulltext-ok' : 'pred-fulltext-missing' })()` },
+  ] },
   { name: '44-quality', path: '/quality', fullPage: true, identity: pageHeader('质量透明度'), afterText: '不是法律正确率', steps: [
     { t: 'eval', expr: `(() => { const stats=[...document.querySelectorAll('.stat')]; return stats.length >= 4 ? 'quality-stats-ok' : 'quality-stats-short:'+stats.length })()` },
   ] },

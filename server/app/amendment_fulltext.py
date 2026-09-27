@@ -78,6 +78,14 @@ def _clean_decree_text(whole: str) -> str:
     m_start = re.search(r"（\d{4}年\d{1,2}月\d{1,2}日[^）]{0,80}通过[^）]{0,400}）", whole)
     start = m_start.start() if m_start else whole.find("@@H1@@")
     text = whole[start:] if start and start > 0 else whole
+    if not m_start:
+        # R411：无括注页（1988 审计条例形态）——标题行与正文首锚（章/条）之间是
+        # 语言/导航/沿革侧栏整块；仅当该间隙确有 chrome 签名时剥除，保标题行。
+        anchor = re.search(r"@@H2@@|第[一二三四五六七八九十百零]+章|第[一二三四五六七八九十百零]+条", text)
+        chrome = re.search(r"添加语言|添加链接|不转换|維基文庫|维基文库", text)
+        if anchor and chrome and chrome.start() < anchor.start():
+            first_nl = text.find("\n")
+            text = (text[:first_nl] if first_nl > 0 else "") + "\n\n" + text[anchor.start():]
     for mark in ("分类：", "本作品来自", "隐藏\n分类", "打印/导出", "导航菜单", "\n分类\n"):
         idx = text.find(mark)
         if idx > 200:

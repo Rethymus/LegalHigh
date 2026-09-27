@@ -2,7 +2,7 @@
  "law_id": "id-card-2011",
  "title": "中华人民共和国居民身份证法",
  "schema_version": 1,
- "note": "R139（2026-09-16）续批：经 lawtext（flk DOCX 转录）链入库。",
+ "note": "R139（2026-09-16）续批：经 lawtext（flk DOCX 转录）链入库。 前身关系定案（条例升法更名边界）：现行《居民身份证法》源头 2003 制定版末条自载「《中华人民共和国居民身份证条例》同时废止」——1985《居民身份证条例》（20 条，主席令第二十九号，公布即施行）为明文废止前身法，条例→法不入 versions 时间线。前身《居民身份证条例》1985 原文已存证 docs/research/evidence/ws_居民身份证条例_1985.html 供对照查阅。",
  "versions": [
   {
    "version_id": "current",
