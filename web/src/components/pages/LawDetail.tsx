@@ -386,7 +386,7 @@ export default function LawDetail() {
                 <div>
                   {versions && versions.versions.length > 1 ? (
                     <>
-                      <div className="tiny mb-12">以下为版本注册表（server/data/law_versions，快照自证）登记的版本时间线；已采集全文的历史版本可展开对照查阅（非现行文本，不进检索语料）；跨版本对比仍禁用以避免误引。</div>
+                      <div className="tiny mb-12">统一立法事件时间线（R392）：版本（改后结果）与修正决定（改了什么）按日期同轴倒序排列——蓝标=版本、青标=决定；已采集全文的历史版本/决定可展开对照（非现行文本，不进检索语料）；跨版本对比仍禁用以避免误引。</div>
                       <div className="card mb-12" style={{ padding: 14 }}>
                         <div className="tiny bold mb-8">历史版本全文检索（非现行文本，仅供对照）</div>
                         <div className="row row-wrap">
@@ -427,32 +427,38 @@ export default function LawDetail() {
                         )}
                       </div>
                       <div className="list-divided mb-12">
-                        {[...versions.versions].reverse().map((v) => (
-                          <div key={v.version_id} className="list-row" style={{ alignItems: 'flex-start' }}>
-                            <div style={{ minWidth: 0, flex: 1 }}>
-                              <div className="bold" style={{ fontSize: 13 }}>
-                                {v.label}
-                                {v.current && <span className="bdg bdg-green" style={{ marginLeft: 8 }}>现行有效</span>}
-                                {!v.current && <span className="bdg bdg-gray" style={{ marginLeft: 8 }}>历史版本</span>}
-                              </div>
-                              <div className="tiny mt-8">
-                                {v.promulgation_date} {v.promulgation_organ || ''}通过/修正
-                                {v.promulgation_instrument ? ` · ${v.promulgation_instrument}` : ''}
-                                {' · '}{v.effective_date} 施行
-                                {v.article_count != null && ` · ${v.article_count} 条`}
-                                {renumber && (() => {
-                                  const pair = renumber.pairs.find((p) => p.to_version === v.version_id)
-                                  if (!pair) return null
-                                  const changed = pair.matches.filter((m) => m.text_changed).length
-                                  const added = pair.unmatched_to.length
-                                  const removed = pair.unmatched_from.length
-                                  const parts = [
-                                    changed > 0 && `修改 ${changed} 条`,
-                                    added > 0 && `新增 ${added} 条`,
-                                    removed > 0 && `废止 ${removed} 条`,
-                                  ].filter(Boolean)
-                                  return parts.length > 0 && <span> · 较上一版：{parts.join('、')}</span>
-                                })()}
+                        {/* R392：统一立法事件时间线——版本（改后结果）与修正决定（改了什么）按日期同轴，
+                            读者看一条时间线即知「何时发生了什么」，不必在两个区块间来回拼合 */}
+                        {(() => {
+                          const events: { date: string; kind: 'version' | 'decree'; node: React.ReactNode; key: string }[] = []
+                          for (const v of versions.versions) {
+                            events.push({ date: v.promulgation_date, kind: 'version', key: 'v-' + v.version_id, node: (
+                              <div className="list-row" style={{ alignItems: 'flex-start' }}>
+                                <div style={{ minWidth: 0, flex: 1 }}>
+                                  <div className="bold" style={{ fontSize: 13 }}>
+                                    <span className="bdg bdg-blue" style={{ marginRight: 8 }}>版本</span>
+                                    {v.label}
+                                    {v.current && <span className="bdg bdg-green" style={{ marginLeft: 8 }}>现行有效</span>}
+                                    {!v.current && <span className="bdg bdg-gray" style={{ marginLeft: 8 }}>历史版本</span>}
+                                  </div>
+                                  <div className="tiny mt-8">
+                                    {v.promulgation_date} {v.promulgation_organ || ''}通过/修正
+                                    {v.promulgation_instrument ? ` · ${v.promulgation_instrument}` : ''}
+                                    {' · '}{v.effective_date} 施行
+                                    {v.article_count != null && ` · ${v.article_count} 条`}
+                                    {renumber && (() => {
+                                      const pair = renumber.pairs.find((p) => p.to_version === v.version_id)
+                                      if (!pair) return null
+                                      const changed = pair.matches.filter((m) => m.text_changed).length
+                                      const added = pair.unmatched_to.length
+                                      const removed = pair.unmatched_from.length
+                                      const parts = [
+                                        changed > 0 && `修改 ${changed} 条`,
+                                        added > 0 && `新增 ${added} 条`,
+                                        removed > 0 && `废止 ${removed} 条`,
+                                      ].filter(Boolean)
+                                      return parts.length > 0 && <span> · 较上一版：{parts.join('、')}</span>
+                                    })()}
                               </div>
                               {v.has_fulltext && (
                                 <button className="btn btn-secondary btn-sm mt-8" onClick={() => setFtVid(ftVid === v.version_id ? null : v.version_id)}>
@@ -477,19 +483,14 @@ export default function LawDetail() {
                               )}
                             </div>
                           </div>
-                        ))}
-                      </div>
-                      {/* 修正决定（R381）：版本页记录「改后结果」，决定记录「改了什么」——双层证据 */}
-                      {versions.amendments && versions.amendments.length > 0 && (
-                        <div className="card mb-12" style={{ padding: 14 }}>
-                          <div className="tiny bold mb-8">修正决定（{versions.amendments.length} 件）——每次修法「改了什么」的原始决定文本</div>
-                          <div className="list-divided">
-                            {versions.amendments.map((a) => (
-                              <div key={a.no} className="lrow" style={{ alignItems: 'flex-start', flexDirection: 'column' }}>
+                            ) })
+                          }                          for (const a of versions.amendments ?? []) {
+                            events.push({ date: a.passed_date, kind: 'decree', key: 'a-' + a.no, node: (
+                              <div className="lrow" style={{ alignItems: 'flex-start', flexDirection: 'column' }}>
                                 <div className="row" style={{ alignSelf: 'stretch', alignItems: 'flex-start' }}>
-                                  <span className="bdg bdg-teal">第{a.no}次</span>
+                                  <span className="bdg bdg-teal">决定</span>
                                   <div style={{ flex: 1, minWidth: 0 }}>
-                                    <b style={{ fontSize: 12.5 }}>{a.title}</b>
+                                    <b style={{ fontSize: 12.5 }}>第{a.no}次修正 · {a.title}</b>
                                     <div className="tiny" style={{ lineHeight: 1.8 }}>
                                       {a.passed_date} 通过 · {a.effective} 施行
                                       {a.evidence?.grade && ` · 证据等级【${a.evidence.grade}】`}
@@ -517,10 +518,12 @@ export default function LawDetail() {
                                   )
                                 )}
                               </div>
-                            ))}
-                          </div>
-                        </div>
-                      )}
+                            ) })
+                          }
+                          events.sort((x, y) => (x.date < y.date ? 1 : x.date > y.date ? -1 : 0))
+                          return events.map((e) => <div key={e.key}>{e.node}</div>)
+                        })()}
+                      </div>
                       {versions.pending_note && <div className="tiny muted">{versions.pending_note}</div>}
                     </>
                   ) : (

@@ -209,7 +209,7 @@ const ROUTES = [
   { name: '45-law-versions', path: '/laws/cl-2023?art=287之一', identity: pageHeader('《刑法（2023修正）》第二百八十七条之一'), steps: [
     { t: 'eval', expr: `(() => { const btn=[...document.querySelectorAll('button')].find(x=>x.textContent.includes('版本对比')); if(!btn) return 'no-version-tab'; btn.click(); return 'clicked' })()` },
     { t: 'wait', ms: 400 },
-    { t: 'eval', expr: `(() => { const b=document.body.innerText||''; return b.includes('版本注册表') && b.includes('2020 第十一次修正') && b.includes('2023 第十二次修正') && b.includes('现行有效') ? 'versions-ok' : 'versions-missing' })()` },
+    { t: 'eval', expr: `(() => { const b=document.body.innerText||''; return b.includes('2020 第十一次修正') && b.includes('2023 第十二次修正') && b.includes('现行有效') && b.includes('修正决定') ? 'versions-ok' : 'versions-missing' })()` },
   ] },
   { name: '45b-law-versions-single', path: '/laws/pipl-2021?art=26', identity: pageHeader('《个人信息保护法》第二十六条'), steps: [
     { t: 'eval', expr: `(() => { const btn=[...document.querySelectorAll('button')].find(x=>x.textContent.includes('版本对比')); if(!btn) return 'no-version-tab'; btn.click(); return 'clicked' })()` },
