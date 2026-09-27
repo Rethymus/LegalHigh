@@ -26,6 +26,7 @@ const ROUTES = [
   { name: 'law-detail', path: '/laws/civl-2020?art=25', identity: { selector: '.ph-t', text: '《民法典》第二十五条' } },
   { name: 'law-detail-null-chapter', path: '/laws/blood-donation-1998?art=1', identity: { selector: '.ph-t', text: '《献血法》第一条' } },
   { name: 'laws-browse', path: '/laws', identity: { selector: '.ph-t', text: '法规条文' } },
+  { name: 'law-versions-pred', path: '/laws/psm-2025?art=1&tab=version', identity: { selector: '.ph-t', text: '《治安管理处罚法（2025修订）》第一条' } },
   { name: 'case-search', path: '/cases', identity: { selector: '.ph-t', text: '案例检索' } },
   { name: 'case-detail', path: '/cases/guidance-24', identity: { selector: '.case-t', text: '荣宝英诉王阳' } },
   { name: 'case-detail-migrated', path: '/cases/guidance-01', identity: { selector: '.case-t', text: '上海中原物业' } },

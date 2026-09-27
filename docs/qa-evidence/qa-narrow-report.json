@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-27T10:58:41.967Z",
+  "generatedAt": "2026-09-27T11:57:06.159Z",
   "viewport": "390x844",
   "routes": [
     {
@@ -63,6 +63,17 @@
     {
       "name": "law-detail-null-chapter",
       "path": "/laws/blood-donation-1998?art=1",
+      "violations": [],
+      "viewportW": 390,
+      "overflowX": 0,
+      "culprit": null,
+      "headerActions": [
+        "更多法条操作"
+      ]
+    },
+    {
+      "name": "law-versions-pred",
+      "path": "/laws/psm-2025?art=1&tab=version",
       "violations": [],
       "viewportW": 390,
       "overflowX": 0,

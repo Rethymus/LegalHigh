@@ -216,6 +216,15 @@ const ROUTES = [
     { t: 'wait', ms: 400 },
     { t: 'eval', expr: `(() => { const b=document.body.innerText||''; return b.includes('暂无已采集历史版本') && !b.includes('待历史版本库建立') ? 'single-version-ok' : 'single-version-stale' })()` },
   ] },
+  // R410：多版本法的前身区块（治安条例→治安法）——时间线（同法沿革）与前身（更名取代）同屏两层证据
+  { name: '45c-law-versions-predecessor', path: '/laws/psm-2025?art=1&tab=version', identity: pageHeader('《治安管理处罚法（2025修订）》第一条'), steps: [
+    // 版本注册表异步晚于页头（identity 只等页头）——先等时间线与前身区块挂载再断言
+    { t: 'wait', ms: 700 },
+    { t: 'eval', expr: `(() => { const b=document.body.innerText||''; return b.includes('查看前身法全文') && b.includes('2005') ? 'pred-entry-ok' : 'pred-entry-missing' })()` },
+    { t: 'eval', expr: `(() => { const btn=[...document.querySelectorAll('button')].find(x=>x.textContent.includes('前身法全文')); if(!btn) return 'no-pred-btn'; btn.click(); return 'clicked' })()` },
+    { t: 'wait', ms: 700 },
+    { t: 'eval', expr: `(() => { const b=document.body.innerText||''; return b.includes('1986年9月5日') && b.includes('第四十五条') ? 'pred-fulltext-ok' : 'pred-fulltext-missing' })()` },
+  ] },
   { name: '44-quality', path: '/quality', fullPage: true, identity: pageHeader('质量透明度'), afterText: '不是法律正确率', steps: [
     { t: 'eval', expr: `(() => { const stats=[...document.querySelectorAll('.stat')]; return stats.length >= 4 ? 'quality-stats-ok' : 'quality-stats-short:'+stats.length })()` },
   ] },

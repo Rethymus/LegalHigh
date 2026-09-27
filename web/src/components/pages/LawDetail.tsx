@@ -525,6 +525,9 @@ export default function LawDetail() {
                         })()}
                       </div>
                       {versions.pending_note && <div className="tiny muted">{versions.pending_note}</div>}
+                      {/* R410：多版本法同样可能有前身关系（食品卫生法→食品安全法/治安条例→治安法）——
+                          时间线讲「同法沿革」，前身区块讲「本法取代了谁」，两层证据并列 */}
+                      {versions.note?.includes('前身关系定案') && <PredSection lawId={lawId ?? ''} />}
                     </>
                   ) : (
                     <>

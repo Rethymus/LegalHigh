@@ -606,6 +606,19 @@
     "title": "LegalHigh · 法律智能知识库"
   },
   {
+    "name": "45c-law-versions-predecessor",
+    "path": "/laws/psm-2025?art=1&tab=version",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "step1": "pred-entry-ok",
+    "step2": "clicked",
+    "step3": "pred-fulltext-ok",
+    "finalUrl": "http://localhost:5173/laws/psm-2025?art=1&tab=version",
+    "title": "LegalHigh · 法律智能知识库"
+  },
+  {
     "name": "44-quality",
     "path": "/quality",
     "consoleErrors": [],

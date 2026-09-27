@@ -30,6 +30,11 @@
     "obscuredFocus": []
   },
   {
+    "route": "law-versions-pred",
+    "smallTargets": [],
+    "obscuredFocus": []
+  },
+  {
     "route": "case-search",
     "smallTargets": [],
     "obscuredFocus": []

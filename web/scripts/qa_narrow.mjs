@@ -29,6 +29,7 @@ const ROUTES = [
   { name: 'laws-browse', path: '/laws', identity: { selector: '.ph-t' } },
   { name: 'law-detail', path: '/laws/civl-2020?art=25', identity: { selector: '.ph-t' } },
   { name: 'law-detail-null-chapter', path: '/laws/blood-donation-1998?art=1', identity: { selector: '.ph-t' } },
+  { name: 'law-versions-pred', path: '/laws/psm-2025?art=1&tab=version', identity: { selector: '.ph-t' } },
   { name: 'case-search', path: '/cases', identity: { selector: '.ph-t' } },
   { name: 'case-detail', path: '/cases/guidance-24', identity: { selector: '.case-t' } },
   { name: 'case-detail-migrated', path: '/cases/guidance-01', identity: { selector: '.case-t' } },
