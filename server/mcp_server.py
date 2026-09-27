@@ -142,6 +142,35 @@ def tool_get_xrefs(law_id: str, article: str = "") -> dict:
     }
 
 
+def tool_get_predecessor(law_id: str) -> dict:
+    """获取某现行法前身法全文（R391）：更名边界法（新法明文废止旧法）的前法文本。
+
+    仅当注册表登记前身关系（医师法→执业医师法 1998、学位法→学位条例 1980）时有数据；
+    前身法不入版本时间线（非同法版本），仅供沿革对照。数据源：注册表 note + 证据快照。
+    """
+    from app import predecessor_fulltext
+
+    try:
+        d = predecessor_fulltext.predecessor_fulltext(law_id)
+    except FileNotFoundError:
+        return {"law_id": law_id, "error": "该法无版本注册表", "disclaimer": DISCLAIMER}
+    except KeyError as e:
+        return {"law_id": law_id, "error": str(e).strip("\"'"),
+                "note": "该法无前身法登记（普通沿革法/首制法均无前身——仅更名边界法有）",
+                "disclaimer": DISCLAIMER}
+    except ValueError as e:
+        return {"law_id": law_id, "error": f"前身法全文不可用：{e}", "disclaimer": DISCLAIMER}
+    return {
+        "law_id": law_id,
+        "title": d["title"],
+        "relation": d["relation"],
+        "text": d["text"],
+        "scope_note": d["scope_note"],
+        "snapshot": d["snapshot"],
+        "disclaimer": DISCLAIMER,
+    }
+
+
 def tool_get_amendments(law_id: str, no: int = 0) -> dict:
     """获取某法的修正决定清单与决定全文（R385）。
 
@@ -288,6 +317,22 @@ TOOLS = [
         },
     },
     {
+        "name": "get_predecessor",
+        "description": (
+            "获取某现行法的前身法全文（更名边界：现行法明文废止的前法，非同法历史版本）。"
+            "如 医师法(physicians-2021)→1998执业医师法、学位法(academic-degree-2024)→1980学位条例。"
+            "仅更名边界法有前身登记，普通沿革法返回无前身说明。数据源：版本注册表+证据快照（R390/R391）。"
+            "输出为立法沿革史料，不构成法律意见。"
+        ),
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "law_id": {"type": "string", "description": "现行法律 ID（如 physicians-2021）"},
+            },
+            "required": ["law_id"],
+        },
+    },
+    {
         "name": "get_amendments",
         "description": (
             "获取某法的修正决定清单（次序/标题/通过与施行日期）与决定快照全文。"
@@ -340,6 +385,8 @@ def dispatch(name: str, args: dict):
         return tool_get_xrefs(args.get("law_id", ""), args.get("article", ""))
     if name == "get_amendments":
         return tool_get_amendments(args.get("law_id", ""), args.get("no", 0))
+    if name == "get_predecessor":
+        return tool_get_predecessor(args.get("law_id", ""))
     if name == "search_history":
         return tool_search_history(
             args.get("query", ""), args.get("top_k", 5),

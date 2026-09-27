@@ -55,7 +55,7 @@ const index = `# LegalHigh · 法律智能知识库
 
 ## MCP Server（AI 助手程序化接口）
 
-七工具（stdio + HTTP 双传输）：search_articles / get_article / list_laws / search_cases / search_history / get_xrefs（双向交叉引用）/ get_amendments（修正决定清单与全文）。只暴露检索无生成型工具，输出附官方来源 URL 与「不构成法律意见」声明。
+八工具（stdio + HTTP 双传输）：search_articles / get_article / list_laws / search_cases / search_history / get_xrefs（双向交叉引用）/ get_amendments（修正决定清单与全文）/ get_predecessor（前身法全文）。只暴露检索无生成型工具，输出附官方来源 URL 与「不构成法律意见」声明。
 
 ## 全文版
 

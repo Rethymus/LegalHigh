@@ -42,11 +42,28 @@ def test_tools_list_red_line_audit():
     ])
     tools = [m for m in out if m.get("id") == 2][0]["result"]["tools"]
     names = sorted(t["name"] for t in tools)
-    assert names == ["get_amendments", "get_article", "get_xrefs", "list_laws",
+    assert names == ["get_amendments", "get_article", "get_predecessor", "get_xrefs", "list_laws",
                      "search_articles", "search_cases", "search_history"], names
     # 每个工具描述都带「不构成法律意见」声明
     for t in tools:
         assert "不构成法律意见" in t["description"], t["name"]
+
+
+def test_tools_call_get_predecessor():
+    """get_predecessor（R391）：医师法前身 1998 执业医师法全文 + 普通法无前身说明。"""
+    out = _roundtrip([
+        {"jsonrpc": "2.0", "id": 1, "method": "initialize",
+         "params": {"protocolVersion": "2024-11-05"}},
+        {"jsonrpc": "2.0", "id": 2, "method": "tools/call",
+         "params": {"name": "get_predecessor", "arguments": {"law_id": "physicians-2021"}}},
+        {"jsonrpc": "2.0", "id": 3, "method": "tools/call",
+         "params": {"name": "get_predecessor", "arguments": {"law_id": "civl-2020"}}},
+    ])
+    by_id = {m.get("id"): m for m in out}
+    pred = by_id[2]["result"]["content"][0]["text"]
+    assert "执业医师" in pred and "前身关系定案" in pred and "1998年6月26日" in pred
+    none = by_id[3]["result"]["content"][0]["text"]
+    assert "无前身法登记" in none
 
 
 def test_tools_call_get_amendments():
