@@ -51,33 +51,7 @@ def amendment_fulltext(law_id: str, no: int) -> dict:
     if not snap:
         raise ValueError(f"{law_id}#{no} 决定条目缺 evidence.snapshot")
     raw = _read_snapshot(snap)
-
-    from build_corpus import clean_html_to_text  # 延迟导入（避免环）
-
-    whole = clean_html_to_text(raw.decode("utf-8", errors="replace"))
-    # 正文定位：括注「（YYYY年M月D日…通过）」是决定正文起点（导航区不含该形态）；
-    # 找不到则退回第一个 @@H1@@ 后内容（fail-open 但仍滤噪）。
-    m_start = re.search(r"（\d{4}年\d{1,2}月\d{1,2}日[^）]{0,80}通过[^）]{0,400}）", whole)
-    start = m_start.start() if m_start else whole.find("@@H1@@")
-    text = whole[start:] if start and start > 0 else whole
-    for mark in ("分类：", "本作品来自", "隐藏\n分类", "打印/导出", "导航菜单", "\n分类\n"):
-        idx = text.find(mark)
-        if idx > 200:
-            text = text[:idx]
-            break
-    for pat in _NOISE_PATTERNS:
-        text = pat.sub("", text)
-    # 二次截尾：正文后维基工具行（编辑链接/查看历史/取自 URL/公有领域版权模板）
-    tail = re.search(
-        r"\n编辑链接\n|\n查看历史\n|\n取自[“\"]https?://|\n\u4e0d\u8f6c\u6362\n"
-        r"|\n本作品来自中华人民共和国|\n依据《中华人民共和国著作权法》|\n本作品不适用于|\n本模板所指的决定包括|\nPublic domain",
-        text,
-    )
-    if tail and tail.start() > 200:
-        text = text[:tail.start()]
-    # 压掉连续空行/制表符噪声，保留分段
-    text = re.sub(r"[ \t]+\n", "\n", text)
-    text = re.sub(r"\n{3,}", "\n\n", text).strip()
+    text = _clean_decree_text(raw.decode("utf-8", errors="replace"))
 
     return {
         "law_id": law_id,
@@ -89,4 +63,34 @@ def amendment_fulltext(law_id: str, no: int) -> dict:
         "scope_note": "修正决定快照原文（维基文库转录清洗后全文）；「改了什么」的一手文本，与版本页「改后结果」对照阅读。",
         "source": {f: ev.get(f) for f in ("kind", "grade", "url", "accessed_at", "snapshot")},
     }
+
+
+def _clean_html_text(raw: str) -> str:
+    """HTML→文本（build_corpus 清洗管线包装，供前身法等复用）。"""
+    from build_corpus import clean_html_to_text  # 延迟导入（避免环）
+    return clean_html_to_text(raw)
+
+
+def _clean_decree_text(whole: str) -> str:
+    """决定/法律快照的正文定位与滤噪（R390 抽出供前身法复用）。"""
+    m_start = re.search(r"（\d{4}年\d{1,2}月\d{1,2}日[^）]{0,80}通过[^）]{0,400}）", whole)
+    start = m_start.start() if m_start else whole.find("@@H1@@")
+    text = whole[start:] if start and start > 0 else whole
+    for mark in ("分类：", "本作品来自", "隐藏\n分类", "打印/导出", "导航菜单", "\n分类\n"):
+        idx = text.find(mark)
+        if idx > 200:
+            text = text[:idx]
+            break
+    for pat in _NOISE_PATTERNS:
+        text = pat.sub("", text)
+    tail = re.search(
+        r"\n编辑链接\n|\n查看历史\n|\n取自[“\"]https?://|\n\u4e0d\u8f6c\u6362\n"
+        r"|\n本作品来自中华人民共和国|\n依据《中华人民共和国著作权法》|\n本作品不适用于|\n本模板所指的决定包括|\nPublic domain",
+        text,
+    )
+    if tail and tail.start() > 200:
+        text = text[:tail.start()]
+    text = re.sub(r"[ \t]+\n", "\n", text)
+    text = re.sub(r"\n{3,}", "\n\n", text).strip()
+    return text
 

@@ -297,6 +297,23 @@ def law_amendment_fulltext(law_id: str, no: int):
         raise HTTPException(500, str(e))
 
 
+@app.get("/api/laws/{law_id}/predecessor/fulltext")
+def law_predecessor_fulltext(law_id: str):
+    """前身法全文查阅（R390）：现行法明文废止的前法文本（更名边界，不入版本时间线）。
+
+    只读、fail-closed：law 不在语料/无前身登记 → 404；schema 问题 → 500。
+    """
+    if law_id not in get_corpus().laws:
+        raise HTTPException(404, "law not found")
+    try:
+        from . import predecessor_fulltext as predecessor_fulltext_mod
+        return predecessor_fulltext_mod.predecessor_fulltext(law_id)
+    except KeyError as e:
+        raise HTTPException(404, str(e))
+    except (ValueError, FileNotFoundError) as e:
+        raise HTTPException(500, str(e))
+
+
 @app.get("/api/laws/{law_id}/renumber-map")
 def law_renumber_map(law_id: str):
     """跨版本条号重编号映射（known-gaps #1，R170→R180 语义对齐 versions 端点）：

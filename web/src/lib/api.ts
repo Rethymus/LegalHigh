@@ -454,6 +454,11 @@ export const api = {
     req<{ law_id: string; no: number; title: string; passed_date: string; effective: string; text: string; scope_note: string; source: { kind: string; grade?: string; url: string; accessed_at?: string; snapshot: string } }>(
       `/laws/${encodeURIComponent(lawId)}/amendments/${no}/fulltext`),
 
+  // 前身法全文（R390）：现行法明文废止的前法文本（更名边界，404=无前身登记）
+  predecessorFulltext: (lawId: string) =>
+    req<{ law_id: string; title: string; relation: string; snapshot: string; text: string; scope_note: string; source: { snapshot: string; kind: string } }>(
+      `/laws/${encodeURIComponent(lawId)}/predecessor/fulltext`),
+
   // 跨版本条号重编号映射（known-gaps #1）：difflib 确定性对齐（公开只读；少两个版本 404）
   renumberMap: (lawId: string) =>
     req<RenumberMap>(`/laws/${encodeURIComponent(lawId)}/renumber-map`),

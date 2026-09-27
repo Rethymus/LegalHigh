@@ -20,6 +20,40 @@ const TABS = [
   { key: 'version', label: '版本对比' },
 ]
 
+/* 前身法全文区块（R390）：更名边界法专用——展开加载前身法清洗全文。
+   note 含「前身关系定案」才渲染入口（登记册驱动，无登记不显示死按钮）。 */
+function PredSection({ lawId }: { lawId: string }) {
+  const [open, setOpen] = useState(false)
+  const [data, setData] = useState<Awaited<ReturnType<typeof api.predecessorFulltext>> | null>(null)
+  useEffect(() => {
+    if (!open || data) return
+    let alive = true
+    api.predecessorFulltext(lawId).then(
+      (d) => alive && setData(d),
+      () => alive && setData(null),
+    )
+    return () => { alive = false }
+  }, [open, lawId, data])
+  return (
+    <div className="mt-8">
+      <button className="btn btn-ghost btn-sm" onClick={() => setOpen(v => !v)}>
+        {open ? '收起前身法全文' : '查看前身法全文（现行法明文废止的前法）'}
+      </button>
+      {open && (
+        data ? (
+          <div className="card mt-8" style={{ padding: 14 }}>
+            <div className="tiny mb-8">{data.relation}</div>
+            <div className="banner banner-warn mb-12"><Icon name="alert" size={15} /><span className="banner-tx">{data.scope_note}</span></div>
+            <pre style={{ whiteSpace: 'pre-wrap', fontFamily: 'inherit', fontSize: 12.5, lineHeight: 2, margin: 0, color: 'var(--tx)' }}>{data.text}</pre>
+          </div>
+        ) : (
+          <div className="tiny muted mt-8">前身法全文加载中…（若长期为空说明快照暂不可用）</div>
+        )
+      )}
+    </div>
+  )
+}
+
 export default function LawDetail() {
   const { audience } = useOutletContext<AppOutletContext>()
   const { lawId } = useParams()
@@ -500,6 +534,10 @@ export default function LawDetail() {
                       <div className="banner banner-info"><Icon name="info" size={15} /><span className="banner-tx">{versions ? '该法版本注册表仅登记现行有效版本，尚无已采集的历史版本全文（历史版本按证据快照管线滚动采集入册）。' : '版本注册表信息暂不可用。'}引用不变量：法条引用必须附版本/生效/效力字段；本页禁用跨版本对比以避免误引。</span></div>
                       {/* R387：单版本法的定性说明消费——终态（从未修正）/前身（新法取代）/待采，登记册定性直达读者 */}
                       {versions?.note && <div className="tiny mt-8" style={{ lineHeight: 1.9, color: 'var(--tx-2)' }}>{versions.note.replace(/\s*R\d+ /g, ' ').trim()}</div>}
+                      {/* R390：前身法全文展开（仅更名边界法有——医师法/学位法等明文废止的前法） */}
+                      {versions?.note?.includes('前身关系定案') && (
+                        <PredSection lawId={lawId ?? ''} />
+                      )}
                     </>
                   )}
                 </div>
