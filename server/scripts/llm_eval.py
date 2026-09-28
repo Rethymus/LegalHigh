@@ -61,7 +61,7 @@ def main() -> int:
                "sample_size": 0, "citation_coverage": 0, "redline_hits": [], "premise_hit": 0, "premise_total": len(premise_probes),
                "cases": []}
 
-    def ask(q: str, allowed, retries: int = 3):
+    def ask(q: str, allowed, retries: int = 5):
         # R418：免费档 RPM 极低（R321 诊断）——评测 harness 加限流退避（仅工具侧节流，
         # 生产 chat 路径不受影响）；429 依 45s 退避重试，与 e2e C1 同款。
         import time as _t
@@ -75,10 +75,17 @@ def main() -> int:
                 _t.sleep(15)  # 主动节流：免费档连续调用即 429
                 return out
             except RuntimeError as e:
-                if "RateLimit" not in str(e) or attempt == retries:
+                if attempt == retries:
                     raise
-                print(f"  [429 退避 {attempt + 1}/{retries}] 45s…")
-                _t.sleep(45)
+                if "RateLimit" in str(e):
+                    print(f"  [429 退避 {attempt + 1}/{retries}] 45s…")
+                    _t.sleep(45)
+                elif "APITimeout" in str(e):
+                    # R420：大证据上下文 + 推理模型偶发超时——短退避重试（同题重算）
+                    print(f"  [超时重试 {attempt + 1}/{retries}] 10s…")
+                    _t.sleep(10)
+                else:
+                    raise
         raise RuntimeError("unreachable")
 
     # ① 金标 50 题：引用绑定 + 红线
