@@ -57,3 +57,13 @@ def test_prompt_context_separates_sources_and_discloses_gaps():
         commentaries.analysis_context("pipl-2021", 1)["citation"]
     ])
     assert "当前登记册没有" in sparse
+
+
+def test_prompt_contains_citation_discipline():
+    """R414 提示-门对齐钉：claim_support 门要求每分句内联《法名》第X条引用——
+    系统提示必须告知模型该格式（含示例），否则模型无从合规、严门近乎扣留一切。"""
+    from app import commentaries
+    ctx, _ = commentaries.prompt_context([{"law_id": "civl-2020", "article_no": 188}])
+    assert "引用纪律（硬性）" in ctx
+    assert "《中华人民共和国民法典》第一百八十八条" in ctx  # 格式示例与门 CITE_RE 同构
+    assert "建议" in ctx  # 无引用句的咨询性出口
