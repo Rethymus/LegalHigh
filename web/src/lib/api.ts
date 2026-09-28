@@ -534,6 +534,7 @@ export const api = {
   aiChat: (p: { provider_id: string; model: string; messages: { role: string; content: string }[]; api_key?: string; base_url_override?: string; allowed_refs?: { law_id?: string; law_title?: string; article_no: number }[]; temperature?: number }) =>
     req<{
       provider_id: string; provider_name: string; model: string; text: string
+      claim_retry?: boolean
       gates: {
         redline: { pass: boolean; hits: string[] }
         citations: { pass: boolean; violations: string[]; note?: string }

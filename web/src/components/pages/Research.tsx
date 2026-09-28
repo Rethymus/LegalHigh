@@ -272,7 +272,7 @@ function ConclusionDraft({ rid, question, cards, references }: {
       claim_support: { pass: boolean; verification_scope: string; violations: string[] }
     }
     evidence: { professional_sources: number; official_interpretations: number; evidence_coverage: { score: number }; calibrated_accuracy: { value: number | null; reason: string } }[]
-    blocked: boolean; model: string
+    blocked: boolean; model: string; claim_retry?: boolean
     privacy_notice?: { possible_personal_info: number; kinds: string[]; notice: string }
   } | null>(null)
   const [aiBusy, setAiBusy] = useState(false)
@@ -304,7 +304,7 @@ function ConclusionDraft({ rid, question, cards, references }: {
           { role: 'user', content: `研究问题：${question}\n\n可用条文依据（仅限这些）：\n${ctx}\n\n请在 250 字内做来源约束的语言整理，不要形成案件结论。` },
         ],
       })
-      setAiDraft({ text: r.text, gates: r.gates, evidence: r.evidence_context, blocked: r.blocked, model: `${r.provider_name}/${r.model}`, privacy_notice: (r as { privacy_notice?: { possible_personal_info: number; kinds: string[]; notice: string } }).privacy_notice })
+      setAiDraft({ text: r.text, gates: r.gates, evidence: r.evidence_context, blocked: r.blocked, claim_retry: r.claim_retry, model: `${r.provider_name}/${r.model}`, privacy_notice: (r as { privacy_notice?: { possible_personal_info: number; kinds: string[]; notice: string } }).privacy_notice })
     } catch (e) {
       setAiErr(e instanceof ApiError ? e.message : String(e))
     } finally { setAiBusy(false); setAiKey('') }
@@ -356,6 +356,7 @@ function ConclusionDraft({ rid, question, cards, references }: {
                 {aiDraft.blocked
                   ? <span className="bdg bdg-red">已拦截：不合规表述</span>
                   : <span className="bdg bdg-green">基础 gate 通过 · 仍须人工核验</span>}
+                {aiDraft.claim_retry && <span className="bdg bdg-gray">已按引用纪律自动重写一次</span>}
               </div>
               {aiDraft.blocked
                 ? <div className="ai-block-b">模型原始输出已被安全门截断，不在界面展示，也不会写入人工文稿。</div>
@@ -373,7 +374,7 @@ function ConclusionDraft({ rid, question, cards, references }: {
               {!aiDraft.gates.claim_support.pass && (
                 <div className="banner banner-warn mt-8">
                   <Icon name="alert" size={14} />
-                  <span className="banner-tx">逐句证据门未通过：{aiDraft.gates.claim_support.violations.join('、')}。这是词面支持检查，不是语义正确性证明；全文已扣留。</span>
+                  <span className="banner-tx">逐句证据门未通过{aiDraft.claim_retry ? '（已自动重写一次仍未达标）' : ''}：{aiDraft.gates.claim_support.violations.join('、')}。这是词面支持检查，不是语义正确性证明；全文已扣留。</span>
                 </div>
               )}
               {aiDraft.evidence.length > 0 && (
