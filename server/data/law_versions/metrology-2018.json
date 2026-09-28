@@ -60,6 +60,24 @@
    "note": "快照头部括注自证：海洋七部打包第二次修正（与 R365 amendments no.2 互证）；施行日跨修正延续。"
   },
   {
+   "version_id": "2015-amendment",
+   "label": "2015 修正",
+   "status": "已被修订（历史文本）",
+   "promulgation_date": "2015-04-24",
+   "promulgation_organ": "第十二届全国人民代表大会常务委员会第十四次会议",
+   "effective_date": "1986-07-01",
+   "article_count": 34,
+   "current": false,
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E8%AE%A1%E9%87%8F%E6%B3%95_(2015%E5%B9%B4)",
+    "accessed_at": "2026-09-28",
+    "snapshot": "docs/research/evidence/ws_计量法_2015.html"
+   },
+   "note": "快照括注自证第三次修正（2015-04-24 计量五部打包决定）——与 amendments no.3 互证；2017 版页括注追认本版沿革；施行日 1986-07-01 跨全部修正延续。R416 正向普查闭合：R413 新登记决定的反向版本页缺口（刑法/宪法修正案按 R345 定案设计性排除）。"
+  },
+  {
    "version_id": "2017-amendment",
    "label": "2017 修正",
    "status": "已被修订（历史文本）",
