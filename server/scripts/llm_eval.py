@@ -61,13 +61,25 @@ def main() -> int:
                "sample_size": 0, "citation_coverage": 0, "redline_hits": [], "premise_hit": 0, "premise_total": len(premise_probes),
                "cases": []}
 
-    def ask(q: str, allowed):
-        out = ai_governor.chat(
-            args.provider, args.model,
-            [{"role": "system", "content": "你是中文法律信息助手。只依据给定条文回答，引用时使用《法名》第X条格式。"},
-             {"role": "user", "content": q}],
-            api_key=os.environ[key_env], base_url_override=args.base_url, allowed_refs=allowed, temperature=0.1)
-        return out
+    def ask(q: str, allowed, retries: int = 3):
+        # R418：免费档 RPM 极低（R321 诊断）——评测 harness 加限流退避（仅工具侧节流，
+        # 生产 chat 路径不受影响）；429 依 45s 退避重试，与 e2e C1 同款。
+        import time as _t
+        for attempt in range(retries + 1):
+            try:
+                out = ai_governor.chat(
+                    args.provider, args.model,
+                    [{"role": "system", "content": "你是中文法律信息助手。只依据给定条文回答，引用时使用《法名》第X条格式。"},
+                     {"role": "user", "content": q}],
+                    api_key=os.environ[key_env], base_url_override=args.base_url, allowed_refs=allowed, temperature=0.1)
+                _t.sleep(15)  # 主动节流：免费档连续调用即 429
+                return out
+            except RuntimeError as e:
+                if "RateLimit" not in str(e) or attempt == retries:
+                    raise
+                print(f"  [429 退避 {attempt + 1}/{retries}] 45s…")
+                _t.sleep(45)
+        raise RuntimeError("unreachable")
 
     # ① 金标 50 题：引用绑定 + 红线
     # allowed_refs 与生产同形态：检索证据池（top-8）∪ 金标答案，而非仅金标单条——
