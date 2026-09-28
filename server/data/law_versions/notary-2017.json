@@ -61,7 +61,21 @@
  "pending_note": "2005 通过原版与 2015 修正版全文未采集。附则自载施行日 2006-03-01（原版施行日跨修正沿用）；2017 修正决定施行日 2018-01-01（flk sxrq）存档注记。R140 lawtext 链入库。 R398 对账（2026-09-27）：下述「未采集」为入库时历史口径——当前已采集 2 份历史全文（见 versions 时间线），最新状态以 versions/amendments 为准。",
  "amendments": [
   {
-   "no": 1,
+   "title": "全国人民代表大会常务委员会关于修改《中华人民共和国义务教育法》等五部法律的决定",
+   "passed_date": "2015-04-24",
+   "effective": "2015-04-24",
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E5%85%A8%E5%9B%BD%E4%BA%BA%E6%B0%91%E4%BB%A3%E8%A1%A8%E5%A4%A7%E4%BC%9A%E5%B8%B8%E5%8A%A1%E5%A7%94%E5%91%98%E4%BC%9A%E5%85%B3%E4%BA%8E%E4%BF%AE%E6%94%B9%E3%80%8A%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E4%B9%89%E5%8A%A1%E6%95%99%E8%82%B2%E6%B3%95%E3%80%8B%E7%AD%89%E4%BA%94%E9%83%A8%E6%B3%95%E5%BE%8B%E7%9A%84%E5%86%B3%E5%AE%9A",
+    "accessed_at": "2026-09-27",
+    "snapshot": "docs/research/evidence/ws_打包决定_义教五部2015.html"
+   },
+   "note": "2015 修正（义教五部打包——公证法为其中之一，快照条目清单含公证法已程序化验证；快照复用零抓取）——与版本时间线 2015-amendment 互证。",
+   "no": 1
+  },
+  {
+   "no": 2,
    "title": "关于修改《中华人民共和国法官法》等八部法律的决定（公证法 2017 修正所在打包决定——现行版来源）",
    "passed_date": "2017-09-01",
    "effective": "2018-01-01",

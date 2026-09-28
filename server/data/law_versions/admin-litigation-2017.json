@@ -62,7 +62,21 @@
  "pending_note": "2014 修正版全文未采集，不预填。 R398 对账（2026-09-27）：下述「未采集」为入库时历史口径——当前已采集 2 份历史全文（见 versions 时间线），最新状态以 versions/amendments 为准。",
  "amendments": [
   {
-   "no": 1,
+   "title": "全国人民代表大会常务委员会关于修改《中华人民共和国行政诉讼法》的决定",
+   "passed_date": "2014-11-01",
+   "effective": "2015-05-01",
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E5%85%A8%E5%9B%BD%E4%BA%BA%E6%B0%91%E4%BB%A3%E8%A1%A8%E5%A4%A7%E4%BC%9A%E5%B8%B8%E5%8A%A1%E5%A7%94%E5%91%98%E4%BC%9A%E5%85%B3%E4%BA%8E%E4%BF%AE%E6%94%B9%E3%80%8A%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E8%A1%8C%E6%94%BF%E8%AF%89%E8%AE%BC%E6%B3%95%E3%80%8B%E7%9A%84%E5%86%B3%E5%AE%9A",
+    "accessed_at": "2026-09-27",
+    "snapshot": "docs/research/evidence/ws_决定_行政诉讼法2014.html"
+   },
+   "note": "2014 大修决定（立案登记制等 61 项，75→103 条）；决定自 2015-05-01 施行——与版本时间线 2014-amendment 互证。",
+   "no": 1
+  },
+  {
+   "no": 2,
    "title": "关于修改《中华人民共和国民事诉讼法》和《中华人民共和国行政诉讼法》的决定（行政诉讼法 2017 修正所在双法打包决定）",
    "passed_date": "2017-06-27",
    "effective": "2017-07-01",

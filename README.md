@@ -146,7 +146,7 @@ LegalHigh 的引用绑定法条检索可作为 **Model Context Protocol 服务�
 python server/mcp_server.py
 ```
 
-八工具：`search_articles`（BM25 全文检索法条原文）、`get_article`（按 ID+条号取原文与元数据）、`list_laws`（语料清单）、`search_cases`（指导案例与域外判例检索）、`search_history`（历史版本文本独立检索，非现行仅供对照）、`get_xrefs`（法条双向交叉引用导航，660 条已验证引用关系）、`get_amendments`（修正决定清单与快照全文——125 条决定「改了什么」的一手文本）、`get_predecessor`（前身法全文——更名边界法明文废止的前法文本；民法典九前身形态带 idx 逐部选择）。**只暴露检索，无任何生成型工具**；输出永远为法条原文+元数据+官方来源 URL，并声明「不构成法律意见」。详见 [v7 路线图](docs/plan/开发计划-v7-生态就绪路线图-2026-09.md) S2。
+八工具：`search_articles`（BM25 全文检索法条原文）、`get_article`（按 ID+条号取原文与元数据）、`list_laws`（语料清单）、`search_cases`（指导案例与域外判例检索）、`search_history`（历史版本文本独立检索，非现行仅供对照）、`get_xrefs`（法条双向交叉引用导航，660 条已验证引用关系）、`get_amendments`（修正决定清单与快照全文——145 条决定「改了什么」的一手文本）、`get_predecessor`（前身法全文——更名边界法明文废止的前法文本；民法典九前身形态带 idx 逐部选择）。**只暴露检索，无任何生成型工具**；输出永远为法条原文+元数据+官方来源 URL，并声明「不构成法律意见」。详见 [v7 路线图](docs/plan/开发计划-v7-生态就绪路线图-2026-09.md) S2。
 
 REST API：运行 `server` 后 [openapi.json](http://localhost:8000/openapi.json) 与 [交互文档](http://localhost:8000/docs) 自动可用（FastAPI 生成，49 路径）；检索响应与 MCP 同源（引用绑定+免责声明）。
 

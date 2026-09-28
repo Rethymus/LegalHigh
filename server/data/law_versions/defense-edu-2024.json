@@ -59,5 +59,21 @@
    }
   }
  ],
- "pending_note": "2001 原版与 2018 修正版全文未采集（双 bbbs 按 status 定案 2024 修正版）。 R398 对账（2026-09-27）：下述「未采集」为入库时历史口径——当前已采集 2 份历史全文（见 versions 时间线），最新状态以 versions/amendments 为准。"
+ "pending_note": "2001 原版与 2018 修正版全文未采集（双 bbbs 按 status 定案 2024 修正版）。 R398 对账（2026-09-27）：下述「未采集」为入库时历史口径——当前已采集 2 份历史全文（见 versions 时间线），最新状态以 versions/amendments 为准。",
+ "amendments": [
+  {
+   "title": "全国人民代表大会常务委员会关于修改《中华人民共和国国境卫生检疫法》等六部法律的决定",
+   "passed_date": "2018-04-27",
+   "effective": "2018-04-27",
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E5%85%A8%E5%9B%BD%E4%BA%BA%E6%B0%91%E4%BB%A3%E8%A1%A8%E5%A4%A7%E4%BC%9A%E5%B8%B8%E5%8A%A1%E5%A7%94%E5%91%98%E4%BC%9A%E5%85%B3%E4%BA%8E%E4%BF%AE%E6%94%B9%E3%80%8A%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%9B%BD%E5%A2%83%E5%8D%AB%E7%94%9F%E6%A3%80%E7%96%AB%E6%B3%95%E3%80%8B%E7%AD%89%E5%85%AD%E9%83%A8%E6%B3%95%E5%BE%8B%E7%9A%84%E5%86%B3%E5%AE%9A",
+    "accessed_at": "2026-09-27",
+    "snapshot": "docs/research/evidence/ws_打包决定_国境卫生六部2018.html"
+   },
+   "note": "国境卫生六部打包（国防教育法为其中之一，快照条目清单含国防教育法已程序化验证）——与版本时间线 2018-amendment 互证。",
+   "no": 1
+  }
+ ]
 }

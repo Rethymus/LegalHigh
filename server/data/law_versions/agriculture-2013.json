@@ -80,7 +80,21 @@
  "pending_note": "1993 原版与 2002/2009 修正版全文未采集。**2026-08-28 全面修订已公布（2027-01-01 施行，bbbs 19fc16b7…）——现行版本仍为 2012 修正版，修订版生效前如实施换**。 R398 对账（2026-09-27）：下述「未采集」为入库时历史口径——当前已采集 3 份历史全文（见 versions 时间线），最新状态以 versions/amendments 为准。",
  "amendments": [
   {
-   "no": 1,
+   "title": "全国人民代表大会常务委员会关于修改部分法律的决定",
+   "passed_date": "2009-08-27",
+   "effective": "2009-08-27",
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E5%85%A8%E5%9B%BD%E4%BA%BA%E6%B0%91%E4%BB%A3%E8%A1%A8%E5%A4%A7%E4%BC%9A%E5%B8%B8%E5%8A%A1%E5%A7%94%E5%91%98%E4%BC%9A%E5%85%B3%E4%BA%8E%E4%BF%AE%E6%94%B9%E9%83%A8%E5%88%86%E6%B3%95%E5%BE%8B%E7%9A%84%E5%86%B3%E5%AE%9A",
+    "accessed_at": "2026-09-27",
+    "snapshot": "docs/research/evidence/ws_打包决定_修改部分法律2009.html"
+   },
+   "note": "2009 大打包修正（农业法为其中之一，快照条目清单已程序化验证；快照复用零抓取）——与版本时间线 2009-amendment 及 2012 版页括注追认互证。",
+   "no": 1
+  },
+  {
+   "no": 2,
    "title": "关于修改《中华人民共和国农业法》的决定（2012 修正——现行版来源）",
    "passed_date": "2012-12-28",
    "effective": "2013-01-01",

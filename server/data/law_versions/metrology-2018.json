@@ -63,8 +63,8 @@
    "version_id": "2017-amendment",
    "label": "2017 修正",
    "status": "已被修订（历史文本）",
-   "promulgation_date": "2017-03-15",
-   "promulgation_organ": "第十二届全国人民代表大会常务委员会第五次会议",
+   "promulgation_date": "2017-12-27",
+   "promulgation_organ": "第十二届全国人民代表大会常务委员会第三十一次会议",
    "effective_date": "1986-07-01",
    "article_count": 34,
    "current": false,
@@ -75,7 +75,7 @@
     "accessed_at": "2026-09-27",
     "snapshot": "docs/research/evidence/ws_计量法_2017.html"
    },
-   "note": "快照头部括注自证：历经 2009 大打包/2013 海洋七部/2015 计量五部/2017 四次修正后文本（34 条）；施行日 1986-07-01 跨全部修正延续（末条附则同证）。"
+   "note": "快照头部括注自证：历经 2009 大打包/2013 海洋七部/2015 计量五部/2017 四次修正后文本（34 条）；施行日 1986-07-01 跨全部修正延续（末条附则同证）。 R413 勘误：原登记 2017-03-15/五次会议与快照括注不符——快照自证第四次修正为 2017-12-27 十二届常委会三十一次会议《关于修改〈中华人民共和国招标投标法〉、〈中华人民共和国计量法〉的决定》，以快照为准改记。"
   },
   {
    "version_id": "current",
@@ -98,7 +98,63 @@
  "pending_note": "1985 原版与 2009/2013/2015/2017 修正版全文未采集（2017 修正条目已修改弃用）。民生计量/强制检定。 R398 对账（2026-09-27）：下述「未采集」为入库时历史口径——当前已采集 4 份历史全文（见 versions 时间线），最新状态以 versions/amendments 为准。",
  "amendments": [
   {
-   "no": 1,
+   "title": "全国人民代表大会常务委员会关于修改部分法律的决定",
+   "passed_date": "2009-08-27",
+   "effective": "2009-08-27",
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E5%85%A8%E5%9B%BD%E4%BA%BA%E6%B0%91%E4%BB%A3%E8%A1%A8%E5%A4%A7%E4%BC%9A%E5%B8%B8%E5%8A%A1%E5%A7%94%E5%91%98%E4%BC%9A%E5%85%B3%E4%BA%8E%E4%BF%AE%E6%94%B9%E9%83%A8%E5%88%86%E6%B3%95%E5%BE%8B%E7%9A%84%E5%86%B3%E5%AE%9A",
+    "accessed_at": "2026-09-27",
+    "snapshot": "docs/research/evidence/ws_打包决定_修改部分法律2009.html"
+   },
+   "note": "第一次修正（2009 大打包，快照条目清单含计量法已程序化验证；快照复用零抓取）；决定自公布之日起施行。",
+   "no": 1
+  },
+  {
+   "title": "全国人民代表大会常务委员会关于修改〈中华人民共和国海洋环境保护法〉等七部法律的决定",
+   "passed_date": "2013-12-28",
+   "effective": "2013-12-28",
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E5%85%A8%E5%9B%BD%E4%BA%BA%E6%B0%91%E4%BB%A3%E8%A1%A8%E5%A4%A7%E4%BC%9A%E5%B8%B8%E5%8A%A1%E5%A7%94%E5%91%98%E4%BC%9A%E5%85%B3%E4%BA%8E%E4%BF%AE%E6%94%B9%E3%80%88%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E6%B5%B7%E6%B4%8B%E7%8E%AF%E5%A2%83%E4%BF%9D%E6%8A%A4%E6%B3%95%E3%80%89%E7%AD%89%E4%B8%83%E9%83%A8%E6%B3%95%E5%BE%8B%E7%9A%84%E5%86%B3%E5%AE%9A",
+    "accessed_at": "2026-09-27",
+    "snapshot": "docs/research/evidence/ws_打包决定_海洋七部2013.html"
+   },
+   "note": "第二次修正（海洋七部打包；决定对公司法的修改自 2014-03-01 施行、对计量法等其余六部自公布之日起施行——快照尾部自证；快照复用零抓取）。",
+   "no": 2
+  },
+  {
+   "title": "全国人民代表大会常务委员会关于修改《中华人民共和国计量法》等五部法律的决定",
+   "passed_date": "2015-04-24",
+   "effective": "2015-04-24",
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E5%85%A8%E5%9B%BD%E4%BA%BA%E6%B0%91%E4%BB%A3%E8%A1%A8%E5%A4%A7%E4%BC%9A%E5%B8%B8%E5%8A%A1%E5%A7%94%E5%91%98%E4%BC%9A%E5%85%B3%E4%BA%8E%E4%BF%AE%E6%94%B9%E3%80%8A%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E8%AE%A1%E9%87%8F%E6%B3%95%E3%80%8B%E7%AD%89%E4%BA%94%E9%83%A8%E6%B3%95%E5%BE%8B%E7%9A%84%E5%86%B3%E5%AE%9A",
+    "accessed_at": "2026-09-27",
+    "snapshot": "docs/research/evidence/ws_打包决定_计量五部2015.html"
+   },
+   "note": "第三次修正（计量五部打包，快照条目清单含计量法已程序化验证）；决定自公布之日起施行。",
+   "no": 3
+  },
+  {
+   "title": "全国人民代表大会常务委员会关于修改《中华人民共和国招标投标法》、《中华人民共和国计量法》的决定",
+   "passed_date": "2017-12-27",
+   "effective": "2017-12-28",
+   "evidence": {
+    "kind": "wikisource-transcription",
+    "grade": "中",
+    "url": "https://zh.wikisource.org/wiki/%E5%85%A8%E5%9B%BD%E4%BA%BA%E6%B0%91%E4%BB%A3%E8%A1%A8%E5%A4%A7%E4%BC%9A%E5%B8%B8%E5%8A%A1%E5%A7%94%E5%91%98%E4%BC%9A%E5%85%B3%E4%BA%8E%E4%BF%AE%E6%94%B9%E3%80%8A%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E6%8B%9B%E6%A0%87%E6%8A%95%E6%A0%87%E6%B3%95%E3%80%8B%E3%80%81%E3%80%8A%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E8%AE%A1%E9%87%8F%E6%B3%95%E3%80%8B%E7%9A%84%E5%86%B3%E5%AE%9A",
+    "accessed_at": "2026-09-27",
+    "snapshot": "docs/research/evidence/ws_决定_招标计量2017.html"
+   },
+   "note": "第四次修正（招标+计量两法决定）；决定自 2017-12-28 施行（快照尾部自证）——与版本时间线 2017-amendment（R413 勘误后）互证。",
+   "no": 4
+  },
+  {
+   "no": 5,
    "title": "关于修改《中华人民共和国野生动物保护法》等十五部法律的决定（计量法 2018 修正所在打包决定——现行版来源）",
    "passed_date": "2018-10-26",
    "effective": "2018-10-26",

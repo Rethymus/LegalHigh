@@ -26,3 +26,27 @@ def test_all_amendments_integer_no_and_iso_dates():
             ev = a.get("evidence") or {}
             assert ev.get("snapshot"), f"{r['law_id']}#{a['no']} 缺 evidence.snapshot"
     assert total >= 120, f"修正决定总数 {total} 异常（应 ≥120）"
+
+
+def test_amendment_version_pairing_no_gaps():
+    """R413 对称普查钉：每个修正型版本条目必须同年有修正决定登记。
+
+    版本页记录「改后结果」、决定记录「改了什么」——两层证据成对。
+    普查起点 19 处缺口已全部闭合（零抓取复用+独立采集）；未来新增
+    修正型版本而无决定登记时本测试失败，须有意识补登记或修本测试。
+    """
+    import json
+    import glob
+    import os
+    reg_dir = os.path.join(os.path.dirname(__file__), "..", "data", "law_versions")
+    gaps = []
+    for p in sorted(glob.glob(os.path.join(reg_dir, "*.json"))):
+        r = json.load(open(p, encoding="utf-8"))
+        am_years = {(a.get("passed_date") or "")[:4] for a in (r.get("amendments") or [])}
+        for v in r["versions"]:
+            if v.get("current") or "修正" not in (v.get("label") or ""):
+                continue
+            year = (v.get("promulgation_date") or "")[:4]
+            if year and year not in am_years:
+                gaps.append(f"{r['law_id']}/{v['version_id']}({year})")
+    assert gaps == [], f"修正型版本缺同年决定登记: {gaps}"
