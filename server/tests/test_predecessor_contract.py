@@ -33,5 +33,27 @@ def test_predecessor_registrations_complete_and_snapshots_present():
 
 def test_predecessor_endpoint_404_for_ordinary():
     import pytest
+    # R412 起民法典有多前身登记（数组形态），普通法样本改用民诉法
     with pytest.raises(KeyError):
-        predecessor_fulltext.predecessor_fulltext("civl-2020")
+        predecessor_fulltext.predecessor_fulltext("pcl-2023")
+
+
+def test_multi_predecessor_contract_civl():
+    """R412：民法典多前身契约——九部清单精确钉住、快照在库、逐部读取干净。"""
+    import json
+    import re as _re
+    from pathlib import Path as _Path
+    reg = json.loads((_Path(__file__).resolve().parents[1] / "data" / "law_versions" / "civl-2020.json").read_text(encoding="utf-8"))
+    preds = reg.get("predecessors") or []
+    assert [p["title"] for p in preds] == [
+        "中华人民共和国婚姻法", "中华人民共和国继承法", "中华人民共和国民法通则", "中华人民共和国收养法",
+        "中华人民共和国担保法", "中华人民共和国合同法", "中华人民共和国物权法",
+        "中华人民共和国侵权责任法", "中华人民共和国民法总则",
+    ]
+    for p in preds:
+        assert (EVIDENCE / p["snapshot"]).is_file(), p["snapshot"]
+        assert p.get("note"), p["title"]
+    assert "第1260条" in reg.get("predecessors_relation", "")
+    for idx in range(len(preds)):
+        d = predecessor_fulltext.predecessor_fulltext("civl-2020", idx)
+        assert d["text"] and "相关导览" not in d["text"] and "添加语言" not in d["text"]

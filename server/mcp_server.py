@@ -142,21 +142,26 @@ def tool_get_xrefs(law_id: str, article: str = "") -> dict:
     }
 
 
-def tool_get_predecessor(law_id: str) -> dict:
-    """获取某现行法前身法全文（R391）：更名边界法（新法明文废止旧法）的前法文本。
+def tool_get_predecessor(law_id: str, idx: int | None = None) -> dict:
+    """获取某现行法前身法全文（R391；R412 多前身 idx 选择）：更名边界法（新法明文废止旧法）的前法文本。
 
-    仅当注册表登记前身关系（医师法→执业医师法 1998、学位法→学位条例 1980）时有数据；
-    前身法不入版本时间线（非同法版本），仅供沿革对照。数据源：注册表 note + 证据快照。
+    单前身（医师法→执业医师法 1998 等）走 note 登记形态；多前身并列（民法典九法，
+    R412）走 predecessors 数组形态，idx 选择（民法典 civl-2020 共 9 部，0 起）；
+    前身法不入版本时间线（非同法版本），仅供沿革对照。数据源：版本注册表 + 证据快照。
     """
     from app import predecessor_fulltext
 
     try:
-        d = predecessor_fulltext.predecessor_fulltext(law_id)
+        d = predecessor_fulltext.predecessor_fulltext(law_id, idx)
     except FileNotFoundError:
         return {"law_id": law_id, "error": "该法无版本注册表", "disclaimer": DISCLAIMER}
     except KeyError as e:
         return {"law_id": law_id, "error": str(e).strip("\"'"),
                 "note": "该法无前身法登记（普通沿革法/首制法均无前身——仅更名边界法有）",
+                "disclaimer": DISCLAIMER}
+    except IndexError as e:
+        return {"law_id": law_id, "error": f"前身法索引越界：{e}",
+                "note": "多前身形态（如民法典九法）须带 idx 选择（0 起）",
                 "disclaimer": DISCLAIMER}
     except ValueError as e:
         return {"law_id": law_id, "error": f"前身法全文不可用：{e}", "disclaimer": DISCLAIMER}
@@ -164,6 +169,8 @@ def tool_get_predecessor(law_id: str) -> dict:
         "law_id": law_id,
         "title": d["title"],
         "relation": d["relation"],
+        "predecessor_note": d.get("predecessor_note", ""),
+        "index": d.get("index"),
         "text": d["text"],
         "scope_note": d["scope_note"],
         "snapshot": d["snapshot"],
@@ -320,14 +327,16 @@ TOOLS = [
         "name": "get_predecessor",
         "description": (
             "获取某现行法的前身法全文（更名边界：现行法明文废止的前法，非同法历史版本）。"
-            "如 医师法(physicians-2021)→1998执业医师法、学位法(academic-degree-2024)→1980学位条例。"
-            "仅更名边界法有前身登记，普通沿革法返回无前身说明。数据源：版本注册表+证据快照（R390/R391）。"
+            "单前身如 医师法(physicians-2021)→1998执业医师法、学位法(academic-degree-2024)→1980学位条例；"
+            "多前身形态（民法典 civl-2020 第1260条废止九法：婚姻法/继承法/民法通则/收养法/担保法/合同法/物权法/侵权责任法/民法总则）须带 idx 选择（0-8）。"
+            "仅更名边界法有前身登记，普通沿革法返回无前身说明。数据源：版本注册表+证据快照（R390/R391/R412）。"
             "输出为立法沿革史料，不构成法律意见。"
         ),
         "inputSchema": {
             "type": "object",
             "properties": {
                 "law_id": {"type": "string", "description": "现行法律 ID（如 physicians-2021）"},
+                "idx": {"type": "integer", "description": "多前身形态的选择索引（民法典 0-8：婚姻法/继承法/民法通则/收养法/担保法/合同法/物权法/侵权责任法/民法总则）；单前身法无需传"},
             },
             "required": ["law_id"],
         },
@@ -386,7 +395,7 @@ def dispatch(name: str, args: dict):
     if name == "get_amendments":
         return tool_get_amendments(args.get("law_id", ""), args.get("no", 0))
     if name == "get_predecessor":
-        return tool_get_predecessor(args.get("law_id", ""))
+        return tool_get_predecessor(args.get("law_id", ""), args.get("idx"))
     if name == "search_history":
         return tool_search_history(
             args.get("query", ""), args.get("top_k", 5),

@@ -27,6 +27,7 @@ _NOISE_PATTERNS = [
     re.compile(r"@@H[123]@@\s*"),
     re.compile(r"\[编辑\]"),
     re.compile(r"姊妹计划[:：]?[^\n]*"),
+    re.compile(r"相关导览[:：][^\n]*"),  # R412：维基导览模板行（民法通则/民法总则页形态）
 ]
 
 

@@ -54,6 +54,48 @@ function PredSection({ lawId }: { lawId: string }) {
   )
 }
 
+/* R412：多前身并列形态（民法典第1260条九法）——chips 选择器 + 全文卡。
+   与单前身 PredSection 的区别：一部现行法废止多部前法时逐部切换查阅。 */
+function MultiPredSection({ lawId, preds, relation }: { lawId: string; preds: { title: string; note?: string }[]; relation: string }) {
+  const [sel, setSel] = useState(0)
+  const [data, setData] = useState<Awaited<ReturnType<typeof api.predecessorFulltext>> | null>(null)
+  useEffect(() => {
+    let alive = true
+    setData(null)
+    api.predecessorFulltext(lawId, sel).then(
+      (d) => alive && setData(d),
+      () => alive && setData(null),
+    )
+    return () => { alive = false }
+  }, [lawId, sel])
+  return (
+    <div className="mt-12">
+      <div className="tiny mb-8" style={{ lineHeight: 1.8 }}>{relation}</div>
+      <div className="chips">
+        {preds.map((p, i) => (
+          <button key={p.title} className={'chip' + (i === sel ? ' is-on' : '')} onClick={() => setSel(i)}>
+            {p.title.replace('中华人民共和国', '')}
+          </button>
+        ))}
+      </div>
+      <div className="card mt-8" style={{ padding: 14 }}>
+        {data ? (
+          <>
+            <div className="tiny mb-8">
+              <b>{data.title}</b> · 快照 {data.snapshot}
+              {data.predecessor_note ? ` · ${data.predecessor_note}` : ''}
+            </div>
+            <div className="banner banner-warn mb-12"><Icon name="alert" size={15} /><span className="banner-tx">{data.scope_note}</span></div>
+            <pre style={{ whiteSpace: 'pre-wrap', fontFamily: 'inherit', fontSize: 12.5, lineHeight: 2, margin: 0, color: 'var(--tx)', maxHeight: 480, overflowY: 'auto' }}>{data.text}</pre>
+          </>
+        ) : (
+          <div className="tiny muted">前身法全文加载中…（若长期为空说明该前法快照暂不可用）</div>
+        )}
+      </div>
+    </div>
+  )
+}
+
 export default function LawDetail() {
   const { audience } = useOutletContext<AppOutletContext>()
   const { lawId } = useParams()
@@ -528,6 +570,9 @@ export default function LawDetail() {
                       {/* R410：多版本法同样可能有前身关系（食品卫生法→食品安全法/治安条例→治安法）——
                           时间线讲「同法沿革」，前身区块讲「本法取代了谁」，两层证据并列 */}
                       {versions.note?.includes('前身关系定案') && <PredSection lawId={lawId ?? ''} />}
+                      {versions.predecessors && versions.predecessors.length > 0 && (
+                        <MultiPredSection lawId={lawId ?? ''} preds={versions.predecessors} relation={versions.predecessors_relation || ''} />
+                      )}
                     </>
                   ) : (
                     <>
@@ -543,6 +588,10 @@ export default function LawDetail() {
                       {/* R390：前身法全文展开（仅更名边界法有——医师法/学位法等明文废止的前法） */}
                       {versions?.note?.includes('前身关系定案') && (
                         <PredSection lawId={lawId ?? ''} />
+                      )}
+                      {/* R412：多前身并列（民法典九法形态）——单前身后、chips 选择逐部查阅 */}
+                      {versions?.predecessors && versions.predecessors.length > 0 && (
+                        <MultiPredSection lawId={lawId ?? ''} preds={versions.predecessors} relation={versions.predecessors_relation || ''} />
                       )}
                     </>
                   )}

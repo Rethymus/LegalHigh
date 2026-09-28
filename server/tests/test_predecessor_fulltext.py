@@ -27,8 +27,8 @@ def test_predecessor_fulltext_degree():
 
 
 def test_predecessor_fulltext_no_registration_404():
-    """无前身登记的普通法 → 404（fail-closed）。"""
-    r = client.get("/api/laws/civl-2020/predecessor/fulltext")
+    """无前身登记的普通法 → 404（fail-closed）。R412 起民法典有多前身（idx 缺省另测）。"""
+    r = client.get("/api/laws/pcl-2023/predecessor/fulltext")
     assert r.status_code == 404
 
 
@@ -72,3 +72,37 @@ def test_predecessor_fulltext_anti_drug_decision():
     r = client.get("/api/laws/anti-drug-2008/predecessor/fulltext")
     assert r.status_code == 200
     assert "1990年12月28日" in r.json()["text"]
+
+
+def test_predecessor_multi_civl_list_and_read():
+    """R412：民法典九法多前身——清单精确、逐部可读、无 chrome。"""
+    r = client.get("/api/laws/civl-2020/predecessor/fulltext?idx=0")
+    assert r.status_code == 200
+    body = r.json()
+    titles = body["predecessors"]
+    assert titles == [
+        "中华人民共和国婚姻法", "中华人民共和国继承法", "中华人民共和国民法通则", "中华人民共和国收养法",
+        "中华人民共和国担保法", "中华人民共和国合同法", "中华人民共和国物权法",
+        "中华人民共和国侵权责任法", "中华人民共和国民法总则",
+    ]
+    assert "第1260条" in body["relation"]
+    for i, marker in [(0, "1980年9月10日"), (5, "1999年3月15日"), (8, "2017年3月15日")]:
+        b = client.get(f"/api/laws/civl-2020/predecessor/fulltext?idx={i}").json()
+        assert marker in b["text"], i
+        for chrome in ("添加语言", "不转换", "相关导览"):
+            assert chrome not in b["text"], (i, chrome)
+
+
+def test_predecessor_multi_idx_out_of_range_404():
+    """R412：idx 越界与缺省 → 404（民法典多前身必须显式选择）。"""
+    assert client.get("/api/laws/civl-2020/predecessor/fulltext?idx=9").status_code == 404
+    assert client.get("/api/laws/civl-2020/predecessor/fulltext?idx=-1").status_code == 404
+    assert client.get("/api/laws/civl-2020/predecessor/fulltext").status_code == 404
+
+
+def test_predecessor_single_form_unchanged():
+    """R412 回归：单前身 note 形态不受 idx 影响（身份证法）。"""
+    r = client.get("/api/laws/id-card-2011/predecessor/fulltext")
+    assert r.status_code == 200
+    assert "1985年9月6日" in r.json()["text"]
+    assert client.get("/api/laws/id-card-2011/predecessor/fulltext?idx=0").status_code == 200

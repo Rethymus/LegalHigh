@@ -408,6 +408,8 @@ export const api = {
       law_id: string; title: string
       versions: { version_id: string; label: string; status: string; promulgation_date: string; promulgation_organ?: string; promulgation_instrument?: string; effective_date: string; article_count: number | null; article_count_note?: string; current: boolean; has_fulltext?: boolean }[]
       amendments?: { no: number; title: string; passed_date: string; effective: string; note?: string; evidence: { url: string; snapshot: string; grade?: string; accessed_at?: string } }[]
+      predecessors?: { title: string; snapshot: string; note?: string }[]
+      predecessors_relation?: string
       note?: string
       pending_note: string
     }>(`/laws/${encodeURIComponent(lawId)}/versions`),
@@ -455,9 +457,9 @@ export const api = {
       `/laws/${encodeURIComponent(lawId)}/amendments/${no}/fulltext`),
 
   // 前身法全文（R390）：现行法明文废止的前法文本（更名边界，404=无前身登记）
-  predecessorFulltext: (lawId: string) =>
-    req<{ law_id: string; title: string; relation: string; snapshot: string; text: string; scope_note: string; source: { snapshot: string; kind: string } }>(
-      `/laws/${encodeURIComponent(lawId)}/predecessor/fulltext`),
+  predecessorFulltext: (lawId: string, idx?: number) =>
+    req<{ law_id: string; title: string; relation: string; predecessor_note?: string; index?: number | null; predecessors?: string[] | null; snapshot: string; text: string; scope_note: string; source: { snapshot: string; kind: string } }>(
+      `/laws/${encodeURIComponent(lawId)}/predecessor/fulltext${idx === undefined ? '' : '?idx=' + idx}`),
 
   // 跨版本条号重编号映射（known-gaps #1）：difflib 确定性对齐（公开只读；少两个版本 404）
   renumberMap: (lawId: string) =>

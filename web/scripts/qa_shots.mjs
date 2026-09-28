@@ -233,6 +233,14 @@ const ROUTES = [
     { t: 'wait', ms: 700 },
     { t: 'eval', expr: `(() => { const b=document.body.innerText||''; return b.includes('1985年9月6日') && b.includes('主席令第二十九号') ? 'pred-fulltext-ok' : 'pred-fulltext-missing' })()` },
   ] },
+  // R412：民法典九前身选择器（多前身并列形态）——九 chips + 选中合同法展开 428 条全文
+  { name: '45e-law-predecessor-multi', path: '/laws/civl-2020?art=1&tab=version', identity: pageHeader('《民法典》第一条'), steps: [
+    { t: 'wait', ms: 800 },
+    { t: 'eval', expr: `(() => { const chips=[...document.querySelectorAll('.chip')].map(c=>c.textContent.trim()); const need=['婚姻法','继承法','民法通则','收养法','担保法','合同法','物权法','侵权责任法','民法总则']; return need.every(n=>chips.some(c=>c.includes(n))) ? 'nine-chips-ok' : 'chips-missing:'+need.filter(n=>!chips.some(c=>c.includes(n))).join('/') })()` },
+    { t: 'eval', expr: `(() => { const chip=[...document.querySelectorAll('.chip')].find(c=>c.textContent.trim()==='合同法'); if(!chip) return 'no-contract-chip'; chip.click(); return 'clicked' })()` },
+    { t: 'wait', ms: 1200 },
+    { t: 'eval', expr: `(() => { const b=document.body.innerText||''; return b.includes('1999年3月15日') && b.includes('第四百二十八条') && b.includes('第1260条') ? 'multi-pred-fulltext-ok' : 'multi-pred-fulltext-missing' })()` },
+  ] },
   { name: '44-quality', path: '/quality', fullPage: true, identity: pageHeader('质量透明度'), afterText: '不是法律正确率', steps: [
     { t: 'eval', expr: `(() => { const stats=[...document.querySelectorAll('.stat')]; return stats.length >= 4 ? 'quality-stats-ok' : 'quality-stats-short:'+stats.length })()` },
   ] },
@@ -352,7 +360,20 @@ async function main() {
         } } catch {}`,
       })
       await cdp.send('Page.navigate', { url: BASE + route.path })
-      await sleep(1600)
+      // R412：固定 1600ms 单等在长巡检负载下对懒 chunk/首渲染不够——identity 轮询
+      // 就绪再跑步骤与截图（与预热同纪律；真坏路由超时后仍由后置断言如实失败）。
+      {
+        const spec = JSON.stringify(route.identity ?? null)
+        for (let i = 0; i < 26; i++) {
+          await sleep(600)
+          const r = await cdp.send('Runtime.evaluate', {
+            expression: `(() => { const sp = ${spec}; const el = sp ? document.querySelector(sp.selector) : null;
+              return !sp || (el && (!sp.text || (el.textContent || '').includes(sp.text))) })()`,
+            returnByValue: true,
+          }).catch(() => null)
+          if (r?.result?.value) break
+        }
+      }
       let sn = 0
       for (const s of route.steps ?? []) {
         if (s.t === 'eval') {

@@ -298,17 +298,19 @@ def law_amendment_fulltext(law_id: str, no: int):
 
 
 @app.get("/api/laws/{law_id}/predecessor/fulltext")
-def law_predecessor_fulltext(law_id: str):
-    """前身法全文查阅（R390）：现行法明文废止的前法文本（更名边界，不入版本时间线）。
+def law_predecessor_fulltext(law_id: str, idx: int | None = None):
+    """前身法全文查阅（R390；R412 多前身 idx 选择——民法典九法形态）。
 
-    只读、fail-closed：law 不在语料/无前身登记 → 404；schema 问题 → 500。
+    只读、fail-closed：law 不在语料/无前身登记 → 404；多前身 idx 越界 → 404；schema 问题 → 500。
     """
     if law_id not in get_corpus().laws:
         raise HTTPException(404, "law not found")
     try:
         from . import predecessor_fulltext as predecessor_fulltext_mod
-        return predecessor_fulltext_mod.predecessor_fulltext(law_id)
+        return predecessor_fulltext_mod.predecessor_fulltext(law_id, idx)
     except KeyError as e:
+        raise HTTPException(404, str(e))
+    except IndexError as e:
         raise HTTPException(404, str(e))
     except (ValueError, FileNotFoundError) as e:
         raise HTTPException(500, str(e))

@@ -50,13 +50,17 @@ def test_tools_list_red_line_audit():
 
 
 def test_tools_call_get_predecessor():
-    """get_predecessor（R391）：医师法前身 1998 执业医师法全文 + 普通法无前身说明。"""
+    """get_predecessor（R391/R412）：单前身 + 多前身 idx + 普通法无前身说明。"""
     out = _roundtrip([
         {"jsonrpc": "2.0", "id": 1, "method": "initialize",
          "params": {"protocolVersion": "2024-11-05"}},
         {"jsonrpc": "2.0", "id": 2, "method": "tools/call",
          "params": {"name": "get_predecessor", "arguments": {"law_id": "physicians-2021"}}},
         {"jsonrpc": "2.0", "id": 3, "method": "tools/call",
+         "params": {"name": "get_predecessor", "arguments": {"law_id": "pcl-2023"}}},
+        {"jsonrpc": "2.0", "id": 4, "method": "tools/call",
+         "params": {"name": "get_predecessor", "arguments": {"law_id": "civl-2020", "idx": 5}}},
+        {"jsonrpc": "2.0", "id": 5, "method": "tools/call",
          "params": {"name": "get_predecessor", "arguments": {"law_id": "civl-2020"}}},
     ])
     by_id = {m.get("id"): m for m in out}
@@ -64,6 +68,10 @@ def test_tools_call_get_predecessor():
     assert "执业医师" in pred and "前身关系定案" in pred and "1998年6月26日" in pred
     none = by_id[3]["result"]["content"][0]["text"]
     assert "无前身法登记" in none
+    multi = by_id[4]["result"]["content"][0]["text"]
+    assert "合同法" in multi and "1999年3月15日" in multi
+    oor = by_id[5]["result"]["content"][0]["text"]
+    assert "索引越界" in oor and "idx" in oor
 
 
 def test_tools_call_get_amendments():

@@ -25,26 +25,45 @@ def _snapshot_from_note(note: str) -> str | None:
     return m.group(1) if m else None
 
 
-def predecessor_fulltext(law_id: str) -> dict:
-    """返回某现行法前身法的清洗全文。无前身登记→KeyError（路由层转 404）。"""
+def predecessor_fulltext(law_id: str, idx: int | None = None) -> dict:
+    """返回某现行法前身法的清洗全文。无前身登记→KeyError（路由层转 404）。
+
+    R412 双形态：
+    - note 形态（一法一快照，R373 建制）：从 note 的「已存证 X」解析快照，idx 忽略；
+    - predecessors 数组形态（多前身并列，民法典九法）：idx 选择条目，越界→IndexError。
+    """
     registry = law_versions.load_registry(law_id)
-    note = registry.get("note", "") or ""
-    snap = _snapshot_from_note(note)
-    if not snap:
-        raise KeyError(f"{law_id} 无前身法登记（predecessor_snapshot）")
+    preds = registry.get("predecessors") or []
+    if preds:
+        if idx is None or not (0 <= idx < len(preds)):
+            raise IndexError(f"{law_id} 前身法索引越界：idx={idx}（共 {len(preds)} 部，0 起）")
+        entry = preds[idx]
+        snap = entry.get("snapshot") or ""
+        relation = registry.get("predecessors_relation", "")
+        pred_title, note = entry.get("title", ""), entry.get("note", "")
+    else:
+        note = registry.get("note", "") or ""
+        snap = _snapshot_from_note(note)
+        if not snap:
+            raise KeyError(f"{law_id} 无前身法登记（predecessor_snapshot）")
+        m = re.search(r"前身关系定案[^。]*。[^。]*。", note)
+        relation = m.group(0) if m else ""
+        pred_title = ""
+
+    if not _af.SAFE_FILE.match(snap or ""):
+        raise ValueError(f"{law_id} 前身条目缺合法 evidence.snapshot")
 
     raw = _af._read_snapshot(snap)
     whole = _af._clean_html_text(raw.decode("utf-8", errors="replace"))
     text = _af._clean_decree_text(whole)
 
-    # 从 note 里取定案句（关系说明回显）
-    m = re.search(r"前身关系定案[^。]*。[^。]*。", note)
-    relation = m.group(0) if m else ""
-
     return {
         "law_id": law_id,
-        "title": registry.get("title", ""),
+        "title": pred_title or registry.get("title", ""),
         "relation": relation,
+        "predecessor_note": note,
+        "index": idx,
+        "predecessors": [p.get("title", "") for p in preds] if preds else None,
         "snapshot": snap,
         "text": text,
         "scope_note": "前身法全文（现行法明文废止的前法，非同法历史版本——不入版本时间线）；仅供沿革对照，不构成法律意见。",
