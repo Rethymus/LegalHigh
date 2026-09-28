@@ -451,3 +451,62 @@ def test_chat_response_carries_quota_and_privacy_fields(monkeypatch):
         ai_governor._quota_state.clear()
     assert out["quota"]["used"] >= 1
     assert out["privacy_notice"]["possible_personal_info"] >= 1
+
+
+def _fake_client_seq(monkeypatch, contents):
+    """R417：按调用序返回不同内容的假 client（重试路径测试）。"""
+    calls = {"n": 0}
+    class FakeMsg:
+        def __init__(self, c):
+            self.content = c
+    class FakeResp:
+        def __init__(self, c):
+            self.choices = [type("Ch", (), {"message": FakeMsg(c)})()]
+            self.usage = type("U", (), {"prompt_tokens": 10, "completion_tokens": 5})()
+    class FakeComp:
+        @staticmethod
+        def create(**kwargs):
+            i = min(calls["n"], len(contents) - 1)
+            calls["n"] += 1
+            return FakeResp(contents[i])
+    class FakeClient:
+        chat = type("C", (), {"completions": FakeComp})()
+    monkeypatch.setattr(ai_governor, "_client", lambda *a, **k: FakeClient())
+    return calls
+
+
+def test_chat_claim_retry_delivers(tmp_db, monkeypatch):
+    """R417：首答无引用（claim_support 判负）→ 纠正重试重写带引用 → 交付且合规。"""
+    calls = _fake_client_seq(monkeypatch, [
+        "诉讼时效期间为三年，法律另有规定的除外。",
+        "依据《民法典》第585条，约定的违约金过分高于造成的损失的，可以请求适当减少。建议进一步确认实际损失证据。",
+    ])
+    monkeypatch.setenv("DEEPSEEK_API_KEY", STUB_KEY)
+    out = ai_governor.chat(
+        "deepseek", "deepseek-chat", [{"role": "user", "content": "q"}],
+        allowed_refs=[{"law_title": "中华人民共和国民法典", "article_no": 585}])
+    assert calls["n"] == 2 and out["claim_retry"] is True
+    assert out["blocked"] is False and out["output_withheld"] is False and out["text"]
+    assert out["gates"]["claim_support"]["pass"] is True
+
+
+def test_chat_claim_retry_still_fails_withholds(tmp_db, monkeypatch):
+    """R417：重写稿仍不合规 → 照旧扣留（门不放松），只重试一次。"""
+    calls = _fake_client_seq(monkeypatch, ["诉讼时效期间为三年。", "诉讼时效期间还是三年。"])
+    monkeypatch.setenv("DEEPSEEK_API_KEY", STUB_KEY)
+    out = ai_governor.chat(
+        "deepseek", "deepseek-chat", [{"role": "user", "content": "q"}],
+        allowed_refs=[{"law_title": "中华人民共和国民法典", "article_no": 585}])
+    assert calls["n"] == 2 and out["claim_retry"] is True
+    assert out["blocked"] is True and out["text"] == ""
+
+
+def test_chat_redline_never_retries(tmp_db, monkeypatch):
+    """R417：红线命中属安全信号——不进入纠正重试（仅一次调用）。"""
+    calls = _fake_client_seq(monkeypatch, ["建议包赢，另见《公司法》第71条。", "不应被调用"])
+    monkeypatch.setenv("DEEPSEEK_API_KEY", STUB_KEY)
+    out = ai_governor.chat(
+        "deepseek", "deepseek-chat", [{"role": "user", "content": "q"}],
+        allowed_refs=[{"law_title": "中华人民共和国民法典", "article_no": 585}])
+    assert calls["n"] == 1 and out["claim_retry"] is False
+    assert out["blocked"] is True

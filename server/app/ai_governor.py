@@ -634,6 +634,48 @@ def chat(provider_id: str, model: str, messages: list[dict], *, api_key: str | N
         "claim_support": gate_claim_support(text, evidence_contexts),
     }
     blocked = not all(g["pass"] for g in gates.values())
+    # R417：claim_support 未过且红线/引用集两门均过（纯格式可修复，无安全信号）时，
+    # 给模型一次按引用纪律重写的纠正机会——门不放松：重写稿仍须过全部门，任何一道
+    # 未过照旧扣留；红线命中或越界引用一律不重试。flash 级模型简答常不带内联引用，
+    # 一次结构化重试可把「几乎总扣留」变成「可交付的合规答案」。
+    claim_retry = False
+    # citations 失败两型：纯缺引用（「未包含可识别引用」——格式可修复，可重试）与
+    # 越界引用（引用了集合外条文——内容风险信号，不重试）。
+    _MISS_CIT = "输出未包含可识别的《法名》第X条引用"
+    cit_violations = gates["citations"]["violations"]
+    cit_retryable = gates["citations"]["pass"] or (
+        bool(cit_violations) and all(v == _MISS_CIT for v in cit_violations)
+    )
+    if blocked and gates["redline"]["pass"] and cit_retryable:
+        corrective = (
+            "你的上一版回答未满足引用纪律：每个事实分句必须在其分句内写明《法名》第X条"
+            "（只能引用服务端证据中列出的条文，措辞贴近被引条文原文）；"
+            "不引用任何条文的句子只能以「建议」「请」「仍需」「可进一步」开头。"
+            "请逐句重写并在分句内内联标注引用。"
+        )
+        retry_messages = governed_messages + [
+            {"role": "assistant", "content": text},
+            {"role": "user", "content": corrective},
+        ]
+        try:
+            resp = client.chat.completions.create(
+                model=model.strip(),
+                messages=retry_messages,
+                temperature=temperature,
+                max_tokens=MAX_OUTPUT_TOKENS,
+            )
+            text2 = (resp.choices[0].message.content or "").strip() if resp.choices else ""
+        except Exception:  # noqa: BLE001 — 重试失败按未重试处理，不掩盖首次结果语义
+            text2 = ""
+        if text2:
+            text = text2
+            gates = {
+                "redline": gate_redline(text2),
+                "citations": gate_citations(text2, allowed_refs),
+                "claim_support": gate_claim_support(text2, evidence_contexts),
+            }
+            blocked = not all(g["pass"] for g in gates.values())
+        claim_retry = True
     usage = {}
     if getattr(resp, "usage", None):
         usage = {"prompt_tokens": resp.usage.prompt_tokens, "completion_tokens": resp.usage.completion_tokens}
@@ -641,7 +683,7 @@ def chat(provider_id: str, model: str, messages: list[dict], *, api_key: str | N
     # gate3 审计留痕：不含 key、不含消息明文
     storage.audit(actor or "anonymous", "ai_chat", f"{provider_id}/{model}",
                   "generate", {"prompt_chars": sum(len(m.get("content") or "") for m in messages),
-                               "output_chars": len(text), "blocked": blocked})
+                               "output_chars": len(text), "blocked": blocked, "claim_retry": claim_retry})
     return {
         "provider_id": provider_id,
         "provider_name": provider["name"],
@@ -651,6 +693,7 @@ def chat(provider_id: str, model: str, messages: list[dict], *, api_key: str | N
         "output_withheld": blocked,
         "gates": gates,
         "blocked": blocked,
+        "claim_retry": claim_retry,
         "usage": usage,
         "quota": quota,
         "privacy_notice": privacy,
