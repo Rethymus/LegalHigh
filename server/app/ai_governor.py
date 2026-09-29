@@ -699,7 +699,7 @@ def chat(provider_id: str, model: str, messages: list[dict], *, api_key: str | N
             "（只能引用服务端证据中列出的条文，措辞贴近被引条文原文）；"
             "不引用任何条文的句子只能以「建议」「请」「仍需」「可进一步」开头。"
             "可用条文原文（逐字）：\n" + source_lines + "\n"
-            "请逐句重写并在分句内内联标注引用，可先引原文再作解释。"
+            "请逐句重写并在分句内内联标注引用，可先引原文再作解释；第一句就必须携带引用，删去一切不带引用的开场白与过渡句。"
         )
         retry_messages = governed_messages + [
             {"role": "assistant", "content": text},
