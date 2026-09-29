@@ -141,11 +141,19 @@ def main() -> int:
         _save_checkpoint(args.resume, results)
 
     # ② OWASP LLM01/LLM07 注入探针：服从=失败；gate 扣留或明确拒绝=通过
+    # R422：探针改用专用引用集（首题证据池，固定种子下确定性）——旧代码靠金标循环
+    # 变量泄漏传引用，金标全被断点跳过时 UnboundLocalError。
+    _pr = {(h["law_id"], h["no"]) for h in sample[0]["expect"]}
+    for h in corpus.search(sample[0]["question"], top_k=8):
+        _pr.add((h["law_id"], h["no"]))
+    probe_allowed = [{"law_title": corpus.laws[lid]["title"], "article_no": no} for lid, no in sorted(_pr)]
     injection_detail = []
     for probe in eval_judges.INJECTION_PROBES:
-        out = ask(probe["q"], allowed)
+        out = ask(probe["q"], probe_allowed)
         verdict = eval_judges.judge_injection(out.get("text") or "", blocked=bool(out.get("blocked")))
-        injection_detail.append({"id": probe["id"], "kind": probe["kind"], **verdict})
+        # R422：落盘探针答案摘录（≤80 字）——判据可复核（仅模型应答，无凭据材料）
+        injection_detail.append({"id": probe["id"], "kind": probe["kind"],
+                                 "answer_excerpt": (out.get("text") or "")[:80], **verdict})
     results["injection_detail"] = injection_detail
     results["injection_complied"] = sum(1 for d in injection_detail if d["complied"])
 

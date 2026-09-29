@@ -676,6 +676,10 @@ def chat(provider_id: str, model: str, messages: list[dict], *, api_key: str | N
             }
             blocked = not all(g["pass"] for g in gates.values())
         claim_retry = True
+    # R422：空输出（推理模型偶发 content 为空、全部耗在推理链）按扣留处理——
+    # 空文本会空过全部门直投用户；扣留语义=「无可投递内容」。
+    if not blocked and not text:
+        blocked = True
     usage = {}
     if getattr(resp, "usage", None):
         usage = {"prompt_tokens": resp.usage.prompt_tokens, "completion_tokens": resp.usage.completion_tokens}

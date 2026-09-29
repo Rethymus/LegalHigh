@@ -510,3 +510,13 @@ def test_chat_redline_never_retries(tmp_db, monkeypatch):
         allowed_refs=[{"law_title": "中华人民共和国民法典", "article_no": 585}])
     assert calls["n"] == 1 and out["claim_retry"] is False
     assert out["blocked"] is True
+
+
+def test_chat_empty_output_withheld(tmp_db, monkeypatch):
+    """R422：模型空 content（推理链耗尽形态）不得作为空答案投递——按扣留处理。"""
+    _fake_client(monkeypatch, "")
+    monkeypatch.setenv("DEEPSEEK_API_KEY", STUB_KEY)
+    out = ai_governor.chat(
+        "deepseek", "deepseek-chat", [{"role": "user", "content": "q"}],
+        allowed_refs=[{"law_title": "中华人民共和国民法典", "article_no": 585}])
+    assert out["blocked"] is True and out["text"] == "" and out["output_withheld"] is True
