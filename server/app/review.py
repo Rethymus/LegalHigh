@@ -128,6 +128,90 @@ def _pct_near(text: str, keyword: str):
     return worst
 
 
+# ---------------- 建议修订块（R440，R437-T3 首批 w:del 修订路由） ----------------
+# 结构：{"action": "delete"|"replace", "target_re": <跨度正则>} 或句级近邻形态
+# {"action": "replace", "near": <关键词>, "replacement": …[, "replacement_cn"/"replacement_dual"]}。
+# 不变式：发射的 target 必须逐字存在于条款文本——跨度一律在条款文本上 re 定位取得
+# （匹配结果即逐字子串，构造即真；发射处再防御性复核，失败回退 comment-only 不编造跨度）。
+# 加载期形状校验 fail-closed：块不合法即拒绝加载整个审查点库（见 _validate_revisions）。
+
+_BRACKET_PCT = rf"[（(]\s*{_PERCENT_VALUE}\s*[）)]"
+
+
+def _validate_revisions(cps: list) -> None:
+    """revision 块形状校验（R437 设计 T3 内容闸门 ①）：非法形状直接抛错——审查点库是
+    引用绑定产出的一环，宁可拒绝加载也不带病运行（fail-closed，与 citation 校验同纪律）。"""
+    for cp in cps:
+        rev = cp.get("revision")
+        if not rev:
+            continue
+        cid = cp.get("id", "?")
+        if cp["id"] == "L6":
+            raise ValueError(f"审查点 {cid}：全文级检查点不得携带 revision 块")
+        if rev.get("action") not in ("delete", "replace"):
+            raise ValueError(f"审查点 {cid}：revision.action 必须是 delete|replace")
+        if not rev.get("target_re") and not rev.get("near"):
+            raise ValueError(f"审查点 {cid}：revision 需要 target_re 或 near 定位")
+        if rev.get("target_re"):
+            try:
+                re.compile(rev["target_re"])
+            except re.error as exc:
+                raise ValueError(f"审查点 {cid}：revision.target_re 无法编译") from exc
+        if rev["action"] == "delete" and rev.get("replacement"):
+            raise ValueError(f"审查点 {cid}：delete 不得携带 replacement")
+        if rev["action"] == "replace" and not str(rev.get("replacement", "")).strip():
+            raise ValueError(f"审查点 {cid}：replace 缺 replacement")
+
+
+def _extend_pct_span(text: str, start: int, end: int) -> tuple[int, int]:
+    """双记数形态（百分之三十（30%）/ 30%（百分之三十））跨度扩展：括号内另一记数形态
+    并入同一替换跨度，避免替换后残留半边旧记数。"""
+    m = re.compile(_BRACKET_PCT).match(text, end)
+    if m:
+        return start, m.end()
+    m = re.compile(rf"{_BRACKET_PCT}\s*").match(text, 0, start)
+    if m and m.end() == start:
+        return m.start(), end
+    return start, end
+
+
+def _locate_revision_span(rev: dict, text: str) -> tuple[int, int] | None:
+    """在条款文本上定位建议修订的逐字跨度（返回起止下标）；定位不到返回 None（回退 comment-only）。"""
+    if rev.get("near"):
+        # 句级近邻（与 _pct_near 同口径）：关键词所在句内取数值最大的百分比（并列取首个）。
+        # 偏移用 split 保序累计（find 对重复句会命中首处，错位后续句）。
+        pos = 0
+        for sent in re.split(r"[。；！？\n]", text):
+            if rev["near"] in sent:
+                best = None
+                for m in PERCENT_RE.finditer(sent):
+                    v = _parse_percentage(m.group(0))
+                    if v is None:
+                        continue
+                    if best is None or v > best[0]:
+                        best = (v, m)
+                if best is not None:
+                    return _extend_pct_span(text, pos + best[1].start(), pos + best[1].end())
+            pos += len(sent) + 1  # 分隔符均为单字符
+        return None
+    m = re.search(rev["target_re"], text)
+    return (m.start(), m.end()) if m else None
+
+
+def _pick_replacement(rev: dict, span: str):
+    """按跨度记数形态选替换文本：中文数字/百分号/双形态三选一（确定性映射）。"""
+    if rev["action"] == "delete":
+        return None
+    if "replacement_cn" in rev:
+        has_cn, has_sym = "百分之" in span, "%" in span or "％" in span
+        if has_cn and has_sym:
+            return rev["replacement_dual"]
+        if has_cn:
+            return rev["replacement_cn"]
+        return rev["replacement"]
+    return rev["replacement"]
+
+
 def _l1_match(t: str) -> bool:
     """违约金/滞纳金/逾期利息/资金占用费偏高的口径：一次性比例 ≥24%；按日 ≥0.3%；按月 ≥2%；
     已设不超过 20% 上限的视为已作风险控制。资金占用费为逾期付款成本的规范表述。"""
@@ -166,7 +250,11 @@ def build_checkpoints():
          "detail": "「最终解释权」「单方修改规则」类条款排除了对方主要权利或重要程序保障。依《民法典》第497条，提供格式条款一方不合理地免除或减轻其责任、加重对方责任、限制或排除对方主要权利的，该格式条款无效。",
          "match": lambda t: bool(re.search(r"(最终解释权|单方解释|保留.{0,8}解释权|有权单方(修改|变更|调整)|无需(另行)?通知.{0,10}(修改|变更|调整))", t)),
          "citation": ("civl-2020", 497),
-         "suggestion": "改为「双方协商一致后书面变更」；保留解释权表述整体删除。"},
+         "suggestion": "改为「双方协商一致后书面变更」；保留解释权表述整体删除。",
+         # R440 首批修订（R437-T3）：解释权形态 → 删除该表述（跨度=逐字定位）；
+         # 修改权形态（有权单方修改…）定位不到解释权跨度 → 自动回退 comment-only。
+         "revision": {"action": "delete",
+                      "target_re": r"(?:保留)?(?:对[^，。；]{0,8})?(?:本协议|本合同|本公司)?最终解释权(?:归[^，。；、]{0,20})?"}},
         {"id": "L4", "category": "liability", "risk": "medium",
          "title": "单方解除权缺乏对等约束",
          "detail": "条款赋予一方单方/随时解除权而未见对等程序约束。依《民法典》第562条，约定解除应明确解除事由；单方解除权宜与通知程序、合理期限、善后安排配套。",
@@ -204,13 +292,20 @@ def build_checkpoints():
          "detail": "定金比例超过主合同标的额的20%上限。依《民法典》第586条，定金不得超过主合同标的额的百分之二十，超过部分不产生定金的效力。",
          "match": lambda t: bool(re.search(r"定金", t)) and _pct_near(t, "定金") > 20,
          "citation": ("civl-2020", 586),
-         "suggestion": "将定金比例降至20%以内；超出部分可改为预付款并约定返还规则。"},
+         "suggestion": "将定金比例降至20%以内；超出部分可改为预付款并约定返还规则。",
+         # R440 首批修订：句级近邻定位「定金」所在句的最大比例跨度 → 替换为 20%
+         # 等值记数（中文数字/百分号/双形态三种确定性映射）。
+         "revision": {"action": "replace", "near": "定金",
+                      "replacement": "20%", "replacement_cn": "百分之二十", "replacement_dual": "百分之二十（20%）"}},
         {"id": "F4", "category": "fee", "risk": "medium",
          "title": "定金与订金/违约金混用风险",
          "detail": "条款同时出现「定金」与其他款项表述，易生混淆。依《民法典》第587条，定金适用双倍返还罚则，与普通预付款（订金）法律后果不同；与违约金并存时还需注意择一适用问题。",
          "match": lambda t: bool(re.search(r"定金", t)) and bool(re.search(r"(订金|预付款|违约金)", t)),
          "citation": ("civl-2020", 587),
-         "suggestion": "区分表述：担保目的的款项统一称「定金」并写明适用罚则；预付性质款项称「预付款」并约定结算与返还规则。"},
+         "suggestion": "区分表述：担保目的的款项统一称「定金」并写明适用罚则；预付性质款项称「预付款」并约定结算与返还规则。",
+         # R440 首批修订：混用形态为「订金」时 → 术语替换为「预付款」（建议文本的逐字兑现）；
+         # 混用形态为预付款/违约金（无订金字样）→ 定位不到 → comment-only。
+         "revision": {"action": "replace", "target_re": r"订金", "replacement": "预付款"}},
         {"id": "F5", "category": "fee", "risk": "low",
          "title": "金额缺少大写约定（实务建议）",
          "detail": "条款出现小写金额但未见大写金额。实务中大写金额可有效防止篡改与争议（实务建议，不构成法律依据）。",
@@ -251,11 +346,13 @@ def build_checkpoints():
          "citation": None,
          "suggestion": "对大额款项考虑银行共管/第三方监管账户或按里程碑分期支付。"},
     ]
-    # 启动期校验：带 citation 的审查点，其条文必须真实存在于语料（引用不变量硬门）
+    # 启动期校验：带 citation 的审查点，其条文必须真实存在于语料（引用不变量硬门）；
+    # revision 块形状校验 fail-closed（R440，R437-T3 内容闸门——非法形状拒绝加载）。
     corpus = get_corpus()
     for cp in cps:
         if cp["citation"]:
             corpus.citation_of(*cp["citation"])
+    _validate_revisions(cps)
     return cps
 
 
@@ -292,6 +389,19 @@ def analyze_contract(text: str, title: str | None = None):
                 continue
             fired = True
             is_whole = cp["id"] == "L6"
+            # 建议修订块（R440）：条款级检查点携带 revision 且能逐字定位跨度时发射；
+            # 定位不到（形态不匹配）→ revision=None 回退 comment-only，绝不编造跨度。
+            rev_out = None
+            if cp.get("revision") and not is_whole:
+                span = _locate_revision_span(cp["revision"], c["text"])
+                if span is not None:
+                    target = c["text"][span[0]:span[1]]
+                    if target and target in c["text"]:  # 逐字存在（构造即真，防御性复核）
+                        rev_out = {
+                            "action": cp["revision"]["action"],
+                            "target": target,
+                            "replacement": _pick_replacement(cp["revision"], target),
+                        }
             finding = {
                 "id": f"f{len(findings) + 1}",
                 "clause_id": None if is_whole else c["id"],
@@ -304,6 +414,7 @@ def analyze_contract(text: str, title: str | None = None):
                 "checkpoint_title": cp["title"],
                 "detail": cp["detail"],
                 "suggestion": cp["suggestion"],
+                "revision": rev_out,
                 "basis_kind": "statute" if cp["citation"] else "practice",
                 "citation": corpus.citation_of(*cp["citation"]) if cp["citation"] else None,
             }

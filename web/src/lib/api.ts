@@ -92,6 +92,13 @@ export interface Citation {
 export type RiskLevel = 'high' | 'medium' | 'low'
 export type ReviewCategory = 'fee' | 'account' | 'liability'
 
+/** 建议修订块（R440，R437-T3）：target 是条款原文的逐字跨度；replace 带 replacement。 */
+export interface FindingRevision {
+  action: 'delete' | 'replace'
+  target: string
+  replacement: string | null
+}
+
 export interface Finding {
   id: string
   clause_id: string | null
@@ -104,6 +111,7 @@ export interface Finding {
   checkpoint_title: string
   detail: string
   suggestion: string
+  revision?: FindingRevision | null
   basis_kind: 'statute' | 'practice'
   citation: Citation | null
 }

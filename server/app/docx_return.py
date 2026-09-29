@@ -61,12 +61,20 @@ def _validate_docx_container(data: bytes) -> None:
 
 def parse_review_docx(data: bytes) -> dict[str, str]:
     """解析回传 DOCX → {finding_id: pending|accepted|rejected}。"""
+    return parse_review_docx_detailed(data)["states"]
+
+
+def parse_review_docx_detailed(data: bytes) -> dict:
+    """详细解析（R440）：states 同既有三态；ranges 另行携带书签区间的分层文本与
+    修订删除信息（del_present/del_text），供 apply_return 对 w:del 的接受/拒绝做
+    可观测判定——删除态不驱动状态机，只进 summary 观测（R437 设计 T3 口径）。"""
     _validate_docx_container(data)
     from docx import Document
 
     doc = Document(BytesIO(data))
     body = doc.element.body
-    result: dict[str, str] = {}
+    states: dict[str, str] = {}
+    ranges: dict[str, dict] = {}
 
     open_name = None
     captured: list = []
@@ -79,30 +87,40 @@ def parse_review_docx(data: bytes) -> dict[str, str]:
         if open_name and tag == W_NS + "bookmarkEnd":
             fid = open_name[3:]  # LH_f3 -> f3
             # 区分「修订内文本」与「普通文本」：Word 接受修订后建议文本会落入普通层
-            ins_text, plain_text = [], []
+            ins_text, plain_text, del_text, del_present = [], [], [], False
             for node in iter_all(captured):
                 if node.tag == W_NS + "t":
                     target = node.getparent()
-                    in_ins = False
+                    in_ins = in_del = False
                     while target is not None:
                         if target.tag == W_NS + "ins":
                             in_ins = True
-                            break
+                        elif target.tag == W_NS + "del":
+                            in_del = True
                         target = target.getparent()
-                    (ins_text if in_ins else plain_text).append(node.text or "")
+                    if in_del:
+                        del_text.append(node.text or "")
+                    elif in_ins:
+                        ins_text.append(node.text or "")
+                    else:
+                        plain_text.append(node.text or "")
+                elif node.tag == W_NS + "del":
+                    del_present = True
             ins_joined, plain_joined = "".join(ins_text), "".join(plain_text)
             if "建议：" in ins_joined:
-                result[fid] = "pending"
+                states[fid] = "pending"
             elif "建议：" in plain_joined:
-                result[fid] = "accepted"
+                states[fid] = "accepted"
             else:
-                result[fid] = "rejected"
+                states[fid] = "rejected"
+            ranges[fid] = {"del_present": del_present, "del_text": "".join(del_text),
+                           "plain": plain_joined, "ins": ins_joined}
             open_name = None
             captured = []
             continue
         if open_name:
             captured.append(el)
-    return result
+    return {"states": states, "ranges": ranges}
 
 
 def iter_all(elements):
@@ -111,9 +129,14 @@ def iter_all(elements):
         yield from el.iter()
 
 
-def apply_return(rid: str, parsed: dict[str, str], review: dict, actor: str = "docx回传") -> dict:
+def apply_return(rid: str, parsed: dict[str, str], review: dict, actor: str = "docx回传",
+                 ranges: dict | None = None) -> dict:
     """把解析结果套用进批注状态机：accepted→adopt、rejected→reject；
-    pending 不动；非法流转（如终态再变更）如实记 skipped，不静默丢弃。"""
+    pending 不动；非法流转（如终态再变更）如实记 skipped，不静默丢弃。
+
+    ranges（R440 可观测）：携带书签区间分层文本时，对带建议修订块的发现另算
+    w:del 删除态（pending=仍在 w:del / accepted=跨度文本已消失 / rejected=落普通层）
+    ——删除态只进 summary["deletions"] 观测，不驱动状态机（状态仍锚定建议 w:ins）。"""
     from . import storage
 
     valid_ids = {f["id"] for f in review["result"]["findings"]}
@@ -133,4 +156,26 @@ def apply_return(rid: str, parsed: dict[str, str], review: dict, actor: str = "d
             summary["skipped"].append({"id": fid, "decision": decision, "reason": str(e)})
     summary["accepted_n"] = len(summary["accepted"])
     summary["rejected_n"] = len(summary["rejected"])
+    summary["deletions"] = _resolve_deletions(review, ranges or {})
     return summary
+
+
+def _resolve_deletions(review: dict, ranges: dict) -> list[dict]:
+    """w:del 删除态观测：仅对带 revision 块的发现计算；无 ranges/无 revision 时为空表。"""
+    out = []
+    for f in review["result"]["findings"]:
+        rev = f.get("revision")
+        if not rev:
+            continue
+        info = ranges.get(f["id"])
+        if info is None:
+            continue
+        if info.get("del_present"):
+            decision = "pending"
+        elif rev["target"] in info.get("plain", ""):
+            decision = "rejected"
+        else:
+            decision = "accepted"
+        out.append({"id": f["id"], "checkpoint_id": f.get("checkpoint_id"),
+                    "action": rev["action"], "target": rev["target"], "decision": decision})
+    return out

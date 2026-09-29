@@ -320,7 +320,15 @@ export default function ContractReview() {
                       <dt>风险说明</dt>
                       <dd>{f.detail}</dd>
                       <dt>建议修改</dt>
-                      <dd><div className="risk-suggest">{f.suggestion}</div></dd>
+                      <dd>
+                        <div className="risk-suggest">{f.suggestion}</div>
+                        {/* 修订行并入同一 dd：dl 网格按 dt/dd 交替分列，多插一个 dd 会落进标签窄列（R440 视觉验收抓出） */}
+                        {f.revision && (
+                          <div className="tiny mono" style={{ background: 'var(--warn-soft)', borderRadius: 6, padding: '6px 8px', marginTop: 6, wordBreak: 'break-all' }}>
+                            建议修订（{f.revision.action === 'delete' ? '删除' : '替换'}）：<s>{f.revision.target}</s>{f.revision.replacement ? ` → ${f.revision.replacement}` : ''}
+                          </div>
+                        )}
+                      </dd>
                       {anno?.amended_text && (<><dt>修改文本</dt><dd className="tiny">{anno.amended_text}</dd></>)}
                       {anno && anno.state !== 'pending' && (<><dt>复核记录</dt><dd className="tiny">{anno.actor} · {fmtTime(anno.updated_at)}</dd></>)}
                     </dl>

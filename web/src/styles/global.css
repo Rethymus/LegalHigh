@@ -755,6 +755,10 @@ svg { display: block; flex: none; }
 .risk-kv { display: grid; grid-template-columns: 64px 1fr; gap: 4px 10px; font-size: 12.5px; margin: 9px 0; }
 .risk-kv dt { color: var(--tx-3); }
 .risk-kv dd { color: var(--tx); line-height: 1.6; }
+/* R440：审查详情窄列内的引用药丸允许内部换行——法律依据标签（法名+条号+状态+施行日）
+   在窄面板超出列宽时溢出药丸底色并与下行叠压（write-E2E 视觉验收抓出；作用域限定
+   risk-kv，a11y 最小高度 24.5px 保留——单行形态不变，仅长标签换行）。 */
+.risk-kv .cit { flex-wrap: wrap; height: auto; min-height: 24.5px; padding: 3px 10px; }
 .risk-quote { background: var(--bg-2); border-radius: 8px; padding: 8px 11px; font-size: 12px; color: var(--tx-2); border-left: 2px solid var(--div); margin-bottom: 8px; line-height: 1.7; }
 .risk-suggest { background: var(--ok-soft); border-radius: 8px; padding: 9px 12px; font-size: 12.5px; color: var(--tx); line-height: 1.7; margin: 8px 0; }
 .risk-acts { display: flex; gap: 7px; flex-wrap: wrap; padding-top: 9px; border-top: 1px dashed var(--div); }

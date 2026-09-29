@@ -148,6 +148,38 @@ def _add_tracked_insert(paragraph, text: str, author: str, date: str, doc):
     return run
 
 
+def _add_tracked_delete(paragraph, text: str, author: str, date: str, doc):
+    """在段落中追加一段「修订删除」文本（w:del 包裹 w:r）——与 _add_tracked_insert 对称
+    （R440，R437-T3 首批 w:del 修订路由）。渲染在建议段落（书签区间内）：删除的是
+    「建议修订所针对的原文跨度」的引用，接受/拒绝由律师在 Word 内处理；回传状态机
+    仍锚定建议文本的 w:ins（docx_return 三态判定不动）。"""
+    from docx.oxml.ns import qn
+    run = paragraph.add_run(text)
+    r_el = run._r
+    dele = r_el.makeelement(qn("w:del"), {})
+    dele.set(qn("w:id"), str(doc._next_id))
+    doc._next_id += 1
+    dele.set(qn("w:author"), author)
+    dele.set(qn("w:date"), date)
+    r_el.addprevious(dele)
+    dele.append(r_el)
+    return run
+
+
+def _render_revision(paragraph, rev: dict | None, date: str, doc):
+    """渲染建议修订块（R440）：书签区间内先呈现「删除原文跨度」（w:del），
+    replace 形态随后呈现「插入替换文本」（w:ins）——建议正文（建议：…）仍走
+    既有 w:ins，回传三态锚定不变。rev 为 None（comment-only）时不渲染任何标记。"""
+    if not rev:
+        return
+    action_label = "删除" if rev["action"] == "delete" else "替换"
+    paragraph.add_run(f"［建议修订·{action_label}］")
+    _add_tracked_delete(paragraph, rev["target"], "LegalHigh AI", date, doc)
+    if rev.get("replacement"):
+        _add_tracked_insert(paragraph, f" → {rev['replacement']}", "LegalHigh AI", date, doc)
+    paragraph.add_run("　")
+
+
 def generate_review_docx(review: dict) -> bytes:
     """审查记录导出：合同条款原文 + 每条 AI 建议以「修订插入」写入（作者=LegalHigh AI）。
     修订版式由结构化数据（findings.suggestion）决定，不让自由生成决定版式。"""
@@ -188,6 +220,7 @@ def generate_review_docx(review: dict) -> bytes:
             p2 = doc.add_paragraph()
             _bookmark(p2, f"LH_{f['id']}")
             p2.add_run(f"[{f['checkpoint_title']}｜{ {'high': '高风险', 'medium': '中风险', 'low': '低风险' }[f['risk']]}] ")
+            _render_revision(p2, f.get("revision"), date, doc)
             _add_tracked_insert(p2, f"建议：{sug}", "LegalHigh AI", date, doc)
     for f in by_clause.get("__whole__", []):
         p3 = doc.add_paragraph()

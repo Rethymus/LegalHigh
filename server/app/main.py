@@ -669,15 +669,18 @@ async def review_docx_return(
     if len(data) > docx_return.MAX_DOCX_BYTES:
         raise HTTPException(status_code=413, detail="DOCX 文件超过 10 MiB 大小限制。")
     try:
-        parsed = docx_return.parse_review_docx(data)
-        summary = docx_return.apply_return(rid, parsed, r, actor=admin.name)
+        detailed = docx_return.parse_review_docx_detailed(data)
+        summary = docx_return.apply_return(rid, detailed["states"], r, actor=admin.name,
+                                            ranges=detailed["ranges"])
     except ValueError as ex:
         raise HTTPException(status_code=422, detail=str(ex)) from ex
     except Exception as ex:  # noqa: BLE001 - 第三方 DOCX 解析异常统一转为输入错误
         raise HTTPException(status_code=422, detail="DOCX 文件无法解析。") from ex
     storage.audit(admin.name, "review", rid, "docx_return", {
         "accepted": summary["accepted_n"], "rejected": summary["rejected_n"],
-        "pending": summary["pending"], "skipped": len(summary["skipped"])})
+        "pending": summary["pending"], "skipped": len(summary["skipped"]),
+        # R440 删除态可观测：只记数量与决定，不回显命中原文（规则⑮扫描/审计纪律）
+        "deletion_decisions": {d["id"]: d["decision"] for d in summary.get("deletions", [])}})
     return summary
 
 

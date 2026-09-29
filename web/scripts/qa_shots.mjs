@@ -128,7 +128,7 @@ const ROUTES = [
       if (!(title instanceof HTMLInputElement) || !(body instanceof HTMLTextAreaElement)) return 'bad-element-types';
       inputSet.call(title, 'QA 隔离数据库合同审查');
       title.dispatchEvent(new Event('input', { bubbles: true }));
-      textSet.call(body, '合同测试输入（仅写入本次唯一临时数据库）。第一条 服务费用由双方另行约定。第二条 任何情况下服务方赔偿责任不超过已收费用的百分之十。第三条 收款账户以书面通知为准。');
+      textSet.call(body, '合同测试输入（仅写入本次唯一临时数据库）。第一条 服务费用由双方另行约定。第二条 任何情况下服务方赔偿责任不超过已收费用的百分之十。第三条 收款账户以书面通知为准。第四条 本协议最终解释权归甲方所有。');
       body.dispatchEvent(new Event('input', { bubbles: true }));
       return title.value && body.value.length > 30 ? 'ok' : 'set-did-not-stick';
     })()` },
@@ -147,7 +147,7 @@ const ROUTES = [
       if (!(title instanceof HTMLInputElement) || !(body instanceof HTMLTextAreaElement)) return 'bad-element-types';
       inputSet.call(title, 'QA 隔离数据库窄屏向导审查');
       title.dispatchEvent(new Event('input', { bubbles: true }));
-      textSet.call(body, '合同测试输入（仅写入本次唯一临时数据库）。第一条 服务费用由双方另行约定。第二条 任何情况下服务方赔偿责任不超过已收费用的百分之十。第三条 收款账户以书面通知为准。');
+      textSet.call(body, '合同测试输入（仅写入本次唯一临时数据库）。第一条 服务费用由双方另行约定。第二条 任何情况下服务方赔偿责任不超过已收费用的百分之十。第三条 收款账户以书面通知为准。第四条 本协议最终解释权归甲方所有。');
       body.dispatchEvent(new Event('input', { bubbles: true }));
       return title.value && body.value.length > 30 ? 'ok' : 'set-did-not-stick';
     })()` },
