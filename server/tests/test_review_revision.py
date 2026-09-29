@@ -46,6 +46,13 @@ GOLD_REVISION_ROWS = [
     ("定金为合同总额的百分之三十（30%）。", "F3", "replace", "百分之三十（30%）", "百分之二十（20%）"),
     # F4 订金术语替换
     ("甲方支付的订金转为定金担保。", "F4", "replace", "订金", "预付款"),
+    # R1 租期超限替换（R442，T4×T3 交叉；记数匹配 + 句内最大年数 + 年数/百分比分流）
+    ("租赁期限为三十年，租金每年一万元。", "R1", "replace", "三十年", "二十年"),
+    # 偏移判别行：句内还有更小年数（可提前3年解约），必须选最大年数「50年」而非碎片跨度
+    #（本行抓过真 bug：year 分支曾漏加句基址 pos，返回句内偏移切出「条 约」——逐字但错误）
+    ("租期50年，可提前3年书面解约。", "R1", "replace", "50年", "20年"),
+    # 单位判别行：同句存在更大的百分比（押金 200%），年数定位不得误选百分比跨度
+    ("租期50年，押金为月租金的 200%。", "R1", "replace", "50年", "20年"),
 ]
 
 GOLD_REVISION_ABSENT_ROWS = [
@@ -79,8 +86,8 @@ def test_revision_gold_absent_rows(text, cp):
 
 
 def test_revision_gold_rows_count():
-    """金标规模门：正表 ≥7 行（三审查点×三形态），反表 ≥2 行。"""
-    assert len(GOLD_REVISION_ROWS) >= 7
+    """金标规模门：正表 ≥10 行（四审查点·含偏移/单位两类判别行），反表 ≥2 行。"""
+    assert len(GOLD_REVISION_ROWS) >= 10
     assert len(GOLD_REVISION_ABSENT_ROWS) >= 2
 
 
@@ -112,10 +119,10 @@ def test_validate_revisions_rejects_malformed_shapes():
 
 
 def test_production_checkpoints_load_clean():
-    """产线审查点库自检：三个 revision 块全部合法加载。"""
+    """产线审查点库自检：四个 revision 块全部合法加载。"""
     cps = review.get_checkpoints()
     with_rev = [cp["id"] for cp in cps if cp.get("revision")]
-    assert with_rev == ["L3", "F3", "F4"], with_rev
+    assert with_rev == ["L3", "F3", "F4", "R1"], with_rev
 
 
 # ---- DOCX 导出：w:del/w:ins 渲染 ----

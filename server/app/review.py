@@ -136,6 +136,12 @@ def _pct_near(text: str, keyword: str):
 # 加载期形状校验 fail-closed：块不合法即拒绝加载整个审查点库（见 _validate_revisions）。
 
 _BRACKET_PCT = rf"[（(]\s*{_PERCENT_VALUE}\s*[）)]"
+_YEAR_VALUE = r"[0-9]{1,3}|[一两二三四五六七八九十]{1,4}"
+_YEAR_RE = re.compile(rf"({_YEAR_VALUE})\s*年")
+
+
+def _year_value(raw: str) -> float:
+    return float(raw) if raw.isdigit() else (_cn_number_to_float(raw) or 0.0)
 
 
 def _validate_revisions(cps: list) -> None:
@@ -178,32 +184,37 @@ def _extend_pct_span(text: str, start: int, end: int) -> tuple[int, int]:
 def _locate_revision_span(rev: dict, text: str) -> tuple[int, int] | None:
     """在条款文本上定位建议修订的逐字跨度（返回起止下标）；定位不到返回 None（回退 comment-only）。"""
     if rev.get("near"):
-        # 句级近邻（与 _pct_near 同口径）：关键词所在句内取数值最大的百分比（并列取首个）。
-        # 偏移用 split 保序累计（find 对重复句会命中首处，错位后续句）。
+        # 句级近邻（与 _pct_near 同口径）：关键词所在句内取数值最大的目标量度跨度
+        # （并列取首个）。unit=year 时目标为年数量词（R442 R1 租期替换）。
+        pattern = _YEAR_RE if rev.get("unit") == "year" else PERCENT_RE
         pos = 0
         for sent in re.split(r"[。；！？\n]", text):
             if rev["near"] in sent:
                 best = None
-                for m in PERCENT_RE.finditer(sent):
-                    v = _parse_percentage(m.group(0))
-                    if v is None:
+                for m in pattern.finditer(sent):
+                    v = _year_value(m.group(1)) if rev.get("unit") == "year" else _parse_percentage(m.group(0))
+                    if v is None or v <= 0:
                         continue
                     if best is None or v > best[0]:
                         best = (v, m)
                 if best is not None:
+                    if rev.get("unit") == "year":
+                        return pos + best[1].start(), pos + best[1].end()
                     return _extend_pct_span(text, pos + best[1].start(), pos + best[1].end())
-            pos += len(sent) + 1  # 分隔符均为单字符
+            pos += len(sent) + 1  # 分隔符均为单字符（find 对重复句会命中首处，错位后续句）
         return None
     m = re.search(rev["target_re"], text)
     return (m.start(), m.end()) if m else None
 
 
 def _pick_replacement(rev: dict, span: str):
-    """按跨度记数形态选替换文本：中文数字/百分号/双形态三选一（确定性映射）。"""
+    """按跨度记数形态选替换文本：中文数字/阿拉伯数字/双形态三选一（确定性映射；
+    百分比与年数两类跨度共用——判定看跨度内是否含中文数字字符）。"""
     if rev["action"] == "delete":
         return None
     if "replacement_cn" in rev:
-        has_cn, has_sym = "百分之" in span, "%" in span or "％" in span
+        has_cn = bool(re.search(r"[一两二三四五六七八九十]", span))
+        has_sym = "%" in span or "％" in span
         if has_cn and has_sym:
             return rev["replacement_dual"]
         if has_cn:
@@ -353,7 +364,11 @@ def build_checkpoints():
          "match": lambda t: bool(m := re.search(r"(?:租赁期限|租期)[^。；，,]{0,6}?([0-9]{1,3}|[一两二三四五六七八九十]{1,4})\s*年", t))
                         and (float(m.group(1)) if m.group(1).isdigit() else (_cn_number_to_float(m.group(1)) or 0)) > 20,
          "citation": ("civl-2020", 705),
-         "suggestion": "将租赁期限调整至二十年以内；确需更长的，期满续订（续订之日起重新计算上限）。"},
+         "suggestion": "将租赁期限调整至二十年以内；确需更长的，期满续订（续订之日起重新计算上限）。",
+         # R442（T4×T3 交叉）：超限年限 → 法定上限等值替换（年数记数匹配；句内取
+         # 最大年数跨度——同句「可提前3年解约」等更小年数不会被误选为替换目标）。
+         "revision": {"action": "replace", "near": "租", "unit": "year",
+                      "replacement": "20年", "replacement_cn": "二十年"}},
         {"id": "R2", "category": "liability", "risk": "low",
          "title": "欠租即解除条款缺少催告宽限",
          "detail": "条款约定拖欠租金即可解除/收回，未见催告或宽限安排。依《民法典》第722条，承租人无正当理由未支付或迟延支付租金的，出租人应先请求其在合理期限内支付，逾期不支付的方可解除。",
