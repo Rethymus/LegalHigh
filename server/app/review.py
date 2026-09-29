@@ -146,7 +146,7 @@ def _validate_revisions(cps: list) -> None:
         if not rev:
             continue
         cid = cp.get("id", "?")
-        if cp["id"] == "L6":
+        if cp["id"] == "L6" or cp.get("scope") == "whole":
             raise ValueError(f"审查点 {cid}：全文级检查点不得携带 revision 块")
         if rev.get("action") not in ("delete", "replace"):
             raise ValueError(f"审查点 {cid}：revision.action 必须是 delete|replace")
@@ -345,6 +345,38 @@ def build_checkpoints():
          "match": lambda t: bool(re.search(r"(保证金|订金|预付款|货款)[^。]{0,30}(万元|万|亿)", t)) and not re.search(r"(共管|监管|托管|分期)", t),
          "citation": None,
          "suggestion": "对大额款项考虑银行共管/第三方监管账户或按里程碑分期支付。"},
+
+        # ── 租赁类（T4 首批，R441；民法典合同编租赁章语料已备） ──────────
+        {"id": "R1", "category": "liability", "risk": "medium",
+         "title": "租赁期限超过法定上限",
+         "detail": "约定的租赁期限超过二十年。依《民法典》第705条，租赁期限不得超过二十年，超过二十年的部分无效；续订的，自续订之日起另计。",
+         "match": lambda t: bool(m := re.search(r"(?:租赁期限|租期)[^。；，,]{0,6}?([0-9]{1,3}|[一两二三四五六七八九十]{1,4})\s*年", t))
+                        and (float(m.group(1)) if m.group(1).isdigit() else (_cn_number_to_float(m.group(1)) or 0)) > 20,
+         "citation": ("civl-2020", 705),
+         "suggestion": "将租赁期限调整至二十年以内；确需更长的，期满续订（续订之日起重新计算上限）。"},
+        {"id": "R2", "category": "liability", "risk": "low",
+         "title": "欠租即解除条款缺少催告宽限",
+         "detail": "条款约定拖欠租金即可解除/收回，未见催告或宽限安排。依《民法典》第722条，承租人无正当理由未支付或迟延支付租金的，出租人应先请求其在合理期限内支付，逾期不支付的方可解除。",
+         "match": lambda t: bool(re.search(r"(拖欠|逾期[^。]{0,6}支付|未按时[^。]{0,4}支付)[^。]{0,20}租金", t))
+                        and bool(re.search(r"(解除|收回)", t))
+                        and not re.search(r"(催告|合理期限|宽限|催缴)", t),
+         "citation": ("civl-2020", 722),
+         "suggestion": "改为「拖欠租金经书面催告后合理期限内仍未支付的，出租人可以解除合同」，与法定解除程序对齐。"},
+
+        # ── 劳动类（T4 首批，R441；劳动合同法语料已备） ──────────────────
+        {"id": "W1", "category": "liability", "risk": "medium", "scope": "whole",
+         "title": "竞业限制条款未约定经济补偿",
+         "detail": "合同约定了竞业限制，但全文未见与竞业限制相关的经济补偿安排。依《劳动合同法》第23条，约定竞业限制条款的，应当在解除或终止劳动合同后的竞业限制期限内按月给予劳动者经济补偿；第24条并限定竞业限制人员范围与期限。",
+         "match": lambda t: bool(re.search(r"竞业限制|竞业禁止", t))
+                        and not re.search(r"竞业[^。；]{0,60}(经济)?补偿|补偿[^。；]{0,45}竞业", t),
+         "citation": ("lcl-2012", 23),
+         "suggestion": "补充「竞业限制期限内按月支付经济补偿」及补偿标准；并核对人员范围（高级管理人员、高级技术人员及其他负有保密义务人员）与期限（不得超过二年）。"},
+        {"id": "W2", "category": "fee", "risk": "high",
+         "title": "试用期工资低于法定下限",
+         "detail": "试用期工资约定低于约定工资的80%。依《劳动合同法》第20条，试用期工资不得低于本单位相同岗位最低档工资或者劳动合同约定工资的百分之八十，并不得低于用人单位所在地最低工资标准。",
+         "match": lambda t: bool(re.search(r"试用期", t)) and 0 < _pct_near(t, "试用期") < 80,
+         "citation": ("lcl-2012", 20),
+         "suggestion": "将试用期工资调整至约定工资（或相同岗位最低档工资）的80%以上，且不低于当地最低工资标准。"},
     ]
     # 启动期校验：带 citation 的审查点，其条文必须真实存在于语料（引用不变量硬门）；
     # revision 块形状校验 fail-closed（R440，R437-T3 内容闸门——非法形状拒绝加载）。
@@ -388,7 +420,7 @@ def analyze_contract(text: str, title: str | None = None):
             if not hit:
                 continue
             fired = True
-            is_whole = cp["id"] == "L6"
+            is_whole = cp["id"] == "L6" or cp.get("scope") == "whole"  # scope=whole：跨条款判断（R441 W1）
             # 建议修订块（R440）：条款级检查点携带 revision 且能逐字定位跨度时发射；
             # 定位不到（形态不匹配）→ revision=None 回退 comment-only，绝不编造跨度。
             rev_out = None

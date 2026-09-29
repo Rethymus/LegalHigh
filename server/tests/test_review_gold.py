@@ -127,13 +127,44 @@ def test_a4_large_payment_without_escrow():
     assert "A4" not in ids
 
 
+# ---- 租赁类（T4 首批，R441：R1/R2）----
+
+def test_r1_lease_term_over_twenty_years():
+    assert "R1" in fired("租赁期限为三十年，租金每年一万元。")
+    assert "R1" in fired("租期50年。")
+    assert "R1" not in fired("租赁期限为二十年。"), "二十年=法定上限本身，不得触发"
+    assert "R1" not in fired("租期3年，租金押一付三。")
+
+
+def test_r2_termination_for_rent_arrears_without_notice():
+    assert "R2" in fired("乙方拖欠租金的，甲方有权立即解除合同并收回房屋。")
+    ids = fired("乙方拖欠租金经书面催告后十日内仍未支付的，甲方可以解除合同。")
+    assert "R2" not in ids, "已设催告宽限，不触发"
+    assert "R2" not in fired("拖欠租金的每日加收滞纳金。"), "无解除表述不触发"
+
+
+# ---- 劳动类（T4 首批，R441：W1/W2）----
+
+def test_w1_non_compete_without_compensation():
+    assert "W1" in fired("乙方离职后两年内不得从事同类业务（竞业限制）。")
+    ids = fired("乙方竞业限制两年，甲方在限制期内按月支付竞业限制经济补偿。")
+    assert "W1" not in ids, "已约定补偿，不触发"
+
+
+def test_w2_probation_wage_below_floor():
+    assert "W2" in fired("试用期工资为约定工资的 70%。")
+    assert "W2" not in fired("试用期工资为约定工资的 80%。"), "80%=法定下限本身，不得触发"
+    assert "W2" not in fired("试用期工资为约定工资的 85%。")
+    assert "W2" not in fired("试用期三个月。"), "无比例表述无从判断，不触发"
+
+
 def test_gold_review_checkpoints_count():
-    """金标规模门：审查点引擎 16 个，判定用例 ≥50 组（含正反例）。"""
-    assert len(review.get_checkpoints()) == 16
+    """金标规模门：审查点引擎 20 个（16 通用 + T4 首批租赁/劳动各 2），判定用例 ≥50 组（含正反例）。"""
+    assert len(review.get_checkpoints()) == 20
     # 本文件内的测试函数数（每组正反例算一组）
     import test_review_gold as _self  # noqa: PLC0415
     n = sum(1 for name in dir(_self) if name.startswith("test_"))
-    assert n >= 12, n
+    assert n >= 15, n
 
 
 # ================= 数据驱动金标表（M6-T5：≥50 组判定）=================
@@ -196,6 +227,22 @@ GOLD_REVIEW_ROWS = [
     ("保证金 200 万元分期支付。", "A4", False),
     # L1 一次性口径下限
     ("任何一方违约的，按合同总价款的 25% 支付违约金。", "L1", True),
+    # R1 租期超限（T4 首批，R441）
+    ("租赁期限为三十年，租金每年一万元。", "R1", True),
+    ("租期50年。", "R1", True),
+    ("租赁期限为二十年。", "R1", False),
+    ("租期3年，租金押一付三。", "R1", False),
+    # R2 欠租解除无宽限
+    ("乙方拖欠租金的，甲方有权立即解除合同并收回房屋。", "R2", True),
+    ("乙方拖欠租金经书面催告后十日内仍未支付的，甲方可以解除合同。", "R2", False),
+    # W1 竞业限制无补偿（全文级）
+    ("乙方离职后两年内不得从事同类业务（竞业限制）。", "W1", True),
+    ("乙方竞业限制两年，甲方在限制期内按月支付竞业限制经济补偿。", "W1", False),
+    # W2 试用期工资低于下限
+    ("试用期工资为约定工资的 70%。", "W2", True),
+    ("试用期工资为约定工资的 80%。", "W2", False),
+    ("试用期工资为约定工资的 85%。", "W2", False),
+    ("试用期三个月。", "W2", False),
 ]
 
 
