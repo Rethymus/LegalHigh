@@ -466,6 +466,47 @@ def _claim_number_values(text: str) -> list[tuple[int, str]]:
     return out
 
 
+def _split_sentences_keep_quotes(text: str) -> list[str]:
+    """R426：引号内句读不切句——引文里的句号不是引用句的句末。
+
+    离线实验定案：引用前缀+复述式（依据《X法》第N条，……）以 0.83-1.0 词面重合全过；
+    唯「引号整段引原文」式失败——引文内部的 。把引用句切断，后半句失去引用继承
+    （active_citation 按句作用域）。教科书式引原文是最规范的引用形态，门不应惩罚它。
+    引号内的 。！？；
+ 以占位符屏蔽参与切分，切完还原。
+    """
+    ph_open, ph_close = "", ""
+    mapping: dict[str, str] = {}
+    buf: list[str] = []
+    stack = 0
+    n = 0
+    for ch in text:
+        if ch in "“「『":
+            stack += 1
+            buf.append(ch)
+        elif ch in "”」』":
+            stack = max(0, stack - 1)
+            buf.append(ch)
+        elif ch == chr(34):  # 直引号按交替配对（中文正式回答中几乎总用于包引文）
+            stack = stack + 1 if stack == 0 else stack - 1
+            buf.append(ch)
+        elif stack and ch in "。！？；\n":
+            ph = f"{ph_open}{n}{ph_close}"
+            n += 1
+            mapping[ph] = ch
+            buf.append(ph)
+        else:
+            buf.append(ch)
+    masked = "".join(buf)
+    sents = [x for x in re.split(r"(?<=[。！？；\n])", masked) if x.strip()]
+    out = []
+    for x in sents:
+        for ph, ch in mapping.items():
+            x = x.replace(ph, ch)
+        out.append(x.strip())
+    return out
+
+
 def gate_claim_support(text: str, evidence_contexts: list[dict]) -> dict:
     """逐句词面证据门 + 数值一致性核验（claim 级确定性中间步，R168）。
 
@@ -484,7 +525,7 @@ def gate_claim_support(text: str, evidence_contexts: list[dict]) -> dict:
         sources_by_ref[(_title_key(citation["law_title"]), int(citation["article_no"]))] = [
             {"grams": _zh_bigrams(source), "raw": source} for source in sources if source
         ]
-    raw_sentences = [s.strip() for s in re.split(r"(?<=[。！？；\n])", text or "") if s.strip()]
+    raw_sentences = _split_sentences_keep_quotes(text or "")
     checks = []
     violations = []
     for index, sentence in enumerate(raw_sentences, start=1):

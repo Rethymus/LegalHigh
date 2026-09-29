@@ -520,3 +520,21 @@ def test_chat_empty_output_withheld(tmp_db, monkeypatch):
         "deepseek", "deepseek-chat", [{"role": "user", "content": "q"}],
         allowed_refs=[{"law_title": "中华人民共和国民法典", "article_no": 585}])
     assert out["blocked"] is True and out["text"] == "" and out["output_withheld"] is True
+
+
+def test_claim_support_quoted_statute_not_sentence_split(tmp_db):
+    """R426：引号内的句读不切句——教科书式「先引原文再解释」不得被切句惩罚。
+
+    离线实验定案：引用前缀+复述式本就以 0.83-1.0 重合全过；唯引号整段引原文
+    （引文内含 。）被切句致后半句失去引用继承。修复后直/弯引号均 PASS。
+    """
+    from app import commentaries
+    from app.ai_governor import gate_claim_support
+    _, ctxs = commentaries.prompt_context([{"law_id": "civl-2020", "article_no": 188}])
+    quote = chr(0x201C) + "向人民法院请求保护民事权利的诉讼时效期间为三年。法律另有规定的，依照其规定。" + chr(0x201D)
+    prefix = "依据《中华人民共和国民法典》第一百八十八条的规定："
+    assert gate_claim_support(prefix + quote, ctxs)["pass"] is True
+    assert gate_claim_support(prefix + chr(34) + quote[1:-1] + chr(34), ctxs)["pass"] is True
+    # 反例：真正未引用的第二句（无引号包裹）仍必须 FAIL——门语义未放松
+    bad = "依据《中华人民共和国民法典》第一百八十八条，诉讼时效为三年。第二句没有任何引用和依据支持纯属编造的结论。"
+    assert gate_claim_support(bad, ctxs)["pass"] is False

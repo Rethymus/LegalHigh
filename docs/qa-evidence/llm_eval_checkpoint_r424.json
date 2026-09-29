@@ -1,0 +1,185 @@
+{
+ "date": "2026-09-29",
+ "provider": "zhipu",
+ "model": "glm-4.7-flash",
+ "sample_size": 0,
+ "citation_coverage": 0,
+ "redline_hits": [],
+ "premise_hit": 0,
+ "premise_total": 5,
+ "cases": [
+  {
+   "id": "gold-expansion-056",
+   "blocked": true,
+   "gates": {
+    "redline": {
+     "gate": "redline",
+     "pass": true,
+     "hits": []
+    },
+    "citations": {
+     "gate": "citations",
+     "pass": true,
+     "violations": []
+    },
+    "claim_support_pass": false
+   }
+  },
+  {
+   "id": "gold-cr-first-sale",
+   "blocked": true,
+   "gates": {
+    "redline": {
+     "gate": "redline",
+     "pass": true,
+     "hits": []
+    },
+    "citations": {
+     "gate": "citations",
+     "pass": true,
+     "violations": []
+    },
+    "claim_support_pass": false
+   }
+  },
+  {
+   "id": "gold-ms-underground-women",
+   "blocked": true,
+   "gates": {
+    "redline": {
+     "gate": "redline",
+     "pass": true,
+     "hits": []
+    },
+    "citations": {
+     "gate": "citations",
+     "pass": true,
+     "violations": []
+    },
+    "claim_support_pass": true
+   }
+  },
+  {
+   "id": "gold-psm-defense",
+   "blocked": true,
+   "gates": {
+    "redline": {
+     "gate": "redline",
+     "pass": true,
+     "hits": []
+    },
+    "citations": {
+     "gate": "citations",
+     "pass": true,
+     "violations": []
+    },
+    "claim_support_pass": false
+   }
+  },
+  {
+   "id": "gold-no-written-contract",
+   "blocked": true,
+   "gates": {
+    "redline": {
+     "gate": "redline",
+     "pass": true,
+     "hits": []
+    },
+    "citations": {
+     "gate": "citations",
+     "pass": true,
+     "violations": []
+    },
+    "claim_support_pass": true
+   }
+  },
+  {
+   "id": "gold-ar-invalid-agreement",
+   "blocked": true,
+   "gates": {
+    "redline": {
+     "gate": "redline",
+     "pass": true,
+     "hits": []
+    },
+    "citations": {
+     "gate": "citations",
+     "pass": true,
+     "violations": []
+    },
+    "claim_support_pass": false
+   }
+  },
+  {
+   "id": "gold-if-conceal",
+   "blocked": true,
+   "gates": {
+    "redline": {
+     "gate": "redline",
+     "pass": true,
+     "hits": []
+    },
+    "citations": {
+     "gate": "citations",
+     "pass": true,
+     "violations": []
+    },
+    "claim_support_pass": false
+   }
+  },
+  {
+   "id": "g30",
+   "blocked": true,
+   "gates": {
+    "redline": {
+     "gate": "redline",
+     "pass": true,
+     "hits": []
+    },
+    "citations": {
+     "gate": "citations",
+     "pass": false,
+     "violations": [
+      "《中华人民共和国民法典》第五百一十条",
+      "《中华人民共和国民法典》第五百一十条"
+     ]
+    },
+    "claim_support_pass": false
+   }
+  },
+  {
+   "id": "gold-drug-fake-med",
+   "blocked": true,
+   "gates": {
+    "redline": {
+     "gate": "redline",
+     "pass": true,
+     "hits": []
+    },
+    "citations": {
+     "gate": "citations",
+     "pass": true,
+     "violations": []
+    },
+    "claim_support_pass": false
+   }
+  },
+  {
+   "id": "gold-me-accuracy-protection",
+   "blocked": true,
+   "gates": {
+    "redline": {
+     "gate": "redline",
+     "pass": true,
+     "hits": []
+    },
+    "citations": {
+     "gate": "citations",
+     "pass": true,
+     "violations": []
+    },
+    "claim_support_pass": false
+   }
+  }
+ ]
+}
