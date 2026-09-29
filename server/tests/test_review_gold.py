@@ -158,13 +158,30 @@ def test_w2_probation_wage_below_floor():
     assert "W2" not in fired("试用期三个月。"), "无比例表述无从判断，不触发"
 
 
+# ---- 买卖类（T4 续批，R443：S1/S2）----
+
+def test_s1_retention_of_title_without_registration():
+    assert "S1" in fired("货款付清前，设备所有权保留归卖方所有。")
+    ids = fired("所有权保留并已在动产融资统一登记公示系统办理登记。")
+    assert "S1" not in ids, "已办理登记，不触发"
+    assert "S1" not in fired("货物所有权自交付时转移给买方。")
+
+
+def test_s2_installment_acceleration_without_statutory_guard():
+    assert "S2" in fired("价款分十二期支付；买受人任何一期未按期支付的，未付款项视为全部到期，卖方有权解除合同。")
+    ids = fired("分期付款的，买受人未付到期价款达全部价款五分之一且经催告后仍未支付的，出卖人可以解除合同。")
+    assert "S2" not in ids, "已含五分之一+催告法定条件，不触发"
+    assert "S2" not in fired("价款分期支付，每期金额相同。"), "无加速/解除表述不触发"
+    assert "S2" not in fired("设备租赁分三期支付租金。"), "分期但无加速/解除表述不触发"
+
+
 def test_gold_review_checkpoints_count():
-    """金标规模门：审查点引擎 20 个（16 通用 + T4 首批租赁/劳动各 2），判定用例 ≥50 组（含正反例）。"""
-    assert len(review.get_checkpoints()) == 20
+    """金标规模门：审查点引擎 22 个（16 通用 + T4 租赁/劳动/买卖各 2），判定用例 ≥50 组（含正反例）。"""
+    assert len(review.get_checkpoints()) == 22
     # 本文件内的测试函数数（每组正反例算一组）
     import test_review_gold as _self  # noqa: PLC0415
     n = sum(1 for name in dir(_self) if name.startswith("test_"))
-    assert n >= 15, n
+    assert n >= 17, n
 
 
 # ================= 数据驱动金标表（M6-T5：≥50 组判定）=================
@@ -243,6 +260,15 @@ GOLD_REVIEW_ROWS = [
     ("试用期工资为约定工资的 80%。", "W2", False),
     ("试用期工资为约定工资的 85%。", "W2", False),
     ("试用期三个月。", "W2", False),
+    # S1 所有权保留未提示登记（T4 续批，R443）
+    ("货款付清前，设备所有权保留归卖方所有。", "S1", True),
+    ("所有权保留并已在动产融资统一登记公示系统办理登记。", "S1", False),
+    ("货物所有权自交付时转移给买方。", "S1", False),
+    # S2 分期付款加速/解除缺法定条件
+    ("价款分十二期支付；买受人任何一期未按期支付的，未付款项视为全部到期，卖方有权解除合同。", "S2", True),
+    ("分期付款的，买受人未付到期价款达全部价款五分之一且经催告后仍未支付的，出卖人可以解除合同。", "S2", False),
+    ("价款分期支付，每期金额相同。", "S2", False),
+    ("设备租赁分三期支付租金。", "S2", False),
 ]
 
 
