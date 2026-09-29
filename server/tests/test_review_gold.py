@@ -197,13 +197,36 @@ def test_g1_use_before_acceptance():
     assert "G1" not in fired("工程竣工经验收合格后交付使用。"), "验收合格后交付=法定正常形态"
 
 
+# ---- 中介/技术服务类（T4 续批三波，R446：M1/M2/T1）----
+
+def test_m1_fee_payable_regardless_of_deal():
+    assert "M1" in fired("无论是否成交，乙方均应支付全额中介费。")
+    assert "M1" in fired("交易不成的，甲方仍应支付佣金。")
+    ids = fired("中介人促成合同成立的，委托人支付佣金。")
+    assert "M1" not in ids, "已绑定促成条件，不触发"
+
+
+def test_m2_intermediary_truthfulness_disclaimer():
+    assert "M2" in fired("中介对第三方提供的信息真实性概不负责。")
+    assert "M2" in fired("房源信息真实性由买方自行核实的，中介不核实。")
+    ids = fired("中介人应当如实报告与订立合同有关的重要事项。")
+    assert "M2" not in ids, "如实报告义务在位，不触发"
+
+
+def test_t1_development_ip_ownership_unspecified():
+    assert "T1" in fired("委托开发本项目管理系统。")
+    ids = fired("委托开发的发明创造，申请专利的权利归委托人所有。")
+    assert "T1" not in ids, "已约定专利权归属，不触发（含「专利」表述的归属安排不因语序漏配）"
+    assert "T1" not in fired("房屋租赁期限为三十年。"), "非技术开发合同不触发"
+
+
 def test_gold_review_checkpoints_count():
-    """金标规模门：审查点引擎 25 个（16 通用 + T4 租赁/劳动/买卖/物业·建设工程各波），判定用例 ≥50 组（含正反例）。"""
-    assert len(review.get_checkpoints()) == 25
+    """金标规模门：审查点引擎 28 个（16 通用 + T4 租赁/劳动/买卖/物业·建设工程/中介·技术服务各波），判定用例 ≥50 组（含正反例）。"""
+    assert len(review.get_checkpoints()) == 28
     # 本文件内的测试函数数（每组正反例算一组）
     import test_review_gold as _self  # noqa: PLC0415
     n = sum(1 for name in dir(_self) if name.startswith("test_"))
-    assert n >= 20, n
+    assert n >= 23, n
 
 
 # ================= 数据驱动金标表（M6-T5：≥50 组判定）=================
@@ -303,6 +326,18 @@ GOLD_REVIEW_ROWS = [
     ("工程完工后未经竣工验收即可交付使用。", "G1", True),
     ("未经验收擅自入住的，视为验收合格。", "G1", True),
     ("工程竣工经验收合格后交付使用。", "G1", False),
+    # M1 未促成仍付报酬（T4 续批三波 R446）
+    ("无论是否成交，乙方均应支付全额中介费。", "M1", True),
+    ("交易不成的，甲方仍应支付佣金。", "M1", True),
+    ("中介人促成合同成立的，委托人支付佣金。", "M1", False),
+    # M2 中介信息真实性免责
+    ("中介对第三方提供的信息真实性概不负责。", "M2", True),
+    ("房源信息真实性由买方自行核实的，中介不核实。", "M2", True),
+    ("中介人应当如实报告与订立合同有关的重要事项。", "M2", False),
+    # T1 委托开发知识产权归属未约定（全文级）
+    ("委托开发本项目管理系统。", "T1", True),
+    ("委托开发的发明创造，申请专利的权利归委托人所有。", "T1", False),
+    ("房屋租赁期限为三十年。", "T1", False),
 ]
 
 
