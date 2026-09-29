@@ -15,9 +15,11 @@ const buildDate = String(manifest0.built_at || manifest0.fetch_date || '').slice
 const terms = JSON.parse(readFileSync(resolve(root, 'web/src/data/terms.json'), 'utf-8'))
 const manifestPath = resolve(root, 'server/data/laws/manifest.json')
 let corpusLine = '受控语料规模见质量透明度页（实时派生）'
+let lawCount = null // laws-md 导出同源（export_markdown.py 同一 manifest），派生数字纪律
 if (existsSync(manifestPath)) {
   const m = JSON.parse(readFileSync(manifestPath, 'utf-8'))
   const laws = m.laws ?? []
+  lawCount = laws.length
   const articles = laws.reduce((s, l) => s + (l.article_count ?? 0), 0)
   const fetchDate = String(m.fetch_date || buildDate)
   corpusLine = `受控语料 ${laws.length} 部 / ${articles} 条文条目（语料抓取 ${fetchDate}，构建期从语料 manifest 派生），每部均带官方来源快照与版本注册表`
@@ -60,7 +62,7 @@ const index = `# LegalHigh · 法律智能知识库
 ## 全文版
 
 - [llms-full.txt](https://legalhigh.pages.dev/llms-full.txt)：术语卡全部条目与项目口径说明的完整文本
-- [data/laws-md/](https://legalhigh.pages.dev/data/laws-md/README.md)：28 部法律全语料 markdown 导出（每法一文件，含官方元数据；同 laws.json 源）
+- [data/laws-md/](https://legalhigh.pages.dev/data/laws-md/README.md)：${lawCount ?? '全'} 部法律全语料 markdown 导出（每法一文件，含官方元数据；同 laws.json 源）
 `
 
 const full = `# LegalHigh · 法律智能知识库（全文版）

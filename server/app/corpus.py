@@ -5,7 +5,9 @@
 任何文章对象都携带 law 元数据与来源链接——引用不变量的数据底座。
 """
 import json
+import math
 import re
+from collections import Counter
 from functools import lru_cache
 from pathlib import Path
 
@@ -61,6 +63,18 @@ class LawCorpus:
                     "text": a["text"],
                 })
         self._index = None
+        self._bigram_df = None
+
+    @property
+    def bigram_df(self):
+        """bigram 文档频率表（R431 IDF 覆盖度用；惰性一次构建）。"""
+        if self._bigram_df is None:
+            df = Counter()
+            for a in self.articles:
+                for b in _q_bigrams(a["text"]):
+                    df[b] += 1
+            self._bigram_df = df
+        return self._bigram_df
 
     @property
     def index(self):
@@ -90,21 +104,31 @@ class LawCorpus:
             results.append({**a, "score": round(float(score), 4)})
             if len(results) >= max(top_k, 20):
                 break
-        # R430 确定性重排（规则⑲ A/B 全量金标实证采用）：top-20 候选内按
-        # 0.7*BM25 归一 + 0.3*查询覆盖度（文章 bigram 覆盖查询 bigram 的比例）混合
-        # 重排——只调序不改召回；A/B（541 组）救回 1、零打落，hit@5 0.9612→0.9630、
-        # MRR 0.7811→0.7885、rank1 0.6654→0.6728（纯提升无回退，脚本 scripts/rerank_ab.py）。
+        # R430→R431 确定性重排（规则⑲ A/B 全量金标实证采用）：top-20 候选内混合
+        # 重排——只调序不改召回。R430：0.7·BM25归一 + 0.3·覆盖度（hit@5 0.9612→0.9630）。
+        # R431：0.5·BM25归一 + 0.5·(0.3·普通覆盖度 + 0.7·IDF加权覆盖度)——IDF 降权
+        # 通用 bigram（什么/责任/公司）、升权稀有 bigram（代言/直播/抛物），普通与 IDF
+        # 两种覆盖度失败模式互补。A/B（541 组，脚本 scripts/rerank_ab2.py）：救回 4
+        # 零打落，hit@5 0.9630→0.9704、MRR 0.7885→0.7920；对半切分两半增益同向
+        # （+0.71/+0.77pp，非金标内过拟合伪影）。
         if len(results) > 1:
             qb = _q_bigrams(query)
             if qb:
+                n_docs = len(self.articles)
+                df = self.bigram_df
+                def _idf(b):
+                    return math.log((n_docs + 1) / (df.get(b, 0) + 1)) + 1.0
+                wsum = sum(_idf(b) for b in qb) or 1e-9
                 sc = [r["score"] for r in results]
                 mx, mn = max(sc), min(sc)
                 def _norm(v):
                     return (v - mn) / (mx - mn) if mx > mn else 1.0
-                results = sorted(
-                    results,
-                    key=lambda r: -(0.7 * _norm(r["score"]) + 0.3 * (len(qb & _q_bigrams(r["text"])) / len(qb))),
-                )
+                def _mix(r):
+                    ab = _q_bigrams(r["text"])
+                    plain = len(qb & ab) / len(qb)
+                    weighted = sum(_idf(b) for b in qb & ab) / wsum
+                    return -(0.5 * _norm(r["score"]) + 0.5 * (0.3 * plain + 0.7 * weighted))
+                results = sorted(results, key=_mix)
         return results[:top_k]
 
     def get_article(self, law_id: str, no: int):

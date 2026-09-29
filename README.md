@@ -125,7 +125,7 @@ cd web && npm ci && npm run dev
 
 | 门禁 / Gate | 内容 / What it checks |
 |---|---|
-| 后端测试 / Backend tests | 426 项 pytest（引用绑定、状态机、PIPL 级联、fail-closed、评测单调性、证据账本、重编号映射、robots 红线代码层等；2026-09-27 实测） |
+| 后端测试 / Backend tests | 429 项 pytest（引用绑定、状态机、PIPL 级联、fail-closed、评测单调性、证据账本、重编号映射、robots 红线代码层、laws-md 导出镜像等；2026-09-29 实测） |
 | 案例库 / Case library | 281 件可公开核验案例（最高人民法院指导案例 278 件 + 域外经典判例 3 件）；裁判要点与裁判结果逐字出自官方发布页快照并由测试钉住，法条引用经语料逐字核验（2026-09-27 实测） |
 | 浏览器巡检 / Route sweeps | 无头 Chrome 逐路由截图 + console/网络零错误门（67 路由，2026-09-27 实测 0 问题） |
 | 对比度 / Contrast | WCAG AA 正文 4.5:1 + UI 指示器 3:1（strict 模式） |
@@ -136,7 +136,7 @@ cd web && npm ci && npm run dev
 | 第三链文本核验 / Third-chain texts | lawtext（flk DOCX 衍生）快照逐字比对：22 部全一致并锁定复验（corpus_selfcheck 常驻自检，2026-09-24 实测 26 部锁定） |
 | 发布前核验 / Final verify | `server/scripts/final_verify.py` 对运行中实例做十项 API 真值断言 |
 
-应用内 [质量透明度页](/quality) 只读公示实时派生指标与带日期历史记录。自动化测试只能证明被覆盖的断言，不能证明系统「绝不出错」；检索评测（金标 541 组，hit@5 96.1%、法律级 98.3%、rank-1 66.5%、MRR 78.1%；2026-09-24 实测；指标随金标扩容与真实难例自然浮动）衡量的是语料命中率，不是法律正确率。
+应用内 [质量透明度页](/quality) 只读公示实时派生指标与带日期历史记录。自动化测试只能证明被覆盖的断言，不能证明系统「绝不出错」；检索评测（金标 541 组，hit@5 97.0%、法律级 98.5%、rank-1 67.5%、MRR 79.2%；2026-09-29 实测——含确定性重排二代的 IDF 加权覆盖度，全量 A/B 救回 4 例零打落；指标随金标扩容与真实难例自然浮动）衡量的是语料命中率，不是法律正确率。
 
 ## 🔌 MCP Server · AI 助手接入
 
@@ -150,6 +150,8 @@ python server/mcp_server.py
 
 REST API：运行 `server` 后 [openapi.json](http://localhost:8000/openapi.json) 与 [交互文档](http://localhost:8000/docs) 自动可用（FastAPI 生成，49 路径）；检索响应与 MCP 同源（引用绑定+免责声明）。
 
+**Agent Skill 形态**：[`skills/legalhigh/SKILL.md`](skills/legalhigh/SKILL.md) 把同一能力打包为 Claude Code / Codex 等 Agent 技能——零安装走 Pages 静态导出（llms.txt / laws-md），或克隆后接 MCP；技能内置引用纪律（逐条绑定来源、原文优先、版本敏感、空结果不臆补）。
+
 ## 🗂 目录结构 · Repository layout
 
 ```text
@@ -159,6 +161,7 @@ LegalHigh/
 ├─ web/                     React 19 + react-router 7 前端 · scripts/ QA 工具链
 │  └─ public/data/laws.json 语料导出（web/scripts/export_laws.py 唯一路径）
 ├─ desktop/                 桌面壳（PyInstaller sidecar，候选包待验收）
+├─ skills/legalhigh/        Agent Skill 打包（Claude Code/Codex 消费形态：静态导出+MCP+REST 三路径）
 ├─ docs/
 │  ├─ readme/               README 媒体资产（readme_media.mjs 生成）
 │  ├─ research/             调研报告与证据快照 evidence/
