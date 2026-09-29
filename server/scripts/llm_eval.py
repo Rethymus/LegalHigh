@@ -123,7 +123,8 @@ def main() -> int:
         allowed = [{"law_title": corpus.laws[lid]["title"], "article_no": no} for lid, no in sorted(ref_set)]
         out = ask(g["question"], allowed)
         if out.get("blocked"):
-            results["cases"].append({"id": g["id"], "blocked": True,
+            results["cases"].append({"id": g["id"], "blocked": True, "claim_retry": out.get("claim_retry"),
+                                     "claim_violations": (out["gates"]["claim_support"].get("violations") or [])[:3],
                                      "gates": {"redline": out["gates"]["redline"], "citations": out["gates"]["citations"],
                                                "claim_support_pass": out["gates"]["claim_support"].get("pass")}})
             _save_checkpoint(args.resume, results)
