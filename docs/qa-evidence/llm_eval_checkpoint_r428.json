@@ -1,0 +1,77 @@
+{
+ "date": "2026-09-29",
+ "provider": "zhipu",
+ "model": "glm-4.7-flash",
+ "sample_size": 0,
+ "citation_coverage": 0,
+ "redline_hits": [],
+ "premise_hit": 0,
+ "premise_total": 5,
+ "cases": [
+  {
+   "id": "gold-expansion-056",
+   "blocked": true,
+   "claim_retry": true,
+   "claim_violations": [
+    "第2句第1分句缺少本分句规范引用",
+    "第9句第1分句缺少本分句规范引用",
+    "第10句第1分句缺少本分句规范引用"
+   ],
+   "gates": {
+    "redline": {
+     "gate": "redline",
+     "pass": true,
+     "hits": []
+    },
+    "citations": {
+     "gate": "citations",
+     "pass": true,
+     "violations": []
+    },
+    "claim_support_pass": false
+   }
+  },
+  {
+   "id": "gold-cr-first-sale",
+   "blocked": true,
+   "claim_retry": false,
+   "claim_violations": [],
+   "gates": {
+    "redline": {
+     "gate": "redline",
+     "pass": true,
+     "hits": []
+    },
+    "citations": {
+     "gate": "citations",
+     "pass": true,
+     "violations": []
+    },
+    "claim_support_pass": true
+   }
+  },
+  {
+   "id": "gold-ms-underground-women",
+   "blocked": true,
+   "claim_retry": true,
+   "claim_violations": [
+    "第2句第1分句缺少本分句规范引用",
+    "第6句第1分句缺少本分句规范引用",
+    "第6句第2分句缺少本分句规范引用"
+   ],
+   "gates": {
+    "redline": {
+     "gate": "redline",
+     "pass": true,
+     "hits": []
+    },
+    "citations": {
+     "gate": "citations",
+     "pass": true,
+     "violations": []
+    },
+    "claim_support_pass": false
+   }
+  }
+ ]
+}
