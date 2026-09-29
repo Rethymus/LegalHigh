@@ -155,6 +155,37 @@ const ROUTES = [
     { t: 'wait', ms: 3000 },
     { t: 'eval', expr: `(() => { const seg = [...document.querySelectorAll('.seg-btn')].find(b => /风险/.test(b.textContent)); if (!seg) return 'no-seg-risk'; seg.click(); return 'switched' })()` },
     { t: 'wait', ms: 600 },
+  ] },
+  // R444：租赁场景 write-E2E——T4 首波检查点（R1 租期超限带修订 / R2 欠租即解除 / F3 定金超限）
+  // 进真实创建流；终态断言钉住「租赁发现 + 两条替换修订行（→ 20年 / → 20%）」。
+  { name: '16c-rental-review-run', path: '/contracts/new', fullPage: true, identity: { selector: '.ph-t' }, afterText: 'Risk Inspector', steps: [
+    { t: 'eval', expr: `(() => {
+      const title = document.querySelector('input[aria-label="合同名称"]');
+      const body = document.querySelector('textarea[aria-label="合同文本"]');
+      if (!title || !body) return 'no-contract-fields';
+      const inputSet = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set;
+      const textSet = Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype, 'value').set;
+      if (!(title instanceof HTMLInputElement) || !(body instanceof HTMLTextAreaElement)) return 'bad-element-types';
+      inputSet.call(title, 'QA 隔离数据库租赁合同审查');
+      title.dispatchEvent(new Event('input', { bubbles: true }));
+      textSet.call(body, '房屋租赁合同测试（仅写入本次唯一临时数据库）。第一条 租赁期限为50年。第二条 承租人拖欠租金的，出租人有权立即解除合同并收回房屋。第三条 定金为两个月租金，即月租金的 200%。');
+      body.dispatchEvent(new Event('input', { bubbles: true }));
+      return title.value && body.value.length > 30 ? 'ok' : 'set-did-not-stick';
+    })()` },
+    { t: 'eval', expr: `(() => { const btn = [...document.querySelectorAll('button')].find(b => /发起规则审查/.test(b.textContent)); if (!btn) return 'no-btn'; btn.click(); return 'clicked' })()` },
+    { t: 'wait', ms: 3000 },
+    { t: 'eval', expr: `(() => {
+      const t = document.body.innerText || '';
+      if (!t.includes('租赁期限超过法定上限')) return 'no-r1-finding';
+      if (!t.includes('欠租即解除')) return 'no-r2-finding';
+      if (!t.includes('建议修订（替换）')) return 'no-revision-line';
+      if (!t.includes('→ 20年')) return 'no-r1-revision';   // R1 年数替换（修订行专属文案，正文列无此串）
+      if (!t.includes('→ 20%')) return 'no-f3-revision';    // F3 比例替换
+      return 'rental-e2e-ok';
+    })()` },
+    // 风险面板是内部滚动容器（fullPage 截图只扩页面不扩内滚）——长高视口后滚动到底
+    // 补一张尾部证据，让 R1/R2 卡与修订行进入视觉验收视野（R444 首轮视觉验收抓出的盲区）。
+    { t: 'shot', name: '16c-rental-risk-tail', fullPage: true, scrollBottom: 'aside.panel .panel-b' },
   ] }] : []),
   { name: '17-compare', path: '/compare', identity: pageHeader('合同版本对比') },
   { name: '18-draft', path: '/draft', fullPage: true, identity: { selector: '.ph-t' } },
@@ -396,6 +427,36 @@ async function main() {
             entry.pageErrors.push(`interaction step failed: ${value}`)
         }
         if (s.t === 'wait') await sleep(s.ms)
+        if (s.t === 'shot') {
+          // R444：命名截图步骤（步骤中段取证）。此前该类型仅在用法注释里声明、循环未
+          // 实现=静默跳过（R273 假绿同款）——本分支补实现：沿用全页口径（量 .content
+          // 自身高度→视口长高→普通截图，vh 系内滚容器随视口同步长高），截后恢复路由
+          // 视口，不影响后续步骤与路由终态截图。scrollBottom：视口长高会重置 vh 系内滚
+          // 容器的滚动位置——须在长高之后再滚动到底（首轮视觉验收抓出滚动被重置）。
+          const h = await cdp.send('Runtime.evaluate', {
+            expression: `(document.querySelector('.content')?.scrollHeight || document.documentElement.scrollHeight)`,
+            returnByValue: true,
+          })
+          const contentH = Math.max(900, Math.min((Number(h.result?.value) || 900) + 130, 20000))
+          const grow = s.fullPage && contentH > vp.height
+          if (grow) {
+            await cdp.send('Emulation.setDeviceMetricsOverride', { width: vp.width, height: contentH, deviceScaleFactor: 1, mobile: vp.width < 700 })
+            await sleep(300)
+          }
+          if (s.scrollBottom) {
+            await cdp.send('Runtime.evaluate', {
+              expression: `(() => { const ps=[...document.querySelectorAll(${JSON.stringify(s.scrollBottom)})]; ps.forEach(p=>p.scrollTo(0, p.scrollHeight)); return 'scrolled:'+ps.length })()`,
+              returnByValue: true,
+            })
+            await sleep(300)
+          }
+          const mid = await cdp.send('Page.captureScreenshot', { format: 'png' })
+          writeFileSync(resolve(OUT, `${s.name}.png`), Buffer.from(mid.data, 'base64'))
+          if (grow) {
+            await cdp.send('Emulation.setDeviceMetricsOverride', { width: vp.width, height: vp.height, deviceScaleFactor: 1, mobile: vp.width < 700 })
+            await sleep(200)
+          }
+        }
       }
       await sleep(route.steps ? 400 : 900)
 
