@@ -158,6 +158,10 @@ def generate_review_docx(review: dict) -> bytes:
     date = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     doc.add_heading(review.get("title") or "合同审查记录", level=0)
     doc.add_paragraph(f"审查时间：{review.get('created_at', '')}　审查点：{review['result']['engine_meta']['checkpoint_count']} 个　风险：高 {review['result']['summary']['high']} / 中 {review['result']['summary']['medium']} / 低 {review['result']['summary']['low']}")
+    # 审查立场（R437-T1）：使用者自选记录，非资格声明；立场不改变审查点触发。
+    _stance_label = {"party_a": "代表甲方", "party_b": "代表乙方"}.get(
+        (review.get("result") or {}).get("stance"), "中立（未声明）")
+    doc.add_paragraph(f"审查立场：{_stance_label}（使用者自选记录，非资格声明；立场不改变审查点触发）")
     by_clause: dict = {}
     for f in review["result"]["findings"]:
         by_clause.setdefault(f.get("clause_id") or "__whole__", []).append(f)

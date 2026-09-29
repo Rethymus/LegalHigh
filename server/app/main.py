@@ -14,6 +14,7 @@ from contextlib import asynccontextmanager
 from dataclasses import dataclass
 from datetime import date
 from pathlib import Path
+from typing import Literal
 
 from functools import lru_cache as cache
 from fastapi import Depends, FastAPI, File, Header, HTTPException, Request, UploadFile
@@ -567,6 +568,9 @@ def case_report_docx(body: CaseBody):
 class AnalyzeBody(BaseModel):
     title: str | None = Field(default=None, max_length=256)
     contract_text: str = Field(min_length=1, max_length=200_000)
+    # 审查立场（R437-T1，contract-review-pro 方法论吸收设计）：使用者自选记录，
+    # 只做记录与呈现（DOCX 头部/详情），不改变审查点触发——立场驱动规则属 T4 内容管线。
+    stance: Literal["party_a", "party_b", "neutral"] | None = Field(default=None)
 
 
 @app.post("/api/reviews/analyze")
@@ -574,6 +578,7 @@ def analyze(body: AnalyzeBody):
     if len(body.contract_text.strip()) < 30:
         raise HTTPException(422, "合同文本过短（至少 30 字）")
     result = review.analyze_contract(body.contract_text, body.title)
+    result["stance"] = body.stance or "neutral"
     # Evidence Ledger（FLERF §19/§23，R170）：审查依据条目入 append-only 账本。
     # dry-run 无持久 id——实体用随机 uuid，payload 只含公共条文哈希，不带合同文本。
     _write_evidence_ledger("review", [f.get("citation") for f in result.get("findings", []) if f.get("citation")])
@@ -599,6 +604,7 @@ def _write_evidence_ledger(entity_type: str, citations: list, actor: str = "anon
 @app.post("/api/reviews")
 def create_review(body: AnalyzeBody, admin: AdminPrincipal = Depends(require_admin)):
     result = review.analyze_contract(body.contract_text, body.title)
+    result["stance"] = body.stance or "neutral"  # 随 result_json 持久化（零 schema 迁移）
     rid = storage.create_review(result["title"], body.contract_text, result, actor=admin.name)
     # 账本实体=持久 rid（区别于 dry-run 的 uuid）；与 create 审计行同实体可并读
     _write_evidence_ledger("review", [f.get("citation") for f in result.get("findings", []) if f.get("citation")],

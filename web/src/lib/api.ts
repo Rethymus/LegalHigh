@@ -110,8 +110,12 @@ export interface Finding {
 
 export interface Clause { id: string; label: string; heading: string; text: string }
 
+export type ReviewStance = 'party_a' | 'party_b' | 'neutral'
+
 export interface ReviewResult {
   title: string
+  /** 审查立场（R437-T1）：使用者自选记录，非资格声明；不改变审查点触发。 */
+  stance?: ReviewStance
   clauses: Clause[]
   findings: Finding[]
   summary: { high: number; medium: number; low: number; by_category: Record<ReviewCategory, number> }
@@ -295,15 +299,15 @@ export const api = {
   }>('/evals'),
 
   // 合同审查
-  analyzeContractText: (contractText: string, title?: string) =>
+  analyzeContractText: (contractText: string, title?: string, stance?: ReviewStance) =>
     req<ReviewResult>('/reviews/analyze', {
       method: 'POST',
-      body: JSON.stringify({ contract_text: contractText, title }),
+      body: JSON.stringify({ contract_text: contractText, title, stance }),
     }),
-  createReview: (contractText: string, title?: string) =>
+  createReview: (contractText: string, title?: string, stance?: ReviewStance) =>
     req<{ review_id: string } & ReviewResult>('/reviews', {
       method: 'POST',
-      body: JSON.stringify({ contract_text: contractText, title }),
+      body: JSON.stringify({ contract_text: contractText, title, stance }),
     }),
   getReview: (rid: string) => req<Review>(`/reviews/${rid}`),
   transitionAnnotation: (rid: string, findingId: string, action: 'adopt' | 'amend' | 'reject' | 'reopen', amendedText?: string) =>

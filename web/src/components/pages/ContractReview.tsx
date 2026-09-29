@@ -5,9 +5,10 @@ import { Link, useParams } from 'react-router-dom'
 import { Icon } from '../icons'
 import { ActionSheet, EmptyState, PageHeader, Segmented, useMediaQuery, useToast, fmtTime, type SheetAction } from '../ui'
 import { CitationChip } from '../domain'
-import { api, ApiError, type Annotation, type AuditEntry, type Finding, type Review } from '../../lib/api'
+import { api, ApiError, type Annotation, type AuditEntry, type Finding, type Review, type ReviewStance } from '../../lib/api'
 
 const CATEGORY_LABEL: Record<string, string> = { fee: '费用', account: '账户', liability: '责任' }
+const STANCE_LABEL: Record<ReviewStance, string> = { party_a: '代表甲方', party_b: '代表乙方', neutral: '中立' }
 const STATE_LABEL: Record<Annotation['state'], { label: string; cls: string }> = {
   pending: { label: '待复核', cls: 'bdg-orange' },
   adopted: { label: '已采纳', cls: 'bdg-green' },
@@ -34,6 +35,8 @@ export default function ContractReview() {
   const [amendText, setAmendText] = useState('')
   const returnFileRef = useRef<HTMLInputElement>(null)
   const [reviewTitle, setReviewTitle] = useState('')
+  // 审查立场（R437-T1）：使用者自选记录，不改变审查点触发
+  const [stance, setStance] = useState<ReviewStance>('neutral')
   const [reviewText, setReviewText] = useState('')
   // 窄屏（R336）：三栏工作台转分步向导（目录/正文/风险 单选切换）；桌面三栏不变
   const isNarrow = useMediaQuery('(max-width: 767.98px)')
@@ -61,7 +64,7 @@ export default function ContractReview() {
     if (!reviewText.trim()) { toast('审查文本为空', 'err'); return }
     setBusy(true); setError(null)
     try {
-      const created = await api.createReview(reviewText, reviewTitle.trim() || undefined)
+      const created = await api.createReview(reviewText, reviewTitle.trim() || undefined, stance)
       setRid(created.review_id)
       toast('规则审查完成：费用、账户与责任审查点已扫描', 'ok')
     } catch (e) {
@@ -181,6 +184,13 @@ export default function ContractReview() {
               <div className="tiny bold">合同名称与文本</div>
             </div>
             <input className="inp mb-12" aria-label="合同名称" placeholder="合同名称（可选；不填写时由正文标题派生）" value={reviewTitle} onChange={(e) => setReviewTitle(e.target.value)} />
+            <div className="row mb-8"><div className="tiny bold">审查立场（记录用）</div></div>
+            <Segmented ariaLabel="审查立场选择" value={stance} onChange={(k) => setStance(k as ReviewStance)} options={[
+              { key: 'neutral', label: '中立' },
+              { key: 'party_a', label: '代表甲方' },
+              { key: 'party_b', label: '代表乙方' },
+            ]} />
+            <div className="tiny mb-12">立场仅随审查记录留痕并写入导出 Word 头部（自选记录，非资格声明；不改变审查点触发）。</div>
             <textarea className="ta" aria-label="合同文本" placeholder="粘贴你有权处理的合同全文（至少 30 字）" style={{ minHeight: 400, fontSize: 12.5, lineHeight: 1.9 }} value={reviewText} onChange={(e) => setReviewText(e.target.value)} />
             <div className="tiny mt-8">提示：按「第X条」分段可让审查引擎定位条款；至少 30 字。文本会写入当前本机服务的 SQLite 审查记录；如配置远程模型，合同规则审查本身仍不调用该模型。</div>
           </div>
@@ -218,6 +228,7 @@ export default function ContractReview() {
               })}
             </div>
             <div className="panel-f">
+              <div className="tiny mb-8">审查立场：<b>{STANCE_LABEL[review.result.stance ?? 'neutral']}</b>（自选记录，非资格声明）</div>
               <div className="risk-stat" style={{ marginBottom: 10 }}>
                 <div className="rs-box rs-high"><b>{review.result.summary.high}</b>高风险</div>
                 <div className="rs-box rs-mid"><b>{review.result.summary.medium}</b>中风险</div>
