@@ -175,13 +175,35 @@ def test_s2_installment_acceleration_without_statutory_guard():
     assert "S2" not in fired("设备租赁分三期支付租金。"), "分期但无加速/解除表述不触发"
 
 
+# ---- 物业/建设工程类（T4 续批二波，R445：P1/P2/G1）----
+
+def test_p1_property_fee_without_disclosure():
+    assert "P1" in fired("物业服务费按每月每平方米 3 元收取。")
+    ids = fired("物业费每月 500 元，物业人应按季度公示收费标准与使用情况。")
+    assert "P1" not in ids, "已有公示安排，不触发"
+    assert "P1" not in fired("租金每月 3000 元。"), "非物业服务合同不触发"
+
+
+def test_p2_restricting_owner_termination_right():
+    assert "P2" in fired("合同期内业主不得解聘物业服务企业。")
+    assert "P2" in fired("业主无权解除本物业服务合同。")
+    ids = fired("业主按法定程序共同决定解聘的，提前六十日书面通知后可解除本合同。")
+    assert "P2" not in ids, "保留法定解除权仅约定程序，不触发"
+
+
+def test_g1_use_before_acceptance():
+    assert "G1" in fired("工程完工后未经竣工验收即可交付使用。")
+    assert "G1" in fired("未经验收擅自入住的，视为验收合格。")
+    assert "G1" not in fired("工程竣工经验收合格后交付使用。"), "验收合格后交付=法定正常形态"
+
+
 def test_gold_review_checkpoints_count():
-    """金标规模门：审查点引擎 22 个（16 通用 + T4 租赁/劳动/买卖各 2），判定用例 ≥50 组（含正反例）。"""
-    assert len(review.get_checkpoints()) == 22
+    """金标规模门：审查点引擎 25 个（16 通用 + T4 租赁/劳动/买卖/物业·建设工程各波），判定用例 ≥50 组（含正反例）。"""
+    assert len(review.get_checkpoints()) == 25
     # 本文件内的测试函数数（每组正反例算一组）
     import test_review_gold as _self  # noqa: PLC0415
     n = sum(1 for name in dir(_self) if name.startswith("test_"))
-    assert n >= 17, n
+    assert n >= 20, n
 
 
 # ================= 数据驱动金标表（M6-T5：≥50 组判定）=================
@@ -269,6 +291,18 @@ GOLD_REVIEW_ROWS = [
     ("分期付款的，买受人未付到期价款达全部价款五分之一且经催告后仍未支付的，出卖人可以解除合同。", "S2", False),
     ("价款分期支付，每期金额相同。", "S2", False),
     ("设备租赁分三期支付租金。", "S2", False),
+    # P1 物业收费未约定公示（全文级，T4 续批二波 R445）
+    ("物业服务费按每月每平方米 3 元收取。", "P1", True),
+    ("物业费每月 500 元，物业人应按季度公示收费标准与使用情况。", "P1", False),
+    ("租金每月 3000 元。", "P1", False),
+    # P2 限制业主解除权
+    ("合同期内业主不得解聘物业服务企业。", "P2", True),
+    ("业主无权解除本物业服务合同。", "P2", True),
+    ("业主按法定程序共同决定解聘的，提前六十日书面通知后可解除本合同。", "P2", False),
+    # G1 未经验收即交付使用
+    ("工程完工后未经竣工验收即可交付使用。", "G1", True),
+    ("未经验收擅自入住的，视为验收合格。", "G1", True),
+    ("工程竣工经验收合格后交付使用。", "G1", False),
 ]
 
 
