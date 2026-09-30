@@ -6,6 +6,7 @@ REM gate 7 a11y probe added 2026-09-13 per docs/plan v5 roadmap (S2-T3, WCAG 2.2
 REM gate 8 offline PWA probe added 2026-09-14 per docs/plan v6 (S4-T1; self-hosted vite preview,
 REM         needs web/dist from gate 2 build - no dev servers required)
 REM gate 9 narrow-viewport overflow sweep added 2026-09-25 (R338; 390px horizontal overflow / crowded headers / viewport self-check)
+REM gate 10 qa evidence receipt added 2026-10-01 (R467; aggregated staged receipt, strict: missing evidence = not passed)
 REM Prereq: dev servers running (uvicorn :8000 + vite :5173) for gates 5-6.
 REM         For the sweep, start uvicorn with LH_ADMIN_TOKEN + LH_ADMIN_PRINCIPAL set,
 REM         and export the same LH_ADMIN_TOKEN so qa_shots can inject it (sensitive
@@ -18,45 +19,51 @@ setlocal
 cd /d %~dp0
 set FAILED=0
 
-echo [1/9] server pytest ...
+echo [1/10] server pytest ...
 cd server
 .venv\Scripts\python.exe -m pytest tests -q
 if errorlevel 1 set FAILED=1
 cd ..
 
-echo [2/9] web tsc + vite build ...
+echo [2/10] web tsc + vite build ...
 cd web
 call npm run build
 if errorlevel 1 set FAILED=1
 
-echo [3/9] data-discipline grep gate ...
+echo [3/10] data-discipline grep gate ...
 node scripts/qa_gates.mjs
 if errorlevel 1 set FAILED=1
 
-echo [4/9] WCAG contrast audit (tokens from global.css, --strict) ...
+echo [4/10] WCAG contrast audit (tokens from global.css, --strict) ...
 node scripts/qa_contrast.mjs --strict
 if errorlevel 1 set FAILED=1
 
 if /i "%1"=="fast" goto :summary
-echo [5/9] read-only visual sweep (--strict; needs ports 8000/5173 up) ...
+echo [5/10] read-only visual sweep (--strict; needs ports 8000/5173 up) ...
 node scripts/qa_shots.mjs --strict
 if errorlevel 1 set FAILED=1
 
-echo [6/9] motion behavior probe (spring physics in headless Chrome; needs vite up) ...
+echo [6/10] motion behavior probe (spring physics in headless Chrome; needs vite up) ...
 node scripts/qa_motion.mjs --strict
 if errorlevel 1 set FAILED=1
 
-echo [7/9] a11y behavior probe (WCAG 2.2 AA subset: target size / focus not obscured; needs vite up) ...
+echo [7/10] a11y behavior probe (WCAG 2.2 AA subset: target size / focus not obscured; needs vite up) ...
 node scripts/qa_a11y.mjs --strict
 if errorlevel 1 set FAILED=1
 
-echo [8/9] offline PWA probe (service worker + real offline navigation on vite preview; self-contained) ...
+echo [8/10] offline PWA probe (service worker + real offline navigation on vite preview; self-contained) ...
 node scripts/qa_offline.mjs
 if errorlevel 1 set FAILED=1
 
-echo [9/9] narrow-viewport overflow sweep (390px: horizontal overflow / crowded headers / viewport self-check; needs vite up) ...
+echo [9/10] narrow-viewport overflow sweep (390px: horizontal overflow / crowded headers / viewport self-check; needs vite up) ...
 node scripts/qa_narrow.mjs --strict
 if errorlevel 1 set FAILED=1
+
+echo [10/10] qa evidence receipt (aggregated gates; strict: missing evidence = not passed) ...
+cd server
+.venv\Scripts\python.exe scripts\qa_receipt.py --strict
+if errorlevel 1 set FAILED=1
+cd ..
 
 :summary
 cd /d %~dp0
