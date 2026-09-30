@@ -1,0 +1,94 @@
+# -*- coding: utf-8 -*-
+"""研究 CLI（R464，opencaselaw「research CLI + 证据保全」模式的本项目实施）。
+
+把一次检索的全过程固化为**可复核的证据收据**：查询词、时间点、命中条文（含官方
+来源 URL/施行日期/版本状态）、受控组编排元数据与整份收据的 SHA-256——检索不是
+一次性对话，而是可归档、可引用、可事后审计的证据事件。
+
+设计纪律：
+- 走产品检索路径（orchestrated_search，R143/R166 同一编排）——CLI 看到的就是产品给的；
+- 收据确定性：同库同查询两次运行 SHA-256 一致（壁钟时间只入 meta 字段、不参与哈希）；
+- 只读：不写任何业务库，收据落 docs/qa-evidence/research-cli/（QA 证据目录惯例）。
+
+用法：
+    python server/scripts/research_cli.py --query "定金能退吗" [--top-k 8] [--as-of 2020-06-01] [--out DIR]
+"""
+import argparse
+import hashlib
+import json
+import sys
+from datetime import date, datetime, timezone
+from pathlib import Path
+
+SERVER = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(SERVER))
+
+from app import retrieval_terms  # noqa: E402
+from app.corpus import get_corpus  # noqa: E402
+
+DEFAULT_OUT = SERVER.parent / "docs" / "qa-evidence" / "research-cli"
+
+
+def build_receipt(query: str, top_k: int, as_of: str | None) -> dict:
+    """构造证据收据（纯函数主体；same corpus+query → same receipt body）。"""
+    corpus = get_corpus()
+    hits, meta = retrieval_terms.orchestrated_search(corpus, query, top_k=max(1, int(top_k)))
+    rows = [{
+        "law_id": h["law_id"],
+        "law_title": h["law_title"],
+        "no": h["no"],
+        "sub": h.get("sub") or "",
+        "label": h["label"],
+        "excerpt": h["text"][:200],
+        "status": h["law_status"],
+        "effective_date": h.get("effective_date"),
+        "source_url": h.get("source_url"),
+        "score": h.get("score"),
+        "matched_groups": h.get("matched_groups") or [],
+    } for h in hits]
+    body = {
+        "schema": "legalhigh-research-receipt/1",
+        "query": query,
+        "top_k": int(top_k),
+        "as_of": as_of,
+        "corpus": {"laws": len(corpus.laws), "articles": len(corpus.articles)},
+        "retrieval_meta": meta,
+        "hits": rows,
+    }
+    digest = hashlib.sha256(json.dumps(body, ensure_ascii=False, sort_keys=True).encode("utf-8")).hexdigest()
+    # 壁钟时间只入信封、不参与哈希——同库同查询两次运行哈希一致（可复核性优先）
+    return {"receipt_sha256": digest, "generated_at": datetime.now(timezone.utc).isoformat(), **body}
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser(description="LegalHigh 研究 CLI：检索并固化证据收据")
+    ap.add_argument("--query", required=True, help="检索查询（口语或法言法语均可）")
+    ap.add_argument("--top-k", type=int, default=8)
+    ap.add_argument("--as-of", default=None, help="时点查证日期（YYYY-MM-DD，可选）")
+    ap.add_argument("--out", default=None, help="收据输出目录（默认 docs/qa-evidence/research-cli）")
+    args = ap.parse_args()
+
+    query = (args.query or "").strip()
+    if not query:
+        print("错误：--query 不能为空。")
+        return 2
+
+    receipt = build_receipt(query, args.top_k, args.as_of)
+    out_dir = Path(args.out) if args.out else DEFAULT_OUT
+    out_dir.mkdir(parents=True, exist_ok=True)
+    stamp = date.today().isoformat()
+    slug = hashlib.sha256(query.encode("utf-8")).hexdigest()[:10]
+    path = out_dir / f"receipt-{stamp}-{slug}.json"
+    path.write_text(json.dumps(receipt, ensure_ascii=False, indent=1), encoding="utf-8", newline="\n")
+
+    hits = receipt["hits"]
+    print(f"收据：{path}")
+    print(f"查询：{query}　命中 {len(hits)} 条（编排：{receipt['retrieval_meta']['method']}）")
+    for h in hits[:5]:
+        print(f"  {h['law_title']} {h['label']}　{h['status']}　{h['source_url']}")
+    print(f"SHA-256：{receipt['receipt_sha256']}")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
