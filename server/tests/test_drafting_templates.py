@@ -164,3 +164,34 @@ def test_new_templates_docx_export(tmp_db):
         assert data[:2] == b"PK"
         xml = zipfile.ZipFile(io.BytesIO(data)).read("word/document.xml").decode("utf-8")
         assert "未经人工核验定稿" in xml  # draft 状态水印横幅
+
+
+def test_appeal_period_note_and_citation_on_litigation_templates():
+    """R471（court-sms 期限规则实施）：起诉状/答辩状附确定性上诉期限提示+pcl-2023#85 引用随行。"""
+    from app import drafting
+    for tid, fill in (("civil_complaint", {
+            "plaintiff": "甲", "plaintiff_info": "某市人", "defendant": "乙", "defendant_info": "某市人",
+            "claims": "请求返还定金", "facts": "事实", "court": "某法院",
+            "legal_basis": [{"law_id": "civl-2020", "article_no": 586}]}),
+            ("civil_answer", ANSWER_FILL)):
+        g = drafting.generate(tid, fill)
+        paras = [s["text"] for s in g["content"]["sections"] if s["type"] == "para"]
+        note = [t for t in paras if "上诉期限" in t]
+        assert note, f"{tid} 缺上诉期限提示段"
+        n = note[0]
+        assert "十五日" in n and "起算日不计入" in n
+        assert "调休上班日" in n and "不顺延" in n, "court-sms 易错点（调休上班日不顺延）必须在提示中"
+        assert "落款日" in n and "送达" in n, "落款日≠送达日提醒必须在提示中"
+        assert "不构成法律意见" in n
+        # 引用随行（用户未选 85 时自动追加）
+        keys = [(c["law_id"], c["article_no"]) for c in g["content"]["citations"]]
+        assert ("pcl-2023", 85) in keys, f"{tid} 引用集缺 pcl-2023#85"
+
+
+def test_appeal_citation_not_duplicated_when_user_selects_it():
+    from app import drafting
+    fill = dict(ANSWER_FILL)
+    fill["legal_basis"] = [{"law_id": "pcl-2023", "article_no": 85}]
+    g = drafting.generate("civil_answer", fill)
+    keys = [(c["law_id"], c["article_no"]) for c in g["content"]["citations"]]
+    assert keys.count(("pcl-2023", 85)) == 1, "用户已选 85 不得重复追加"

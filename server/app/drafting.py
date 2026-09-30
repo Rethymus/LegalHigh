@@ -274,10 +274,29 @@ def build_contract(f: dict):
     return {"sections": sections, "citations": citations, "gate_note": gate_note}
 
 
+def _with_appeal_period_citation(citations: list) -> list:
+    """R471：诉讼文书引用集追加 pcl-2023#85（期间规则）——提示段的法律依据随行。
+
+    用户已自选该条则不重复；citation_of 启动校验兜底（条号漂移即 KeyError）。"""
+    if any(c.get("law_id") == "pcl-2023" and c.get("article_no") == 85 for c in citations):
+        return citations
+    return citations + [get_corpus().citation_of("pcl-2023", 85)]
+
+
+APPEAL_PERIOD_NOTE = (
+    "程序提示（上诉期限）：一审判决送达后十五日内、裁定送达后十日内可上诉（《民事诉讼法》相关规定）。"
+    "两个易错点：①期间起算日不计入（送达当日不算第一天）；②届满日遇法定休假日的顺延至其后第一日——"
+    "但调休上班日（周末但经国务院通知为工作日）属工作日、**不顺延**，顺延判断必须依据当年国务院办公厅"
+    "节假日安排通知，不能只按周末粗算。上诉期限自**送达之日**起算，文书落款日只是制作日、不得当作送达日。"
+    "本提示不构成法律意见，具体期限请以受诉法院告知为准。"
+)
+
+
 def build_civil_complaint(f: dict):
     claims = _lines(f.get("claims"))
     evidence = _lines(f.get("evidence"))
     citations = parse_citations(f.get("legal_basis"))
+    citations = _with_appeal_period_citation(citations)
     sections = [
         {"type": "title", "text": "民事起诉状"},
         {"type": "party", "lines": [
@@ -301,6 +320,10 @@ def build_civil_complaint(f: dict):
     sections += [
         {"type": "closing", "text": f"此致\n{f.get('court', '')}"},
         {"type": "signature", "lines": ["具状人（签名/盖章）：", date.today().strftime("%Y年%m月%d日")]},
+        # R471（court-sms 期限规则实施）：诉讼文书附确定性上诉期限提示——法律要点来自
+        # pcl-2023#85（起算日不计入/休假日顺延），易错点来自 court-sms 实务规则
+        #（调休上班日不顺延/落款日≠送达日），不作具体日期计算（无送达日输入）。
+        {"type": "para", "text": APPEAL_PERIOD_NOTE},
     ]
     gate_note = "本起诉状为要素式模板生成的草稿（程序指引属性）：不构成法律意见、不建立委托关系；提交法院前请经人工核验，并核对管辖、诉讼时效与证据清单。"
     return {"sections": sections, "citations": citations, "gate_note": gate_note}
@@ -310,6 +333,7 @@ def build_civil_answer(f: dict):
     points = _lines(f.get("answer_points"))
     responses = _lines(f.get("claims_response"))
     citations = parse_citations(f.get("legal_basis"))
+    citations = _with_appeal_period_citation(citations)
     sections = [
         {"type": "title", "text": "民事答辩状"},
         {"type": "party", "lines": [
@@ -334,6 +358,8 @@ def build_civil_answer(f: dict):
     sections += [
         {"type": "closing", "text": f"此致\n{f.get('court', '')}"},
         {"type": "signature", "lines": [f"答辩人：{f.get('defendant', '')}", date.today().strftime("%Y年%m月%d日")]},
+        # R471：答辩状同样附上诉期限提示（答辩人后续对判决/裁定亦为潜在上诉人）
+        {"type": "para", "text": APPEAL_PERIOD_NOTE},
     ]
     gate_note = "本答辩状为要素式模板生成的草稿（程序指引属性）：不构成法律意见；提交法院前请由实际使用者独立复核，并逐项核对适用的答辩期限、送达方式与证据清单。"
     return {"sections": sections, "citations": citations, "gate_note": gate_note}
