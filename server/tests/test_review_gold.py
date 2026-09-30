@@ -220,13 +220,38 @@ def test_t1_development_ip_ownership_unspecified():
     assert "T1" not in fired("房屋租赁期限为三十年。"), "非技术开发合同不触发"
 
 
+# ---- 借款/担保类（T4 续批四波，R447：B1/D1/D2）----
+
+def test_b1_loan_rate_too_high_period_aware():
+    assert "B1" in fired("借款利率为年利率 36%。")
+    assert "B1" in fired("贷款利息按月利率 2.5% 计收。"), "按月形态须按月阈值判（周期感知）"
+    assert "B1" in fired("借款月息 2%，按月计收。")
+    assert "B1" in fired("借款按日利率 0.8% 计收利息。")
+    assert "B1" not in fired("借款年利率为 12%。")
+    assert "B1" not in fired("借款按月利率 1.5% 计息。"), "按月低于 2% 不触发"
+    assert "B1" not in fired("借款期内不收取利息。"), "无息借款不触发"
+
+
+def test_d1_guarantee_mode_unspecified():
+    assert "D1" in fired("甲方为乙方的债务提供保证。")
+    ids = fired("保证人自愿为上述借款承担连带责任保证。")
+    assert "D1" not in ids, "已明示连带责任保证，不触发"
+    assert "D1" not in fired("房屋租赁期限为三十年。"), "非保证合同不触发"
+
+
+def test_d2_guarantee_period_unspecified():
+    assert "D2" in fired("甲方为乙方的债务提供保证。")
+    ids = fired("保证人承担连带责任保证，保证期间为主债务履行期届满之日起三年。")
+    assert "D2" not in ids, "已约定保证期间，不触发"
+
+
 def test_gold_review_checkpoints_count():
-    """金标规模门：审查点引擎 28 个（16 通用 + T4 租赁/劳动/买卖/物业·建设工程/中介·技术服务各波），判定用例 ≥50 组（含正反例）。"""
-    assert len(review.get_checkpoints()) == 28
+    """金标规模门：审查点引擎 31 个（16 通用 + T4 六波八类型），判定用例 ≥50 组（含正反例）。"""
+    assert len(review.get_checkpoints()) == 31
     # 本文件内的测试函数数（每组正反例算一组）
     import test_review_gold as _self  # noqa: PLC0415
     n = sum(1 for name in dir(_self) if name.startswith("test_"))
-    assert n >= 23, n
+    assert n >= 26, n
 
 
 # ================= 数据驱动金标表（M6-T5：≥50 组判定）=================
@@ -338,6 +363,20 @@ GOLD_REVIEW_ROWS = [
     ("委托开发本项目管理系统。", "T1", True),
     ("委托开发的发明创造，申请专利的权利归委托人所有。", "T1", False),
     ("房屋租赁期限为三十年。", "T1", False),
+    # B1 借款利率明显偏高（周期感知，T4 续批四波 R447）
+    ("借款利率为年利率 36%。", "B1", True),
+    ("贷款利息按月利率 2.5% 计收。", "B1", True),
+    ("借款按日利率 0.8% 计收利息。", "B1", True),
+    ("借款年利率为 12%。", "B1", False),
+    ("借款按月利率 1.5% 计息。", "B1", False),
+    ("借款期内不收取利息。", "B1", False),
+    # D1 保证方式未约定（全文级，视为一般保证）
+    ("甲方为乙方的债务提供保证。", "D1", True),
+    ("保证人自愿为上述借款承担连带责任保证。", "D1", False),
+    ("房屋租赁期限为三十年。", "D1", False),
+    # D2 保证期间未约定（全文级，默认六个月）
+    ("甲方为乙方的债务提供保证。", "D2", True),
+    ("保证人承担连带责任保证，保证期间为主债务履行期届满之日起三年。", "D2", False),
 ]
 
 

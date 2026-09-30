@@ -240,6 +240,26 @@ def _l1_match(t: str) -> bool:
     return p >= 24
 
 
+def _loan_rate_too_high(t: str) -> bool:
+    """借款利率偏高口径（R447 B1）：句级定位含 利率/利息/月息 的句子，按计息周期
+    判阈值——按月 ≥2%、按日 ≥0.5%、其余（年化口径）≥24%；任一计息句命中即触发。
+    与 L1 同构（L1 管违约金/逾期成本，B1 管借款利率本身，关键词集不相交）。"""
+    hit = False
+    for sent in re.split(r"[。；！？\n]", t):
+        if not re.search(r"(利率|利息|月息)", sent):
+            continue
+        p = max(_numbers_in(sent), default=0.0)
+        if p <= 0:
+            continue
+        if re.search(r"(按月|每月|月息|月利率)", sent):
+            hit = hit or p >= 2
+        elif re.search(r"(按日|每日|日息|日利率)", sent):
+            hit = hit or p >= 0.5
+        else:
+            hit = hit or p >= 24
+    return hit
+
+
 def build_checkpoints():
     """审查点库。citation=(law_id, no) 的条文一律在启动时经 corpus 校验存在。"""
     cps = [
@@ -453,6 +473,28 @@ def build_checkpoints():
                         and not re.search(r"(归属|知识产权|专利|技术成果[^。]{0,10}归|著作权|成果归)", t),
          "citation": ("civl-2020", 859),
          "suggestion": "明确约定开发成果的知识产权归属（如「委托开发完成的发明创造，申请专利的权利归委托人所有」）及双方实施、许可与改进安排。"},
+
+        # ── 借款/担保类（T4 续批四波，R447；民法典相应章节语料已备） ──────
+        {"id": "B1", "category": "fee", "risk": "high",
+         "title": "借款利率明显偏高",
+         "detail": "借款利率约定明显偏高。《民法典》第680条明文禁止高利放贷，借款的利率不得违反国家有关规定；过高的利率约定存在不受保护或被调整的风险。本检查点以约定利率明显偏高（年化口径 ≥24% 或按月 ≥2%）为提示口径，非对法定上限的认定。",
+         "match": lambda t: bool(re.search(r"(借款|贷款)", t)) and _loan_rate_too_high(t),
+         "citation": ("civl-2020", 680),
+         "suggestion": "将利率调整至国家有关规定允许的范围内（以现行监管与司法保护口径为准），并写明计息方式、还款顺序与提前还款规则。"},
+        {"id": "D1", "category": "liability", "risk": "medium", "scope": "whole",
+         "title": "保证方式未约定（视为一般保证）",
+         "detail": "合同涉及保证，但全文未明确保证方式。依《民法典》第686条，保证的方式包括一般保证和连带责任保证；对保证方式没有约定或者约定不明确的，按照一般保证承担保证责任。一般保证的保证人享有先诉抗辩权（第687条：主合同纠纷未经审判或仲裁并就债务人财产依法强制执行仍不能履行前，有权拒绝承担保证责任）——保证方式直接影响债权人实现债权与保证人担责的路径。",
+         "match": lambda t: bool(re.search(r"(保证人|提供保证|承担保证责任|保证合同)", t))
+                        and not re.search(r"(一般保证|连带(责任)?保证)", t),
+         "citation": ("civl-2020", 686),
+         "suggestion": "明确保证方式：需保证人无先诉抗辩权的写明「连带责任保证」；接受一般保证的写明「一般保证」——未明确的按一般保证承担。"},
+        {"id": "D2", "category": "liability", "risk": "low", "scope": "whole",
+         "title": "保证期间未约定",
+         "detail": "合同涉及保证，但全文未约定保证期间。依《民法典》第692条，没有约定或者约定不明确的，保证期间为主债务履行期限届满之日起六个月；约定的保证期间早于主债务履行期限或与其同时届满的，视为没有约定。保证期间不发生中止、中断和延长——债权人未在保证期间内主张的，保证人免责。",
+         "match": lambda t: bool(re.search(r"(保证人|提供保证|承担保证责任|保证合同)", t))
+                        and not re.search(r"保证期间", t),
+         "citation": ("civl-2020", 692),
+         "suggestion": "明确约定保证期间（如「保证期间为主债务履行期届满之日起三年」），并注意约定早于或同时届满的视为没有约定。"},
     ]
     # 启动期校验：带 citation 的审查点，其条文必须真实存在于语料（引用不变量硬门）；
     # revision 块形状校验 fail-closed（R440，R437-T3 内容闸门——非法形状拒绝加载）。
