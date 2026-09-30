@@ -265,13 +265,34 @@ def test_y1_carriage_liability_cap():
     assert "Y1" not in ids, "无限额表述不触发"
 
 
+# ---- 赠与/委托类（T4 续批六波，R449：Z1/C1/C2）----
+
+def test_z1_gift_irrevocability_clause():
+    assert "Z1" in fired("本赠与不可撤销，受赠人不得要求撤回。")
+    assert "Z1" in fired("赠与人不得任意撤销本赠与。")
+    ids = fired("赠与人在权利转移前可以撤销赠与。")
+    assert "Z1" not in ids, "复述法定任意撤销权的表述不触发"
+
+
+def test_c1_termination_restriction_on_mandate():
+    assert "C1" in fired("甲方委托乙方办理登记手续，双方均不得解除本合同。")
+    ids = fired("委托人可以随时解除委托合同，但应赔偿对方直接损失。")
+    assert "C1" not in ids, "保留任意解除权仅约定赔偿，不触发"
+
+
+def test_c2_gratuitous_mandate_liability_threshold():
+    assert "C2" in fired("乙方免费委托甲方代收邮件。")
+    ids = fired("甲方支付报酬，委托乙方提供代理服务。")
+    assert "C2" not in ids, "有偿委托不触发"
+
+
 def test_gold_review_checkpoints_count():
-    """金标规模门：审查点引擎 34 个（16 通用 + T4 七波九类型），判定用例 ≥50 组（含正反例）。"""
-    assert len(review.get_checkpoints()) == 34
+    """金标规模门：审查点引擎 37 个（16 通用 + T4 八波十一类型），判定用例 ≥50 组（含正反例）。"""
+    assert len(review.get_checkpoints()) == 37
     # 本文件内的测试函数数（每组正反例算一组）
     import test_review_gold as _self  # noqa: PLC0415
     n = sum(1 for name in dir(_self) if name.startswith("test_"))
-    assert n >= 29, n
+    assert n >= 32, n
 
 
 # ================= 数据驱动金标表（M6-T5：≥50 组判定）=================
@@ -406,6 +427,16 @@ GOLD_REVIEW_ROWS = [
     # Y1 运输限责条款提示
     ("货物丢失的，最高赔偿运费的三倍。", "Y1", True),
     ("货物毁损灭失的赔偿额按交付时货物到达地市场价格计算。", "Y1", False),
+    # Z1 「赠与不可撤销」约定（T4 续批六波 R449）
+    ("本赠与不可撤销，受赠人不得要求撤回。", "Z1", True),
+    ("赠与人不得任意撤销本赠与。", "Z1", True),
+    ("赠与人在权利转移前可以撤销赠与。", "Z1", False),
+    # C1 限制解除委托合同
+    ("甲方委托乙方办理登记手续，双方均不得解除本合同。", "C1", True),
+    ("委托人可以随时解除委托合同，但应赔偿对方直接损失。", "C1", False),
+    # C2 无偿委托赔偿门槛
+    ("乙方免费委托甲方代收邮件。", "C2", True),
+    ("甲方支付报酬，委托乙方提供代理服务。", "C2", False),
 ]
 
 
