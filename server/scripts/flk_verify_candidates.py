@@ -16,6 +16,7 @@ import json
 import os
 import pathlib
 import sys
+import time
 import urllib.parse
 import urllib.request
 
@@ -37,7 +38,9 @@ def main() -> int:
     laws = {l['law_id']: l for l in json.loads(
         (SERVER / 'data' / 'laws' / 'manifest.json').read_text(encoding='utf-8'))['laws']}
     ok, skipped = [], []
-    for cand in batch['current']:
+    for i, cand in enumerate(batch['current']):
+        if i:
+            time.sleep(3)  # 请求间隔（R202 纪律）：对政府端点保持礼貌频率，21 条约 1 分钟
         lid, bbbs = cand['law_id'], cand['bbbs']
         url = DETAIL + urllib.parse.quote(bbbs)
         try:

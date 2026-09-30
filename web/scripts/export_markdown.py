@@ -83,6 +83,7 @@ def main():
     lines += [
         "",
         f"共 {len(index)} 部 {total_articles} 条。法条文本不受著作权保护（著作权法第五条）；",
+        "整理成果以 CC0 1.0 Universal 发布（决策 19，2026-09-30；全文见仓库 LICENSES/DATA-CC0-1.0.txt）。",
         "引用请以官方公报为准。本导出不构成法律意见。",
     ]
     (OUT / "README.md").write_text("\n".join(lines) + "\n", encoding="utf-8", newline="\n")

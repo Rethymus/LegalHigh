@@ -125,7 +125,7 @@ cd web && npm ci && npm run dev
 
 | 门禁 / Gate | 内容 / What it checks |
 |---|---|
-| 后端测试 / Backend tests | 491 项 pytest（引用绑定、状态机、PIPL 级联、fail-closed、评测单调性、证据账本、重编号映射、robots 红线代码层、laws-md 导出镜像、受控检索组名次锚、时点适用全时间线性质扫描、审查立场契约、建议修订块（w:del）金标与三态观测、租赁/劳动/买卖/物业·建设工程/中介·技术服务/借款·担保/保管·仓储·运输/赠与·委托/合伙·保险/供用电水气热力/行纪类审查点判定表与修订跨度精确断言等；2026-09-29 实测） |
+| 后端测试 / Backend tests | 495 项 pytest（引用绑定、状态机、PIPL 级联、fail-closed、评测单调性、证据账本、重编号映射、robots 红线代码层、laws-md 导出镜像、受控检索组名次锚、时点适用全时间线性质扫描、审查立场契约、建议修订块（w:del）金标与三态观测、租赁/劳动/买卖/物业·建设工程/中介·技术服务/借款·担保/保管·仓储·运输/赠与·委托/合伙·保险/供用电水气热力/行纪类审查点判定表与修订跨度精确断言、数据许可接线等；2026-09-30 实测） |
 | 案例库 / Case library | 281 件可公开核验案例（最高人民法院指导案例 278 件 + 域外经典判例 3 件）；裁判要点与裁判结果逐字出自官方发布页快照并由测试钉住，法条引用经语料逐字核验（2026-09-27 实测） |
 | 浏览器巡检 / Route sweeps | 无头 Chrome 逐路由截图 + console/网络零错误门（67 路由，2026-09-29 实测 0 问题） |
 | 对比度 / Contrast | WCAG AA 正文 4.5:1 + UI 指示器 3:1（strict 模式） |
@@ -137,6 +137,10 @@ cd web && npm ci && npm run dev
 | 发布前核验 / Final verify | `server/scripts/final_verify.py` 对运行中实例做十项 API 真值断言 |
 
 应用内 [质量透明度页](/quality) 只读公示实时派生指标与带日期历史记录。自动化测试只能证明被覆盖的断言，不能证明系统「绝不出错」；检索评测（金标 541 组，hit@5 97.0%、法律级 98.5%、rank-1 67.5%、MRR 79.2%；2026-09-29 实测——含确定性重排二代的 IDF 加权覆盖度，全量 A/B 救回 4 例零打落；指标随金标扩容与真实难例自然浮动）衡量的是语料命中率，不是法律正确率。
+
+## 📦 开放数据与许可 · Open data & license
+
+全语料 markdown 导出（每法一文件+官方元数据）与结构化 laws.json 见 [data/laws-md/](https://legalhigh.pages.dev/data/laws-md/README.md)；数据集发布件由 `server/scripts/package_dataset.py` 产出（ZIP+SHA256+CC0 LICENSE）。**许可（决策 19，2026-09-30 业主裁定）**：法条文本不受著作权保护（《著作权法》第五条）；数据整理成果以 **CC0 1.0 Universal** 发布（全文见 [LICENSES/DATA-CC0-1.0.txt](LICENSES/DATA-CC0-1.0.txt)）；仓库代码许可另议（未定）。
 
 ## 🔌 MCP Server · AI 助手接入
 
