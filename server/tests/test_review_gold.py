@@ -286,13 +286,35 @@ def test_c2_gratuitous_mandate_liability_threshold():
     assert "C2" not in ids, "有偿委托不触发"
 
 
+# ---- 合伙/保险类（T4 续批七波，R450：H1/H2/X1）----
+
+def test_h1_partnership_profit_loss_unspecified():
+    assert "H1" in fired("甲乙双方合伙经营餐饮，各出资 20 万元。")
+    ids = fired("合伙经营所得利润按出资比例分配，亏损亦同。")
+    assert "H1" not in ids, "已有利润分配与亏损分担安排（分离语序亦算），不触发"
+    assert "H1" not in fired("房屋租赁期限为三十年。"), "非合伙合同不触发"
+
+
+def test_h2_share_transfer_without_unanimous_consent():
+    assert "H2" in fired("合伙人向合伙人以外的人转让其出资份额的，按本条办理。")
+    ids = fired("转让合伙份额须经其他合伙人一致同意，其他合伙人同等条件下优先受让。")
+    assert "H2" not in ids, "已设一致同意与优先受让安排，不触发"
+
+
+def test_x1_insurance_exclusion_without_disclosure():
+    assert "X1" in fired("保险合同约定：高空坠落属责任免除范围。")
+    ids = fired("对免除保险人责任的条款，保险人已作显著提示并向投保人明确说明。")
+    assert "X1" not in ids, "已有提示与明确说明安排，不触发"
+    assert "X1" not in fired("房屋租赁期限为三十年。"), "非保险合同不触发"
+
+
 def test_gold_review_checkpoints_count():
-    """金标规模门：审查点引擎 37 个（16 通用 + T4 八波十一类型），判定用例 ≥50 组（含正反例）。"""
-    assert len(review.get_checkpoints()) == 37
+    """金标规模门：审查点引擎 40 个（16 通用 + T4 九波十三类型），判定用例 ≥50 组（含正反例）。"""
+    assert len(review.get_checkpoints()) == 40
     # 本文件内的测试函数数（每组正反例算一组）
     import test_review_gold as _self  # noqa: PLC0415
     n = sum(1 for name in dir(_self) if name.startswith("test_"))
-    assert n >= 32, n
+    assert n >= 35, n
 
 
 # ================= 数据驱动金标表（M6-T5：≥50 组判定）=================
@@ -437,6 +459,16 @@ GOLD_REVIEW_ROWS = [
     # C2 无偿委托赔偿门槛
     ("乙方免费委托甲方代收邮件。", "C2", True),
     ("甲方支付报酬，委托乙方提供代理服务。", "C2", False),
+    # H1 合伙利润分配与亏损分担未约定（全文级，T4 续批七波 R450）
+    ("甲乙双方合伙经营餐饮，各出资 20 万元。", "H1", True),
+    ("合伙经营所得利润按出资比例分配，亏损亦同。", "H1", False),
+    ("房屋租赁期限为三十年。", "H1", False),
+    # H2 合伙份额对外转让缺一致同意安排
+    ("合伙人向合伙人以外的人转让其出资份额的，按本条办理。", "H2", True),
+    ("转让合伙份额须经其他合伙人一致同意，其他合伙人同等条件下优先受让。", "H2", False),
+    # X1 保险免责条款未附提示与明确说明安排（全文级）
+    ("保险合同约定：高空坠落属责任免除范围。", "X1", True),
+    ("对免除保险人责任的条款，保险人已作显著提示并向投保人明确说明。", "X1", False),
 ]
 
 
