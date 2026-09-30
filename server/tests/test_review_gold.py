@@ -308,13 +308,28 @@ def test_x1_insurance_exclusion_without_disclosure():
     assert "X1" not in fired("房屋租赁期限为三十年。"), "非保险合同不触发"
 
 
+# ---- 供用电水气热力类（T4 续批八波，R451：E1/E2）----
+
+def test_e1_interruption_without_prior_notice():
+    assert "E1" in fired("因检修需要，供电人可随时中断供电。")
+    assert "E1" in fired("停止供气无需另行通知用户。"), "水气热参照供用电（第656条）"
+    ids = fired("中断供电的，应提前七日通知用电人。")
+    assert "E1" not in ids, "已有事先通知安排，不触发"
+
+
+def test_e2_arrears_suspension_without_demand():
+    assert "E2" in fired("逾期未交电费的，供电人有权立即停电。")
+    ids = fired("欠费停水的，经书面催告后合理期限内仍未支付的，按国家规定程序中止供水并事先通知。")
+    assert "E2" not in ids, "已含催告+合理期限+事先通知，不触发"
+
+
 def test_gold_review_checkpoints_count():
-    """金标规模门：审查点引擎 40 个（16 通用 + T4 九波十三类型），判定用例 ≥50 组（含正反例）。"""
-    assert len(review.get_checkpoints()) == 40
+    """金标规模门：审查点引擎 42 个（16 通用 + T4 十波十四类型），判定用例 ≥50 组（含正反例）。"""
+    assert len(review.get_checkpoints()) == 42
     # 本文件内的测试函数数（每组正反例算一组）
     import test_review_gold as _self  # noqa: PLC0415
     n = sum(1 for name in dir(_self) if name.startswith("test_"))
-    assert n >= 35, n
+    assert n >= 37, n
 
 
 # ================= 数据驱动金标表（M6-T5：≥50 组判定）=================
@@ -469,6 +484,13 @@ GOLD_REVIEW_ROWS = [
     # X1 保险免责条款未附提示与明确说明安排（全文级）
     ("保险合同约定：高空坠落属责任免除范围。", "X1", True),
     ("对免除保险人责任的条款，保险人已作显著提示并向投保人明确说明。", "X1", False),
+    # E1 中断供电无事先通知（T4 续批八波 R451；水气热参照 656）
+    ("因检修需要，供电人可随时中断供电。", "E1", True),
+    ("停止供气无需另行通知用户。", "E1", True),
+    ("中断供电的，应提前七日通知用电人。", "E1", False),
+    # E2 欠费即中止供电缺催告程序
+    ("逾期未交电费的，供电人有权立即停电。", "E2", True),
+    ("欠费停水的，经书面催告后合理期限内仍未支付的，按国家规定程序中止供水并事先通知。", "E2", False),
 ]
 
 
