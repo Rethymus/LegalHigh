@@ -253,7 +253,7 @@ Please read [CONTRIBUTING.md](CONTRIBUTING.md) before submitting. Report securit
 
 LegalHigh is for legal-information retrieval, research and software-engineering validation only. Any output may be incomplete, outdated or wrong; verify against the latest authoritative publications and consult a qualified professional on specific matters.
 
-This repository currently ships no open-source licence, so no right to copy, modify, distribute or commercially use the code is granted. Rights to legal texts, judgments and third-party materials remain with their sources.
+**Licence status (decision 19, ruled 2026-09-30)**: the curated data (controlled corpus, version registries, exports and the dataset release artifacts) is published under **CC0 1.0 Universal** (full text at [LICENSES/DATA-CC0-1.0.txt](LICENSES/DATA-CC0-1.0.txt)); statute texts themselves are not protected by copyright (Art. 5 of the PRC Copyright Law). **The repository code still ships no open-source licence** — no right to copy, modify, distribute or commercially use the code is granted (code licence TBD). Rights to legal texts, judgments and third-party materials remain with their sources.
 
 <div align="center">
 
