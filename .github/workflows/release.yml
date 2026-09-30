@@ -1,8 +1,9 @@
 # Release 工作流（S1-T2）：tag 推送触发，产物一律进「草稿 Release」，
 # 由维护者按 docs/compliance/发布检查清单-RC转正式.md 人工审核后发布——
 # 不自动 publish（转正三条件中的「零回归窗口」判断是人 gate，不交给 CI）。
-# 桌面安装器不在本工作流范围（签名未决，决策 16）；本工作流只产出
-# 源码 ZIP / 静态站点 ZIP / SHA-256 / SBOM 四类附件。
+# 桌面安装器不在本工作流范围（签名未决，决策 16）；本工作流产出
+# 源码 ZIP / 静态站点 ZIP / 开放数据集 ZIP（CC0，决策 19 于 2026-09-30 裁定，
+# R457 接入）/ SHA-256 / SBOM 五类附件。
 name: release
 
 on:
@@ -50,6 +51,16 @@ jobs:
         run: |
           cd server
           .venv/bin/python scripts/make_sbom.py --out ../artifacts
+
+      - name: 开放数据集打包（CC0，决策 19，R457）
+        run: |
+          cd server
+          # package_dataset 的 --out 相对「仓库根」解析（ROOT / args.out），不用 ../ 前缀
+          .venv/bin/python scripts/package_dataset.py --out artifacts/dataset
+          TAG="${GITHUB_REF#refs/tags/}"
+          mv "../artifacts/dataset/legalhigh-corpus-"*.zip "../artifacts/LegalHigh-corpus-${TAG}.zip"
+          rm -f ../artifacts/dataset/SHA256SUMS.txt
+          rmdir ../artifacts/dataset
 
       - name: 打包与校验和
         run: |

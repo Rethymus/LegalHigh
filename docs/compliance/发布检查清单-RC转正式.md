@@ -14,7 +14,7 @@
 ## 二、发布前核查（草稿 Release 上逐项勾选）
 
 1. **版本与变更**：`CHANGELOG.md` 顶部新增本版本段落（Added/Fixed/Verification/Upgrade and limits 四节，中英）；版本号与 tag 一致；`desktop/package.json` version 同步。
-2. **附件四件**：源码 ZIP、静态站点 ZIP、SBOM ×3（server/web/desktop CycloneDX 1.5）、`SHA256SUMS`。桌面安装器不在附件内，除非决策 16 已决议签名路径。
+2. **附件五件**（R457 起含数据集）：源码 ZIP、静态站点 ZIP、**开放数据集 ZIP（108 部语料+CC0 LICENSE，决策 19 于 2026-09-30 裁定后接入）**、SBOM ×3（server/web/desktop CycloneDX 1.5）、`SHA256SUMS`（覆盖全部 ZIP）。桌面安装器不在附件内，除非决策 16 已决议签名路径。
 3. **静态站点内容**：解包抽查 `data/laws.json` 与 `/api/laws` 一致（export_laws 同源）；首页可达、法条详情路由（HashRouter）深链可开。
 4. **质量门当次全绿**：pytest / build / qa_gates / qa_contrast --strict / qa_motion（发布前手动 `run_qa.cmd` 全量，含 52 路由巡检）。
 5. **合规公示复核**（对照 `备案材料清单` B 类）：B2 定位声明在列；B5 投诉通道可用；B1/B3/B4/B6 现状如实标注「未接入/待建立」，不虚标。
