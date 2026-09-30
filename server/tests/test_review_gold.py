@@ -323,13 +323,33 @@ def test_e2_arrears_suspension_without_demand():
     assert "E2" not in ids, "已含催告+合理期限+事先通知，不触发"
 
 
+# ---- 行纪类（T4 续批九波，R452：J1/J2/J3）----
+
+def test_j1_price_deviation_without_consent():
+    assert "J1" in fired("行纪人可低于指定价格卖出商品。")
+    ids = fired("低于约定价格卖出的，须经委托人同意并补足差额。")
+    assert "J1" not in ids, "已有同意+差额补足安排，不触发"
+
+
+def test_j2_third_party_risk_shifted_to_client():
+    assert "J2" in fired("因第三人不履行义务造成损失的，行纪人不承担赔偿责任。")
+    ids = fired("行纪人对第三人合同直接享有权利并承担义务。")
+    assert "J2" not in ids, "复述法定直接担责规则，不触发"
+
+
+def test_j3_interposition_right_unspecified():
+    assert "J3" in fired("委托行纪人代销一批货物。")
+    ids = fired("未经委托人书面同意，行纪人不得自行买入或卖出。")
+    assert "J3" not in ids, "已作相反意思表示（排除介入），不触发"
+
+
 def test_gold_review_checkpoints_count():
-    """金标规模门：审查点引擎 42 个（16 通用 + T4 十波十四类型），判定用例 ≥50 组（含正反例）。"""
-    assert len(review.get_checkpoints()) == 42
+    """金标规模门：审查点引擎 45 个（16 通用 + T4 十一波十五类型），判定用例 ≥50 组（含正反例）。"""
+    assert len(review.get_checkpoints()) == 45
     # 本文件内的测试函数数（每组正反例算一组）
     import test_review_gold as _self  # noqa: PLC0415
     n = sum(1 for name in dir(_self) if name.startswith("test_"))
-    assert n >= 37, n
+    assert n >= 40, n
 
 
 # ================= 数据驱动金标表（M6-T5：≥50 组判定）=================
@@ -491,6 +511,15 @@ GOLD_REVIEW_ROWS = [
     # E2 欠费即中止供电缺催告程序
     ("逾期未交电费的，供电人有权立即停电。", "E2", True),
     ("欠费停水的，经书面催告后合理期限内仍未支付的，按国家规定程序中止供水并事先通知。", "E2", False),
+    # J1 背离指定价格未经同意（T4 续批九波 R452）
+    ("行纪人可低于指定价格卖出商品。", "J1", True),
+    ("低于约定价格卖出的，须经委托人同意并补足差额。", "J1", False),
+    # J2 第三人不履约风险转嫁
+    ("因第三人不履行义务造成损失的，行纪人不承担赔偿责任。", "J2", True),
+    ("行纪人对第三人合同直接享有权利并承担义务。", "J2", False),
+    # J3 行纪介入权未约定（全文级）
+    ("委托行纪人代销一批货物。", "J3", True),
+    ("未经委托人书面同意，行纪人不得自行买入或卖出。", "J3", False),
 ]
 
 
