@@ -245,13 +245,33 @@ def test_d2_guarantee_period_unspecified():
     assert "D2" not in ids, "已约定保证期间，不触发"
 
 
+# ---- 保管/仓储/运输类（T4 续批五波，R448：K1/K2/Y1）----
+
+def test_k1_gratuitous_bailment():
+    assert "K1" in fired("乙方免费保管甲方寄存的行李物品。")
+    ids = fired("保管费每月 100 元，保管人妥善保管寄存物品。")
+    assert "K1" not in ids, "有偿保管不触发（责任门槛不同提示仅对无偿形态）"
+
+
+def test_k2_warehouse_deterioration_boundary():
+    assert "K2" in fired("仓储物超过有效储存期变质的，双方另行协商处置。")
+    ids = fired("因储存期间保管不善造成仓储物毁损的，由保管人赔偿。")
+    assert "K2" not in ids, "毁损非变质/超期形态，不属于第917条第2句边界"
+
+
+def test_y1_carriage_liability_cap():
+    assert "Y1" in fired("货物丢失的，最高赔偿运费的三倍。")
+    ids = fired("货物毁损灭失的赔偿额按交付时货物到达地市场价格计算。")
+    assert "Y1" not in ids, "无限额表述不触发"
+
+
 def test_gold_review_checkpoints_count():
-    """金标规模门：审查点引擎 31 个（16 通用 + T4 六波八类型），判定用例 ≥50 组（含正反例）。"""
-    assert len(review.get_checkpoints()) == 31
+    """金标规模门：审查点引擎 34 个（16 通用 + T4 七波九类型），判定用例 ≥50 组（含正反例）。"""
+    assert len(review.get_checkpoints()) == 34
     # 本文件内的测试函数数（每组正反例算一组）
     import test_review_gold as _self  # noqa: PLC0415
     n = sum(1 for name in dir(_self) if name.startswith("test_"))
-    assert n >= 26, n
+    assert n >= 29, n
 
 
 # ================= 数据驱动金标表（M6-T5：≥50 组判定）=================
@@ -377,6 +397,15 @@ GOLD_REVIEW_ROWS = [
     # D2 保证期间未约定（全文级，默认六个月）
     ("甲方为乙方的债务提供保证。", "D2", True),
     ("保证人承担连带责任保证，保证期间为主债务履行期届满之日起三年。", "D2", False),
+    # K1 无偿保管责任形态（T4 续批五波 R448）
+    ("乙方免费保管甲方寄存的行李物品。", "K1", True),
+    ("保管费每月 100 元，保管人妥善保管寄存物品。", "K1", False),
+    # K2 仓储变质/超储存期责任边界
+    ("仓储物超过有效储存期变质的，双方另行协商处置。", "K2", True),
+    ("因储存期间保管不善造成仓储物毁损的，由保管人赔偿。", "K2", False),
+    # Y1 运输限责条款提示
+    ("货物丢失的，最高赔偿运费的三倍。", "Y1", True),
+    ("货物毁损灭失的赔偿额按交付时货物到达地市场价格计算。", "Y1", False),
 ]
 
 
