@@ -23,12 +23,44 @@ from pathlib import Path
 SERVER = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(SERVER))
 
+from app import cases as cases_mod  # noqa: E402
 from app import retrieval_terms  # noqa: E402
 from app import temporal as temporal_mod  # noqa: E402
 from app import version_fulltext as version_fulltext_mod  # noqa: E402
 from app.corpus import get_corpus  # noqa: E402
 
 DEFAULT_OUT = SERVER.parent / "docs" / "qa-evidence" / "research-cli"
+
+
+def build_case_receipt(query: str, top_k: int, level: str | None, bias: str) -> dict:
+    """案例证据收据（R469）：指导性案例等可公开核验案例的检索固化。
+
+    引用不变量同法条收据：每行携带来源 URL（source_url）与核验时间（source_accessed_at）；
+    bias 影响排序不影响召回集（确定性，无随机）。"""
+    hits = cases_mod.search_cases(query, level=level, bias=bias)[: max(1, int(top_k))]
+    rows = [{
+        "case_id": h["id"],
+        "name": h["name"],
+        "court": h["court"],
+        "level": h["level"],
+        "doc_type": h.get("doc_type") or "",
+        "holding_excerpt": (h.get("holding") or "")[:200],
+        "cause": h.get("cause") or "",
+        "source_url": h.get("source_url"),
+        "source_accessed_at": h.get("source_accessed_at"),
+    } for h in hits]
+    body = {
+        "schema": "legalhigh-research-receipt/1",
+        "kind": "cases",
+        "query": query,
+        "top_k": int(top_k),
+        "level": level,
+        "bias": bias,
+        "hits": rows,
+    }
+    digest = hashlib.sha256(json.dumps(body, ensure_ascii=False, sort_keys=True).encode("utf-8")).hexdigest()
+    return {"receipt_sha256": digest,
+            "generated_at": datetime.now(timezone.utc).isoformat(), **body}
 
 
 def build_receipt(query: str, top_k: int, as_of: str | None) -> dict:
@@ -82,7 +114,10 @@ def main() -> int:
     ap = argparse.ArgumentParser(description="LegalHigh 研究 CLI：检索并固化证据收据")
     ap.add_argument("--query", required=True, help="检索查询（口语或法言法语均可）")
     ap.add_argument("--top-k", type=int, default=8)
-    ap.add_argument("--as-of", default=None, help="时点查证日期（YYYY-MM-DD，可选）")
+    ap.add_argument("--as-of", default=None, help="时点查证日期（YYYY-MM-DD，可选，仅 statutes 模式）")
+    ap.add_argument("--mode", choices=["statutes", "cases"], default="statutes")
+    ap.add_argument("--level", default=None, help="案例层级过滤（cases 模式，如 指导性案例）")
+    ap.add_argument("--bias", default="balanced", help="案例排序偏向（cases 模式：balanced/facts/reasoning）")
     ap.add_argument("--out", default=None, help="收据输出目录（默认 docs/qa-evidence/research-cli）")
     args = ap.parse_args()
 
@@ -90,8 +125,10 @@ def main() -> int:
     if not query:
         print("错误：--query 不能为空。")
         return 2
-
-    receipt = build_receipt(query, args.top_k, args.as_of)
+    if args.mode == "cases":
+        receipt = build_case_receipt(query, args.top_k, args.level, args.bias)
+    else:
+        receipt = build_receipt(query, args.top_k, args.as_of)
     out_dir = Path(args.out) if args.out else DEFAULT_OUT
     out_dir.mkdir(parents=True, exist_ok=True)
     stamp = date.today().isoformat()
@@ -101,9 +138,12 @@ def main() -> int:
 
     hits = receipt["hits"]
     print(f"收据：{path}")
-    print(f"查询：{query}　命中 {len(hits)} 条（编排：{receipt['retrieval_meta']['method']}）")
+    print(f"查询：{query}　命中 {len(hits)} 条（模式：{receipt.get('kind', 'statutes')}）")
     for h in hits[:5]:
-        print(f"  {h['law_title']} {h['label']}　{h['status']}　{h['source_url']}")
+        if "law_title" in h:
+            print(f"  {h['law_title']} {h['label']}　{h['status']}　{h['source_url']}")
+        else:
+            print(f"  {h['name']}　{h['level']}　{h['court']}　{h['source_url']}")
     print(f"SHA-256：{receipt['receipt_sha256']}")
     return 0
 

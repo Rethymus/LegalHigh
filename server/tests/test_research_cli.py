@@ -15,7 +15,7 @@ SERVER = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(SERVER))
 sys.path.insert(0, str(SERVER / "scripts"))
 
-from research_cli import build_receipt  # noqa: E402
+from research_cli import build_case_receipt, build_receipt  # noqa: E402
 
 
 def test_receipt_structure_and_citations():
@@ -48,6 +48,25 @@ def test_receipt_subprocess_end_to_end(tmp_path):
     body = {k: v for k, v in receipt.items() if k not in ("receipt_sha256", "generated_at")}
     digest = hashlib.sha256(json.dumps(body, ensure_ascii=False, sort_keys=True).encode("utf-8")).hexdigest()
     assert digest == receipt["receipt_sha256"], "收据哈希必须与内容自洽"
+
+
+def test_case_receipt_structure_and_invariant():
+    """R469：案例收据——引用不变量同法条收据（来源 URL+核验时间随行）。"""
+    r = build_case_receipt("海上货物运输保险", 5, "指导性案例", "balanced")
+    assert r["schema"] == "legalhigh-research-receipt/1" and r["kind"] == "cases"
+    assert r["hits"] and r["level"] == "指导性案例"
+    for h in r["hits"]:
+        assert h["source_url"], "案例命中行必须携带来源 URL"
+        assert h["case_id"] and h["name"]
+    a = build_case_receipt("海上货物运输保险", 5, "指导性案例", "balanced")
+    assert a["receipt_sha256"] == r["receipt_sha256"], "案例收据同样确定性"
+
+
+def test_case_receipt_respects_top_k_and_deterministic_bias():
+    a = build_case_receipt("保险", 3, None, "facts")
+    assert len(a["hits"]) <= 3
+    b = build_case_receipt("保险", 3, None, "facts")
+    assert a["receipt_sha256"] == b["receipt_sha256"]
 
 
 def test_empty_query_fails(tmp_path):
