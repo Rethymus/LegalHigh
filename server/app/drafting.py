@@ -90,6 +90,14 @@ OPINION_FIELDS = [
     {"key": "firm", "label": "记录主体（使用者自行填写）", "type": "text", "required": True},
 ]
 
+PAYMENT_ORDER_FIELDS = [
+    {"key": "applicant", "label": "申请人（债权人/劳动者）", "type": "text", "required": True},
+    {"key": "respondent", "label": "被申请人（债务人/用人单位）", "type": "text", "required": True},
+    {"key": "claims", "label": "请求给付的劳动报酬（每行一项：项目+数额+计算方式）", "type": "textarea_list", "required": True},
+    {"key": "facts", "label": "债权债务关系与事实理由（劳动关系、拖欠经过）", "type": "textarea", "required": True},
+    {"key": "court", "label": "受理法院（基层人民法院）", "type": "text", "required": True},
+]
+
 PRESERVATION_FIELDS = [
     {"key": "applicant", "label": "申请人", "type": "text", "required": True},
     {"key": "respondent", "label": "被申请人", "type": "text", "required": True},
@@ -150,6 +158,13 @@ TEMPLATES = {
         "description": "要素式诉讼文书模板（程序指引属性）：按最高法诉讼文书样式的要素结构生成，明示不构成法律意见、不建立委托关系。",
         "gate": {"review_label": "完成内容复核", "finalize_label": "使用者确认定稿"},
         "fields": COMPLAINT_FILING_FIELDS,
+    },
+    "payment_order_application": {
+        "template_id": "payment_order_application",
+        "name": "支付令申请书（追索劳动报酬）",
+        "description": "追索劳动报酬支付令申请书模板（程序指引属性，适用《劳动争议调解仲裁法》第十六条的调解协议路径：因拖欠劳动报酬等事项达成调解协议、用人单位在协议约定期限内不履行）：组织请求事项与事实理由；支付令的一般督促程序、管辖与债务人异议后果须以受理法院和适用法律为准。",
+        "gate": {"review_label": "完成内容复核", "finalize_label": "使用者确认定稿"},
+        "fields": PAYMENT_ORDER_FIELDS,
     },
 }
 
@@ -402,7 +417,32 @@ def build_preservation_application(f: dict):
     return {"sections": sections, "citations": [], "gate_note": gate_note}
 
 
-BUILDERS = {"lawyer_letter": build_lawyer_letter, "contract": build_contract, "civil_complaint": build_civil_complaint, "civil_answer": build_civil_answer, "power_of_attorney": build_power_of_attorney, "legal_opinion": build_legal_opinion, "preservation_application": build_preservation_application}
+def build_payment_order_application(f: dict):
+    claims = _lines(f.get("claims"))
+    # 引用随行：lcar-2007#16（追索劳动报酬可申请支付令）——语料存在性由 citation_of 启动校验兜底
+    citations = [get_corpus().citation_of("lcar-2007", 16)]
+    sections = [
+        {"type": "title", "text": "支付令申请书"},
+        {"type": "party", "lines": [
+            f"申请人：{f.get('applicant', '')}",
+            f"被申请人：{f.get('respondent', '')}",
+        ]},
+        {"type": "para", "text": "申请事项：请求人民法院向被申请人发出支付令，责令其给付下列劳动报酬："},
+    ]
+    for i, c in enumerate(claims, 1):
+        sections.append({"type": "numbered", "n": i, "text": c})
+    sections += [
+        {"type": "heading", "text": "事实与理由"},
+        {"type": "para", "text": f.get("facts", "")},
+        {"type": "para", "text": "依据《中华人民共和国劳动争议调解仲裁法》第十六条，因支付拖欠劳动报酬、工伤医疗费、经济补偿或者赔偿金事项达成调解协议，用人单位在协议约定期限内不履行的，劳动者可以持调解协议书依法向人民法院申请支付令，人民法院应当依法发出支付令。本申请书不构成法律意见；支付令申请的条件、管辖、费用与债务人异议的后果，请以受理法院要求和适用法律为准。"},
+        {"type": "closing", "text": f"此致\n{f.get('court', '')}"},
+        {"type": "signature", "lines": [f"申请人：{f.get('applicant', '')}", date.today().strftime("%Y年%m月%d日")]},
+    ]
+    gate_note = "本申请书为模板生成的草稿（程序指引属性）：支付令的适用条件、管辖与异议程序请与受理法院确认；提交前请经人工核验。"
+    return {"sections": sections, "citations": citations, "gate_note": gate_note}
+
+
+BUILDERS = {"lawyer_letter": build_lawyer_letter, "contract": build_contract, "civil_complaint": build_civil_complaint, "civil_answer": build_civil_answer, "power_of_attorney": build_power_of_attorney, "legal_opinion": build_legal_opinion, "preservation_application": build_preservation_application, "payment_order_application": build_payment_order_application}
 
 
 def generate(template_id: str, fields: dict):

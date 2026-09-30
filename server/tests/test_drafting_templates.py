@@ -47,8 +47,38 @@ PRESERVATION_FILL = {
 
 def test_new_templates_registered():
     """M7-T2：答辩状与授权委托书进入模板库（文书家族 3→5）。"""
-    assert {"civil_answer", "power_of_attorney", "legal_opinion", "preservation_application"} <= set(TEMPLATES)
-    assert len(TEMPLATES) == 7
+    assert {"civil_answer", "power_of_attorney", "legal_opinion", "preservation_application",
+            "payment_order_application"} <= set(TEMPLATES)
+    assert len(TEMPLATES) == 8
+
+
+PAY_ORDER_FILL = {
+    "applicant": "某人", "respondent": "某公司", "court": "某市某区人民法院",
+    "claims": "2026年3月至6月拖欠工资合计 18,000 元\n拖欠加班费合计 2,000 元",
+    "facts": "某人于某公司工作，双方就拖欠劳动报酬达成调解协议，约定期限届满仍未履行。",
+}
+
+
+def test_generate_payment_order_application():
+    """R466：支付令申请书（追索劳动报酬，lcar-2007#16 调解协议路径）。"""
+    g = generate("payment_order_application", PAY_ORDER_FILL)
+    secs = g["content"]["sections"]
+    kinds = [s["type"] for s in secs]
+    assert kinds[0] == "title" and "signature" in kinds, "标题与落款必备"
+    # 引用随行：lcar-2007#16（启动期 citation_of 校验 + 生成期断言）
+    assert any(c["law_id"] == "lcar-2007" and c["article_no"] == 16 for c in g["content"]["citations"])
+    # 请求事项逐行编号
+    nums = [s for s in secs if s["type"] == "numbered"]
+    assert len(nums) == 2 and "18,000" in nums[0]["text"]
+    # 引述必须与语料原文要点一致（工伤医疗费/经济补偿/赔偿金事项不遗漏）
+    joined = "".join(s.get("text", "") for s in secs)
+    assert "工伤医疗费" in joined and "经济补偿" in joined and "调解协议书" in joined
+    assert "不构成法律意见" in joined
+
+
+def test_payment_order_required_validation():
+    with pytest.raises(ValueError):
+        generate("payment_order_application", {k: v for k, v in PAY_ORDER_FILL.items() if k != "court"})
 
 
 def test_generate_civil_answer():
