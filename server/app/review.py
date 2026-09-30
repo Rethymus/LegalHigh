@@ -304,6 +304,12 @@ def build_checkpoints():
          "match": lambda t: not re.search(r"违约(责任|金)", t),
          "citation": ("civl-2020", 577),
          "suggestion": "增加违约责任条款：明确违约情形、救济方式与损失计算口径。"},
+        {"id": "L7", "category": "liability", "risk": "medium", "scope": "whole",
+         "title": "争议解决条款缺失",
+         "detail": "全文未见争议解决安排（协商、管辖、仲裁或诉讼）。依《民事诉讼法》第三十五条，合同纠纷当事人可以书面协议选择与争议有实际联系地点的人民法院管辖；无约定时只能按法定管辖处理，争议发生后的救济成本与确定性下降。",
+         "match": lambda t: not re.search(r"(争议解决|协商解决|管辖|仲裁|诉讼|向.{0,8}法院)", t),
+         "citation": ("pcl-2023", 35),
+         "suggestion": "增加争议解决条款：如「因本合同发生争议，双方协商解决；协商不成的，向合同签订地（或被告住所地）人民法院提起诉讼」，或约定仲裁条款。"},
 
         # ── 费用条款 ──────────────────────────────────────────────
         {"id": "F1", "category": "fee", "risk": "medium",
@@ -627,8 +633,12 @@ def analyze_contract(text: str, title: str | None = None):
     whole = text
     for cp in get_checkpoints():
         fired = False
+        # 全文级检查点（L6 / scope=whole）的 match 必须吃全文——R468 修复：R441 泛化
+        # is_whole 元数据时漏了 target 选择，W1 的「竞业限制在 A 条、补偿在 B 条」
+        # 跨条款真实场景按单条款匹配会误报（两处冒烟均为单条款形态，恰好漏过）。
+        is_whole_cp = cp["id"] == "L6" or cp.get("scope") == "whole"
         for c in clauses:
-            target = whole if cp["id"] == "L6" else c["text"]
+            target = whole if is_whole_cp else c["text"]
             if fired:
                 break
             try:

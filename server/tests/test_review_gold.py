@@ -343,9 +343,29 @@ def test_j3_interposition_right_unspecified():
     assert "J3" not in ids, "已作相反意思表示（排除介入），不触发"
 
 
+# ---- 争议解决条款缺失（R468，contract-copilot 微观层「核心条款齐全」方法论）----
+
+def test_l7_dispute_resolution_missing():
+    assert "L7" in fired("第一条 乙方交付货物。")
+    ids = fired("争议提交某仲裁委员会仲裁。第一条 乙方交付货物。")
+    assert "L7" not in ids, "有仲裁条款不触发"
+    ids = fired("纠纷由合同签订地人民法院管辖。第一条 乙方交付货物。")
+    assert "L7" not in ids, "有管辖约定不触发"
+    ids = fired("违约的可向人民法院提起诉讼。第一条 乙方交付货物。")
+    assert "L7" not in ids, "有诉讼表述不触发"
+
+
+def test_w1_cross_clause_compensation_still_suppresses():
+    """R468 潜伏 bug 钉子：竞业限制与补偿分处不同条款时，全文级匹配必须仍识别补偿。"""
+    ids = fired("第一条 期限三年。第二条 乙方离职后两年内竞业限制。第三条 甲方按月支付竞业限制经济补偿。")
+    assert "W1" not in ids, "跨条款补偿安排必须抑制 W1（R441 target 泛化遗漏的回归钉）"
+    ids = fired("第一条 期限三年。第二条 乙方离职后两年内竞业限制，不得从事同类业务。")
+    assert "W1" in ids
+
+
 def test_gold_review_checkpoints_count():
-    """金标规模门：审查点引擎 45 个（16 通用 + T4 十一波十五类型），判定用例 ≥50 组（含正反例）。"""
-    assert len(review.get_checkpoints()) == 45
+    """金标规模门：审查点引擎 46 个（16 通用+L7 争议解决 + T4 各类型），判定用例 ≥50 组（含正反例）。"""
+    assert len(review.get_checkpoints()) == 46
     # 本文件内的测试函数数（每组正反例算一组）
     import test_review_gold as _self  # noqa: PLC0415
     n = sum(1 for name in dir(_self) if name.startswith("test_"))
@@ -520,6 +540,11 @@ GOLD_REVIEW_ROWS = [
     # J3 行纪介入权未约定（全文级）
     ("委托行纪人代销一批货物。", "J3", True),
     ("未经委托人书面同意，行纪人不得自行买入或卖出。", "J3", False),
+    # L7 争议解决条款缺失（全文级，R468）
+    ("第一条 乙方交付货物。", "L7", True),
+    ("争议提交某仲裁委员会仲裁。第一条 乙方交付货物。", "L7", False),
+    ("纠纷由合同签订地人民法院管辖。第一条 乙方交付货物。", "L7", False),
+    ("违约的可向人民法院提起诉讼。第一条 乙方交付货物。", "L7", False),
 ]
 
 
