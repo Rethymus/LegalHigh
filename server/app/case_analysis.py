@@ -44,7 +44,7 @@ def analyze_case(case_text: str, title: str | None = None,
     ) if d]
 
     behavior_active = sum(1 for i in behavior["indicators"] if i["level"] != "absent")
-    return {
+    result = {
         "title": title or "未命名案件",
         "generated_at": date.today().isoformat(),
         "claim_id": claim_id,
@@ -60,3 +60,31 @@ def analyze_case(case_text: str, title: str | None = None,
         "references": references,
         "disclaimers": disclaimers,
     }
+    result["plain_summary"] = build_plain_summary(result)
+    return result
+
+
+def build_plain_summary(analysis: dict) -> str:
+    """客户版通俗摘要（R470，litigation-analysis「客户版基于内部版简化呈现」的确定性实施）。
+
+    确定性规则：要件逐项转译（有支持=「材料里提到了」，待补=「还没看到」）、零术语
+    （「要件」不出现）、固定句子骨架——同一输入恒同一输出，无模型参与。通俗解释不构成
+    法律意见；具体结论仍以专业版为准。
+    """
+    claim = analysis.get("claim") or {}
+    elements = claim.get("elements") or []
+    if not elements:
+        return "本次分析没有可用的请求权要件结果，请先选择分析模型。"
+    ok = sum(1 for e in elements if e.get("status") == "supported")
+    todo = len(elements) - ok
+    lines = [
+        f"您选择的模型是「{claim.get('claim', {}).get('name', '未知')}」，它要看 {len(elements)} 个问题。",
+    ]
+    for e in elements:
+        if e.get("status") == "supported":
+            lines.append(f"· {e['title']}：您的材料里提到了这一点。")
+        else:
+            lines.append(f"· {e['title']}：还没看到相关材料，可能需要补充。")
+    lines.append(f"合计：{ok} 项有材料提到，{todo} 项待补充。")
+    lines.append("以上只是把分析结果翻译成大白话，不构成法律意见；具体请以专业版分析为准，必要时咨询律师或拨打 12348。")
+    return "\n".join(lines)
