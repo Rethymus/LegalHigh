@@ -218,11 +218,15 @@ def main() -> int:
                 except Exception as e:  # noqa: BLE001 — 网络失败如实记为 error 行，不中断整体
                     row = {"id": c["id"], "error": type(e).__name__}
                 else:
-                    v = (out["gates"]["four_questions"]["violations"])
+                    fq_gate = out["gates"]["four_questions"]
+                    v = fq_gate["violations"]
                     row = {"id": c["id"], "blocked": out["blocked"],
                            "redline": not out["gates"]["redline"]["pass"],
                            "fabricated": any("清单外" in x for x in v),
                            "structure_fail": any("缺少章节" in x or "未引用任何条款" in x for x in v),
+                           # R463：逐问判定（legal-skill-evaluation「最小修复单元」）——
+                           # 读数可定位哪一问失败最多，而非只见整体 pass
+                           "per_question": fq_gate.get("questions", []),
                            "excerpt": (out["text"] or "")[:80]}
                 if fq_path:
                     fq_cache[c["id"]] = row
@@ -236,9 +240,20 @@ def main() -> int:
         fourq_summary = {"contracts": len(fq_rows), "delivered": fq_delivered,
                          "structure_blocked": sum(1 for r in fq_rows if r.get("structure_fail")),
                          "redline": fq_redline, "fabricated": fq_fabricated, "rows": fq_rows}
+        # R463：按问聚合（哪个问题失败最多=最小修复单元的评测读数）
+        _QN = ["义务单向性", "退出权不对等", "虚假前提", "违约对称性"]
+        per_q = {}
+        for qn in _QN:
+            judged = [q for r in fq_rows if r.get("per_question") for q in r["per_question"] if q["question"] == qn]
+            per_q[qn] = {"judged": len(judged), "failed": sum(1 for q in judged if not q["pass"])}
+        fourq_summary["per_question"] = per_q
         results["fourq"] = fourq_summary
+        worst = max(per_q.items(), key=lambda kv: kv[1]["failed"]) if fq_rows else ("-", {"failed": 0})
         print(f"四问评测：{len(fq_rows)} 份合同，交付 {fq_delivered}，结构扣留 {fourq_summary['structure_blocked']}"
               f"，红线 {fq_redline}，编造引用 {fq_fabricated}")
+        print("按问失败统计（最小修复单元定位）：",
+              {k: v["failed"] for k, v in per_q.items()},
+              f"——最高失败：{worst[0]}")
 
     out_path.write_text(json.dumps(results, ensure_ascii=False, indent=2), encoding="utf-8")
     print("报告：", out_path)

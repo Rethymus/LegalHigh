@@ -75,6 +75,39 @@ def test_judge_supports_cn_numerals():
     assert out["pass"], out["violations"]
 
 
+def test_judge_per_question_verdicts_locate_minimal_fix_unit():
+    """R463（legal-skill-evaluation「最小修复单元」方法论）：逐问判定定位失败问。"""
+    out = review_ai.judge_four_questions(GOOD, {1, 2})
+    assert [q["question"] for q in out["questions"]] == ["义务单向性", "退出权不对等", "虚假前提", "违约对称性"]
+    assert all(q["pass"] for q in out["questions"])
+    # 仅问题四引用编造 → 恰好该问 fail，其余三问 pass（定位到最小修复单元）
+    broken = GOOD.replace("问题四（违约对称性）：第2条", "问题四（违约对称性）：第7条")
+    out2 = review_ai.judge_four_questions(broken, {1, 2})
+    verdicts = {q["question"]: q["pass"] for q in out2["questions"]}
+    assert verdicts == {"义务单向性": True, "退出权不对等": True, "虚假前提": True, "违约对称性": False}
+    assert out2["questions"][3]["violations"] and "清单外" in out2["questions"][3]["violations"][0]
+
+
+def test_judge_honest_no_finding_passes_without_reference():
+    """R463 门侧不公修复：系统提示允许如实答「未发现」，判分不得因无引用扣留诚实答案。"""
+    honest = ("问题一（义务单向性）：第2条仅要求乙方赔付，义务单向。依据：第2条。\n"
+              "问题二（退出权不对等）：未发现，合同未载明任何一方的解除权安排。\n"
+              "问题三（虚假前提）：无法判断，缺少资质与权属材料。依据：第1条。\n"
+              "问题四（违约对称性）：未发现。")
+    out = review_ai.judge_four_questions(honest, {1, 2})
+    assert out["pass"], out["violations"]
+
+
+def test_judge_vague_answer_without_ref_or_marker_still_fails():
+    """既无引用又无诚实标记=含糊作答，仍判违规（诚实通道不放松门）。"""
+    vague = ("问题一（义务单向性）：第2条。依据：第2条。\n"
+             "问题二（退出权不对等）：双方权利义务大体平衡。\n"
+             "问题三（虚假前提）：第1条。依据：第1条。\n"
+             "问题四（违约对称性）：第2条。依据：第2条。")
+    out = review_ai.judge_four_questions(vague, {1, 2})
+    assert not out["pass"] and any("未引用任何条款" in v for v in out["violations"])
+
+
 # ---- ② frame_review 假 client ----
 
 def _fake_client(monkeypatch, content):

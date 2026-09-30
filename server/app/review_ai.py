@@ -48,10 +48,10 @@ _SYSTEM_PROMPT = (
     "你是合同审查辅助工具。对用户提交的合同条款完成「框架审阅四问」，"
     "严格按以下格式输出四节，每节标题一字不差：\n"
     + "\n".join(f"{m}：结论+依据" for m in _SECTION_MARKERS) + "\n"
-    "纪律：①每节的结论必须在同一节内引用依据条款号（如「第3条」），"
-    "且只能引用条款清单中存在的条号，禁止编造；②未发现或无法判断时如实写「未发现」或「无法判断」，"
-    "并说明缺什么信息；③不输出任何法律意见结论、不预测裁判结果、不建议「签或不签」；"
-    "④不改写条款、不虚构清单外内容。"
+    "纪律：①结论涉及具体条款的，必须在同一节内引用条款号（如「第3条」），"
+    "且只能引用条款清单中存在的条号，禁止编造；②未发现或无法判断时如实写「未发现」或"
+    "「无法判断」，并说明缺什么信息（此时可无条款引用）；③不输出任何法律意见结论、"
+    "不预测裁判结果、不建议「签或不签」；④不改写条款、不虚构清单外内容。"
 )
 
 
@@ -79,26 +79,41 @@ def judge_four_questions(text: str, clause_nos: set[int]) -> dict:
     """四问判分（纯函数，无网络无密钥可测）：结构完整 + 每节有真实条款引用。
 
     违规三类：缺节 / 节内无条款引用 / 引用了条款集合外的条号（编造引用）。
+    questions：逐问判定（R463，legal-skill-evaluation「定位最小修复单元」方法论）——
+    在线评测读数可据此定位哪一问失败最多，而非只见整体 pass。
     """
     violations: list[str] = []
-    sections: list[str] = []
+    questions: list[dict] = []
+    spans: list[tuple[str, str | None]] = []
     for marker in _SECTION_MARKERS:
         idx = text.find(marker)
         if idx < 0:
             violations.append(f"缺少章节：{marker}")
+            spans.append((marker, None))
             continue
         nxt = [text.find(m2) for m2 in _SECTION_MARKERS if text.find(m2) > idx]
         end = min(nxt) if nxt else len(text)
-        sections.append(text[idx:end])
-    for sec in sections:
+        spans.append((marker, text[idx:end]))
+    for marker, sec in spans:
+        qname = marker.split("（")[1][:-1]
+        if sec is None:
+            questions.append({"question": qname, "pass": False,
+                              "violations": [f"缺少章节：{marker}"]})
+            continue
         refs = [_clause_no(m.group(1)) for m in _CLAUSE_REF_RE.finditer(sec)]
         refs = [r for r in refs if r is not None]
-        if not refs:
-            violations.append(f"章节未引用任何条款：{sec[:18]}…")
+        q_violations: list[str] = []
         bad = sorted({r for r in refs if r not in clause_nos})
         if bad:
-            violations.append(f"引用了条款清单外的条号：第{bad[0]}条")
-    return {"pass": not violations, "violations": violations}
+            q_violations.append(f"引用了条款清单外的条号：第{bad[0]}条")
+        # 诚实「未发现/无法判断」可不带引用（R463 门侧不公修复：系统提示允许如实答
+        # 「未发现」，判分却要求每节必有引用——诚实答案会被扣留，R422 同类结构性不公）；
+        # 既无引用又无诚实标记=含糊作答，仍判违规。
+        if not refs and not re.search(r"(未发现|无法判断)", sec):
+            q_violations.append(f"章节未引用任何条款：{sec[:18]}…")
+        questions.append({"question": qname, "pass": not q_violations, "violations": q_violations})
+        violations.extend(q_violations)
+    return {"pass": not violations, "violations": violations, "questions": questions}
 
 
 def frame_review(review: dict, provider_id: str, model: str, *, api_key: str | None = None,
