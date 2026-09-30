@@ -47,6 +47,7 @@ from app import (  # noqa: E402
     research,
     research_report,
     review,
+    review_ai,
     source_registry as source_registry_mod,
     storage,
     temporal,
@@ -682,6 +683,42 @@ async def review_docx_return(
         # R440 删除态可观测：只记数量与决定，不回显命中原文（规则⑮扫描/审计纪律）
         "deletion_decisions": {d["id"]: d["decision"] for d in summary.get("deletions", [])}})
     return summary
+
+
+class AiFrameBody(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    provider_id: str = Field(min_length=1, max_length=64)
+    model: str = Field(min_length=1, max_length=256)
+    api_key: str | None = Field(default=None, max_length=512)  # 瞬态使用，服务端不落库不记日志
+    base_url_override: str | None = Field(default=None, max_length=2048)
+
+
+@app.post("/api/reviews/{rid}/ai-frame")
+def review_ai_frame(rid: str, body: AiFrameBody, admin: AdminPrincipal = Depends(require_admin)):
+    """审查 AI 框架审阅四问（R460，R437 设计 T2）：义务单向性/退出权不对等/虚假前提/违约对称性。
+
+    AI 默认关闭（无密钥 409）；输出过 红线+四问结构判分（条款引用须真实存在于该审查的
+    条款集合，编造即扣留）；审计只记数量与判定，合同文本不入审计明文（PIPL 纪律）。
+    在线验证（llm_eval 四重门扩四问维度）待 2026-10-03 配额窗口。
+    """
+    r = storage.get_review(rid)
+    if not r:
+        raise HTTPException(404, "review not found")
+    if not r["result"]["clauses"]:
+        raise HTTPException(422, "该审查记录无切分条款，无法进行四问框架审阅。")
+    try:
+        out = review_ai.frame_review(
+            r, body.provider_id, body.model,
+            api_key=body.api_key, base_url_override=body.base_url_override, actor=admin.name)
+    except ValueError as e:
+        raise HTTPException(422, str(e))
+    except review_ai.ai_governor.QuotaExceeded as e:
+        raise HTTPException(429, str(e))
+    except PermissionError as e:
+        raise HTTPException(409, str(e))
+    except RuntimeError as e:
+        raise HTTPException(502, str(e))
+    return out
 
 
 @app.delete("/api/reviews/{rid}")
