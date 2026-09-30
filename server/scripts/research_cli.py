@@ -24,28 +24,45 @@ SERVER = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(SERVER))
 
 from app import retrieval_terms  # noqa: E402
+from app import temporal as temporal_mod  # noqa: E402
+from app import version_fulltext as version_fulltext_mod  # noqa: E402
 from app.corpus import get_corpus  # noqa: E402
 
 DEFAULT_OUT = SERVER.parent / "docs" / "qa-evidence" / "research-cli"
 
 
 def build_receipt(query: str, top_k: int, as_of: str | None) -> dict:
-    """构造证据收据（纯函数主体；same corpus+query → same receipt body）。"""
+    """构造证据收据（纯函数主体；same corpus+query+as_of → same receipt body）。
+
+    as_of 与产品端点 /api/search 同口径（R144/R465 对齐）：temporal 告知块 +
+    逐命中 in_force_at_as_of 标记 + 适用历史版本「同条号对照」——只标记不排名，
+    不冒充历史文本；CLI 收据与产品响应的时点语义保持一致。"""
     corpus = get_corpus()
     hits, meta = retrieval_terms.orchestrated_search(corpus, query, top_k=max(1, int(top_k)))
-    rows = [{
-        "law_id": h["law_id"],
-        "law_title": h["law_title"],
-        "no": h["no"],
-        "sub": h.get("sub") or "",
-        "label": h["label"],
-        "excerpt": h["text"][:200],
-        "status": h["law_status"],
-        "effective_date": h.get("effective_date"),
-        "source_url": h.get("source_url"),
-        "score": h.get("score"),
-        "matched_groups": h.get("matched_groups") or [],
-    } for h in hits]
+    t_block = temporal_mod.temporal_block(query, as_of)
+    as_of_ref = t_block.get("as_of") if t_block else None
+    rows = []
+    for h in hits:
+        row = {
+            "law_id": h["law_id"],
+            "law_title": h["law_title"],
+            "no": h["no"],
+            "sub": h.get("sub") or "",
+            "label": h["label"],
+            "excerpt": h["text"][:200],
+            "status": h["law_status"],
+            "effective_date": h.get("effective_date"),
+            "source_url": h.get("source_url"),
+            "score": h.get("score"),
+            "matched_groups": h.get("matched_groups") or [],
+        }
+        if t_block:
+            # 时间上下文存在才带标记（契约与 /api/search 一致）
+            row["in_force_at_as_of"] = temporal_mod.in_force_at(h.get("effective_date"), as_of_ref)
+            hist = version_fulltext_mod.historical_for_card(h["law_id"], as_of_ref, h["no"], h.get("sub"))
+            if hist:
+                row["historical_version"] = hist
+        rows.append(row)
     body = {
         "schema": "legalhigh-research-receipt/1",
         "query": query,
@@ -53,6 +70,7 @@ def build_receipt(query: str, top_k: int, as_of: str | None) -> dict:
         "as_of": as_of,
         "corpus": {"laws": len(corpus.laws), "articles": len(corpus.articles)},
         "retrieval_meta": meta,
+        "temporal": t_block,
         "hits": rows,
     }
     digest = hashlib.sha256(json.dumps(body, ensure_ascii=False, sort_keys=True).encode("utf-8")).hexdigest()

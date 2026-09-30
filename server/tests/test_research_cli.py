@@ -55,3 +55,20 @@ def test_empty_query_fails(tmp_path):
         [sys.executable, str(SERVER / "scripts" / "research_cli.py"), "--query", "  ", "--out", str(tmp_path)],
         capture_output=True, text=True, timeout=120, cwd=str(SERVER))
     assert r.returncode == 2
+
+
+def test_as_of_receipt_carries_temporal_metadata():
+    """R465：as_of 与产品端点同口径——temporal 块 + 逐命中 in_force 标记；确定性保持。"""
+    r = build_receipt("高空抛物怎么处罚", 5, "2020-06-01")
+    assert r["temporal"] and r["temporal"].get("as_of") == "2020-06-01"
+    assert r["hits"], "时点检索仍应命中"
+    for h in r["hits"]:
+        assert "in_force_at_as_of" in h, "时点上下文存在时逐命中必须带 in_force 标记"
+    a = build_receipt("高空抛物怎么处罚", 5, "2020-06-01")
+    assert a["receipt_sha256"] == r["receipt_sha256"], "as_of 路径同样确定性"
+
+
+def test_no_as_of_receipt_has_no_temporal_block():
+    r = build_receipt("定金能退吗", 5, None)
+    assert r["temporal"] is None
+    assert all("in_force_at_as_of" not in h for h in r["hits"]), "非时间检索响应形态不变（契约稳定）"
