@@ -39,6 +39,12 @@ export default function CaseAnalysis() {
     {busy && <div className="card card-pad mt-16"><SkeletonLines n={6} /></div>}
     {result && <section className="sec"><div className="sec-h"><span className="sec-t">{result.claim.claim.name}</span><span className="tiny">{result.claim.summary.overall}</span></div>
       {result.claim.elements.map((element) => <div className="card card-pad mb-12" key={element.id}><div className="row-wrap"><span className={'bdg ' + (element.status === 'supported' ? 'bdg-green' : 'bdg-orange')}>{element.status === 'supported' ? '文本中发现线索' : '文本中未见线索'}</span><b>{element.title}</b></div>{element.evidence_spans.map((span, index) => <blockquote className="risk-quote" key={`${span.start}-${index}`}>“{span.excerpt}”</blockquote>)}<div className="row-wrap mt-8">{element.citations.map((citation) => <Link className="chip" key={`${citation.law_id}-${citation.article_no}`} to={`/laws/${citation.law_id}?art=${citation.article_no}`}>《{citation.law_title}》{citation.article_label} · {citation.status} · 施行 {citation.effective_date}</Link>)}</div></div>)}
+      {result.plain_summary && (
+        <div className="card card-pad mb-12" style={{ background: 'var(--bg-2)' }}>
+          <div className="tiny bold mb-8">大白话解读</div>
+          <div className="tiny" style={{ whiteSpace: 'pre-wrap', lineHeight: 1.8 }}>{result.plain_summary}</div>
+        </div>
+      )}
       <div className="banner banner-info"><Icon name="info" size={14} /><span className="banner-tx">{result.claim.disclaimer}</span></div>
     </section>}
   </div>

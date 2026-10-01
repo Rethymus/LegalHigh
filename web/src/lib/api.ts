@@ -828,6 +828,7 @@ export interface CaseAnalysisResult {
   }
   references: Citation[]
   disclaimers: string[]
+  plain_summary?: string
 }
 
 /* ---------- AI 模型档案（只持久化非秘密配置；密钥永不写浏览器存储） ---------- */
