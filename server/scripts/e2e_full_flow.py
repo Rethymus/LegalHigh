@@ -140,6 +140,9 @@ if AI_ENABLED:
 st, r = call('GET', '/api/drafts/templates')
 tpl = next((t for t in r.get('templates', []) if t.get('template_id') == 'lawyer_letter'), None)
 ok('E1 模板存在', tpl is not None, f"{len(r.get('templates', []))} 模板")
+# E1b 支付令模板存在（R466，7→8）
+pay_tpl = next((t for t in r.get('templates', []) if t.get('template_id') == 'payment_order_application'), None)
+ok('E1b 支付令模板存在', pay_tpl is not None, f"模板总数={len(r.get('templates', []))}")
 required = [f['key'] for f in (tpl.get('fields') or []) if f.get('required')] if tpl else []
 st, r = call('POST', '/api/drafts', {'template_id': 'lawyer_letter', 'fields': {k: '' for k in required} if required else {}})
 ok('E2 必填门拦截', st == 422, f'缺必填 → {st}')
@@ -161,6 +164,26 @@ st, r = call('POST', f'/api/drafts/{did}/finalize', {'responsibility_confirmed':
 ok('E5 定稿责任确认', st == 200 and r.get('to') == 'finalized' and r.get('responsibility_confirmed') is True, f"{r.get('from')}→{r.get('to')} 确认={r.get('responsibility_confirmed')}")
 st, r = call('GET', f'/api/drafts/{did}/docx', raw=True)
 ok('E6 文书 DOCX', st == 200 and r[:2] == b'PK', f'{len(r)} bytes')
+
+# ---------- Flow E2 支付令模板端到端（R466）----------
+pay_fields = {
+    'applicant': '张三', 'respondent': '某某公司',
+    'claims': '2026年3月至6月拖欠工资合计 18,000 元',
+    'facts': '双方就拖欠劳动报酬达成调解协议，约定期限届满仍未履行。',
+    'court': '某市某区人民法院',
+}
+st, r = call('POST', '/api/drafts', {'template_id': 'payment_order_application', 'fields': pay_fields})
+pay_did = r.get('id') or r.get('draft_id') or (r.get('draft') or {}).get('id')
+ok('E7 支付令草稿创建', st == 200 and pay_did, f"did={str(pay_did)[:16]}…")
+ok('E8 支付令引用随行', len(r.get('content', {}).get('citations', [])) > 0
+   and any(c.get('law_id') == 'lcar-2007' for c in r.get('content', {}).get('citations', [])),
+   f"citations={[c.get('law_id') for c in r.get('content', {}).get('citations', [])]}")
+st, r = call('GET', f'/api/drafts/{pay_did}/docx', raw=True)
+# DOCX 是 ZIP：须解压后检查 XML 内容（原始 bytes 是压缩的，中文不可直接搜索）
+import io as _bio, zipfile as _zf
+_xml = _zf.ZipFile(_bio.BytesIO(r)).read('word/document.xml').decode('utf-8') if r[:2] == b'PK' else ''
+ok('E9 支付令 DOCX 含法律依据', st == 200 and '劳动争议调解仲裁法' in _xml,
+   f'{len(r)} bytes, law_in_xml={"劳动争议调解仲裁法" in _xml}')
 
 # ---------- Flow F 交付前校验 ----------
 st, r = call('GET', f'/api/drafts/{did}/validation')
