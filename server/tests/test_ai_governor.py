@@ -431,6 +431,24 @@ def test_privacy_scan_respects_digit_boundaries():
     assert ai_governor.scan_outbound_privacy("单号 139123456789")["possible_personal_info"] == 0
 
 
+
+def test_privacy_scan_detects_email_and_luhn_bank_card():
+    """R475（legal-qa-extractor 脱敏清单确定性子集）：电子邮箱 + Luhn 校验银行卡形。"""
+    out = ai_governor.scan_outbound_privacy("联系 zhang.san@example.com 处理")
+    assert "电子邮箱" in out["kinds"] and out["possible_personal_info"] == 1
+    # 经典 Visa 测试卡号（Luhn 通过）→ 报银行卡号
+    out2 = ai_governor.scan_outbound_privacy("卡号 4111111111111111 请扣款")
+    assert "银行卡号" in out2["kinds"] and "4111" not in out2["notice"], "只报类型不回显"
+
+
+def test_privacy_scan_bank_card_requires_luhn():
+    """非 Luhn 长数字串（案号/单号形态）零误报——银行卡检测必须过 Luhn。"""
+    out = ai_governor.scan_outbound_privacy("案号 2026 一审 12345678901234567")
+    assert out["possible_personal_info"] == 0 and "银行卡号" not in out["kinds"]
+    # 16 位但 Luhn 失败 → 不报
+    out2 = ai_governor.scan_outbound_privacy("编号 6222020200112233 备案")
+    assert "银行卡号" not in out2["kinds"]
+
 def test_chat_response_carries_quota_and_privacy_fields(monkeypatch):
     """chat 返回体包含 quota/privacy_notice（OWASP LLM02/LLM10 的对外可观测面）。"""
     class FakeResp:

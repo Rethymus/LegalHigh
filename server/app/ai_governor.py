@@ -58,6 +58,23 @@ _ID_CARD_RE = re.compile(
     r"(?<!\d)[1-9]\d{5}(?:19|20)\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])\d{3}[\dXx](?!\d)"
 )
 _PASSPORT_RE = re.compile(r"(?<![A-Za-z0-9])[EeGg]\d{8}(?![A-Za-z0-9])")
+# R475（legal-qa-extractor 脱敏清单的确定性子集）：电子邮箱与银行卡形——与手机号/证件号
+# 同级的可识别个人信息形态；银行卡取 Luhn 校验通过才报（裸 16-19 位数字对条文/案号误报率高）。
+_EMAIL_RE = re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}")
+_BANK_CARD_RE = re.compile(r"(?<!\d)\d{16,19}(?!\d)")
+
+
+def _luhn_ok(raw: str) -> bool:
+    total, alt = 0, False
+    for ch in reversed(raw):
+        d = ord(ch) - 48
+        if alt:
+            d *= 2
+            if d > 9:
+                d -= 9
+        total += d
+        alt = not alt
+    return total % 10 == 0
 
 
 def scan_outbound_privacy(text: str) -> dict:
@@ -69,7 +86,13 @@ def scan_outbound_privacy(text: str) -> dict:
         kinds.append("身份证件号")
     if _PASSPORT_RE.search(payload):
         kinds.append("护照号")
-    hits = len(_PHONE_RE.findall(payload)) + len(_ID_CARD_RE.findall(payload)) + len(_PASSPORT_RE.findall(payload))
+    if _EMAIL_RE.search(payload):
+        kinds.append("电子邮箱")
+    bank_hits = sum(1 for m in _BANK_CARD_RE.finditer(payload) if _luhn_ok(m.group(0)))
+    if bank_hits:
+        kinds.append("银行卡号")
+    hits = (len(_PHONE_RE.findall(payload)) + len(_ID_CARD_RE.findall(payload))
+            + len(_PASSPORT_RE.findall(payload)) + len(_EMAIL_RE.findall(payload)) + bank_hits)
     return {
         "possible_personal_info": hits,
         "kinds": kinds,
