@@ -116,8 +116,25 @@ st, r = call('GET', f'/api/reviews/{rid}/audit')
 actions = [a.get('action') for a in (r.get('entries') or [])]
 ok('D4 审计留痕', st == 200 and 'adopt' in actions, f"actions={actions[:6]}")
 
+# ---------- Flow D-plus 四问框架审阅（R460/R476，AI_ENABLED 门内）----------
+if AI_ENABLED:
+    st, r = call('POST', f'/api/reviews/{rid}/ai-frame', {
+        'provider_id': 'zhipu', 'model': MODEL, 'api_key': KEY})
+    ok('D4b 四问端点可达', st == 200, f"status={st} blocked={r.get('blocked')}")
+    fq = (r.get('gates') or {}).get('four_questions') or {}
+    qs = fq.get('questions') or []
+    ok('D4c 四问逐问判定齐备', len(qs) == 4 and all(q.get('criteria') for q in qs),
+       f"questions={len(qs)} criteria_all={all(q.get('criteria') for q in qs)}")
+    ok('D4d 免责声明随行', '不构成法律意见' in (r.get('disclaimer') or ''), r.get('disclaimer', '')[:30])
+    ok('D4e 密钥不泄漏', KEY not in json.dumps(r), '响应体无密钥材料')
+
 st, r = call('DELETE', f'/api/reviews/{rid}')
 ok('D5 审查删除', st in (200, 204), f'status={st}')
+if AI_ENABLED:
+    st, r = call('GET', f'/api/reviews/{rid}/audit')
+    fr = [a for a in (r.get('entries') or []) if a.get('action') == 'ai_review_frame']
+    ok('D6 四问审计留痕', st == 200 and fr and '合同' not in (fr[0].get('payload_json') or ''),
+       f"entries={len(fr)} (PIPL：合同文本不入审计明文)")
 
 # ---------- Flow E 文书起草 ----------
 st, r = call('GET', '/api/drafts/templates')
