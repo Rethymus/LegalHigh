@@ -46,6 +46,10 @@ GOLD_REVISION_ROWS = [
     ("定金为合同总额的百分之三十（30%）。", "F3", "replace", "百分之三十（30%）", "百分之二十（20%）"),
     # F4 订金术语替换
     ("甲方支付的订金转为定金担保。", "F4", "replace", "订金", "预付款"),
+    # L1 违约金比例周期感知封顶（R489 第四批，replace_pct_capped 新动作）
+    ("违约金按合同总价的 30% 支付。", "L1", "replace", "30%", "24%"),
+    ("逾期付款利息按日支付 0.5%。", "L1", "replace", "0.5%", "0.3%"),
+    ("滞纳金按月支付 3%。", "L1", "replace", "3%", "2%"),
     # W2 试用期工资比例修正（R488 第三批）
     ("试用期工资为约定工资的 70%。", "W2", "replace", "70%", "80%"),
     ("试用期工资为约定工资的 60%。", "W2", "replace", "60%", "80%"),
@@ -112,7 +116,7 @@ def test_validate_revisions_rejects_malformed_shapes():
         review._validate_revisions([_cp({"action": "swap", "target_re": "x"})])
     with pytest.raises(ValueError, match="全文级"):
         review._validate_revisions([{"id": "L6", "revision": {"action": "delete", "target_re": "x"}}])
-    with pytest.raises(ValueError, match="target_re 或 near"):
+    with pytest.raises(ValueError, match="target_re / near / thresholds"):
         review._validate_revisions([_cp({"action": "delete"})])
     # 合法形状（三种）不抛
     review._validate_revisions([
@@ -126,7 +130,7 @@ def test_production_checkpoints_load_clean():
     """产线审查点库自检：四个 revision 块全部合法加载。"""
     cps = review.get_checkpoints()
     with_rev = [cp["id"] for cp in cps if cp.get("revision")]
-    assert with_rev == ["L2", "L3", "F3", "F4", "R1", "W2"], with_rev
+    assert with_rev == ["L1", "L2", "L3", "F3", "F4", "R1", "W2"], with_rev
 
 
 # ---- DOCX 导出：w:del/w:ins 渲染 ----

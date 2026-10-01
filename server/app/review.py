@@ -154,10 +154,10 @@ def _validate_revisions(cps: list) -> None:
         cid = cp.get("id", "?")
         if cp["id"] == "L6" or cp.get("scope") == "whole":
             raise ValueError(f"审查点 {cid}：全文级检查点不得携带 revision 块")
-        if rev.get("action") not in ("delete", "replace"):
-            raise ValueError(f"审查点 {cid}：revision.action 必须是 delete|replace")
-        if not rev.get("target_re") and not rev.get("near"):
-            raise ValueError(f"审查点 {cid}：revision 需要 target_re 或 near 定位")
+        if rev.get("action") not in ("delete", "replace", "replace_pct_capped"):
+            raise ValueError(f"审查点 {cid}：revision.action 必须是 delete|replace|replace_pct_capped")
+        if not rev.get("target_re") and not rev.get("near") and not rev.get("thresholds"):
+            raise ValueError(f"审查点 {cid}：revision 需要 target_re / near / thresholds 定位")
         if rev.get("target_re"):
             try:
                 re.compile(rev["target_re"])
@@ -183,6 +183,31 @@ def _extend_pct_span(text: str, start: int, end: int) -> tuple[int, int]:
 
 def _locate_revision_span(rev: dict, text: str) -> tuple[int, int] | None:
     """在条款文本上定位建议修订的逐字跨度（返回起止下标）；定位不到返回 None（回退 comment-only）。"""
+    if rev.get("action") == "replace_pct_capped":
+        # R489（L1 周期感知比例封顶）：句级定位「违约金/滞纳金/逾期利息」关键词所在句，
+        # 按句内周期标记选阈值，取数值最大的百分比跨度（与 _l1_match 同口径）。
+        thresholds = rev.get("thresholds", {"default": 24})
+        pos = 0
+        for sent in re.split(r"[。；！？\n]", text):
+            if re.search(r"(违约金|滞纳金|逾期利息|逾期付款利息|资金占用费)", sent):
+                cap = thresholds["default"]
+                if re.search(r"(按月|每月)", sent):
+                    cap = thresholds.get("monthly", 2)
+                elif re.search(r"(按日|每日|每天|一日|一天)", sent):
+                    cap = thresholds.get("daily", 0.3)
+                best = None
+                for m in PERCENT_RE.finditer(sent):
+                    v = _parse_percentage(m.group(0))
+                    if v is None or v <= cap:  # 阈值以下的百分比不修订
+                        continue
+                    if best is None or v > best[0]:
+                        best = (v, m)
+                if best is not None:
+                    s0, e0 = pos + best[1].start(), pos + best[1].end()
+                    s0, e0 = _extend_pct_span(text, s0, e0)
+                    return s0, e0, {"cap": cap}
+            pos += len(sent) + 1
+        return None
     if rev.get("near"):
         # 句级近邻（与 _pct_near 同口径）：关键词所在句内取数值最大的目标量度跨度
         # （并列取首个）。unit=year 时目标为年数量词（R442 R1 租期替换）。
@@ -205,6 +230,20 @@ def _locate_revision_span(rev: dict, text: str) -> tuple[int, int] | None:
         return None
     m = re.search(rev["target_re"], text)
     return (m.start(), m.end()) if m else None
+
+
+def _num_to_cn(n: int) -> str:
+    """整数→中文数字（R489 L1 封顶替换用；仅覆盖 0-99，超出如实返回阿拉伯形态）。"""
+    if n < 0 or n > 99:
+        return str(n)
+    digits = "零一二三四五六七八九"
+    if n < 10:
+        return digits[n]
+    if n == 10:
+        return "十"
+    if n < 20:
+        return "十" + digits[n % 10]
+    return digits[n // 10] + "十" + (digits[n % 10] if n % 10 else "")
 
 
 def _pick_replacement(rev: dict, span: str):
@@ -269,7 +308,12 @@ def build_checkpoints():
          "detail": "条款约定了较高比例的违约金/滞纳金/逾期利息。依《民法典》第585条，约定的违约金过分高于造成的损失的，人民法院或仲裁机构可以根据当事人请求予以适当减少；过高的比例条款在诉讼中存在被酌减风险。",
          "match": _l1_match,
          "citation": ("civl-2020", 585),
-         "suggestion": "建议将比例调整至与可预见损失相匹配的水平，或设置总额上限条款。"},
+         "suggestion": "建议将比例调整至与可预见损失相匹配的水平，或设置总额上限条款。",
+         # R489 第四批修订：违约金比例偏高 → 修正到阈值（与 F3/W2 同构的按周期感知替换）。
+         # 注意阈值=0（无百分比/无年份）不发射修订（match 已保证 pct>0）。
+         # 百分比修正的确定性锚点=24%（一次性）、2%（按月）、0.3%（按日）。
+         "revision": {"action": "replace_pct_capped",
+                      "thresholds": {"monthly": 2, "daily": 0.3, "default": 24}}},
         {"id": "L2", "category": "liability", "risk": "high",
          "title": "单方免责/概不负责条款",
          "detail": "条款存在免除或减轻己方责任的表述。依《民法典》第506条，造成对方人身损害的免责条款、因故意或重大过失造成对方财产损失的免责条款无效；第497条下格式条款不合理免责亦无效。",
@@ -666,11 +710,28 @@ def analyze_contract(text: str, title: str | None = None):
                 if span is not None:
                     target = c["text"][span[0]:span[1]]
                     if target and target in c["text"]:  # 逐字存在（构造即真，防御性复核）
-                        rev_out = {
-                            "action": cp["revision"]["action"],
-                            "target": target,
-                            "replacement": _pick_replacement(cp["revision"], target),
-                        }
+                        action = cp["revision"]["action"]
+                        if action == "replace_pct_capped":
+                            # R489（L1 周期感知比例封顶）：span 带回 {cap, ext} 额外信息——
+                            # replacement 按记数形态映射到 cap 值（非静态三选）。
+                            cap = span[2]["cap"] if len(span) > 2 else 24.0
+                            has_cn = bool(re.search(r"[一两二三四五六七八九十]", target))
+                            has_sym = "%" in target or "％" in target
+                            if has_cn and has_sym:
+                                repl = f"百分之{_num_to_cn(int(cap))}（{cap}%）"
+                            elif has_cn:
+                                repl = f"百分之{_num_to_cn(int(cap))}"
+                            elif abs(cap) < 1:
+                                repl = f"{cap}%"
+                            else:
+                                repl = f"{int(cap)}%"
+                            rev_out = {"action": "replace", "target": target, "replacement": repl}
+                        else:
+                            rev_out = {
+                                "action": action,
+                                "target": target,
+                                "replacement": _pick_replacement(cp["revision"], target),
+                            }
             finding = {
                 "id": f"f{len(findings) + 1}",
                 "clause_id": None if is_whole else c["id"],
