@@ -24,12 +24,43 @@ SERVER = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(SERVER))
 
 from app import cases as cases_mod  # noqa: E402
+from app import history_index  # noqa: E402
 from app import retrieval_terms  # noqa: E402
 from app import temporal as temporal_mod  # noqa: E402
 from app import version_fulltext as version_fulltext_mod  # noqa: E402
 from app.corpus import get_corpus  # noqa: E402
 
 DEFAULT_OUT = SERVER.parent / "docs" / "qa-evidence" / "research-cli"
+
+
+def build_history_receipt(query: str, top_k: int, law_id: str | None) -> dict:
+    """历史版本证据收据（R496）：版本全文库（193 份）的检索固化。
+
+    每行携带 law_id/version_id/version_label/effective_date——历史版本无独立来源
+    URL（来源=现行版语料的版本注册表），引用不变量以版本注册表为锚点。"""
+    res = history_index.search(query, top_k=max(1, int(top_k)), law_id=law_id)
+    hits = res.get("hits", [])
+    rows = [{
+        "law_id": h.get("law_id"),
+        "version_id": h.get("version_id"),
+        "version_label": h.get("version_label", ""),
+        "effective_date": h.get("effective_date"),
+        "no": h.get("no"),
+        "sub": h.get("sub") or "",
+        "label": h.get("label", ""),
+        "text_excerpt": (h.get("text") or "")[:200],
+    } for h in hits]
+    body = {
+        "schema": "legalhigh-research-receipt/1",
+        "kind": "history",
+        "query": query,
+        "top_k": int(top_k),
+        "law_id": law_id,
+        "hits": rows,
+    }
+    digest = hashlib.sha256(json.dumps(body, ensure_ascii=False, sort_keys=True).encode("utf-8")).hexdigest()
+    return {"receipt_sha256": digest,
+            "generated_at": datetime.now(timezone.utc).isoformat(), **body}
 
 
 def build_case_receipt(query: str, top_k: int, level: str | None, bias: str) -> dict:
@@ -115,9 +146,10 @@ def main() -> int:
     ap.add_argument("--query", required=True, help="检索查询（口语或法言法语均可）")
     ap.add_argument("--top-k", type=int, default=8)
     ap.add_argument("--as-of", default=None, help="时点查证日期（YYYY-MM-DD，可选，仅 statutes 模式）")
-    ap.add_argument("--mode", choices=["statutes", "cases"], default="statutes")
+    ap.add_argument("--mode", choices=["statutes", "cases", "history"], default="statutes")
     ap.add_argument("--level", default=None, help="案例层级过滤（cases 模式，如 指导性案例）")
     ap.add_argument("--bias", default="balanced", help="案例排序偏向（cases 模式：balanced/facts/reasoning）")
+    ap.add_argument("--law-id", default=None, help="法律过滤（history 模式，如 pcl-2023）")
     ap.add_argument("--out", default=None, help="收据输出目录（默认 docs/qa-evidence/research-cli）")
     args = ap.parse_args()
 
@@ -127,6 +159,8 @@ def main() -> int:
         return 2
     if args.mode == "cases":
         receipt = build_case_receipt(query, args.top_k, args.level, args.bias)
+    elif args.mode == "history":
+        receipt = build_history_receipt(query, args.top_k, args.law_id)
     else:
         receipt = build_receipt(query, args.top_k, args.as_of)
     out_dir = Path(args.out) if args.out else DEFAULT_OUT
@@ -142,6 +176,8 @@ def main() -> int:
     for h in hits[:5]:
         if "law_title" in h:
             print(f"  {h['law_title']} {h['label']}　{h['status']}　{h['source_url']}")
+        elif "version_id" in h:
+            print(f"  {h['law_id']} {h['version_id']} {h['label']}　{h['version_label']}")
         else:
             print(f"  {h['name']}　{h['level']}　{h['court']}　{h['source_url']}")
     print(f"SHA-256：{receipt['receipt_sha256']}")
