@@ -235,6 +235,13 @@ def generate_review_docx(review: dict) -> bytes:
             p2.add_run(f"[{f['checkpoint_title']}｜{ {'high': '高风险', 'medium': '中风险', 'low': '低风险' }[f['risk']]}] ")
             _render_revision(p2, f.get("revision"), date, doc)
             _add_tracked_insert(p2, f"建议：{sug}", "LegalHigh AI", date, doc)
+            # R485（引用不变量 DOCX 面·审查侧）：发现携带 citation 时在建议段下方
+            # 渲染法律依据行——法名+条号+状态+施行日期，律师在 Word 中可追溯法源。
+            cit = f.get("citation")
+            if cit and cit.get("law_title"):
+                p2.add_run(f"法律依据：《{cit['law_title']}》{cit['article_label']}"
+                           f"（{cit['status']}，施行 {cit.get('effective_date', '')}）")
+            p2.add_run("")  # 段落结束分隔
     for f in by_clause.get("__whole__", []):
         p3 = doc.add_paragraph()
         _bookmark(p3, f"LH_{f['id']}")
