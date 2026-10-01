@@ -261,11 +261,25 @@ export default function ContractReview() {
                       {frameBusy ? '审阅中…' : <><Icon name="zap" size={12} />四问审阅</>}
                     </button>
                   </div>
-                  {frameResult && (
-                    frameResult.blocked
-                      ? <div className="tiny" style={{ color: 'var(--warn)', padding: '6px 0' }}>四问审阅结果被安全门扣留（结构不合规或含风险内容）。{frameResult.gates.four_questions.violations.length > 0 && `违规：${frameResult.gates.four_questions.violations[0]}`}</div>
-                      : <div className="tiny" style={{ whiteSpace: 'pre-wrap', background: 'var(--bg-2)', borderRadius: 8, padding: '8px 10px', lineHeight: 1.7 }}>{frameResult.text}</div>
-                  )}
+                  {frameResult && (frameResult.blocked ? (
+                    <div>
+                      <div className="tiny" style={{ color: 'var(--warn)', padding: '6px 0' }}>四问审阅结果被安全门扣留（结构不合规或含风险内容）。</div>
+                      {(frameResult.gates.four_questions.questions || []).map((q) => (
+                        <div key={q.question} className="tiny" style={{ padding: '3px 0', color: q.pass ? 'var(--ok)' : 'var(--danger)' }}>
+                          {q.pass ? '✓' : '✗'} {q.question}{q.violations.length > 0 ? `：${q.violations[0]}` : ''}
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div>
+                      <div className="tiny" style={{ whiteSpace: 'pre-wrap', background: 'var(--bg-2)', borderRadius: 8, padding: '8px 10px', lineHeight: 1.7, marginBottom: 6 }}>{frameResult.text}</div>
+                      {(frameResult.gates.four_questions.questions || []).map((q) => (
+                        <div key={q.question} className="tiny" style={{ color: q.pass ? 'var(--ok)' : 'var(--warn)', padding: '2px 0' }}>
+                          {q.pass ? '✓' : '⚠'} {q.question}{q.violations.length > 0 ? `：${q.violations[0]}` : ''}
+                        </div>
+                      ))}
+                    </div>
+                  ))}
                   {!frameResult && !frameBusy && <div className="tiny" style={{ color: 'var(--tx-3)' }}>需在设置→AI 模型插件管理中配置模型后可用</div>}
                 </div>
               )}
