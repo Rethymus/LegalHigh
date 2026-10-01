@@ -5,7 +5,7 @@ import { Link, useParams } from 'react-router-dom'
 import { Icon } from '../icons'
 import { ActionSheet, EmptyState, PageHeader, Segmented, useMediaQuery, useToast, fmtTime, type SheetAction } from '../ui'
 import { CitationChip } from '../domain'
-import { api, ApiError, type Annotation, type AuditEntry, type Finding, type Review, type ReviewStance } from '../../lib/api'
+import { api, ApiError, type AiFrameResult, type Annotation, type AuditEntry, type Finding, type Review, type ReviewStance } from '../../lib/api'
 
 const CATEGORY_LABEL: Record<string, string> = { fee: '费用', account: '账户', liability: '责任' }
 const STANCE_LABEL: Record<ReviewStance, string> = { party_a: '代表甲方', party_b: '代表乙方', neutral: '中立' }
@@ -32,6 +32,8 @@ export default function ContractReview() {
   const [section, setSection] = useState<string | null>(null)
   const [activeFinding, setActiveFinding] = useState<string | null>(null)
   const [amending, setAmending] = useState<string | null>(null)
+  const [frameResult, setFrameResult] = useState<AiFrameResult | null>(null)
+  const [frameBusy, setFrameBusy] = useState(false)
   const [amendText, setAmendText] = useState('')
   const returnFileRef = useRef<HTMLInputElement>(null)
   const [reviewTitle, setReviewTitle] = useState('')
@@ -59,6 +61,20 @@ export default function ContractReview() {
   }, [])
 
   useEffect(() => { if (rid) void load(rid) }, [rid, load])
+
+  const runFrameReview = async () => {
+    if (!rid) return
+    setFrameBusy(true); setError(null)
+    try {
+      const r = await api.aiFrame(rid, 'zhipu', 'glm-4.7-flash')
+      setFrameResult(r)
+      toast(r.blocked ? '四问审阅被安全门扣留（结构不合规）' : '四问审阅完成', r.blocked ? 'err' : 'ok')
+    } catch (e) {
+      setFrameResult(null)
+      const msg = e instanceof ApiError ? e.message : String(e)
+      toast(msg.includes('密钥') ? msg + '（设置→AI 模型插件管理）' : msg, 'err')
+    } finally { setFrameBusy(false) }
+  }
 
   const createReview = async () => {
     if (!reviewText.trim()) { toast('审查文本为空', 'err'); return }
@@ -234,6 +250,25 @@ export default function ContractReview() {
                 <div className="rs-box rs-mid"><b>{review.result.summary.medium}</b>中风险</div>
                 <div className="rs-box rs-low"><b>{review.result.summary.low}</b>低风险</div>
               </div>
+              {review && (
+                <div className="mb-12">
+                  <div className="row" style={{ alignItems: 'center', marginBottom: 6 }}>
+                    <div className="tiny bold">框架审阅四问</div>
+                    <span className="spacer" />
+                    <button className="btn btn-ghost btn-sm" disabled={frameBusy || !rid}
+                      onClick={runFrameReview}
+                      title="AI 辅助梳理合同框架风险（义务单向性/退出权不对等/虚假前提/违约对称性）；需配置 AI 模型插件">
+                      {frameBusy ? '审阅中…' : <><Icon name="zap" size={12} />四问审阅</>}
+                    </button>
+                  </div>
+                  {frameResult && (
+                    frameResult.blocked
+                      ? <div className="tiny" style={{ color: 'var(--warn)', padding: '6px 0' }}>四问审阅结果被安全门扣留（结构不合规或含风险内容）。{frameResult.gates.four_questions.violations.length > 0 && `违规：${frameResult.gates.four_questions.violations[0]}`}</div>
+                      : <div className="tiny" style={{ whiteSpace: 'pre-wrap', background: 'var(--bg-2)', borderRadius: 8, padding: '8px 10px', lineHeight: 1.7 }}>{frameResult.text}</div>
+                  )}
+                  {!frameResult && !frameBusy && <div className="tiny" style={{ color: 'var(--tx-3)' }}>需在设置→AI 模型插件管理中配置模型后可用</div>}
+                </div>
+              )}
               <div className="tiny bold mb-8">审计日志（最近 {audit.length}）</div>
               <div style={{ maxHeight: 150, overflowY: 'auto' }}>
                 {audit.map((a, i) => (

@@ -148,10 +148,10 @@ if (!existsSync(distDir)) {
   const allCssGz = cssFiles.reduce((s, f) => s + gz(f.buf), 0)
   const lawsPath = resolve(distDir, 'data/laws.json')
   const lawsBytes = existsSync(lawsPath) ? statSync(lawsPath).size : 0
-  const BUDGET = { entryJsGz: 120 * 1024, allJsGz: 220 * 1024, allCssGz: 25 * 1024, lawsJson: 5 * 1024 * 1024 }  // 2026-09-21 修订 200→220KB（R263）：术语卡 60→149 张扩张（terms.json 增长推高全 JS gzip 超 200KB）按既定预算修订制度执行、依据与幅度记 CHANGELOG，非静默放宽；入口 JS/CSS 预算不变
+  const BUDGET = { entryJsGz: 120 * 1024, allJsGz: 240 * 1024, allCssGz: 25 * 1024, lawsJson: 5 * 1024 * 1024 }  // 2026-09-21 修订 200→220KB（R263）；2026-10-02 修订 220→240KB（R478）：四问审阅面板+支付令模板+研究 CLI 等功能增长（全 JS gzip 实测 218KB 逼近 220KB 预算），按既定预算修订制度执行、依据与幅度记 CHANGELOG，非静默放宽；入口 JS/CSS 预算不变
   const over = []
   if (entryGz > BUDGET.entryJsGz) over.push(`入口 JS gzip ${(entryGz / 1024).toFixed(0)}KB > 预算 120KB`)
-  if (allJsGz > BUDGET.allJsGz) over.push(`全部 JS gzip ${(allJsGz / 1024).toFixed(0)}KB > 预算 200KB`)
+  if (allJsGz > BUDGET.allJsGz) over.push(`全部 JS gzip ${(allJsGz / 1024).toFixed(0)}KB > 预算 240KB`)
 
   if (allCssGz > BUDGET.allCssGz) over.push(`全部 CSS gzip ${(allCssGz / 1024).toFixed(0)}KB > 预算 25KB`)
   if (!lawsBytes) over.push('dist/data/laws.json 缺失（语料导出链路断裂）')

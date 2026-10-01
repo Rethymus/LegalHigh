@@ -159,6 +159,16 @@ export interface Review {
   annotations: Annotation[]
 }
 
+export interface AiFrameResult {
+  provider_id: string
+  model: string
+  blocked: boolean
+  output_withheld: boolean
+  text: string
+  gates: { redline: { pass: boolean }; four_questions: { pass: boolean; violations: string[]; questions: { question: string; pass: boolean; violations: string[]; criteria: string }[] } }
+  disclaimer: string
+}
+
 export interface AuditEntry {
   id?: string
   ts?: string
@@ -318,6 +328,11 @@ export const api = {
       body: JSON.stringify({ contract_text: contractText, title, stance }),
     }),
   getReview: (rid: string) => req<Review>(`/reviews/${rid}`),
+  aiFrame: (rid: string, providerId: string, model: string, apiKey?: string) =>
+    req<AiFrameResult>(`/reviews/${rid}/ai-frame`, {
+      method: 'POST',
+      body: JSON.stringify({ provider_id: providerId, model, api_key: apiKey }),
+    }),
   transitionAnnotation: (rid: string, findingId: string, action: 'adopt' | 'amend' | 'reject' | 'reopen', amendedText?: string) =>
     req<unknown>(`/reviews/${rid}/annotations/${findingId}/transition`, {
       method: 'POST',
