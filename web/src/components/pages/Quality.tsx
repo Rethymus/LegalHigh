@@ -202,6 +202,19 @@ export default function Quality() {
           <div className="tiny mt-8">更多证据：<Link to="/data-sources" className="bold" style={{ color: 'var(--accent-text)' }}>数据与证据来源页</Link> · <a href="https://github.com/Rethymus/LegalHigh/releases" target="_blank" rel="noreferrer" className="bold" style={{ color: 'var(--accent-text)' }}>Releases（源码 / 静态站 / SBOM / SHA-256）</a></div>
         </div>
       </section>
+
+      <section className="card mb-20">
+        <div className="card-h row-wrap"><b className="card-h-t">外部评测基准参考（非本项目运行）</b></div>
+        <div className="card-b tiny" style={{ lineHeight: 2 }}>
+          以下为中文法律 LLM 评测领域的公开基准与排行，供了解行业评测口径参考；本项目指标口径与这些基准不同，数字不可直接对比。
+          <div className="mt-8">
+            <a href="https://github.com/open-compass/LawBench" target="_blank" rel="noreferrer" style={{ color: 'var(--accent-text)' }}>LawBench</a>（EMNLP 2024 · 20 任务 · 中文法律三层认知） ·{' '}
+            <a href="https://arxiv.org/abs/2309.16289" target="_blank" rel="noreferrer" style={{ color: 'var(--accent-text)' }}>arXiv:2309.16289</a> ·{' '}
+            <a href="https://www.vals.ai" target="_blank" rel="noreferrer" style={{ color: 'var(--accent-text)' }}>Vals AI LegalBench</a>（众包法律推理排行） ·{' '}
+            <a href="https://artificialanalysis.ai" target="_blank" rel="noreferrer" style={{ color: 'var(--accent-text)' }}>Artificial Analysis Legal Index</a>（AI 模型法律能力独立评测）
+          </div>
+        </div>
+      </section>
     </div>
   )
 }
