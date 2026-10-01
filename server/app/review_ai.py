@@ -22,13 +22,17 @@ MAX_CLAUSE_CHARS = 300          # 每条进提示词的截断（防超长合同�
 MAX_CLAUSES_IN_PROMPT = 60      # 超出部分如实告知模型「以下条款未纳入本次四问」
 
 FOUR_QUESTIONS = [
-    ("义务单向性", "合同义务是否实质上只约束一方？逐项指出仅施加于单一方的义务条款，或回答「未发现」。"),
-    ("退出权不对等", "解除、终止或退出权利是否不对等（一方随时可退且无成本，另一方退出须赔偿或被禁止）？"),
-    ("虚假前提", "合同是否建立在不实或未经核实的前提上（资质、权属、数据、口头承诺被写成本次合同的事实）？"),
-    ("违约对称性", "违约责任是否明显不对称（一方的违约金/罚则远重于另一方，或单方免责）？"),
+    ("义务单向性", "合同义务是否实质上只约束一方？逐项指出仅施加于单一方的义务条款，或回答「未发现」。",
+     "PASS：指出了仅约束单一方的义务条款并引用条号，或如实回答「未发现/无法判断」。FAIL：声称无单向义务却不引用任何条号，或虚构清单外条号。"),
+    ("退出权不对等", "解除、终止或退出权利是否不对等（一方随时可退且无成本，另一方退出须赔偿或被禁止）？",
+     "PASS：指出不对等的解除安排并引用条号，或如实回答「未发现/无法判断」。FAIL：空泛断言不对等而无条号依据，或编造条号。"),
+    ("虚假前提", "合同是否建立在不实或未经核实的前提上（资质、权属、数据、口头承诺被写成本次合同的事实）？",
+     "PASS：指出依赖未核实前提的条款并引用条号，或如实说明缺什么材料。FAIL：把未经核实的前提当作已证事实陈述。"),
+    ("违约对称性", "违约责任是否明显不对称（一方的违约金/罚则远重于另一方，或单方免责）？",
+     "PASS：指出不对称的违约安排并引用条号，或如实回答「未发现」。FAIL：只描述一方违约金而不对比另一方，或编造条号。"),
 ]
 
-_SECTION_MARKERS = [f"问题{cn}（{name}）" for cn, (name, _) in zip("一二三四", FOUR_QUESTIONS)]
+_SECTION_MARKERS = [f"问题{cn}（{name}）" for cn, (name, _desc, _crit) in zip("一二三四", FOUR_QUESTIONS)]
 _CLAUSE_REF_RE = re.compile(r"第([0-9]+|[零〇一二三四五六七八九十百千两]+)条")
 _CLAUSE_LABEL_RE = re.compile(r"第([0-9]+|[零〇一二三四五六七八九十百千两]+)条")
 
@@ -66,7 +70,7 @@ def build_messages(review: dict) -> list[dict]:
     if len(review["result"]["clauses"]) > MAX_CLAUSES_IN_PROMPT:
         lines.append(f"（其余 {len(review['result']['clauses']) - MAX_CLAUSES_IN_PROMPT} 条未纳入本次四问，勿推测其内容）")
     findings = "；".join(f"{f['checkpoint_title']}" for f in review["result"]["findings"][:10]) or "（规则引擎未检出）"
-    q = "\n".join(f"- {m.split('（')[1][:-1]}：{desc}" for m, (_, desc) in zip(_SECTION_MARKERS, FOUR_QUESTIONS))
+    q = "\n".join(f"- {m.split('（')[1][:-1]}：{desc}" for m, (_, desc, _c) in zip(_SECTION_MARKERS, FOUR_QUESTIONS))
     user = (
         "合同条款清单（条号即引用依据范围）：\n" + "\n".join(lines) +
         "\n\n规则引擎已检出（供参考，不构成四问结论）：\n" + findings +
@@ -96,9 +100,10 @@ def judge_four_questions(text: str, clause_nos: set[int]) -> dict:
         spans.append((marker, text[idx:end]))
     for marker, sec in spans:
         qname = marker.split("（")[1][:-1]
+        qcriteria = next((c for n, (_, _d, c) in zip(_SECTION_MARKERS, FOUR_QUESTIONS) if n == marker), "")
         if sec is None:
             questions.append({"question": qname, "pass": False,
-                              "violations": [f"缺少章节：{marker}"]})
+                              "violations": [f"缺少章节：{marker}"], "criteria": qcriteria})
             continue
         refs = [_clause_no(m.group(1)) for m in _CLAUSE_REF_RE.finditer(sec)]
         refs = [r for r in refs if r is not None]
@@ -111,7 +116,8 @@ def judge_four_questions(text: str, clause_nos: set[int]) -> dict:
         # 既无引用又无诚实标记=含糊作答，仍判违规。
         if not refs and not re.search(r"(未发现|无法判断)", sec):
             q_violations.append(f"章节未引用任何条款：{sec[:18]}…")
-        questions.append({"question": qname, "pass": not q_violations, "violations": q_violations})
+        questions.append({"question": qname, "pass": not q_violations, "violations": q_violations,
+                          "criteria": qcriteria})
         violations.extend(q_violations)
     return {"pass": not violations, "violations": violations, "questions": questions}
 
