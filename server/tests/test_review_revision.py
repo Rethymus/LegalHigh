@@ -46,7 +46,8 @@ GOLD_REVISION_ROWS = [
     ("定金为合同总额的百分之三十（30%）。", "F3", "replace", "百分之三十（30%）", "百分之二十（20%）"),
     # F4 订金术语替换
     ("甲方支付的订金转为定金担保。", "F4", "replace", "订金", "预付款"),
-    # R1 租期超限替换（R442，T4×T3 交叉；记数匹配 + 句内最大年数 + 年数/百分比分流）
+    # L2 免责表述删除（R486 第二批，与 L3 同为删除型）
+    ("乙方对一切损失概不负责。", "L2", "delete", "概不负责", None),
     ("租赁期限为三十年，租金每年一万元。", "R1", "replace", "三十年", "二十年"),
     # 偏移判别行：句内还有更小年数（可提前3年解约），必须选最大年数「50年」而非碎片跨度
     #（本行抓过真 bug：year 分支曾漏加句基址 pos，返回句内偏移切出「条 约」——逐字但错误）
@@ -122,7 +123,7 @@ def test_production_checkpoints_load_clean():
     """产线审查点库自检：四个 revision 块全部合法加载。"""
     cps = review.get_checkpoints()
     with_rev = [cp["id"] for cp in cps if cp.get("revision")]
-    assert with_rev == ["L3", "F3", "F4", "R1"], with_rev
+    assert with_rev == ["L2", "L3", "F3", "F4", "R1"], with_rev
 
 
 # ---- DOCX 导出：w:del/w:ins 渲染 ----
@@ -138,7 +139,7 @@ def _sample_review(tmp_db):
 def test_docx_renders_tracked_delete_and_replace(tmp_db):
     r = _sample_review(tmp_db)
     with_rev = [f for f in r["result"]["findings"] if f.get("revision")]
-    assert {f["checkpoint_id"] for f in with_rev} == {"L3", "F3"}
+    assert {f["checkpoint_id"] for f in with_rev} == {"L2", "L3", "F3"}
     xml = zipfile.ZipFile(io.BytesIO(docxgen.generate_review_docx(r))).read("word/document.xml").decode("utf-8")
     for f in with_rev:
         rev = f["revision"]
@@ -147,10 +148,7 @@ def test_docx_renders_tracked_delete_and_replace(tmp_db):
         assert any(rev["target"] in d for d in dels), f"{f['checkpoint_id']} 跨度未进 w:del"
         if rev["replacement"]:
             assert f" → {rev['replacement']}" in xml
-    # comment-only 发现（L2）不携带建议修订标签
-    l2 = next(f for f in r["result"]["findings"] if f["checkpoint_id"] == "L2")
-    assert not l2.get("revision")
-    assert "［建议修订·" in xml  # 渲染标签在位（两条带修订）
+    assert "［建议修订·" in xml  # 渲染标签在位
 
 
 def test_docx_del_inside_bookmark_range(tmp_db):
@@ -201,7 +199,7 @@ def _mutate_deletion(data: bytes, fid: str, mode: str) -> bytes:
 def test_return_deletion_three_states_and_anchor(tmp_db):
     r = _sample_review(tmp_db)
     data = docxgen.generate_review_docx(r)
-    rev_f = next(f for f in r["result"]["findings"] if f.get("revision") and f["revision"]["action"] == "delete")
+    rev_f = next(f for f in r["result"]["findings"] if f.get("revision") and f["revision"]["action"] == "delete" and f["checkpoint_id"] == "L3")
     fid = rev_f["id"]
 
     # ① 原样回传：删除 pending，状态 pending
