@@ -370,6 +370,7 @@
     "consoleWarnings": [],
     "pageErrors": [],
     "failedRequests": [],
+    "step1": "citation-net-ok:31nodes/3colors",
     "finalUrl": "http://localhost:5199/data-sources",
     "title": "LegalHigh · 法律智能知识库"
   },
