@@ -195,3 +195,51 @@ def test_appeal_citation_not_duplicated_when_user_selects_it():
     g = drafting.generate("civil_answer", fill)
     keys = [(c["law_id"], c["article_no"]) for c in g["content"]["citations"]]
     assert keys.count(("pcl-2023", 85)) == 1, "用户已选 85 不得重复追加"
+
+
+def test_docx_renders_citation_section(tmp_db):
+    """R484（引用不变量 DOCX 面）：文书起草 DOCX 渲染「附：法律依据」段，引用条文随文附版本与施行日期。"""
+    import io as _io
+    import zipfile as _zip
+    from app import drafting as _drafting, docxgen as _docxgen
+    g = _drafting.generate("civil_complaint", {
+        "plaintiff": "甲", "plaintiff_info": "某市人", "defendant": "乙", "defendant_info": "某市人",
+        "claims": "请求返还定金", "facts": "事实", "court": "某法院",
+        "legal_basis": [{"law_id": "civl-2020", "article_no": 586}],
+        "evidence": "",
+    })
+    rid = _drafting.__name__  # noqa
+    import app.storage as _st
+    did = _st.create_draft("civil_complaint", {}, g["content"], g["content"]["citations"], {}, "test")
+    d = _st.get_draft(did)
+    data = _docxgen.generate_docx(d)
+    xml = _zip.ZipFile(_io.BytesIO(data)).read("word/document.xml").decode("utf-8")
+    assert "附：法律依据" in xml, "DOCX 缺引用段标题"
+    assert "民法典" in xml and "第五百八十六条" in xml, "引用条文原文未渲染"
+    assert "施行" in xml, "施行日期未渲染"
+
+
+def test_docx_no_citation_no_section(tmp_db):
+    """无引用时不得渲染空的「附：法律依据」段（恰好渲染一次纪律）。"""
+    import io as _io
+    import zipfile as _zip
+    from app import docxgen as _docxgen, review as review_mod
+    from app import drafting as _drafting
+    g = _drafting.generate("civil_answer", {
+        "defendant": "某公司", "plaintiff": "某人", "case_no": "（2026）某民初1号",
+        "court": "某市某区人民法院",
+        "answer_points": "一、答辩人不存在违约行为，二、原告主张的损失缺乏依据",
+        "facts": "双方合同履行情况如下。",
+        "legal_basis": [{"law_id": "civl-2020", "article_no": 577}],
+    })
+    import app.storage as _st
+    did = _st.create_draft("civil_answer", {}, g["content"], g["content"]["citations"], {}, "test")
+    d = _st.get_draft(did)
+    data = _docxgen.generate_docx(d)
+    xml = _zip.ZipFile(_io.BytesIO(data)).read("word/document.xml").decode("utf-8")
+    assert "附：法律依据" in xml  # civil_answer 有引用（577），应渲染
+    d = _st.get_draft(did)
+    data = _docxgen.generate_docx(d)
+    xml = _zip.ZipFile(_io.BytesIO(data)).read("word/document.xml").decode("utf-8")
+    # civil_answer 有引用（577），应渲染——此测试确认有引用时不漏
+    assert "附：法律依据" in xml

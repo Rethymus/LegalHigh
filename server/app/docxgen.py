@@ -123,6 +123,19 @@ def generate_docx(draft: dict) -> bytes:
         _para(doc, "【说明】" + gate_note, indent=False, size=Pt(10), east="宋体",
               color=RGBColor(0x63, 0x63, 0x66), line=Pt(18), before=10)
 
+    # R484（引用不变量的 DOCX 面）：文书起草的引用条文（citation_picker 选择，
+    # 经 citation_of 语料校验）随文附版本与施行日期——此前仅在数据中不进 Word，
+    # 引用不变量在 DOCX 交付层断裂。
+    citations = content.get("citations") or []
+    if citations:
+        doc.add_paragraph()
+        _para(doc, "附：法律依据", indent=False, size=HEADING_SIZE, east="黑体", bold=True,
+              line=Pt(26), before=8, after=4)
+        for c in citations:
+            _para(doc, f"《{c['law_title']}》{c['article_label']}（{c['status']}，"
+                       f"施行 {c.get('effective_date', '')}）：{c['text']}",
+                  indent=False, size=Pt(11), east="宋体", line=Pt(22))
+
     _footer_note(doc, draft)
 
     buf = io.BytesIO()
