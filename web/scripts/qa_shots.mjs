@@ -196,7 +196,21 @@ const ROUTES = [
   { name: '21-learning', path: '/learning', audience: 'student', fullPage: true, identity: pageHeader('学习中心') },
   { name: '22-workspace', path: '/workspace', fullPage: true, identity: pageHeader('专业工具工作台') },
   { name: '23-collections', path: '/collections', identity: pageHeader('我的收藏') },
-  { name: '24-data-sources', path: '/data-sources', fullPage: true, identity: pageHeader('当前数据与证据来源') },
+  { name: '24-data-sources', path: '/data-sources', fullPage: true, identity: pageHeader('当前数据与证据来源'), afterSelector: 'svg[aria-label="引用网络图"] circle[data-law]', steps: [
+    // R472 引用网络三断言：可点节点存在 / 图例标准件在位 / 度数分档着色（≥2 色）——假交互修复的常驻守卫
+    // （图数据异步拉取 + d3-force 350 tick 后才渲染 innerHTML，先等再断言）
+    { t: 'wait', ms: 4500 },
+    { t: 'eval', expr: `(() => {
+      const svg = document.querySelector('svg[aria-label="引用网络图"]');
+      if (!svg) return 'no-citation-svg';
+      if (!svg.querySelector('#cit-legend')) return 'no-legend';
+      const circles = svg.querySelectorAll('circle[data-law]');
+      if (circles.length < 2) return 'circles-short:' + circles.length;
+      const colors = new Set([...circles].map((c) => c.getAttribute('fill')));
+      if (colors.size < 2) return 'no-degree-coloring:' + colors.size;
+      return 'citation-net-ok:' + circles.length + 'nodes/' + colors.size + 'colors';
+    })()` },
+  ] },
   { name: '25-audit', path: '/audit', fullPage: true, identity: pageHeader('历史记录与操作审计') },
   { name: '26-settings', path: '/settings', fullPage: true, identity: pageHeader('设置') },
   { name: '28-narrow-needs', path: '/needs', viewport: { width: 390, height: 844 }, fullPage: true, identity: needsIdentity },

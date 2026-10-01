@@ -103,9 +103,31 @@ export default function CitationNetwork({ laws, onPick }: { laws: NetLaw[]; onPi
         for (const n of nodes) { n.x = n.x * sc + ox; n.y = n.y * sc + oy }
 
         // 构建 SVG innerHTML：先节点圆（底层）→ 再连线（上层，确保可见）→ 最后标签
+        // R472（legal-visualization 方法论吸收 + 假交互修复）：
+        // ①度数语义着色——「颜色含义优先，同主体同色」：全部节点同属「被引法律」主体，
+        //   按共被引连接度分三档，用主色深浅表达核心度（单色系语义渐变，非装饰，强调色不超3）；
+        // ②图例标准件——SVG 内嵌右下角图例（节点大小/连线粗细/颜色分档语义）；
+        // ③假交互修复——R304 声称「悬停高亮/点击跳转」但从未绑定事件（onPick 由
+        //   DataSources 传入后无人消费）：circle 携带 data-id + 事件委托实现点击跳转与悬停提亮。
+        const deg = new Map<string, number>()
+        // forceLink 会把 source/target 突变为节点对象——此处两种形态都要认（度数在模拟后计算）
+        const idOf = (v: unknown): string => (typeof v === 'object' && v !== null ? (v as { id: string }).id : String(v))
+        for (const lk of links) {
+          deg.set(idOf(lk.source), (deg.get(idOf(lk.source)) ?? 0) + 1)
+          deg.set(idOf(lk.target), (deg.get(idOf(lk.target)) ?? 0) + 1)
+        }
+        const degs = [...deg.values()]
+        const dMax = Math.max(1, ...degs)
+        const dCut = [Math.max(1, Math.round(dMax * 0.33)), Math.max(2, Math.round(dMax * 0.66))]
+        const fillFor = (id: string): string => {
+          const d = deg.get(id) ?? 0
+          if (d >= dCut[1]) return '#084c8f' // 高核心度（深）
+          if (d >= dCut[0]) return '#0a6ad0' // 中（主色）
+          return '#7ab3e8' // 低（浅）
+        }
         const parts: string[] = []
         for (const n of nodes) {
-          parts.push(`<circle cx="${n.x.toFixed(1)}" cy="${n.y.toFixed(1)}" r="${n.r.toFixed(1)}" fill="#0069d9" fill-opacity="0.8" stroke="#fff" stroke-width="1"/>`)
+          parts.push(`<circle data-law="${n.id}" cx="${n.x.toFixed(1)}" cy="${n.y.toFixed(1)}" r="${n.r.toFixed(1)}" fill="${fillFor(n.id)}" fill-opacity="0.85" stroke="#fff" stroke-width="1" style="cursor:pointer"><title>${n.title.replace(/&/g, '&amp;').replace(/</g, '&lt;')}（共被引连接 ${deg.get(n.id) ?? 0}）</title></circle>`)
         }
         for (const lk of links) {
           const sa = typeof lk.source === 'object' ? (lk.source as unknown as { x: number; y: number }) : nodes.find((n) => n.id === lk.source)
@@ -113,12 +135,50 @@ export default function CitationNetwork({ laws, onPick }: { laws: NetLaw[]; onPi
           if (!sa || !tb) continue
           parts.push(`<line x1="${sa.x.toFixed(1)}" y1="${sa.y.toFixed(1)}" x2="${tb.x.toFixed(1)}" y2="${tb.y.toFixed(1)}" stroke="#999" stroke-width="${Math.min(3, 1 + lk.weight * 0.3)}" stroke-opacity="0.6"/>`)
         }
+        // R472 标签防叠（视觉验收抓出密集核心标签互叠）：贪心放置——大节点优先，
+        // 标签默认在节点下方，与已放置标签碰撞时依次试上方/更下方/更上方，确定性无随机。
+        const placed: { x1: number; y1: number; x2: number; y2: number }[] = []
+        const byR = [...nodes].sort((a, b) => b.r - a.r || (a.id < b.id ? -1 : 1))
+        const labelY = new Map<string, number>()
+        const overlap = (x1: number, y1: number, x2: number, y2: number) =>
+          placed.some((p) => x1 < p.x2 + 3 && x2 > p.x1 - 3 && y1 < p.y2 + 2 && y2 > p.y1 - 2)
+        for (const n of byR) {
+          const short = n.title.replace(/^中华人民共和国/, '')
+          const w = Math.max(3, short.length) * 9.2
+          const candidates = [n.y + n.r + 13, n.y - n.r - 6, n.y + n.r + 26, n.y - n.r - 19]
+          let chosen = candidates[0]
+          for (const cy of candidates) {
+            const y1 = cy - 9, y2 = cy + 2
+            if (!overlap(n.x - w / 2, y1, n.x + w / 2, y2)) { chosen = cy; break }
+          }
+          placed.push({ x1: n.x - w / 2, y1: chosen - 9, x2: n.x + w / 2, y2: chosen + 2 })
+          labelY.set(n.id, chosen)
+        }
         for (const n of nodes) {
           const short = n.title.replace(/^中华人民共和国/, '').replace(/&/g, '&amp;').replace(/</g, '&lt;')
-          parts.push(`<text x="${n.x.toFixed(1)}" y="${(n.y + n.r + 4).toFixed(1)}" text-anchor="middle" font-size="9" fill="currentColor" style="pointer-events:none">${short}</text>`)
+          const y = labelY.get(n.id) ?? n.y + n.r + 13
+          parts.push(`<text x="${n.x.toFixed(1)}" y="${y.toFixed(1)}" text-anchor="middle" font-size="9" fill="currentColor" style="pointer-events:none">${short}</text>`)
         }
+        // 图例标准件（右下角内嵌）：节点大小 / 连线粗细 / 度数分档色
+        parts.push(
+          `<g id="cit-legend" style="pointer-events:none">` +
+          `<rect x="${W - 250}" y="${H - 96}" width="238" height="86" rx="8" fill="rgba(127,127,127,0.08)" stroke="rgba(127,127,127,0.25)"/>` +
+          `<text x="${W - 238}" y="${H - 78}" font-size="10" fill="currentColor" font-weight="600">图例</text>` +
+          `<circle cx="${W - 228}" cy="${H - 62}" r="9" fill="#7ab3e8"/><text x="${W - 212}" y="${H - 58}" font-size="9.5" fill="currentColor">低连接度</text>` +
+          `<circle cx="${W - 228}" cy="${H - 44}" r="9" fill="#0a6ad0"/><text x="${W - 212}" y="${H - 40}" font-size="9.5" fill="currentColor">中连接度</text>` +
+          `<circle cx="${W - 228}" cy="${H - 26}" r="9" fill="#084c8f"/><text x="${W - 212}" y="${H - 22}" font-size="9.5" fill="currentColor">高连接度（共被引核心）</text>` +
+          `<line x1="${W - 130}" y1="${H - 62}" x2="${W - 106}" y2="${H - 62}" stroke="#999" stroke-width="1" stroke-opacity="0.6"/><text x="${W - 100}" y="${H - 58}" font-size="9.5" fill="currentColor">连线细=弱共被引</text>` +
+          `<line x1="${W - 130}" y1="${H - 44}" x2="${W - 106}" y2="${H - 44}" stroke="#999" stroke-width="3" stroke-opacity="0.6"/><text x="${W - 100}" y="${H - 40}" font-size="9.5" fill="currentColor">连线粗=强共被引</text>` +
+          `<text x="${W - 100}" y="${H - 22}" font-size="9.5" fill="currentColor">节点大小=被引案例数</text>` +
+          `</g>`)
         svg.setAttribute('viewBox', `0 0 ${W} ${H}`)
         svg.innerHTML = parts.join('')
+        // 事件委托：点击节点 → onPick 跳转（假交互修复的核心接线）
+        svg.onclick = (ev) => {
+          const t = ev.target as SVGElement
+          const lawId = t?.getAttribute?.('data-law')
+          if (lawId && onPick) onPick(lawId)
+        }
       } catch (e) {
         if (!disposed) setErr(e instanceof Error ? e.message : String(e))
       }
@@ -132,7 +192,7 @@ export default function CitationNetwork({ laws, onPick }: { laws: NetLaw[]; onPi
     <div>
       <div className="tiny bold mb-8">引用网络（共被引）</div>
       <div className="tiny muted mb-8">
-        节点大小 = 被引案例数 · 连线 = 两法共享同一被引案例 · 点击节点跳转法条页。
+        节点大小 = 被引案例数 · 颜色深浅 = 共被引连接度 · 连线粗细 = 共被引强度 · 点击节点跳转法条页，悬停显示详情。
       </div>
       <svg ref={svgRef} style={{ width: '100%', height: 480 }} role="img" aria-label="引用网络图" />
     </div>
