@@ -46,6 +46,8 @@ GOLD_REVISION_ROWS = [
     ("定金为合同总额的百分之三十（30%）。", "F3", "replace", "百分之三十（30%）", "百分之二十（20%）"),
     # F4 订金术语替换
     ("甲方支付的订金转为定金担保。", "F4", "replace", "订金", "预付款"),
+    # C1 限制委托解除删除（R497 第六批）
+    ("甲方委托乙方办理登记，双方均不得解除本合同。", "C1", "delete", "不得解除本合同", None),
     # P2 限制业主解除权删除（R491 第五批）
     ("合同期内业主不得解聘物业服务企业。", "P2", "delete", "业主不得解聘物业服务企业", None),
     # L1 违约金比例周期感知封顶（R489 第四批，replace_pct_capped 新动作）
@@ -132,7 +134,7 @@ def test_production_checkpoints_load_clean():
     """产线审查点库自检：四个 revision 块全部合法加载。"""
     cps = review.get_checkpoints()
     with_rev = [cp["id"] for cp in cps if cp.get("revision")]
-    assert sorted(with_rev) == sorted(["L1", "L2", "L3", "F3", "F4", "P2", "R1", "W2"]), with_rev
+    assert sorted(with_rev) == sorted(["C1", "L1", "L2", "L3", "F3", "F4", "P2", "R1", "W2"]), with_rev
 
 
 # ---- DOCX 导出：w:del/w:ins 渲染 ----
