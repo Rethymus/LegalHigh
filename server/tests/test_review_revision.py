@@ -46,6 +46,9 @@ GOLD_REVISION_ROWS = [
     ("定金为合同总额的百分之三十（30%）。", "F3", "replace", "百分之三十（30%）", "百分之二十（20%）"),
     # F4 订金术语替换
     ("甲方支付的订金转为定金担保。", "F4", "replace", "订金", "预付款"),
+    # W2 试用期工资比例修正（R488 第三批）
+    ("试用期工资为约定工资的 70%。", "W2", "replace", "70%", "80%"),
+    ("试用期工资为约定工资的 60%。", "W2", "replace", "60%", "80%"),
     # L2 免责表述删除（R486 第二批，与 L3 同为删除型）
     ("乙方对一切损失概不负责。", "L2", "delete", "概不负责", None),
     ("租赁期限为三十年，租金每年一万元。", "R1", "replace", "三十年", "二十年"),
@@ -123,7 +126,7 @@ def test_production_checkpoints_load_clean():
     """产线审查点库自检：四个 revision 块全部合法加载。"""
     cps = review.get_checkpoints()
     with_rev = [cp["id"] for cp in cps if cp.get("revision")]
-    assert with_rev == ["L2", "L3", "F3", "F4", "R1"], with_rev
+    assert with_rev == ["L2", "L3", "F3", "F4", "R1", "W2"], with_rev
 
 
 # ---- DOCX 导出：w:del/w:ins 渲染 ----

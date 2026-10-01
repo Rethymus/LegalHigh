@@ -420,7 +420,10 @@ def build_checkpoints():
          "detail": "试用期工资约定低于约定工资的80%。依《劳动合同法》第20条，试用期工资不得低于本单位相同岗位最低档工资或者劳动合同约定工资的百分之八十，并不得低于用人单位所在地最低工资标准。",
          "match": lambda t: bool(re.search(r"试用期", t)) and 0 < _pct_near(t, "试用期") < 80,
          "citation": ("lcl-2012", 20),
-         "suggestion": "将试用期工资调整至约定工资（或相同岗位最低档工资）的80%以上，且不低于当地最低工资标准。"},
+         "suggestion": "将试用期工资调整至约定工资（或相同岗位最低档工资）的80%以上，且不低于当地最低工资标准。",
+         # R488 第三批修订：低于 80% 的试用期工资比例 → 法定下限等值替换
+         "revision": {"action": "replace", "near": "试用期",
+                      "replacement": "80%", "replacement_cn": "百分之八十", "replacement_dual": "百分之八十（80%）"}},
 
         # ── 买卖类（T4 续批，R443；民法典合同编买卖章语料已备） ──────────
         {"id": "S1", "category": "liability", "risk": "low",
