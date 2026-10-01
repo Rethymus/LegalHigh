@@ -58,7 +58,11 @@ def set_review(law_id: str, no: int, action: str, reviewer: str) -> dict:
                 e.pop("reviewer_role", None)
             else:
                 raise ValueError(f"未知审核动作: {action}")
-            DATA_PATH.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+            # R480（case-progress「原子替换」纪律吸收）：先写临时文件再原子改名——
+            # 进程崩溃/磁盘满不留半截 JSON（人工审核记录不可再生，丢失不可逆）
+            tmp = DATA_PATH.with_suffix(".json.tmp")
+            tmp.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+            tmp.replace(DATA_PATH)
             load_explains.cache_clear()
             return e
     raise KeyError(f"explain not found: {law_id}#{no}")
