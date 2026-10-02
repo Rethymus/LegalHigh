@@ -282,12 +282,24 @@ function ConclusionDraft({ rid, question, cards, references }: {
   const [sendAuthorized, setSendAuthorized] = useState(false)
   const [redactOutbound, setRedactOutbound] = useState(true)
   const profile = loadAiProfile()
+  // 出域预检（与服务端 scan_outbound_privacy 同口径五类——R504 对齐：邮箱+Luhn 银行卡
+  // 此前只在服务端扫，前端警示会漏报这两类）
   const outboundPrivacy = (() => {
     const text = [question, ...references.map((r) => r.text)].join('\n')
     const kinds: string[] = []
     if (/(?<!\d)1[3-9]\d{9}(?!\d)/.test(text)) kinds.push('手机号')
     if (/(?<!\d)[1-9]\d{5}(?:19|20)\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])\d{3}[\dXx](?!\d)/.test(text)) kinds.push('身份证件号')
     if (/(?<![A-Za-z0-9])[EeGg]\d{8}(?![A-Za-z0-9])/.test(text)) kinds.push('护照号')
+    if (/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/.test(text)) kinds.push('电子邮箱')
+    for (const m of text.matchAll(/(?<!\d)\d{16,19}(?!\d)/g)) {
+      let total = 0, alt = false
+      for (const ch of m[0].split('').reverse().join('')) {
+        let d = ch.charCodeAt(0) - 48
+        if (alt) { d *= 2; if (d > 9) d -= 9 }
+        total += d; alt = !alt
+      }
+      if (total % 10 === 0) { kinds.push('银行卡号'); break }
+    }
     return kinds
   })()
 

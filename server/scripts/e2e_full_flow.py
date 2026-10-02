@@ -207,6 +207,13 @@ elif EXPLAIN_WRITE:
 else:
     print('跳过 G2/G3 写入式解读审核（仅在服务端 LH_EXPLAINS_PATH 指向副本且设置 LH_E2E_ISOLATED_EXPLAINS=1 时执行）')
 
+# ---------- Flow R 出域脱敏（R500，无密钥可跑） ----------
+st, r = call('POST', '/api/ai/redact', {'text': '手机 13900001111，邮箱 e2e@example.com，卡 4111111111111111'})
+redacted = (r or {}).get('text', '')
+ok('R1 脱敏端点五类中三类命中', st == 200 and (r or {}).get('total') == 3, f"total={ (r or {}).get('total') }")
+ok('R2 原值不回显', '13900001111' not in redacted and 'e2e@example.com' not in redacted and '4111111111111111' not in redacted, '变换输出只含占位符')
+ok('R3 残留回扫归零', (r or {}).get('residue_check') == 'pass', str((r or {}).get('residue_check')))
+
 # ---------- Flow H 合规通道 ----------
 st, r = call('POST', '/api/reviews', {'title': 'E2E-PIPL 临时件', 'contract_text': contract[:60]})
 rid2 = r.get('id') or r.get('review_id')
