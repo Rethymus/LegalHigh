@@ -329,10 +329,10 @@ export const api = {
       body: JSON.stringify({ contract_text: contractText, title, stance }),
     }),
   getReview: (rid: string) => req<Review>(`/reviews/${rid}`),
-  aiFrame: (rid: string, providerId: string, model: string, apiKey?: string, redactOutbound?: boolean) =>
+  aiFrame: (rid: string, providerId: string, model: string, apiKey?: string, redactOutbound?: boolean, baseUrlOverride?: string) =>
     req<AiFrameResult>(`/reviews/${rid}/ai-frame`, {
       method: 'POST',
-      body: JSON.stringify({ provider_id: providerId, model, api_key: apiKey, redact_outbound: redactOutbound ?? false }),
+      body: JSON.stringify({ provider_id: providerId, model, api_key: apiKey, redact_outbound: redactOutbound ?? false, base_url_override: baseUrlOverride }),
     }),
   transitionAnnotation: (rid: string, findingId: string, action: 'adopt' | 'amend' | 'reject' | 'reopen', amendedText?: string) =>
     req<unknown>(`/reviews/${rid}/annotations/${findingId}/transition`, {

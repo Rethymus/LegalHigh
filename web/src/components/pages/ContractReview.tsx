@@ -5,7 +5,7 @@ import { Link, useParams } from 'react-router-dom'
 import { Icon } from '../icons'
 import { ActionSheet, EmptyState, PageHeader, Segmented, useMediaQuery, useToast, fmtTime, type SheetAction } from '../ui'
 import { CitationChip } from '../domain'
-import { api, ApiError, type AiFrameResult, type Annotation, type AuditEntry, type Finding, type Review, type ReviewStance } from '../../lib/api'
+import { api, ApiError, loadAiProfile, type AiFrameResult, type Annotation, type AuditEntry, type Finding, type Review, type ReviewStance } from '../../lib/api'
 
 const CATEGORY_LABEL: Record<string, string> = { fee: '费用', account: '账户', liability: '责任' }
 const STANCE_LABEL: Record<ReviewStance, string> = { party_a: '代表甲方', party_b: '代表乙方', neutral: '中立' }
@@ -35,6 +35,9 @@ export default function ContractReview() {
   const [frameResult, setFrameResult] = useState<AiFrameResult | null>(null)
   const [frameBusy, setFrameBusy] = useState(false)
   const [frameRedact, setFrameRedact] = useState(true)
+  // R502：四问面板跟随设置里的模型档案（此前硬编码 zhipu/glm-4.7-flash——用户在
+  // 设置→AI 模型插件管理配置的其他提供方被无视）；未配置档案时回落服务端默认。
+  const aiProfile = loadAiProfile()
   const [amendText, setAmendText] = useState('')
   const returnFileRef = useRef<HTMLInputElement>(null)
   const [reviewTitle, setReviewTitle] = useState('')
@@ -67,7 +70,8 @@ export default function ContractReview() {
     if (!rid) return
     setFrameBusy(true); setError(null)
     try {
-      const r = await api.aiFrame(rid, 'zhipu', 'glm-4.7-flash', undefined, frameRedact)
+      const r = await api.aiFrame(rid, aiProfile?.provider_id ?? 'zhipu', aiProfile?.model ?? 'glm-4.7-flash',
+        undefined, frameRedact, aiProfile?.base_url_override)
       setFrameResult(r)
       toast(r.blocked ? '四问审阅被安全门扣留（结构不合规）' : '四问审阅完成', r.blocked ? 'err' : 'ok')
       if (r.privacy_redaction && r.privacy_redaction.total > 0)
@@ -266,6 +270,9 @@ export default function ContractReview() {
                       title="AI 辅助梳理合同框架风险（义务单向性/退出权不对等/虚假前提/违约对称性）；需配置 AI 模型插件">
                       {frameBusy ? '审阅中…' : <><Icon name="zap" size={12} />四问审阅</>}
                     </button>
+                  </div>
+                  <div className="tiny" style={{ marginBottom: 6 }}>
+                    模型：{aiProfile ? `${aiProfile.provider_id}/${aiProfile.model}（设置档案）` : 'zhipu/glm-4.7-flash（服务端默认——设置→AI 模型插件管理 可换）'}；密钥走服务端环境变量。
                   </div>
                   {frameResult && (frameResult.blocked ? (
                     <div>
