@@ -228,7 +228,7 @@ LegalHigh 的引用绑定法条检索可作为 **Model Context Protocol 服务�
 python server/mcp_server.py
 ```
 
-六工具：`search_articles`（BM25 全文检索法条原文）、`get_article`（按 ID+条号取原文与元数据）、`list_laws`（语料清单）、`search_cases`（指导案例与域外判例检索）、`search_history`（历史版本文本独立检索，非现行仅供对照）、`get_xrefs`（法条双向交叉引用导航，660 条已验证引用）。**只暴露检索，无任何生成型工具**；输出永远为法条原文+元数据+官方来源 URL，并声明「不构成法律意见」。HTTP 端点 `POST /mcp` 亦可用（JSON-RPC 2.0）。
+九工具：`search_articles`（BM25 全文检索法条原文）、`resolve_citation`（法条直查——问句含「法名+条号」时确定性解析定位单条）、`get_article`（按 ID+条号取原文与元数据）、`list_laws`（语料清单）、`search_cases`（指导案例与域外判例检索）、`search_history`（历史版本文本独立检索，非现行仅供对照）、`get_xrefs`（法条双向交叉引用导航，660 条已验证引用）、`get_amendments`（修正决定清单与快照全文）、`get_predecessor`（前身法全文）。**只暴露检索，无任何生成型工具**；输出永远为法条原文+元数据+官方来源 URL，并声明「不构成法律意见」。HTTP 端点 `POST /mcp` 亦可用（JSON-RPC 2.0）。
 
 ## 开放数据
 

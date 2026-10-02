@@ -75,6 +75,36 @@ def tool_get_article(law_id: str, no: int, sub: str | None = None) -> dict:
     }
 
 
+def tool_resolve_citation(query: str) -> dict:
+    """法条直查（R503）：从问句解析引用并返回条文——R501 确定性解析层的 MCP 面。"""
+    from app import query_citation
+    corpus = get_corpus()
+    a = query_citation.resolve(query or "", corpus)
+    if not a:
+        return {
+            "resolved": False,
+            "note": "未解析出受控语料内的法条引用（法名/条号不完整，或法律不在语料）。"
+                    "可改用 search_articles 关键词检索。",
+            "disclaimer": DISCLAIMER,
+        }
+    law = corpus.laws.get(a["law_id"], {})
+    return {
+        "resolved": True,
+        "law_id": a["law_id"],
+        "law_title": a["law_title"],
+        "no": a["no"],
+        "sub": a.get("sub") or "",
+        "label": a["label"],
+        "chapter": a.get("chapter"),
+        "text": a["text"],
+        "law_status": law.get("status", ""),
+        "effective_date": law.get("effective_date", ""),
+        "instrument": law.get("promulgation_instrument", ""),
+        "source_url": (law.get("source") or {}).get("url", ""),
+        "disclaimer": DISCLAIMER,
+    }
+
+
 def tool_list_laws() -> dict:
     corpus = get_corpus()
     laws = []
@@ -307,6 +337,23 @@ TOOLS = [
         "inputSchema": {"type": "object", "properties": {}},
     },
     {
+        "name": "resolve_citation",
+        "description": (
+            "从自然语言问句解析法条引用（如「民法典第1254条说了什么」「个保法第13条」）"
+            "并返回该条文原文与元数据。确定性解析：法名（全称/去国号前缀/常用简称）+"
+            "条号（阿拉伯或中文数字，可选之N 子条号）；解析失败如实返回未命中，不猜测。"
+            "适合用户直接点名条文的问题；语义检索请用 search_articles。"
+            "输出为法条原文引用，不构成法律意见。"
+        ),
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "query": {"type": "string", "description": "含法条引用的问句（如 民法典第188条诉讼时效是多久）"},
+            },
+            "required": ["query"],
+        },
+    },
+    {
         "name": "search_cases",
         "description": (
             "检索已核实的公开案例（15 件：最高人民法院指导案例与域外经典判例比较研究），"
@@ -384,6 +431,8 @@ def dispatch(name: str, args: dict):
         )
     if name == "get_article":
         return tool_get_article(args.get("law_id", ""), args.get("no", 0), args.get("sub"))
+    if name == "resolve_citation":
+        return tool_resolve_citation(args.get("query", ""))
     if name == "list_laws":
         return tool_list_laws()
     if name == "search_cases":

@@ -43,7 +43,7 @@ def test_tools_list_red_line_audit():
     tools = [m for m in out if m.get("id") == 2][0]["result"]["tools"]
     names = sorted(t["name"] for t in tools)
     assert names == ["get_amendments", "get_article", "get_predecessor", "get_xrefs", "list_laws",
-                     "search_articles", "search_cases", "search_history"], names
+                     "resolve_citation", "search_articles", "search_cases", "search_history"], names
     # 每个工具描述都带「不构成法律意见」声明
     for t in tools:
         assert "不构成法律意见" in t["description"], t["name"]
@@ -171,3 +171,26 @@ def test_unknown_method_is_jsonrpc_error():
     ])
     err = [m for m in out if m.get("id") == 9][0]
     assert err["error"]["code"] == -32601
+
+
+def test_tools_call_resolve_citation():
+    """法条直查（R503）：引用问句确定性解析；未解析如实返回不猜测。"""
+    out = _roundtrip([
+        {"jsonrpc": "2.0", "id": 1, "method": "initialize",
+         "params": {"protocolVersion": "2024-11-05"}},
+        {"jsonrpc": "2.0", "id": 2, "method": "tools/call",
+         "params": {"name": "resolve_citation",
+                    "arguments": {"query": "民法典第1254条说了什么"}}},
+        {"jsonrpc": "2.0", "id": 3, "method": "tools/call",
+         "params": {"name": "resolve_citation",
+                    "arguments": {"query": "婚姻法第32条有效吗"}}},
+    ])
+    by_id = {m.get("id"): m for m in out if m.get("id") is not None}
+    hit = json.loads(by_id[2]["result"]["content"][0]["text"])
+    assert hit["resolved"] is True
+    assert (hit["law_id"], hit["no"]) == ("civl-2020", 1254)
+    assert hit["text"] and hit["source_url"]
+    assert "不构成法律意见" in hit["disclaimer"]
+    miss = json.loads(by_id[3]["result"]["content"][0]["text"])
+    assert miss["resolved"] is False and miss["note"]
+    assert by_id[3]["result"]["isError"] is False  # 诚实未命中不是工具错误
