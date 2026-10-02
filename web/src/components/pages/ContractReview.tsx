@@ -34,6 +34,7 @@ export default function ContractReview() {
   const [amending, setAmending] = useState<string | null>(null)
   const [frameResult, setFrameResult] = useState<AiFrameResult | null>(null)
   const [frameBusy, setFrameBusy] = useState(false)
+  const [frameRedact, setFrameRedact] = useState(true)
   const [amendText, setAmendText] = useState('')
   const returnFileRef = useRef<HTMLInputElement>(null)
   const [reviewTitle, setReviewTitle] = useState('')
@@ -66,9 +67,11 @@ export default function ContractReview() {
     if (!rid) return
     setFrameBusy(true); setError(null)
     try {
-      const r = await api.aiFrame(rid, 'zhipu', 'glm-4.7-flash')
+      const r = await api.aiFrame(rid, 'zhipu', 'glm-4.7-flash', undefined, frameRedact)
       setFrameResult(r)
       toast(r.blocked ? '四问审阅被安全门扣留（结构不合规）' : '四问审阅完成', r.blocked ? 'err' : 'ok')
+      if (r.privacy_redaction && r.privacy_redaction.total > 0)
+        toast(`条款外发前已脱敏替换 ${r.privacy_redaction.total} 处（原值未出本机）`, 'ok')
     } catch (e) {
       setFrameResult(null)
       const msg = e instanceof ApiError ? e.message : String(e)
@@ -254,6 +257,9 @@ export default function ContractReview() {
                 <div className="mb-12">
                   <div className="row" style={{ alignItems: 'center', marginBottom: 6 }}>
                     <div className="tiny bold">框架审阅四问</div>
+                    <label className="row tiny" style={{ gap: 4 }} title="合同条款外发前把手机号/证件号/邮箱/银行卡号替换为占位符（服务端执行，计数入审计；不影响四问判分）">
+                      <input type="checkbox" checked={frameRedact} onChange={(e) => setFrameRedact(e.target.checked)} />外发脱敏
+                    </label>
                     <span className="spacer" />
                     <button className="btn btn-ghost btn-sm" disabled={frameBusy || !rid}
                       onClick={runFrameReview}

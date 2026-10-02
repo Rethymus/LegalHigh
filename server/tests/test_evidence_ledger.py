@@ -187,8 +187,7 @@ def test_ai_chat_writes_ledger(tmp_db, monkeypatch):
     """AI 生成链路（第六条）入账：依据条目=服务端证据的 citation 对象。"""
     from app import ai_governor
 
-    def fake_chat(provider_id, model, messages, *, api_key=None, base_url_override=None,
-                  allowed_refs=None, temperature=0.3, actor=None):
+    def fake_chat(provider_id, model, messages, **kw):
         cit = main.get_corpus().citation_of("civl-2020", 577)
         return {
             "provider_id": provider_id, "model": model,

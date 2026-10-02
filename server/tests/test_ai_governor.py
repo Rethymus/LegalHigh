@@ -556,3 +556,147 @@ def test_claim_support_quoted_statute_not_sentence_split(tmp_db):
     # 反例：真正未引用的第二句（无引号包裹）仍必须 FAIL——门语义未放松
     bad = "依据《中华人民共和国民法典》第一百八十八条，诉讼时效为三年。第二句没有任何引用和依据支持纯属编造的结论。"
     assert gate_claim_support(bad, ctxs)["pass"] is False
+
+
+# ---------- R500：出域脱敏（占位符替换 + 残留回扫归零；legal-redactor 模式） ----------
+
+def test_redact_replaces_all_kinds_with_numbered_placeholders():
+    phone = "139" + "12345678"
+    ident = "11010119900307891X"
+    card = "4111111111111111"
+    text = f"手机 {phone}，身份证 {ident}，邮箱 a.b@example.com，卡 {card}"
+    out = ai_governor.redact_outbound_privacy(text)
+    assert out["total"] == 4 and out["residue_check"] == "pass"
+    # 命中原值永不回显（规则⑮：变换输出只含占位符）
+    for raw in (phone, ident, "a.b@example.com", card):
+        assert raw not in out["text"]
+    assert "【手机号①】" in out["text"] and "【身份证号①】" in out["text"]
+    assert "【电子邮箱①】" in out["text"] and "【银行卡号①】" in out["text"]
+    assert out["replacements"] == {"手机号": 1, "身份证件号": 1, "电子邮箱": 1, "银行卡号": 1}
+    # 残留回扫归零（与扫描器同正则族的不变式）
+    assert ai_governor.scan_outbound_privacy(out["text"])["possible_personal_info"] == 0
+
+
+def test_redact_multiple_phones_get_distinct_numbers():
+    a, b = "13812345678", "15987654321"
+    out = ai_governor.redact_outbound_privacy(f"联系 {a} 或 {b}")
+    assert out["replacements"]["手机号"] == 2
+    assert "【手机号①】" in out["text"] and "【手机号②】" in out["text"]
+    assert a not in out["text"] and b not in out["text"]
+
+
+def test_redact_id_card_wins_over_luhn_bank_card():
+    """17 位数字前缀恰好通过 Luhn 的身份证形必须按身份证件号替换（先匹配防撞形）。"""
+    base = "11010119900307"
+    colliding = next(
+        (f"{base}{seq:03d}X" for seq in range(1000) if ai_governor._luhn_ok(f"{base}{seq:03d}")),
+        None)
+    assert colliding, "测试前提：千候选内必存在 Luhn 撞形身份证"
+    out = ai_governor.redact_outbound_privacy(f"证件 {colliding}")
+    assert out["replacements"] == {"身份证件号": 1}, out["replacements"]
+    assert "【身份证号①】" in out["text"] and colliding not in out["text"]
+
+
+def test_redact_clean_and_non_luhn_digits_untouched():
+    """干净文本与案号/单号形态（非 Luhn）不脱敏——与扫描器同口径零误报。"""
+    for text in ("试用期最长不得超过六个月。", "案号 2026 一审 12345678901234567"):
+        out = ai_governor.redact_outbound_privacy(text)
+        assert out["total"] == 0 and out["replacements"] == {} and out["text"] == text
+
+
+def test_redact_passport_and_boundary_digits():
+    out = ai_governor.redact_outbound_privacy("护照 E12345678 有效")
+    assert out["replacements"]["护照号"] == 1 and "E12345678" not in out["text"]
+    # 12 位连续数字不是手机号（边界断言防误替换）
+    out2 = ai_governor.redact_outbound_privacy("单号 139123456789")
+    assert out2["total"] == 0 and "139123456789" in out2["text"]
+
+
+def test_chat_redact_outbound_transforms_before_wire(tmp_db, monkeypatch):
+    """redact_outbound=True：模型实际收到的消息已脱敏；响应与审计携带替换计数。"""
+    captured = {}
+
+    class FakeMsg:
+        content = "依据《民法典》第585条，约定的违约金过分高于造成的损失的，可以请求适当减少。"
+    class FakeResp:
+        choices = [type("Choice", (), {"message": FakeMsg()})()]
+        usage = None
+    class FakeComp:
+        @staticmethod
+        def create(**kwargs):
+            captured.update(kwargs)
+            return FakeResp()
+    class FakeClient:
+        chat = type("C", (), {"completions": FakeComp})()
+
+    monkeypatch.setattr(ai_governor, "_client", lambda *a, **k: FakeClient())
+    monkeypatch.setenv("DEEPSEEK_API_KEY", STUB_KEY)
+    phone = "139" + "12345678"
+    out = ai_governor.chat(
+        "deepseek", "deepseek-chat",
+        [{"role": "user", "content": f"我的手机 {phone}，问违约金"}],
+        allowed_refs=[{"law_title": "中华人民共和国民法典", "article_no": 585}],
+        redact_outbound=True)
+    wire = " ".join(str(m["content"]) for m in captured["messages"])
+    assert phone not in wire and "【手机号①】" in wire
+    assert out["privacy_redaction"] == {"total": 1, "replacements": {"手机号": 1}}
+    # privacy_notice 反映实际出境内容（脱敏后为零）
+    assert out["privacy_notice"]["possible_personal_info"] == 0
+    entries = storage.list_audit("ai_chat", None)
+    assert entries[0]["payload_json"].find("redacted_outbound") > 0
+    import json as _json
+    assert _json.loads(entries[0]["payload_json"])["redacted_outbound"] == 1
+
+
+def test_chat_without_redact_keeps_original_wire(tmp_db, monkeypatch):
+    """默认不脱敏：行为不变式（出域最小必要是可选项，非静默默认）。"""
+    captured = {}
+
+    class FakeMsg:
+        content = "依据《民法典》第585条，约定的违约金过分高于造成的损失的，可以请求适当减少。"
+    class FakeResp:
+        choices = [type("Choice", (), {"message": FakeMsg()})()]
+        usage = None
+    class FakeComp:
+        @staticmethod
+        def create(**kwargs):
+            captured.update(kwargs)
+            return FakeResp()
+    class FakeClient:
+        chat = type("C", (), {"completions": FakeComp})()
+
+    monkeypatch.setattr(ai_governor, "_client", lambda *a, **k: FakeClient())
+    monkeypatch.setenv("DEEPSEEK_API_KEY", STUB_KEY)
+    phone = "139" + "12345678"
+    out = ai_governor.chat(
+        "deepseek", "deepseek-chat",
+        [{"role": "user", "content": f"我的手机 {phone}"}],
+        allowed_refs=[{"law_title": "中华人民共和国民法典", "article_no": 585}])
+    wire = " ".join(str(m["content"]) for m in captured["messages"])
+    assert phone in wire
+    assert out["privacy_redaction"] is None
+    assert out["privacy_notice"]["possible_personal_info"] >= 1
+
+
+def test_ai_redact_endpoint_matrix(tmp_db, monkeypatch):
+    """POST /api/ai/redact 管理门矩阵（R500）：无令牌 503 / 错令牌 403 / 正令牌 200
+    且响应不含命中原值；OpenAPI schema 登记新路径。"""
+    from fastapi.testclient import TestClient
+    from app import main
+
+    token = "redact-endpoint-token-32-chars!!!!!"
+    monkeypatch.setenv("LH_ADMIN_TOKEN", token)
+    monkeypatch.setenv("LH_ADMIN_PRINCIPAL", "redact-test")
+    headers = {"X-LegalHigh-Admin-Token": token}
+    with TestClient(main.app) as client:
+        body = {"text": "手机 13900001111 请回电"}
+        r0 = client.post("/api/ai/redact", json=body)  # 缺令牌（服务端已配置令牌 → 401 fail-closed）
+        assert r0.status_code == 401
+        r1 = client.post("/api/ai/redact", json=body, headers={"X-LegalHigh-Admin-Token": "wrong-token-wrong-token-wrong!!"})
+        assert r1.status_code == 403
+        r2 = client.post("/api/ai/redact", json=body, headers=headers)
+        assert r2.status_code == 200
+        data = r2.json()
+        assert data["total"] == 1 and "13900001111" not in data["text"]
+        assert "【手机号①】" in data["text"] and data["residue_check"] == "pass"
+        assert "/api/ai/redact" in client.get("/openapi.json").json()["paths"]

@@ -691,6 +691,7 @@ class AiFrameBody(BaseModel):
     model: str = Field(min_length=1, max_length=256)
     api_key: str | None = Field(default=None, max_length=512)  # 瞬态使用，服务端不落库不记日志
     base_url_override: str | None = Field(default=None, max_length=2048)
+    redact_outbound: bool = False  # R500：合同条款外发前服务端确定性脱敏
 
 
 @app.post("/api/reviews/{rid}/ai-frame")
@@ -709,7 +710,8 @@ def review_ai_frame(rid: str, body: AiFrameBody, admin: AdminPrincipal = Depends
     try:
         out = review_ai.frame_review(
             r, body.provider_id, body.model,
-            api_key=body.api_key, base_url_override=body.base_url_override, actor=admin.name)
+            api_key=body.api_key, base_url_override=body.base_url_override, actor=admin.name,
+            redact_outbound=body.redact_outbound)
     except ValueError as e:
         raise HTTPException(422, str(e))
     except review_ai.ai_governor.QuotaExceeded as e:
@@ -984,6 +986,22 @@ class AiChatBody(BaseModel):
     base_url_override: str | None = Field(default=None, max_length=2048)
     allowed_refs: list[dict] | None = Field(default=None, max_length=128)  # gate2 引用绑定
     temperature: float = Field(default=0.3, ge=0, le=2)
+    redact_outbound: bool = False  # R500：发送前服务端确定性脱敏（占位符替换）
+
+
+class AiRedactBody(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    text: str = Field(min_length=1, max_length=100_000)
+
+
+@app.post("/api/ai/redact")
+def ai_redact(body: AiRedactBody, admin: AdminPrincipal = Depends(require_admin)):
+    """出域脱敏预览（R500）：确定性占位符替换，无状态无密钥。规则⑮口径不受影响
+    ——响应只回占位符文本与替换计数，命中的原值永不回显（变换不是扫描报告）。"""
+    try:
+        return ai_governor.redact_outbound_privacy(body.text)
+    except RuntimeError as e:
+        raise HTTPException(500, str(e))
 
 
 @app.get("/api/ai/providers")
@@ -1011,7 +1029,8 @@ def ai_chat(body: AiChatBody, admin: AdminPrincipal = Depends(require_admin)):
         out = ai_governor.chat(
             body.provider_id, body.model, body.messages,
             api_key=body.api_key, base_url_override=body.base_url_override,
-            allowed_refs=body.allowed_refs, temperature=body.temperature, actor=admin.name)
+            allowed_refs=body.allowed_refs, temperature=body.temperature, actor=admin.name,
+            redact_outbound=body.redact_outbound)
     except ValueError as e:
         raise HTTPException(422, str(e))
     except ai_governor.QuotaExceeded as e:

@@ -123,8 +123,11 @@ def judge_four_questions(text: str, clause_nos: set[int]) -> dict:
 
 
 def frame_review(review: dict, provider_id: str, model: str, *, api_key: str | None = None,
-                 base_url_override: str | None = None, actor: str = "anonymous") -> dict:
-    """四问框架审阅主入口（红线/判分/配额/审计随行；扣留语义与 chat 一致）。"""
+                 base_url_override: str | None = None, actor: str = "anonymous",
+                 redact_outbound: bool = False) -> dict:
+    """四问框架审阅主入口（红线/判分/配额/审计随行；扣留语义与 chat 一致）。
+    redact_outbound=True（R500）：合同条款外发前确定性脱敏——占位符不破坏四问
+    判分输入（判分锚定条款引用与问题判决结构，非当事人联系方式）。"""
     provider = ai_governor.get_provider(provider_id)
     if not provider:
         raise ValueError(f"未知模型提供方：{provider_id}")
@@ -136,6 +139,14 @@ def frame_review(review: dict, provider_id: str, model: str, *, api_key: str | N
         raise PermissionError(f"未配置 {provider['name']} 的密钥（环境变量或请求瞬态提供）。")
     quota = ai_governor.check_quota(actor)
     messages = build_messages(review)
+    redaction = None
+    if redact_outbound:
+        counters = {k: 0 for k in ai_governor._REDACT_KINDS}
+        messages = [{**m, "content": ai_governor._redact_text(str(m.get("content") or ""), counters)}
+                    for m in messages]
+        total = sum(counters.values())
+        if total:
+            redaction = {"total": total, "replacements": {k: v for k, v in counters.items() if v}}
     clause_nos = clause_nos_of(review)
     client = ai_governor._client(provider, endpoint, key)
     try:
@@ -157,11 +168,13 @@ def frame_review(review: dict, provider_id: str, model: str, *, api_key: str | N
     # 审计只记数量与判定——合同条款属用户材料，不入审计明文（PIPL 纪律）
     storage.audit(actor or "anonymous", "ai_review_frame", f"{provider_id}/{model}",
                   "generate", {"clauses": len(review["result"]["clauses"]),
-                               "output_chars": len(text), "blocked": blocked})
+                               "output_chars": len(text), "blocked": blocked,
+                               "redacted_outbound": redaction["total"] if redaction else 0})
     return {
         "provider_id": provider_id, "model": model, "blocked": blocked,
         "output_withheld": blocked, "text": "" if blocked else text,
         "gates": gates, "quota": quota, "usage": usage,
+        "privacy_redaction": redaction,
         "disclaimer": "AI 生成内容，仅作合同审查辅助梳理，不构成法律意见，也不替代执业律师审核；"
                       "四问结论须由使用者结合完整材料独立核验。",
     }

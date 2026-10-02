@@ -274,11 +274,13 @@ function ConclusionDraft({ rid, question, cards, references }: {
     evidence: { professional_sources: number; official_interpretations: number; evidence_coverage: { score: number }; calibrated_accuracy: { value: number | null; reason: string } }[]
     blocked: boolean; model: string; claim_retry?: boolean
     privacy_notice?: { possible_personal_info: number; kinds: string[]; notice: string }
+    privacy_redaction?: { total: number; replacements: Record<string, number> } | null
   } | null>(null)
   const [aiBusy, setAiBusy] = useState(false)
   const [aiErr, setAiErr] = useState<string | null>(null)
   const [aiKey, setAiKey] = useState('')
   const [sendAuthorized, setSendAuthorized] = useState(false)
+  const [redactOutbound, setRedactOutbound] = useState(true)
   const profile = loadAiProfile()
   const outboundPrivacy = (() => {
     const text = [question, ...references.map((r) => r.text)].join('\n')
@@ -303,8 +305,9 @@ function ConclusionDraft({ rid, question, cards, references }: {
           { role: 'system', content: '你是来源约束的语言整理工具。规则：①只能整理使用者的问题和所提供的条文原文，不得补充任何事实、案例、数字、期限、责任认定、案件类型或裁判预测；②每个法律性表述必须写出可核验的《法律全名》第X条，并可标注依据编号[1]；③不得使用胜诉率、包赢、必胜、稳赢、法院必然裁判等确定性承诺；④明确区分“使用者陈述”“条文原文能够支持的内容”和“仍需确认的信息”；⑤资料不足时只列缺口，不作结论。' },
           { role: 'user', content: `研究问题：${question}\n\n可用条文依据（仅限这些）：\n${ctx}\n\n请在 250 字内做来源约束的语言整理，不要形成案件结论。` },
         ],
+        redact_outbound: redactOutbound,
       })
-      setAiDraft({ text: r.text, gates: r.gates, evidence: r.evidence_context, blocked: r.blocked, claim_retry: r.claim_retry, model: `${r.provider_name}/${r.model}`, privacy_notice: (r as { privacy_notice?: { possible_personal_info: number; kinds: string[]; notice: string } }).privacy_notice })
+      setAiDraft({ text: r.text, gates: r.gates, evidence: r.evidence_context, blocked: r.blocked, claim_retry: r.claim_retry, model: `${r.provider_name}/${r.model}`, privacy_notice: (r as { privacy_notice?: { possible_personal_info: number; kinds: string[]; notice: string } }).privacy_notice, privacy_redaction: r.privacy_redaction ?? null })
     } catch (e) {
       setAiErr(e instanceof ApiError ? e.message : String(e))
     } finally { setAiBusy(false); setAiKey('') }
@@ -325,9 +328,13 @@ function ConclusionDraft({ rid, question, cards, references }: {
             {outboundPrivacy.length > 0 && (
               <div className="banner banner-warn mt-8" style={{ padding: '8px 12px' }}>
                 <Icon name="alert" size={13} />
-                <span className="banner-tx">出域提醒：研究问题或条文引用中疑似含{'「' + outboundPrivacy.join('、') + '」'}。点选生成会把内容发送到你配置的远程模型端点，建议先删除或替换为占位符；是否发送由你决定。</span>
+                <span className="banner-tx">出域提醒：研究问题或条文引用中疑似含{'「' + outboundPrivacy.join('、') + '」'}。点选生成会把内容发送到你配置的远程模型端点，建议先删除或替换为占位符（或保持勾选下方「发送前服务端脱敏」自动替换）；是否发送由你决定。</span>
               </div>
             )}
+            <label className="row tiny mt-8" style={{ alignItems: 'flex-start', gap: 8 }}>
+              <input type="checkbox" checked={redactOutbound} onChange={(e) => setRedactOutbound(e.target.checked)} />
+              <span>发送前服务端脱敏：手机号/证件号/护照号/邮箱/银行卡号先替换为【占位符】再发给模型端点（占位符不影响条文推理；替换计数入审计，原值不出本机）。</span>
+            </label>
             <label className="row tiny mt-8" style={{ alignItems: 'flex-start', gap: 8 }}>
               <input type="checkbox" checked={sendAuthorized} onChange={(e) => setSendAuthorized(e.target.checked)} />
               <span>我确认有权把本页研究问题与所列法条发送到已选择的模型端点，并已了解远程端点的保留、训练、跨境与删除规则不由 LegalHigh 控制。</span>
@@ -343,7 +350,12 @@ function ConclusionDraft({ rid, question, cards, references }: {
         {aiErr && <div className="banner banner-warn mt-8" style={{ padding: '8px 12px' }}><Icon name="alert" size={14} /><span className="banner-tx">{aiErr}</span></div>}
         {aiDraft?.privacy_notice && aiDraft.privacy_notice.possible_personal_info > 0 && (
           <div className="banner banner-warn mt-8" style={{ padding: '8px 12px' }}><Icon name="alert" size={14} />
-            <span className="banner-tx">服务端出域扫描：{aiDraft.privacy_notice.notice}</span>
+            <span className="banner-tx">服务端出域扫描（实际出境内容）：{aiDraft.privacy_notice.notice}</span>
+          </div>
+        )}
+        {aiDraft?.privacy_redaction && aiDraft.privacy_redaction.total > 0 && (
+          <div className="banner banner-ok mt-8" style={{ padding: '8px 12px' }}><Icon name="shieldCheck" size={14} />
+            <span className="banner-tx">发送前已服务端脱敏：替换 {aiDraft.privacy_redaction.total} 处（{Object.entries(aiDraft.privacy_redaction.replacements).map(([k, v]) => `${k}×${v}`).join('、')}）——原值未离开本机，替换计数已入审计。</span>
           </div>
         )}
         {aiDraft && (

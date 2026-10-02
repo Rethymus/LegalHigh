@@ -1,0 +1,31 @@
+{
+ "receipt_sha256": "437322a8a3fe2827c5f5043a3cb0bbe71ee4ea5001fd02af08f4ac5ebdd46530",
+ "generated_at": "2026-10-02T02:29:07.108996+00:00",
+ "schema": "legalhigh-qa-receipt/1",
+ "evidence_dir": "F:\\ZCodeData\\LegalHigh\\docs\\qa-evidence",
+ "gates": [
+  {
+   "gate": "browser_sweep",
+   "status": "pass",
+   "routes": 67,
+   "failed_routes": []
+  },
+  {
+   "gate": "a11y",
+   "status": "pass",
+   "routes": 30,
+   "violated_routes": []
+  },
+  {
+   "gate": "narrow",
+   "status": "pass",
+   "routes": 29,
+   "violated_routes": []
+  },
+  {
+   "gate": "corpus_selfcheck",
+   "status": "pass",
+   "problems": 0
+  }
+ ]
+}

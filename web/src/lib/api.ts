@@ -166,6 +166,7 @@ export interface AiFrameResult {
   output_withheld: boolean
   text: string
   gates: { redline: { pass: boolean }; four_questions: { pass: boolean; violations: string[]; questions: { question: string; pass: boolean; violations: string[]; criteria: string }[] } }
+  privacy_redaction?: { total: number; replacements: Record<string, number> } | null
   disclaimer: string
 }
 
@@ -328,10 +329,10 @@ export const api = {
       body: JSON.stringify({ contract_text: contractText, title, stance }),
     }),
   getReview: (rid: string) => req<Review>(`/reviews/${rid}`),
-  aiFrame: (rid: string, providerId: string, model: string, apiKey?: string) =>
+  aiFrame: (rid: string, providerId: string, model: string, apiKey?: string, redactOutbound?: boolean) =>
     req<AiFrameResult>(`/reviews/${rid}/ai-frame`, {
       method: 'POST',
-      body: JSON.stringify({ provider_id: providerId, model, api_key: apiKey }),
+      body: JSON.stringify({ provider_id: providerId, model, api_key: apiKey, redact_outbound: redactOutbound ?? false }),
     }),
   transitionAnnotation: (rid: string, findingId: string, action: 'adopt' | 'amend' | 'reject' | 'reopen', amendedText?: string) =>
     req<unknown>(`/reviews/${rid}/annotations/${findingId}/transition`, {
@@ -558,7 +559,7 @@ export const api = {
     req<{ providers: { id: string; name: string; base_url: string; default_model: string; models_hint: string[]; docs: string; local: boolean; env_key: string | null; env_key_set: boolean }[] }>('/ai/providers'),
   aiTest: (p: { provider_id: string; model: string; api_key?: string; base_url_override?: string }) =>
     req<{ ok: boolean; sample?: string; error?: string }>('/ai/test', { method: 'POST', body: JSON.stringify(p) }),
-  aiChat: (p: { provider_id: string; model: string; messages: { role: string; content: string }[]; api_key?: string; base_url_override?: string; allowed_refs?: { law_id?: string; law_title?: string; article_no: number }[]; temperature?: number }) =>
+  aiChat: (p: { provider_id: string; model: string; messages: { role: string; content: string }[]; api_key?: string; base_url_override?: string; allowed_refs?: { law_id?: string; law_title?: string; article_no: number }[]; temperature?: number; redact_outbound?: boolean }) =>
     req<{
       provider_id: string; provider_name: string; model: string; text: string
       claim_retry?: boolean
@@ -569,6 +570,8 @@ export const api = {
       }
       evidence_context: { law_id: string; article_no: number; professional_sources: number; official_interpretations: number; evidence_coverage: LawAnalysisContext['evidence_coverage']; calibrated_accuracy: LawAnalysisContext['calibrated_accuracy'] }[]
       blocked: boolean; output_withheld: boolean; usage: Record<string, number>; disclaimer: string
+      privacy_notice?: { possible_personal_info: number; kinds: string[]; notice: string }
+      privacy_redaction?: { total: number; replacements: Record<string, number> } | null
     }>('/ai/chat', { method: 'POST', body: JSON.stringify(p) }),
 
   // 需求解析（本机确定性规则与 BM25；不把用户描述发送给模型）

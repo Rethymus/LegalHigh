@@ -104,6 +104,52 @@ def scan_outbound_privacy(text: str) -> dict:
     }
 
 
+# R500（qwertyzhu/legal-redactor 双模式脱敏的确定性子集，模式参考）：出域前
+# 占位符替换。与扫描器共用同一组正则——替换顺序 身份证件号 → 银行卡 → 手机 →
+# 护照 → 邮箱：18 位身份证约一成概率顺带通过 Luhn，先匹配防「身份证被当银行卡」
+# 撞形；占位符不含 ASCII 数字，替换后不会被后续规则二次命中。
+_REDACT_KINDS = ("手机号", "身份证件号", "护照号", "电子邮箱", "银行卡号")
+_CIRCLED = "①②③④⑤⑥⑦⑧⑨⑩"
+
+
+def _emit(counters: dict[str, int], kind: str, label: str) -> str:
+    counters[kind] += 1
+    n = counters[kind]
+    return f"【{label}{_CIRCLED[n - 1] if n <= 10 else f'({n})'}】"
+
+
+def _redact_text(payload: str, counters: dict[str, int]) -> str:
+    """单段文本的确定性脱敏（计数器由调用方持有——跨段共享占位符序号）。"""
+    result = _ID_CARD_RE.sub(lambda m: _emit(counters, "身份证件号", "身份证号"), payload)
+    result = _BANK_CARD_RE.sub(
+        lambda m: _emit(counters, "银行卡号", "银行卡号") if _luhn_ok(m.group(0)) else m.group(0), result)
+    result = _PHONE_RE.sub(lambda m: _emit(counters, "手机号", "手机号"), result)
+    result = _PASSPORT_RE.sub(lambda m: _emit(counters, "护照号", "护照号"), result)
+    result = _EMAIL_RE.sub(lambda m: _emit(counters, "电子邮箱", "电子邮箱"), result)
+    return result
+
+
+def redact_outbound_privacy(text: str) -> dict:
+    """出域前确定性脱敏（R500）：五类个人信息形态替换为带序占位符。
+
+    规则⑮口径不受影响——扫描报告仍只报数量与类型；本函数是文本变换，响应只
+    回占位符文本与替换计数，命中的原值永不回显。替换完成后用同一扫描器回扫，
+    残留必须为零（fail-closed：残留≠0 属实现缺陷，带病返回比失败更糟）。
+    """
+    counters = {k: 0 for k in _REDACT_KINDS}
+    redacted = _redact_text(text or "", counters)
+    residue = scan_outbound_privacy(redacted)
+    if residue["possible_personal_info"]:
+        raise RuntimeError("脱敏残留检查失败：替换后仍检测到个人信息形态。")
+    total = sum(counters.values())
+    return {
+        "text": redacted,
+        "replacements": {k: v for k, v in counters.items() if v},
+        "total": total,
+        "residue_check": "pass",
+    }
+
+
 # OWASP LLM10：每主体每日调用配额。内存计数，重启清零；只为失控成本兜底，
 # 不是计费系统。LH_AI_DAILY_LIMIT=0 表示不限；默认 200。
 QUOTA_ENV = "LH_AI_DAILY_LIMIT"
@@ -638,10 +684,11 @@ def _cn_to_int_safe(s: str) -> int | None:
 
 def chat(provider_id: str, model: str, messages: list[dict], *, api_key: str | None = None,
          base_url_override: str | None = None, allowed_refs: list[dict] | None = None,
-         temperature: float = 0.3, actor: str = "anonymous") -> dict:
+         temperature: float = 0.3, actor: str = "anonymous", redact_outbound: bool = False) -> dict:
     """统一对话入口：OpenAI 协议调用 → 三道 gate → 审计留痕。密钥瞬态使用，不落库。
     provider_id="custom" 时必须提供 base_url_override——任意 OpenAI 协议端点均可接入
-    （参照 LiteLLM/one-api/new-api 网关模式，目录不锁厂商）。"""
+    （参照 LiteLLM/one-api/new-api 网关模式，目录不锁厂商）。redact_outbound=True 时
+    （R500）服务端在发往模型前对消息内容确定性脱敏（占位符替换）——出域最小必要。"""
     provider = get_provider(provider_id)
     if not provider:
         raise ValueError(f"未知模型提供方：{provider_id}")
@@ -670,10 +717,21 @@ def chat(provider_id: str, model: str, messages: list[dict], *, api_key: str | N
             raise ValueError(f"AI 引用无法由服务端核验：{error}")
         canonical_refs.append(citation)
     quota = check_quota(actor)
-    privacy = scan_outbound_privacy(" ".join(str(m.get("content") or "") for m in messages))
+    # R500 出域脱敏（服务端权威）：先对消息内容做确定性占位符替换，再扫描最终
+    # 出境文本——privacy_notice 反映「实际出本机的内容」而非用户原始输入。
+    redaction = None
+    out_messages = messages
+    if redact_outbound:
+        counters = {k: 0 for k in _REDACT_KINDS}
+        out_messages = [{**m, "content": _redact_text(str(m.get("content") or ""), counters)}
+                        for m in messages]
+        total = sum(counters.values())
+        if total:
+            redaction = {"total": total, "replacements": {k: v for k, v in counters.items() if v}}
+    privacy = scan_outbound_privacy(" ".join(str(m.get("content") or "") for m in out_messages))
     server_context, evidence_contexts = commentaries.prompt_context(canonical_refs)
     governed_messages = [{"role": "system", "content": server_context}]
-    for message in messages:
+    for message in out_messages:
         # 客户端可描述任务，但无权用 system 角色覆盖服务端证据纪律。
         governed_messages.append({
             "role": "user" if message["role"] == "system" else message["role"],
@@ -757,8 +815,9 @@ def chat(provider_id: str, model: str, messages: list[dict], *, api_key: str | N
 
     # gate3 审计留痕：不含 key、不含消息明文
     storage.audit(actor or "anonymous", "ai_chat", f"{provider_id}/{model}",
-                  "generate", {"prompt_chars": sum(len(m.get("content") or "") for m in messages),
-                               "output_chars": len(text), "blocked": blocked, "claim_retry": claim_retry})
+                  "generate", {"prompt_chars": sum(len(m.get("content") or "") for m in out_messages),
+                               "output_chars": len(text), "blocked": blocked, "claim_retry": claim_retry,
+                               "redacted_outbound": redaction["total"] if redaction else 0})
     return {
         "provider_id": provider_id,
         "provider_name": provider["name"],
@@ -772,6 +831,7 @@ def chat(provider_id: str, model: str, messages: list[dict], *, api_key: str | N
         "usage": usage,
         "quota": quota,
         "privacy_notice": privacy,
+        "privacy_redaction": redaction,
         "evidence_context": [{
             "law_id": ctx["law_id"], "article_no": ctx["article_no"],
             "professional_sources": len(ctx["professional_commentaries"]),
