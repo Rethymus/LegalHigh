@@ -55,7 +55,7 @@ function FavButton({ favKey, item }: { favKey: string; item: Parameters<typeof t
   )
 }
 
-function LawResultCard({ r, q, si, asOf }: { r: ResolvedHit; q: string; si?: number; asOf?: string }) {
+function LawResultCard({ r, q, si, asOf, direct }: { r: ResolvedHit; q: string; si?: number; asOf?: string; direct?: boolean }) {
   const { hit, law } = r
   const title = lawDisplayTitle((law?.title ?? hit.law_title).replace(/^中华人民共和国/, ''), law?.status)
   const to = `/laws/${hit.law_id}?art=${hit.no}${hit.sub ?? ''}`
@@ -78,6 +78,7 @@ function LawResultCard({ r, q, si, asOf }: { r: ResolvedHit; q: string; si?: num
         {law && <span>公布：<b>{law.promulgationDate}</b></span>}
         {law && <span>施行：<b>{law.effectiveDate || '待核'}</b></span>}
         <span>法域：<b>中国</b></span>
+        {direct && <span className="mono" style={{ color: 'var(--ok)' }}>◆ 直查命中（问法引用置顶）</span>}
         {hit.chapter && <span>章节：<b>{hit.chapter.split('>').slice(0, 2).join(' > ')}</b></span>}
         <span>相关度：<b className="mono">{hit.score.toFixed(2)}</b></span>
       </div>
@@ -160,7 +161,7 @@ export default function SearchResults() {
   const { data: laws, error } = useLaws()
 
   // 主检索：server BM25（与问答/研究同一引擎）；laws.json 仅用于补齐机关/日期等元数据
-  const [srv, setSrv] = useState<{ hits: SearchHit[]; corpus: number; temporal: SearchResult['temporal'] } | null>(null)
+  const [srv, setSrv] = useState<{ hits: SearchHit[]; corpus: number; temporal: SearchResult['temporal']; direct: SearchResult['retrieval_meta']['direct_citation'] | null } | null>(null)
   const [srvError, setSrvError] = useState<string | null>(null)
   useEffect(() => {
     setTab(scopeTab)
@@ -170,7 +171,7 @@ export default function SearchResults() {
     let alive = true
     setSrv(null); setSrvError(null)
     api.search(q.trim(), 60, undefined, asOf.trim() || undefined).then(
-      (d) => alive && setSrv({ hits: d.hits, corpus: d.retrieval_meta.corpus_size, temporal: d.temporal ?? null }),
+      (d) => alive && setSrv({ hits: d.hits, corpus: d.retrieval_meta.corpus_size, temporal: d.temporal ?? null, direct: d.retrieval_meta.direct_citation ?? null }),
       (e) => alive && setSrvError(e instanceof ApiError ? e.message : String(e)),
     )
     return () => { alive = false }
@@ -194,6 +195,11 @@ export default function SearchResults() {
     )
     return () => { alive = false }
   }, [q])
+  // 法条直查（R501）：引用解析置顶命中标记（问法含「法名+条号」时服务端确定性置顶）
+  const isDirectHit = (h: SearchHit) => !!srv?.direct
+    && srv.direct.law_id === h.law_id && srv.direct.no === h.no
+    && (srv.direct.sub ?? '') === (h.sub ?? '')
+
   const runQa = async () => {
     if (!qaQ.trim()) return
     setQaBusy(true); setQaError(null)
@@ -388,8 +394,8 @@ export default function SearchResults() {
               {/* 列表级联入场（W5-2）：骨架屏→内容切换时 20ms 步长级联，序号封顶 12（.stagger 规则） */}
               <div className="mt-16 stagger">
                 {(tab === 'all' || tab === 'case') && caseHits.map((c, i) => <CaseResultCard key={c.id} c={c} q={q} si={i} />)}
-                {tab === 'all' && resolved.map((r, i) => <LawResultCard key={`${r.hit.law_id}-${r.hit.no}`} r={r} q={q} asOf={asOf} si={i + Math.min(caseHits.length, 6)} />)}
-                {tab === 'law' && lawHits.map((r, i) => <LawResultCard key={`${r.hit.law_id}-${r.hit.no}`} r={r} q={q} asOf={asOf} si={i} />)}
+                {tab === 'all' && resolved.map((r, i) => <LawResultCard key={`${r.hit.law_id}-${r.hit.no}`} r={r} q={q} asOf={asOf} si={i + Math.min(caseHits.length, 6)} direct={i === 0 && isDirectHit(r.hit)} />)}
+                {tab === 'law' && lawHits.map((r, i) => <LawResultCard key={`${r.hit.law_id}-${r.hit.no}`} r={r} q={q} asOf={asOf} si={i} direct={i === 0 && isDirectHit(r.hit)} />)}
                 {tab === 'js' && judicialHits.map((r, i) => <LawResultCard key={`${r.hit.law_id}-${r.hit.no}`} r={r} q={q} asOf={asOf} si={i} />)}
 
                 {tab === 'js' && q && judicialHits.length === 0 && (

@@ -6,6 +6,18 @@
 """
 import re
 
+from . import query_citation
+
+
+def _hoist_direct(hits: list[dict], article: dict, top_k: int) -> list[dict]:
+    """直查条文置顶（R501）：精确引用解析强于任何词法匹配——分数取词法最高分
+    与 6.0（拒答分界概念值）的较大者 +1，保证跨层语义一致且始终排首。"""
+    key = (article["law_id"], article["no"], article.get("sub") or "")
+    rest = [h for h in hits if (h["law_id"], h["no"], h.get("sub") or "") != key]
+    base = max((hits[0]["score"] if hits else 0.0), 6.0)
+    return [{**article, "score": round(float(base) + 1.0, 4),
+             "matched_groups": ["direct-citation"]}, *rest][:max(top_k, 1)]
+
 
 TOPIC_TERMS: list[tuple[str, list[str]]] = [
     (r"工资|欠薪|不发工资|劳动报酬|加班费", ["劳动报酬", "劳动合同", "工资支付"]),
@@ -99,6 +111,15 @@ def orchestrated_search(corpus, query: str, top_k: int = 8, law_ids: list[str] |
     groups = controlled_groups(query)
     top_k = max(1, int(top_k))
     requested = set(law_ids or [])
+    # R501 法条直查前置层：「民法典第1254条」类问法确定性置顶（解析失败静默
+    # 回退——词法鸿沟里最不该 miss 的一类：条文号就在问句里）。
+    direct, direct_meta = None, {}
+    cand = query_citation.resolve(query, corpus)
+    if cand and (not requested or cand["law_id"] in requested):
+        direct = cand
+        direct_meta = {"law_id": cand["law_id"], "no": cand["no"],
+                       "sub": cand.get("sub") or "", "label": cand["label"],
+                       "law_title": cand["law_title"]}
     if not groups:
         if law_ids:
             merged: dict[tuple[str, int], dict] = {}
@@ -110,7 +131,12 @@ def orchestrated_search(corpus, query: str, top_k: int = 8, law_ids: list[str] |
             hits = sorted(merged.values(), key=lambda h: (-h["score"], h["law_id"], h["no"]))[:top_k]
         else:
             hits = corpus.search(query, top_k=top_k)
-        return hits, {"method": "bm25-char-bigram", "groups": [], "unmatched_groups": []}
+        if direct:
+            hits = _hoist_direct(hits, direct, top_k)
+        meta = {"method": "bm25-char-bigram", "groups": [], "unmatched_groups": []}
+        if direct:
+            meta["direct_citation"] = direct_meta
+        return hits, meta
 
     ranked_by_group: list[tuple[dict, list[dict]]] = []
     for group in groups:
@@ -168,9 +194,14 @@ def orchestrated_search(corpus, query: str, top_k: int = 8, law_ids: list[str] |
 
     matched = [group["id"] for group, ranked in ranked_by_group if ranked]
     unmatched = [group["id"] for group, ranked in ranked_by_group if not ranked]
-    return selected, {
+    if direct:
+        selected = _hoist_direct(selected, direct, top_k)
+    meta = {
         "method": "bm25-controlled-groups",
         "groups": [{"id": group["id"], "query": group["query"], "topic": group["topic"]} for group, _ in ranked_by_group],
         "matched_groups": matched,
         "unmatched_groups": unmatched,
     }
+    if direct:
+        meta["direct_citation"] = direct_meta
+    return selected, meta

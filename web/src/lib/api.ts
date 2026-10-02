@@ -693,7 +693,7 @@ export interface SearchResult {
   query: string
   total: number
   hits: SearchHit[]
-  retrieval_meta: { method: string; corpus_size: number }
+  retrieval_meta: { method: string; corpus_size: number; direct_citation?: { law_id: string; no: number; sub?: string | null; label: string; law_title: string } }
   temporal?: {
     reference_detected: boolean
     as_of: string | null
