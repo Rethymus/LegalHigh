@@ -6,7 +6,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { Icon } from '../icons'
 import { lawDisplayTitle, lawEvidenceGrade, useLaws } from '../../data/model'
-import { EmptyState, SkeletonLines, Tabs, ValidityBadge } from '../ui'
+import { EmptyState, SkeletonLines, Tabs, useToast, ValidityBadge } from '../ui'
 import { api, ApiError, toggleFav, isFav, type CaseRecord, type SearchHit, type SearchResult } from '../../lib/api'
 import { CitationChip, SourceBadge } from '../domain'
 
@@ -56,6 +56,7 @@ function FavButton({ favKey, item }: { favKey: string; item: Parameters<typeof t
 }
 
 function LawResultCard({ r, q, si, asOf, direct }: { r: ResolvedHit; q: string; si?: number; asOf?: string; direct?: boolean }) {
+  const toast = useToast()
   const { hit, law } = r
   const title = lawDisplayTitle((law?.title ?? hit.law_title).replace(/^中华人民共和国/, ''), law?.status)
   const to = `/laws/${hit.law_id}?art=${hit.no}${hit.sub ?? ''}`
@@ -106,6 +107,8 @@ function LawResultCard({ r, q, si, asOf, direct }: { r: ResolvedHit; q: string; 
       <div className="res-acts">
         <CitationChip label={`引用 ${hit.law_id}#${hit.no}`} to={to} />
         <span className="spacer" />
+        <button className="res-act" onClick={() => { navigator.clipboard?.writeText(`《${title.replace(/^中华人民共和国/, '')}》${hit.label}（现行有效，${hit.effective_date ?? ''} 施行）\n\n${hit.text}\n\n来源：${hit.source_url ?? ''}`).then(() => toast('已复制条文与规范引用')).catch(() => toast('复制失败，请手动选择复制')) }} title="复制条文原文与规范引用"><Icon name="copy" size={12} />复制条文</button>
+        <button className="res-act" onClick={() => window.print()} title="打印（自动隐藏导航，保留条文与引用）"><Icon name="docpen" size={12} />打印</button>
         <Link className="res-act" to={to}><Icon name="external" size={12} />查看证据快照</Link>
         <FavButton favKey={`law:${hit.law_id}:${hit.no}`} item={{ key: `law:${hit.law_id}:${hit.no}`, type: '法条', title: `《${title}》${hit.label}`, meta: hit.text.slice(0, 40) + '…', to }} />
       </div>
