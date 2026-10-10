@@ -80,6 +80,7 @@ export function canAudienceAccess(pathname: string, mode: AudienceMode): boolean
   if (/^\/(needs|case-analysis)(\/|$)/.test(pathname)) return true
   if (/^\/guide(\/|$)/.test(pathname)) return true  // 使用指南：三视图开放（粉饰清单①）
   if (/^\/terms(\/|$)/.test(pathname)) return true  // 术语卡：三视图开放（粉饰清单②）
+  if (/^\/quiz(\/|$)/.test(pathname)) return true  // 知识测评：三视图开放（R339）
   if (/^\/quality(\/|$)/.test(pathname)) return true  // 质量透明度：三视图开放（粉饰清单③）
   if (/^\/process(\/|$)/.test(pathname)) return true  // 流程图解：三视图开放（v6 S4-T3）
 

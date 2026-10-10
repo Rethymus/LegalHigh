@@ -657,6 +657,17 @@
     "title": "LegalHigh · 法律智能知识库"
   },
   {
+    "name": "55-quiz",
+    "path": "/quiz",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "step1": "quiz-ok",
+    "finalUrl": "http://localhost:5173/quiz",
+    "title": "LegalHigh · 法律智能知识库"
+  },
+  {
     "name": "46-process",
     "path": "/process",
     "consoleErrors": [],

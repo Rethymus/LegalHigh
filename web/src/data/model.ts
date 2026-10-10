@@ -120,6 +120,7 @@ export const NAV_MAIN: NavEntry[] = [
   { to: '/data-sources', icon: 'database', label: '数据洞察' },
   { to: '/guide', icon: 'book', label: '使用指南' },
   { to: '/terms', icon: 'bulb', label: '术语卡' },
+  { to: '/quiz', icon: 'gradcap', label: '知识测评' },
   { to: '/process', icon: 'compass', label: '流程图解' },
   { to: '/quality', icon: 'shieldCheck', label: '质量透明度' },
 ]
