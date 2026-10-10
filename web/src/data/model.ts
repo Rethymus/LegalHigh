@@ -111,6 +111,7 @@ export const NAV_MAIN: NavEntry[] = [
   { to: '/search', icon: 'lawSearch', label: '法律检索' },
   { to: '/research', icon: 'sparkle', label: '来源研究', audiences: ['student', 'professional'] },
   { to: '/cases', icon: 'caseSearch', label: '案例检索' },
+  { to: '/cases/compare', icon: 'compare', label: '案例对比' },
   { to: '/laws', icon: 'article', label: '法规条文' },
   { to: '/contracts', icon: 'shield', label: '合同审查', audiences: ['professional'] },
   { to: '/draft', icon: 'docpen', label: '文书工具', audiences: ['professional'] },

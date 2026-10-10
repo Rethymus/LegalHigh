@@ -289,6 +289,9 @@ const ROUTES = [
   { name: '44-quality', path: '/quality', fullPage: true, identity: pageHeader('质量透明度'), afterText: '不是法律正确率', steps: [
     { t: 'eval', expr: `(() => { const stats=[...document.querySelectorAll('.stat')]; return stats.length >= 4 ? 'quality-stats-ok' : 'quality-stats-short:'+stats.length })()` },
   ] },
+  { name: '56-case-compare', path: '/cases/compare', identity: pageHeader('案例对比阅读'), afterText: '学习研究', steps: [
+    { t: 'eval', expr: `(() => { const s=[...document.querySelectorAll('select')]; return s.length >= 2 ? 'compare-selects-ok' : 'compare-selects-missing' })()` },
+  ] },
   { name: '55-quiz', path: '/quiz', identity: pageHeader('法律知识测评'), afterText: '术语卡', steps: [
     { t: 'eval', expr: `(() => { const b=document.body.innerText||''; return b.includes('准备好了吗') || b.includes('第 1 / 10 题') ? 'quiz-ok' : 'quiz-missing' })()` },
   ] },

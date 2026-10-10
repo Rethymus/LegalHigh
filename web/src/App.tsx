@@ -25,6 +25,7 @@ const Guide = lazy(() => import('./components/pages/Guide'))
 const Terms = lazy(() => import('./components/pages/Terms'))
 const Quality = lazy(() => import('./components/pages/Quality'))
 const Quiz = lazy(() => import('./components/pages/Quiz'))
+const CaseCompare = lazy(() => import('./components/pages/CaseCompare'))
 const Process = lazy(() => import('./components/pages/Process'))
 const Learning = lazy(() => import('./components/pages/Learning'))
 const Workspace = lazy(() => import('./components/pages/Workspace'))
@@ -69,6 +70,7 @@ export default function App() {
         <Route path="/terms" element={<Terms />} />
         <Route path="/quality" element={<Quality />} />
         <Route path="/quiz" element={<Quiz />} />
+        <Route path="/cases/compare" element={<CaseCompare />} />
         <Route path="/process" element={<Process />} />
         <Route path="/learning" element={<Learning />} />
         <Route path="/workspace" element={<Workspace />} />

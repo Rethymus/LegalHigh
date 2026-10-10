@@ -657,6 +657,17 @@
     "title": "LegalHigh · 法律智能知识库"
   },
   {
+    "name": "56-case-compare",
+    "path": "/cases/compare",
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "step1": "compare-selects-ok",
+    "finalUrl": "http://localhost:5173/cases/compare",
+    "title": "LegalHigh · 法律智能知识库"
+  },
+  {
     "name": "55-quiz",
     "path": "/quiz",
     "consoleErrors": [],
