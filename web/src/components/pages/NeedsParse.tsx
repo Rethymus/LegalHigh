@@ -14,6 +14,54 @@ const ANALYSIS_MODEL: Record<string, ClaimId> = {
   'standard-terms': 'breach_damage', loan: 'loan_repayment',
 }
 
+/* 求助准备单 → 人类可读文本（R335：公民拿到的导出必须可阅读，JSON 只是数据备份） */
+function formatIntakeAsText(result: NeedsParseResult): string {
+  const intake = result.intake
+  if (!intake) return '准备单数据不完整，请重新整理。'
+  const L: string[] = []
+  const hr = '─'.repeat(48)
+  L.push('LegalHigh 求助准备单')
+  L.push(`生成时间：${new Date().toLocaleString('zh-CN')}`)
+  L.push(hr)
+  L.push('')
+  L.push('【一、事实摘要】')
+  L.push(intake.summary)
+  if (intake.trigger) { L.push(''); L.push('【起因】'); L.push(intake.trigger) }
+  if (intake.timeline.length) {
+    L.push(''); L.push('【时间线】')
+    intake.timeline.forEach((t, i) => L.push(`  ${i + 1}. ${t}`))
+  }
+  if (intake.actual_outcome) { L.push(''); L.push('【当前结果】'); L.push(intake.actual_outcome) }
+  if (intake.parties.length) {
+    L.push(''); L.push('【相关人员/机构】')
+    L.push('  ' + intake.parties.join('、'))
+  }
+  L.push('')
+  L.push(hr)
+  L.push('【二、材料台账】')
+  intake.evidence_checklist.forEach((x) => L.push(`  [${x.state}] ${x.item}`))
+  if (intake.missing_questions.length) {
+    L.push(''); L.push('【尚需补充的信息】')
+    intake.missing_questions.forEach((q) => L.push(`  · ${q}`))
+  }
+  L.push('');
+  L.push(hr)
+  L.push('【三、建议下一步】')
+  intake.next_steps.forEach((s, i) => L.push(`  ${i + 1}. ${s}`))
+  if (result.articles.length) {
+    L.push(''); L.push('【可能相关的法律依据（不是案件定性）】')
+    result.articles.forEach((a) => {
+      L.push(`  · 《${lawDisplayTitle(a.law_title, a.status)}》${a.article_label}`)
+      L.push(`    施行：${a.effective_date} | 来源：${a.official_entry}`)
+    })
+  }
+  L.push('');
+  L.push(hr)
+  L.push('本准备单由 LegalHigh 法律知识库生成，仅作咨询前的事实梳理参考。')
+  L.push('不构成法律意见；具体案件请咨询执业律师或拨打 12348 法律援助热线。')
+  return L.join('\n')
+}
+
 export default function NeedsParse() {
   const { audience } = useOutletContext<AppOutletContext>()
   const toast = useToast()
@@ -70,7 +118,7 @@ export default function NeedsParse() {
       <section className="sec"><div className="sec-h"><span className="sec-t">求助准备单</span><span className="tiny mono">{result.intake.method}</span></div><div className="cols cols-2">
         <div className="card card-pad"><b>已确认的事实摘要</b><p style={{ lineHeight: 1.8 }}>{result.intake.summary}</p>{result.intake.trigger && <><b>起因/触发事件</b><p className="tiny" style={{ lineHeight: 1.8 }}>{result.intake.trigger}</p></>}<b>时间线</b>{result.intake.timeline.length ? <ol className="tiny" style={{ lineHeight: 2 }}>{result.intake.timeline.map((x) => <li key={x}>{x}</li>)}</ol> : <p className="tiny">尚未填写</p>}<b>当前结果/影响</b><p className="tiny" style={{ lineHeight: 1.8 }}>{result.intake.actual_outcome || '尚未填写'}</p><b>相关人员/机构</b><div className="row-wrap mt-8">{result.intake.parties.map((x) => <span className="chip" key={x}>{x}</span>)}</div></div>
         <div className="card card-pad"><b>尚需补充</b>{result.intake.missing_questions.length ? <ul className="tiny" style={{ lineHeight: 2 }}>{result.intake.missing_questions.map((x) => <li key={x}>· {x}</li>)}</ul> : <div className="banner banner-ok mt-8"><Icon name="check" size={13} /><span className="banner-tx">当前必填信息已整理；可选项仍可能未填写，请自行核对真实性。</span></div>}<b className="mt-12" style={{ display: 'block' }}>材料台账</b>{result.intake.evidence_checklist.map((x) => <div className="lrow" key={x.id}><span className={'bdg ' + (x.state === '已掌握' ? 'bdg-green' : 'bdg-orange')}>{x.state}</span><span className="lrow-t">{x.item}</span><span className="tiny">{x.source}</span></div>)}<div className="tiny mt-8">材料状态来自你的填写或规则提示，不表示真实性、合法性或证明力已经核验。</div></div>
-      </div><div className="card card-pad mt-12"><div className="row"><b>下一步</b><span className="spacer" /><button className="btn btn-secondary btn-sm" onClick={() => { const blob = new Blob([JSON.stringify(result, null, 2)], { type: 'application/json' }); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = `LegalHigh-求助准备单-${new Date().toISOString().slice(0, 10)}.json`; a.click(); URL.revokeObjectURL(url) }}><Icon name="download" size={12} />主动导出准备单</button></div><ol className="tiny" style={{ lineHeight: 2 }}>{result.intake.next_steps.map((x) => <li key={x}>{x}</li>)}</ol><div className="tiny">本页不自动保存案情；刷新或离开页面后不会保留。导出文件由你自行保管。</div></div></section>
+      </div><div className="card card-pad mt-12"><div className="row"><b>下一步</b><span className="spacer" /><button className="btn btn-secondary btn-sm" onClick={() => { const text = formatIntakeAsText(result); const blob = new Blob([text], { type: 'text/plain;charset=utf-8' }); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = `LegalHigh-求助准备单-${new Date().toISOString().slice(0, 10)}.txt`; a.click(); URL.revokeObjectURL(url) }}><Icon name="docpen" size={12} />导出可读准备单</button><button className="btn btn-ghost btn-sm" onClick={() => { const blob = new Blob([JSON.stringify(result, null, 2)], { type: 'application/json' }); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = `LegalHigh-求助准备单-${new Date().toISOString().slice(0, 10)}.json`; a.click(); URL.revokeObjectURL(url) }}><Icon name="download" size={12} />导出原始数据</button></div><ol className="tiny" style={{ lineHeight: 2 }}>{result.intake.next_steps.map((x) => <li key={x}>{x}</li>)}</ol><div className="tiny">本页不自动保存案情；刷新或离开页面后不会保留。导出文件由你自行保管。可读版供打印或转交律师参考；原始数据版包含完整检索结果。</div></div></section>
       <section className="sec"><div className="sec-h"><span className="sec-t">可能涉及的问题方向</span><span className="tiny">可多选或为未知 · 不等于案由</span></div>{!!result.parse?.missing_material_facts?.length && (<div className="card card-pad mb-12"><div className="row-wrap mb-8"><span className="bdg bdg-orange">缺失提示</span><b>建议补充的关键事实</b><span className="spacer" /><span className="tiny">确定性规则 · 不脑补</span></div>{result.parse.missing_material_facts.map((group) => <div key={group.domain} className="mb-12"><div className="tiny bold">{group.domain}</div><ul className="plain-list">{group.missing.map((m) => <li key={m.id}><b>{m.fact}</b>——{m.why}</li>)}</ul></div>)}<div className="tiny">{result.parse.missing_material_facts[0]?.note}</div></div>)}{result.intake.issue_candidates.map((candidate) => <div className="card card-pad mb-12" key={candidate.id}><div className="row-wrap"><span className={'bdg ' + (candidate.status === 'unknown' ? 'bdg-orange' : 'bdg-blue')}>{candidate.status === 'unknown' ? '尚不能判断' : '候选方向'}</span><b>{candidate.label}</b><span className="spacer" />{ANALYSIS_MODEL[candidate.id] && <button className="btn btn-secondary btn-sm" onClick={() => navigate('/case-analysis', { state: { claimId: ANALYSIS_MODEL[candidate.id], caseText: [result.intake!.summary, result.intake!.trigger, ...result.intake!.timeline, result.intake!.actual_outcome].filter(Boolean).join('\n') } })}>本人选择此方向，继续要件检查</button>}</div>{candidate.fact_basis.length > 0 && <div className="mt-8"><div className="tiny bold">触发该方向的用户原文：</div>{candidate.fact_basis.map((fact) => <blockquote className="risk-quote" key={fact}>“{fact}”</blockquote>)}</div>}<div className="tiny mt-8">{candidate.note}</div></div>)}</section>
       <section className="sec"><div className="sec-h"><span className="sec-t">可能相关的官方法律依据</span><span className="tiny">{result.articles.length} 条 · 不是案件定性</span></div>{result.articles_none && <div className="card"><EmptyState icon="search" title="库内未找到直接对应条文" desc="请补充事实或使用精确检索；系统不会为填满页面而生成依据。" /></div>}{result.articles.map((a) => <div key={`${a.law_id}-${a.article_no}`} className="ot mb-12"><div className="ot-h"><span className="ot-tag">证据快照原文</span><b>《{lawDisplayTitle(a.law_title, a.status).replace(/^中华人民共和国/, '')}》{a.article_label}</b><ValidityBadge v={a.status} /><span className="ot-src">相关度 {a.score}</span></div><div style={{ fontSize: 14, lineHeight: 2 }}>{a.text}</div><div className="ot-meta"><span>施行：<b>{a.effective_date}</b></span><span className="spacer" /><a href={a.official_entry} target="_blank" rel="noreferrer" className="res-act"><Icon name="external" size={12} />官方核对入口</a><a href={a.snapshot_url} target="_blank" rel="noreferrer" className="res-act"><Icon name="file" size={12} />证据快照</a><CitationChip label="条文本页" to={`/laws/${a.law_id}?art=${a.article_no}`} /></div></div>)}</section>
       {result.cases.length > 0 && <section className="sec"><div className="sec-h"><span className="sec-t">可核验公开案例</span><span className="tiny">仅作类案学习和咨询准备</span></div>{result.cases.map((c) => <div key={c.id} className="res-card"><div className="res-h"><div><Link to={`/cases/${c.id}`} className="res-t">{c.name}</Link><div className="res-meta"><span>{c.no}</span><span>{c.court} · {c.date}</span></div></div><span className="spacer" /><SourceBadge kind={c.kind} grade={c.grade} /></div><p className="res-snip clamp2">{c.summary}</p><div className="res-acts"><span className="tiny">来源核验于 {c.source_accessed_at}</span>{c.official_entries.map((e) => <a className="res-act" key={e.url} href={e.url} target="_blank" rel="noreferrer"><Icon name="external" size={12} />{e.name}</a>)}</div></div>)}</section>}

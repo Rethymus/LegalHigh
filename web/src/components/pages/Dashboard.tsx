@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate, useOutletContext } from 'react-router-dom'
 import { Icon, type IconName } from '../icons'
+import LimitationCalculator from '../LimitationCalculator'
 import { CORPUS_DYNAMICS, HOT_SEARCHES, WARM_TIPS, useLaws } from '../../data/model'
 import { EmptyState, SkeletonLines, fmtTime } from '../ui'
 import { CitationChip } from '../domain'
@@ -142,6 +143,13 @@ export default function Dashboard() {
           </div>
         </div>
       </section>
+
+      {/* 诉讼时效计算器（R336）：公民最常问「我还能告吗」——确定性计算，依据民法典188/196条 */}
+      {audience === 'public' && (
+        <div className="page" style={{ maxWidth: 620, paddingTop: 0, paddingBottom: 0 }}>
+          <LimitationCalculator />
+        </div>
+      )}
 
       <div className="page" style={{ maxWidth: 1240 }}>
         {lawsError && <div className="banner banner-danger mb-12"><Icon name="alert" size={15} /><span className="banner-tx">本地法条语料加载失败：{lawsError}</span></div>}
