@@ -5938,6 +5938,61 @@
     }
    ],
    "note": "2026-09-19 增（#9 金标先行）：基线实测 MISS 但相近（top3=lcl-2012#19/#83/labor-law#21——邻近条与同名法占位，21 未进 top5）；目标=试用期解除限制与说明理由义务21。 → R166 编排层修复后 rank2（条件试用期组；raw 层仍 MISS）"
+  },
+  {
+   "id": "gold-defense-mobil-plan",
+   "question": "国防动员实施预案由谁组织编制",
+   "expect": [
+    {
+     "law_id": "defense-mobil-2026",
+     "no": 22
+    }
+   ],
+   "note": "预案编制主体"
+  },
+  {
+   "id": "gold-defense-mobil-recruit",
+   "question": "后备兵员被征召后谁来下达通知",
+   "expect": [
+    {
+     "law_id": "defense-mobil-2026",
+     "no": 35
+    }
+   ],
+   "note": "征召通知"
+  },
+  {
+   "id": "gold-defense-mobil-requisition",
+   "question": "国家可以征用民用资源吗",
+   "expect": [
+    {
+     "law_id": "defense-mobil-2026",
+     "no": 63
+    }
+   ],
+   "note": "征用民用资源"
+  },
+  {
+   "id": "gold-defense-mobil-potential",
+   "question": "国防动员潜力统计调查制度",
+   "expect": [
+    {
+     "law_id": "defense-mobil-2026",
+     "no": 20
+    }
+   ],
+   "note": "潜力统计"
+  },
+  {
+   "id": "gold-defense-mobil-duty",
+   "question": "国防勤务是什么",
+   "expect": [
+    {
+     "law_id": "defense-mobil-2026",
+     "no": 50
+    }
+   ],
+   "note": "国防勤务定义"
   }
  ]
 }

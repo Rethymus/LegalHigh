@@ -118,7 +118,8 @@
     "agriculture-2013",
     "village-committee-2025",
     "residents-committee-2025",
-    "sports-2023"
+    "sports-2023",
+    "defense-mobil-2026"
   ],
   "priority_backlog": [],
   "update_protocol": [
@@ -126,5 +127,6 @@
     "保存证据快照并记录来源、查阅日期与SHA-256",
     "解析后核对条数、缺号、版本状态和生效日期",
     "运行语料自检、检索金标与前后端逐字一致性检查后才对外"
-  ]
+  ],
+  "controlled_count": 109
 }

@@ -138,6 +138,7 @@ LAW_FILES = {
     "patriotic_edu_2024_lawtext_md": "lawtext_爱国主义教育法2024.md",  # 爱国主义教育法 2023（R161）
     "legal_publicity_2025_lawtext_md": "lawtext_法治宣传教育法2025.md",  # 法治宣传教育法 2025（R162）
     "defense_edu_2024_lawtext_md": "lawtext_国防教育法2024.md",  # 国防教育法 2024 修正（R162）
+    "defense_mobil_2026_lawtext_md": "lawtext_国防动员法2026.md",  # 国防动员法 2026（R338）
     "agriculture_2013_lawtext_md": "lawtext_农业法2013.md",  # 农业法 2012 修正（R162，现行；2026 修订尚未生效）
     "village_committee_2025_lawtext_md": "lawtext_村民委员会组织法2025.md",  # 村民委员会组织法 2025 修正（R163）
     "residents_committee_2025_lawtext_md": "lawtext_居民委员会组织法2025.md",  # 城市居民委员会组织法 2025 修正（R163）
@@ -500,6 +501,7 @@ EXPECTED_COUNTS = {
     "patriotic-edu-2024": 40,
     "legal-publicity-2025": 65,
     "defense-edu-2024": 42,
+    "defense-mobil-2026": 82,
     "agriculture-2013": 99,
     "village-committee-2025": 50,
     "residents-committee-2025": 50,
@@ -1326,6 +1328,15 @@ def main():
                 "effective_date": "2024-09-21",
             },
             "https://flk.npc.gov.cn/detail?id=ff80818191db55220191eba9396a08f4",
+        ),
+        build_lawtext_md_law(
+            "defense_mobil_2026_lawtext_md", "defense-mobil-2026", "中华人民共和国国防动员法",
+            {
+                "status": "现行有效（2026）",
+                "promulgation": {"date": "2026-08-28", "organ": "全国人民代表大会常务委员会"},
+                "effective_date": "2026-10-01",
+            },
+            "https://flk.npc.gov.cn/detail?id=7d951fed0e964a509d223ebd47af0f5a",
         ),
         build_lawtext_md_law(
             "agriculture_2013_lawtext_md", "agriculture-2013", "中华人民共和国农业法",

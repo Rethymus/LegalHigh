@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "law_id": "defense-mobil-2026",
+  "versions": [
+    {
+      "version_id": "2026-enacted",
+      "label": "2026 通过",
+      "status": "现行有效（2026）",
+      "promulgation_date": "2026-08-28",
+      "promulgation_organ": "全国人民代表大会常务委员会",
+      "effective_date": "2026-10-01",
+      "current": true,
+      "has_fulltext": true,
+      "article_count": 82,
+      "article_count_note": "",
+      "evidence": {
+        "url": "https://flk.npc.gov.cn/detail?id=7d951fed0e964a509d223ebd47af0f5a",
+        "snapshot": "docs/research/evidence/lawtext_国防动员法2026.md",
+        "grade": "中",
+        "kind": "lawtext-md-transcription",
+        "accessed_at": "2026-10-10"
+      }
+    }
+  ],
+  "amendments": [],
+  "pending_note": "2026-08-28 通过、2026-10-01 施行的新法首版。历史版本暂无。",
+  "title": "中华人民共和国国防动员法"
+}

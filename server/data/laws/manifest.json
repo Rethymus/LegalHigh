@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-21T23:35:55.830326",
+  "built_at": "2026-10-10T11:16:25.515273",
   "fetch_date": "2026-09-08",
   "laws": [
     {
@@ -2102,6 +2102,29 @@
       "fetched_at": "2026-08-29",
       "snapshot_sha256": "c78180e75ca798f9b0e148f67a62cc2db4af80b340226d47964f13263201f90f",
       "output_sha256": "7dee2704468486d75b65641d8540a212cae26e83d0ad1a953e2ef223a4e74e73"
+    },
+    {
+      "law_id": "defense-mobil-2026",
+      "title": "中华人民共和国国防动员法",
+      "status": "现行有效（2026）",
+      "effective_date": "2026-10-01",
+      "effective_date_evidence": {
+        "title": "中华人民共和国国防动员法",
+        "url": "https://flk.npc.gov.cn/detail?id=7d951fed0e964a509d223ebd47af0f5a",
+        "accessed_at": "2026-08-29",
+        "grade": "中",
+        "source_kind": "flk-docx-transcription",
+        "version": "现行有效（2026）"
+      },
+      "promulgation_instrument": null,
+      "article_count": 82,
+      "expected_count": 82,
+      "missing_numbers": [],
+      "source_url": "https://flk.npc.gov.cn/detail?id=7d951fed0e964a509d223ebd47af0f5a",
+      "snapshot": "docs/research/evidence/lawtext_国防动员法2026.md",
+      "fetched_at": "2026-08-29",
+      "snapshot_sha256": "aa543f7115608a1e560509d8036932e8548e71db0994e19a6bc8bacc8cc5c128",
+      "output_sha256": "2e0868418b93f9df47c36c09c04c7210f430fad982bad7820945a646c2fca86c"
     },
     {
       "law_id": "agriculture-2013",

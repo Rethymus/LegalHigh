@@ -820,6 +820,15 @@
       "no_effective_date": false,
       "effective_date_evidence_valid": true
     },
+    "defense-mobil-2026": {
+      "manifest_count": 82,
+      "actual_count": 82,
+      "sequential": true,
+      "empty_text": 0,
+      "duplicate_no": 0,
+      "no_effective_date": false,
+      "effective_date_evidence_valid": true
+    },
     "agriculture-2013": {
       "manifest_count": 99,
       "actual_count": 99,
@@ -1010,6 +1019,7 @@
     "crpl-imp-2024": 1,
     "csl-2025": 2,
     "defense-edu-2024": 3,
+    "defense-mobil-2026": 1,
     "disabled-2018": 3,
     "drug-admin-2019": 4,
     "dsl-2021": 1,

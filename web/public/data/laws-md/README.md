@@ -95,6 +95,7 @@
 | [中华人民共和国爱国主义教育法](./patriotic-edu-2024.md) | patriotic-edu-2024 | 40 |
 | [中华人民共和国法治宣传教育法](./legal-publicity-2025.md) | legal-publicity-2025 | 65 |
 | [中华人民共和国国防教育法](./defense-edu-2024.md) | defense-edu-2024 | 42 |
+| [中华人民共和国国防动员法](./defense-mobil-2026.md) | defense-mobil-2026 | 82 |
 | [中华人民共和国农业法](./agriculture-2013.md) | agriculture-2013 | 99 |
 | [中华人民共和国村民委员会组织法](./village-committee-2025.md) | village-committee-2025 | 50 |
 | [中华人民共和国城市居民委员会组织法](./residents-committee-2025.md) | residents-committee-2025 | 50 |
@@ -113,6 +114,6 @@
 | [中华人民共和国行政复议法](./admin-review-2023.md) | admin-review-2023 | 90 |
 | [中华人民共和国行政诉讼法](./admin-litigation-2017.md) | admin-litigation-2017 | 103 |
 
-共 108 部 10669 条。法条文本不受著作权保护（著作权法第五条）；
+共 109 部 10751 条。法条文本不受著作权保护（著作权法第五条）；
 整理成果以 CC0 1.0 Universal 发布（决策 19，2026-09-30；全文见仓库 LICENSES/DATA-CC0-1.0.txt）。
 引用请以官方公报为准。本导出不构成法律意见。
