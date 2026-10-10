@@ -60,10 +60,10 @@ node scripts/qa_narrow.mjs --strict
 if errorlevel 1 set FAILED=1
 
 echo [10/10] qa evidence receipt (aggregated gates; strict: missing evidence = not passed) ...
-cd server
+cd ..\server
 .venv\Scripts\python.exe scripts\qa_receipt.py --strict
 if errorlevel 1 set FAILED=1
-cd ..
+cd ..\..
 
 :summary
 cd /d %~dp0
