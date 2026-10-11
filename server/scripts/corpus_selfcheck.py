@@ -254,7 +254,7 @@ def main() -> int:
 
     # 术语卡校验（R248）：每张卡的 art 引用必须指向语料中真实存在的条文
     # （R238 首跑抓出帮信罪卡误指 287之一——语义正确性需人工，存在性由本门机器核验）。
-    terms_path = ROOT.parent / "web" / "src" / "data" / "terms.json"
+    terms_path = ROOT.parent / "web" / "public" / "data" / "terms.json"
     terms_report = {"cards": 0, "refs_checked": 0}
     if terms_path.is_file():
         terms = json.loads(terms_path.read_text(encoding="utf-8"))

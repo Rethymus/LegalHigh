@@ -194,3 +194,69 @@ def test_tools_call_resolve_citation():
     miss = json.loads(by_id[3]["result"]["content"][0]["text"])
     assert miss["resolved"] is False and miss["note"]
     assert by_id[3]["result"]["isError"] is False  # 诚实未命中不是工具错误
+
+
+def _roundtrip_raw(lines: list[str]):
+    """按原始行发送（不经 json.dumps）——测非对象 JSON 与畸形消息。"""
+    proc = subprocess.run(
+        [sys.executable, str(SERVER)],
+        input="\n".join(lines) + "\n",
+        capture_output=True, text=True, timeout=120,
+    )
+    return proc, [json.loads(l) for l in proc.stdout.split("\n") if l.strip()]
+
+
+def test_non_object_json_does_not_kill_server():
+    """R508 MCP 健壮性：合法 JSON 但非对象（数组/字符串）此前 AttributeError 击穿
+    stdio 主循环（单条 `[1,2,3]` 即崩溃，实测复现）——现返回 -32600 且服务存活。"""
+    proc, out = _roundtrip_raw([
+        "[1,2,3]",
+        '"plain string"',
+        "42",
+        json.dumps({"jsonrpc": "2.0", "id": 7, "method": "tools/list"}),
+    ])
+    assert proc.returncode == 0, f"服务器被击穿：stderr={proc.stderr[:300]}"
+    codes = [m.get("error", {}).get("code") for m in out if m.get("id") is None]
+    assert codes.count(-32600) == 3, f"三条非对象消息应各返回 -32600：{out}"
+    alive = [m for m in out if m.get("id") == 7][0]
+    assert "tools" in alive["result"]  # 坏消息之后服务仍在应答
+
+
+def test_bad_params_shape_is_jsonrpc_error_not_crash():
+    """params/arguments 非对象 → -32602，服务存活。"""
+    proc, out = _roundtrip_raw([
+        json.dumps({"jsonrpc": "2.0", "id": 1, "method": "tools/call", "params": [1, 2]}),
+        json.dumps({"jsonrpc": "2.0", "id": 2, "method": "tools/call",
+                    "params": {"name": "list_laws", "arguments": "not-an-object"}}),
+        json.dumps({"jsonrpc": "2.0", "id": 3, "method": "tools/list"}),
+    ])
+    assert proc.returncode == 0, proc.stderr[:200]
+    by_id = {m.get("id"): m for m in out}
+    assert by_id[1]["error"]["code"] == -32602
+    assert by_id[2]["error"]["code"] == -32602
+    assert "tools" in by_id[3]["result"]
+
+
+def test_unexpected_tool_exception_returns_internal_error():
+    """dispatch 未预期异常 → JSON-RPC -32603 信封（进程内直接调 handle 验证
+    catch-all 路径；stdio 层由前两测的存活断言覆盖）。"""
+    import mcp_server as M
+
+    resp = M.handle({"jsonrpc": "2.0", "id": 5, "method": "tools/call",
+                     "params": {"name": "search_articles",
+                                "arguments": {"query": None, "top_k": "3"}}})
+    # search_articles(query=None) 走 ValueError 分支或 catch-all，都不得抛出
+    assert resp is not None and (resp.get("result") is not None or resp.get("error") is not None)
+
+    def _boom(*a, **k):
+        raise RuntimeError("boom")
+
+    orig = M.dispatch
+    M.dispatch = _boom
+    try:
+        resp = M.handle({"jsonrpc": "2.0", "id": 6, "method": "tools/call",
+                         "params": {"name": "search_articles", "arguments": {"query": "x"}}})
+    finally:
+        M.dispatch = orig
+    assert resp["error"]["code"] == -32603
+    assert "RuntimeError" in resp["error"]["message"]

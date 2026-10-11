@@ -86,7 +86,7 @@ def test_terms_refs_all_in_corpus():
 
     from app.corpus import get_corpus
 
-    terms_path = SERVER.parent / "web" / "src" / "data" / "terms.json"
+    terms_path = SERVER.parent / "web" / "public" / "data" / "terms.json"
     assert terms_path.is_file()
     terms = json.loads(terms_path.read_text(encoding="utf-8"))
     assert len(terms) >= 60, "术语卡数量回落"

@@ -96,7 +96,9 @@ const ROUTES = [
   { name: '07b-law-detail-professional-evidence', path: '/laws/pipl-2021?art=13', fullPage: true, identity: pageHeader('《个人信息保护法》第十三条'), afterText: '校准正确率：暂无' },
   { name: '08-laws-browse', path: '/laws', identity: pageHeader('法规条文') },
   { name: '09-case-search', path: '/cases', fullPage: true, identity: pageHeader('案例检索'), steps: [
-    { t: 'eval', expr: `(() => { const links=[...document.querySelectorAll('a[href*="/cases/guidance-"]')]; const uniq=new Set(links.map(x=>x.getAttribute('href'))); return uniq.size >= 8 ? 'case-refs-ok' : 'case-refs-short:'+uniq.size })()` },
+    // R508：案例列表为异步渲染，单发求值在慢轮会撞在空列表上（全量巡检实录的
+    // 时序假阳性）——步骤内部轮询 8s，awaitPromise 由 runner 统一开启。
+    { t: 'eval', expr: `new Promise(res => { const t0 = Date.now(); const iv = setInterval(() => { const links=[...document.querySelectorAll('a[href*="/cases/guidance-"]')]; const uniq=new Set(links.map(x=>x.getAttribute('href'))); if (uniq.size >= 8) { clearInterval(iv); res('case-refs-ok') } else if (Date.now() - t0 > 8000) { clearInterval(iv); res('case-refs-short:'+uniq.size) } }, 250) })` },
   ] },
   { name: '10-case-detail-cn', path: '/cases/guidance-24', fullPage: true, identity: { selector: '.case-t', text: '荣宝英诉王阳' } },
   { name: '10b-case-detail-defense', path: '/cases/guidance-93', fullPage: true, identity: { selector: '.case-t', text: '于欢故意伤害案' } },
@@ -428,7 +430,7 @@ async function main() {
       let sn = 0
       for (const s of route.steps ?? []) {
         if (s.t === 'eval') {
-          const r = await cdp.send('Runtime.evaluate', { expression: s.expr, returnByValue: true })
+          const r = await cdp.send('Runtime.evaluate', { expression: s.expr, returnByValue: true, awaitPromise: true })
           // R273：探针表达式在页面内抛异常时 value 为 undefined，此前整步被静默
           // 跳过 = 假绿。异常必须按交互失败计。
           if (r.exceptionDetails) {

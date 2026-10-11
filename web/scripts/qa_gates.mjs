@@ -148,14 +148,14 @@ if (!existsSync(distDir)) {
   const allCssGz = cssFiles.reduce((s, f) => s + gz(f.buf), 0)
   const lawsPath = resolve(distDir, 'data/laws.json')
   const lawsBytes = existsSync(lawsPath) ? statSync(lawsPath).size : 0
-  const BUDGET = { entryJsGz: 120 * 1024, allJsGz: 240 * 1024, allCssGz: 25 * 1024, lawsJson: 5 * 1024 * 1024 }  // 2026-09-21 修订 200→220KB（R263）；2026-10-02 修订 220→240KB（R478）：四问审阅面板+支付令模板+研究 CLI 等功能增长（全 JS gzip 实测 218KB 逼近 220KB 预算），按既定预算修订制度执行、依据与幅度记 CHANGELOG，非静默放宽；入口 JS/CSS 预算不变
+  const BUDGET = { entryJsGz: 120 * 1024, allJsGz: 240 * 1024, allCssGz: 25 * 1024, lawsJson: 6.5 * 1024 * 1024 }  // 2026-09-21 修订 200→220KB（R263）；2026-10-02 修订 220→240KB（R478）：四问审阅面板+支付令模板+研究 CLI 等功能增长（全 JS gzip 实测 218KB 逼近 220KB 预算），按既定预算修订制度执行、依据与幅度记 CHANGELOG，非静默放宽；入口 JS/CSS 预算不变；2026-10-11 修订 lawsJson 5→6.5MB（R508 主动规划，非被动跟随）：109 部/4.63MB/部均 43KB，旧余量仅容 8 部而语料扩张是 S2 持续路线——投影 130 部≈5.5MB/140 部≈6.0MB，取 6.5MB 留 15% 余量；同轮 terms.json 外置静态资产使全 JS 226→209KB（JS 预算 240KB 不变，余量 11→31KB）
   const over = []
   if (entryGz > BUDGET.entryJsGz) over.push(`入口 JS gzip ${(entryGz / 1024).toFixed(0)}KB > 预算 120KB`)
   if (allJsGz > BUDGET.allJsGz) over.push(`全部 JS gzip ${(allJsGz / 1024).toFixed(0)}KB > 预算 240KB`)
 
   if (allCssGz > BUDGET.allCssGz) over.push(`全部 CSS gzip ${(allCssGz / 1024).toFixed(0)}KB > 预算 25KB`)
   if (!lawsBytes) over.push('dist/data/laws.json 缺失（语料导出链路断裂）')
-  else if (lawsBytes > BUDGET.lawsJson) over.push(`laws.json ${(lawsBytes / 1048576).toFixed(2)}MB > 预算 5.0MB`)
+  else if (lawsBytes > BUDGET.lawsJson) over.push(`laws.json ${(lawsBytes / 1048576).toFixed(2)}MB > 预算 6.5MB`)
   checks++
   if (over.length) fail.push(`[性能预算] ${over.join('；')}`)
   else {
@@ -176,7 +176,7 @@ if (!existsSync(distDir)) {
 
 // ---- gate 7：术语卡分类全渲染（R271：CATS 固定清单漏 4 类 122 张卡的漂移钉住）----
 // terms.json 实际出现的 cat 全集必须 ⊆ Terms.tsx CATS 渲染清单，否则页面静默吞卡。
-const termsData = JSON.parse(readFileSync(resolve(root, 'web/src/data/terms.json'), 'utf-8'))
+const termsData = JSON.parse(readFileSync(resolve(root, 'web/public/data/terms.json'), 'utf-8'))
 const termsTsx = readFileSync(resolve(root, 'web/src/components/pages/Terms.tsx'), 'utf-8')
 const catsBlock = termsTsx.match(/const CATS[\s\S]*?^\]/m)
 const dataCats = [...new Set(termsData.map((t) => t.cat))]

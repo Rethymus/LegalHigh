@@ -1,24 +1,35 @@
-import { useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import TERMS from '../data/terms.json'
+import { loadTerms, type TermCard } from '../data/terms'
 
 /* 搜索建议（R310）：用户输入时实时匹配术语卡（term/explain 词面），
    引导从口语表述（「别人打我我还手」）到法条词面（「正当防卫」）。
    零新依赖——纯 JS 子串匹配 215 条已验证术语卡。
-   术语卡的 refs 指向语料内真实条文（R248 机器门钉住）。 */
+   术语卡的 refs 指向语料内真实条文（R248 机器门钉住）。
+   R508：术语数据为静态资产异步加载——模块加载即预热，用户开始输入前
+   多半已就绪；未就绪时建议列表暂不出现（优雅降级，不阻塞输入）。 */
 
-interface TermT { term: string; cat: string; explain: string; refs: { law_id: string; art: string; label: string }[] }
+type TermT = TermCard
+
+// 模块级预热：SearchHome 路由 chunk 加载时立即取数（不等首键输入）
+void loadTerms().catch(() => { /* 失败静默——建议功能缺失不阻塞搜索本体 */ })
 
 export default function SearchSuggest({ query, onPick }: { query: string; onPick?: (q: string) => void }) {
   const nav = useNavigate()
   const [activeIdx, setActiveIdx] = useState(-1)
   const listRef = useRef<HTMLDivElement>(null)
+  const [terms, setTerms] = useState<TermT[] | null>(null)
+  useEffect(() => {
+    let alive = true
+    loadTerms().then((d) => { if (alive) setTerms(d) }, () => { /* 保持无建议态 */ })
+    return () => { alive = false }
+  }, [])
 
   const suggestions = useMemo(() => {
     const q = query.trim().toLowerCase()
-    if (q.length < 1) return []
+    if (q.length < 1 || !terms) return []
     const scored: { t: TermT; score: number }[] = []
-    for (const t of TERMS as TermT[]) {
+    for (const t of terms) {
       const term = t.term.toLowerCase()
       const explain = t.explain.toLowerCase()
       let score = 0
@@ -27,7 +38,7 @@ export default function SearchSuggest({ query, onPick }: { query: string; onPick
       if (score > 0) scored.push({ t, score })
     }
     return scored.sort((a, b) => b.score - a.score).slice(0, 6).map((x) => x.t)
-  }, [query])
+  }, [query, terms])
 
   if (!suggestions.length) return null
 

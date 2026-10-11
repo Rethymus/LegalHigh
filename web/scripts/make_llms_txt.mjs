@@ -12,7 +12,7 @@ const manifestPath0 = resolve(root, 'server/data/laws/manifest.json')
 const manifest0 = JSON.parse(readFileSync(manifestPath0, 'utf-8'))
 const buildDate = String(manifest0.built_at || manifest0.fetch_date || '').slice(0, 10)
 
-const terms = JSON.parse(readFileSync(resolve(root, 'web/src/data/terms.json'), 'utf-8'))
+const terms = JSON.parse(readFileSync(resolve(root, 'web/public/data/terms.json'), 'utf-8'))
 const manifestPath = resolve(root, 'server/data/laws/manifest.json')
 let corpusLine = '受控语料规模见质量透明度页（实时派生）'
 let lawCount = null // laws-md 导出同源（export_markdown.py 同一 manifest），派生数字纪律

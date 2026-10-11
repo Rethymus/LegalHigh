@@ -1,32 +1,15 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { PageHeader } from '../ui'
+import { PageHeader, SkeletonLines } from '../ui'
 import { Icon } from '../icons'
 import { api } from '../../lib/api'
-import TERMS from '../../data/terms.json'
+import { loadTerms, type TermCard } from '../../data/terms'
 
 /* 术语卡（粉饰清单②，v5-S2 2026-09-14）：高频法律术语的通俗解释，全部为项目原创
    内容并绑定受控语料内的真实条文（点击可核对原文）——与解读库双轨纪律一致的诚实形态：
    通俗解释不是法律意见。所有条号引用经检索/金标验证存在且现行有效。
-   数据单一来源：src/data/terms.json（R91 抽出）——llms.txt 生成器与页面共用同一份。 */
-
-interface TermCard {
-  term: string
-  explain: string
-  refs: { law_id: string; art: string; label: string }[]
-  cat:
-    | '民事'
-    | '劳动'
-    | '刑事'
-    | '程序'
-    | '网络与数据'
-    | '治安'
-    | '宪法'
-    | '行政'
-    | '经济法'
-    | '社会法'
-    | '知识产权'
-}
+   数据单一来源：public/data/terms.json 运行时加载（R508 从 JS 打包外置为静态资产，
+   与 laws.json/xrefs.json 同纪律）——llms.txt 生成器与 gate7 读同一路径。 */
 
 /* 分类清单必须与 terms.json 实际出现的 cat 全集对齐（R271 教训：扩张批次引入
    行政/经济法/社会法/知识产权 四类共 122 张卡未同步进此列表，页面静默吞掉）——
@@ -51,6 +34,17 @@ export default function Terms() {
   useEffect(() => {
     let alive = true
     api.citatorGraph().then((g) => { if (alive) setGraph(g) }, () => { /* 图谱不可用时不显示案例徽章 */ })
+    return () => { alive = false }
+  }, [])
+  // R508：术语数据运行时加载（静态资产）；失败显示重试横幅而非空白
+  const [terms, setTerms] = useState<TermCard[] | null>(null)
+  const [loadError, setLoadError] = useState<string | null>(null)
+  useEffect(() => {
+    let alive = true
+    loadTerms().then(
+      (d) => { if (alive) setTerms(d) },
+      (e) => { if (alive) setLoadError(e instanceof Error ? e.message : String(e)) },
+    )
     return () => { alive = false }
   }, [])
 
@@ -88,8 +82,15 @@ export default function Terms() {
           术语解释仅作普法参考，具体案件的适用请结合完整材料咨询执业律师或拨打 12348 法律援助热线。
         </span>
       </div>
-      {CATS.map((cat) => {
-        const list = TERMS.filter((t) => t.cat === cat)
+      {loadError && (
+        <div className="banner banner-danger mb-16">
+          <Icon name="alert" size={14} />
+          <span className="banner-tx">术语卡数据加载失败：{loadError}。请检查网络后刷新重试。</span>
+        </div>
+      )}
+      {!terms && !loadError && <div className="card card-pad"><SkeletonLines n={6} /></div>}
+      {terms && CATS.map((cat) => {
+        const list = terms.filter((t) => t.cat === cat)
         if (!list.length) return null
         return (
           <section key={cat} className="mb-20">
@@ -121,7 +122,7 @@ export default function Terms() {
         )
       })}
       <div className="tiny" style={{ paddingBottom: 24 }}>
-        以上共 {TERMS.length} 张术语卡将随语料扩张持续增补；术语解释为项目原创普法内容并逐条绑定语料条文，未采用任何 AI 未审核生成。{graph ? '「N 案例引用」徽章数据来自案例-法条引用图谱（已核实案例精确匹配）。' : ''}
+        以上共 {terms?.length ?? '…'} 张术语卡将随语料扩张持续增补；术语解释为项目原创普法内容并逐条绑定语料条文，未采用任何 AI 未审核生成。{graph ? '「N 案例引用」徽章数据来自案例-法条引用图谱（已核实案例精确匹配）。' : ''}
       </div>
     </div>
   )

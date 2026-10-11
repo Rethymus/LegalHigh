@@ -1280,7 +1280,13 @@ async def mcp_http_endpoint(request: Request):
     except Exception:
         return JSONResponse({"jsonrpc": "2.0", "id": None,
                              "error": {"code": -32700, "message": "parse error"}}, status_code=400)
-    resp = handle(msg)
+    # handle 已全面化（R508）：非对象消息 → -32600、未预期工具异常 → -32603，
+    # 不会以 500 击穿端点；此处兜底仅防响应序列化类意外。
+    try:
+        resp = handle(msg)
+    except Exception:  # noqa: BLE001 JSON-RPC 信封优先于裸 500
+        resp = {"jsonrpc": "2.0", "id": None,
+                "error": {"code": -32603, "message": "internal error"}}
     if resp is None:
         return JSONResponse({}, status_code=202)  # notification
     return JSONResponse(resp)

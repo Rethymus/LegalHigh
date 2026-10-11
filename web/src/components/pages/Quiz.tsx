@@ -1,20 +1,16 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link, useOutletContext } from 'react-router-dom'
 import { Icon } from '../icons'
 import { PageHeader } from '../ui'
-import TERMS from '../../data/terms.json'
+import { loadTerms, type TermCard } from '../../data/terms'
 import type { AppOutletContext } from '../AppShell'
 
 /* 法律知识测评（R339）：基于 215 张已验证术语卡生成选择题——
    纯客户端、零 AI、全确定性。每题从术语卡池随机抽 1 张正确卡 + 3 张同分类干扰卡，
-   答题后即时反馈 + 法条深链。数据 100% 来自 R248 机器门核验的术语卡。 */
+   答题后即时反馈 + 法条深链。数据 100% 来自 R248 机器门核验的术语卡。
+   R508：术语数据运行时加载（public/data/terms.json 静态资产）。 */
 
-interface TermT {
-  term: string
-  cat: string
-  explain: string
-  refs: { law_id: string; art: string; label: string }[]
-}
+type TermT = TermCard
 
 /** 确定性伪随机（每次进入页面同一序列号生成同一题目集，可复现） */
 function mulberry32(seed: number) {
@@ -68,10 +64,17 @@ export default function Quiz() {
   const [current, setCurrent] = useState(0)
   const [answers, setAnswers] = useState<number[]>([])
   const [selected, setSelected] = useState<number | null>(null)
+  // R508：术语卡静态资产异步加载；未就绪时开始按钮禁用（诚实禁用态而非假交互）
+  const [terms, setTerms] = useState<TermT[] | null>(null)
+  useEffect(() => {
+    let alive = true
+    loadTerms().then((d) => { if (alive) setTerms(d) }, () => { /* 失败保持禁用态 */ })
+    return () => { alive = false }
+  }, [])
 
   const questions = useMemo(
-    () => buildQuiz(TERMS as TermT[], QUIZ_COUNT, seed),
-    [seed],
+    () => (terms ? buildQuiz(terms, QUIZ_COUNT, seed) : []),
+    [terms, seed],
   )
 
   const score = useMemo(
@@ -102,10 +105,15 @@ export default function Quiz() {
           <Icon name="gradcap" size={32} className="muted" />
           <h2 style={{ fontSize: 18, marginTop: 12 }}>准备好了吗？</h2>
           <p className="tiny muted mt-8">
-            {QUIZ_COUNT} 道选择题 · 基于 {(TERMS as TermT[]).length} 张已验证术语卡 · 每题附法条原文链接
+            {QUIZ_COUNT} 道选择题 · 基于 {terms ? terms.length : '…'} 张已验证术语卡 · 每题附法条原文链接
           </p>
-          <button className="btn btn-primary btn-lg mt-16" onClick={() => setStarted(true)}>
-            <Icon name="sparkle" size={14} /> 开始测评
+          <button
+            className="btn btn-primary btn-lg mt-16"
+            onClick={() => terms && setStarted(true)}
+            disabled={!terms}
+            title={terms ? undefined : '术语卡数据加载中…'}
+          >
+            <Icon name="sparkle" size={14} /> {terms ? '开始测评' : '加载中…'}
           </button>
         </div>
       )}
@@ -200,7 +208,7 @@ export default function Quiz() {
             <Link to="/terms" className="btn btn-secondary"><Icon name="bulb" size={13} />浏览术语卡</Link>
           </div>
           <div className="tiny muted mt-16">
-            测评题目从 {(TERMS as TermT[]).length} 张已验证术语卡中随机生成，每张卡的解释均绑定受控语料内真实条文。
+            测评题目从 {terms ? terms.length : '…'} 张已验证术语卡中随机生成，每张卡的解释均绑定受控语料内真实条文。
             {' '}本测评不构成法律意见；具体案件请咨询执业律师或拨打 12348。
           </div>
         </div>

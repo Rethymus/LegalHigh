@@ -7,8 +7,8 @@
  *  - /data/laws.json 等公开数据：先回缓存再后台更新（stale-while-revalidate）。
  * 缓存以版本号命名（CACHE 常量），activate 时清理旧版本——语料更新后 SW 字节变化即触发全量刷新。
  */
-const CACHE = 'lh-shell-v3'; // v3（2026-10-11）：xrefs.json 修正 20 条错误引用目标 + laws.json 国防动员法；数据正确性修复须立即生效，不等 SWR 二次访问
-const PRECACHE = ['/data/laws.json', '/data/xrefs.json'];
+const CACHE = 'lh-shell-v4'; // v4（2026-10-11 R508）：terms.json 外置静态资产入预缓存；v3（2026-10-11）：xrefs.json 修正 20 条错误引用目标 + laws.json 国防动员法；数据正确性修复须立即生效，不等 SWR 二次访问
+const PRECACHE = ['/data/laws.json', '/data/xrefs.json', '/data/terms.json']; // R508：terms 外置静态资产入离线预缓存
 
 self.addEventListener('install', (event) => {
   event.waitUntil(

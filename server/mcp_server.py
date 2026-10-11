@@ -454,6 +454,10 @@ def dispatch(name: str, args: dict):
 
 
 def handle(msg: dict) -> dict | None:
+    # 请求全面化（R508 MCP 健壮性审计）：合法 JSON 但非对象（数组/字符串/数字）
+    # 此前直接 AttributeError 击穿 stdio 主循环 / HTTP 500——单条坏消息不得杀服务器。
+    if not isinstance(msg, dict):
+        return _error(None, -32600, "invalid request: message must be a JSON object")
     method = msg.get("method", "")
     msg_id = msg.get("id")
     is_request = msg_id is not None
@@ -470,8 +474,12 @@ def handle(msg: dict) -> dict | None:
         return _result(msg_id, {"tools": TOOLS})
     if method == "tools/call":
         params = msg.get("params") or {}
+        if not isinstance(params, dict):
+            return _error(msg_id, -32602, "invalid params: must be an object")
         name = params.get("name", "")
         args = params.get("arguments") or {}
+        if not isinstance(args, dict):
+            return _error(msg_id, -32602, "invalid params: arguments must be an object")
         try:
             data = dispatch(name, args)
             text = json.dumps(data, ensure_ascii=False, indent=1)
@@ -489,6 +497,8 @@ def handle(msg: dict) -> dict | None:
                 "content": [{"type": "text", "text": f"工具执行失败: {e}"}],
                 "isError": True,
             })
+        except Exception as e:  # noqa: BLE001 未预期异常按 JSON-RPC -32603 返回，不击穿传输
+            return _error(msg_id, -32603, f"internal error: {type(e).__name__}")
     if is_request:
         return _error(msg_id, -32601, f"method not found: {method}")
     return None
@@ -520,7 +530,6 @@ def main():
         if resp is not None:
             sys.stdout.write(json.dumps(resp, ensure_ascii=False) + "\n")
             sys.stdout.flush()
-
 
 if __name__ == "__main__":
     main()

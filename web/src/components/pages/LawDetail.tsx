@@ -9,7 +9,7 @@ import { AIContentBadge, AIWarning, CitationChip, OfficialArticle, SourceBadge }
 import XRefBlock from '../XRefBlock'
 import { api, isFav as isFavKey, toggleFav, type ArticleExplain, type ArticleLink, type LawAnalysisContext } from '../../lib/api'
 import type { AppOutletContext } from '../AppShell'
-import TERMS from '../../data/terms.json'
+import { loadTerms, type TermCard as TermCardT } from '../../data/terms'
 
 const TABS = [
   { key: 'rel-js', label: '关联司法解释' },
@@ -162,10 +162,17 @@ export default function LawDetail() {
   }, [lawId, articleNo])
   // 当前条号的已审核人工解读（决策项4：无则保持 AI 通用指引）
   const explain = article ? explains[String(article.no)] : undefined
-  // 本法关联术语卡反查（v7 粉饰：打通术语卡↔法条详情双向导航）
+  // 本法关联术语卡反查（v7 粉饰：打通术语卡↔法条详情双向导航；
+  // R508：术语数据静态资产异步加载——未就绪时区块暂不出现，不阻塞法条本体）
+  const [allTerms, setAllTerms] = useState<TermCardT[] | null>(null)
+  useEffect(() => {
+    let alive = true
+    loadTerms().then((d) => { if (alive) setAllTerms(d) }, () => { /* 反查缺失可容忍 */ })
+    return () => { alive = false }
+  }, [])
   const relatedTerms = useMemo(
-    () => TERMS.filter((t) => t.refs.some((r) => r.law_id === lawId)),
-    [lawId],
+    () => (allTerms ?? []).filter((t) => t.refs.some((r) => r.law_id === lawId)),
+    [allTerms, lawId],
   )
   const [favState, setFavState] = useState(false)
   useEffect(() => { setFavState(lawId ? isFavKey(`law:${lawId}#${no}`) : false) }, [lawId, no])
