@@ -110,7 +110,10 @@ export default function CaseCompare() {
 
   useEffect(() => {
     let alive = true
-    api.listCases('', '300').then((r) => { if (alive) setCases(r.cases) }, () => { if (alive) setCases([]) })
+    // R511 修复：此前误传 '300' 作第二参——listCases 的第二参是 level（案例等级）
+    // 而非 top_k，'300' 匹配不到任何等级 → 服务端全滤空 → 下拉自 R341 起从未有
+    // 选项（走查实测 6.5s 后 0 有效 option）。空查询返回全部已核实案例。
+    api.listCases('').then((r) => { if (alive) setCases(r.cases) }, () => { if (alive) setCases([]) })
     return () => { alive = false }
   }, [])
 

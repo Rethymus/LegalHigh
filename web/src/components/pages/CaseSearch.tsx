@@ -67,8 +67,11 @@ function CaseRow({ c }: { c: CaseRecord }) {
 
 export default function CaseSearch() {
   const [tab, setTab] = useState('all')
-  const [kw, setKw] = useState('')
-  const [q, setQ] = useState('')
+  // R511 走查修复：/cases?q=xxx 深链此前被无视（useState('') 不读 URL）——荒谬词与
+  // 真实词深链都落到全量列表；与 R510 /search?q= 同构。预填 kw 与 q（q 直接驱动
+  // server 检索），深链即得结果。
+  const [kw, setKw] = useState(() => new URLSearchParams(window.location.search).get('q') ?? '')
+  const [q, setQ] = useState(() => new URLSearchParams(window.location.search).get('q') ?? '')
   // 检索偏向（R150）：类似案情=纯 Facts↔Facts 比对；裁判理由=Holding/Result 主导——
   // 与后端 /api/cases bias 参数一一对应（R146 字段加权检索的 UI 面）
   const [bias, setBias] = useState<'balanced' | 'facts' | 'reasoning'>('balanced')
