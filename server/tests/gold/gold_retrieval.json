@@ -5993,6 +5993,41 @@
     }
    ],
    "note": "国防勤务定义"
+  },
+  {
+   "id": "gold-high-altitude-throw",
+   "question": "我在小区被高空抛物砸伤，找不到扔东西的人，该依据什么法律维权",
+   "expect": [
+    {
+     "law_id": "civl-2020",
+     "no": 1254
+    },
+    {
+     "law_id": "cl-2023",
+     "no": 291,
+     "sub": "之二"
+    }
+   ],
+   "note": "R512 needs 抽检实录（badcase 金标先行）：无域词覆盖时 top1 落消防法#26 不相关。"
+  },
+  {
+   "id": "gold-noise-neighbor",
+   "question": "邻居每天早上装修噪音很大扰民，能依据哪些法律条文",
+   "expect": [
+    {
+     "law_id": "civl-2020",
+     "no": 294
+    },
+    {
+     "law_id": "psm-2025",
+     "no": 88
+    },
+    {
+     "law_id": "civl-2020",
+     "no": 288
+    }
+   ],
+   "note": "R512 needs 抽检实录（badcase 金标先行）：域词缺失致 ['邻居/居家/家装'] bigram 噪声展示 + top1 消防法#26。"
   }
  ]
 }

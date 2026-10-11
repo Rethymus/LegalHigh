@@ -30,6 +30,11 @@ TOPIC_TERMS: list[tuple[str, list[str]]] = [
     (r"格式条款|霸王条款", ["格式条款"]),
     (r"竞业|竞业限制", ["竞业限制"]),
     (r"歧视|区别对待|不公正对待", ["平等就业"]),
+    # R512 needs 抽检实录补覆盖（badcase 金标先行 gold-noise-neighbor/gold-high-altitude-throw）：
+    # 「装修噪音扰民」此前无域词——展示层亮出 ['邻居/居家/家装'] bigram 噪声、取证 top5 全不相关
+    # （消防法#26 等 miss）；「高空抛物」检索已命中但展示同为 bigram 噪声（['在小/小区/区被']）。
+    (r"高空抛物|高空坠物|坠物|抛掷|砸伤|砸到|楼上扔", ["高空抛物", "侵权责任", "过错责任"]),
+    (r"噪音|噪声|扰民|太吵|吵到|装修", ["相邻关系", "噪声", "不动产权利"]),
 ]
 
 
@@ -77,6 +82,17 @@ CONTROLLED_TOPICS = [
             {"id": "termination-notice", "query": "额外支付劳动者一个月工资 提前三十日"},
             {"id": "termination-rules", "query": "严重违反用人单位的规章制度"},
             {"id": "termination-probation", "when": r"试用期", "query": "试用期 用人单位不得解除劳动合同"},
+        ],
+    },
+    {
+        # R512 needs 抽检实录（gold-noise-neighbor miss 驱动）：「装修噪音扰民」类问句
+        # 原句 BM25 top5 全不相关（消防法#26/英烈法#18 等跨域噪声）。组查询=目标条文
+        # 规范词面（组内 #1 实测：民法典#294 / 治安法#88），主题组只提供查询纪律。
+        "id": "neighbor-noise",
+        "pattern": r"噪音|噪声|扰民|太吵|吵到|装修吵",
+        "groups": [
+            {"id": "noise-nuisance-civil", "query": "不动产 排放 噪声 违反国家规定 相邻"},
+            {"id": "noise-public-order", "query": "社会生活噪声 劝阻 调解"},
         ],
     },
 ]

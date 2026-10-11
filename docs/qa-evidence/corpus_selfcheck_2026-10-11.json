@@ -1019,7 +1019,7 @@
     "crpl-imp-2024": 1,
     "csl-2025": 2,
     "defense-edu-2024": 3,
-    "defense-mobil-2026": 1,
+    "defense-mobil-2026": 2,
     "disabled-2018": 3,
     "drug-admin-2019": 4,
     "dsl-2021": 1,
@@ -1096,7 +1096,7 @@
     "women-2022": 4,
     "work-safety-2021": 4
   },
-  "version_fulltexts": 193,
+  "version_fulltexts": 194,
   "flk_native_ids": 106,
   "cases": {
     "cases": 281,
