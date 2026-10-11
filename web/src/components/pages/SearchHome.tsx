@@ -13,7 +13,9 @@ export default function SearchHome() {
   const nav = useNavigate()
   const location = useLocation()
   const inputRef = useRef<HTMLInputElement>(null)
-  const [q, setQ] = useState('')
+  // R510 走查修复：/search?q=xxx 深链此前不预填（useState('') 无视 URL）——外部
+  // 链接/回链落地的用户面对空框需重打全句；预填并聚焦，直接可检索或改写。
+  const [q, setQ] = useState(() => new URLSearchParams(location.search).get('q') ?? '')
   const [scope, setScope] = useState('全部')
   const [showScope, setShowScope] = useState(false)
   // 时间视角 as_of（R383）：结果页已有该能力但首页不可发现——入口前置（可选，留空=现行视角）
@@ -27,6 +29,15 @@ export default function SearchHome() {
       window.history.replaceState({}, '')
     }
   }, [location.state])
+
+  // 深链预填时聚焦到句尾（一次性；直接回车即检索原句，或改写）
+  useEffect(() => {
+    if (new URLSearchParams(location.search).get('q')) {
+      const el = inputRef.current
+      if (el) { el.focus(); el.setSelectionRange(el.value.length, el.value.length) }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <div className="page">

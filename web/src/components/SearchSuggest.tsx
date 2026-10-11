@@ -28,13 +28,22 @@ export default function SearchSuggest({ query, onPick }: { query: string; onPick
   const suggestions = useMemo(() => {
     const q = query.trim().toLowerCase()
     if (q.length < 1 || !terms) return []
+    // R510 修复：原实现 term.includes(整句问话) 方向反了——口语长句永远不是短术语的
+    // 子串，本组件宣称的「别人打我我还手→正当防卫」引导从未发生过（走查实录）。
+    // 三层匹配：整词前缀（100）/ 整词包含（80）/ 问句与解释的 bigram 重合（60，
+    // 口语词面桥接：问句任一连续二字段出现在解释里即得分，按重合数加权）。
+    const qGrams = new Set(Array.from({ length: Math.max(0, q.length - 1) }, (_, i) => q.slice(i, i + 2)))
     const scored: { t: TermT; score: number }[] = []
     for (const t of terms) {
       const term = t.term.toLowerCase()
       const explain = t.explain.toLowerCase()
       let score = 0
       if (term.includes(q)) score = term.startsWith(q) ? 100 : 80
-      else if (explain.includes(q)) score = 40
+      if (score === 0 && qGrams.size > 0) {
+        let overlap = 0
+        for (const g of qGrams) if (explain.includes(g)) overlap += 1
+        if (overlap >= 2) score = 40 + Math.min(overlap, 20) // ≥2 个二字重合才浮现，控噪
+      }
       if (score > 0) scored.push({ t, score })
     }
     return scored.sort((a, b) => b.score - a.score).slice(0, 6).map((x) => x.t)
