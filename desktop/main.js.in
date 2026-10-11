@@ -131,6 +131,10 @@ function createWindow(base) {
       allowRunningInsecureContent: false,
     },
   })
+  // R509 桌面壳审计：本应用不需要任何浏览器权限（无摄像头/麦克风/通知/地理/
+  // 剪贴板读取等）——请求与查询两个钩子一律拒绝，渲染层拿不到权限面。
+  win.webContents.session.setPermissionRequestHandler((_wc, _permission, callback) => callback(false))
+  win.webContents.session.setPermissionCheckHandler((_wc, _permission) => false)
   win.webContents.setWindowOpenHandler(({ url }) => { openExternalHttp(url); return { action: 'deny' } })
   win.webContents.on('will-navigate', (event, url) => {
     let isLocal = false
