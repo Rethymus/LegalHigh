@@ -191,6 +191,18 @@ if (!catsBlock || hiddenCats.length || dupCats.length) {
   )
 } else console.log(`OK gate7 术语卡全渲染：${termsData.length} 张卡 / ${dataCats.length} 个分类全部在 CATS 渲染清单内`)
 
+// ---- gate 8：对外声明面一致性（R524：R523 llms.txt「八工具」漂移的制度化）----
+// 单一真源=mcp_server.py TOOLS；扫 README×3/llms.txt/SKILL.md 的工具清单 +
+// README 无日期语料主张 vs manifest。实现独立成 check_declared_surface.mjs（可单跑）。
+checks++
+try {
+  const { execFileSync } = await import('node:child_process')
+  const out = execFileSync(process.execPath, [resolve(root, 'web/scripts/check_declared_surface.mjs')], { encoding: 'utf-8' })
+  console.log('OK gate8 ' + out.trim())
+} catch (e) {
+  fail.push(`[声明面一致性] ${String(e.stdout || e.message).trim()}`)
+}
+
 if (fail.length) {
   console.error(`\nqa_gates：${fail.length}/${checks} 项失败`)
   for (const f of fail) console.error('\n' + f)
