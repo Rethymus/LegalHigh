@@ -349,7 +349,13 @@ def export_all() -> dict:
 
 
 def record_evidence(actor: str, entity_type: str, entity_id: str, action: str, snapshot: dict):
-    """Evidence Ledger（FLERF §23）：append-only，无更新/删除通道，不随缓存过期。"""
+    """Evidence Ledger（FLERF §23）：append-only，无更新/删除通道，不随缓存过期。
+
+    增长与轮转口径（2026-10-11 R528 评估）：**不设轮转/清理**——append-only 是
+    可追溯义务的载体，删除账本行即破坏设计目标。实测增长主体为本表快照
+    （均值约 8.4KB/行）；重度使用（20 动作/日）上界约 60MB/年，SQLite 十年
+    尺度无压力，本地磁盘成本可忽略。PIPL 删除用户数据时本表审计留痕保留
+    是合规要求而非缺陷。"""
     with _lock:
         conn = get_conn()
         conn.execute(
