@@ -85,6 +85,20 @@ CONTROLLED_TOPICS = [
         ],
     },
     {
+        # R532 金标 MISS 聚类（4 条同域：gold-livestream-platform / gold-expansion-072/
+        # 075/077 全部 MISS 聚成「电商平台义务」族）——组查询=目标条文规范词面
+        # （预验全部组内 top-1：ecom#10/#24/#29、crpl#14），主题组只提供查询纪律。
+        "id": "ecom-platform-duty",
+        "pattern": r"平台|直播间|电商|注销账号|市场主体登记|网店",
+        "groups": [
+            {"id": "ecom-registration", "query": "市场主体登记 个人销售自产农副产品 便民劳务 零星小额交易"},
+            {"id": "ecom-account-cancel", "query": "用户信息查询 更正 删除 注销 不得设置不合理条件"},
+            {"id": "ecom-platform-report", "query": "平台内 商品或者服务信息 违法 采取必要的处置措施 向主管部门报告"},
+            # when（R166 模式）：直播类问法优先供位，否则被 consumer 组轮转挤出 top5
+            {"id": "livestream-duty", "when": r"直播", "query": "直播营销平台 消费者权益保护制度 消费争议解决机制"},
+        ],
+    },
+    {
         # R512 needs 抽检实录（gold-noise-neighbor miss 驱动）：「装修噪音扰民」类问句
         # 原句 BM25 top5 全不相关（消防法#26/英烈法#18 等跨域噪声）。组查询=目标条文
         # 规范词面（组内 #1 实测：民法典#294 / 治安法#88），主题组只提供查询纪律。
