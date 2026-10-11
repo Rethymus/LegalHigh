@@ -432,6 +432,7 @@ svg { display: block; flex: none; }
    tone 类挂在 .main（AppShell），此处的语义变量自上而下继承 */
 .content {
   flex: 1; min-height: 0; overflow-y: auto; overflow-x: hidden;
+  scrollbar-gutter: stable;  /* R516：滚动容器是真滚动口（html 无页面级滚动条）——槽位恒定，右对齐元素不随滚动条出现横移 */
   overscroll-behavior: contain;  /* 滚动收链：面板/台面滚到底不再漏给外层（MDN overscroll-behavior） */
   scroll-padding-top: 132px;  /* WCAG 2.4.11（S2-T3）：滚动口顶部被 -66px 负 margin 拉入铬层之下（tb.bottom≈66），
      scrollIntoView 落点需补「下潜区 66 + 期望间隙 66」=132px，焦点元素才真正停在悬浮层下方 */

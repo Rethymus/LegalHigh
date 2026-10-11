@@ -125,6 +125,37 @@ export default function CaseSearch() {
         <div className="tiny">示例：指导案例24号、机动车交通事故、格式条款、最高人民法院。多词按服务端案例关键词规则匹配。</div>
       </div>
 
+
+      <div className="card mt-16">
+        <div style={{ padding: '0 16px' }}>
+          <Tabs tabs={TAB_DEFS} active={tab} onChange={setTab} right={<span className="tiny">{hits.length} 件当前结果</span>} />
+          <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 10, margin: '10px 0 4px' }}>
+            <Segmented
+              ariaLabel="案例检索偏向"
+              value={bias}
+              onChange={(k) => setBias(k as typeof bias)}
+              options={[
+                { key: 'balanced', label: '综合' },
+                { key: 'facts', label: '类似案情' },
+                { key: 'reasoning', label: '裁判理由' },
+              ]}
+            />
+            <span className="tiny">「类似案情」按案情事实比对；「裁判理由」按法院说理排序——同一关键词两种视角。</span>
+          </div>
+        </div>
+        <div className="card-b">
+          {error && <div className="banner banner-danger mb-12"><Icon name="alert" size={15} />{error}</div>}
+          {loading && <div className="card-pad"><SkeletonLines n={4} tall /></div>}
+          {!loading && hits.map((c) => <CaseRow key={c.id} c={c} />)}
+          {!loading && hits.length === 0 && (
+            tab === 'all'
+              ? <EmptyState icon="search" title="未找到匹配案例" desc="请更换关键词或清空检索词后重试。未核实记录不会展示。" />
+              : <EmptyState icon="search" title="该筛选下暂无案例" desc="切换来源层级或清除关键词。" />
+          )}
+        </div>
+      {/* R516 CLS 修复：谱系总览卡后置于列表之后——原在列表上方插入（281 徽章高卡）
+          把首屏内容推出视口（CLS 0.3054 实测）；后置后插入发生在视口外不计漂移，
+          且「先结果后总览」更贴合检索动线。 */}
       {!loading && cases.length > 0 && (
         <div className="card mt-16" style={{ padding: '12px 16px' }}>
           <div className="tiny bold mb-8">案例谱系 · {cases.length} 件一览（按案由派生分组）</div>
@@ -156,34 +187,6 @@ export default function CaseSearch() {
           </div>
         </div>
       )}
-
-      <div className="card mt-16">
-        <div style={{ padding: '0 16px' }}>
-          <Tabs tabs={TAB_DEFS} active={tab} onChange={setTab} right={<span className="tiny">{hits.length} 件当前结果</span>} />
-          <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 10, margin: '10px 0 4px' }}>
-            <Segmented
-              ariaLabel="案例检索偏向"
-              value={bias}
-              onChange={(k) => setBias(k as typeof bias)}
-              options={[
-                { key: 'balanced', label: '综合' },
-                { key: 'facts', label: '类似案情' },
-                { key: 'reasoning', label: '裁判理由' },
-              ]}
-            />
-            <span className="tiny">「类似案情」按案情事实比对；「裁判理由」按法院说理排序——同一关键词两种视角。</span>
-          </div>
-        </div>
-        <div className="card-b">
-          {error && <div className="banner banner-danger mb-12"><Icon name="alert" size={15} />{error}</div>}
-          {loading && <div className="card-pad"><SkeletonLines n={4} tall /></div>}
-          {!loading && hits.map((c) => <CaseRow key={c.id} c={c} />)}
-          {!loading && hits.length === 0 && (
-            tab === 'all'
-              ? <EmptyState icon="search" title="未找到匹配案例" desc="请更换关键词或清空检索词后重试。未核实记录不会展示。" />
-              : <EmptyState icon="search" title="该筛选下暂无案例" desc="切换来源层级或清除关键词。" />
-          )}
-        </div>
       </div>
     </div>
   )
