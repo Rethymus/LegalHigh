@@ -567,6 +567,7 @@ export const api = {
         redline: { pass: boolean; hits: string[] }
         citations: { pass: boolean; violations: string[]; note?: string }
         claim_support: { pass: boolean; verification_scope: string; violations: string[]; checks: { sentence: number; clause: number; lexical_overlap: number; has_citation: boolean; advisory: boolean; categorical_case_outcome: boolean; pass: boolean }[] }
+        quote_integrity?: { pass: boolean; violations: string[] }
       }
       evidence_context: { law_id: string; article_no: number; professional_sources: number; official_interpretations: number; evidence_coverage: LawAnalysisContext['evidence_coverage']; calibrated_accuracy: LawAnalysisContext['calibrated_accuracy'] }[]
       blocked: boolean; output_withheld: boolean; usage: Record<string, number>; disclaimer: string

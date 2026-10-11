@@ -270,6 +270,7 @@ function ConclusionDraft({ rid, question, cards, references }: {
       redline: { pass: boolean; hits: string[] }
       citations: { pass: boolean; violations: string[] }
       claim_support: { pass: boolean; verification_scope: string; violations: string[] }
+      quote_integrity?: { pass: boolean; violations: string[] }
     }
     evidence: { professional_sources: number; official_interpretations: number; evidence_coverage: { score: number }; calibrated_accuracy: { value: number | null; reason: string } }[]
     blocked: boolean; model: string; claim_retry?: boolean
@@ -399,6 +400,12 @@ function ConclusionDraft({ rid, question, cards, references }: {
                 <div className="banner banner-warn mt-8">
                   <Icon name="alert" size={14} />
                   <span className="banner-tx">逐句证据门未通过{aiDraft.claim_retry ? '（已自动重写一次仍未达标）' : ''}：{aiDraft.gates.claim_support.violations.join('、')}。这是词面支持检查，不是语义正确性证明；全文已扣留。</span>
+                </div>
+              )}
+              {aiDraft.gates.quote_integrity && !aiDraft.gates.quote_integrity.pass && (
+                <div className="banner banner-warn mt-8">
+                  <Icon name="alert" size={14} />
+                  <span className="banner-tx">引号逐字门未通过{aiDraft.claim_retry ? '（已自动重写一次仍未达标）' : ''}：{aiDraft.gates.quote_integrity.violations.join('、')}。紧邻法条引用的引号内容与条文原文不一致（转述冒充原文）；全文已扣留。</span>
                 </div>
               )}
               {aiDraft.evidence.length > 0 && (

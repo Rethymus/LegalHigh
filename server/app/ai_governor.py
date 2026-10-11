@@ -470,6 +470,61 @@ def gate_citations(text: str, allowed_refs: list[dict] | None) -> dict:
     return {"gate": "citations", "pass": not violations, "violations": violations[:10]}
 
 
+# 引号内容逐字核验（R506，lawgent「quotation round-trip」模式本地化）：
+# 紧邻《法名》第X条引用的引号内容（≥6 字符）必须是被引条文的去空白子串。
+# 引用不变量第三层——citations 核验指向、R168 数值核验抓数字编造、本门抓
+# 「定性转述冒充原文」。邻接=同句（引用与引号之间不得隔句读终点且 ≤120 字符）；
+# 远离婚引的引号不校验（不声称是法条原文，如免责声明）。
+_QUOTE_SPAN_RE = re.compile(r"[「“]([^「」“”]{6,120})[」”]")
+_QUOTE_ADJACENCY = 120  # 引号与其前最近法条引用的最大字符距离（约一句）
+_SENTENCE_END = "。！？；"
+
+
+def _strip_ws(s: str) -> str:
+    return re.sub(r"[\s\u3000]+", "", s or "")
+
+
+def gate_quote_integrity(text: str, allowed_refs: list[dict] | None) -> dict:
+    """引号内容与被引条文逐字一致性；无可核验依据集合时跳过（由 citations 门兜底）。"""
+    corpus = get_corpus()
+    canonical = []
+    for raw in allowed_refs or []:
+        citation, _ = _resolve_allowed_ref(raw, corpus)
+        if citation is not None:
+            canonical.append(citation)
+    if not canonical:
+        return {"gate": "quote_integrity", "pass": True, "violations": []}
+    allowed_texts = [_strip_ws(c.get("text") or "") for c in canonical]
+    by_pair = {(_title_key(c["law_title"]), int(c["article_no"])): _strip_ws(c.get("text") or "")
+               for c in canonical}
+
+    mentions = [(m.end(), _title_key(m.group(1)), _cn_to_int_safe(m.group(2)))
+                for m in CITE_RE.finditer(text or "")]
+    violations = []
+    for q in _QUOTE_SPAN_RE.finditer(text or ""):
+        # 找引号之前最近的一条法条引用（同句邻接：中间无句读终点）；没有则不校验
+        anchor = None
+        for end, tkey, no in reversed(mentions):
+            if end <= q.start() and q.start() - end <= _QUOTE_ADJACENCY:
+                between = (text or "")[end:q.start()]
+                if any(ch in _SENTENCE_END for ch in between):
+                    break  # 隔句的引用不构成该引号的出处声明
+                anchor = (tkey, no)
+                break
+        if anchor is None:
+            continue
+        quoted = _strip_ws(q.group(1))
+        attributed = by_pair.get(anchor)
+        # 首选被引条文本身；宽限到依据集合内任一条文（模型偶发张冠李戴到
+        # 同集合另一条文时，由 citations 门按指向拦截，本门只管「逐字」）
+        if attributed is not None and quoted in attributed:
+            continue
+        if any(quoted in t for t in allowed_texts):
+            continue
+        violations.append(f"引号内容与《…》第…条原文不一致：{q.group(1)[:30]}")
+    return {"gate": "quote_integrity", "pass": not violations, "violations": violations[:10]}
+
+
 def _zh_bigrams(text: str) -> set[str]:
     compact = re.sub(r"[^\u4e00-\u9fffA-Za-z0-9]", "", text or "")
     return {compact[i:i + 2] for i in range(max(0, len(compact) - 1))}
@@ -754,6 +809,7 @@ def chat(provider_id: str, model: str, messages: list[dict], *, api_key: str | N
         "redline": gate_redline(text),
         "citations": gate_citations(text, allowed_refs),
         "claim_support": gate_claim_support(text, evidence_contexts),
+        "quote_integrity": gate_quote_integrity(text, allowed_refs),
     }
     blocked = not all(g["pass"] for g in gates.values())
     # R417：claim_support 未过且红线/引用集两门均过（纯格式可修复，无安全信号）时，
@@ -802,6 +858,7 @@ def chat(provider_id: str, model: str, messages: list[dict], *, api_key: str | N
                 "redline": gate_redline(text2),
                 "citations": gate_citations(text2, allowed_refs),
                 "claim_support": gate_claim_support(text2, evidence_contexts),
+                "quote_integrity": gate_quote_integrity(text2, allowed_refs),
             }
             blocked = not all(g["pass"] for g in gates.values())
         claim_retry = True

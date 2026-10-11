@@ -83,6 +83,10 @@ def get_conn() -> sqlite3.Connection:
             DB_PATH.parent.mkdir(parents=True, exist_ok=True)
         _conn = sqlite3.connect(str(DB_PATH), check_same_thread=False)
         _conn.row_factory = sqlite3.Row
+        # 跨进程互斥保险（2026-10-11 并发审计）：单进程内共享连接已由 _lock 串行化，
+        # 但桌面 sidecar 与外部工具同时打开同一 db 文件时，默认 5s 超时前的
+        # SQLITE_BUSY 直接抛错——显式设同一口径并留注释锚点。
+        _conn.execute("PRAGMA busy_timeout=5000")
         _conn.executescript(SCHEMA)
         _conn.commit()
         try:
@@ -125,20 +129,23 @@ def audit(actor: str, entity_type: str, entity_id: str, action: str, payload: di
 
 def list_audit(entity_type: str | None = None, entity_id: str | None = None, limit: int = 200):
     """按实体检索审计日志；entity_id 支持前缀匹配（annotation 的 id 形如 review_id/finding_id）。"""
-    conn = get_conn()
-    q = "SELECT * FROM audit_log"
-    conds, args = [], []
-    if entity_type:
-        conds.append("entity_type=?")
-        args.append(entity_type)
-    if entity_id:
-        conds.append("(entity_id=? OR entity_id LIKE ?)")
-        args.extend([entity_id, entity_id + "/%"])
-    if conds:
-        q += " WHERE " + " AND ".join(conds)
-    q += " ORDER BY id DESC LIMIT ?"
-    args.append(limit)
-    return [dict(r) for r in conn.execute(q, args).fetchall()]
+    # 共享连接上的读同样持锁（2026-10-11 并发审计）：无锁读会与写线程的事务
+    # 交错（读到未提交状态/递归游标错误），且 get_conn 惰性初始化本身非线程安全。
+    with _lock:
+        conn = get_conn()
+        q = "SELECT * FROM audit_log"
+        conds, args = [], []
+        if entity_type:
+            conds.append("entity_type=?")
+            args.append(entity_type)
+        if entity_id:
+            conds.append("(entity_id=? OR entity_id LIKE ?)")
+            args.extend([entity_id, entity_id + "/%"])
+        if conds:
+            q += " WHERE " + " AND ".join(conds)
+        q += " ORDER BY id DESC LIMIT ?"
+        args.append(limit)
+        return [dict(r) for r in conn.execute(q, args).fetchall()]
 
 
 def create_review(title: str, contract_text: str, result: dict, actor: str = "system") -> str:
@@ -160,39 +167,43 @@ def create_review(title: str, contract_text: str, result: dict, actor: str = "sy
 
 
 def get_review(rid: str):
-    conn = get_conn()
-    row = conn.execute("SELECT * FROM reviews WHERE id=?", (rid,)).fetchone()
-    if not row:
-        return None
-    result = json.loads(row["result_json"])
-    annotations = [dict(r) for r in conn.execute("SELECT * FROM annotations WHERE review_id=? ORDER BY rowid", (rid,)).fetchall()]
-    return {
-        "id": rid,
-        "created_at": row["created_at"],
-        "title": row["title"],
-        "contract_text": row["contract_text"],
-        "result": result,
-        "annotations": annotations,
-    }
+    # 共享连接上的读同样持锁（2026-10-11 并发审计）：无锁读与写事务交错风险。
+    with _lock:
+        conn = get_conn()
+        row = conn.execute("SELECT * FROM reviews WHERE id=?", (rid,)).fetchone()
+        if not row:
+            return None
+        result = json.loads(row["result_json"])
+        annotations = [dict(r) for r in conn.execute("SELECT * FROM annotations WHERE review_id=? ORDER BY rowid", (rid,)).fetchall()]
+        return {
+            "id": rid,
+            "created_at": row["created_at"],
+            "title": row["title"],
+            "contract_text": row["contract_text"],
+            "result": result,
+            "annotations": annotations,
+        }
 
 
 def list_reviews(limit: int = 50) -> list[dict]:
     """审查记录列表（轻量：含风险摘要，不含全文）。"""
-    conn = get_conn()
-    rows = conn.execute(
-        "SELECT id, created_at, title, result_json FROM reviews ORDER BY created_at DESC LIMIT ?",
-        (limit,),
-    ).fetchall()
-    out = []
-    for r in rows:
-        result = json.loads(r["result_json"])
-        s = result.get("summary") or {}
-        out.append({
-            "id": r["id"], "created_at": r["created_at"], "title": r["title"],
-            "high": s.get("high", 0), "medium": s.get("medium", 0), "low": s.get("low", 0),
-            "findings": len(result.get("findings") or []),
-        })
-    return out
+    # 共享连接上的读同样持锁（2026-10-11 并发审计）：无锁读与写事务交错风险。
+    with _lock:
+        conn = get_conn()
+        rows = conn.execute(
+            "SELECT id, created_at, title, result_json FROM reviews ORDER BY created_at DESC LIMIT ?",
+            (limit,),
+        ).fetchall()
+        out = []
+        for r in rows:
+            result = json.loads(r["result_json"])
+            s = result.get("summary") or {}
+            out.append({
+                "id": r["id"], "created_at": r["created_at"], "title": r["title"],
+                "high": s.get("high", 0), "medium": s.get("medium", 0), "low": s.get("low", 0),
+                "findings": len(result.get("findings") or []),
+            })
+        return out
 
 
 def transition_annotation(review_id: str, finding_id: str, action: str, actor: str, amended_text: str | None = None):
@@ -232,24 +243,28 @@ def create_draft(template_id: str, fields: dict, content: dict, citations: list,
 
 
 def get_draft(did: str):
-    conn = get_conn()
-    row = conn.execute("SELECT * FROM drafts WHERE id=?", (did,)).fetchone()
-    if not row:
-        return None
-    d = dict(row)
-    for k in ("fields_json", "content_json", "citations_json", "snapshot_json"):
-        d[k.replace("_json", "")] = json.loads(d.pop(k))
-    return d
+    # 共享连接上的读同样持锁（2026-10-11 并发审计）：无锁读与写事务交错风险。
+    with _lock:
+        conn = get_conn()
+        row = conn.execute("SELECT * FROM drafts WHERE id=?", (did,)).fetchone()
+        if not row:
+            return None
+        d = dict(row)
+        for k in ("fields_json", "content_json", "citations_json", "snapshot_json"):
+            d[k.replace("_json", "")] = json.loads(d.pop(k))
+        return d
 
 
 def list_drafts(limit: int = 50) -> list[dict]:
     """草稿列表（轻量：不含 content），供交付前校验页选择最近草稿。"""
-    conn = get_conn()
-    rows = conn.execute(
-        "SELECT id, created_at, template_id, status FROM drafts ORDER BY created_at DESC LIMIT ?",
-        (limit,),
-    ).fetchall()
-    return [dict(r) for r in rows]
+    # 共享连接上的读同样持锁（2026-10-11 并发审计）：无锁读与写事务交错风险。
+    with _lock:
+        conn = get_conn()
+        rows = conn.execute(
+            "SELECT id, created_at, template_id, status FROM drafts ORDER BY created_at DESC LIMIT ?",
+            (limit,),
+        ).fetchall()
+        return [dict(r) for r in rows]
 
 
 def transition_draft(did: str, action: str, actor: str, *, responsibility_confirmed: bool = False,
@@ -321,15 +336,16 @@ def delete_complaint(cid: str, actor: str = "anonymous"):
 
 def export_all() -> dict:
     """PIPL 导出通道：全量本机数据（不含审计 payload 以外的派生文件），一次导出。"""
-    conn = get_conn()
-    return {
-        "reviews": [dict(r) for r in conn.execute("SELECT * FROM reviews").fetchall()],
-        "annotations": [dict(r) for r in conn.execute("SELECT * FROM annotations").fetchall()],
-        "drafts": [dict(r) for r in conn.execute("SELECT * FROM drafts").fetchall()],
-        "complaints": [dict(r) for r in conn.execute("SELECT * FROM complaints").fetchall()],
-        "audit_log": [dict(r) for r in conn.execute("SELECT * FROM audit_log ORDER BY id").fetchall()],
-        "evidence_ledger": [dict(r) for r in conn.execute("SELECT * FROM evidence_ledger ORDER BY id").fetchall()],
-    }
+    with _lock:  # 六表一次读出，与写事务隔离（PIPL 导出不得读到半截状态）
+        conn = get_conn()
+        return {
+            "reviews": [dict(r) for r in conn.execute("SELECT * FROM reviews").fetchall()],
+            "annotations": [dict(r) for r in conn.execute("SELECT * FROM annotations").fetchall()],
+            "drafts": [dict(r) for r in conn.execute("SELECT * FROM drafts").fetchall()],
+            "complaints": [dict(r) for r in conn.execute("SELECT * FROM complaints").fetchall()],
+            "audit_log": [dict(r) for r in conn.execute("SELECT * FROM audit_log ORDER BY id").fetchall()],
+            "evidence_ledger": [dict(r) for r in conn.execute("SELECT * FROM evidence_ledger ORDER BY id").fetchall()],
+        }
 
 
 def record_evidence(actor: str, entity_type: str, entity_id: str, action: str, snapshot: dict):
@@ -344,20 +360,22 @@ def record_evidence(actor: str, entity_type: str, entity_id: str, action: str, s
 
 
 def list_evidence(entity_type: str | None = None, entity_id: str | None = None, limit: int = 200):
-    conn = get_conn()
-    q = "SELECT * FROM evidence_ledger"
-    conds, args = [], []
-    if entity_type:
-        conds.append("entity_type=?")
-        args.append(entity_type)
-    if entity_id:
-        conds.append("entity_id=?")
-        args.append(entity_id)
-    if conds:
-        q += " WHERE " + " AND ".join(conds)
-    q += " ORDER BY id DESC LIMIT ?"
-    args.append(limit)
-    return [dict(r) for r in conn.execute(q, args).fetchall()]
+    # 共享连接上的读同样持锁（2026-10-11 并发审计）：无锁读与写事务交错风险。
+    with _lock:
+        conn = get_conn()
+        q = "SELECT * FROM evidence_ledger"
+        conds, args = [], []
+        if entity_type:
+            conds.append("entity_type=?")
+            args.append(entity_type)
+        if entity_id:
+            conds.append("entity_id=?")
+            args.append(entity_id)
+        if conds:
+            q += " WHERE " + " AND ".join(conds)
+        q += " ORDER BY id DESC LIMIT ?"
+        args.append(limit)
+        return [dict(r) for r in conn.execute(q, args).fetchall()]
 
 
 def create_complaint(contact: str | None, subject: str, content: str, kind: str = "general",
@@ -376,6 +394,8 @@ def create_complaint(contact: str | None, subject: str, content: str, kind: str 
 
 
 def list_complaints(limit: int = 50):
-    conn = get_conn()
-    rows = conn.execute("SELECT * FROM complaints ORDER BY rowid DESC LIMIT ?", (limit,)).fetchall()
-    return [dict(r) for r in rows]
+    # 共享连接上的读同样持锁（2026-10-11 并发审计）：无锁读与写事务交错风险。
+    with _lock:
+        conn = get_conn()
+        rows = conn.execute("SELECT * FROM complaints ORDER BY rowid DESC LIMIT ?", (limit,)).fetchall()
+        return [dict(r) for r in rows]
