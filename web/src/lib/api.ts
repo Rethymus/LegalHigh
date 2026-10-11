@@ -32,20 +32,39 @@ function requestHeaders(init?: RequestInit, json = true): Headers {
   return headers
 }
 
-async function apiFetch(path: string, init?: RequestInit, json = true): Promise<Response> {
+// 请求超时（R507 前端故障面审计）：此前 fetch 无任何超时——服务端/上游 LLM 卡死时
+// 界面永久转圈。默认 30s；AI 生成类端点（推理模型可跑分钟级）120s。旧引擎无
+// AbortSignal.timeout 时跳过信号（优雅降级为旧行为，不白屏）。
+const DEFAULT_TIMEOUT_MS = 30_000
+export const AI_TIMEOUT_MS = 120_000
+
+function timeoutSignal(ms: number): AbortSignal | undefined {
+  try {
+    return typeof AbortSignal !== 'undefined' && 'timeout' in AbortSignal ? AbortSignal.timeout(ms) : undefined
+  } catch {
+    return undefined
+  }
+}
+
+async function apiFetch(path: string, init?: RequestInit, json = true, timeoutMs = DEFAULT_TIMEOUT_MS): Promise<Response> {
   // 静态说明站（GitHub Pages，VITE_STATIC_PREVIEW=1）不部署后端：所有 /api 请求在
   // 客户端直接拒绝，不发注定 404 的网络请求（R21：曾出现逐页静默 404 噪声）。
   if (import.meta.env.VITE_STATIC_PREVIEW === '1') {
     throw new ApiError(503, '静态说明站不部署后端服务；请使用本地完整版或桌面版。')
   }
-  return fetch(`${API_BASE}${path}`, { ...init, headers: requestHeaders(init, json) })
+  return fetch(`${API_BASE}${path}`, { ...init, headers: requestHeaders(init, json), signal: timeoutSignal(timeoutMs) })
 }
 
-async function req<T>(path: string, init?: RequestInit): Promise<T> {
+async function req<T>(path: string, init?: RequestInit, timeoutMs = DEFAULT_TIMEOUT_MS): Promise<T> {
   let res: Response
   try {
-    res = await apiFetch(path, init)
-  } catch {
+    res = await apiFetch(path, init, undefined, timeoutMs)
+  } catch (e) {
+    // AbortSignal.timeout 在 Chrome 拒绝为 TimeoutError（实测探针钉住），手动 abort 才是
+    // AbortError——两种名都要认，否则超时落进「无法连接后端」误导文案。
+    if (e instanceof DOMException && (e.name === 'TimeoutError' || e.name === 'AbortError')) {
+      throw new ApiError(0, `请求超时（${Math.round(timeoutMs / 1000)} 秒无响应）。请稍后重试；AI 生成类操作耗时较长，可再试一次。`)
+    }
     throw new ApiError(0, '无法连接后端服务（请确认已启动：server/.venv → uvicorn app.main:app --port 8000）')
   }
   if (!res.ok) {
@@ -60,7 +79,7 @@ async function req<T>(path: string, init?: RequestInit): Promise<T> {
 }
 
 async function downloadApi(path: string, filename: string, init?: RequestInit): Promise<void> {
-  const res = await apiFetch(path, init, !(init?.body instanceof FormData))
+  const res = await apiFetch(path, init, !(init?.body instanceof FormData), 60_000)
   if (!res.ok) {
     let detail = `下载失败（HTTP ${res.status}）`
     try { const body = await res.json(); if (typeof body?.detail === 'string') detail = body.detail } catch { /* 非 JSON */ }
@@ -333,7 +352,7 @@ export const api = {
     req<AiFrameResult>(`/reviews/${rid}/ai-frame`, {
       method: 'POST',
       body: JSON.stringify({ provider_id: providerId, model, api_key: apiKey, redact_outbound: redactOutbound ?? false, base_url_override: baseUrlOverride }),
-    }),
+    }, AI_TIMEOUT_MS),
   transitionAnnotation: (rid: string, findingId: string, action: 'adopt' | 'amend' | 'reject' | 'reopen', amendedText?: string) =>
     req<unknown>(`/reviews/${rid}/annotations/${findingId}/transition`, {
       method: 'POST',
@@ -346,7 +365,7 @@ export const api = {
   reviewDocxReturn: async (rid: string, file: File): Promise<{ accepted: string[]; rejected: string[]; pending: number; skipped: { id: string; reason: string }[]; accepted_n: number; rejected_n: number }> => {
     const fd = new FormData()
     fd.append('file', file)
-    const res = await apiFetch(`/reviews/${rid}/docx-return`, { method: 'POST', body: fd }, false)
+    const res = await apiFetch(`/reviews/${rid}/docx-return`, { method: 'POST', body: fd }, false, 60_000)
     if (!res.ok) {
       let detail = `HTTP ${res.status}`
       try { const b = await res.json(); if (typeof b?.detail === 'string') detail = b.detail } catch { /* 保留状态码 */ }
@@ -534,7 +553,7 @@ export const api = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ question, law_ids: lawIds ?? null, top_k: topK }),
-    })
+    }, undefined, 60_000)
     if (!res.ok) throw new ApiError(res.status, `报告生成失败（HTTP ${res.status}）`)
     const blob = await res.blob()
     const a = document.createElement('a')
@@ -558,7 +577,7 @@ export const api = {
   aiProviders: () =>
     req<{ providers: { id: string; name: string; base_url: string; default_model: string; models_hint: string[]; docs: string; local: boolean; env_key: string | null; env_key_set: boolean }[] }>('/ai/providers'),
   aiTest: (p: { provider_id: string; model: string; api_key?: string; base_url_override?: string }) =>
-    req<{ ok: boolean; sample?: string; error?: string }>('/ai/test', { method: 'POST', body: JSON.stringify(p) }),
+    req<{ ok: boolean; sample?: string; error?: string }>('/ai/test', { method: 'POST', body: JSON.stringify(p) }, AI_TIMEOUT_MS),
   aiChat: (p: { provider_id: string; model: string; messages: { role: string; content: string }[]; api_key?: string; base_url_override?: string; allowed_refs?: { law_id?: string; law_title?: string; article_no: number }[]; temperature?: number; redact_outbound?: boolean }) =>
     req<{
       provider_id: string; provider_name: string; model: string; text: string
@@ -573,7 +592,7 @@ export const api = {
       blocked: boolean; output_withheld: boolean; usage: Record<string, number>; disclaimer: string
       privacy_notice?: { possible_personal_info: number; kinds: string[]; notice: string }
       privacy_redaction?: { total: number; replacements: Record<string, number> } | null
-    }>('/ai/chat', { method: 'POST', body: JSON.stringify(p) }),
+    }>('/ai/chat', { method: 'POST', body: JSON.stringify(p) }, AI_TIMEOUT_MS),
 
   // 需求解析（本机确定性规则与 BM25；不把用户描述发送给模型）
   needsParse: (text: string) =>
