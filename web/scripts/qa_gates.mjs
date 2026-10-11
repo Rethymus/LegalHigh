@@ -158,7 +158,20 @@ if (!existsSync(distDir)) {
   else if (lawsBytes > BUDGET.lawsJson) over.push(`laws.json ${(lawsBytes / 1048576).toFixed(2)}MB > 预算 5.0MB`)
   checks++
   if (over.length) fail.push(`[性能预算] ${over.join('；')}`)
-  else console.log(`OK gate6 性能预算：入口 JS ${(entryGz / 1024).toFixed(0)}KB gz / 全 JS ${(allJsGz / 1024).toFixed(0)}KB gz / CSS ${(allCssGz / 1024).toFixed(0)}KB gz / laws.json ${(lawsBytes / 1024).toFixed(0)}KB`)
+  else {
+    // 余量预警（2026-10-11 三轮审计）：门只在超限时报警，93-94% 的逼近完全不可见——
+    // 预算修订制度是「主动规划」而非「被动跟随」，≥85% 即在收据里亮出利用率与余量。
+    const util = [
+      ['入口 JS', entryGz, BUDGET.entryJsGz],
+      ['全 JS', allJsGz, BUDGET.allJsGz],
+      ['CSS', allCssGz, BUDGET.allCssGz],
+      ['laws.json', lawsBytes, BUDGET.lawsJson],
+    ]
+    const near = util.filter(([, used, cap]) => used / cap >= 0.85)
+    const utilLine = util.map(([n, u, c]) => `${n} ${(u / c * 100).toFixed(0)}%`).join(' / ')
+    console.log(`OK gate6 性能预算：入口 JS ${(entryGz / 1024).toFixed(0)}KB gz / 全 JS ${(allJsGz / 1024).toFixed(0)}KB gz / CSS ${(allCssGz / 1024).toFixed(0)}KB gz / laws.json ${(lawsBytes / 1024).toFixed(0)}KB（利用率 ${utilLine}）`)
+    if (near.length) console.warn(`WARN gate6 预算余量：${near.map(([n, u, c]) => `${n} 已用 ${(u / c * 100).toFixed(0)}%（余 ${((c - u) / 1024).toFixed(0)}KB）`).join('；')} —— 逼近预算，扩张前先按制度做预算规划而非事后修订`)
+  }
 }
 
 // ---- gate 7：术语卡分类全渲染（R271：CATS 固定清单漏 4 类 122 张卡的漂移钉住）----

@@ -66,8 +66,9 @@ async def _lifespan(app: FastAPI):
     默认关闭：pytest 的 TestClient 同样走 lifespan，无条件预热会把全量测试拖慢约 34s。
     预热失败只记日志——评测卡有「不可用」三态兜底，后台任务不得拖垮服务启动。
     """
+    import threading as _threading
+
     if _os.environ.get("LH_WARM_EVALS", "").strip() == "1":
-        import threading as _threading
 
         def _warm():
             try:
@@ -76,6 +77,21 @@ async def _lifespan(app: FastAPI):
                 print(f"[warm] /api/evals 预热失败：{exc}", file=sys.stderr)
 
         _threading.Thread(target=_warm, name="warm-evals", daemon=True).start()
+
+    # BM25 索引预热（2026-10-11 三轮审计）：懒构建实测冷启动约 1s，此前落在首个
+    # 检索请求上。get_corpus 是进程单例、构建幂等，无条件后台预热只发生一次；
+    # pytest 多次进 lifespan 也不会重复付代价。
+    def _warm_index():
+        try:
+            # 单引用持有：lru_cache 并发 miss 不互斥，多次调用可能各建实例
+            # 而缓存只留其一——预热落在被逐出实例上等于白做。
+            c = get_corpus()
+            c.index  # noqa: B018 property 访问即触发构建
+            c.bigram_df  # 重排层同样惰性构建（R430/431），不预热则落在首个检索上
+        except Exception as exc:  # noqa: BLE001 预热失败不致命，首请求会再试
+            print(f"[warm] BM25 索引预热失败：{exc}", file=sys.stderr)
+
+    _threading.Thread(target=_warm_index, name="warm-bm25", daemon=True).start()
     yield
 
 

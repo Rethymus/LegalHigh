@@ -1,11 +1,17 @@
 # 从 server 证据快照语料导出前端静态数据（唯一合法入口；禁止手改 server/data/laws）
-# 用法: python web/scripts/export_laws.py
+# 用法: server/.venv/Scripts/python.exe web/scripts/export_laws.py
+# 产物：laws.json（法条全文）+ xrefs.json（法内交叉引用，同轮生成保证不漂移）
 import json
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 SRC = ROOT / "server" / "data" / "laws"
 OUT = ROOT / "web" / "public" / "data" / "laws.json"  # 前端运行时 fetch 的唯一路径
+XREFS_OUT = ROOT / "web" / "public" / "data" / "xrefs.json"
+
+sys.path.insert(0, str(ROOT / "server"))
+from lib.xrefs import build_xrefs  # noqa: E402  唯一实现，测试逐字节锁定（防一次性脚本再蒸发）
 
 laws_out = []
 manifest = json.loads((SRC / "manifest.json").read_text(encoding="utf-8"))
@@ -46,3 +52,16 @@ OUT.write_text(
     newline="\n",
 )
 print("exported", len(laws_out), "laws ->", OUT, OUT.stat().st_size, "bytes")
+
+# 法内交叉引用：与 laws.json 同轮生成（防止一者更新另一者陈旧——2026-10-11
+# 审计实锤：09-23 后入库的法律从未进入 xrefs）。逻辑唯一实现见 lib/xrefs.py。
+xrefs = build_xrefs(laws_out)
+XREFS_OUT.write_text(
+    json.dumps(xrefs, ensure_ascii=False, separators=(",", ":")),
+    encoding="utf-8",
+    newline="\n",
+)
+print(
+    "exported xrefs:", sum(len(v) for v in xrefs.values()), "refs across",
+    len(xrefs), "laws ->", XREFS_OUT, XREFS_OUT.stat().st_size, "bytes",
+)
