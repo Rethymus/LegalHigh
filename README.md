@@ -143,7 +143,7 @@ cd web && npm ci && npm run dev
 
 ## 📦 开放数据与许可 · Open data & license
 
-全语料 markdown 导出（每法一文件+官方元数据）与结构化 laws.json 见 [data/laws-md/](https://legalhigh.pages.dev/data/laws-md/README.md)；数据集发布件由 `server/scripts/package_dataset.py` 产出（ZIP+SHA256+CC0 LICENSE）。**许可（决策 19，2026-09-30 业主裁定）**：法条文本不受著作权保护（《著作权法》第五条）；数据整理成果以 **CC0 1.0 Universal** 发布（全文见 [LICENSES/DATA-CC0-1.0.txt](LICENSES/DATA-CC0-1.0.txt)）；仓库代码许可另议（未定）。
+全语料 markdown 导出（每法一文件+官方元数据）与结构化 laws.json 见 [data/laws-md/](https://rethymus.github.io/LegalHigh/data/laws-md/README.md)；数据集发布件由 `server/scripts/package_dataset.py` 产出（ZIP+SHA256+CC0 LICENSE）。**许可（决策 19，2026-09-30 业主裁定）**：法条文本不受著作权保护（《著作权法》第五条）；数据整理成果以 **CC0 1.0 Universal** 发布（全文见 [LICENSES/DATA-CC0-1.0.txt](LICENSES/DATA-CC0-1.0.txt)）；仓库代码许可另议（未定）。
 
 ## 🔌 MCP Server · AI 助手接入
 

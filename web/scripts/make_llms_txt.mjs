@@ -48,12 +48,12 @@ const index = `# LegalHigh · 法律智能知识库
 
 ## 页面索引
 
-- [使用指南](https://legalhigh.pages.dev/#/guide)：三类视图与四条工作流的图文说明
-- [法规浏览](https://legalhigh.pages.dev/#/laws)：按部浏览受控语料，条文支持子条号（之N）深链与双向交叉引用导航（本文引用→/→引用本文）
-- [术语卡](https://legalhigh.pages.dev/#/terms)：${terms.length} 张高频法律术语通俗解释，逐条绑定语料条文
-- [案例检索](https://legalhigh.pages.dev/#/cases)：${caseLine}
-- [质量透明度](https://legalhigh.pages.dev/#/quality)：检索评测数字、覆盖边界、质量门与历史运行记录
-- [数据源清单](https://legalhigh.pages.dev/#/data-sources)：各数据源的接入策略、引用网络图与合规边界
+- [使用指南](https://rethymus.github.io/LegalHigh/#/guide)：三类视图与四条工作流的图文说明
+- [法规浏览](https://rethymus.github.io/LegalHigh/#/laws)：按部浏览受控语料，条文支持子条号（之N）深链与双向交叉引用导航（本文引用→/→引用本文）
+- [术语卡](https://rethymus.github.io/LegalHigh/#/terms)：${terms.length} 张高频法律术语通俗解释，逐条绑定语料条文
+- [案例检索](https://rethymus.github.io/LegalHigh/#/cases)：${caseLine}
+- [质量透明度](https://rethymus.github.io/LegalHigh/#/quality)：检索评测数字、覆盖边界、质量门与历史运行记录
+- [数据源清单](https://rethymus.github.io/LegalHigh/#/data-sources)：各数据源的接入策略、引用网络图与合规边界
 
 ## MCP Server（AI 助手程序化接口）
 
@@ -61,8 +61,8 @@ const index = `# LegalHigh · 法律智能知识库
 
 ## 全文版
 
-- [llms-full.txt](https://legalhigh.pages.dev/llms-full.txt)：术语卡全部条目与项目口径说明的完整文本
-- [data/laws-md/](https://legalhigh.pages.dev/data/laws-md/README.md)：${lawCount ?? '全'} 部法律全语料 markdown 导出（每法一文件，含官方元数据；同 laws.json 源）
+- [llms-full.txt](https://rethymus.github.io/LegalHigh/llms-full.txt)：术语卡全部条目与项目口径说明的完整文本
+- [data/laws-md/](https://rethymus.github.io/LegalHigh/data/laws-md/README.md)：${lawCount ?? '全'} 部法律全语料 markdown 导出（每法一文件，含官方元数据；同 laws.json 源）
 `
 
 const full = `# LegalHigh · 法律智能知识库（全文版）
@@ -81,7 +81,7 @@ const full = `# LegalHigh · 法律智能知识库（全文版）
 ${terms
   .map((t) => {
     const first = t.refs[0]
-    const link = first ? `https://legalhigh.pages.dev/#/laws/${first.law_id}?art=${first.art}` : ''
+    const link = first ? `https://rethymus.github.io/LegalHigh/#/laws/${first.law_id}?art=${first.art}` : ''
     return `### ${t.term}（${t.cat}）\n\n${t.explain}\n\n依据：${t.refs.map((r) => r.label).join('、')}${link ? `\n原文：${link}` : ''}\n`
   })
   .join('\n')}

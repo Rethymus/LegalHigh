@@ -16,1503 +16,1503 @@
 向法院请求保护民事权利一般有三年期间，从知道或应当知道权利受损及义务人之日起算。及时主张权利很重要。
 
 依据：《民法典》第188条
-原文：https://legalhigh.pages.dev/#/laws/civl-2020?art=188
+原文：https://rethymus.github.io/LegalHigh/#/laws/civl-2020?art=188
 
 ### 定金与订金（民事）
 
 「定金」有担保性质，收定金一方违约要双倍返还；「订金」通常只是预付款。合同里一字之差，后果不同。
 
 依据：《民法典》第586条
-原文：https://legalhigh.pages.dev/#/laws/civl-2020?art=586
+原文：https://rethymus.github.io/LegalHigh/#/laws/civl-2020?art=586
 
 ### 居住权（民事）
 
 可以在住宅上为他人设立居住权，让其长期稳定居住；居住权无偿设立为主，不得转让、继承。
 
 依据：《民法典》第366条
-原文：https://legalhigh.pages.dev/#/laws/civl-2020?art=366
+原文：https://rethymus.github.io/LegalHigh/#/laws/civl-2020?art=366
 
 ### 试用期上限（劳动）
 
 劳动合同期限三个月以上不满一年的，试用期不得超过一个月；三年以上或无固定期限的，不得超过六个月。
 
 依据：《劳动合同法》第19条
-原文：https://legalhigh.pages.dev/#/laws/lcl-2012?art=19
+原文：https://rethymus.github.io/LegalHigh/#/laws/lcl-2012?art=19
 
 ### 仲裁前置（劳动）
 
 劳动争议要先申请劳动仲裁，对裁决不服才能起诉——「先仲裁、后诉讼」，不能直接去法院。
 
 依据：《劳动争议调解仲裁法》第5条
-原文：https://legalhigh.pages.dev/#/laws/lcar-2007?art=5
+原文：https://rethymus.github.io/LegalHigh/#/laws/lcar-2007?art=5
 
 ### 仲裁时效一年（劳动）
 
 申请劳动仲裁的时效为一年，从知道或应当知道权利被侵害之日起算；拖欠劳动报酬在职期间不受此限。
 
 依据：《劳动争议调解仲裁法》第27条
-原文：https://legalhigh.pages.dev/#/laws/lcar-2007?art=27
+原文：https://rethymus.github.io/LegalHigh/#/laws/lcar-2007?art=27
 
 ### 正当防卫（刑事）
 
 为使合法权益免受正在进行的不法侵害而制止侵害，造成损害的不负刑事责任；明显超限才需担责但应减轻。
 
 依据：《刑法》第20条
-原文：https://legalhigh.pages.dev/#/laws/cl-2023?art=20
+原文：https://rethymus.github.io/LegalHigh/#/laws/cl-2023?art=20
 
 ### 自首（刑事）
 
 犯罪后自动投案、如实供述自己罪行的，是自首，可以从轻或减轻处罚；犯罪较轻的可以免除处罚。
 
 依据：《刑法》第67条
-原文：https://legalhigh.pages.dev/#/laws/cl-2023?art=67
+原文：https://rethymus.github.io/LegalHigh/#/laws/cl-2023?art=67
 
 ### 缓刑（刑事）
 
 被判拘役或三年以下有期徒刑、符合犯罪情节较轻等条件的，可以宣告缓刑；特定人群应当宣告缓刑。
 
 依据：《刑法》第72条
-原文：https://legalhigh.pages.dev/#/laws/cl-2023?art=72
+原文：https://rethymus.github.io/LegalHigh/#/laws/cl-2023?art=72
 
 ### 帮信罪（刑事）
 
 明知他人利用信息网络实施犯罪，仍提供支付结算等帮助（如出借银行卡给跑分团伙），情节严重的构成犯罪。
 
 依据：《刑法》第287条之二
-原文：https://legalhigh.pages.dev/#/laws/cl-2023?art=287之二
+原文：https://rethymus.github.io/LegalHigh/#/laws/cl-2023?art=287之二
 
 ### 首违不罚（程序）
 
 初次违法且危害后果轻微并及时改正的，可以不予行政处罚；没有主观过错的不予行政处罚。
 
 依据：《行政处罚法》第33条
-原文：https://legalhigh.pages.dev/#/laws/penal-2021?art=33
+原文：https://rethymus.github.io/LegalHigh/#/laws/penal-2021?art=33
 
 ### 国家赔偿时效（程序）
 
 请求国家赔偿的时效为两年，从知道或应当知道权益被侵犯之日起算；被羁押期间不计入。
 
 依据：《国家赔偿法》第39条
-原文：https://legalhigh.pages.dev/#/laws/scl-2012?art=39
+原文：https://rethymus.github.io/LegalHigh/#/laws/scl-2012?art=39
 
 ### 网络实名制（网络与数据）
 
 办理网络接入、注册域名、使用即时通讯等服务时，运营者应要求提供真实身份信息；不提供不得服务。
 
 依据：《网络安全法》第26条
-原文：https://legalhigh.pages.dev/#/laws/csl-2025?art=26
+原文：https://rethymus.github.io/LegalHigh/#/laws/csl-2025?art=26
 
 ### 数据分类分级（网络与数据）
 
 国家按数据的重要程度和遭破坏后的危害程度，对数据实行分类分级保护；重要数据处理者有定期风险评估义务。
 
 依据：《数据安全法》第21条
-原文：https://legalhigh.pages.dev/#/laws/dsl-2021?art=21
+原文：https://rethymus.github.io/LegalHigh/#/laws/dsl-2021?art=21
 
 ### 网络欺凌（网络与数据）
 
 任何人不得通过网络以文字、图片、音视频等形式对未成年人实施侮辱、诽谤等欺凌行为；可通知平台采取处置措施。
 
 依据：《未成年人保护法》第77条
-原文：https://legalhigh.pages.dev/#/laws/minor-2024?art=77
+原文：https://rethymus.github.io/LegalHigh/#/laws/minor-2024?art=77
 
 ### 人身安全保护令（网络与数据）
 
 遭受或面临被纠缠、骚扰等现实危险的，可以向人民法院申请人身安全保护令；恋爱、分手后同样适用。
 
 依据：《妇女权益保障法》第29条
-原文：https://legalhigh.pages.dev/#/laws/women-2022?art=29
+原文：https://rethymus.github.io/LegalHigh/#/laws/women-2022?art=29
 
 ### 询问查证时限（治安）
 
 公安机关传唤后询问查证不得超过八小时；案情复杂可能适用行政拘留的，不得超过二十四小时。
 
 依据：《治安管理处罚法》第97条
-原文：https://legalhigh.pages.dev/#/laws/psm-2025?art=97
+原文：https://rethymus.github.io/LegalHigh/#/laws/psm-2025?art=97
 
 ### 当场处罚（治安）
 
 当场作出治安处罚决定时，人民警察应当出示人民警察证、填写处罚决定书并当场交付被处罚人。
 
 依据：《治安管理处罚法》第120条
-原文：https://legalhigh.pages.dev/#/laws/psm-2025?art=120
+原文：https://rethymus.github.io/LegalHigh/#/laws/psm-2025?art=120
 
 ### 高空抛物（治安）
 
 从建筑物或者其他高空抛掷物品，危害他人人身、财产安全或公共安全的，处五日以下拘留或者一千元以下罚款；情节严重的处十日以上十五日以下拘留。
 
 依据：《治安管理处罚法》第43条
-原文：https://legalhigh.pages.dev/#/laws/psm-2025?art=43
+原文：https://rethymus.github.io/LegalHigh/#/laws/psm-2025?art=43
 
 ### 行政处罚时效（程序）
 
 违法行为二年内未被发现的不再给予行政处罚；涉及公民生命健康安全、金融安全且有危害后果的延长至五年。
 
 依据：《行政处罚法》第36条
-原文：https://legalhigh.pages.dev/#/laws/penal-2021?art=36
+原文：https://rethymus.github.io/LegalHigh/#/laws/penal-2021?art=36
 
 ### 教唆犯罪（刑事）
 
 教唆他人犯罪的，按照其在共同犯罪中所起的作用处罚；教唆不满十八周岁的人犯罪的，应当从重处罚。
 
 依据：《刑法》第29条
-原文：https://legalhigh.pages.dev/#/laws/cl-2023?art=29
+原文：https://rethymus.github.io/LegalHigh/#/laws/cl-2023?art=29
 
 ### 性骚扰救济（民事）
 
 禁止违背妇女意愿以言语、文字、图像、肢体等方式实施性骚扰；受害妇女可以投诉、报案或依法向法院起诉。
 
 依据：《妇女权益保障法》第23条
-原文：https://legalhigh.pages.dev/#/laws/women-2022?art=23
+原文：https://rethymus.github.io/LegalHigh/#/laws/women-2022?art=23
 
 ### 就业性别歧视（民事）
 
 用人单位招聘不得限定男性或男性优先，不得进一步询问调查女性求职者婚育情况，不得将妊娠测试作为入职体检项目。
 
 依据：《妇女权益保障法》第43条
-原文：https://legalhigh.pages.dev/#/laws/women-2022?art=43
+原文：https://rethymus.github.io/LegalHigh/#/laws/women-2022?art=43
 
 ### 关基采购保密协议（网络与数据）
 
 关键信息基础设施运营者采购网络产品和服务，应当与提供者签订安全保密协议，明确安全和保密义务责任。
 
 依据：《网络安全法》第38条
-原文：https://legalhigh.pages.dev/#/laws/csl-2025?art=38
+原文：https://rethymus.github.io/LegalHigh/#/laws/csl-2025?art=38
 
 ### 重要数据出境（网络与数据）
 
 关基运营者境内收集产生的重要数据出境适用网络安全法规定；其他数据处理者的重要数据出境由国家网信部门会同有关部门制定管理办法。
 
 依据：《数据安全法》第31条
-原文：https://legalhigh.pages.dev/#/laws/dsl-2021?art=31
+原文：https://rethymus.github.io/LegalHigh/#/laws/dsl-2021?art=31
 
 ### 人权保障（宪法）
 
 国家尊重和保障人权；公民在法律面前一律平等，享有宪法和法律规定的权利，同时必须履行宪法和法律规定的义务。
 
 依据：《宪法》第33条
-原文：https://legalhigh.pages.dev/#/laws/con-2018?art=33
+原文：https://rethymus.github.io/LegalHigh/#/laws/con-2018?art=33
 
 ### 劳动权利与义务（宪法）
 
 公民有劳动的权利和义务。国家通过各种途径创造劳动就业条件，加强劳动保护，改善劳动条件。
 
 依据：《宪法》第42条
-原文：https://legalhigh.pages.dev/#/laws/con-2018?art=42
+原文：https://rethymus.github.io/LegalHigh/#/laws/con-2018?art=42
 
 ### 强制报告制度（网络与数据）
 
 任何组织或个人发现侵害未成年人合法权益的情形都有权劝阻、制止或检举；密切接触未成年人的单位及其工作人员发现情形应当立即报告。
 
 依据：《未成年人保护法》第11条
-原文：https://legalhigh.pages.dev/#/laws/minor-2024?art=11
+原文：https://rethymus.github.io/LegalHigh/#/laws/minor-2024?art=11
 
 ### 学生欺凌防控（网络与数据）
 
 学校应当建立学生欺凌防控制度，对学生欺凌行为应当立即制止，通知双方家长参与认定和处理，并可给予心理辅导。
 
 依据：《未成年人保护法》第39条
-原文：https://legalhigh.pages.dev/#/laws/minor-2024?art=39
+原文：https://rethymus.github.io/LegalHigh/#/laws/minor-2024?art=39
 
 ### 住宿登记报告（网络与数据）
 
 旅馆、宾馆等住宿经营者接待未成年人入住时，应当询问父母或其他监护人联系方式、入住人员身份关系等情况；发现违法犯罪嫌疑应当立即向公安机关报告。
 
 依据：《未成年人保护法》第57条
-原文：https://legalhigh.pages.dev/#/laws/minor-2024?art=57
+原文：https://rethymus.github.io/LegalHigh/#/laws/minor-2024?art=57
 
 ### 村规民约不得侵权（民事）
 
 村规民约以及村民会议等决定，不得以妇女未婚、结婚、离婚、丧偶、户无男性等为由，侵害妇女在农村集体经济组织中的各项权益。
 
 依据：《妇女权益保障法》第56条
-原文：https://legalhigh.pages.dev/#/laws/women-2022?art=56
+原文：https://rethymus.github.io/LegalHigh/#/laws/women-2022?art=56
 
 ### 拖欠工资支付令（劳动）
 
 因拖欠劳动报酬达成调解协议后用人单位不履行的，劳动者可以持调解协议书依法向人民法院申请支付令，法院应当依法发出。
 
 依据：《劳动争议调解仲裁法》第16条
-原文：https://legalhigh.pages.dev/#/laws/lcar-2007?art=16
+原文：https://rethymus.github.io/LegalHigh/#/laws/lcar-2007?art=16
 
 ### 一裁终局（劳动）
 
 追索劳动报酬、工伤医疗费、经济补偿或赔偿金，不超过当地月最低工资标准十二个月金额的争议，仲裁裁决为终局裁决，用人单位不得起诉。
 
 依据：《劳动争议调解仲裁法》第47条
-原文：https://legalhigh.pages.dev/#/laws/lcar-2007?art=47
+原文：https://rethymus.github.io/LegalHigh/#/laws/lcar-2007?art=47
 
 ### 漏洞补救与报告（网络与数据）
 
 网络产品、服务提供者发现安全缺陷、漏洞等风险时，应当立即采取补救措施，按规定及时告知用户并向有关主管部门报告。
 
 依据：《网络安全法》第24条
-原文：https://legalhigh.pages.dev/#/laws/csl-2025?art=24
+原文：https://rethymus.github.io/LegalHigh/#/laws/csl-2025?art=24
 
 ### 数据安全管理制度（网络与数据）
 
 开展数据处理活动应当建立全流程数据安全管理制度，组织开展数据安全教育培训，采取相应技术措施保障数据安全。
 
 依据：《数据安全法》第27条
-原文：https://legalhigh.pages.dev/#/laws/dsl-2021?art=27
+原文：https://rethymus.github.io/LegalHigh/#/laws/dsl-2021?art=27
 
 ### 数据安全事件处置（网络与数据）
 
 开展数据处理活动应当加强风险监测；发生数据安全事件时应当立即采取处置措施，按规定及时告知用户并向有关主管部门报告。
 
 依据：《数据安全法》第29条
-原文：https://legalhigh.pages.dev/#/laws/dsl-2021?art=29
+原文：https://rethymus.github.io/LegalHigh/#/laws/dsl-2021?art=29
 
 ### 行政复议申请（程序）
 
 认为行政机关的行政行为侵犯其合法权益的，可以依法向行政复议机关提出行政复议申请；行政复议机关应当依法受理并作出决定。
 
 依据：《行政复议法》第2条
-原文：https://legalhigh.pages.dev/#/laws/admin-review-2023?art=2
+原文：https://rethymus.github.io/LegalHigh/#/laws/admin-review-2023?art=2
 
 ### 行政诉讼受案范围（程序）
 
 认为行政机关和行政机关工作人员的行政行为侵犯其合法权益的，有权依照本法向人民法院提起行政诉讼。
 
 依据：《行政诉讼法》第2条
-原文：https://legalhigh.pages.dev/#/laws/admin-litigation-2017?art=2
+原文：https://rethymus.github.io/LegalHigh/#/laws/admin-litigation-2017?art=2
 
 ### 两审终审制度（程序）
 
 人民法院审理民事案件实行合议、回避、公开审判和两审终审制度——一审判决不服可以上诉，二审判决为终审判决。
 
 依据：《民事诉讼法》第10条
-原文：https://legalhigh.pages.dev/#/laws/pcl-2023?art=10
+原文：https://rethymus.github.io/LegalHigh/#/laws/pcl-2023?art=10
 
 ### 累犯（刑事）
 
 被判处有期徒刑以上刑罚的犯罪分子，刑罚执行完毕或者赦免以后，在五年以内再犯应当判处有期徒刑以上刑罚之罪的，是累犯，应当从重处罚，不适用缓刑和假释。
 
 依据：《刑法》第65条
-原文：https://legalhigh.pages.dev/#/laws/cl-2023?art=65
+原文：https://rethymus.github.io/LegalHigh/#/laws/cl-2023?art=65
 
 ### 诈骗罪（刑事）
 
 诈骗公私财物，数额较大的，处三年以下有期徒刑、拘役或者管制，并处或者单处罚金；数额特别巨大的处十年以上有期徒刑或者无期徒刑。
 
 依据：《刑法》第266条
-原文：https://legalhigh.pages.dev/#/laws/cl-2023?art=266
+原文：https://rethymus.github.io/LegalHigh/#/laws/cl-2023?art=266
 
 ### 家庭暴力告诫书（程序）
 
 家庭暴力情节较轻，依法不给予治安管理处罚的，公安机关可以对加害人出具告诫书；告诫书可以作为法院认定家庭暴力事实的证据。
 
 依据：《反家庭暴力法》第16条
-原文：https://legalhigh.pages.dev/#/laws/dv-2015?art=16
+原文：https://rethymus.github.io/LegalHigh/#/laws/dv-2015?art=16
 
 ### 人身安全保护令（反家暴）（程序）
 
 因遭受家庭暴力或者面临家庭暴力现实危险的，可以向人民法院申请人身安全保护令；法院受理后应在七十二小时内作出裁定。
 
 依据：《反家庭暴力法》第23条
-原文：https://legalhigh.pages.dev/#/laws/dv-2015?art=23
+原文：https://rethymus.github.io/LegalHigh/#/laws/dv-2015?art=23
 
 ### 社会保险费征缴（劳动）
 
 用人单位未按时足额缴纳社会保险费的，由社会保险费征收机构责令限期缴纳或者补足，并加收滞纳金；逾期仍不缴纳的处罚款。
 
 依据：《社会保险法》第63条
-原文：https://legalhigh.pages.dev/#/laws/social-ins-2018?art=63
+原文：https://rethymus.github.io/LegalHigh/#/laws/social-ins-2018?art=63
 
 ### 食品生产经营许可（程序）
 
 从事食品生产、食品销售、餐饮服务，应当依法取得许可；仅销售预包装食品的，不需要取得许可，仅需报备案。
 
 依据：《食品安全法》第35条
-原文：https://legalhigh.pages.dev/#/laws/food-safety-2025?art=35
+原文：https://rethymus.github.io/LegalHigh/#/laws/food-safety-2025?art=35
 
 ### 食品召回制度（程序）
 
 食品生产经营者发现生产经营的食品不符合食品安全标准的，应当立即停止生产经营，主动召回；对召回的食品进行无害化处理或销毁。
 
 依据：《食品安全法》第63条
-原文：https://legalhigh.pages.dev/#/laws/food-safety-2025?art=63
+原文：https://rethymus.github.io/LegalHigh/#/laws/food-safety-2025?art=63
 
 ### 经济补偿（劳动）
 
 用人单位依法解除或终止劳动合同的，应当按照劳动者在本单位工作的年限，每满一年支付一个月工资的标准向劳动者支付经济补偿。
 
 依据：《劳动合同法》第46条
-原文：https://legalhigh.pages.dev/#/laws/lcl-2012?art=46
+原文：https://rethymus.github.io/LegalHigh/#/laws/lcl-2012?art=46
 
 ### 人脸识别采集（网络与数据）
 
 在公共场所安装图像采集、个人身份识别设备，应当为维护公共安全所必需并设置显著提示标识——商场、小区等场所的人脸识别采集不能随意扩用，收集的图像只能用于公共安全目的。
 
 依据：《个人信息保护法》第26条
-原文：https://legalhigh.pages.dev/#/laws/pipl-2021?art=26
+原文：https://rethymus.github.io/LegalHigh/#/laws/pipl-2021?art=26
 
 ### 大数据杀熟（网络与数据）
 
 利用个人信息进行自动化决策应保证透明度和结果公平公正，不得在交易价格等交易条件上对不同人实行不合理的差别待遇——「老用户价格反而更贵」式的大数据杀熟为法律所禁止。
 
 依据：《个人信息保护法》第24条
-原文：https://legalhigh.pages.dev/#/laws/pipl-2021?art=24
+原文：https://rethymus.github.io/LegalHigh/#/laws/pipl-2021?art=24
 
 ### 刷单炒信（网络与数据）
 
 电子商务经营者应当全面真实准确地披露商品或服务信息，不得以虚构交易、编造用户评价等方式进行虚假或引人误解的商业宣传——刷单、刷好评是违法行为。
 
 依据：《电子商务法》第17条
-原文：https://legalhigh.pages.dev/#/laws/ecom-2018?art=17
+原文：https://rethymus.github.io/LegalHigh/#/laws/ecom-2018?art=17
 
 ### 平台连带责任（网络与数据）
 
 电商平台知道或应当知道平台内商家销售的商品不符合保障人身、财产安全要求，或有其他侵害消费者合法权益行为而未采取必要措施的，依法与该商家承担连带责任。
 
 依据：《电子商务法》第38条
-原文：https://legalhigh.pages.dev/#/laws/ecom-2018?art=38
+原文：https://rethymus.github.io/LegalHigh/#/laws/ecom-2018?art=38
 
 ### 七日无理由退货（民事）
 
 采用网络、电视、电话、邮购方式销售商品，消费者有权自收到商品之日起七日内退货且无需说明理由；定作商品、鲜活易腐、在线下载或拆封的音像制品与计算机软件、交付的报纸期刊等除外。
 
 依据：《消费者权益保护法》第25条
-原文：https://legalhigh.pages.dev/#/laws/cl-2013?art=25
+原文：https://rethymus.github.io/LegalHigh/#/laws/cl-2013?art=25
 
 ### 退一赔三（民事）
 
 经营者提供商品或者服务有欺诈行为的，应按消费者要求增加赔偿，金额为价款或费用的三倍；增加赔偿不足五百元的按五百元计——这就是常说的「退一赔三」。
 
 依据：《消费者权益保护法》第55条
-原文：https://legalhigh.pages.dev/#/laws/cl-2013?art=55
+原文：https://rethymus.github.io/LegalHigh/#/laws/cl-2013?art=55
 
 ### 法律援助（程序）
 
 因经济困难没有委托代理人的当事人，在依法请求国家赔偿、请求给付赡养费抚育费、请求确认劳动关系等法定情形下，可以向法律援助机构申请免费法律服务——「打不起官司」有制度性出路。
 
 依据：《法律援助法》第31条
-原文：https://legalhigh.pages.dev/#/laws/legal-aid-2021?art=31
+原文：https://rethymus.github.io/LegalHigh/#/laws/legal-aid-2021?art=31
 
 ### 取保候审（程序）
 
 对可能判处管制、拘役或独立适用附加刑，或虽可能判处有期徒刑以上刑罚但采取取保候审不致发生社会危险性的犯罪嫌疑人、被告人，可以取保候审——不经羁押但须遵守规定、随传随到。
 
 依据：《刑事诉讼法》第67条
-原文：https://legalhigh.pages.dev/#/laws/cpl-2018?art=67
+原文：https://rethymus.github.io/LegalHigh/#/laws/cpl-2018?art=67
 
 ### 签收≠认可质量（民事）
 
 电商格式条款中「收货人签收商品即视为认可商品质量符合约定」一类内容无效——签收快递不等于认可商品质量，发现问题仍可依法主张权利。
 
 依据：网络消费纠纷规定（一）第1条
-原文：https://legalhigh.pages.dev/#/laws/wlxf-2022?art=1
+原文：https://rethymus.github.io/LegalHigh/#/laws/wlxf-2022?art=1
 
 ### 拆封查验不影响退货（民事）
 
 因检查商品的必要而拆封查验、且不影响商品完好的，电商经营者以「商品已拆封」为由拒绝七日无理由退货的，法院不予支持——拆封查验是消费者的正当权利。
 
 依据：网络消费纠纷规定（一）第3条
-原文：https://legalhigh.pages.dev/#/laws/wlxf-2022?art=3
+原文：https://rethymus.github.io/LegalHigh/#/laws/wlxf-2022?art=3
 
 ### 自动续费（民事）
 
 经营者采取自动展期、自动续费方式提供服务的，应当在消费者接受服务前和自动展期、自动续费日期前以显著方式提请消费者注意，由消费者自主选择——「默认勾选悄悄扣费」不合规。
 
 依据：《消保法实施条例》第10条
-原文：https://legalhigh.pages.dev/#/laws/crpl-imp-2024?art=10
+原文：https://rethymus.github.io/LegalHigh/#/laws/crpl-imp-2024?art=10
 
 ### AI 输入信息保护（网络与数据）
 
 生成式人工智能服务提供者对使用者的输入信息和使用记录应依法履行保护义务：不得收集非必要个人信息，不得非法留存能识别使用者身份的输入信息和使用记录，不得非法向他人提供。
 
 依据：《生成式AI服务管理暂行办法》第11条
-原文：https://legalhigh.pages.dev/#/laws/genai-2023?art=11
+原文：https://rethymus.github.io/LegalHigh/#/laws/genai-2023?art=11
 
 ### 更换律师权（程序）
 
 委托人可以拒绝已委托的律师为其继续辩护或者代理，同时可以另行委托律师担任辩护人或者代理人；律师接受委托后无正当理由不得拒绝辩护或代理——委托关系的主导权在委托人。
 
 依据：《律师法》第32条
-原文：https://legalhigh.pages.dev/#/laws/ll-2017?art=32
+原文：https://rethymus.github.io/LegalHigh/#/laws/ll-2017?art=32
 
 ### 礼让行人（行政）
 
 机动车行经人行横道应当减速行驶，遇行人正在通过时应停车让行。不礼让行人可被处以罚款和记分。
 
 依据：《道路交通安全法》第47条
-原文：https://legalhigh.pages.dev/#/laws/road-safety-2021?art=47
+原文：https://rethymus.github.io/LegalHigh/#/laws/road-safety-2021?art=47
 
 ### 酒后驾驶（行政）
 
 饮酒后驾驶机动车处暂扣六个月驾驶证并罚款；醉酒驾驶构成危险驾驶罪，处拘役并处罚金。
 
 依据：《道路交通安全法》第91条
-原文：https://legalhigh.pages.dev/#/laws/road-safety-2021?art=91
+原文：https://rethymus.github.io/LegalHigh/#/laws/road-safety-2021?art=91
 
 ### 三包义务（民事）
 
 售出的产品不具备应当具备的使用性能或不符合质量要求的，销售者应当负责修理、更换、退货，给消费者造成损失的应当赔偿。
 
 依据：《产品质量法》第40条
-原文：https://legalhigh.pages.dev/#/laws/product-quality-2018?art=40
+原文：https://rethymus.github.io/LegalHigh/#/laws/product-quality-2018?art=40
 
 ### 产品缺陷（民事）
 
 产品存在危及人身、他人财产安全的不合理危险即为缺陷。因缺陷造成损害的，生产者应承担赔偿责任——即使没有过错。
 
 依据：《产品质量法》第46条
-原文：https://legalhigh.pages.dev/#/laws/product-quality-2018?art=46
+原文：https://rethymus.github.io/LegalHigh/#/laws/product-quality-2018?art=46
 
 ### 如实告知义务（民事）
 
 订立保险合同时投保人应如实回答保险人的询问。故意不告知或重大过失未告知且足以影响承保决定的，保险人可解除合同。
 
 依据：《保险法》第16条
-原文：https://legalhigh.pages.dev/#/laws/insurance-2015?art=16
+原文：https://rethymus.github.io/LegalHigh/#/laws/insurance-2015?art=16
 
 ### 代位求偿权（民事）
 
 因第三者对保险标的损害造成保险事故的，保险人赔付后被保险人后，可在赔偿金额范围内代位行使对第三者的索赔权。
 
 依据：《保险法》第60条
-原文：https://legalhigh.pages.dev/#/laws/insurance-2015?art=60
+原文：https://rethymus.github.io/LegalHigh/#/laws/insurance-2015?art=60
 
 ### 消防安全职责（行政）
 
 机关、团体、企业、事业单位应落实消防安全责任制，制定消防安全制度，配置消防设施器材，组织防火检查消除火灾隐患。
 
 依据：《消防法》第16条
-原文：https://legalhigh.pages.dev/#/laws/fire-2021?art=16
+原文：https://rethymus.github.io/LegalHigh/#/laws/fire-2021?art=16
 
 ### 火灾报警义务（行政）
 
 任何人发现火灾都应当立即报警。严禁谎报火警。人员密集场所发生火灾时现场工作人员应组织引导在场人员疏散。
 
 依据：《消防法》第44条
-原文：https://legalhigh.pages.dev/#/laws/fire-2021?art=44
+原文：https://rethymus.github.io/LegalHigh/#/laws/fire-2021?art=44
 
 ### 横向垄断协议（经济法）
 
 具有竞争关系的经营者之间达成固定价格、限制产量、分割市场等协议，属于垄断协议，法律明令禁止。
 
 依据：《反垄断法》第17条
-原文：https://legalhigh.pages.dev/#/laws/anti-monopoly-2022?art=17
+原文：https://rethymus.github.io/LegalHigh/#/laws/anti-monopoly-2022?art=17
 
 ### 滥用市场支配地位（经济法）
 
 具有市场支配地位的经营者以不公平高价销售、无正当理由拒绝交易、限定交易对象等，构成滥用市场支配地位。
 
 依据：《反垄断法》第22条
-原文：https://legalhigh.pages.dev/#/laws/anti-monopoly-2022?art=22
+原文：https://rethymus.github.io/LegalHigh/#/laws/anti-monopoly-2022?art=22
 
 ### 内幕交易（经济法）
 
 证券交易内幕信息的知情人和非法获取内幕信息的人，在内幕信息公开前买卖证券或建议他人买卖，属于内幕交易，应承担法律责任。
 
 依据：《证券法》第50条
-原文：https://legalhigh.pages.dev/#/laws/securities-2019?art=50
+原文：https://rethymus.github.io/LegalHigh/#/laws/securities-2019?art=50
 
 ### 操纵证券市场（经济法）
 
 通过合谋、集中资金优势、连续买卖等手段操纵证券市场，影响交易价格或交易量，诱导投资者决策的，属于操纵市场行为。
 
 依据：《证券法》第55条
-原文：https://legalhigh.pages.dev/#/laws/securities-2019?art=55
+原文：https://rethymus.github.io/LegalHigh/#/laws/securities-2019?art=55
 
 ### 慈善活动（社会法）
 
 以捐赠财产或提供服务等方式自愿开展的扶贫、济困、救灾、助残、教育、科学、文化、卫生、体育等公益活动，属于慈善活动。
 
 依据：《慈善法》第3条
-原文：https://legalhigh.pages.dev/#/laws/charity-2023?art=3
+原文：https://rethymus.github.io/LegalHigh/#/laws/charity-2023?art=3
 
 ### 慈善组织信息公开（社会法）
 
 慈善组织应当依法公开信息，接受社会监督，包括募捐情况、接受捐赠、慈善财产管理使用等信息。
 
 依据：《慈善法》第58条
-原文：https://legalhigh.pages.dev/#/laws/charity-2023?art=58
+原文：https://rethymus.github.io/LegalHigh/#/laws/charity-2023?art=58
 
 ### 公证（程序）
 
 公证机构根据申请，依照法定程序对民事法律行为、有法律意义的事实和文书的真实性、合法性予以证明的活动。
 
 依据：《公证法》第2条
-原文：https://legalhigh.pages.dev/#/laws/notary-2017?art=2
+原文：https://rethymus.github.io/LegalHigh/#/laws/notary-2017?art=2
 
 ### 公证事项（程序）
 
 公证机构办理的公证事项包括合同、继承、委托、声明、赠与、遗嘱、财产分割、招标投标、拍卖等。
 
 依据：《公证法》第11条
-原文：https://legalhigh.pages.dev/#/laws/notary-2017?art=11
+原文：https://rethymus.github.io/LegalHigh/#/laws/notary-2017?art=11
 
 ### 专利申请权（知识产权）
 
 专利分为发明、实用新型和外观设计三种类型。完成发明创造后，可以就产品、方法或其改进提出新的技术方案申请专利保护。
 
 依据：《专利法》第2条
-原文：https://legalhigh.pages.dev/#/laws/patent-2020?art=2
+原文：https://rethymus.github.io/LegalHigh/#/laws/patent-2020?art=2
 
 ### 专利侵权（知识产权）
 
 未经专利权人许可实施其专利（制造、使用、销售、进口等）即构成侵权。发生纠纷可协商、请求管理部门处理或向法院起诉。
 
 依据：《专利法》第65条
-原文：https://legalhigh.pages.dev/#/laws/patent-2020?art=65
+原文：https://rethymus.github.io/LegalHigh/#/laws/patent-2020?art=65
 
 ### 作品（知识产权）
 
 著作权法保护的作品是指文学、艺术和科学领域内具有独创性并能以一定形式表现的智力成果，包括文字作品、口述作品、音乐、美术、视听作品等。
 
 依据：《著作权法》第3条
-原文：https://legalhigh.pages.dev/#/laws/copyright-2020?art=3
+原文：https://rethymus.github.io/LegalHigh/#/laws/copyright-2020?art=3
 
 ### 著作权内容（知识产权）
 
 著作权包括人身权（发表权、署名权、修改权、保护作品完整权）和财产权（复制权、发行权、信息网络传播权等）。
 
 依据：《著作权法》第10条
-原文：https://legalhigh.pages.dev/#/laws/copyright-2020?art=10
+原文：https://rethymus.github.io/LegalHigh/#/laws/copyright-2020?art=10
 
 ### 商标战略（知识产权）
 
 国家实施知识产权战略，提升商标保护、运用、管理和服务水平，促进商标的创造和运用。
 
 依据：《商标法》第3条
-原文：https://legalhigh.pages.dev/#/laws/trademark-2026?art=3
+原文：https://rethymus.github.io/LegalHigh/#/laws/trademark-2026?art=3
 
 ### 商标使用管理（知识产权）
 
 商标注册人应规范使用注册商标。自行改变注册商标内容、注册人名义地址等注册事项且逾期不改正的，可能面临处罚。
 
 依据：《商标法》第57条
-原文：https://legalhigh.pages.dev/#/laws/trademark-2026?art=57
+原文：https://rethymus.github.io/LegalHigh/#/laws/trademark-2026?art=57
 
 ### 商业广告（经济法）
 
 商品经营者或服务提供者通过媒介和形式直接或间接介绍自己商品或服务的商业广告活动，受广告法调整。
 
 依据：《广告法》第2条
-原文：https://legalhigh.pages.dev/#/laws/advertising-2021?art=2
+原文：https://rethymus.github.io/LegalHigh/#/laws/advertising-2021?art=2
 
 ### 虚假广告（经济法）
 
 广告以虚假或引人误解的内容欺骗、误导消费者的，构成虚假广告。发布虚假广告应承担法律责任。
 
 依据：《广告法》第28条
-原文：https://legalhigh.pages.dev/#/laws/advertising-2021?art=28
+原文：https://rethymus.github.io/LegalHigh/#/laws/advertising-2021?art=28
 
 ### 假药认定（行政）
 
 药品所含成份与国家标准不符、以非药品冒充药品或以他种药品冒充此种药品的，为假药。禁止生产、销售、使用假药。
 
 依据：《药品管理法》第98条
-原文：https://legalhigh.pages.dev/#/laws/drug-admin-2019?art=98
+原文：https://rethymus.github.io/LegalHigh/#/laws/drug-admin-2019?art=98
 
 ### 药品质量赔偿（行政）
 
 药品上市许可持有人、生产企业、经营企业或医疗机构违反药品管理规定给用药者造成损害的，依法承担赔偿责任。
 
 依据：《药品管理法》第144条
-原文：https://legalhigh.pages.dev/#/laws/drug-admin-2019?art=144
+原文：https://rethymus.github.io/LegalHigh/#/laws/drug-admin-2019?art=144
 
 ### 旅游者权利（民事）
 
 旅游者有权自主选择旅游产品和服务，有权拒绝强制交易，有权知悉真实情况，有权要求旅游经营者依约提供产品和服务。
 
 依据：《旅游法》第9条
-原文：https://legalhigh.pages.dev/#/laws/tourism-2018?art=9
+原文：https://rethymus.github.io/LegalHigh/#/laws/tourism-2018?art=9
 
 ### 旅行社违约责任（民事）
 
 旅行社不履行包价旅游合同或履行不符合约定的，应承担继续履行、补救措施或赔偿损失等违约责任；造成人身损害的还应赔偿。
 
 依据：《旅游法》第70条
-原文：https://legalhigh.pages.dev/#/laws/tourism-2018?art=70
+原文：https://rethymus.github.io/LegalHigh/#/laws/tourism-2018?art=70
 
 ### 传染病分类管理（程序）
 
 传染病分为甲类、乙类、丙类以及突发原因不明的传染病。甲类传染病（鼠疫、霍乱）实行最严格的预防控制措施。
 
 依据：《传染病防治法》第3条
-原文：https://legalhigh.pages.dev/#/laws/infectious-2025?art=3
+原文：https://rethymus.github.io/LegalHigh/#/laws/infectious-2025?art=3
 
 ### 传染病应急预案（程序）
 
 县级以上政府应制定传染病预防控制应急预案，增强科学性、针对性和可操作性，并根据实际需要和形势变化及时修订。
 
 依据：《传染病防治法》第30条
-原文：https://legalhigh.pages.dev/#/laws/infectious-2025?art=30
+原文：https://rethymus.github.io/LegalHigh/#/laws/infectious-2025?art=30
 
 ### 从业人员安全权利（劳动）
 
 劳动合同应载明劳动安全和防止职业危害事项以及工伤保险事项。从业人员有权了解危险因素和防范措施，有权拒绝违章指挥。
 
 依据：《安全生产法》第52条
-原文：https://legalhigh.pages.dev/#/laws/work-safety-2021?art=52
+原文：https://rethymus.github.io/LegalHigh/#/laws/work-safety-2021?art=52
 
 ### 安全生产方针（劳动）
 
 安全生产工作以人为本，坚持人民至上、生命至上，把保护人民生命安全摆在首位，树牢安全发展理念。
 
 依据：《安全生产法》第3条
-原文：https://legalhigh.pages.dev/#/laws/work-safety-2021?art=3
+原文：https://rethymus.github.io/LegalHigh/#/laws/work-safety-2021?art=3
 
 ### 股东有限责任（经济法）
 
 有限责任公司股东以其认缴的出资额为限对公司承担责任；股份有限公司股东以其认购的股份为限。股东还享有资产收益等权利。
 
 依据：《公司法》第4条
-原文：https://legalhigh.pages.dev/#/laws/company-2023?art=4
+原文：https://rethymus.github.io/LegalHigh/#/laws/company-2023?art=4
 
 ### 法人人格否认（经济法）
 
 股东滥用公司法人独立地位和股东有限责任逃避债务、严重损害债权人利益的，应对公司债务承担连带责任。
 
 依据：《公司法》第23条
-原文：https://legalhigh.pages.dev/#/laws/company-2023?art=23
+原文：https://rethymus.github.io/LegalHigh/#/laws/company-2023?art=23
 
 ### 仲裁协议效力（程序）
 
 仲裁事业发展应服务国家高质量发展，仲裁根据事实、符合法律规定，公平合理解决纠纷。
 
 依据：《仲裁法》第7条
-原文：https://legalhigh.pages.dev/#/laws/arbitration-2025?art=7
+原文：https://rethymus.github.io/LegalHigh/#/laws/arbitration-2025?art=7
 
 ### 一裁终局制度（程序）
 
 仲裁实行一裁终局制度，裁决作出后当事人就同一纠纷再申请仲裁或起诉的，不予受理。
 
 依据：《仲裁法》第9条
-原文：https://legalhigh.pages.dev/#/laws/arbitration-2025?art=9
+原文：https://rethymus.github.io/LegalHigh/#/laws/arbitration-2025?art=9
 
 ### 赡养义务（社会法）
 
 赡养人应对老年人履行经济上供养、生活上照料和精神上慰藉的义务。赡养人包括子女及其他依法负有赡养义务的人。
 
 依据：《老年人权益保障法》第14条
-原文：https://legalhigh.pages.dev/#/laws/elderly-2018?art=14
+原文：https://rethymus.github.io/LegalHigh/#/laws/elderly-2018?art=14
 
 ### 老年人优待（社会法）
 
 与老年人日常生活密切相关的服务行业应为老年人提供优先、优惠服务；公共交通应为老年人提供优待和照顾。
 
 依据：《老年人权益保障法》第58条
-原文：https://legalhigh.pages.dev/#/laws/elderly-2018?art=58
+原文：https://rethymus.github.io/LegalHigh/#/laws/elderly-2018?art=58
 
 ### 电信网络诈骗（刑事）
 
 以非法占有为目的，利用电信网络技术手段，通过远程、非接触方式诈骗公私财物的行为。非法买卖电话卡银行卡帮助诈骗也属违法。
 
 依据：《反电信网络诈骗法》第2条
-原文：https://legalhigh.pages.dev/#/laws/anti-fraud-2022?art=2
+原文：https://rethymus.github.io/LegalHigh/#/laws/anti-fraud-2022?art=2
 
 ### 两卡管理（刑事）
 
 任何单位和个人不得非法买卖、出租、出借电话卡、银行账户、支付账户、互联网账号等，不得提供实名核验帮助。
 
 依据：《反电信网络诈骗法》第31条
-原文：https://legalhigh.pages.dev/#/laws/anti-fraud-2022?art=31
+原文：https://rethymus.github.io/LegalHigh/#/laws/anti-fraud-2022?art=31
 
 ### 人民调解（程序）
 
 人民调解委员会通过说服、疏导等方法促使当事人自愿达成调解协议、解决民间纠纷的活动。调解协议具有法律约束力。
 
 依据：《人民调解法》第2条、《人民调解法》第31条
-原文：https://legalhigh.pages.dev/#/laws/mediation-2010?art=2
+原文：https://rethymus.github.io/LegalHigh/#/laws/mediation-2010?art=2
 
 ### 身份证查验（行政）
 
 人民警察遇有违法犯罪嫌疑等法定情形，经出示执法证件可以查验居民身份证；但不得随意扣押居民身份证。
 
 依据：《居民身份证法》第15条
-原文：https://legalhigh.pages.dev/#/laws/id-card-2011?art=15
+原文：https://rethymus.github.io/LegalHigh/#/laws/id-card-2011?art=15
 
 ### 身份证违法行为（行政）
 
 使用虚假证明材料骗领身份证、出租出借转让身份证、购买出售使用伪造变造身份证的，由公安机关处罚。
 
 依据：《居民身份证法》第16条
-原文：https://legalhigh.pages.dev/#/laws/id-card-2011?art=16
+原文：https://rethymus.github.io/LegalHigh/#/laws/id-card-2011?art=16
 
 ### 精神障碍患者权益（社会法）
 
 精神障碍患者的人格尊严、人身和财产安全不受侵犯，其教育、劳动、医疗等合法权益受法律保护。
 
 依据：《精神卫生法》第4条
-原文：https://legalhigh.pages.dev/#/laws/mental-health-2018?art=4
+原文：https://rethymus.github.io/LegalHigh/#/laws/mental-health-2018?art=4
 
 ### 自愿住院原则（社会法）
 
 精神障碍的住院治疗实行自愿原则。除法律规定情形外，不得强制精神障碍患者住院治疗。
 
 依据：《精神卫生法》第30条
-原文：https://legalhigh.pages.dev/#/laws/mental-health-2018?art=30
+原文：https://rethymus.github.io/LegalHigh/#/laws/mental-health-2018?art=30
 
 ### 毒品（刑事）
 
 毒品是指鸦片、海洛因、甲基苯丙胺、吗啡、大麻、可卡因以及国家规定管制的其他能够使人形成瘾癖的麻醉药品和精神药品。
 
 依据：《禁毒法》第3条
-原文：https://legalhigh.pages.dev/#/laws/anti-drug-2008?art=3
+原文：https://rethymus.github.io/LegalHigh/#/laws/anti-drug-2008?art=3
 
 ### 容留吸毒（刑事）
 
 容留他人吸食、注射毒品构成犯罪的，依法追究刑事责任；尚不构成犯罪的，依法给予治安管理处罚。
 
 依据：《禁毒法》第59条
-原文：https://legalhigh.pages.dev/#/laws/anti-drug-2008?art=59
+原文：https://rethymus.github.io/LegalHigh/#/laws/anti-drug-2008?art=59
 
 ### 土地承包经营权（民事）
 
 承包方承包土地后享有土地承包经营权，可自己经营也可流转土地经营权由他人经营。国家保护进城农户的土地承包经营权。
 
 依据：《农村土地承包法》第9条、《农村土地承包法》第27条
-原文：https://legalhigh.pages.dev/#/laws/rural-land-2018?art=9
+原文：https://rethymus.github.io/LegalHigh/#/laws/rural-land-2018?art=9
 
 ### 义务教育（行政）
 
 国家实行九年义务教育制度，所有适龄儿童、少年必须接受，是国家必须予以保障的公益性事业。
 
 依据：《义务教育法》第2条
-原文：https://legalhigh.pages.dev/#/laws/compulsory-edu-2018?art=2
+原文：https://rethymus.github.io/LegalHigh/#/laws/compulsory-edu-2018?art=2
 
 ### 免试入学（行政）
 
 义务教育学校实行免试就近入学，不得以面试、评测等名义选拔学生。适龄儿童、少年在户籍所在地学校就近入学。
 
 依据：《义务教育法》第7条
-原文：https://legalhigh.pages.dev/#/laws/compulsory-edu-2018?art=7
+原文：https://rethymus.github.io/LegalHigh/#/laws/compulsory-edu-2018?art=7
 
 ### 混淆行为（经济法）
 
 经营者不得擅自使用与他人有一定影响的商品名称、包装、装潢等相同或近似的标识，引人误认为他人商品或与他人存在特定联系。
 
 依据：《反不正当竞争法》第7条
-原文：https://legalhigh.pages.dev/#/laws/unfair-competition-2025?art=7
+原文：https://rethymus.github.io/LegalHigh/#/laws/unfair-competition-2025?art=7
 
 ### 虚假宣传（经济法）
 
 经营者不得对商品的性能、功能、质量、销售状况、用户评价等作虚假或引人误解的商业宣传，欺骗误导消费者。
 
 依据：《反不正当竞争法》第9条
-原文：https://legalhigh.pages.dev/#/laws/unfair-competition-2025?art=9
+原文：https://rethymus.github.io/LegalHigh/#/laws/unfair-competition-2025?art=9
 
 ### 工会基本职责（劳动）
 
 维护职工合法权益、竭诚服务职工群众是工会的基本职责。工会通过平等协商和集体合同制度等维护职工劳动权益。
 
 依据：《工会法》第6条
-原文：https://legalhigh.pages.dev/#/laws/trade-union-2021?art=6
+原文：https://rethymus.github.io/LegalHigh/#/laws/trade-union-2021?art=6
 
 ### 工会劳动保护监督（劳动）
 
 用人单位处分职工或单方面解除劳动合同时应事先通知工会，工会认为不适当的有权提出意见。
 
 依据：《工会法》第22条
-原文：https://legalhigh.pages.dev/#/laws/trade-union-2021?art=22
+原文：https://rethymus.github.io/LegalHigh/#/laws/trade-union-2021?art=22
 
 ### 无障碍设施建设（社会法）
 
 工程建设单位应将无障碍设施建设经费纳入项目概预算，不得明示或暗示设计施工单位违反无障碍设施工程建设标准。
 
 依据：《无障碍环境建设法》第14条
-原文：https://legalhigh.pages.dev/#/laws/accessibility-2023?art=14
+原文：https://rethymus.github.io/LegalHigh/#/laws/accessibility-2023?art=14
 
 ### 无障碍信息交流（社会法）
 
 利用财政资金设立的电视台应在播出电视节目时配备同步字幕，条件具备的每天至少播放一次配播手语的新闻节目。
 
 依据：《无障碍环境建设法》第30条
-原文：https://legalhigh.pages.dev/#/laws/accessibility-2023?art=30
+原文：https://rethymus.github.io/LegalHigh/#/laws/accessibility-2023?art=30
 
 ### 疫苗战略公益性（行政）
 
 国家坚持疫苗产品的战略性和公益性，支持疫苗基础研究和应用研究，将预防控制重大疾病的疫苗研制、生产和储备纳入国家战略。
 
 依据：《疫苗管理法》第4条
-原文：https://legalhigh.pages.dev/#/laws/vaccine-2019?art=4
+原文：https://rethymus.github.io/LegalHigh/#/laws/vaccine-2019?art=4
 
 ### 疫苗储存运输管理（行政）
 
 疫苗上市许可持有人应建立完整的生产质量管理体系，采用信息化手段如实记录生产检验全过程数据，确保疫苗质量安全。
 
 依据：《疫苗管理法》第25条
-原文：https://legalhigh.pages.dev/#/laws/vaccine-2019?art=25
+原文：https://rethymus.github.io/LegalHigh/#/laws/vaccine-2019?art=25
 
 ### 多层次医疗保障体系（社会法）
 
 国家建立健全以基本医疗保险为主体的多层次全民医疗保障体系，促进参保人员连续参保。
 
 依据：《医疗保障法》第8条
-原文：https://legalhigh.pages.dev/#/laws/medical-insurance-2027?art=8
+原文：https://rethymus.github.io/LegalHigh/#/laws/medical-insurance-2027?art=8
 
 ### 医保基金参保机制（社会法）
 
 国家建立健全参保长效机制，优化参保服务，完善激励约束措施，促进参保人员连续参保。
 
 依据：《医疗保障法》第12条
-原文：https://legalhigh.pages.dev/#/laws/medical-insurance-2027?art=12
+原文：https://rethymus.github.io/LegalHigh/#/laws/medical-insurance-2027?art=12
 
 ### 体育管理体制（行政）
 
 国务院体育行政部门主管全国体育工作，县级以上地方政府体育行政部门主管本行政区域内的体育工作。
 
 依据：《体育法》第4条
-原文：https://legalhigh.pages.dev/#/laws/sports-2023?art=4
+原文：https://rethymus.github.io/LegalHigh/#/laws/sports-2023?art=4
 
 ### 学校体育督导（行政）
 
 各级教育督导机构应对学校体育实施督导并向社会公布督导报告，保障学生体育活动权利。
 
 依据：《体育法》第35条
-原文：https://legalhigh.pages.dev/#/laws/sports-2023?art=35
+原文：https://rethymus.github.io/LegalHigh/#/laws/sports-2023?art=35
 
 ### 反洗钱客户尽职调查（经济法）
 
 金融机构应持续关注并评估客户整体状况及交易情况，了解客户的洗钱风险。发现客户交易异常时应按规定处理。
 
 依据：《反洗钱法》第30条
-原文：https://legalhigh.pages.dev/#/laws/aml-2024?art=30
+原文：https://rethymus.github.io/LegalHigh/#/laws/aml-2024?art=30
 
 ### 突发事件（行政）
 
 突发事件是指突然发生、造成或可能造成严重社会危害的自然灾害、事故灾难、公共卫生事件和社会安全事件，需要采取应急处置措施应对。
 
 依据：《突发事件应对法》第2条
-原文：https://legalhigh.pages.dev/#/laws/emergency-2024?art=2
+原文：https://rethymus.github.io/LegalHigh/#/laws/emergency-2024?art=2
 
 ### 突发事件应对原则（行政）
 
 突发事件应对坚持总体国家安全观，人民至上生命至上，依法科学应对，预防为主、预防与应急相结合。
 
 依据：《突发事件应对法》第5条
-原文：https://legalhigh.pages.dev/#/laws/emergency-2024?art=5
+原文：https://rethymus.github.io/LegalHigh/#/laws/emergency-2024?art=5
 
 ### 无偿献血制度（行政）
 
 国家实行无偿献血制度，提倡十八至五十五周岁健康公民自愿献血。国家鼓励国家工作人员、现役军人和高校学生率先献血。
 
 依据：《献血法》第2条（无偿献血制度）、《献血法》第7条（鼓励率先献血）
-原文：https://legalhigh.pages.dev/#/laws/blood-donation-1998?art=2
+原文：https://rethymus.github.io/LegalHigh/#/laws/blood-donation-1998?art=2
 
 ### 合伙企业（经济法）
 
 合伙企业分为普通合伙企业和有限合伙企业。普通合伙企业由普通合伙人组成，合伙人对合伙企业债务承担无限连带责任。
 
 依据：《合伙企业法》第2条、《合伙企业法》第14条
-原文：https://legalhigh.pages.dev/#/laws/partnership-2006?art=2
+原文：https://rethymus.github.io/LegalHigh/#/laws/partnership-2006?art=2
 
 ### 审计监督制度（程序）
 
 国家实行审计监督制度，构建集中统一、全面覆盖、权威高效的审计监督体系，对财政收支和财务收支进行审计监督。
 
 依据：《审计法》第2条
-原文：https://legalhigh.pages.dev/#/laws/audit-2021?art=2
+原文：https://rethymus.github.io/LegalHigh/#/laws/audit-2021?art=2
 
 ### 审计权限（国际项目）（程序）
 
 审计机关对国际组织和外国政府援助、贷款项目的财务收支进行审计监督。
 
 依据：《审计法》第25条
-原文：https://legalhigh.pages.dev/#/laws/audit-2021?art=25
+原文：https://rethymus.github.io/LegalHigh/#/laws/audit-2021?art=25
 
 ### 档案开放（程序）
 
 档案馆应定期公布开放档案目录，创新服务形式，积极为档案利用创造条件。档案一般自形成之日起满二十五年向社会开放。
 
 依据：《档案法》第28条
-原文：https://legalhigh.pages.dev/#/laws/archives-2020?art=28
+原文：https://rethymus.github.io/LegalHigh/#/laws/archives-2020?art=28
 
 ### 票据（经济法）
 
 票据分为汇票、本票和支票。票据活动适用票据法，票据的签发、取得和转让应遵循诚实信用原则，具有真实的交易关系和债权债务关系。
 
 依据：《票据法》第2条、《票据法》第10条
-原文：https://legalhigh.pages.dev/#/laws/negotiable-2004?art=2
+原文：https://rethymus.github.io/LegalHigh/#/laws/negotiable-2004?art=2
 
 ### 邮政普遍服务（经济法）
 
 国务院规定范围内的信件寄递业务由邮政企业专营。邮政企业应提供邮政普遍服务。
 
 依据：《邮政法》第5条
-原文：https://legalhigh.pages.dev/#/laws/postal-2015?art=5
+原文：https://rethymus.github.io/LegalHigh/#/laws/postal-2015?art=5
 
 ### 通信自由保护（民事）
 
 任何单位和个人不得私自开拆、隐匿、毁弃他人邮件。邮政企业及其从业人员不得泄露用户使用邮政服务的信息。
 
 依据：《邮政法》第35条
-原文：https://legalhigh.pages.dev/#/laws/postal-2015?art=35
+原文：https://rethymus.github.io/LegalHigh/#/laws/postal-2015?art=35
 
 ### 劳动者权利（劳动）
 
 劳动者享有平等就业和选择职业的权利、取得劳动报酬的权利、休息休假的权利、获得劳动安全卫生保护的权利等。
 
 依据：《劳动法》第3条
-原文：https://legalhigh.pages.dev/#/laws/labor-law-2018?art=3
+原文：https://rethymus.github.io/LegalHigh/#/laws/labor-law-2018?art=3
 
 ### 工资支付保障（劳动）
 
 工资应当以货币形式按月支付给劳动者本人，不得克扣或者无故拖欠劳动者的工资。
 
 依据：《劳动法》第50条
-原文：https://legalhigh.pages.dev/#/laws/labor-law-2018?art=50
+原文：https://rethymus.github.io/LegalHigh/#/laws/labor-law-2018?art=50
 
 ### 环境保护义务（行政）
 
 一切单位和个人都有保护环境的义务。企业事业单位和其他生产经营者应防止、减少环境污染和生态破坏，对所造成的损害依法承担责任。
 
 依据：《环境保护法》第6条
-原文：https://legalhigh.pages.dev/#/laws/environment-2014?art=6
+原文：https://rethymus.github.io/LegalHigh/#/laws/environment-2014?art=6
 
 ### 按日连续处罚（行政）
 
 违法排放污染物受到罚款处罚被责令改正后拒不改正的，行政机关可自责令改正之日的次日起按原处罚数额按日连续处罚。
 
 依据：《环境保护法》第59条
-原文：https://legalhigh.pages.dev/#/laws/environment-2014?art=59
+原文：https://rethymus.github.io/LegalHigh/#/laws/environment-2014?art=59
 
 ### 市场价格机制（经济法）
 
 国家实行主要由市场形成价格的机制。大多数商品和服务价格实行市场调节价，极少数商品和服务价格实行政府指导价或政府定价。
 
 依据：《价格法》第3条
-原文：https://legalhigh.pages.dev/#/laws/price-1997?art=3
+原文：https://rethymus.github.io/LegalHigh/#/laws/price-1997?art=3
 
 ### 不正当价格行为（经济法）
 
 经营者不得相互串通操纵市场价格，不得捏造散布涨价信息哄抬价格，不得对具有同等交易条件的其他经营者实行价格歧视。
 
 依据：《价格法》第14条
-原文：https://legalhigh.pages.dev/#/laws/price-1997?art=14
+原文：https://rethymus.github.io/LegalHigh/#/laws/price-1997?art=14
 
 ### 人民警察任务（行政）
 
 人民警察的任务是维护国家安全、社会治安秩序，保护公民人身安全和合法财产，预防、制止和惩治违法犯罪活动。
 
 依据：《人民警察法》第2条
-原文：https://legalhigh.pages.dev/#/laws/police-2012?art=2
+原文：https://rethymus.github.io/LegalHigh/#/laws/police-2012?art=2
 
 ### 人民警察禁止行为（行政）
 
 人民警察不得散布损害国家声誉的言论、参加非法组织、参加罢工、泄露国家秘密、玩忽职守、刑讯逼供、非法剥夺限制他人人身自由等。
 
 依据：《人民警察法》第22条
-原文：https://legalhigh.pages.dev/#/laws/police-2012?art=22
+原文：https://rethymus.github.io/LegalHigh/#/laws/police-2012?art=22
 
 ### 残疾人平等权利（社会法）
 
 残疾人在政治、经济、文化、社会和家庭生活等方面享有同其他公民平等的权利。禁止基于残疾的歧视。
 
 依据：《残疾人保障法》第3条
-原文：https://legalhigh.pages.dev/#/laws/disabled-2018?art=3
+原文：https://rethymus.github.io/LegalHigh/#/laws/disabled-2018?art=3
 
 ### 残疾人福利性单位保护（社会法）
 
 国家保护残疾人福利性单位的财产所有权和经营自主权。职工招用、晋级、职称评定等方面不得歧视残疾人。
 
 依据：《残疾人保障法》第38条
-原文：https://legalhigh.pages.dev/#/laws/disabled-2018?art=38
+原文：https://rethymus.github.io/LegalHigh/#/laws/disabled-2018?art=38
 
 ### 家庭教育立德树人（社会法）
 
 家庭教育以立德树人为根本任务，弘扬中华民族优秀传统文化，促进未成年人健康成长。
 
 依据：《家庭教育促进法》第3条
-原文：https://legalhigh.pages.dev/#/laws/family-edu-2021?art=3
+原文：https://rethymus.github.io/LegalHigh/#/laws/family-edu-2021?art=3
 
 ### 家庭教育基本要求（社会法）
 
 家庭教育应尊重未成年人身心发展规律和个体差异，尊重人格尊严，保护隐私权和个人信息。
 
 依据：《家庭教育促进法》第5条
-原文：https://legalhigh.pages.dev/#/laws/family-edu-2021?art=5
+原文：https://rethymus.github.io/LegalHigh/#/laws/family-edu-2021?art=5
 
 ### 破产原因（经济法）
 
 企业法人不能清偿到期债务且资产不足以清偿全部债务或明显缺乏清偿能力的，可依照企业破产法清理债务或重整。
 
 依据：《企业破产法》第2条
-原文：https://legalhigh.pages.dev/#/laws/bankruptcy-2006?art=2
+原文：https://rethymus.github.io/LegalHigh/#/laws/bankruptcy-2006?art=2
 
 ### 破产申请（经济法）
 
 债务人不能清偿到期债务可向法院提出重整、和解或破产清算申请；债权人也可向法院申请对债务人重整或破产清算。
 
 依据：《企业破产法》第7条
-原文：https://legalhigh.pages.dev/#/laws/bankruptcy-2006?art=7
+原文：https://rethymus.github.io/LegalHigh/#/laws/bankruptcy-2006?art=7
 
 ### 受教育平等权（行政）
 
 公民不分民族、种族、性别、职业、财产状况、宗教信仰等，依法享有平等的受教育机会。
 
 依据：《教育法》第9条
-原文：https://legalhigh.pages.dev/#/laws/education-2021?art=9
+原文：https://rethymus.github.io/LegalHigh/#/laws/education-2021?art=9
 
 ### 学前教育普及（行政）
 
 国家制定学前教育标准，加快普及学前教育，构建覆盖城乡特别是农村的学前教育公共服务体系。
 
 依据：《教育法》第18条
-原文：https://legalhigh.pages.dev/#/laws/education-2021?art=18
+原文：https://rethymus.github.io/LegalHigh/#/laws/education-2021?art=18
 
 ### 中医药事业（行政）
 
 中医药事业是我国医药卫生事业的重要组成部分。国家大力发展中医药事业，实行中西医并重的方针，充分发挥中医药特色和优势。
 
 依据：《中医药法》第3条
-原文：https://legalhigh.pages.dev/#/laws/tcm-2017?art=3
+原文：https://rethymus.github.io/LegalHigh/#/laws/tcm-2017?art=3
 
 ### 中医药学术传承（行政）
 
 具有重要学术价值的中医药理论和技术方法，省级以上政府中医药主管部门应组织遴选传承项目和传承人。
 
 依据：《中医药法》第42条
-原文：https://legalhigh.pages.dev/#/laws/tcm-2017?art=42
+原文：https://rethymus.github.io/LegalHigh/#/laws/tcm-2017?art=42
 
 ### 计量器具管理（经济法）
 
 建立计量基准器具、计量标准器具，进行计量检定，制造、修理、销售、使用计量器具，必须遵守计量法规定。
 
 依据：《计量法》第2条
-原文：https://legalhigh.pages.dev/#/laws/metrology-2018?art=2
+原文：https://rethymus.github.io/LegalHigh/#/laws/metrology-2018?art=2
 
 ### 社会公用计量标准（经济法）
 
 县级以上政府计量行政部门对社会公用计量标准器具及部门、企事业使用的最高计量标准器具实行强制检定。
 
 依据：《计量法》第9条
-原文：https://legalhigh.pages.dev/#/laws/metrology-2018?art=9
+原文：https://rethymus.github.io/LegalHigh/#/laws/metrology-2018?art=9
 
 ### 标准化要求（经济法）
 
 标准是农业、工业、服务业以及社会事业等领域需要统一的技术要求，包括国家标准、行业标准、地方标准和团体标准、企业标准。
 
 依据：《标准化法》第2条
-原文：https://legalhigh.pages.dev/#/laws/standardization-2017?art=2
+原文：https://rethymus.github.io/LegalHigh/#/laws/standardization-2017?art=2
 
 ### 强制性标准实施（经济法）
 
 不符合强制性标准的产品、服务，不得生产、销售、进口或者提供——强制性标准具有法律强制力。
 
 依据：《标准化法》第25条
-原文：https://legalhigh.pages.dev/#/laws/standardization-2017?art=25
+原文：https://rethymus.github.io/LegalHigh/#/laws/standardization-2017?art=25
 
 ### 科技成果转化（经济法）
 
 科技成果是通过科学研究与技术开发产生的具有实用价值的成果。职务科技成果的权利归属由法律规定或合同约定。
 
 依据：《促进科技成果转化法》第2条
-原文：https://legalhigh.pages.dev/#/laws/tech-transfer-2015?art=2
+原文：https://rethymus.github.io/LegalHigh/#/laws/tech-transfer-2015?art=2
 
 ### 科技成果转化方式（经济法）
 
 科技成果持有者可自行投资转化、向他人转让、许可他人使用、以科技成果作价投资等方式实施转化。
 
 依据：《促进科技成果转化法》第16条
-原文：https://legalhigh.pages.dev/#/laws/tech-transfer-2015?art=16
+原文：https://rethymus.github.io/LegalHigh/#/laws/tech-transfer-2015?art=16
 
 ### 专门教育（社会法）
 
 专门教育是国民教育体系的组成部分，对有严重不良行为的未成年人进行教育和矫治。
 
 依据：《预防未成年人犯罪法》第6条
-原文：https://legalhigh.pages.dev/#/laws/crime-prev-2020?art=6
+原文：https://rethymus.github.io/LegalHigh/#/laws/crime-prev-2020?art=6
 
 ### 预防犯罪表彰（社会法）
 
 国家对预防未成年人犯罪工作有显著成绩的组织和个人给予表彰和奖励。
 
 依据：《预防未成年人犯罪法》第14条
-原文：https://legalhigh.pages.dev/#/laws/crime-prev-2020?art=14
+原文：https://rethymus.github.io/LegalHigh/#/laws/crime-prev-2020?art=14
 
 ### 医师职业精神（社会法）
 
 医师应坚持人民至上、生命至上，发扬救死扶伤、甘于奉献的崇高职业精神，恪守职业道德，遵守执业规范。
 
 依据：《医师法》第3条
-原文：https://legalhigh.pages.dev/#/laws/physicians-2021?art=3
+原文：https://rethymus.github.io/LegalHigh/#/laws/physicians-2021?art=3
 
 ### 医师执业义务（社会法）
 
 医师执业应尽职尽责救治患者，执行疫情防控等公共卫生措施，如实告知病情，保护患者隐私。
 
 依据：《医师法》第23条
-原文：https://legalhigh.pages.dev/#/laws/physicians-2021?art=23
+原文：https://rethymus.github.io/LegalHigh/#/laws/physicians-2021?art=23
 
 ### 乡村振兴原则（经济法）
 
 乡村振兴坚持党的领导和新发展理念，促进共同富裕，走中国特色社会主义乡村振兴道路。
 
 依据：《乡村振兴促进法》第4条
-原文：https://legalhigh.pages.dev/#/laws/rural-revitalization-2021?art=4
+原文：https://rethymus.github.io/LegalHigh/#/laws/rural-revitalization-2021?art=4
 
 ### 乡村产业发展（经济法）
 
 各级政府应加强国有农（林、牧、渔）场规划建设，推进现代农业发展，促进乡村产业振兴。
 
 依据：《乡村振兴促进法》第22条
-原文：https://legalhigh.pages.dev/#/laws/rural-revitalization-2021?art=22
+原文：https://rethymus.github.io/LegalHigh/#/laws/rural-revitalization-2021?art=22
 
 ### 特种设备定期检验（行政）
 
 特种设备使用单位应在检验合格有效期届满前一个月向特种设备检验机构提出定期检验要求。
 
 依据：《特种设备安全法》第40条
-原文：https://legalhigh.pages.dev/#/laws/special-equipment-2014?art=40
+原文：https://rethymus.github.io/LegalHigh/#/laws/special-equipment-2014?art=40
 
 ### 特种设备安全监管（行政）
 
 各级政府应加强特种设备安全工作领导，督促有关部门依法履行监督管理职责，建立协调机制。
 
 依据：《特种设备安全法》第6条
-原文：https://legalhigh.pages.dev/#/laws/special-equipment-2014?art=6
+原文：https://rethymus.github.io/LegalHigh/#/laws/special-equipment-2014?art=6
 
 ### 学位类型（行政）
 
 我国学位分为学士、硕士、博士三级，包括学术学位和专业学位等类型，按学科门类和专业学位类别授予。
 
 依据：《学位法》第2条
-原文：https://legalhigh.pages.dev/#/laws/academic-degree-2024?art=2
+原文：https://rethymus.github.io/LegalHigh/#/laws/academic-degree-2024?art=2
 
 ### 学位不授予与撤销（行政）
 
 学位论文存在造假等学术不端情形的，学位授予单位可不授予学位或撤销已授学位。
 
 依据：《学位法》第37条
-原文：https://legalhigh.pages.dev/#/laws/academic-degree-2024?art=37
+原文：https://rethymus.github.io/LegalHigh/#/laws/academic-degree-2024?art=37
 
 ### 动物防疫（行政）
 
 动物防疫适用于我国领域内的动物防疫及其监督管理活动，包括动物疫病的预防、控制、扑灭和动物及动物产品的检疫。
 
 依据：《动物防疫法》第2条
-原文：https://legalhigh.pages.dev/#/laws/animal-epidemic-2021?art=2
+原文：https://rethymus.github.io/LegalHigh/#/laws/animal-epidemic-2021?art=2
 
 ### 动物疫情报告（行政）
 
 从事动物饲养、屠宰、经营、运输等活动的单位和个人发现动物染疫或疑似染疫的，应立即向所在地农业农村主管部门或动物卫生监督机构报告。
 
 依据：《动物防疫法》第31条
-原文：https://legalhigh.pages.dev/#/laws/animal-epidemic-2021?art=31
+原文：https://rethymus.github.io/LegalHigh/#/laws/animal-epidemic-2021?art=31
 
 ### 监狱刑罚执行（刑事）
 
 监狱是国家的刑罚执行机关。被判处死刑缓期二年执行、无期徒刑、有期徒刑的罪犯在监狱内执行刑罚。
 
 依据：《监狱法》第2条
-原文：https://legalhigh.pages.dev/#/laws/prison-2012?art=2
+原文：https://rethymus.github.io/LegalHigh/#/laws/prison-2012?art=2
 
 ### 罪犯人格保障（刑事）
 
 罪犯的人格不受侮辱，其人身安全、合法财产和辩护、申诉、控告、检举等未被依法剥夺或限制的权利不受侵犯。
 
 依据：《监狱法》第7条
-原文：https://legalhigh.pages.dev/#/laws/prison-2012?art=7
+原文：https://rethymus.github.io/LegalHigh/#/laws/prison-2012?art=7
 
 ### 高等教育权利（行政）
 
 公民依法享有接受高等教育的权利。国家帮助少数民族学生和经济困难学生接受高等教育。
 
 依据：《高等教育法》第9条
-原文：https://legalhigh.pages.dev/#/laws/higher-edu-2018?art=9
+原文：https://rethymus.github.io/LegalHigh/#/laws/higher-edu-2018?art=9
 
 ### 高等教育学生义务（行政）
 
 高等学校学生应遵守法律法规和学校管理制度，尊敬师长，刻苦学习，增强体质，树立爱国主义、集体主义和社会主义思想。
 
 依据：《高等教育法》第53条
-原文：https://legalhigh.pages.dev/#/laws/higher-edu-2018?art=53
+原文：https://rethymus.github.io/LegalHigh/#/laws/higher-edu-2018?art=53
 
 ### 英雄烈士保护（行政）
 
 国家和人民永远尊崇、铭记英雄烈士的牺牲和贡献。侵害英雄烈士姓名、肖像、名誉、荣誉的，近亲属或检察机关可依法提起诉讼。
 
 依据：《英雄烈士保护法》第2条、《英雄烈士保护法》第25条
-原文：https://legalhigh.pages.dev/#/laws/martyrs-2018?art=2
+原文：https://rethymus.github.io/LegalHigh/#/laws/martyrs-2018?art=2
 
 ### 反洗钱（经济法）
 
 反洗钱是为预防通过掩饰、隐瞒毒品犯罪、黑社会性质组织犯罪、贪污贿赂犯罪等犯罪所得来源和性质的活动而采取的措施。
 
 依据：《反洗钱法》第2条
-原文：https://legalhigh.pages.dev/#/laws/aml-2024?art=2
+原文：https://rethymus.github.io/LegalHigh/#/laws/aml-2024?art=2
 
 ### 反洗钱特别预防措施（经济法）
 
 对国家反恐怖主义工作领导机构认定的恐怖活动组织及人员，应采取反洗钱特别预防措施。
 
 依据：《反洗钱法》第40条
-原文：https://legalhigh.pages.dev/#/laws/aml-2024?art=40
+原文：https://rethymus.github.io/LegalHigh/#/laws/aml-2024?art=40
 
 ### 学前教育（社会法）
 
 学前教育是由幼儿园等机构对三周岁到入小学前的儿童实施的保育和教育，是重要的社会公益事业。
 
 依据：《学前教育法》第2条
-原文：https://legalhigh.pages.dev/#/laws/preschool-edu-2025?art=2
+原文：https://rethymus.github.io/LegalHigh/#/laws/preschool-edu-2025?art=2
 
 ### 学前教育普及普惠（社会法）
 
 全社会应为适龄儿童接受学前教育、健康快乐成长创造良好环境，推动学前教育普及普惠安全优质发展。
 
 依据：《学前教育法》第7条
-原文：https://legalhigh.pages.dev/#/laws/preschool-edu-2025?art=7
+原文：https://rethymus.github.io/LegalHigh/#/laws/preschool-edu-2025?art=7
 
 ### 农业基本制度（经济法）
 
 农业是指种植业、林业、畜牧业和渔业等产业，包括与其直接相关的产前、产中、产后服务。
 
 依据：《农业法》第2条
-原文：https://legalhigh.pages.dev/#/laws/agriculture-2013?art=2
+原文：https://rethymus.github.io/LegalHigh/#/laws/agriculture-2013?art=2
 
 ### 科教兴农与可持续发展（经济法）
 
 国家坚持科教兴农和农业可持续发展方针，加强农业基础设施建设，调整优化农业和农村经济结构，推进农业产业化经营。
 
 依据：《农业法》第6条
-原文：https://legalhigh.pages.dev/#/laws/agriculture-2013?art=6
+原文：https://rethymus.github.io/LegalHigh/#/laws/agriculture-2013?art=6
 
 ### 村民委员会（社会法）
 
 村民委员会是村民自我管理、自我服务、自我教育、自我监督的基层群众性自治组织，实行民主选举、民主协商、民主决策、民主管理、民主监督。
 
 依据：《村民委员会组织法》第2条
-原文：https://legalhigh.pages.dev/#/laws/village-committee-2025?art=2
+原文：https://rethymus.github.io/LegalHigh/#/laws/village-committee-2025?art=2
 
 ### 村务移交（社会法）
 
 新一届村民委员会产生之日起十日内完成工作移交，由村民选举委员会主持，乡镇政府监督。
 
 依据：《村民委员会组织法》第24条
-原文：https://legalhigh.pages.dev/#/laws/village-committee-2025?art=24
+原文：https://rethymus.github.io/LegalHigh/#/laws/village-committee-2025?art=24
 
 ### 社区矫正（刑事）
 
 对被判处管制、宣告缓刑、假释和暂予监外执行的罪犯依法实行社区矫正，监督管理与教育帮扶相结合。
 
 依据：《社区矫正法》第2条、《社区矫正法》第3条
-原文：https://legalhigh.pages.dev/#/laws/community-correction-2020?art=2
+原文：https://rethymus.github.io/LegalHigh/#/laws/community-correction-2020?art=2
 
 ### 纳税申报（经济法）
 
 纳税人必须按法定期限和内容如实办理纳税申报，报送纳税申报表、财务会计报表等资料。
 
 依据：《税收征收管理法》第25条
-原文：https://legalhigh.pages.dev/#/laws/tax-admin-2015?art=25
+原文：https://rethymus.github.io/LegalHigh/#/laws/tax-admin-2015?art=25
 
 ### 滞纳金（经济法）
 
 纳税人未按期缴纳税款的，税务机关除责令限期缴纳外，从滞纳税款之日起按日加收滞纳税款万分之五的滞纳金。
 
 依据：《税收征收管理法》第32条
-原文：https://legalhigh.pages.dev/#/laws/tax-admin-2015?art=32
+原文：https://rethymus.github.io/LegalHigh/#/laws/tax-admin-2015?art=32
 
 ### 农产品产地监测（经济法）
 
 国家建立健全农产品产地监测制度，县级以上农业农村主管部门制定农产品产地监测计划，监测产地环境质量。
 
 依据：《农产品质量安全法》第20条
-原文：https://legalhigh.pages.dev/#/laws/agri-quality-2022?art=20
+原文：https://rethymus.github.io/LegalHigh/#/laws/agri-quality-2022?art=20
 
 ### 农业投入品使用记录（经济法）
 
 农产品生产企业、合作社等应建立农产品生产记录，如实记载农业投入品名称、来源、用法用量和使用日期。
 
 依据：《农产品质量安全法》第27条
-原文：https://legalhigh.pages.dev/#/laws/agri-quality-2022?art=27
+原文：https://rethymus.github.io/LegalHigh/#/laws/agri-quality-2022?art=27
 
 ### 种子（经济法）
 
 种子是指农作物和林木的种植材料或繁殖材料。从事品种选育、种子生产经营和管理等活动适用种子法。
 
 依据：《种子法》第2条
-原文：https://legalhigh.pages.dev/#/laws/seeds-2022?art=2
+原文：https://rethymus.github.io/LegalHigh/#/laws/seeds-2022?art=2
 
 ### 植物新品种权（经济法）
 
 植物新品种权所有人对其授权品种享有排他的独占权，可将品种权许可他人实施并按约定收取许可使用费。
 
 依据：《种子法》第28条
-原文：https://legalhigh.pages.dev/#/laws/seeds-2022?art=28
+原文：https://rethymus.github.io/LegalHigh/#/laws/seeds-2022?art=28
 
 ### 爱国主义教育（行政）
 
 国家在全体人民中开展爱国主义教育，赓续传承中华文明和中华民族精神，增强民族凝聚力和向心力。
 
 依据：《爱国主义教育法》第2条
-原文：https://legalhigh.pages.dev/#/laws/patriotic-edu-2024?art=2
+原文：https://rethymus.github.io/LegalHigh/#/laws/patriotic-edu-2024?art=2
 
 ### 学校爱国主义教育（行政）
 
 各级各类学校应将爱国主义教育内容融入校园文化和各类主题活动，组织学生参观爱国主义教育基地。
 
 依据：《爱国主义教育法》第16条
-原文：https://legalhigh.pages.dev/#/laws/patriotic-edu-2024?art=16
+原文：https://rethymus.github.io/LegalHigh/#/laws/patriotic-edu-2024?art=16
 
 ### 母婴保健服务（社会法）
 
 各级政府应领导母婴保健工作，将其纳入国民经济和社会发展计划，为母婴保健事业发展提供保障。
 
 依据：《母婴保健法》第3条
-原文：https://legalhigh.pages.dev/#/laws/maternal-infant-2017?art=3
+原文：https://rethymus.github.io/LegalHigh/#/laws/maternal-infant-2017?art=3
 
 ### 孕产期保健（社会法）
 
 医疗保健机构应为育龄妇女和孕产妇提供孕产期保健服务，包括母婴保健指导、孕妇产妇保健、胎儿保健和新生儿保健。
 
 依据：《母婴保健法》第14条
-原文：https://legalhigh.pages.dev/#/laws/maternal-infant-2017?art=14
+原文：https://rethymus.github.io/LegalHigh/#/laws/maternal-infant-2017?art=14
 
 ### 科技自立自强（行政）
 
 国家坚持科技创新在国家现代化建设全局中的核心地位，把科技自立自强作为国家发展的战略支撑。
 
 依据：《科学技术进步法》第2条
-原文：https://legalhigh.pages.dev/#/laws/sci-tech-2021?art=2
+原文：https://rethymus.github.io/LegalHigh/#/laws/sci-tech-2021?art=2
 
 ### 科技人才尊重（行政）
 
 科学技术人员是社会主义现代化建设事业的重要人才力量，应受到全社会的尊重。国家坚持人才引领发展的战略地位。
 
 依据：《科学技术进步法》第10条
-原文：https://legalhigh.pages.dev/#/laws/sci-tech-2021?art=10
+原文：https://rethymus.github.io/LegalHigh/#/laws/sci-tech-2021?art=10
 
 ### 商业银行（经济法）
 
 商业银行是依照公司法和商业银行法设立的吸收公众存款、发放贷款、办理结算等业务的企业法人。
 
 依据：《商业银行法》第2条
-原文：https://legalhigh.pages.dev/#/laws/commercial-bank-2015?art=2
+原文：https://rethymus.github.io/LegalHigh/#/laws/commercial-bank-2015?art=2
 
 ### 个人储蓄存款原则（经济法）
 
 商业银行办理个人储蓄存款业务应遵循存款自愿、取款自由、存款有息、为存款人保密的原则。
 
 依据：《商业银行法》第29条
-原文：https://legalhigh.pages.dev/#/laws/commercial-bank-2015?art=29
+原文：https://rethymus.github.io/LegalHigh/#/laws/commercial-bank-2015?art=29
 
 ### 法治宣传教育（行政）
 
 法治宣传教育坚持党的领导，以习近平法治思想为指导，向社会普及法律知识、弘扬法治精神、建设法治文化。
 
 依据：《法治宣传教育法》第2条
-原文：https://legalhigh.pages.dev/#/laws/legal-publicity-2025?art=2
+原文：https://rethymus.github.io/LegalHigh/#/laws/legal-publicity-2025?art=2
 
 ### 法治宣传教育规划（行政）
 
 国家编制全国法治宣传教育规划，省级政府依据全国规划结合实际制定本行政区域相关规划。
 
 依据：《法治宣传教育法》第6条
-原文：https://legalhigh.pages.dev/#/laws/legal-publicity-2025?art=6
+原文：https://rethymus.github.io/LegalHigh/#/laws/legal-publicity-2025?art=6
 
 ### 国防教育（行政）
 
 国防教育以爱国主义为核心，以履行国防义务为目的，涵盖国防理论、知识、技能以及科技、法律、心理等方面。
 
 依据：《国防教育法》第2条
-原文：https://legalhigh.pages.dev/#/laws/defense-edu-2024?art=2
+原文：https://rethymus.github.io/LegalHigh/#/laws/defense-edu-2024?art=2
 
 ### 学校国防教育（行政）
 
 国防教育实行经常教育与集中教育相结合、普及教育与重点教育相结合、理论教育与行为教育相结合的原则。
 
 依据：《国防教育法》第6条
-原文：https://legalhigh.pages.dev/#/laws/defense-edu-2024?art=6
+原文：https://rethymus.github.io/LegalHigh/#/laws/defense-edu-2024?art=6
 
 ### 环境保护税纳税人（经济法）
 
 直接向环境排放应税污染物的企业事业单位和其他生产经营者为环境保护税纳税人，应依法缴纳环保税。
 
 依据：《环境保护税法》第2条
-原文：https://legalhigh.pages.dev/#/laws/env-tax-2025?art=2
+原文：https://rethymus.github.io/LegalHigh/#/laws/env-tax-2025?art=2
 
 ### 环保税免税情形（经济法）
 
 向依法设立的污水集中处理场所排放污染物等情形不属于直接向环境排放污染物，不缴纳环保税。
 
 依据：《环境保护税法》第4条
-原文：https://legalhigh.pages.dev/#/laws/env-tax-2025?art=4
+原文：https://rethymus.github.io/LegalHigh/#/laws/env-tax-2025?art=4
 
 ### 会计核算真实性（经济法）
 
 各单位必须根据实际发生的经济业务事项进行会计核算，填制会计凭证、登记会计账簿、编制财务报告。不得以虚假的经济业务事项或资料进行会计核算。
 
 依据：《会计法》第9条
-原文：https://legalhigh.pages.dev/#/laws/accounting-2024?art=9
+原文：https://rethymus.github.io/LegalHigh/#/laws/accounting-2024?art=9
 
 ### 会计法立法目的（经济法）
 
 会计法旨在规范会计行为，保证会计资料真实完整，加强经济管理和财务管理，提高经济效益，维护社会主义市场经济秩序。
 
 依据：《会计法》第1条
-原文：https://legalhigh.pages.dev/#/laws/accounting-2024?art=1
+原文：https://rethymus.github.io/LegalHigh/#/laws/accounting-2024?art=1
 
 ### 人口与计划生育（社会法）
 
 为促进人口与经济社会资源环境协调发展和家庭幸福，国家推行计划生育，维护公民合法权益。
 
 依据：《人口与计划生育法》第1条
-原文：https://legalhigh.pages.dev/#/laws/family-plan-2021?art=1
+原文：https://rethymus.github.io/LegalHigh/#/laws/family-plan-2021?art=1
 
 ### 计生经费保障（社会法）
 
 国家逐步提高人口与计划生育经费投入水平，各级政府应保障计划生育工作必要的经费。
 
 依据：《人口与计划生育法》第15条
-原文：https://legalhigh.pages.dev/#/laws/family-plan-2021?art=15
+原文：https://rethymus.github.io/LegalHigh/#/laws/family-plan-2021?art=15
 
 ### 职业教育定义（社会法）
 
 职业教育是为培养高素质技术技能人才，使受教育者具备职业道德、科学文化与专业知识、技术技能等职业综合素质和行动能力的教育。
 
 依据：《职业教育法》第2条
-原文：https://legalhigh.pages.dev/#/laws/vocational-edu-2022?art=2
+原文：https://rethymus.github.io/LegalHigh/#/laws/vocational-edu-2022?art=2
 
 ### 职业教育协调机制（社会法）
 
 国务院建立职业教育工作协调机制，统筹协调全国职业教育工作。教育行政部门负责统筹规划、综合协调和宏观管理。
 
 依据：《职业教育法》第8条
-原文：https://legalhigh.pages.dev/#/laws/vocational-edu-2022?art=8
+原文：https://rethymus.github.io/LegalHigh/#/laws/vocational-edu-2022?art=8
 
 ### 矿山安全保障（行政）
 
 矿山企业必须具有保障安全生产的设施，建立健全安全管理制度，采取有效措施改善职工劳动条件。
 
 依据：《矿山安全法》第3条
-原文：https://legalhigh.pages.dev/#/laws/mine-safety-2009?art=3
+原文：https://rethymus.github.io/LegalHigh/#/laws/mine-safety-2009?art=3
 
 ### 矿山职工安全监督权（行政）
 
 矿山企业职工有权对危害安全的行为提出批评、检举和控告，参与矿山安全管理。
 
 依据：《矿山安全法》第22条
-原文：https://legalhigh.pages.dev/#/laws/mine-safety-2009?art=22
+原文：https://rethymus.github.io/LegalHigh/#/laws/mine-safety-2009?art=22
 
 ### 居民委员会（社会法）
 
 居民委员会是居民自我管理、自我服务、自我教育、自我监督的基层群众性自治组织，实行民主选举、民主决策、民主管理、民主监督。
 
 依据：《居民委员会组织法》第2条
-原文：https://legalhigh.pages.dev/#/laws/residents-committee-2025?art=2
+原文：https://rethymus.github.io/LegalHigh/#/laws/residents-committee-2025?art=2
 
 ### 居委会设立规模（社会法）
 
 居民委员会一般在一千至三千户范围内设立，可根据实际需要调整，以便利居民自治和基层治理为原则。
 
 依据：《居民委员会组织法》第3条
-原文：https://legalhigh.pages.dev/#/laws/residents-committee-2025?art=3
+原文：https://rethymus.github.io/LegalHigh/#/laws/residents-committee-2025?art=3
 
 ### 合同条款解释规则（民事）
 
 解释合同条款应以词句的通常含义为基础，结合相关条款、行为性质目的、习惯以及诚信原则，确定争议条款的真实含义。
 
 依据：《民法典合同编通则解释》第1条
-原文：https://legalhigh.pages.dev/#/laws/htjs-2023?art=1
+原文：https://rethymus.github.io/LegalHigh/#/laws/htjs-2023?art=1
 
 ### 情势变更（民事）
 
 合同成立后因政策调整或市场异常变动致价格发生不可预见涨跌，继续履行对一方明显不公平的，可请求变更或解除合同。
 
 依据：《民法典合同编通则解释》第32条
-原文：https://legalhigh.pages.dev/#/laws/htjs-2023?art=32
+原文：https://rethymus.github.io/LegalHigh/#/laws/htjs-2023?art=32
 
