@@ -49,6 +49,8 @@ const ROUTES = [
   { name: 'guide', path: '/guide', identity: { selector: '.ph-t', text: '使用指南' } },
   { name: 'terms', path: '/terms', identity: { selector: '.ph-t', text: '术语卡' } },
   { name: 'quality', path: '/quality', identity: { selector: '.ph-t', text: '质量透明度' } },
+  { name: 'quiz', path: '/quiz', identity: { selector: '.ph-t', text: '法律知识测评' } },
+  { name: 'case-compare', path: '/cases/compare', identity: { selector: '.ph-t', text: '案例对比阅读' } },
   { name: 'process', path: '/process', identity: { selector: '.ph-t', text: '流程图解' } },
 ]
 

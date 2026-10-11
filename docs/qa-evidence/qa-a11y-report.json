@@ -145,6 +145,16 @@
     "obscuredFocus": []
   },
   {
+    "route": "quiz",
+    "smallTargets": [],
+    "obscuredFocus": []
+  },
+  {
+    "route": "case-compare",
+    "smallTargets": [],
+    "obscuredFocus": []
+  },
+  {
     "route": "process",
     "smallTargets": [],
     "obscuredFocus": []

@@ -1,6 +1,6 @@
 // FRAME 01 · Dashboard —— Dark / Hero Glass（规格 §6）
 // 不出现：Persona、Roadmap、Design System、优先级等内部设计内容（§52）
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link, useNavigate, useOutletContext } from 'react-router-dom'
 import { Icon, type IconName } from '../icons'
 import LimitationCalculator from '../LimitationCalculator'
@@ -56,6 +56,29 @@ function loadResearchList(): LocalResearchItem[] {
 
 /* 构建期常量：静态说明站（VITE_STATIC_PREVIEW=1）不部署后端，禁止发 /api 请求 */
 const STATIC_PREVIEW = import.meta.env.VITE_STATIC_PREVIEW === '1'
+
+/* 最近浏览（R346）：消费 AppShell 写入的 lh:browse-history，显示最近访问的页面链接 */
+function RecentActivity() {
+  const items = useMemo(() => {
+    try {
+      const raw = JSON.parse(localStorage.getItem('lh:browse-history') ?? '[]') as { p: string; t: string; ts: number }[]
+      return raw.slice(0, 5)
+    } catch { return [] }
+  }, [])
+  if (!items.length) return null
+  return (
+    <div className="card mb-12" style={{ padding: '10px 14px' }}>
+      <div className="row mb-4"><span className="tiny bold"><Icon name="history" size={12} /> 继续上次</span></div>
+      <div className="row-wrap">
+        {items.map((x, i) => (
+          <Link key={`${x.p}-${x.ts}`} to={x.p} className="chip" style={{ fontSize: 11 }}>
+            {i === 0 ? '📌 ' : ''}{x.t}
+          </Link>
+        ))}
+      </div>
+    </div>
+  )
+}
 
 export default function Dashboard() {
   const nav = useNavigate()
@@ -152,6 +175,8 @@ export default function Dashboard() {
       )}
 
       <div className="page" style={{ maxWidth: 1240 }}>
+        {/* 最近浏览（R346：AppShell 写入 lh:browse-history，此处消费展示——继续上次阅读） */}
+        <RecentActivity />
         {lawsError && <div className="banner banner-danger mb-12"><Icon name="alert" size={15} /><span className="banner-tx">本地法条语料加载失败：{lawsError}</span></div>}
         {/* 普法温度提示（公共法律常识 + 语料内条文引用） */}
         <div className="banner-warm mb-12">

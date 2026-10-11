@@ -131,3 +131,13 @@
     page-break-inside: avoid !important;
   }
 }
+
+/* R346: 新元素打印覆盖——底部标签栏隐藏、Quiz/CaseCompare 不打印交互按钮 */
+@media print {
+  .btab { display: none !important; }
+  .btab-item { display: none !important; }
+  /* Quiz 页不打印按钮（只打印当前题目和答案） */
+  .btn { display: none !important; }
+  /* CaseCompare 保持双列 */
+  .fld select { border: 1px solid #000 !important; }
+}
