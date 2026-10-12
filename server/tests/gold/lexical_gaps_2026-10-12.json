@@ -1,0 +1,491 @@
+{
+ "description": "词法鸿沟资产（R534）：金标 548 组中当前 MISS 的 14 条——语义重排再评估（决策 14）的基准数据集。每条含问句/期望条文/当前 top5 干扰项/note。生成方式：orchestrated_search top5 全量跑分（2026-10-12）。",
+ "generated_at": "2026-10-12",
+ "gold_total": 548,
+ "miss_count": 14,
+ "records": [
+  {
+   "id": "g30",
+   "question": "交付的标的物不符合约定怎么办？",
+   "expect": [
+    {
+     "law_id": "civl-2020",
+     "no": 582
+    }
+   ],
+   "top5": [
+    {
+     "law_id": "civl-2020",
+     "no": 633
+    },
+    {
+     "law_id": "civl-2020",
+     "no": 740
+    },
+    {
+     "law_id": "civl-2020",
+     "no": 631
+    },
+    {
+     "law_id": "civl-2020",
+     "no": 621
+    },
+    {
+     "law_id": "civl-2020",
+     "no": 617
+    }
+   ],
+   "note": "",
+   "cluster": "consumer-subtopics"
+  },
+  {
+   "id": "gold-expansion-056",
+   "question": "商家虚假宣传商品功效有什么后果",
+   "expect": [
+    {
+     "law_id": "cl-2013",
+     "no": 20
+    }
+   ],
+   "top5": [
+    {
+     "law_id": "cl-2013",
+     "no": 45
+    },
+    {
+     "law_id": "cl-2013",
+     "no": 55
+    },
+    {
+     "law_id": "crpl-imp-2024",
+     "no": 19
+    },
+    {
+     "law_id": "cl-2013",
+     "no": 44
+    },
+    {
+     "law_id": "wlxf-2022",
+     "no": 11
+    }
+   ],
+   "note": "2026-08-30 增（D5 主体·第五轮）：按条文原文人工拟题，写入前逐组复验 top-5 命中。cl-2013#20",
+   "cluster": "consumer-subtopics"
+  },
+  {
+   "id": "gold-expansion-057",
+   "question": "办卡合同里的格式条款要提醒哪些内容",
+   "expect": [
+    {
+     "law_id": "cl-2013",
+     "no": 26
+    }
+   ],
+   "top5": [
+    {
+     "law_id": "postal-2015",
+     "no": 22
+    },
+    {
+     "law_id": "insurance-2015",
+     "no": 17
+    },
+    {
+     "law_id": "civl-2020",
+     "no": 498
+    },
+    {
+     "law_id": "civl-2020",
+     "no": 496
+    },
+    {
+     "law_id": "insurance-2015",
+     "no": 19
+    }
+   ],
+   "note": "2026-08-30 增（D5 主体·第五轮）：按条文原文人工拟题，写入前逐组复验 top-5 命中。cl-2013#26",
+   "cluster": "consumer-subtopics"
+  },
+  {
+   "id": "gold-expansion-066",
+   "question": "拒绝违章指挥被开除算违约吗",
+   "expect": [
+    {
+     "law_id": "lcl-2012",
+     "no": 32
+    }
+   ],
+   "top5": [
+    {
+     "law_id": "work-safety-2021",
+     "no": 54
+    },
+    {
+     "law_id": "lcl-2012",
+     "no": 87
+    },
+    {
+     "law_id": "lcl-2012",
+     "no": 47
+    },
+    {
+     "law_id": "lcl-2012",
+     "no": 40
+    },
+    {
+     "law_id": "lcl-2012",
+     "no": 39
+    }
+   ],
+   "note": "2026-08-30 增（D5 主体·第五轮）：按条文原文人工拟题，写入前逐组复验 top-5 命中。lcl-2012#32",
+   "cluster": "labor-special-termination"
+  },
+  {
+   "id": "gold-expansion-068",
+   "question": "试用期不符合录用条件公司能辞退吗",
+   "expect": [
+    {
+     "law_id": "lcl-2012",
+     "no": 39
+    }
+   ],
+   "top5": [
+    {
+     "law_id": "labor-law-2018",
+     "no": 25
+    },
+    {
+     "law_id": "lcl-2012",
+     "no": 21
+    },
+    {
+     "law_id": "lcl-2012",
+     "no": 87
+    },
+    {
+     "law_id": "lcl-2012",
+     "no": 47
+    },
+    {
+     "law_id": "lcl-2012",
+     "no": 40
+    }
+   ],
+   "note": "2026-08-30 增（D5 主体·第五轮）：按条文原文人工拟题，写入前逐组复验 top-5 命中。lcl-2012#39",
+   "cluster": "labor-special-termination"
+  },
+  {
+   "id": "gold-expansion-089",
+   "question": "起诉要满足哪些条件法院才会受理",
+   "expect": [
+    {
+     "law_id": "pcl-2023",
+     "no": 122
+    }
+   ],
+   "top5": [
+    {
+     "law_id": "admin-litigation-2017",
+     "no": 52
+    },
+    {
+     "law_id": "pcl-2023",
+     "no": 126
+    },
+    {
+     "law_id": "lcar-2007",
+     "no": 29
+    },
+    {
+     "law_id": "cl-2013",
+     "no": 35
+    },
+    {
+     "law_id": "pcl-2023",
+     "no": 280
+    }
+   ],
+   "note": "2026-08-30 增（D5 主体·第五轮）：按条文原文人工拟题，写入前逐组复验 top-5 命中。pcl-2023#122",
+   "cluster": "singletons"
+  },
+  {
+   "id": "gold-lcar-pay-order",
+   "question": "公司欠工资达成了调解协议还是不给钱怎么办",
+   "expect": [
+    {
+     "law_id": "lcar-2007",
+     "no": 16
+    }
+   ],
+   "top5": [
+    {
+     "law_id": "mediation-2010",
+     "no": 28
+    },
+    {
+     "law_id": "mediation-2010",
+     "no": 32
+    },
+    {
+     "law_id": "mediation-2010",
+     "no": 30
+    },
+    {
+     "law_id": "mediation-2010",
+     "no": 33
+    },
+    {
+     "law_id": "lcar-2007",
+     "no": 14
+    }
+   ],
+   "note": "2026-09-13 增（S2-T1）：拖欠劳动报酬调解协议可申请支付令第16条。",
+   "cluster": "labor-special-termination"
+  },
+  {
+   "id": "gold-ad-spokesperson",
+   "question": "明星代言产品出问题要担责吗",
+   "expect": [
+    {
+     "law_id": "advertising-2021",
+     "no": 38
+    }
+   ],
+   "top5": [
+    {
+     "law_id": "metrology-2018",
+     "no": 15
+    },
+    {
+     "law_id": "cpl-2018",
+     "no": 120
+    },
+    {
+     "law_id": "agriculture-2013",
+     "no": 30
+    },
+    {
+     "law_id": "product-quality-2018",
+     "no": 22
+    },
+    {
+     "law_id": "product-quality-2018",
+     "no": 23
+    }
+   ],
+   "note": "2026-09-16 增：广告代言人义务与责任第38条。",
+   "cluster": "singletons"
+  },
+  {
+   "id": "gold-dp-compulsory-edu",
+   "question": "残疾儿童可以上学吗",
+   "expect": [
+    {
+     "law_id": "disabled-2018",
+     "no": 21
+    }
+   ],
+   "top5": [
+    {
+     "law_id": "disabled-2018",
+     "no": 26
+    },
+    {
+     "law_id": "preschool-edu-2025",
+     "no": 28
+    },
+    {
+     "law_id": "preschool-edu-2025",
+     "no": 17
+    },
+    {
+     "law_id": "compulsory-edu-2018",
+     "no": 19
+    },
+    {
+     "law_id": "preschool-edu-2025",
+     "no": 54
+    }
+   ],
+   "note": "2026-09-16 增：残疾儿童少年义务教育与免费资助第21条。",
+   "cluster": "education-enrollment"
+  },
+  {
+   "id": "gold-env-criminal",
+   "question": "违反环境保护法构成犯罪的依法追究刑事责任吗",
+   "expect": [
+    {
+     "law_id": "environment-2014",
+     "no": 69
+    }
+   ],
+   "top5": [
+    {
+     "law_id": "aml-2024",
+     "no": 62
+    },
+    {
+     "law_id": "trademark-2026",
+     "no": 85
+    },
+    {
+     "law_id": "compulsory-edu-2018",
+     "no": 60
+    },
+    {
+     "law_id": "crime-prev-2020",
+     "no": 67
+    },
+    {
+     "law_id": "fire-2021",
+     "no": 72
+    }
+   ],
+   "note": "2026-09-16 增：刑事责任条款第69条。词法鸿沟实录：初拟「污染环境构成犯罪怎么追究」未入 top5（「污染环境」是刑法语汇），改题后 rank 4。",
+   "cluster": "singletons"
+  },
+  {
+   "id": "gold-uc-platform",
+   "question": "平台强制商家二选一违法吗",
+   "expect": [
+    {
+     "law_id": "unfair-competition-2025",
+     "no": 14
+    }
+   ],
+   "top5": [
+    {
+     "law_id": "unfair-competition-2025",
+     "no": 30
+    },
+    {
+     "law_id": "ecom-2018",
+     "no": 10
+    },
+    {
+     "law_id": "ecom-2018",
+     "no": 24
+    },
+    {
+     "law_id": "ecom-2018",
+     "no": 29
+    },
+    {
+     "law_id": "scl-2012",
+     "no": 4
+    }
+   ],
+   "note": "2026-09-16 增：平台经营者不得强制不合理条件第14条。词法鸿沟实录：问法「二选一」vs 条文「不合理条件」。",
+   "cluster": "singletons"
+  },
+  {
+   "id": "gold-af-fintech",
+   "question": "银行要对涉诈账户采取措施吗",
+   "expect": [
+    {
+     "law_id": "anti-fraud-2022",
+     "no": 18
+    }
+   ],
+   "top5": [
+    {
+     "law_id": "anti-fraud-2022",
+     "no": 32
+    },
+    {
+     "law_id": "anti-monopoly-2022",
+     "no": 47
+    },
+    {
+     "law_id": "anti-fraud-2022",
+     "no": 33
+    },
+    {
+     "law_id": "anti-fraud-2022",
+     "no": 15
+    },
+    {
+     "law_id": "anti-fraud-2022",
+     "no": 22
+    }
+   ],
+   "note": "2026-09-17 增：金融机构账户风控义务第18条。",
+   "cluster": "singletons"
+  },
+  {
+   "id": "gold-ce-no-expel",
+   "question": "学校能开除小学生吗",
+   "expect": [
+    {
+     "law_id": "compulsory-edu-2018",
+     "no": 27
+    }
+   ],
+   "top5": [
+    {
+     "law_id": "minor-2024",
+     "no": 28
+    },
+    {
+     "law_id": "lcl-2012",
+     "no": 87
+    },
+    {
+     "law_id": "lcl-2012",
+     "no": 47
+    },
+    {
+     "law_id": "lcl-2012",
+     "no": 40
+    },
+    {
+     "law_id": "lcl-2012",
+     "no": 39
+    }
+   ],
+   "note": "2026-09-17 增：不得开除学生第27条。",
+   "cluster": "education-enrollment"
+  },
+  {
+   "id": "gold-defense-mobil-duty",
+   "question": "国防勤务是什么",
+   "expect": [
+    {
+     "law_id": "defense-mobil-2026",
+     "no": 50
+    }
+   ],
+   "top5": [
+    {
+     "law_id": "defense-mobil-2026",
+     "no": 57
+    },
+    {
+     "law_id": "defense-mobil-2026",
+     "no": 59
+    },
+    {
+     "law_id": "defense-mobil-2026",
+     "no": 62
+    },
+    {
+     "law_id": "defense-mobil-2026",
+     "no": 58
+    },
+    {
+     "law_id": "defense-mobil-2026",
+     "no": 60
+    }
+   ],
+   "note": "国防勤务定义",
+   "cluster": "singletons"
+  }
+ ],
+ "clusters": {
+  "consumer-subtopics": 3,
+  "labor-special-termination": 3,
+  "education-enrollment": 2,
+  "singletons": 6
+ },
+ "cluster_note": "消费子题 3/劳动特殊解除 3/教育就学 2/零散 6——均低于受控组建槛（同域同意图 ≥4 条，ADR-0005），留作语义重排再评估基准"
+}
