@@ -109,6 +109,21 @@ CONTROLLED_TOPICS = [
             {"id": "noise-public-order", "query": "社会生活噪声 劝阻 调解"},
         ],
     },
+    {
+        # R537 召回层 MISS 实验（3 条：g30/gold-expansion-056/gold-defense-mobil-duty——
+        # 期望条文在 top20 外，纯语义等价无词面桥）：桥词面全部取自目标条文自身原文
+        # （组查询规范词面模式，非外挂词典——决策 2 边界不触碰）。when 限定触发问法。
+        "id": "recall-bridge",
+        "pattern": r"标的物不符|交付的标的物|虚假宣传|国防勤务",  # 主题门；子组再按 when 精确供位
+        "groups": [
+            {"id": "nonconforming-delivery", "when": r"标的物不符|交付的标的物",
+             "query": "履行不符合约定 违约责任 标的的性质 损失大小"},
+            {"id": "misleading-publicity", "when": r"虚假宣传",
+             "query": "虚假或者引人误解的宣传 质量性能用途 行政处罚"},
+            {"id": "defense-mobil-service", "when": r"国防勤务",
+             "query": "战争灾害的预防与救助 国防动员潜力"},
+        ],
+    },
 ]
 
 
