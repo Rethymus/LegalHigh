@@ -8,3 +8,8 @@ server/data/article_links.json -text
 server/data/scenarios.json -text
 server/data/ai_providers.json -text
 web/public/data/laws.json -text
+
+# 前端公共数据文件同理：它们是绑定哈希的发布产物（线上 Pages / SHA256SUMS /
+# SW 预缓存三处引用同一字节面），行尾差异会造成「本地构建 ≠ 线上部署」的
+# 伪漂移（R546 实录：terms.json CRLF 本地 vs LF 线上，内容 JSON 等价但哈希不同）。
+web/public/data/** -text
