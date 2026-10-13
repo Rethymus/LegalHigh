@@ -203,6 +203,16 @@ try {
   fail.push(`[声明面一致性] ${String(e.stdout || e.message).trim()}`)
 }
 
+// ---- gate 9：README 链接完整性（R564：R563 人工核验制度化）----
+checks++
+try {
+  const { execFileSync } = await import('node:child_process')
+  const out = execFileSync(process.execPath, [resolve(root, 'web/scripts/check_readme_links.mjs')], { encoding: 'utf-8' })
+  console.log('OK gate9 ' + out.trim())
+} catch (e) {
+  fail.push(`[README 链接] ${String(e.stdout || e.message).trim()}`)
+}
+
 if (fail.length) {
   console.error(`\nqa_gates：${fail.length}/${checks} 项失败`)
   for (const f of fail) console.error('\n' + f)
