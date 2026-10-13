@@ -13,6 +13,7 @@
 用法：python server/mcp_server.py [--lang-dir server]（MCP 客户端一行配置接入）
 """
 import argparse
+import io
 import json
 import sys
 from pathlib import Path
@@ -516,7 +517,11 @@ def main():
     ap = argparse.ArgumentParser(description="LegalHigh MCP Server (stdio)")
     ap.parse_args()
     corpus = get_corpus()  # 启动时加载语料（fail-fast：缺数据立即退出）
-    for line in sys.stdin:
+    # 传输层边界（R572）：stdin 按 utf-8 文本迭代，非法字节/多字节字符截断会在
+    # for-line 解码处抛 UnicodeDecodeError 击穿主循环——errors="replace" 把坏字节
+    # 替换为 U+FFFD，随后的 json.loads 自然走 -32700 parse error 路径。
+    stdin = io.TextIOWrapper(sys.stdin.buffer, encoding="utf-8", errors="replace")
+    for line in stdin:
         line = line.strip()
         if not line:
             continue

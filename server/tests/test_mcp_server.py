@@ -260,3 +260,29 @@ def test_unexpected_tool_exception_returns_internal_error():
         M.dispatch = orig
     assert resp["error"]["code"] == -32603
     assert "RuntimeError" in resp["error"]["message"]
+
+
+def _raw_bytes(data: bytes):
+    proc = subprocess.run(
+        [sys.executable, str(SERVER)],
+        input=data, capture_output=True, timeout=120,
+    )
+    return proc
+
+
+def test_stdio_transport_boundaries_never_crash():
+    """R572 传输层边界：二进制噪声/UTF-8 截断击穿主循环实录修复——
+    stdin 解码 errors=replace 后坏字节走 -32700 路径，服务存活。"""
+    # 二进制噪声 + 随后正常请求
+    p1 = _raw_bytes(bytes(range(256)) + b'\n' +
+                    json.dumps({"jsonrpc": "2.0", "id": 2, "method": "tools/list"}).encode() + b'\n')
+    assert p1.returncode == 0, f"二进制噪声击穿: {p1.stderr[-200:]}"
+    assert b'"tools"' in p1.stdout, "噪声后服务未应答"
+
+    # UTF-8 多字节字符截断
+    p2 = _raw_bytes('{"q": "诉讼时效"}\n'.encode('utf-8')[:12] + b'\n')
+    assert p2.returncode == 0, f"UTF-8 截断击穿: {p2.stderr[-200:]}"
+
+    # 1MB 垃圾单行
+    p3 = _raw_bytes(b'x' * 1_000_000 + b'\n')
+    assert p3.returncode == 0 and b'Traceback' not in p3.stderr
