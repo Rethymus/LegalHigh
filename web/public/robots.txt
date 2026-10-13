@@ -1,0 +1,7 @@
+# LegalHigh 静态说明站爬虫引导
+# 全站公开可爬（法条与案例均来自官方来源快照，无隐私内容）；/api/ 在静态站不存在。
+# AI 助手消费面：llms.txt（索引）与 llms-full.txt（全文）专为机器阅读生成。
+User-agent: *
+Allow: /
+
+Sitemap: https://rethymus.github.io/LegalHigh/sitemap.xml
