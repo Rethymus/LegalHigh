@@ -1,0 +1,58 @@
+[
+ {
+  "label": "合法 professional",
+  "首选屏": false,
+  "专业可见": true,
+  "blank": false,
+  "jsErr": 0,
+  "verdict": "✓"
+ },
+ {
+  "label": "合法 public",
+  "首选屏": false,
+  "专业可见": false,
+  "blank": false,
+  "jsErr": 0,
+  "verdict": "✓"
+ },
+ {
+  "label": "非法 mode 值",
+  "首选屏": true,
+  "专业可见": false,
+  "blank": false,
+  "jsErr": 0,
+  "verdict": "✓"
+ },
+ {
+  "label": "损坏 JSON",
+  "首选屏": true,
+  "专业可见": false,
+  "blank": false,
+  "jsErr": 0,
+  "verdict": "✓"
+ },
+ {
+  "label": "空串",
+  "首选屏": true,
+  "专业可见": false,
+  "blank": false,
+  "jsErr": 0,
+  "verdict": "✓"
+ },
+ {
+  "label": "数组注入",
+  "首选屏": true,
+  "专业可见": false,
+  "blank": false,
+  "jsErr": 0,
+  "verdict": "✓"
+ },
+ {
+  "label": "null",
+  "首选屏": true,
+  "专业可见": false,
+  "blank": false,
+  "jsErr": 0,
+  "verdict": "✓"
+ }
+]
