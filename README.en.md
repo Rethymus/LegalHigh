@@ -131,7 +131,7 @@ The AI plugin is off by default: requests reach a controlled remote endpoint onl
 - The local corpus is not a mirror of the national legal database; public snapshots must be re-verified against the listed sources before formal citation.
 - Automated tests, retrieval evaluation and security checks prove only the assertions they cover — not that the system "never errs".
 
-The in-app [quality transparency page](/quality) publishes live-derived metrics and dated historical records read-only.
+The in-app [quality transparency page](https://rethymus.github.io/LegalHigh/#/quality) publishes live-derived metrics and dated historical records read-only.
 
 ## Data & evidence discipline
 
