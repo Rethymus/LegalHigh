@@ -1,0 +1,112 @@
+[
+ {
+  "path": "/laws/civl-2020?art=abc",
+  "label": "art 非数字",
+  "blank": false,
+  "hasErrorBoundary": false,
+  "len": 1169,
+  "has404": false,
+  "errs": 0,
+  "verdict": "✓"
+ },
+ {
+  "path": "/laws/civl-2020?art=99999",
+  "label": "art 越界",
+  "blank": false,
+  "hasErrorBoundary": false,
+  "len": 233,
+  "has404": true,
+  "errs": 0,
+  "verdict": "✓"
+ },
+ {
+  "path": "/laws/civl-2020?art=-1",
+  "label": "art 负数",
+  "blank": false,
+  "hasErrorBoundary": false,
+  "len": 1169,
+  "has404": false,
+  "errs": 0,
+  "verdict": "✓"
+ },
+ {
+  "path": "/laws/civl-2020?art=<script>alert(1)</script>",
+  "label": "art 注入串",
+  "blank": false,
+  "hasErrorBoundary": false,
+  "len": 1169,
+  "has404": false,
+  "errs": 0,
+  "verdict": "✓"
+ },
+ {
+  "path": "/laws/not-a-law?art=1",
+  "label": "法 id 不存在",
+  "blank": false,
+  "hasErrorBoundary": false,
+  "len": 229,
+  "has404": true,
+  "errs": 0,
+  "verdict": "✓"
+ },
+ {
+  "path": "/laws/civl-2020/../../etc",
+  "label": "路径穿越样式",
+  "blank": false,
+  "hasErrorBoundary": false,
+  "len": 291,
+  "has404": true,
+  "errs": 0,
+  "verdict": "✓"
+ },
+ {
+  "path": "/search?q=<img src=x onerror=alert(1)>",
+  "label": "q 注入串",
+  "blank": false,
+  "hasErrorBoundary": false,
+  "len": 457,
+  "has404": false,
+  "errs": 0,
+  "verdict": "✓"
+ },
+ {
+  "path": "/cases?q=%3Cscript%3E",
+  "label": "cases q 注入编码",
+  "blank": false,
+  "hasErrorBoundary": false,
+  "len": 2325,
+  "has404": false,
+  "errs": 0,
+  "verdict": "✓"
+ },
+ {
+  "path": "/laws/civl-2020/versions/not-a-version",
+  "label": "version 不存在",
+  "blank": false,
+  "hasErrorBoundary": false,
+  "len": 1420,
+  "has404": false,
+  "errs": 0,
+  "verdict": "✓"
+ },
+ {
+  "path": "/cases/does-not-exist",
+  "label": "案例 id 不存在",
+  "blank": false,
+  "hasErrorBoundary": false,
+  "len": 193,
+  "has404": false,
+  "errs": 0,
+  "verdict": "✓"
+ },
+ {
+  "path": "/draft/validation?draft_id=zzz",
+  "label": "校验页未知草稿",
+  "blank": false,
+  "hasErrorBoundary": false,
+  "len": 247,
+  "has404": false,
+  "errs": 0,
+  "verdict": "✓"
+ }
+]
