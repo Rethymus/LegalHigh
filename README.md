@@ -139,7 +139,7 @@ cd web && npm ci && npm run dev
 | QA 证据收据 / QA receipt | `server/scripts/qa_receipt.py` 聚合四类 QA 工件为带 SHA-256 的分层收据（strict：证据缺失≠通过；run_qa 第 10 门） |
 | 发布前核验 / Final verify | `server/scripts/final_verify.py` 对运行中实例做十项 API 真值断言 |
 
-应用内 [质量透明度页](https://rethymus.github.io/LegalHigh/#/quality) 只读公示实时派生指标与带日期历史记录。自动化测试只能证明被覆盖的断言，不能证明系统「绝不出错」；检索评测（金标 548 组，hit@5 96.9%、法律级 99.1%、rank-1 67.2%、MRR 78.8%；2026-10-11 实测——含确定性重排二代的 IDF 加权覆盖度，全量 A/B 救回 4 例零打落；指标随金标扩容与真实难例自然浮动）衡量的是语料命中率，不是法律正确率。
+应用内 [质量透明度页](https://rethymus.github.io/LegalHigh/#/quality) 只读公示实时派生指标与带日期历史记录。自动化测试只能证明被覆盖的断言，不能证明系统「绝不出错」；检索评测（金标 548 组，编排层 hit@5 98.0%、法律级 99.3%、rank-1 67.2%、MRR 79.2%（raw 层 96.7%/98.5% 见 /api/evals）；2026-10-12 实测——含确定性重排二代的 IDF 加权覆盖度，全量 A/B 救回 4 例零打落；指标随金标扩容与真实难例自然浮动）衡量的是语料命中率，不是法律正确率。
 
 ## 📦 开放数据与许可 · Open data & license
 
