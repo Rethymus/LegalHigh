@@ -7,7 +7,7 @@
 //   C. README 无日期的现态语料主张（「跨 N 部受控语料（M 条」/「当前构建产物为 N 部、M 条」）
 //      必须与 manifest 一致——语料扩张未同步 README 即失败（R514 纪律的机器化）。
 // 用法：node scripts/check_declared_surface.mjs（由 qa_gates gate8 调用；也可独立跑）
-import { readFileSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
 import { resolve, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -42,6 +42,30 @@ for (const f of surfaces) {
   const cn = ['零', '一', '二', '三', '四', '五', '六', '七', '八', '九', '十']
   const wrongCn = cn.filter((c, i) => i > 0 && i !== toolNames.length && new RegExp(c + '工具').test(text))
   if (wrongCn.length) fail.push(`${f}: 出现旧工具计数「${wrongCn.map((c) => c + '工具').join('、')}」（当前应为 ${toolNames.length} 个）`)
+}
+
+// ---- C2：README 编排层检索指标主张 vs orchestrated_search 实测（R588 教训固化）----
+// README hub 写「编排层 hit@5 N%、法律级 M%」——四元组必须与
+// server/scripts/rerank_gold_metrics.json（每次检索指标变更后由 regen 脚本刷新）一致。
+// 双口径纪律：raw 层（/api/evals 的 corpus.search）由 evals 测试钉住；编排层由本门钉住。
+let gold_metrics = null
+const GM_PATH = resolve(root, 'server/scripts/rerank_gold_metrics.json')
+if (existsSync(GM_PATH)) {
+  gold_metrics = JSON.parse(readFileSync(GM_PATH, 'utf-8'))
+} else {
+  fail.push('server/scripts/rerank_gold_metrics.json 缺失（检索指标变更后须重跑 regen）')
+}
+const hub2 = readFileSync(resolve(root, 'README.md'), 'utf-8')
+const om = hub2.match(/编排层 hit@5 (\d+\.\d)%、法律级 (\d+\.\d)%、rank-1 (\d+\.\d)%、MRR (\d+\.\d)%/)
+if (!om) fail.push('README.md: 找不到「编排层 hit@5 N%…」四元组主张')
+else if (gold_metrics) {
+  const claimed = om.slice(1).map(Number)
+  const actual = [gold_metrics.hit_at_5, gold_metrics.law_level, gold_metrics.rank1, gold_metrics.mrr].map((x) => Math.round(x * 1000) / 10)
+  const tol = 0.05
+  actual.forEach((a, i) => {
+    if (Math.abs(claimed[i] - a) > tol)
+      fail.push(`README.md: 编排层指标第 ${i + 1} 项声称 ${claimed[i]}% ≠ 实测 ${a}%（重跑 server 脚本刷新）`)
+  })
 }
 
 // ---- C：README 现态语料主张 vs manifest ----

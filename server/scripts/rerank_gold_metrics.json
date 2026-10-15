@@ -1,0 +1,9 @@
+{
+ "description": "编排层检索指标（orchestrated_search 全金标）——gate8-C2 数据源；检索变更后重跑本脚本并同步 README hub 四元组",
+ "generated_at": "2026-10-15",
+ "gold_count": 548,
+ "hit_at_5": 0.9799,
+ "law_level": 0.9927,
+ "rank1": 0.6715,
+ "mrr": 0.7922
+}
